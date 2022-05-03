@@ -1,0 +1,67 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.io.IOHelper"%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal modal-lg" tabindex="-1" role="dialog" id="posHelperModal">
+        <div class="modal-dialog modal-lg" role="document" style="margin-left:25%; max-width:1000px;">
+            <div class="modal-content">
+                
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="posHelperModal-title"><%=myResources.getString("SearchFieldTooltip")%></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&#x00D7;</span>
+                    </button>
+                </div>
+
+                    <%
+                    String STTS_XML = "/data/STTS_2_0.xml";
+                    String STTS_XSL = "/org/zumult/io/POS2HTMLDIV.xsl";
+                    String htmlDiv = new IOHelper().applyInternalStylesheetToInternalFile(STTS_XSL, STTS_XML);
+                %>
+
+                <div class="modal-body" id="parameters-body" style="background: white; max-height:600px; overflow: auto; font-size: smaller;">
+                    <p>
+                      Um ausgewählte Formen im Transkript zu suchen und hervorzuheben, geben Sie einen Suchbegriff
+                      der Form X=Y ein, wobei z.B.:
+                      <ul>
+                          <li><b>norm=fünfzig</b> nach normalisierten Formen <i>fünfzig</i> sucht, also z.B. die transkribierten Formen <i>fünfzig</i> und <i>fuffzich</i> findet, </li>
+                          <li><b>lemma=gehen</b> nach lemmatisierten Formen <i>gehen</i> sucht, also z.B. die transkribierten Formen <i>gehst</i> und <i>gegangen</i> findet, </li>
+                          <li><b>pos=VVFIN</b> nach Formen mit dem Part-Of-Speech-Tag <i>VVFIN</i> sucht, also alle finiten Vollverben findet. </li>
+                      </ul>
+                    Statt einfachen Zeichenketten können auch reguläre Ausdrücke verwendet werden - <b>lemma=(gehen|kommen)</b> 
+                    findet z.B. die lemmatisierten Formen <i>gehen</i> und <i>kommen</i>, <b>pos=VV.+</b> findet alle Vollverben. <br/>
+                    
+                    Die nachfolgende Liste erläutert die Part-Of-Speech-Tags des Stuttgart-Tübingen-Tagsets, das für die <b>deutschen</b> Daten verwendet wird. 
+                    Ein Klick auf einen Tag fügt den entsprechenden Suchausdruck direkt ins Suchfeld ein. 
+                    </p>        
+                    <p style="color:gray; font-size:smaller">
+                        <ul style="color:gray; font-size:smaller">
+                            <li>
+                                Für das <b>Englische</b> wird das <a target="_blank" href="http://www.natcorp.ox.ac.uk/docs/c5spec.html">Tagset des British National Corpus (BNC)</a> 
+                                verwendet.
+                            </li>
+                            <li>
+                                Für das <b>Polnische</b> wird das <a target="_blank" href="http://nkjp.pl/poliqarp/help/ense2.html">Tagset des Polnischen Nationalkorpus (NKJP)</a> 
+                                verwendet.
+                            </li>
+                            <li>
+                                Für das <b>Italienische</b> wird ein 
+                                <a target="_blank" href="https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/italian-tagset.txt">von Achim Stein an der Universität 
+                                Stuttgart entwickeltes Tagset</a> verwendet.
+                            </li>
+                        </ul>
+                        
+                        
+
+                    </p>
+                    
+                    <%= htmlDiv %>
+                </div>
+            </div>
+                    
+                    
+                    
+        </div>
+    </div>
+                    
+

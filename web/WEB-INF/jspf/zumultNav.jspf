@@ -1,0 +1,58 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.backend.Configuration"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Set"%>
+<%@page import="org.zumult.objects.MetadataKey"%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@ page pageEncoding="UTF-8" %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="http://agd.ids-mannheim.de/folk.shtml">
+            <% String imgSrc = "../images/agd.png"; %>
+            <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a class="navbar-brand" href="http://www.zumult.org"><b><%= pageName %></b></a>
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                    <%= pageTitle %>
+                </li>
+                
+            </ul>
+
+            <!-- ******************* -->
+            <!-- * PROJECT LINKS  ** -->
+            <!-- ******************* -->
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="http://zumult.ids-mannheim.de/ProtoZumult/"><%=myResources.getString("Home")%></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" target="_blank" href="https://zumult.org/"><%=myResources.getString("Project")%></a>
+              </li>
+              <% if (pageName == "ZuMal") { %>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="../../doc/Handreichung-<%=pageName%>.html">Help</a>
+                </li>
+              <% } %>
+            </ul>
+
+            <!-- *********************** -->
+            <!-- * LANGUAGE SELECTOR  ** -->
+            <!-- *********************** -->
+            <% if (pageName != "ZuMal") { %>
+            <select id="selectLang" class="ml-3" style="width: 100px;">
+                <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
+                <option value="en"<%if (!currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
+            </select>
+            <% } %>
+
+        </div>
+                            
+    </nav>                
+
+

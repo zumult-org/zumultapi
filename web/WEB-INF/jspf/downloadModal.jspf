@@ -1,0 +1,189 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal modal-lg" tabindex="-1" role="dialog" id="downloadModal" onload="$('downloadSpinner').toggle()">
+        <div class="modal-dialog" role="document" style="min-width:80%">
+            <div class="modal-content">
+                
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="parameters-title"><%=myResources.getString("Download")%>  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&#x00D7;</span>
+                    </button>
+                </div>
+                
+                <form id="downloadOptionsForm" action="javascript:requestDownload()">
+                    
+                                       
+                    <div class="modal-body" id="parameters-body">
+
+                        <!-- ***************************** -->
+                        <!-- ****** AUDIO / VIDEO ******** -->
+                        <!-- ***************************** -->
+                        
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-photo-video"></i> Audio / Video</h5>
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="audioArchive" name="audioArchive" checked="checked"/>                            
+                                    <label class="form-check-label" for="audioArchive"><%=myResources.getString("AudioDownload")%></label>
+                                  </div>
+                                </div>
+                            </div>
+                            
+                            <!-- <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="audioMP3" name="audioMP3"/>                            
+                                    <label class="form-check-label" for="audioMP3">Audio (MP3)</label>
+                                  </div>
+                                </div>
+                            </div> -->
+                            
+                            <% if (!(videos.isEmpty())){ %>
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="videoArchive" name="videoArchive"/>                            
+                                    <label class="form-check-label" for="videoArchive"><%=myResources.getString("FirstVideoDownload")%></label>
+                                  </div>
+                                </div>
+                            </div>
+                            <% if (!(videos.size()>2)){ %>
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="video2Archive" name="video2Archive"/>                            
+                                    <label class="form-check-label" for="video2Archive"><%=myResources.getString("SecondVideoDownload")%></label>
+                                  </div>
+                                </div>
+                            </div>                            
+                            <% } %>
+                            <% } %>
+                            
+                                                        
+
+                        </div>
+                            
+                        <!-- ***************************** -->
+                        <!-- ****** TRANSCRIPTS ******** -->
+                        <!-- ***************************** -->
+                        
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title"><i class="far fa-file-alt"></i> <%=myResources.getString("Transcripts")%></h5>
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptISO" name="transcriptISO" checked="checked"/>                            
+                                    <label class="form-check-label" for="transcriptISO">ISO/TEI Format (*.xml)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+                            
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptFLN" name="transcriptFLN"/>                            
+                                    <label class="form-check-label" for="transcriptFLN">FOLKER/OrthoNormal (*.fln)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+                            
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptEXB" name="transcriptEXB" checked="checked"/>                            
+                                    <label class="form-check-label" for="transcriptEXB">EXMARaLDA (*.exb)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+                            
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text" title="not available yet">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptEAF" name="transcriptEAF"/>                            
+                                    <label class="form-check-label" for="transcriptEAF">ELAN (*.eaf)</label>
+                                  </div>
+                                </div>
+                            </div>      
+                            
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptPraat" name="transcriptPraat"/>                            
+                                    <label class="form-check-label" for="transcriptPraat">Praat (*.textGrid)</label>
+                                  </div>
+                                </div>
+                            </div>                           <br/>
+
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptHTML" name="transcriptHTML"/>                            
+                                    <label class="form-check-label" for="transcriptHTML">List, HTML (*.html)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptTXT" name="transcriptTXT" checked="checked"/>                            
+                                    <label class="form-check-label" for="transcriptTXT">List, Plain Text (*.txt)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text" title="not available yet">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptPartiturHTML" name="transcriptPartiturHTML"/>                            
+                                    <label class="form-check-label" for="transcriptPartiturHTML">Partitur, HTML (*.html)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+
+                            <div class="input-group-sm mb-3 form-check form-check-inline">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text" title="not available yet">
+                                    <input class="form-check-input" type="checkbox" value="TRUE" id="transcriptPartiturRTF" name="transcriptPartiturRTF"/>                            
+                                    <label class="form-check-label" for="transcriptPartiturRTF">Partitur, RTF (*.rtf)</label>
+                                  </div>
+                                </div>
+                            </div>                            
+
+
+
+                          </div>
+                            
+                            
+                        
+                        
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <div id="downloadSpinner" class="float-left" style="display:none;">
+                            <i class="fas fa-sync fa-spin"></i>
+                            Preparing download, please wait...
+                        </div>
+                        <button id="downloadSubmitButton" type="submit" class="btn btn-primary">
+                            <i class="fa fa-download"></i> Download
+                        </button>
+                    </div>
+                    
+
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,35 @@
+<!-- loading indicator -->
+<div class="wait-query-tab" style="display:none;"></div>
+
+<!--  row XML -->
+<div class="openXML-KWICSearch-area" style="display:none;">
+    <p class="collapsible" onclick="openContent(this)">XML</p>
+    <div class="content rowData-Response"><p><pre class="rowData-KWICSearch">Test</pre></div>
+</div>
+            
+<!-- search summary -->    
+<div class="mt-3 KWICSearch-result"></div>       
+
+<!-- kwic table -->
+<div class="kwic-tab" style="display:none;">
+    
+    <!-- table header -->
+    <div class="card kwic-card">
+        <div class="card-header">
+            <div class="float-left">
+                <div class="query_summary"></div>
+            </div>
+            <div class="float-right">
+                <div class="container paging_container"></div>
+            </div>
+        </div>           
+    </div>
+    
+    <!--  loading indicator -->
+    <div id="wait-audio" style="display:none;">Loading... <img src='../images/loading.gif' width="64" height="64" alt="Loading indicator"/></div>
+
+    <!-- table body -->
+    <div class="px-4">    
+        <div class="table-wrapper table-responsive myKWIC"></div>
+    </div>
+</div>

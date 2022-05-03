@@ -1,0 +1,519 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>             
+
+<script type="text/javascript">
+    
+    function setStartSelection(element){
+        var id = element.closest("tr").dataset.annotationBlockId;   
+        startSelection = id;                        
+        $("tr").removeClass("selectionStart");
+        $("#tr" + id).addClass("selectionStart");
+        if ($("tr").index($("#tr" + startSelection)) > $("tr").index($("#tr" + endSelection))){
+            $("#tr" + endSelection).removeClass("selectionEnd");
+            endSelection="";
+        }
+        if (endSelection===""){
+            $("#tr" + id).addClass("selectionEnd");
+            endSelection = id;                        
+        }
+        $("#selectionMenuItem").addClass("active");
+    }
+
+    function setEndSelection(element){
+        if (startSelection===""){
+            alert("<%=myResources.getString("SelectStartFirst")%>");
+            return;
+        }
+        var id = element.closest("tr").dataset.annotationBlockId;
+        endSelection = id;                        
+        $("tr").removeClass("selectionEnd");
+        $("#tr" + id).addClass("selectionEnd");
+        if ($("tr").index($("#tr" + startSelection)) >= $("tr").index($("#tr" + endSelection))){
+            $("tr").removeClass("selectionStart");
+            $("#tr" + id).addClass("selectionStart");  
+            startSelection = id;
+        }
+        $("#selectionMenuItem").addClass("active");
+    }
+    
+    function showAnnotations(element){
+        var id = element.closest("tr").dataset.annotationBlockId;   
+        if (id==null) return;
+        $.post(
+                BASE_URL + "/ZumultDataServlet",
+                { 
+                    command: 'getAnnotations',
+                    transcriptID: transcriptID, 
+                    startAnnotationBlockID: id,
+                    endAnnotationBlockID: id
+                },
+                function( data ) {
+                    $("#annotations-container").html(data);
+                    $("#annotations-title").html("<%=myResources.getString("AnnotationsFor")%> " + transcriptID + " / " + id);
+                    
+                    // show the modal!
+                    $('#annotations-modal').modal();
+
+                    $('#waitSpinner').toggle();
+                }
+              );                
+    }
+    
+    function showPartitur(element){
+        var id = element.closest("tr").dataset.annotationBlockId;   
+        if (id==null) return;
+        $.post(
+                BASE_URL + "/ZumultDataServlet",
+                { 
+                    command: 'getPartitur',
+                    transcriptID: transcriptID, 
+                    startAnnotationBlockID: id,
+                    endAnnotationBlockID: id
+                },
+                function( data ) {
+                    $("#partitur-container").html(data);
+                    $("#partitur-title").html("Partitur: " + transcriptID + " / " + id);
+                    
+                    // show the modal!
+                    $('#partitur-modal').modal();
+
+                    $('#waitSpinner').toggle();
+                }
+              );                
+    }
+    
+    function showProtocol(){
+        $.post(
+            BASE_URL + "/ZumultDataServlet",
+            { 
+                command: 'getProtocol',
+                transcriptID: transcriptID, 
+            },
+            function( data ) {
+                $("#protocol-container").html(data);
+                //$("#annotations-title").html("Annotations for " + transcriptID + " / " + id);
+
+                // show the modal!
+                $('#protocol-modal').modal();
+
+                $('#waitSpinner').toggle();
+            }
+        );                
+    }
+
+    function reduceToSelection(){
+        if (startSelection==="" || endSelection===""){
+            alert("<%=myResources.getString("SelectStartEndFirst")%>");
+            return;
+        }
+        // http://zumult.ids-mannheim.de/ProtoZumult/jsp/transcript2.jsp?transcriptID=FOLK_E_00001_SE_01_T_01&form=norm
+        //url = "./transcript2.jsp?transcriptID=" + transcriptID + "&form=" + form 
+        //        + "&startAnnotationBlockID=" + startSelection + "&endAnnotationBlockID=" + endSelection;
+        //window.open(url,'_blank');
+        
+        var formlistDropdown = document.getElementById('form');
+        var selectedForm = formlistDropdown.options[formlistDropdown.selectedIndex].value;
+        form = selectedForm;
+
+        var wordlistDropdown = document.getElementById('refwordlist');
+        var selectedWordlist = wordlistDropdown.options[wordlistDropdown.selectedIndex].value;       
+
+        $.post('./zuViel.jsp', 
+            {
+                transcriptID: transcriptID, 
+                wordlistID: selectedWordlist,
+                startAnnotationBlockID: startSelection,
+                endAnnotationBlockID: endSelection,
+                form: selectedForm,
+                showNormDev : showNormDev,
+                visSpeechRate : visSpeechRate,
+                highlightIDs1 : highlightIDs1,
+                highlightIDs2 : highlightIDs2,
+                highlightIDs3 : highlightIDs3,
+
+                tokenList : tokenList                
+            },
+            function (data) {
+                var w = window.open('about:blank');
+                w.document.open();
+                w.document.write(data);
+                w.document.close();
+        });
+    }
+    
+    
+    var lastFormSearched = '';
+    var countSearch = 0;
+
+    function findForms(type, form){
+        var searchRegex = new RegExp("\\b" + form + "\\b");
+        //
+        //alert(lemma);        
+        //
+        // very annoying -- distinguish here between dom and jquery elements
+        if (form!==lastFormSearched){
+            //$("span[data-" + type + "='" + lastFormSearched + "']").removeClass("highlight-search");            
+            var lastSearchRegex = new RegExp("\\b" + lastFormSearched + "\\b");
+            // issue #66 allow regex
+            $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(lastSearchRegex)); }).removeClass("highlight-search");
+            
+            countSearch=0;
+        } else {
+            countSearch++;
+            //if (countSearch >= $("span[data-" + type + "='" + form + "']").length){
+            // issue #66 allow regex
+            if (countSearch >= $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).length){
+                countSearch = 0;
+            }
+        }
+        //$("span[data-" + type + "='" + form + "']").fadeIn(500);
+        //$("span[data-" + type + "='" + form + "']").addClass("highlight2");
+        
+        // issue #66 allow regex
+        $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).fadeIn(500);
+        $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).addClass("highlight2");
+        
+        //var currentForm = $("span[data-" + type + "='" + form + "']")[countSearch];
+        var currentForm = $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); })[countSearch];
+        currentForm.scrollIntoView(true);
+        
+        // make it briefly flash, the more things flash, the better the science
+        var orig = currentForm.style.background;
+        currentForm.style.background = '#42f545';
+        setTimeout(function(){
+                currentForm.style.background = orig;
+        }, 500);        
+        
+        
+        window.scrollBy(0, -70);
+        lastFormSearched = form;        
+    }
+    
+    function clearSearch(){
+        $('.highlight2').removeClass('highlight2');
+    }
+    
+
+    function findAllForms(type, form){
+        //$("span[data-" + type + "='" + form + "']").addClass("highlight2");
+        // issue #66 allow regex
+        var searchRegex = new RegExp("\\b" + form + "\\b");
+        $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).addClass("highlight2");
+    }
+
+    function searchFromBox(){
+        var searchTerm = $("#searchBox").val();
+        var index = searchTerm.indexOf("=");
+        if (index<1){
+            alert("<%=myResources.getString("InvalidSearchExpression")%>");
+            return;
+        }
+        var type = searchTerm.substring(0, index);
+        var form = searchTerm.substring(index + 1);
+        findForms(type, form);
+    }
+    
+    function searchAllFromBox(){
+        //alert("searchAllFromBox: to do");
+        var searchTerm = $("#searchBox").val();
+        var index = searchTerm.indexOf("=");
+        if (index<1){
+            alert("<%=myResources.getString("InvalidSearchExpression")%>");
+            return;
+        }
+        var type = searchTerm.substring(0, index);
+        var form = searchTerm.substring(index + 1);
+        findAllForms(type, form);
+    }
+
+    function makeVisible(annotationBlockID){
+        //$.scrollTo($("#tr" + annotationBlockID), 1000);
+        var trElement = document.getElementById("tr" + annotationBlockID)
+        if (trElement==null) return;
+        trElement.scrollIntoView(true);
+        window.scrollBy(0, -70);
+        
+        // new 07-12-2020, for issue #26 : make the element flash briefly
+        var tdChildren = trElement.getElementsByTagName('td');
+        var td = tdChildren[0];
+        var orig = td.style.background;
+        td.style.background = '#42f545';
+        setTimeout(function(){
+                td.style.background = orig;
+        }, 500);        
+        
+        //$("#tr" + annotationBlockID).scrollIntoView();
+    }
+    
+    function highlight(id){
+        var elements = document.getElementsByName(id);
+        for (var i = 0; i < elements.length; i++) {
+            element = elements[i];
+            element.style.background='rgb(135,206,250)';
+        }
+    }
+    
+    function lowlight(id){
+        var elements = document.getElementsByName(id);
+        for (var i = 0; i < elements.length; i++) {
+            element = elements[i];
+            element.style.background='inherit';
+        }
+    }
+    
+    function updateFontsize(){
+        var fontsize = document.getElementById('fontsizeSlider').value;
+        document.getElementById('transcriptsizelabel').textContent = fontsize + 'pt';        
+        document.getElementById('transcript-table').style.fontSize = fontsize + 'pt';
+    }
+    
+    function changeTranscriptFont(){
+        var fontfamily = document.getElementById('fontfamily').value;
+        document.getElementById('transcript-table').style.fontFamily = fontfamily;
+    }
+    
+    function changeColumnDisplay(){
+        var showLeftColumn = document.getElementById('showLeftCol').checked;
+        if (showLeftColumn){
+           document.getElementById('columnLeft').style.display = 'block';             
+        } else {
+           document.getElementById('columnLeft').style.display = 'none'; 
+        }
+        
+        var showRightColumn = document.getElementById('showRightCol').checked;
+        if (showRightColumn){
+           document.getElementById('columnRight').style.display = 'block';             
+        } else {
+           document.getElementById('columnRight').style.display = 'none'; 
+        }
+        
+        if (showLeftColumn && showRightColumn){
+           document.getElementById('columnLeft').className = 'col-sm-2';             
+           document.getElementById('columnCenter').className = 'col-sm-6';             
+           document.getElementById('columnRight').className = 'col-sm-4';                         
+        } else if (showLeftColumn && !showRightColumn){
+           document.getElementById('columnLeft').className = 'col-sm-2';             
+           document.getElementById('columnCenter').className = 'col-sm-9';             
+           document.getElementById('columnRight').className = 'col-sm-1';                                     
+        } else if (!showLeftColumn && showRightColumn){
+           document.getElementById('columnLeft').className = 'col-sm-1';             
+           document.getElementById('columnCenter').className = 'col-sm-7';             
+           document.getElementById('columnRight').className = 'col-sm-4';                                     
+        } else {
+           document.getElementById('columnLeft').className = 'col-sm-1';             
+           document.getElementById('columnCenter').className = 'col-sm-10';             
+           document.getElementById('columnRight').className = 'col-sm-1';                                     
+        }
+        
+    }
+    
+    function changeForm(){
+        reloadTranscript();
+    }
+    
+    function changeRefWordlist(){
+        reloadWordlist();
+        reloadTranscript();
+    }
+    
+    function changeShowNormDev(checkbox){
+        var show = checkbox.checked;
+        showNormDev = show.toString().toUpperCase();
+        reloadTranscript();
+    }
+    
+    function changeVisSpeechRate(checkbox){
+        var vis = checkbox.checked;
+        visSpeechRate = vis.toString().toUpperCase();
+        reloadTranscript();
+        
+    }
+
+    function expandTranscript(amount){
+        $.get(BASE_URL + "/ZumultDataServlet?command=getExpansion" 
+                + "&transcriptID=" + transcriptID 
+                + "&startAnnotationBlockID=" + startAnnotationBlockID 
+                + "&endAnnotationBlockID=" + endAnnotationBlockID 
+                + "&expand=" + amount
+            , function (data) {
+                startAnnotationBlockID = $(data).find("startAnnotationBlockID").text();
+                endAnnotationBlockID = $(data).find("endAnnotationBlockID").text();
+                startTime = $(data).find("startTime").text() + 0.0;
+                reloadTranscript();
+                reloadSVG('small');
+                reloadWordlist();
+            });
+
+        
+    }
+
+    function reloadTranscript(){
+        reloadTranscript(null);
+    }
+
+    function reloadTranscript(gotoID){
+        $('#waitSpinner').toggle();
+        
+        var waitHTML = '<i class="fas fa-spinner fa-spin"></i><p style="color:gray"><%=myResources.getString("WaitTranscriptLoading")%></p>';
+        $("#transcript-container").html(waitHTML);
+        
+        var formlistDropdown = document.getElementById('form');
+        var selectedForm = formlistDropdown.options[formlistDropdown.selectedIndex].value;
+        form = selectedForm;
+
+        var wordlistDropdown = document.getElementById('refwordlist');
+        var selectedWordlist = wordlistDropdown.options[wordlistDropdown.selectedIndex].value;       
+        
+        $.post(
+                BASE_URL + "/ZumultDataServlet",
+                { 
+                    command: 'getTranscript',
+                    transcriptID: transcriptID, 
+                    wordlistID: selectedWordlist,
+                    startAnnotationBlockID: startAnnotationBlockID,
+                    endAnnotationBlockID: endAnnotationBlockID,
+                    form: selectedForm,
+                    showNormDev : showNormDev,
+                    visSpeechRate : visSpeechRate,
+                    highlightIDs1 : highlightIDs1,
+                    highlightIDs2 : highlightIDs2,
+                    highlightIDs3 : highlightIDs3,
+                    
+                    tokenList : tokenList
+                },
+                function( data ) {
+                    $("#transcript-container").html(data);
+
+                    $("#tr" + startSelection).addClass("selectionStart");
+                    $("#tr" + endSelection).addClass("selectionEnd");
+                    addOnDblClicks();
+                    
+                    if (gotoID!==null){
+                        makeVisible(gotoID);
+                    }
+
+                    $('#waitSpinner').toggle();
+                }
+              );                
+
+    }
+    
+    function reloadSVG(size){
+        $('#waitSpinner').toggle();
+        $.post(
+            BASE_URL + "/ZumultDataServlet",
+            { 
+                command: 'getSVG',
+                transcriptID: transcriptID, 
+                startAnnotationBlockID: startAnnotationBlockID,
+                endAnnotationBlockID: endAnnotationBlockID,
+                size : size
+            },
+            function( data ) {
+                $("#svg").html(data);                
+                $('#waitSpinner').toggle();
+            }
+        );                
+
+    }
+    
+    function reloadWordlist(){
+        $('#waitSpinner').toggle();
+        var wordlistDropdown = document.getElementById('refwordlist');
+        var selectedWordlist = wordlistDropdown.options[wordlistDropdown.selectedIndex].value;
+        $.post(
+            BASE_URL + "/ZumultDataServlet",
+            { 
+                command: 'getWordlist',
+                transcriptID: transcriptID, 
+                wordlistID: selectedWordlist,
+                startAnnotationBlockID: startAnnotationBlockID,
+                endAnnotationBlockID: endAnnotationBlockID,
+                tokenList : tokenList
+            },
+            function( data ) {
+                $("#wordlist-container").html(data);
+                $('#waitSpinner').toggle();                
+            }
+        );                
+            
+    }
+    
+    function gotoTime(time){
+        $('#waitSpinner').toggle();
+        $.post(
+            BASE_URL + "/ZumultDataServlet",
+            { 
+                command: 'getCoordinatesForTime',
+                transcriptID: transcriptID, 
+                time : time
+            },
+            function( data ) {
+                var newTranscriptID = $(data).find("transcriptID").text();
+                var annotationBlockID = $(data).find("startAnnotationBlockID").text();
+
+                //alert("Going to : " + newTranscriptID + " / " + annotationBlockID + " for: " + time);
+                
+                if (transcriptID===newTranscriptID){
+                    makeVisible(annotationBlockID);
+                } else {
+                    transcriptID = newTranscriptID;
+                    highlightIDs1 = "";
+                    highlightIDs2 = "";
+                    highlightIDs3 = "";
+                    loadAll(annotationBlockID);
+                    //reloadTranscript(annotationBlockID);
+                    //reloadWordlist();
+                    //reloadSVG('small');
+                }
+                
+                
+                $('#waitSpinner').toggle();                
+            }
+        );                
+        
+    }
+    
+    function loadAll(gotoID){
+        var formlistDropdown = document.getElementById('form');
+        var selectedForm = formlistDropdown.options[formlistDropdown.selectedIndex].value;
+        form = selectedForm;
+
+        var wordlistDropdown = document.getElementById('refwordlist');
+        var selectedWordlist = wordlistDropdown.options[wordlistDropdown.selectedIndex].value;       
+
+        $.post('./zuViel.jsp', 
+            {
+                transcriptID: transcriptID, 
+                wordlistID: selectedWordlist,
+                startAnnotationBlockID: startSelection,
+                endAnnotationBlockID: endSelection,
+                form: selectedForm,
+                showNormDev : showNormDev,
+                visSpeechRate : visSpeechRate,
+                highlightIDs1 : highlightIDs1,
+                highlightIDs2 : highlightIDs2,
+                highlightIDs3 : highlightIDs3,
+                makeVisibleID : gotoID,
+
+                tokenList : tokenList                
+            },
+            function (data) {
+                var w = window.open('about:blank');
+                w.document.open();
+                w.document.write(data);
+                w.document.close();
+        });
+        
+    }
+    
+    function insertText(text, elementID, element){
+        //alert(text);
+        $('#' + elementID).val(text);
+    }
+
+
+
+    
+    
+</script>

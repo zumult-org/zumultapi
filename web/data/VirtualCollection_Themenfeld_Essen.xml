@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><virtualCollection name="Themenfeld_Essen" owner="kaiser@ids-mannheim.de" xml:id="a4595c683-a8a3-4da0-8ba3-b6e9a354da15">
+    
+    <title>Essen</title>
+    <subtitle>Thematische Ausschnitte</subtitle>
+    <description>Manuell ausgewählte Transkriptausschnitte zum Themenfeld "Essen"</description>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00300_SE_01_T_01&form=trans&startAnnotationBlockID=c281&endAnnotationBlockID=c335  -->
+    <virtualCollectionItem endAnnotationBlockID="c335" startAnnotationBlockID="c281" transcriptID="FOLK_E_00300_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Andünsten mit Öl oder Butter? </title>
+            <transcript-form>trans</transcript-form>                
+        <speakers>7</speakers><duration>00:00:53</duration><measures><measure normRate="14,93" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="63,35" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,78" type="articulationRate"/><measure lemmas="58" lemmas_ratio="0.59" reference="GOETHE_A1" tokens="151" tokens_ratio="0.74" type="intersection"/><measure lemmas="67" lemmas_ratio="0.68" reference="GOETHE_A2" tokens="166" tokens_ratio="0.81" type="intersection"/><measure lemmas="75" lemmas_ratio="0.77" reference="GOETHE_B1" tokens="178" tokens_ratio="0.87" type="intersection"/><measure lemmas="69" lemmas_ratio="0.70" reference="HERDER_1000" tokens="163" tokens_ratio="0.80" type="intersection"/><measure lemmas="71" lemmas_ratio="0.72" reference="HERDER_2000" tokens="165" tokens_ratio="0.80" type="intersection"/><measure lemmas="73" lemmas_ratio="0.74" reference="HERDER_3000" tokens="168" tokens_ratio="0.82" type="intersection"/><measure lemmas="73" lemmas_ratio="0.74" reference="HERDER_4000" tokens="168" tokens_ratio="0.82" type="intersection"/><measure lemmas="75" lemmas_ratio="0.77" reference="HERDER_5000" tokens="174" tokens_ratio="0.85" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00300_SE_01_T_01&form=trans&startAnnotationBlockID=c1429&endAnnotationBlockID=c1451 -->       
+    <virtualCollectionItem endAnnotationBlockID="c1451" startAnnotationBlockID="c1429" transcriptID="FOLK_E_00300_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Risotto ist wie ein Baby</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>6</speakers><duration>00:00:27</duration><measures><measure normRate="10,43" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="17,39" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,50" type="articulationRate"/><measure lemmas="40" lemmas_ratio="0.67" reference="GOETHE_A1" tokens="83" tokens_ratio="0.77" type="intersection"/><measure lemmas="50" lemmas_ratio="0.83" reference="GOETHE_A2" tokens="94" tokens_ratio="0.87" type="intersection"/><measure lemmas="54" lemmas_ratio="0.90" reference="GOETHE_B1" tokens="100" tokens_ratio="0.93" type="intersection"/><measure lemmas="48" lemmas_ratio="0.80" reference="HERDER_1000" tokens="92" tokens_ratio="0.85" type="intersection"/><measure lemmas="54" lemmas_ratio="0.90" reference="HERDER_2000" tokens="100" tokens_ratio="0.93" type="intersection"/><measure lemmas="56" lemmas_ratio="0.93" reference="HERDER_3000" tokens="102" tokens_ratio="0.94" type="intersection"/><measure lemmas="56" lemmas_ratio="0.93" reference="HERDER_4000" tokens="102" tokens_ratio="0.94" type="intersection"/><measure lemmas="56" lemmas_ratio="0.93" reference="HERDER_5000" tokens="102" tokens_ratio="0.94" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00300_SE_01_T_01&form=trans&startAnnotationBlockID=c1615&endAnnotationBlockID=c1696 -->
+    <!-- <virtualCollectionItem type="transcript-excerpt" transcriptID="FOLK_E_00300_SE_01_T_01" startAnnotationBlockID="c1615" endAnnotationBlockID="c1696">
+        <display-hints>
+            <title>Couscous und kochende Männer</title>
+            <transcript-form>trans</transcript-form>
+        </display-hints>
+    </virtualCollectionItem> -->
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00300_SE_01_T_01&form=trans&startAnnotationBlockID=c1842&endAnnotationBlockID=c1911 -->
+    <virtualCollectionItem endAnnotationBlockID="c1911" startAnnotationBlockID="c1842" transcriptID="FOLK_E_00300_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Käse-Vorlieben</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>7</speakers><duration>00:00:56</duration><measures><measure normRate="17,00" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="48,58" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,24" type="articulationRate"/><measure lemmas="55" lemmas_ratio="0.57" reference="GOETHE_A1" tokens="171" tokens_ratio="0.73" type="intersection"/><measure lemmas="69" lemmas_ratio="0.71" reference="GOETHE_A2" tokens="190" tokens_ratio="0.82" type="intersection"/><measure lemmas="76" lemmas_ratio="0.78" reference="GOETHE_B1" tokens="205" tokens_ratio="0.88" type="intersection"/><measure lemmas="62" lemmas_ratio="0.64" reference="HERDER_1000" tokens="183" tokens_ratio="0.79" type="intersection"/><measure lemmas="66" lemmas_ratio="0.68" reference="HERDER_2000" tokens="188" tokens_ratio="0.81" type="intersection"/><measure lemmas="68" lemmas_ratio="0.70" reference="HERDER_3000" tokens="190" tokens_ratio="0.82" type="intersection"/><measure lemmas="69" lemmas_ratio="0.71" reference="HERDER_4000" tokens="192" tokens_ratio="0.82" type="intersection"/><measure lemmas="72" lemmas_ratio="0.74" reference="HERDER_5000" tokens="198" tokens_ratio="0.85" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00300_SE_01_T_01&form=trans&startAnnotationBlockID=c1914&endAnnotationBlockID=c1964 -->
+    <virtualCollectionItem endAnnotationBlockID="c1964" startAnnotationBlockID="c1914" transcriptID="FOLK_E_00300_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Flexitarier</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>7</speakers><duration>00:00:49</duration><measures><measure normRate="14,83" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="52,63" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,49" type="articulationRate"/><measure lemmas="60" lemmas_ratio="0.65" reference="GOETHE_A1" tokens="144" tokens_ratio="0.75" type="intersection"/><measure lemmas="68" lemmas_ratio="0.73" reference="GOETHE_A2" tokens="157" tokens_ratio="0.82" type="intersection"/><measure lemmas="72" lemmas_ratio="0.77" reference="GOETHE_B1" tokens="161" tokens_ratio="0.84" type="intersection"/><measure lemmas="59" lemmas_ratio="0.63" reference="HERDER_1000" tokens="149" tokens_ratio="0.78" type="intersection"/><measure lemmas="66" lemmas_ratio="0.71" reference="HERDER_2000" tokens="158" tokens_ratio="0.82" type="intersection"/><measure lemmas="66" lemmas_ratio="0.71" reference="HERDER_3000" tokens="158" tokens_ratio="0.82" type="intersection"/><measure lemmas="67" lemmas_ratio="0.72" reference="HERDER_4000" tokens="159" tokens_ratio="0.83" type="intersection"/><measure lemmas="68" lemmas_ratio="0.73" reference="HERDER_5000" tokens="160" tokens_ratio="0.83" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00370_SE_01_T_05&form=trans&startAnnotationBlockID=c1435&endAnnotationBlockID=c1493 -->
+    <virtualCollectionItem endAnnotationBlockID="c1493" startAnnotationBlockID="c1435" transcriptID="FOLK_E_00370_SE_01_T_05" type="transcript-excerpt">
+        <display-hints>
+            <title>Frisch gepresster Saft</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:01:06</duration><measures><measure normRate="7,97" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="15,94" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,13" type="articulationRate"/><measure lemmas="62" lemmas_ratio="0.67" reference="GOETHE_A1" tokens="182" tokens_ratio="0.75" type="intersection"/><measure lemmas="71" lemmas_ratio="0.76" reference="GOETHE_A2" tokens="209" tokens_ratio="0.86" type="intersection"/><measure lemmas="78" lemmas_ratio="0.84" reference="GOETHE_B1" tokens="220" tokens_ratio="0.91" type="intersection"/><measure lemmas="59" lemmas_ratio="0.63" reference="HERDER_1000" tokens="180" tokens_ratio="0.74" type="intersection"/><measure lemmas="62" lemmas_ratio="0.67" reference="HERDER_2000" tokens="189" tokens_ratio="0.78" type="intersection"/><measure lemmas="65" lemmas_ratio="0.70" reference="HERDER_3000" tokens="194" tokens_ratio="0.80" type="intersection"/><measure lemmas="69" lemmas_ratio="0.74" reference="HERDER_4000" tokens="201" tokens_ratio="0.83" type="intersection"/><measure lemmas="71" lemmas_ratio="0.76" reference="HERDER_5000" tokens="205" tokens_ratio="0.85" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00331_SE_01_T_02&form=trans&startAnnotationBlockID=p475&endAnnotationBlockID=c1019 -->
+    <virtualCollectionItem endAnnotationBlockID="c1019" startAnnotationBlockID="p475" transcriptID="FOLK_E_00331_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Fauler Apfel</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:00:30</duration><measures><measure normRate="23,81" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="11,90" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,95" type="articulationRate"/><measure lemmas="36" lemmas_ratio="0.72" reference="GOETHE_A1" tokens="63" tokens_ratio="0.81" type="intersection"/><measure lemmas="41" lemmas_ratio="0.82" reference="GOETHE_A2" tokens="69" tokens_ratio="0.88" type="intersection"/><measure lemmas="43" lemmas_ratio="0.86" reference="GOETHE_B1" tokens="71" tokens_ratio="0.91" type="intersection"/><measure lemmas="34" lemmas_ratio="0.68" reference="HERDER_1000" tokens="61" tokens_ratio="0.78" type="intersection"/><measure lemmas="36" lemmas_ratio="0.72" reference="HERDER_2000" tokens="63" tokens_ratio="0.81" type="intersection"/><measure lemmas="38" lemmas_ratio="0.76" reference="HERDER_3000" tokens="65" tokens_ratio="0.83" type="intersection"/><measure lemmas="41" lemmas_ratio="0.82" reference="HERDER_4000" tokens="68" tokens_ratio="0.87" type="intersection"/><measure lemmas="43" lemmas_ratio="0.86" reference="HERDER_5000" tokens="71" tokens_ratio="0.91" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00331_SE_01_T_02&form=trans&startAnnotationBlockID=c1317&endAnnotationBlockID=p655 -->
+    <virtualCollectionItem endAnnotationBlockID="p655" startAnnotationBlockID="c1317" transcriptID="FOLK_E_00331_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Riecht lecker</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:00:42</duration><measures><measure normRate="22,73" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="22,73" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,35" type="articulationRate"/><measure lemmas="41" lemmas_ratio="0.60" reference="GOETHE_A1" tokens="92" tokens_ratio="0.71" type="intersection"/><measure lemmas="50" lemmas_ratio="0.74" reference="GOETHE_A2" tokens="108" tokens_ratio="0.83" type="intersection"/><measure lemmas="56" lemmas_ratio="0.82" reference="GOETHE_B1" tokens="114" tokens_ratio="0.88" type="intersection"/><measure lemmas="43" lemmas_ratio="0.63" reference="HERDER_1000" tokens="94" tokens_ratio="0.72" type="intersection"/><measure lemmas="46" lemmas_ratio="0.68" reference="HERDER_2000" tokens="102" tokens_ratio="0.78" type="intersection"/><measure lemmas="47" lemmas_ratio="0.69" reference="HERDER_3000" tokens="103" tokens_ratio="0.79" type="intersection"/><measure lemmas="50" lemmas_ratio="0.74" reference="HERDER_4000" tokens="106" tokens_ratio="0.82" type="intersection"/><measure lemmas="52" lemmas_ratio="0.76" reference="HERDER_5000" tokens="109" tokens_ratio="0.84" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c50&endAnnotationBlockID=p36 -->
+    <virtualCollectionItem endAnnotationBlockID="p36" startAnnotationBlockID="c50" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Menü, Fleisch oder vegetarisch</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:00:29</duration><measures><measure normRate="19,42" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="9,71" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,05" type="articulationRate"/><measure lemmas="38" lemmas_ratio="0.61" reference="GOETHE_A1" tokens="67" tokens_ratio="0.68" type="intersection"/><measure lemmas="49" lemmas_ratio="0.79" reference="GOETHE_A2" tokens="82" tokens_ratio="0.84" type="intersection"/><measure lemmas="53" lemmas_ratio="0.85" reference="GOETHE_B1" tokens="87" tokens_ratio="0.89" type="intersection"/><measure lemmas="44" lemmas_ratio="0.71" reference="HERDER_1000" tokens="76" tokens_ratio="0.78" type="intersection"/><measure lemmas="48" lemmas_ratio="0.77" reference="HERDER_2000" tokens="81" tokens_ratio="0.83" type="intersection"/><measure lemmas="50" lemmas_ratio="0.81" reference="HERDER_3000" tokens="83" tokens_ratio="0.85" type="intersection"/><measure lemmas="51" lemmas_ratio="0.82" reference="HERDER_4000" tokens="85" tokens_ratio="0.87" type="intersection"/><measure lemmas="51" lemmas_ratio="0.82" reference="HERDER_5000" tokens="85" tokens_ratio="0.87" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c275&endAnnotationBlockID=c321 -->
+    <virtualCollectionItem endAnnotationBlockID="c321" startAnnotationBlockID="c275" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Brot und Gemüse</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:01:09</duration><measures><measure normRate="15,76" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="6,06" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,83" type="articulationRate"/><measure lemmas="57" lemmas_ratio="0.66" reference="GOETHE_A1" tokens="114" tokens_ratio="0.75" type="intersection"/><measure lemmas="66" lemmas_ratio="0.76" reference="GOETHE_A2" tokens="125" tokens_ratio="0.82" type="intersection"/><measure lemmas="76" lemmas_ratio="0.87" reference="GOETHE_B1" tokens="138" tokens_ratio="0.91" type="intersection"/><measure lemmas="59" lemmas_ratio="0.68" reference="HERDER_1000" tokens="115" tokens_ratio="0.76" type="intersection"/><measure lemmas="64" lemmas_ratio="0.74" reference="HERDER_2000" tokens="122" tokens_ratio="0.80" type="intersection"/><measure lemmas="65" lemmas_ratio="0.75" reference="HERDER_3000" tokens="123" tokens_ratio="0.81" type="intersection"/><measure lemmas="67" lemmas_ratio="0.77" reference="HERDER_4000" tokens="125" tokens_ratio="0.82" type="intersection"/><measure lemmas="67" lemmas_ratio="0.77" reference="HERDER_5000" tokens="125" tokens_ratio="0.82" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c350&endAnnotationBlockID=p178 -->
+    <virtualCollectionItem endAnnotationBlockID="p178" startAnnotationBlockID="c350" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Essensbestellung</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>3</speakers><duration>00:00:21</duration><measures><measure normRate="19,05" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,38" type="articulationRate"/><measure lemmas="23" lemmas_ratio="0.79" reference="GOETHE_A1" tokens="31" tokens_ratio="0.84" type="intersection"/><measure lemmas="25" lemmas_ratio="0.86" reference="GOETHE_A2" tokens="33" tokens_ratio="0.89" type="intersection"/><measure lemmas="26" lemmas_ratio="0.90" reference="GOETHE_B1" tokens="34" tokens_ratio="0.92" type="intersection"/><measure lemmas="22" lemmas_ratio="0.76" reference="HERDER_1000" tokens="30" tokens_ratio="0.81" type="intersection"/><measure lemmas="23" lemmas_ratio="0.79" reference="HERDER_2000" tokens="31" tokens_ratio="0.84" type="intersection"/><measure lemmas="23" lemmas_ratio="0.79" reference="HERDER_3000" tokens="31" tokens_ratio="0.84" type="intersection"/><measure lemmas="23" lemmas_ratio="0.79" reference="HERDER_4000" tokens="31" tokens_ratio="0.84" type="intersection"/><measure lemmas="23" lemmas_ratio="0.79" reference="HERDER_5000" tokens="31" tokens_ratio="0.84" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c770&endAnnotationBlockID=p424  -->
+    <virtualCollectionItem endAnnotationBlockID="p424" startAnnotationBlockID="c770" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Linsensuppe</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:01:04</duration><measures><measure normRate="7,83" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="17,39" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,85" type="articulationRate"/><measure lemmas="37" lemmas_ratio="0.60" reference="GOETHE_A1" tokens="77" tokens_ratio="0.73" type="intersection"/><measure lemmas="44" lemmas_ratio="0.71" reference="GOETHE_A2" tokens="84" tokens_ratio="0.80" type="intersection"/><measure lemmas="49" lemmas_ratio="0.79" reference="GOETHE_B1" tokens="89" tokens_ratio="0.85" type="intersection"/><measure lemmas="37" lemmas_ratio="0.60" reference="HERDER_1000" tokens="76" tokens_ratio="0.72" type="intersection"/><measure lemmas="39" lemmas_ratio="0.63" reference="HERDER_2000" tokens="78" tokens_ratio="0.74" type="intersection"/><measure lemmas="41" lemmas_ratio="0.66" reference="HERDER_3000" tokens="80" tokens_ratio="0.76" type="intersection"/><measure lemmas="43" lemmas_ratio="0.69" reference="HERDER_4000" tokens="82" tokens_ratio="0.78" type="intersection"/><measure lemmas="43" lemmas_ratio="0.69" reference="HERDER_5000" tokens="82" tokens_ratio="0.78" type="intersection"/></measures></display-hints>        
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00309_SE_01_T_01&form=trans&startAnnotationBlockID=c89&endAnnotationBlockID=p76 -->
+    <virtualCollectionItem endAnnotationBlockID="p76" startAnnotationBlockID="c89" transcriptID="FOLK_E_00309_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Eier und Brötchen</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>3</speakers><duration>00:00:50</duration><measures><measure normRate="20,88" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="21,98" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="3,85" type="articulationRate"/><measure lemmas="30" lemmas_ratio="0.70" reference="GOETHE_A1" tokens="64" tokens_ratio="0.74" type="intersection"/><measure lemmas="33" lemmas_ratio="0.77" reference="GOETHE_A2" tokens="69" tokens_ratio="0.80" type="intersection"/><measure lemmas="36" lemmas_ratio="0.84" reference="GOETHE_B1" tokens="74" tokens_ratio="0.86" type="intersection"/><measure lemmas="28" lemmas_ratio="0.65" reference="HERDER_1000" tokens="59" tokens_ratio="0.69" type="intersection"/><measure lemmas="33" lemmas_ratio="0.77" reference="HERDER_2000" tokens="72" tokens_ratio="0.84" type="intersection"/><measure lemmas="33" lemmas_ratio="0.77" reference="HERDER_3000" tokens="72" tokens_ratio="0.84" type="intersection"/><measure lemmas="33" lemmas_ratio="0.77" reference="HERDER_4000" tokens="72" tokens_ratio="0.84" type="intersection"/><measure lemmas="33" lemmas_ratio="0.77" reference="HERDER_5000" tokens="72" tokens_ratio="0.84" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00309_SE_01_T_01&form=trans&startAnnotationBlockID=c313&endAnnotationBlockID=c368 -->
+    <virtualCollectionItem endAnnotationBlockID="c368" startAnnotationBlockID="c313" transcriptID="FOLK_E_00309_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Schokocreme und Milch</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>4</speakers><duration>00:00:44</duration><measures><measure normRate="13,39" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="17,86" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,08" type="articulationRate"/><measure lemmas="37" lemmas_ratio="0.77" reference="GOETHE_A1" tokens="82" tokens_ratio="0.85" type="intersection"/><measure lemmas="41" lemmas_ratio="0.85" reference="GOETHE_A2" tokens="88" tokens_ratio="0.91" type="intersection"/><measure lemmas="42" lemmas_ratio="0.88" reference="GOETHE_B1" tokens="88" tokens_ratio="0.91" type="intersection"/><measure lemmas="34" lemmas_ratio="0.71" reference="HERDER_1000" tokens="73" tokens_ratio="0.75" type="intersection"/><measure lemmas="37" lemmas_ratio="0.77" reference="HERDER_2000" tokens="77" tokens_ratio="0.79" type="intersection"/><measure lemmas="38" lemmas_ratio="0.79" reference="HERDER_3000" tokens="82" tokens_ratio="0.85" type="intersection"/><measure lemmas="39" lemmas_ratio="0.81" reference="HERDER_4000" tokens="83" tokens_ratio="0.86" type="intersection"/><measure lemmas="39" lemmas_ratio="0.81" reference="HERDER_5000" tokens="83" tokens_ratio="0.86" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00309_SE_01_T_01&form=trans&startAnnotationBlockID=c524&endAnnotationBlockID=c550 -->
+    <virtualCollectionItem endAnnotationBlockID="c550" startAnnotationBlockID="c524" transcriptID="FOLK_E_00309_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Marmelade</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>4</speakers><duration>00:00:25</duration><measures><measure normRate="19,75" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="37,04" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,68" type="articulationRate"/><measure lemmas="29" lemmas_ratio="0.66" reference="GOETHE_A1" tokens="52" tokens_ratio="0.73" type="intersection"/><measure lemmas="33" lemmas_ratio="0.75" reference="GOETHE_A2" tokens="57" tokens_ratio="0.80" type="intersection"/><measure lemmas="38" lemmas_ratio="0.86" reference="GOETHE_B1" tokens="62" tokens_ratio="0.87" type="intersection"/><measure lemmas="31" lemmas_ratio="0.70" reference="HERDER_1000" tokens="55" tokens_ratio="0.77" type="intersection"/><measure lemmas="34" lemmas_ratio="0.77" reference="HERDER_2000" tokens="58" tokens_ratio="0.82" type="intersection"/><measure lemmas="34" lemmas_ratio="0.77" reference="HERDER_3000" tokens="58" tokens_ratio="0.82" type="intersection"/><measure lemmas="34" lemmas_ratio="0.77" reference="HERDER_4000" tokens="58" tokens_ratio="0.82" type="intersection"/><measure lemmas="34" lemmas_ratio="0.77" reference="HERDER_5000" tokens="58" tokens_ratio="0.82" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00327_SE_01_T_02&form=trans&startAnnotationBlockID=c50&endAnnotationBlockID=c113 -->
+    <virtualCollectionItem endAnnotationBlockID="c113" startAnnotationBlockID="c50" transcriptID="FOLK_E_00327_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Zimt und Feta</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:01:28</duration><measures><measure normRate="15,21" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="4,61" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="4,74" type="articulationRate"/><measure lemmas="62" lemmas_ratio="0.63" reference="GOETHE_A1" tokens="150" tokens_ratio="0.74" type="intersection"/><measure lemmas="70" lemmas_ratio="0.71" reference="GOETHE_A2" tokens="160" tokens_ratio="0.78" type="intersection"/><measure lemmas="84" lemmas_ratio="0.85" reference="GOETHE_B1" tokens="181" tokens_ratio="0.89" type="intersection"/><measure lemmas="66" lemmas_ratio="0.67" reference="HERDER_1000" tokens="157" tokens_ratio="0.77" type="intersection"/><measure lemmas="69" lemmas_ratio="0.70" reference="HERDER_2000" tokens="160" tokens_ratio="0.78" type="intersection"/><measure lemmas="71" lemmas_ratio="0.72" reference="HERDER_3000" tokens="162" tokens_ratio="0.79" type="intersection"/><measure lemmas="74" lemmas_ratio="0.75" reference="HERDER_4000" tokens="165" tokens_ratio="0.81" type="intersection"/><measure lemmas="78" lemmas_ratio="0.79" reference="HERDER_5000" tokens="169" tokens_ratio="0.83" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00327_SE_01_T_02&form=trans&startAnnotationBlockID=c907&endAnnotationBlockID=c941 -->
+    <virtualCollectionItem endAnnotationBlockID="c941" startAnnotationBlockID="c907" transcriptID="FOLK_E_00327_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Umrühren und Essenszeiten</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>2</speakers><duration>00:00:56</duration><measures><measure normRate="14,71" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="7,35" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,02" type="articulationRate"/><measure lemmas="61" lemmas_ratio="0.71" reference="GOETHE_A1" tokens="98" tokens_ratio="0.77" type="intersection"/><measure lemmas="72" lemmas_ratio="0.84" reference="GOETHE_A2" tokens="113" tokens_ratio="0.88" type="intersection"/><measure lemmas="77" lemmas_ratio="0.90" reference="GOETHE_B1" tokens="118" tokens_ratio="0.92" type="intersection"/><measure lemmas="67" lemmas_ratio="0.78" reference="HERDER_1000" tokens="108" tokens_ratio="0.84" type="intersection"/><measure lemmas="70" lemmas_ratio="0.81" reference="HERDER_2000" tokens="111" tokens_ratio="0.87" type="intersection"/><measure lemmas="74" lemmas_ratio="0.86" reference="HERDER_3000" tokens="116" tokens_ratio="0.91" type="intersection"/><measure lemmas="76" lemmas_ratio="0.88" reference="HERDER_4000" tokens="118" tokens_ratio="0.92" type="intersection"/><measure lemmas="76" lemmas_ratio="0.88" reference="HERDER_5000" tokens="118" tokens_ratio="0.92" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_01&form=trans&startAnnotationBlockID=c956&endAnnotationBlockID=c1023 -->
+    <virtualCollectionItem endAnnotationBlockID="c1023" startAnnotationBlockID="c956" transcriptID="FOLK_E_00220_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Soja anbraten</title>
+            <transcript-form>trans</transcript-form>
+        <speakers>4</speakers><duration>00:01:25</duration><measures><measure normRate="18,25" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,60" type="articulationRate"/><measure lemmas="54" lemmas_ratio="0.46" reference="GOETHE_A1" tokens="163" tokens_ratio="0.65" type="intersection"/><measure lemmas="84" lemmas_ratio="0.71" reference="GOETHE_A2" tokens="209" tokens_ratio="0.83" type="intersection"/><measure lemmas="96" lemmas_ratio="0.81" reference="GOETHE_B1" tokens="225" tokens_ratio="0.90" type="intersection"/><measure lemmas="82" lemmas_ratio="0.69" reference="HERDER_1000" tokens="209" tokens_ratio="0.83" type="intersection"/><measure lemmas="89" lemmas_ratio="0.75" reference="HERDER_2000" tokens="216" tokens_ratio="0.86" type="intersection"/><measure lemmas="94" lemmas_ratio="0.80" reference="HERDER_3000" tokens="221" tokens_ratio="0.88" type="intersection"/><measure lemmas="95" lemmas_ratio="0.81" reference="HERDER_4000" tokens="222" tokens_ratio="0.88" type="intersection"/><measure lemmas="95" lemmas_ratio="0.81" reference="HERDER_5000" tokens="222" tokens_ratio="0.88" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem> 
+    
+    <!-- ******************************** Vorschlag/Angebot *********************************************** -->
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c990&endAnnotationBlockID=c1001 -->
+    <virtualCollectionItem endAnnotationBlockID="c1001" startAnnotationBlockID="c990" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Frischkäse</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Du kannst X</note>
+        <speakers>2</speakers><duration>00:00:14</duration><measures><measure normRate="14,58" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="20,83" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,05" type="articulationRate"/><measure lemmas="23" lemmas_ratio="0.68" reference="GOETHE_A1" tokens="30" tokens_ratio="0.70" type="intersection"/><measure lemmas="27" lemmas_ratio="0.79" reference="GOETHE_A2" tokens="35" tokens_ratio="0.81" type="intersection"/><measure lemmas="30" lemmas_ratio="0.88" reference="GOETHE_B1" tokens="38" tokens_ratio="0.88" type="intersection"/><measure lemmas="27" lemmas_ratio="0.79" reference="HERDER_1000" tokens="35" tokens_ratio="0.81" type="intersection"/><measure lemmas="28" lemmas_ratio="0.82" reference="HERDER_2000" tokens="36" tokens_ratio="0.84" type="intersection"/><measure lemmas="29" lemmas_ratio="0.85" reference="HERDER_3000" tokens="37" tokens_ratio="0.86" type="intersection"/><measure lemmas="29" lemmas_ratio="0.85" reference="HERDER_4000" tokens="37" tokens_ratio="0.86" type="intersection"/><measure lemmas="29" lemmas_ratio="0.85" reference="HERDER_5000" tokens="37" tokens_ratio="0.86" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c1101&endAnnotationBlockID=c1115 -->
+    <virtualCollectionItem endAnnotationBlockID="c1115" startAnnotationBlockID="c1101" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Samosa</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Magst Du X?</note>
+        <speakers>2</speakers><duration>00:00:19</duration><measures><measure normRate="22,73" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,23" type="articulationRate"/><measure lemmas="23" lemmas_ratio="0.77" reference="GOETHE_A1" tokens="33" tokens_ratio="0.83" type="intersection"/><measure lemmas="26" lemmas_ratio="0.87" reference="GOETHE_A2" tokens="36" tokens_ratio="0.90" type="intersection"/><measure lemmas="27" lemmas_ratio="0.90" reference="GOETHE_B1" tokens="37" tokens_ratio="0.93" type="intersection"/><measure lemmas="25" lemmas_ratio="0.83" reference="HERDER_1000" tokens="35" tokens_ratio="0.88" type="intersection"/><measure lemmas="25" lemmas_ratio="0.83" reference="HERDER_2000" tokens="35" tokens_ratio="0.88" type="intersection"/><measure lemmas="26" lemmas_ratio="0.87" reference="HERDER_3000" tokens="36" tokens_ratio="0.90" type="intersection"/><measure lemmas="26" lemmas_ratio="0.87" reference="HERDER_4000" tokens="36" tokens_ratio="0.90" type="intersection"/><measure lemmas="26" lemmas_ratio="0.87" reference="HERDER_5000" tokens="36" tokens_ratio="0.90" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_02&form=trans&startAnnotationBlockID=c585&endAnnotationBlockID=c598 -->
+    <virtualCollectionItem endAnnotationBlockID="c598" startAnnotationBlockID="c585" transcriptID="FOLK_E_00047_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Zahlen</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Wollen wir X?</note>
+        <speakers>2</speakers><duration>00:00:16</duration><measures><measure normRate="16,98" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,33" type="articulationRate"/><measure lemmas="28" lemmas_ratio="0.74" reference="GOETHE_A1" tokens="39" tokens_ratio="0.78" type="intersection"/><measure lemmas="32" lemmas_ratio="0.84" reference="GOETHE_A2" tokens="44" tokens_ratio="0.88" type="intersection"/><measure lemmas="33" lemmas_ratio="0.87" reference="GOETHE_B1" tokens="45" tokens_ratio="0.90" type="intersection"/><measure lemmas="31" lemmas_ratio="0.82" reference="HERDER_1000" tokens="43" tokens_ratio="0.86" type="intersection"/><measure lemmas="32" lemmas_ratio="0.84" reference="HERDER_2000" tokens="44" tokens_ratio="0.88" type="intersection"/><measure lemmas="33" lemmas_ratio="0.87" reference="HERDER_3000" tokens="45" tokens_ratio="0.90" type="intersection"/><measure lemmas="34" lemmas_ratio="0.89" reference="HERDER_4000" tokens="46" tokens_ratio="0.92" type="intersection"/><measure lemmas="34" lemmas_ratio="0.89" reference="HERDER_5000" tokens="46" tokens_ratio="0.92" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_01&form=trans&startAnnotationBlockID=c36&endAnnotationBlockID=c49 -->
+    <virtualCollectionItem endAnnotationBlockID="c49" startAnnotationBlockID="c36" transcriptID="FOLK_E_00220_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Möhren</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Wir können X</note>
+        <speakers>3</speakers><duration>00:00:22</duration><measures><measure normRate="19,23" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,71" type="articulationRate"/><measure lemmas="26" lemmas_ratio="0.68" reference="GOETHE_A1" tokens="38" tokens_ratio="0.75" type="intersection"/><measure lemmas="30" lemmas_ratio="0.79" reference="GOETHE_A2" tokens="42" tokens_ratio="0.82" type="intersection"/><measure lemmas="34" lemmas_ratio="0.89" reference="GOETHE_B1" tokens="47" tokens_ratio="0.92" type="intersection"/><measure lemmas="27" lemmas_ratio="0.71" reference="HERDER_1000" tokens="40" tokens_ratio="0.78" type="intersection"/><measure lemmas="30" lemmas_ratio="0.79" reference="HERDER_2000" tokens="43" tokens_ratio="0.84" type="intersection"/><measure lemmas="31" lemmas_ratio="0.82" reference="HERDER_3000" tokens="44" tokens_ratio="0.86" type="intersection"/><measure lemmas="31" lemmas_ratio="0.82" reference="HERDER_4000" tokens="44" tokens_ratio="0.86" type="intersection"/><measure lemmas="32" lemmas_ratio="0.84" reference="HERDER_5000" tokens="45" tokens_ratio="0.88" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_01&form=trans&startAnnotationBlockID=c216&endAnnotationBlockID=c226 -->
+    <virtualCollectionItem endAnnotationBlockID="c226" startAnnotationBlockID="c216" transcriptID="FOLK_E_00220_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Salat und Tomatensoße</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Sollen wir X?</note>
+        <speakers>4</speakers><duration>00:00:17</duration><measures><measure normRate="13,33" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="6,98" type="articulationRate"/><measure lemmas="32" lemmas_ratio="0.70" reference="GOETHE_A1" tokens="55" tokens_ratio="0.80" type="intersection"/><measure lemmas="35" lemmas_ratio="0.76" reference="GOETHE_A2" tokens="58" tokens_ratio="0.84" type="intersection"/><measure lemmas="40" lemmas_ratio="0.87" reference="GOETHE_B1" tokens="63" tokens_ratio="0.91" type="intersection"/><measure lemmas="33" lemmas_ratio="0.72" reference="HERDER_1000" tokens="53" tokens_ratio="0.77" type="intersection"/><measure lemmas="37" lemmas_ratio="0.80" reference="HERDER_2000" tokens="57" tokens_ratio="0.83" type="intersection"/><measure lemmas="37" lemmas_ratio="0.80" reference="HERDER_3000" tokens="57" tokens_ratio="0.83" type="intersection"/><measure lemmas="39" lemmas_ratio="0.85" reference="HERDER_4000" tokens="59" tokens_ratio="0.86" type="intersection"/><measure lemmas="39" lemmas_ratio="0.85" reference="HERDER_5000" tokens="59" tokens_ratio="0.86" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_01&form=trans&startAnnotationBlockID=c292&endAnnotationBlockID=c303 -->
+    <virtualCollectionItem endAnnotationBlockID="c303" startAnnotationBlockID="c292" transcriptID="FOLK_E_00220_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Karotten schälen</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Soll ich X?</note>
+        <speakers>4</speakers><duration>00:00:16</duration><measures><measure normRate="13,85" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="15,38" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="6,13" type="articulationRate"/><measure lemmas="32" lemmas_ratio="0.70" reference="GOETHE_A1" tokens="48" tokens_ratio="0.74" type="intersection"/><measure lemmas="37" lemmas_ratio="0.80" reference="GOETHE_A2" tokens="54" tokens_ratio="0.83" type="intersection"/><measure lemmas="41" lemmas_ratio="0.89" reference="GOETHE_B1" tokens="59" tokens_ratio="0.91" type="intersection"/><measure lemmas="35" lemmas_ratio="0.76" reference="HERDER_1000" tokens="53" tokens_ratio="0.82" type="intersection"/><measure lemmas="37" lemmas_ratio="0.80" reference="HERDER_2000" tokens="55" tokens_ratio="0.85" type="intersection"/><measure lemmas="38" lemmas_ratio="0.83" reference="HERDER_3000" tokens="56" tokens_ratio="0.86" type="intersection"/><measure lemmas="38" lemmas_ratio="0.83" reference="HERDER_4000" tokens="56" tokens_ratio="0.86" type="intersection"/><measure lemmas="38" lemmas_ratio="0.83" reference="HERDER_5000" tokens="56" tokens_ratio="0.86" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_01&form=trans&startAnnotationBlockID=c564&endAnnotationBlockID=c577 -->
+    <virtualCollectionItem endAnnotationBlockID="c577" startAnnotationBlockID="c564" transcriptID="FOLK_E_00220_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Zwiebel anbraten</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Lass uns X</note>
+        <speakers>2</speakers><duration>00:00:23</duration><measures><measure normRate="13,58" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="24,69" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,34" type="articulationRate"/><measure lemmas="27" lemmas_ratio="0.52" reference="GOETHE_A1" tokens="54" tokens_ratio="0.67" type="intersection"/><measure lemmas="35" lemmas_ratio="0.67" reference="GOETHE_A2" tokens="64" tokens_ratio="0.79" type="intersection"/><measure lemmas="41" lemmas_ratio="0.79" reference="GOETHE_B1" tokens="70" tokens_ratio="0.86" type="intersection"/><measure lemmas="33" lemmas_ratio="0.63" reference="HERDER_1000" tokens="62" tokens_ratio="0.77" type="intersection"/><measure lemmas="35" lemmas_ratio="0.67" reference="HERDER_2000" tokens="64" tokens_ratio="0.79" type="intersection"/><measure lemmas="37" lemmas_ratio="0.71" reference="HERDER_3000" tokens="66" tokens_ratio="0.81" type="intersection"/><measure lemmas="37" lemmas_ratio="0.71" reference="HERDER_4000" tokens="66" tokens_ratio="0.81" type="intersection"/><measure lemmas="37" lemmas_ratio="0.71" reference="HERDER_5000" tokens="66" tokens_ratio="0.81" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_02&form=trans&startAnnotationBlockID=c435&endAnnotationBlockID=c446 -->
+    <virtualCollectionItem endAnnotationBlockID="c446" startAnnotationBlockID="c435" transcriptID="FOLK_E_00220_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Getrocknete Tomaten</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Wollen wir X?</note>
+        <speakers>3</speakers><duration>00:00:16</duration><measures><measure normRate="13,56" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="6,28" type="articulationRate"/><measure lemmas="28" lemmas_ratio="0.65" reference="GOETHE_A1" tokens="39" tokens_ratio="0.70" type="intersection"/><measure lemmas="35" lemmas_ratio="0.81" reference="GOETHE_A2" tokens="48" tokens_ratio="0.86" type="intersection"/><measure lemmas="39" lemmas_ratio="0.91" reference="GOETHE_B1" tokens="52" tokens_ratio="0.93" type="intersection"/><measure lemmas="34" lemmas_ratio="0.79" reference="HERDER_1000" tokens="47" tokens_ratio="0.84" type="intersection"/><measure lemmas="34" lemmas_ratio="0.79" reference="HERDER_2000" tokens="47" tokens_ratio="0.84" type="intersection"/><measure lemmas="36" lemmas_ratio="0.84" reference="HERDER_3000" tokens="49" tokens_ratio="0.88" type="intersection"/><measure lemmas="36" lemmas_ratio="0.84" reference="HERDER_4000" tokens="49" tokens_ratio="0.88" type="intersection"/><measure lemmas="37" lemmas_ratio="0.86" reference="HERDER_5000" tokens="50" tokens_ratio="0.89" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00332_SE_01_T_01&form=trans&startAnnotationBlockID=c562&endAnnotationBlockID=c576 -->
+    <virtualCollectionItem endAnnotationBlockID="c576" startAnnotationBlockID="c562" transcriptID="FOLK_E_00332_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Pfanne</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Vorschlag/Angebot; Format: Sollen wir X?</note>
+        <speakers>2</speakers><duration>00:00:14</duration><measures><measure normRate="20,69" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="6,37" type="articulationRate"/><measure lemmas="17" lemmas_ratio="0.63" reference="GOETHE_A1" tokens="18" tokens_ratio="0.62" type="intersection"/><measure lemmas="21" lemmas_ratio="0.78" reference="GOETHE_A2" tokens="22" tokens_ratio="0.76" type="intersection"/><measure lemmas="21" lemmas_ratio="0.78" reference="GOETHE_B1" tokens="22" tokens_ratio="0.76" type="intersection"/><measure lemmas="19" lemmas_ratio="0.70" reference="HERDER_1000" tokens="20" tokens_ratio="0.69" type="intersection"/><measure lemmas="19" lemmas_ratio="0.70" reference="HERDER_2000" tokens="20" tokens_ratio="0.69" type="intersection"/><measure lemmas="20" lemmas_ratio="0.74" reference="HERDER_3000" tokens="21" tokens_ratio="0.72" type="intersection"/><measure lemmas="20" lemmas_ratio="0.74" reference="HERDER_4000" tokens="21" tokens_ratio="0.72" type="intersection"/><measure lemmas="20" lemmas_ratio="0.74" reference="HERDER_5000" tokens="21" tokens_ratio="0.72" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- *************************   Frage/Bitte/Aufforderung *********************************** -->
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c694&endAnnotationBlockID=c706  -->
+    <virtualCollectionItem endAnnotationBlockID="c706" startAnnotationBlockID="c694" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Suppe probieren</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Frage/Bitte/Aufforderung; Format: Ich möchte X</note>
+        <speakers>2</speakers><duration>00:00:11</duration><measures><measure normRate="22,22" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,17" type="articulationRate"/><measure lemmas="23" lemmas_ratio="0.77" reference="GOETHE_A1" tokens="29" tokens_ratio="0.81" type="intersection"/><measure lemmas="26" lemmas_ratio="0.87" reference="GOETHE_A2" tokens="32" tokens_ratio="0.89" type="intersection"/><measure lemmas="27" lemmas_ratio="0.90" reference="GOETHE_B1" tokens="33" tokens_ratio="0.92" type="intersection"/><measure lemmas="23" lemmas_ratio="0.77" reference="HERDER_1000" tokens="29" tokens_ratio="0.81" type="intersection"/><measure lemmas="24" lemmas_ratio="0.80" reference="HERDER_2000" tokens="30" tokens_ratio="0.83" type="intersection"/><measure lemmas="25" lemmas_ratio="0.83" reference="HERDER_3000" tokens="31" tokens_ratio="0.86" type="intersection"/><measure lemmas="25" lemmas_ratio="0.83" reference="HERDER_4000" tokens="31" tokens_ratio="0.86" type="intersection"/><measure lemmas="25" lemmas_ratio="0.83" reference="HERDER_5000" tokens="31" tokens_ratio="0.86" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00047_SE_01_T_01&form=trans&startAnnotationBlockID=c1085&endAnnotationBlockID=c1097 -->       
+    <virtualCollectionItem endAnnotationBlockID="c1097" startAnnotationBlockID="c1085" transcriptID="FOLK_E_00047_SE_01_T_01" type="transcript-excerpt">
+        <display-hints>
+            <title>Soße probieren</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Frage/Bitte/Aufforderung; Format: Darf ich X?</note>
+        <speakers>2</speakers><duration>00:00:32</duration><measures><measure normRate="11,54" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="19,23" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="5,62" type="articulationRate"/><measure lemmas="23" lemmas_ratio="0.59" reference="GOETHE_A1" tokens="32" tokens_ratio="0.64" type="intersection"/><measure lemmas="30" lemmas_ratio="0.77" reference="GOETHE_A2" tokens="41" tokens_ratio="0.82" type="intersection"/><measure lemmas="35" lemmas_ratio="0.90" reference="GOETHE_B1" tokens="46" tokens_ratio="0.92" type="intersection"/><measure lemmas="25" lemmas_ratio="0.64" reference="HERDER_1000" tokens="35" tokens_ratio="0.70" type="intersection"/><measure lemmas="26" lemmas_ratio="0.67" reference="HERDER_2000" tokens="36" tokens_ratio="0.72" type="intersection"/><measure lemmas="28" lemmas_ratio="0.72" reference="HERDER_3000" tokens="39" tokens_ratio="0.78" type="intersection"/><measure lemmas="28" lemmas_ratio="0.72" reference="HERDER_4000" tokens="39" tokens_ratio="0.78" type="intersection"/><measure lemmas="28" lemmas_ratio="0.72" reference="HERDER_5000" tokens="39" tokens_ratio="0.78" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>   
+    
+    <!-- http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuViel.jsp?transcriptID=FOLK_E_00220_SE_01_T_02&form=trans&startAnnotationBlockID=c1094&endAnnotationBlockID=c1105 -->
+    <virtualCollectionItem endAnnotationBlockID="c1105" startAnnotationBlockID="c1094" transcriptID="FOLK_E_00220_SE_01_T_02" type="transcript-excerpt">
+        <display-hints>
+            <title>Kühlschrank</title>
+            <transcript-form>trans</transcript-form>
+            <note>Handlungssequenz: Frage/Bitte/Aufforderung; Format: Kann ich X?</note>
+        <speakers>3</speakers><duration>00:00:29</duration><measures><measure normRate="17,12" type="normRate"/><measure perMilTokensOverlapsWithMoreThan2Words="0,00" type="perMilTokensOverlapsWithMoreThan2Words"/><measure articulationRate="6,06" type="articulationRate"/><measure lemmas="53" lemmas_ratio="0.80" reference="GOETHE_A1" tokens="95" tokens_ratio="0.88" type="intersection"/><measure lemmas="58" lemmas_ratio="0.88" reference="GOETHE_A2" tokens="100" tokens_ratio="0.93" type="intersection"/><measure lemmas="61" lemmas_ratio="0.92" reference="GOETHE_B1" tokens="103" tokens_ratio="0.95" type="intersection"/><measure lemmas="53" lemmas_ratio="0.80" reference="HERDER_1000" tokens="93" tokens_ratio="0.86" type="intersection"/><measure lemmas="55" lemmas_ratio="0.83" reference="HERDER_2000" tokens="96" tokens_ratio="0.89" type="intersection"/><measure lemmas="57" lemmas_ratio="0.86" reference="HERDER_3000" tokens="98" tokens_ratio="0.91" type="intersection"/><measure lemmas="59" lemmas_ratio="0.89" reference="HERDER_4000" tokens="100" tokens_ratio="0.93" type="intersection"/><measure lemmas="59" lemmas_ratio="0.89" reference="HERDER_5000" tokens="100" tokens_ratio="0.93" type="intersection"/></measures></display-hints>
+    </virtualCollectionItem>
+</virtualCollection>

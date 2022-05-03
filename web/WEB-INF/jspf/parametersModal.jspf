@@ -1,0 +1,188 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.io.Constants"%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal modal-lg" tabindex="-1" role="dialog" id="parametersModal">
+        <div class="modal-dialog" role="document" style="min-width:80%">
+            <div class="modal-content">
+                
+                
+                <div class="modal-header" style="background: white; opacity: 0.88;">
+                    <h5 class="modal-title" id="parameters-title"><%=myResources.getString("Parameters")%></h5>
+
+                    <span class="navbar-brand" style="margin-left:20px; margin-right: 20px; display: none" id="waitSpinner">
+                        <i class="fas fa-spinner fa-spin"></i>                    
+                    </span>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&#x00D7;</span>
+                    </button>
+                </div>
+                
+                <form action="#" method="post">
+                    <div class="modal-body" id="parameters-body">
+
+                        <input type="hidden" name="howMuchAround" value="<%=howMuchAround %>"/>
+                        <input type="hidden" name="startTokenID" value="<%=startTokenID %>"/>
+                        <input type="hidden" name="endTokenID" value="<%=endTokenID %>"/>
+                        <% 
+                            for (int i=1; i<=9; i++){ %>
+                            <input type="hidden" name="highlightIDs<%= Integer.toString(i) %>" value="<%= highlightIDsArray[i-1] %>"/>
+                            <% }
+                        %>
+                        <!-- <input type="hidden" name="transcriptIDWithHighlights" value="<% //=transcriptIDWithHighlights %>"/> -->
+                        <input type="hidden" name="tokenList" value="<%=tokenList %>"/>
+
+                        <!-- ********************************** -->
+                        <!-- *    COLUMN HIDE/SHOW            * -->
+                        <!-- ********************************** -->
+                        <div class="input-group-sm mb-3 form-check form-check-inline">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text" style="width:240px;">
+                                <input type="checkbox" id="showLeftCol" checked="checked" onchange="changeColumnDisplay()">
+                                <label class="form-check-label checkbox-inline" for="showLeftCol" style="padding-left:10px;"><%=myResources.getString("ZuViel.LeftColumn")%></label>
+                              </div>
+                            </div>
+                            <div class="input-group-prepend">
+                              <div class="input-group-text" style="width:300px; margin-left: 50px;">
+                                <input type="checkbox" id="showRightCol" checked="checked" onchange="changeColumnDisplay()">
+                                <label class="form-check-label checkbox-inline" for="showRightCol" style="padding-left:10px;"><%=myResources.getString("ZuViel.RightColumn")%></label>
+                              </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <!-- ********************************** -->
+                        <!-- *    TRANSCRIPT                  * -->
+                        <!-- ********************************** -->
+                        <div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="formlabel"><%=myResources.getString("Transcript")%></span>
+                                </div>
+                                <select class="form-control" id="form" name="form" onchange="changeForm()">
+                                  <option value="trans" selected="selected"><%=myResources.getString("TranscribedForms")%></option>
+                                  <option value="norm"><%=myResources.getString("NormalisedForms")%></option>
+                                  <option value="lemma"><%=myResources.getString("Lemmas")%></option>
+                                  <option value="phon"><%=myResources.getString("PhonologicalForms")%></option>
+                                  <option value="pos"><%=myResources.getString("POS")%></option>
+                                </select>                          
+                            </div>
+                        </div>
+
+                        
+                        
+                        <!-- ********************************** -->
+                        <!-- *    SUBTITLES                   * -->
+                        <!-- ********************************** -->
+                        <% if (!videos.isEmpty()){ %>
+                        <div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="subtitletypelabel"><%=myResources.getString("Subtitles")%></span>
+                                </div>
+                                <select class="form-control" id="subtitletype" onchange="changeSubtitleType()">
+                                  <option value="none"><%=myResources.getString("NoSubtitles")%></option>
+                                  <option value="trans" selected="selected"><%=myResources.getString("TranscribedForms")%></option>
+                                  <option value="norm"><%=myResources.getString("NormalisedForms")%></option>
+                                </select>                          
+                            </div>
+                        </div>
+                        <% } %>
+                        
+                        <!-- ********************************** -->
+                        <!-- *    PLAYBACK SPEED              * -->
+                        <!-- ********************************** -->
+                        <div class="input-group mb-3 input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="playbackspeedlabel"><%=myResources.getString("PlaybackRate")%></span>
+                            </div>
+                            <input type="range" min="50" max="150" value="100" 
+                                   class="slider" id="playbackSpeedSlider" aria-describedby="playbackspeedlabel"
+                                   oninput="updatePlaybackSpeed()" list="tickmarks"
+                            >
+                            <output for="playbackSpeedSlider" id="playbackspeedlabel2">100%</output>                        
+                        </div>
+
+                        
+                        <!-- ********************************** -->
+                        <!-- *    TRANSCRIPT FONT / SIZE      * -->
+                        <!-- ********************************** -->
+                        <div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="transcriptfontlabel"><%=myResources.getString("TranscriptFont")%></span>
+                                </div>
+                                <select class="form-control" id="fontfamily" onchange="changeTranscriptFont()">
+                                  <option value="monospace"><%=myResources.getString("TranscriptFont")%></option>
+                                  <option value="sans-serif" selected="selected">Sans Serif</option>
+                                  <option value="serif">Serif</option>
+                                </select>       
+                                <input type="range" min="2" max="20" value="12" 
+                                       class="slider" id="fontsizeSlider" 
+                                       oninput="updateFontsize()" list="tickmarks-fontsize"
+                                       style="width: 80px"
+                                >
+                                <output for="fontsizeSlider" id="transcriptsizelabel">12pt</output>                        
+                            </div>
+                        </div>
+                        
+
+                        <!-- checkboxes for other options -->
+                        <div class="input-group-sm mb-3 form-check form-check-inline">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text" style="">
+                                <input class="form-check-input" type="checkbox" value="TRUE" id="showNormDev" name="showNormDev" onchange="changeShowNormDev(this)"/>
+                                <label class="form-check-label" for="showNormDev">
+                                    <%=myResources.getString("ShowNormDev")%>                                    
+                                </label>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group-sm mb-3 form-check form-check-inline">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text" style="">
+                                <input class="form-check-input" type="checkbox" value="TRUE" id="visSpeechRate" name="visSpeechRate" onchange="changeVisSpeechRate(this)"/>
+                                <label class="form-check-label" for="visSpeechRate">
+                                    <%=myResources.getString("VisSpeechRate")%>                                    
+                                </label>
+                              </div>
+                            </div>
+                        </div>
+                                                
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+                        
+        <!-- these are the tickmarks for the playback rate slider -->
+        <datalist id="tickmarks">
+          <option value="50" label="50%">50%</option>
+          <option value="60"></option>
+          <option value="70"></option>
+          <option value="80"></option>
+          <option value="90"></option>
+          <option value="100" label="100%">100%</option>
+          <option value="110"></option>
+          <option value="120"></option>
+          <option value="130"></option>
+          <option value="140"></option>
+          <option value="150" label="150%">150%</option>
+        </datalist>                        
+        
+        <!-- these are the tickmarks for the playback rate slider -->
+        <datalist id="tickmarks-fontsize">
+          <option value="2" label="2pt">2pt</option>
+          <option value="12" label="100%">12pt</option>
+          <option value="20"></option>
+        </datalist>                        
+                        
+    </div>                
+

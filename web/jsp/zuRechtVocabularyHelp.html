@@ -1,0 +1,265 @@
+<div class="modal-header">
+    <h2 class="modal-title">Querying Vocabulary (in Preparation)</h2>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>       
+</div>
+<div class="modal-body">
+
+
+            <!-- text -->
+            <div>
+                <p>The "Querying Vocabulary" function described here is primarily aimed at teachers of German as a foreign language (GFL). 
+                    It allows you to search in the selected corpus for speech events which contain a high number of important vocabulary 
+                    for a specific topic you may want to introduce in your GFL lessons in the context of authentic spoken interactions, 
+                    such as food, school, work etc.</p>
+            </div>  
+                        
+            <!-- title -->
+            <h4>1 Search</h4>
+            
+            
+            <!-- text -->
+            <div>
+                <p>You can either upload your own vocabulary list or you can open one of the proposed thematic vocabulary lists by pressing the button
+                    'Preselected thematic vocabulary'.</p>
+                <img src="../images/query_help/vocabulary_001.png" alt="Screenshot"  width="95%" height="95%"  style="border:1px solid grey;margin-left:25px;margin-top:25px"/>
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>If you want to use your own vocabulary list, upload it by clicking in the search field 'Chose your file'.</p> 
+                <img src="../images/query_help/vocabulary_007.png" alt="Screenshot"  />
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>Select the vocabulary file from your computer</p>
+                <img src="../images/query_help/vocabulary_006.png" alt="Screenshot" style="margin-left:25px;margin-top:25px" />
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>and click on the search button (green button with a magnifying-glass icon).</p>
+                <img src="../images/query_help/vocabulary_005.png" alt="Screenshot" style="margin-left: 25px;" />
+            </div>
+                        
+            <!-- blank line -->
+            <br/>
+            
+            <!-- title -->           
+            <div><span class="badge badge-secondary">The format of the vocabulary list</span></div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>Your vocabulary list should be a .txt-document with one search item per line. The search item can be either a simple lemma:
+                <br>
+                <br>Abfalleimer
+                <br>Abwasch
+                <br>backen
+                <br>Currywurst
+                <br>Dessert
+                <br>essen
+                <br>...
+                <br>
+                <br>or a search query pattern formulated in the CQP Query Language (cf. the query conventions in the Query Help):
+                <br>
+                <br>[lemma="Abfalleimer"]
+                <br>[lemma="Abwasch"]
+                <br>[lemma="backen"]
+                <br>[lemma="Currywurst"]
+                <br>[lemma="essen"]
+                <br>...
+                </p>
+                <p>The benefit from the use of CQP Query Language ist that you can not only search for a lemma, but also 
+                    specify the position of it, for example 'at the beginning of a transcript' or 'at the end of a contribution'.
+                    It also allows you to specify collocations (e.g. 'Kuchen backen') and set the precedence and token distance between single words.
+                    Here are some relevant examples:
+                </p>
+            </div> 
+             
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[lemma=&quot;abwaschen&quot;]|([lemma=&quot;waschen&quot;][]{0,6}[lemma=&quot;ab&quot;])</div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="query-description">(matches: <em>abwaschen</em> and <em>waschen da geht des wieder ab</em>)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right" style="display: none;">Corpus: FOLK</div>
+            </div>
+             <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">([lemma=&quot;Kuchen&quot;][]{0,3}[lemma=&quot;backen&quot;])|([lemma=&quot;backen&quot;][]{0,3}[lemma=&quot;Kuchen&quot;])</div>           
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="query-description">(matches: <em>Kuchen backen</em>, <em>Kuchen für mich backen</em>, <em>Kuchen gebacken</em>)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right" style="display: none;">Corpus: FOLK</div>
+            </div>
+             
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;annotationBlock&gt;([norm=&quot;ja&quot;][]{0,3}[lemma=&quot;gern(e)?&quot;])|([lemma=&quot;gern(e)?v][]{0,3}[norm=&quot;ja&quot;])</div>           
+                &nbsp;&nbsp;
+                <span class="query-description">(matches: <em>ja...gern</em> and <em>gern...ja</em> at the beginning of contribution)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right" style="display: none;">Corpus: FOLK</div>
+            </div>
+            
+            <!-- note -->
+           <!-- <div class="query-note">
+                <span><b>NOTE:</b>
+                <br>...</span>
+            </div>-->
+            
+                
+            <!-- text -->    
+            <div>
+                <br>All search items in a document should be of the same type (either lemmas or queries). 
+                The type of the vocabulary list should be specified before clicking the search button. Please use the selection menu underneath the input field:
+                </p>
+                <img src="../images/query_help/vocabulary_003.png" alt="Screenshot" />
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- title -->           
+            <div><span class="badge badge-secondary">The format of the vocabulary list</span></div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>Three thematic vocabulary lists have been prepared as part of the ZuMult-project for the demonstration of search functionalities. 
+                    You can open them by pressing the green button:</p>
+                <img src="../images/query_help/vocabulary_002.png" alt="Screenshot" style="margin-left: 25px;"/>
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>The vocabulary lists are compiled in the query format and cover the topics 'Food', 'House and Apartment', 'School and Education'.
+                    They are based on the thematic vocabulary of the workbook "Sage und Schreibe. Übungswortschatz Grundstufe A1-B1", edited by Fandrych and Tallowitz (2019).
+                    You are free to use these preselected vocabulary lists for your own purposes.</p>
+                <img src="../images/query_help/vocabulary_004.png" alt="Screenshot" width="90%" height="90%" style="margin-left: 25px;border:1px solid grey;margin-top:25px" />
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+                        
+            <!-- blank line -->
+            <br/>
+            
+            <!-- title -->
+            <h4>2 Result View</h4>
+            
+            <!-- text -->
+            <div>
+                <p>Once you have uploaded or opened a thematic list, a ranking list will show you the transcripts with most hits: 
+                    <img src="../images/query_help/vocabulary_008.png" alt="Screenshot" width="90%" height="90%" style="margin-left: 25px;border:1px solid grey;margin-top:25px" >
+                </p>
+            </div>
+            
+            <!-- text -->
+            <div>
+                <p>
+                    The result list of transcripts is sorted either according to absolute numbers or relative to the word token number of the respective transcript or
+                    relative to the number of types of hits.
+                    You can set this in the ordering options by using the button with three vertical dots next to the search button:
+                </p>
+                <img src="../images/query_help/vocabulary_009.png" alt="Screenshot" style="margin-left: 25px;">
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            
+             <!-- note -->
+            <div class="query-note">
+                <span><b>NOTE:</b>
+                <br>After having set new search options (documents per page or a new ordering), you need to run the query again.</span>
+            </div>
+            
+             <!-- blank line -->
+            <br/>
+            <br/>
+            
+            <!-- title -->           
+            <div><span class="badge badge-secondary">View hits as lemma table</span></div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>The link 'View hits as lemma table' opens a new window with a table displaying 
+                    the frequency distribution of hits in the selected transcript for each lemma from the vocabulary list.
+                </p>
+                <!--<img src="../images/query_help/vocabulary_013.png" alt="Screenshot" width="90%" height="90%" style="margin-left: 25px;border:1px solid grey;margin-top:25px">-->
+                <img src="../images/query_help/vocabulary_011.png" alt="Screenshot" width="30%" height="30%" style="margin-left: 25px;">
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            <br/>
+            
+            <!-- title -->           
+            <div><span class="badge badge-secondary">View hits as KWIC</span></div>
+            
+            <!-- blank line -->
+            <br/>
+            
+            <!-- text -->
+            <div>
+                <p>You can open the respective KWIC for every transcript by clicking on 'View hits as KWIC on the Query Tab'
+                    and see the individual word results (kind and complexity) in their sequential context.  
+                    Click the button 'group hits' and select 'lemma' to display the distribution of your vocabulary in the selected transcript.
+                </p>
+                <img src="../images/query_help/vocabulary_012.png" alt="Screenshot" width="90%" height="90%" style="margin-left: 25px;border:1px solid grey;margin-top:25px">
+            </div>
+            
+            <!-- blank line -->
+            <br/>
+            <br/>
+            
+            <!-- title -->           
+            <div><span class="badge badge-secondary">Open Transcript</span></div>
+            
+            <!-- blank line -->
+            <br/>
+            
+             <!-- text -->
+            <div>
+                <p>If you click on 'Open Transcript', you will open the respective transcript in the full form 
+                    including the complete and alphabetically sorted list of all word tokens that appear in the transcript.
+                    The thematic keywords will be marked with a red check mark 
+                    in the transcript word list on the left (red check mark) and they will be highlighted throughout the transcript. 
+                    You can also combine this marking with the vocabulary marking for the Goethe and Herder Wortschatz lists (green check mark).
+                </p>
+                <img src="../images/query_help/vocabulary_014.png" alt="Screenshot" width="60%" height="60%" style="margin-left: 25px;border:1px solid grey;margin-top:25px">
+            </div>
+             
+            
+
+                
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+</div>

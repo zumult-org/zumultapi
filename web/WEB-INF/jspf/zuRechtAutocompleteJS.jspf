@@ -1,0 +1,515 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<script type="text/javascript">
+    var posTagSet = '<%=annotationTagSetXML%>';
+    
+    function getY(obj){
+        //measure input field
+        var outerHeightOfInputField = $(obj).outerHeight();
+        var posYOfInputField = $(obj).offset().top;
+        
+        return posYOfInputField + outerHeightOfInputField; 
+    }
+    
+    function getX(obj, inputRight){
+        //measure input field
+        var outerWidthOfInputField = $(obj).outerWidth();
+        var posXOfInputField = $(obj).offset().left;
+        
+        var posX = posXOfInputField + outerWidthOfInputField - 200; // set to max
+
+        // measure search query text                       
+        var $dummy = $('<span>', {
+            html: inputRight.replace(/</g, "|").replace(/>/g, "|"),
+            css: {
+                display: 'none'
+            }
+        }).appendTo('body');
+        
+        var outerWidthOfDummyElement = $dummy.outerWidth();
+        $dummy.remove();
+        var posXOfChar=posXOfInputField+outerWidthOfDummyElement;
+        if (posX>posXOfChar){
+            posX=posXOfChar;
+        }
+        
+        return posX;
+    }
+    
+    function setPositionsForAutocomplete(selector, inputRight){
+        var posY = getY($(selector));
+        var posX = getX($(selector), inputRight);
+        $("#autocompleteForQueryInputField").css({'top':posY, 'left':posX});
+    }
+    
+    function addAutocomplete(selector, str){
+        var charPosition = $(selector).prop('selectionStart');
+             
+        var input = $(selector).val();
+        var inputLength = input.length;
+                
+        var inputRight = input + str;
+        var inputLeft = null;
+
+        if(inputLength!==charPosition){
+            var startStr = input.substring(0, charPosition);
+            var endStr = input.substring(charPosition, inputLength);
+            inputRight = startStr + str;
+            inputLeft = " " + endStr;
+        }
+                
+        hideAutocompleteIfClickOutside(selector);
+        setPositionsForAutocomplete(selector, inputRight);
+        createAutocomplete(selector, inputRight, inputLeft);
+    }
+    
+    function hideAutocompleteIfClickOutside(selector){
+        $(document).on("click.myEvent", function (event) {
+            //alert(event.target.id);
+            var myClass = $(event.target).attr('class');
+            if(typeof myClass === 'undefined' || (!myClass.includes("autocompleteForQueryInputField") && event.target!==selector)){    
+                $("#autocompleteForQueryInputField").empty();
+                $(this).off('click.myEvent');  
+            }
+        });
+    }
+    
+    function createAutocomplete(selector, inputRight, inputLeft){
+        //alert("createAutocomplete");
+        var corpusQueryStr = getCorpusQueryStr();
+        if (corpusQueryStr!==''){                               
+            var searchType = getSearchType();
+            var myClass = $(selector).attr('class');
+            if(myClass.includes("speakerMetadataInputField")){
+                if (!inputRight || inputRight.trim().length === 0){
+                    createAutocompleteWithSpecials(selector, "", "", "<");
+                }else if (inputRight.endsWith(" <") 
+                    || (inputRight.endsWith("<") && inputRight.length===1) 
+                    || inputRight.endsWith("(<")){
+
+                    $("#autocompleteForQueryInputField").append("<span id='autocompleteForQueryInputField-wait'>" + imgLoadingIndicatorText + "</span>");
+                    $.when( ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEAKER", '<%=myResources.getString("Metadata")%>' + " ("+'<%=myResources.getString("Speaker")%>'+")"),
+                            ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEAKER_IN_SPEECH_EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("SpeakerInSpeechEvent")%>' +")"),
+                            ).done(function(){
+                        $("#autocompleteForQueryInputField-wait").remove(); 
+                    });
+
+                }else if (inputRight.endsWith("=")){
+                    createAutocompleteAfterEqualSign(selector, corpusQueryStr, inputRight, inputLeft, searchType);
+                }
+            }else{         
+                if (!inputRight || inputRight.trim().length === 0){
+                    createAutocompleteWithSpecials(selector, "", "", "[");
+                    createAutocompleteWithSpecials(selector, "", "", "<");
+                }else if (inputRight.endsWith("within ")){
+                    createAutocompleteWithSpecials(selector, inputRight, inputLeft, "<");
+                }else if (inputRight.endsWith(" [") 
+                    || inputRight.endsWith("([") 
+                    || inputRight.endsWith(" &") 
+                    ||(inputRight.endsWith("[") && inputRight.length===1)){
+
+                    ajaxCallToGetTokenAnnotationTiers(selector, corpusQueryStr, inputRight, inputLeft, searchType);
+
+                }else if (inputRight.endsWith(" <") 
+                    || (inputRight.endsWith("<") && inputRight.length===1) 
+                    || inputRight.endsWith("(<")){
+
+                    $("#autocompleteForQueryInputField").append("<span id='autocompleteForQueryInputField-wait'>" + imgLoadingIndicatorText + "</span>");
+                    $.when(ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEAKER", '<%=myResources.getString("Metadata")%>' + " ("+'<%=myResources.getString("Speaker")%>'+")"),
+                            ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("Event")%>' +")"),
+                            ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEECH_EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("SpeechEvent")%>' +")"),
+                            ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEAKER_IN_SPEECH_EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("SpeakerInSpeechEvent")%>' +")"),
+                            ajaxCallToGetAnnotationTiers(selector, corpusQueryStr, inputRight, inputLeft, searchType, "span", '<%=myResources.getString("SpanBasedAnnotations")%>')).done(function(){
+                        $("#autocompleteForQueryInputField-wait").remove(); 
+                    });
+
+                }else if (inputRight.endsWith("=")){
+                    createAutocompleteAfterEqualSign(selector, corpusQueryStr, inputRight, inputLeft, searchType);
+                }
+            }
+        }
+    }
+         
+
+    
+    function createAutocompleteAfterEqualSign(selector, corpusQueryStr, inputRight, inputLeft, searchType){
+        var re = /[\s<(\[](\w+([-\.]\w+)*)=$/g;
+        var match = re.exec(inputRight);
+
+        if(match[1]==="pos"){
+            createAutocompleteWithPOS(selector, inputRight, inputLeft);
+        }else{
+            ajaxCallToGetValues(selector, match[1], corpusQueryStr, inputRight, inputLeft, searchType);
+        }
+    }
+    
+    function focusPosition(selector, position){
+        $(selector).focus();
+        $(selector).prop('selectionStart', position);
+        $(selector).prop('selectionEnd', position);
+    }
+            
+    function createAutocompleteWithPOS(selector, inputRight, inputLeft){
+        var parser = new DOMParser();
+        var posTagSetXML = parser.parseFromString(posTagSet, "text/xml");
+                                    
+        var sel = $('<select/>')
+            .addClass('form-control form-control-sm autocompleteForQueryInputField')
+            .attr('multiple','multiple')
+            .attr('size',15)
+            .appendTo($("#autocompleteForQueryInputField"));
+                                    
+        $(posTagSetXML).find("[name='POS-tags']").children("category").each(function () {
+            var optgroup = $('<optgroup/>')
+                .addClass('autocompleteForQueryInputField')
+                .attr("label", $(this).attr("name"))
+                .appendTo($(sel));
+                                        
+            $(this).children("category").each(function () {
+                addPOSOptionToAutocomplete(selector, this, sel, inputRight, inputLeft);
+            });
+        });
+
+        var optgroupSpecial = $('<optgroup/>')
+            .addClass('autocompleteForQueryInputField')
+            .attr("label", 'Extra-tags')
+            .appendTo($(sel));
+
+        $(posTagSetXML).find("[name='Extra-tags']").children("category").each(function () {
+            addPOSOptionToAutocomplete(selector, this, sel, inputRight, inputLeft);
+        });
+    }
+            
+    function addPOSOptionToAutocomplete(selector, obj, sel, inputRight, inputLeft){
+        var subCategoryName = $(obj).attr("name");
+        var subCategoryTag = $(obj).find("tag").attr("name");
+        var subCategoryDescription = $(obj).find("description").text();
+                                            
+        var span = $('<option/>')
+            .addClass('list-group-item-action autocompleteForQueryInputField')
+            .html(subCategoryTag+" <small class='autocompleteForQueryInputField'>"+subCategoryName +" (<i class='autocompleteForQueryInputField' style='background:#f3f3f3;'>"+ subCategoryDescription + "</i>)</small>")
+            .appendTo($(sel));
+                                        
+        var newValue = inputRight + "\"" +subCategoryTag + "\"";
+        addClickListenerForAutocompleteTokenValue(selector, span, newValue, inputLeft);
+    }
+            
+    function ajaxCallToGetTokenAnnotationTiers(selector, corpusQueryStr, inputRight, inputLeft, searchType){
+        
+        $.ajax({
+            type: "GET",
+            url: annotationTiersURL,
+            data: { cq: corpusQueryStr, mode: searchType, locale: languageTag, type: 'token'},
+            dataType: "xml",
+            beforeSend : function(){
+                // Show loading indicator
+                $("#autocompleteForQueryInputField").append("<span id='autocompleteForQueryInputField-wait'>" + imgLoadingIndicatorText + "</span>");
+            },
+            success: function(xml) {
+                $(xml).find("annotations").children("annotation-tier").each(function () {
+                    var id = $(this).attr("id");
+                    var name = $(this).attr("name");
+                    var span = createSimpleSpan(id , name);
+                    if (inputRight.endsWith("&")){
+                        inputRight= inputRight + " ";
+                    }
+                    var newValue = inputRight + id;                                                
+                    addClickListenerForAutocompleteToken(selector, span, newValue, inputLeft);
+                });            
+            },
+            error: function(xhr, status){
+                processError(xhr, status);
+            },
+            complete : function(){
+                // hide loading indicator
+                $("#autocompleteForQueryInputField-wait").remove();
+            }
+        });
+    }
+            
+    function ajaxCallToGetValues(selector, metadataKeyID, corpusQueryStr, inputRight, inputLeft, searchType){
+       
+        $.ajax({
+            type: "GET",
+            url: metadataValuesURL,
+            data: { cq: corpusQueryStr, mode: searchType, metadataKeyID: metadataKeyID},
+            dataType: "xml",
+            beforeSend : function(){
+                // Show loading indicator
+                $("#autocompleteForQueryInputField").append("<span id='autocompleteForQueryInputField-wait'>" + imgLoadingIndicatorText + "</span>");
+            },
+            success: function(xml) { 
+                var metadataValues = $(xml).find("metadataValues").children();
+                
+                if ($(metadataValues).length === 0){
+                                              
+                    $.ajax({
+                        type: "GET",
+                        url: annotationLayerValuesURL,
+                        data: { cq: corpusQueryStr, mode: searchType, metadataKeyID: metadataKeyID},
+                        dataType: "xml",
+                        success: function(xml2) {
+                            var annotationValues = $(xml2).find("annotationValues").children();
+                            if ($(annotationValues).length === 0){
+                                var newValue = inputRight + "\"\"";
+                                var position = newValue.length - 1;
+                                if(inputLeft!==null){
+                                    newValue = newValue + inputLeft;
+                                }                                                      
+                                $(selector).val(newValue);
+                                focusPosition(selector, position);
+                            } else{
+                                addSelect(selector, metadataKeyID, annotationValues, inputRight, inputLeft);
+                            }
+                        },
+                        error: function(xhr, status){
+                            processError(xhr, status);
+                        }
+                    });
+                                               
+                } else{
+                    addSelect(selector, metadataKeyID, metadataValues, inputRight, inputLeft);
+                }
+            },
+            error: function(xhr, status){
+                processError(xhr, status);
+            },
+            complete : function(){
+                // hide loading indicator
+                $("#autocompleteForQueryInputField-wait").remove();
+            }
+        });
+    }
+            
+    function ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, metadataType, groupName){
+        $.ajax({
+            type: "GET",
+            url: metadataDownLoadURL,
+            data: { cq: corpusQueryStr, mode: searchType, locale: languageTag, type: metadataType},
+            dataType: "xml",
+            success: function(xml) { 
+                addGroupToAutocomplete(selector, xml, "metadata", "metadata-key", inputRight, inputLeft, groupName);
+            },
+            error: function(xhr, status){
+                processError(xhr, status);
+            }
+        });
+    }
+            
+    function ajaxCallToGetAnnotationTiers(selector, corpusQueryStr, inputRight, inputLeft, searchType, annotationType, groupName){
+        $.ajax({
+            type: "GET",
+            url: annotationTiersURL,
+            data: { cq: corpusQueryStr, mode: searchType, locale: languageTag, type:annotationType},
+            dataType: "xml",
+            success: function(xml) {                        
+                addGroupToAutocomplete(selector, xml, "annotations", "annotation-tier", inputRight, inputLeft, groupName);         
+            },
+            error: function(xhr, status){
+                processError(xhr, status);
+            }
+        });
+    }
+            
+    function createAutocompleteValue(id, name){
+        return "<div class='py-0 autocompleteForQueryInputField' style='height:18px'><strong class='autocompleteForQueryInputField'>" + id + '</strong></div>'
+               + "<div class='py-0 my-0 autocompleteForQueryInputField'><small class='autocompleteForQueryInputField'>" + name + '</small></div>';
+    }
+    
+    function createAutocompleteValue2(id, name){
+        return "<div class='autocompleteForQueryInputField' style='height:18px'><small class='autocompleteForQueryInputField'>" + "use " + "</small> <strong class='autocompleteForQueryInputField'>" + id + '</strong>'
+               + "<small class='autocompleteForQueryInputField'>" + " to start token" + '</small></div>';
+    }
+    
+    function addSelect(selector, metadataKeyID, data, inputRight, inputLeft){
+        var sel = $('<select/>')
+           .addClass('form-control form-control-sm autocompleteForQueryInputField')
+           .attr('multiple','multiple')
+           .appendTo($("#autocompleteForQueryInputField"));
+   
+        if($(data).length <= 10){
+            $(sel).attr('size', $(data).length);
+            $(sel).css("scrollbar-width", "none");
+        }else{
+            $(sel).attr('size',10);
+        }
+                    
+        $(data).each(function () {
+            var value = $(this).text();
+            var span = $('<option/>')
+                .addClass('list-group-item-action autocompleteForQueryInputField')
+                .html(value)
+                .appendTo($(sel));
+            
+            var newValue = inputRight + "\"" + escapeAllRegEx(value) + "\"";
+            var startOfMetadataKeyID=inputRight.length-1-metadataKeyID.length;
+            var char = inputRight.substring(startOfMetadataKeyID-1, startOfMetadataKeyID);
+
+            if(char==="<"){
+                addClickListenerForAutocompleteStructureValue(selector, span, newValue, inputLeft);
+            }else{
+                addClickListenerForAutocompleteTokenValue(selector, span, newValue, inputLeft);
+            }
+            
+        });      
+    }
+            
+    function addGroupToAutocomplete(selector, xml, type, subtype, inputRight, inputLeft, categoryName){   
+        var categoryID = categoryName.replace(/\s+/g, "-").replace(/\(/g, "").replace(/\)/g, "");
+        var card = $('<div/>')
+            .addClass('card autocompleteForQueryInputField')
+            .appendTo($("#autocompleteForQueryInputField"));
+         
+        var cardHeader = $('<div/>')
+            .addClass('card-header autocompleteForQueryInputField')
+            .attr("data-toggle", "#"+ categoryID)
+            .html(categoryName + "<span class='icon ml-3' style='float: right;'><i class='fa fa-angle-down autocompleteForQueryInputField'></i></span>")
+            .appendTo(card);   
+             
+        $(cardHeader).on('click', function(){
+            var target = $(this).attr('data-toggle');
+            $(target).slideToggle();
+            $(this).find("i").toggleClass("fa-angle-down  fa-angle-up");
+        });
+            
+        var listGrp = $('<div/>')
+            .addClass('list-group card-body')
+            .attr("id", categoryID)
+            .css("display", "none")
+            .appendTo(card);
+              
+        $(xml).find(type).children(subtype).each(function () {
+            var id = $(this).attr("id");
+            var name = $(this).attr("name");
+                   
+            var span = $('<span/>')
+                .addClass('link list-group-item list-group-item-action py-0 autocompleteForQueryInputField')
+                .css("border-left","none")
+                .css("border-right","none")
+                .html(createAutocompleteValue(id, name))
+                .appendTo(listGrp);
+                
+            var newValue = inputRight + id;
+            addClickListenerForAutocompleteStructure(selector, span, newValue, inputLeft);
+        });         
+    }
+    
+    function createSimpleSpan2(id, name){
+        var span = $('<span/>')
+            .addClass('link list-group-item list-group-item-action autocompleteForQueryInputField')
+            .html(createAutocompleteValue2(id, name))
+            .appendTo($("#autocompleteForQueryInputField"));
+        return span;
+    }
+    
+    function createSimpleSpan(id, name){
+        var span = $('<span/>')
+            .addClass('link list-group-item list-group-item-action py-0 autocompleteForQueryInputField')
+            .html(createAutocompleteValue(id, name))
+            .appendTo($("#autocompleteForQueryInputField"));
+        return span;
+    }
+    
+    function addValueFromAutoCompleteToQueryInputField(selector, inputRight, inputLeft, special){
+        $("#autocompleteForQueryInputField").empty();
+        if(special!==null){
+            inputRight = inputRight + special;
+        }
+        var position = inputRight.length;
+        if (inputLeft!==null){
+            inputRight = inputRight + inputLeft;
+        }
+        
+        $(selector).val(inputRight);
+        focusPosition(selector, position);
+    }
+        
+    function addClickListenerForAutocompleteStructure(selector, obj, inputRight, inputLeft){
+        $(obj).on("click", function(){
+            var myClass = $(selector).attr('class');
+            addValueFromAutoCompleteToQueryInputField(selector, inputRight, inputLeft, null);
+            setPositionsForAutocomplete(selector, inputRight);
+            createAutocompleteWithSpecials(selector, inputRight, inputLeft, "=");
+            if(!myClass.includes("speakerMetadataInputField")){
+                createAutocompleteWithSpecials(selector, inputRight, inputLeft, "/>");
+            }
+        });
+    }
+    
+    function addClickListenerForAutocompleteToken(selector, obj, inputRight, inputLeft){
+        $(obj).on("click", function(){ 
+            addValueFromAutoCompleteToQueryInputField(selector, inputRight, inputLeft, null);
+            setPositionsForAutocomplete(selector, inputRight);
+            createAutocompleteWithSpecials(selector, inputRight, inputLeft, "=");
+        }); 
+    }
+    
+    function addClickListenerForAutocompleteTokenValue(selector, obj, inputRight, inputLeft){
+        $(obj).on("click", function(){ 
+            addValueFromAutoCompleteToQueryInputField(selector, inputRight, inputLeft, null);
+            setPositionsForAutocomplete(selector, inputRight);
+            createAutocompleteWithSpecials(selector, inputRight, inputLeft, "&");
+            createAutocompleteWithSpecials(selector, inputRight, inputLeft, "]");
+            
+        });
+    }
+    
+    function addClickListenerForAutocompleteStructureValue(selector, obj, inputRight, inputLeft){
+        $(obj).on("click", function(){
+            addValueFromAutoCompleteToQueryInputField(selector, inputRight, inputLeft, "/>");
+        });
+    }
+            
+    function createAutocompleteWithSpecials(selector, inputRight, inputLeft, specialCharacter){
+        var myClass = $(selector).attr('class');
+        var name = "";
+        switch (specialCharacter) {
+            case "[":
+              name = '<%=myResources.getString("StartSinglePositionToken")%>';
+              break;
+            case "]":
+              name = '<%=myResources.getString("CloseSinglePositionToken")%>';
+              break;
+            case "&":
+              name = '<%=myResources.getString("AddMoreConstraintsOnSinglePositionToken")%>';
+              break;
+            case "<":
+              if(myClass.includes("speakerMetadataInputField")){
+                name = '<%=myResources.getString("StartMetadataSpecification")%>';
+              }else{
+                name = '<%=myResources.getString("StartMultiPositionToken")%>';
+              }
+              break;
+            case "/>":
+              name = '<%=myResources.getString("CloseMultiPositionToken")%>';;
+              break;
+            case "=":
+              name = '<%=myResources.getString("AddValue")%>';
+              break;
+        }
+        var span = createSimpleSpan(specialCharacter, name);
+        if(specialCharacter==="&"){
+            inputRight= inputRight+ " ";
+        }
+        var newValue = inputRight + specialCharacter;
+        
+        $(span).on("click", function(){ 
+            addValueFromAutoCompleteToQueryInputField(selector, newValue, inputLeft, null);
+            hideAutocompleteIfClickOutside(selector);
+            setPositionsForAutocomplete(selector, newValue);
+            createAutocomplete(selector, newValue, inputLeft);
+        });       
+    }
+    
+    function escapeAllRegEx(queryStr){
+        var queryString = queryStr
+            .replace(/\?/g, "\\?")
+            .replace(/#/g, "\\\#")
+            .replace(/\+/g, "\\+")
+            .replace(/\)/g, "\\)")
+            .replace(/\(/g, "\\(");
+        return queryString;
+    }
+    
+
+</script>

@@ -1,0 +1,209 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@ page pageEncoding="UTF-8" %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <!-- **************************** -->
+        <!-- *          LOGO            * -->
+        <!-- **************************** -->
+        <a class="navbar-brand" href="http://agd.ids-mannheim.de/folk.shtml">
+            <% String imgSrc = "../images/folk1.png";
+               if (eventID.startsWith("GWSS")){ 
+                   imgSrc = "../images/gewiss-logo.png"; 
+               }
+            %>
+            <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/>
+        </a>
+        
+        
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <!-- ******************* -->
+                <!-- *     METADATA    * -->
+                <!-- ******************* -->
+
+                <li class="nav-item active" style="line-height: 1">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="#metadataModal" data-toggle="modal" 
+                       onclick="openMetadataModal('<%= speechEventID %>')"
+                       title="<%=myResources.getString("DisplayMetadata")%> <%= speechEventID %>"
+                       >
+                        <b>
+                        <%= backend.getSpeechEvent(speechEventID).getMetadataValue(backend.findMetadataKeyByID("v_e_se_art")) %> 
+                        </b><br/>
+                        <span class="titleID"><%= transcriptID %></span>
+                    </a>
+                </li>
+                
+                <!-- **************************** -->
+                <!-- *     DISPLAY PARAMETERS   * -->
+                <!-- **************************** -->
+
+                <li class="nav-item active">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="#parametersModal" data-toggle="modal" 
+                       title="<%=myResources.getString("SetParametersDisplay")%>"
+                       ><%=myResources.getString("Parameters")%></a>
+                </li>
+
+                <!-- ******************* -->
+                <!-- *   SPEECH EVENT  * -->
+                <!-- ******************* -->
+                <%
+                    IDList allTranscripts = backend.getTranscripts4SpeechEvent(speechEventID);
+                    //if (allTranscripts.size()>1){
+                %>        
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       title="<%=myResources.getString("AllDatasetsSpeechEvent")%>"
+                       >
+                        <%=myResources.getString("SpeechEvent")%> (<%= Integer.toString(allTranscripts.size()) %>)
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" onclick="javascript:addSpeechEventToCollection()"
+                           title="<%=myResources.getString("AddSpeechEventCollection")%>"><%=myResources.getString("AddSpeechEventCollection")%>...</a>
+                        <a class="dropdown-item" onclick="javascript:addTranscriptToCollection()"
+                           title="<%=myResources.getString("AddTranscriptCollection")%>"><%=myResources.getString("AddTranscriptCollection")%>...</a>
+                        
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" onclick="javascript:showProtocol()"
+                           title="<%=myResources.getString("ShowProtocol")%>"><%=myResources.getString("Protocol")%>...</a>
+                        
+                        <div class="dropdown-divider"></div>
+                        <% for (String tID : allTranscripts) { %>
+                                <a class="dropdown-item" href="./zuViel.jsp?transcriptID=<%=tID%>">
+                                    <% if (tID.equals(transcriptID)) {%><span>&#x2713; </span><% } %>
+                                    <%= tID %>
+                                </a>                    
+                        <% }   %>                
+                            </div>
+                        <%        
+                    //}                
+                %>
+                
+                <!-- ******************* -->
+                <!-- *     SELECTION   * -->
+                <!-- ******************* -->
+                <li class="nav-item dropdown active" id="selectionMenuItem">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%=myResources.getString("Selection")%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" onclick="javascript:reduceToSelection()"
+                           title="<%=myResources.getString("ShowCurrentSelectionTitle")%>"><%=myResources.getString("ShowCurrentSelection")%></a>
+                        
+                        <div class="dropdown-divider"></div>
+                        
+                        <a class="dropdown-item" 
+                           href="#downloadModal" data-toggle="modal" 
+                           title="<%=myResources.getString("DownloadSelectionTitle")%>">
+                           <%=myResources.getString("Download")%>...
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+                        
+                        <a class="dropdown-item" 
+                           onclick="javascript:addSelectionToCollection()"
+                           title="<%=myResources.getString("AddSelectionCollection")%>">
+                           <%=myResources.getString("AddToCollection")%>...
+                        </a>
+
+                    </div>
+                </li>
+                
+                <!-- ******************* -->
+                <!-- *   CUSTOM TITLE  * -->
+                <!-- ******************* -->
+                <% if (customTitle!=null) {%>
+                <li>
+                    <b class="navbar-brand" style="margin-left: 10em;"><%= customTitle %></b>
+                </li>
+                <% } %>
+                
+                <!-- ************************** -->
+                <!-- ********* PRINT ********** -->
+                <!-- ************************** -->
+                <!-- issue 55 -->
+                <button class="btn btn-light" type="button" title="<%=myResources.getString("PrintViewTranscript")%>"
+                        onclick="window.print()">
+                    <i class="fas fa-print" aria-hidden="true"></i>
+                </button>
+
+                
+                <!-- <li>
+                    <span class="navbar-brand" style="margin-left:20px; margin-right: 20px; display: none" id="waitSpinner">
+                        <i class="fas fa-spinner fa-spin"></i>                    
+                    </span>
+                </li> -->
+                
+            </ul>
+                
+        </div>
+                                
+                            
+        <!-- ******************* -->
+        <!-- *   SEARCH BOX  *** -->
+        <!-- ******************* -->
+        <form class="form-inline" action="javascript:searchFromBox()">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <!-- input helper for POS tags : issue #53 -->
+                <button class="btn btn-outline-secondary" type="button" title="<%=myResources.getString("POSHelperTooltip")%>"
+                         data-toggle="modal" data-target="#posHelperModal">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                </button>
+              </div>
+              <input class="form-control" type="text" 
+                     placeholder="pos=ART" aria-label="Search" id="searchBox"
+                     title="<%=myResources.getString("SearchFieldTooltip")%>"
+                     />
+              <div class="input-group-append">
+                <!-- find next button - this is also the default action for this form -->
+                <button type="button" class="btn btn-outline-secondary" title="<%=myResources.getString("FindNextTooltip")%>" onclick="javascript:searchFromBox()">
+                    <i class="fas fa-search-plus" aria-hidden="true"></i>
+                </button>        
+                <button type="button" class="btn btn-outline-secondary" title="Aktuelle Hervorhebungen entfernen" onclick="javascript:clearSearch()">
+                    <i class="fas fa-remove-format"></i>
+                </button>        
+
+
+                    
+              </div>
+            </div>            
+            <!-- find all button : issue #53 -->
+            <!-- turns out we don't need that after all -->
+            <!-- <button type="button" class="btn btn-light" title="<%=myResources.getString("FindAllTooltip")%>" onclick="javascript:searchAllFromBox()">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button> -->
+        </form>                   
+                
+        <!-- ******************* -->
+        <!-- * PROJECT LINKS  ** -->
+        <!-- ******************* -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="http://zumult.ids-mannheim.de/ProtoZumult/"><%=myResources.getString("Home")%></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" target="_blank" href="https://zumult.org/"><%=myResources.getString("Project")%></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" target="_blank" href="../doc/Handreichung-ZuViel.html">Help</a>
+          </li>
+        </ul>
+
+        <!-- *********************** -->
+        <!-- * LANGUAGE SELECTOR  ** -->
+        <!-- *********************** -->
+      <select id="selectLang" class="ml-3" style="width: 100px;">
+          <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
+          <option value="en"<%if (!currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
+      </select>
+                
+    </nav>                
+
+

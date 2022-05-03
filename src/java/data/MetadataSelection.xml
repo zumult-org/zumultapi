@@ -1,0 +1,1974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgd-metadata>
+    <!-- ********************* -->
+    <!-- 1. EREIGNIS-METADATEN -->
+    <!-- ********************* -->
+        <metadata-item quantify="false">        
+        <label>DGD-Kennung</label> <!-- Bezeichnung, die in der DGD erscheint -->        
+        <xpath>/*/@Kennung</xpath> <!-- XPath auf diese Beschreibung im XML-Dokument -->        
+        <level>event-metadata</level> <!-- Ebene (Ereignis, Sprechereignis, Sprecher bzw. Sprecher in Sprechereignis) -->        
+        <dgd-parameter-name>v_e_id</dgd-parameter-name> <!-- Parametername (für HTTP-Methoden in der DGD) -->        
+        <example>ZW--E_00008</example> <!-- Beispiel (erscheint im Tooltip, als Placeholder etc.) -->
+        <corpora> <!-- alle Korpora, für die dieser Deskriptor angeboten werden soll -->
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="false">
+        <label>Sonstige Bezeichnungen</label>
+        <xpath>Basisdaten/Sonstige_Bezeichnungen</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_sonstige_bezeichnungen</dgd-parameter-name>
+        <example>ZW008</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>               
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>MIKO</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Beschreibung</label>
+        <xpath>Basisdaten/Beschreibung</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_beschreibung</dgd-parameter-name>
+        <example>Pressekonferenz</example>
+        <corpora>
+            <corpus>DS--</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+        </corpora>
+    </metadata-item>   
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>In DGD seit Version</label>
+        <xpath>/*/@in_DGD_seit</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_in_dgd_seit</dgd-parameter-name>
+        <example>2.6</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>   
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Land)</label>
+        <xpath>Basisdaten/Ort/Land</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_land</dgd-parameter-name>    
+        <example>Australien</example>        
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->        
+    <!-- new 09-01-2018 -->
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Dialektregion Lameli)</label>
+        <xpath>Basisdaten/Ort/Region[@Ebene='1']</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_region_lameli</dgd-parameter-name>
+        <example>mittelost</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->        
+    <!-- new 09-01-2018 -->
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Dialektregion Wiesinger)</label>
+        <xpath>Basisdaten/Ort/Region[@Ebene='2']</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_region_wiesinger</dgd-parameter-name>
+        <example>Rheinfränkische Sprachregion</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->        
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Region)</label>
+        <xpath>Basisdaten/Ort/Region</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_region</dgd-parameter-name>
+        <example>Rheinland-Pfalz oder Rheinfränkische Sprachregion</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>         
+            <!-- <corpus>FOLK</corpus> --> <!-- removed 09-01-2018 -->
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>
+            <corpus>HL--</corpus>        
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->   
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Kreis)</label>
+        <xpath>Basisdaten/Ort/Kreis</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_kreis</dgd-parameter-name>   
+        <example>Castrop-Rauxel</example>
+        <corpora>           
+            <corpus>BB--</corpus>
+            <corpus>BR--</corpus>           
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>          
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>              
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>           
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Ortsname)</label>
+        <xpath>Basisdaten/Ort/Ortsname</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_ort</dgd-parameter-name>    
+        <example>Ludwigswinkel</example>        
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>               
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>        
+            <corpus>KN--</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>           
+            <corpus>RUDI</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>            
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Aufnahmeort (Ortsteil)</label>
+        <xpath>Basisdaten/Ort/Ortsteil</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_ortsteil</dgd-parameter-name>    
+        <example>Kreuzberg</example>          
+        <corpora>          
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>       
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>         
+        </corpora>
+    </metadata-item>  
+    <!--***********************************-->          
+    <metadata-item quantify="false">
+        <label>Aufnahmeort (Planquadrat)</label>
+        <xpath>Basisdaten/Ort/Koordinaten/Planquadrat</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_planquadrat</dgd-parameter-name>    
+        <example>4331</example>        
+        <corpora>
+            <corpus>DR--</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->          
+    <metadata-item quantify="false">
+        <label>Aufnahmeort (geogr. Breite)</label>
+        <xpath>Basisdaten/Ort/Koordinaten/Geocode/Geografische_Breite</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_breite</dgd-parameter-name>    
+        <example>47.8134</example>        
+        <corpora>
+            <corpus>DH--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->          
+    <metadata-item quantify="false">
+        <label>Aufnahmeort (geogr. Länge)</label>
+        <xpath>Basisdaten/Ort/Koordinaten/Geocode/Geografische_Länge</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_laenge</dgd-parameter-name>    
+        <example>7.5604</example>        
+        <corpora>
+            <corpus>DH--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Datum</label>
+        <xpath>Basisdaten/Datum/YYYY-MM-DD</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_datum</dgd-parameter-name>
+        <example>1961 oder 2007-2009</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>            
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>            
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Dauer</label>
+        <xpath>Basisdaten/Dauer</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_dauer</dgd-parameter-name>        
+        <example>00:19:01</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>ForscherIn</label>
+        <xpath>Projekt/Personal/An_E_teilnehmende_Forscher</xpath>
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_forsch</dgd-parameter-name>
+        <example>Hans Fuchs</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>         
+            <corpus>DH--</corpus>
+            <corpus>DR--</corpus>         
+            <corpus>DTRK</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>          
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MV--</corpus>  
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>          
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>        
+    
+    <!-- *************************** -->
+    <!-- 2. SPRECHEREIGNIS-METADATEN -->    
+    <!-- *************************** -->
+    
+    <metadata-item quantify="false">
+        <label>Titel</label>
+        <xpath>Basisdaten/Titel</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_titel</dgd-parameter-name>
+        <example>Schwertfischfang vor Malta</example>
+        <corpora>
+            <corpus>DS--</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FR--</corpus>           
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Art</label>
+        <xpath>Basisdaten/Art</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_art</dgd-parameter-name>
+        <example>Gespräch unter Freunden</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+<!--            <corpus>FOLK</corpus>          -->
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus> 
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Kurzbezeichnung ("Art")</label>
+        <xpath>Basisdaten/Art</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_art</dgd-parameter-name>
+        <example>Gespräch unter Freunden</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <!-- <Interaktionsdomäne>Privat</Interaktionsdomäne>
+    <Lebensbereich>Privat (nicht spezifiert)</Lebensbereich>
+    <Aktivität>Spielen</Aktivität>    
+    <Anzahl_der_Sprecher Konstellation="Drei-Personen-Interaktion" Publikum="nein" Vertrautheit="vertraut">3</Anzahl_der_Sprecher> -->
+    <!--***********************************-->
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Interaktionsdomäne</label>
+        <xpath>Basisdaten/Interaktionsdomäne</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_interaktionsdomaene</dgd-parameter-name>        
+        <example>Privat</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>MIKO</corpus>            
+        </corpora>
+    </metadata-item>
+    <!-- 
+      <Interaktionsdomäne>Privat</Interaktionsdomäne>
+      <Lebensbereich>Privat (nicht spezifiert)</Lebensbereich>
+      <Aktivität>Spielen</Aktivität>    
+      <Anzahl_der_Sprecher Konstellation="Drei-Personen-Interaktion" Publikum="nein" Vertrautheit="vertraut">3</Anzahl_der_Sprecher>
+      <Forscherbeteiligung>Nicht beteiligt</Forscherbeteiligung>
+      <Elizitiertheit>Nicht elizitiert</Elizitiertheit>
+      <Mediale_Realisierung>face-to-face</Mediale_Realisierung>       
+    -->
+    <!--***********************************-->
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Lebensbereich</label>
+        <xpath>Basisdaten/Lebensbereich</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_lebensbereich</dgd-parameter-name>        
+        <example>Privat</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>MIKO</corpus>            
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Aktivität</label>
+        <xpath>Basisdaten/Aktivität</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_aktivitaet</dgd-parameter-name>        
+        <example>Spielen</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>HMAT</corpus>            
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Anzahl Sprecher</label>
+        <xpath>Basisdaten/Anzahl_der_Sprecher</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_anzahl_s</dgd-parameter-name>        
+        <example>3 oder 2-4</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <!-- Das Format bei GWSS ist anders, z.B.: 	"1 Vortragender, 1 Moderator, ca. 25 Zuhörer" -->
+            <!-- <corpus>GWSS</corpus> -->
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Sprecher-Konstellation</label>
+        <xpath>Basisdaten/Anzahl_der_Sprecher/@Konstellation</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_konstellation</dgd-parameter-name>        
+        <example>Drei-Personen-Interaktion</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>HMAT</corpus>    
+            <corpus>HMOT</corpus>    
+            <corpus>MIKO</corpus>                            
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Publikum</label>
+        <xpath>Basisdaten/Anzahl_der_Sprecher/@Publikum</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_publikum</dgd-parameter-name>        
+        <example>ja oder nein</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Vertrautheit der Sprecher</label>
+        <xpath>Basisdaten/Anzahl_der_Sprecher/@Vertrautheit</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_vertrautheit</dgd-parameter-name>        
+        <example>vertraut</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>HMAT</corpus> 
+            <corpus>HMOT</corpus>                       
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Forscherbeteiligung</label>
+        <xpath>Basisdaten/Forscherbeteiligung</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_forscherbeteiligung</dgd-parameter-name>        
+        <example>Nicht beteiligt</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Elizitiertheit</label>
+        <xpath>Basisdaten/Elizitiertheit</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_elizitiertheit</dgd-parameter-name>        
+        <example>Nicht elizitiert</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Mediale Realisierung</label>
+        <xpath>Basisdaten/Mediale_Realisierung</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_mediale_realisierung</dgd-parameter-name>        
+        <example>Telefon</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->    
+    <!-- new 09-01-2018 -->    
+    <metadata-item quantify="true">
+        <label>Empraktischer Bezug</label>
+        <xpath>Inhalt/Empraktischer_Bezug</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_empraktischer_bezug</dgd-parameter-name>        
+        <example>ja</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Inhalt (Themen)</label>
+        <xpath>Inhalt/Themen</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_themen</dgd-parameter-name> 
+        <example>Arbeit</example>        
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>         
+            <corpus>DH--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>        
+            <corpus>MEKI</corpus>
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Sprachen</label>
+        <xpath>Basisdaten/Sprachen</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_sprachen</dgd-parameter-name> 
+        <example>Deutsch</example>        
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>GWSS</corpus>
+        </corpora>
+    </metadata-item>
+    
+
+    <!-- *************************************** -->
+    <!-- 3. SPRECHER IN SPRECHEREIGNIS-METADATEN -->    
+    <!-- *************************************** -->
+    
+    <metadata-item quantify="true">
+        <label>Alter</label>
+        <xpath>Basisdaten/Alter</xpath>
+        <level>speech-event-speaker-metadata</level>
+        <dgd-parameter-name>v_ses_alter_s</dgd-parameter-name>        
+        <example>68 oder 60-90</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>            
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <!-- <corpus>RUDI</corpus> -->
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+	<metadata-item quantify="true">
+        <label>Alter (chronologisch)</label>
+        <xpath>Basisdaten/chronologisches_Alter</xpath>
+        <level>speech-event-speaker-metadata</level>
+        <dgd-parameter-name>v_ses_alter_chron_s</dgd-parameter-name>        
+        <example>5;6</example>
+        <corpora>
+            <corpus>MEKI</corpus>
+        </corpora>
+    </metadata-item>
+	<!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Rolle</label>
+        <xpath>Basisdaten/Rolle</xpath>
+        <level>speech-event-speaker-metadata</level>
+        <dgd-parameter-name>v_ses_rolle_s</dgd-parameter-name>        
+        <example>Gastgeberin</example>
+        <corpora>
+            <corpus>AD--</corpus>           
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>           
+            <corpus>DTRK</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>            
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus> 
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->  
+    <metadata-item quantify="false">
+        <label>Sprachen</label>
+        <xpath>Sprachdaten/Sprachen</xpath>
+        <level>speech-event-speaker-metadata</level>
+        <dgd-parameter-name>v_ses_sprachen_s</dgd-parameter-name>
+        <example>Englisch</example>        
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>           
+            <corpus>DTRK</corpus>
+            <corpus>FOLK</corpus>          
+            <corpus>FR--</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>       
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="false">
+        <label>Sprachliche Besonderheiten</label>
+        <xpath>Sprachdaten/Sprachliche_Besonderheiten</xpath>
+        <level>speech-event-speaker-metadata</level>
+        <dgd-parameter-name>v_ses_sprachl_besonderheiten_s</dgd-parameter-name>
+        <example>Nordniederdeutsch</example>        
+        <corpora>     
+            <corpus>BR--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    
+
+    <!-- ********************* -->
+    <!-- 4. SPRECHER-METADATEN -->    
+    <!-- ********************* -->
+    
+    <metadata-item quantify="false">
+        <label>DGD-Kennung</label>
+        <xpath>/*/@Kennung</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_id</dgd-parameter-name>
+        <example>ZW--S_00008</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>PF--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->   
+    <metadata-item quantify="false">
+        <label>Sonstige Bezeichnungen</label>
+        <xpath>Basisdaten/Sonstige_Bezeichnungen</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_sonstige_bezeichnungen</dgd-parameter-name>
+        <example>FOLK_SS21_01_T41</example>
+        <corpora>
+            <corpus>DNAM</corpus>
+            <corpus>FOLK</corpus>  
+            <corpus>GDSA</corpus>           
+            <corpus>MEND</corpus>                                       
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->   
+    <metadata-item quantify="false">
+        <label>Name</label>
+        <xpath>Basisdaten/Name</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_name</dgd-parameter-name>                                                        
+        <example>Christine</example>
+        <corpora>
+            <corpus>BETV</corpus>
+            <corpus>DS--</corpus>
+            <corpus>FEGB</corpus>
+            <!-- <corpus>FGOP</corpus> -->
+            <corpus>FOLK</corpus>  
+            <corpus>FR--</corpus>  
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>                      
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Früherer Name</label>
+        <xpath>Basisdaten/Früherer_Name</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_früherer_name</dgd-parameter-name>
+        <example>David Kahn</example>
+        <corpora>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->    
+    <metadata-item quantify="false">
+        <label>Pseudonym</label>
+        <xpath>Basisdaten/Pseudonym</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_pseudonym</dgd-parameter-name>        
+        <example>Laura</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>            
+            <corpus>FOLK</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>JK--</corpus>  
+            <corpus>MEKI</corpus>                      
+        </corpora>
+    </metadata-item>    
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Geschlecht</label>
+        <xpath>Basisdaten/Geschlecht</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geschlecht</dgd-parameter-name>
+        <example>Männlich oder Weiblich</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>            
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>            
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MIKO</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+        <metadata-item quantify="true">
+        <label>Geburtsdatum (Jahr)</label>
+        <xpath>Basisdaten/Geburtsdatum/YYYY-MM-DD</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_jahr</dgd-parameter-name>                
+        <example>1968 oder 1980-1985</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>            
+            <corpus>GDSA</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>HMOT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MIKO</corpus>            
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Bildungsabschluss</label>
+        <xpath>Basisdaten/Bildungsabschluss</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_bildung</dgd-parameter-name>  
+        <example>Hochschulabschluss</example>        
+        <corpora>       
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>          
+            <corpus>KN--</corpus>                 
+            <corpus>PF--</corpus>            
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Berufe</label>
+        <xpath>Basisdaten/Berufe</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_berufe</dgd-parameter-name>  
+        <example>Lehrer</example>        
+        <corpora>            
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>
+            <corpus>BW--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>            
+            <corpus>HL--</corpus>         
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>MIKO</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->           
+    <metadata-item quantify="true">
+        <label>Arbeitsort/Wohnort (Land)</label>
+        <xpath>Ortsdaten[@Typ='Arbeitsort/Wohnort']/Land</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_arb_wohn_land</dgd-parameter-name>  
+        <example>Deutschland</example>        
+        <corpora>
+            <corpus>DS--</corpus>
+            <corpus>FR--</corpus>
+            <!-- <corpus>RUDI</corpus> -->
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->  
+    <metadata-item quantify="true">
+        <label>Arbeitsort/Wohnort (Region)</label>
+        <xpath>Ortsdaten[@Typ='Arbeitsort/Wohnort']/Region</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_arb_wohn_region</dgd-parameter-name>     
+        <example>Bayern</example>        
+        <corpora>
+            <corpus>DS--</corpus>
+            <corpus>FR--</corpus>
+            <!-- <corpus>RUDI</corpus> -->
+        </corpora>
+    </metadata-item> 
+    <!--***********************************-->     
+    <metadata-item quantify="true">
+        <label>Arbeitsort/Wohnort (Kreis)</label>
+        <xpath>Ortsdaten[@Typ='Arbeitsort/Wohnort']/Kreis</xpath>
+        <level>speaker-metadata</level>
+       <dgd-parameter-name>v_s_arb_wohn_kreis</dgd-parameter-name>     
+        <example>Marburg-Biedenkopf</example>        
+        <corpora>
+            <corpus>DS--</corpus>
+            <corpus>FR--</corpus>
+        </corpora>
+    </metadata-item>   
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Arbeitsort/Wohnort (Ortsname)</label>
+        <xpath>Ortsdaten[@Typ='Arbeitsort/Wohnort']/Ortsname</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_arb_wohn_ort</dgd-parameter-name>  
+        <example>München</example>
+        <corpora>
+            <corpus>DS--</corpus>
+            <corpus>FR--</corpus>
+            <!-- <corpus>RUDI</corpus> -->
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Aufenthaltsort (Land)</label>
+        <xpath>Ortsdaten[@Typ='Aufenthaltsort']/Land</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_aufent_land</dgd-parameter-name>  
+        <example>Deutschland</example>        
+        <corpora>
+            <corpus>BETV</corpus>
+            <!-- <corpus>FOLK</corpus> -->
+            <corpus>MEND</corpus>            
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Aufenthaltsort (Region)</label>
+        <xpath>Ortsdaten[@Typ='Aufenthaltsort']/Region</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_aufent_reg</dgd-parameter-name>  
+        <example>Ostfränkische Sprachregion</example>        
+        <corpora>
+            <corpus>BETV</corpus>
+            <!-- <corpus>FOLK</corpus> -->
+            <corpus>MEND</corpus>            
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <!-- new 06-03-2019 (DGD 2.12) -->
+    <!-- <metadata-item quantify="true">
+        <label>Aufenthaltsort (Dialektregion Lameli)</label>
+        <xpath>Ortsdaten[@Typ='Aufenthaltsort']/Region[@Ebene='1']</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_aufent_reg_lameli</dgd-parameter-name>  
+        <example>mittelost</example>        
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item> -->
+    <!--***********************************-->
+    <!-- new 06-03-2019 (DGD 2.12) -->
+    <!-- <metadata-item quantify="true">
+        <label>Aufenthaltsort (Dialektregion Wiesinger)</label>
+        <xpath>Ortsdaten[@Typ='Aufenthaltsort']/Region[@Ebene='2']</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_aufent_reg_wiesinger</dgd-parameter-name>  
+        <example>Ostfränkische Sprachregion</example>        
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item> -->
+    <!--***********************************-->
+    <!-- new 06-03-2019 (DGD 2.12) -->
+    <metadata-item quantify="true">
+        <label>Sprchl. prägender Ort (Land)</label>
+        <xpath>Ortsdaten[@Typ='Sprachlich prägende Region']/Land</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_praeg_land</dgd-parameter-name>  
+        <example>Deutschland</example>        
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <!-- new 06-03-2019 (DGD 2.12) -->
+    <metadata-item quantify="true">
+        <label>Sprchl. prägender Ort (Region Lameli)</label>
+        <xpath>Ortsdaten[@Typ='Sprachlich prägende Region']/Region[@Ebene='1']</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_praeg_reg_lameli</dgd-parameter-name>  
+        <example>mittelost</example>        
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <!-- new 06-03-2019 (DGD 2.12) -->
+    <metadata-item quantify="true">
+        <label>Sprchl. prägender Ort (Region Wiesinger)</label>
+        <xpath>Ortsdaten[@Typ='Sprachlich prägende Region']/Region[@Ebene='2']</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_praeg_reg_wiesinger</dgd-parameter-name>  
+        <example>Ostfränkische Sprachregion</example>        
+        <corpora>
+            <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>
+    
+    <!--***********************************-->
+      <metadata-item quantify="true">
+        <label>Geburtsort (Land)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Land</xpath>
+        <level>speaker-metadata</level>
+          <dgd-parameter-name>v_s_geb_land</dgd-parameter-name>
+        <example>Deutschland</example>
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BR--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEKI</corpus>
+            <corpus>MEND</corpus>            
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Geburtsort (Region)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Region</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_reg</dgd-parameter-name>
+        <example>Bayern</example>       
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BR--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>            
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->       
+    <metadata-item quantify="true">
+        <label>Geburtsort (Kreis)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Kreis</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_kreis</dgd-parameter-name> 
+        <example>Marburg-Biedenkopf</example>        
+        <corpora>                 
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>           
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>            
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>                 
+            <corpus>KN--</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>             
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>      
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Geburtsort (Ortsname)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Ortsname</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_ort</dgd-parameter-name>
+        <example>Marburg</example>        
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BR--</corpus>              
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>           
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>FR--</corpus>            
+            <corpus>GDSA</corpus>
+            <corpus>HL--</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>
+            <corpus>KN--</corpus>
+            <corpus>MEND</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>             
+            <corpus>RUDI</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Geburtsort (Ortsteil)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Ortsteil</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_ortsteil</dgd-parameter-name> 
+        <example>Kreuzberg</example>        
+        <corpora>          
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>                 
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>           
+        </corpora>
+    </metadata-item> 
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Geburtsort (Planquadrat)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Koordinaten/Planquadrat</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_ort_plan</dgd-parameter-name>     
+        <example>4231</example>        
+        <corpora>
+            <corpus>DR--</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SR--</corpus>          
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Geburtsort (geogr. Breite)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Koordinaten/Geocode/Geografische_Breite</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_breite</dgd-parameter-name>     
+        <example>49.5647</example>        
+        <corpora>
+            <corpus>DH--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Geburtsort (geogr. Länge)</label>
+        <xpath>Ortsdaten[@Typ='Geburtsort']/Koordinaten/Geocode/Geografische_Laenge</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_geb_laenge</dgd-parameter-name>     
+        <example>9.3456</example>        
+        <corpora>
+            <corpus>DH--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->   
+    <metadata-item quantify="true">
+        <label>Wohnort (Land)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Land</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_land</dgd-parameter-name>  
+        <example>Deutschland</example>        
+        <corpora>
+            <corpus>AD--</corpus>           
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>
+            <corpus>JK--</corpus>
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>MEKI</corpus>            
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>    
+            <corpus>PF--</corpus>     
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>    
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>         
+        </corpora>     
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Wohnort (Region)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Region</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_reg</dgd-parameter-name>  
+        <example>Bayern</example>        
+        <corpora>
+            <corpus>AD--</corpus>           
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>          
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>JK--</corpus>   
+            <corpus>MEKI</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>               
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->     
+    <metadata-item quantify="true">
+        <label>Wohnort (Kreis)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Kreis</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_kreis</dgd-parameter-name> 
+        <example>Marburg-Biedenkopf</example>        
+        <corpora>                
+            <corpus>DR--</corpus>                
+            <!-- <corpus>FEGB</corpus> -->
+            <corpus>FGOP</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>                  
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************--> 
+    <metadata-item quantify="true">
+        <label>Wohnort (Ortsname)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Ortsname</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_ort</dgd-parameter-name>  
+        <example>Marburg</example>        
+        <corpora>
+            <corpus>AD--</corpus>           
+            <corpus>BW--</corpus>
+            <corpus>DH--</corpus>
+            <corpus>DNAM</corpus>
+            <corpus>DR--</corpus>          
+            <corpus>FEGB</corpus>
+            <corpus>FGOP</corpus>
+            <corpus>GDSA</corpus>
+            <corpus>JK--</corpus>        
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>
+            <corpus>OS--</corpus>            
+            <corpus>PF--</corpus>              
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->          
+    <metadata-item quantify="true">
+        <label>Wohnort (Ortsteil)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Ortsteil</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_ortsteil</dgd-parameter-name>  
+        <example>Kreuzberg</example>        
+         <corpora>          
+             <corpus>BW--</corpus>           
+             <corpus>MV--</corpus>
+             <corpus>MVEX</corpus>
+             <corpus>OS--</corpus>            
+             <corpus>PF--</corpus>               
+             <corpus>SV--</corpus>
+             <corpus>SW--</corpus>            
+             <corpus>WISC</corpus>
+         </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="false">
+        <label>Wohnort (Planquadrat)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Koordinaten/Planquadrat</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_ort_plan</dgd-parameter-name>     
+        <example>4321</example>        
+        <corpora>
+            <corpus>DR--</corpus>
+            <corpus>MV--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Wohnort (geogr. Breite)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Koordinaten/Geocode/Geografische_Breite</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_breite</dgd-parameter-name>     
+        <example>49.5647</example>        
+        <corpora>
+            <corpus>DH--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Wohnort (geogr. Länge)</label>
+        <xpath>Ortsdaten[@Typ='Wohnort']/Koordinaten/Geocode/Geografische_Laenge</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_wohn_laenge</dgd-parameter-name>     
+        <example>9.3456</example>        
+        <corpora>
+            <corpus>DH--</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    
+    <!--***********************************-->        
+    <metadata-item quantify="true">
+        <label>Mundartort (Land)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Land</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_land</dgd-parameter-name>     
+        <example>Deutschland</example>        
+        <corpora>
+            <corpus>OS--</corpus>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>            
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Mundartort (Region)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Region</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_reg</dgd-parameter-name>   
+        <example>Bayern</example>        
+        <corpora>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>            
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->    
+    <metadata-item quantify="true">
+        <label>Mundartort (Kreis)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Kreis</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_kreis</dgd-parameter-name>     
+        <example>Marburg-Biedenkopf</example>        
+        <corpora>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>            
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+   <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Mundartort (Ortsname)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Ortsname</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_ort</dgd-parameter-name>     
+       <example>Marburg</example>        
+       <corpora>
+           <corpus>OS--</corpus>
+           <corpus>PF--</corpus>
+           <corpus>SV--</corpus>
+           <corpus>SW--</corpus>            
+           <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+   <!--***********************************--> 
+    <metadata-item quantify="true">
+        <label>Mundartort (Ortsteil)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Ortsteil</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_ortsteil</dgd-parameter-name>      
+        <example>Kreuzberg</example>        
+        <corpora>
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>             
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Mundartort (Planquadrat)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Koordinaten/Planquadrat</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_ort_plan</dgd-parameter-name>     
+        <example>4321</example>        
+       <corpora>
+           <corpus>OS--</corpus>
+           <corpus>PF--</corpus>
+           <corpus>SV--</corpus>
+           <corpus>SW--</corpus>            
+           <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Mundartort (geogr. Breite)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Koordinaten/Geocode/Geografische_Breite</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_breite</dgd-parameter-name>     
+        <example>49.5647</example>        
+        <corpora>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    <!--***********************************-->
+    <metadata-item quantify="false">
+        <label>Mundartort (geogr. Länge)</label>
+        <xpath>Ortsdaten[@Typ='Mundartort']/Koordinaten/Geocode/Geografische_Laenge</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_mund_laenge</dgd-parameter-name>     
+        <example>9.3456</example>        
+        <corpora>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    
+    
+    
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Sprachen</label>
+        <xpath>/Sprecher/Sprachdaten/Sprachkenntnisse/@Sprachname</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_sprachname</dgd-parameter-name>     
+        <example>Kroatisch</example>        
+       <corpora>
+           <corpus>GWSS</corpus>
+           <corpus>MEKI</corpus>
+           <corpus>MEND</corpus>
+           <corpus>FOLK</corpus>
+           <corpus>HMAT</corpus>     
+           <corpus>HMOT</corpus>                 
+        </corpora>
+    </metadata-item>   
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <!-- <label>Muttersprachen</label> -->
+        <label>Erstsprachen</label>
+        <xpath>/Sprecher/Sprachdaten/Sprachkenntnisse[Sprachstatus='Muttersprache']/@Sprachname</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_muttersprache</dgd-parameter-name>     
+        <example>Türkisch</example>        
+       <corpora>
+           <corpus>FOLK</corpus>
+        </corpora>
+    </metadata-item>   
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Gruppenzugehörigkeit</label>
+        <xpath>/Sprecher/Basisdaten/Gruppenzugehörigkeit</xpath>
+        <level>speaker-metadata</level>
+        <dgd-parameter-name>v_s_gruppenzug</dgd-parameter-name>     
+        <example>Mennonite Evangelical Church</example>        
+       <corpora>
+           <corpus>DNAM</corpus>
+           <corpus>MEND</corpus>
+        </corpora>
+    </metadata-item>   
+    <!--***********************************-->
+    <!-- <metadata-item>
+        <label>Mediale Realisierung</label>
+        <xpath>Basisdaten/Mediale_Realisierung</xpath>
+        <level>speech-event-metadata</level>
+        <corpora>
+            <corpus>DS-\-</corpus>
+            <corpus>FR-\-</corpus>
+            <corpus>HL-\-</corpus>
+        </corpora>
+    </metadata-item>-->
+    <!--***********************************-->
+<!--    <metadata-item>
+        <label>Vorgaben</label>
+        <xpath>Basisdaten/Vorgaben</xpath>
+        <level>speech-event-metadata</level>
+        <corpora>
+            <corpus>KN-\-</corpus>
+        </corpora>
+    </metadata-item>
+-->    <!--***********************************-->
+    
+<!--   <metadata-item>
+        <label>Inhalt (Beschreibung)</label>
+        <xpath>Inhalt/Beschreibung</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_beschreibung</dgd-parameter-name>        
+        <example>Der Künstler berichtet von seinem Werdegang und der seiner Familie, seiner Kunst und seinem Atelier</example>
+        <corpora>
+            <corpus>FOLK</corpus> 
+       </corpora>
+    </metadata-item>
+    ***********************************-->
+    
+    <!-- ****************************** -->
+    <!-- THIS ONE FOR ZUMULT ONLY!!! -->
+    <metadata-item quantify="false">
+        <label>Inhalt (Beschreibung)</label>
+        <xpath>Inhalt/Beschreibung</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_inhalt</dgd-parameter-name> 
+        <example>Es handelt sich um eine elizitierte Spielinteraktion, bei der jedem der zwei Gesprächsbeteiligten eine Karte vorliegt, [...]</example>        
+        <corpora>
+            <corpus>AD--</corpus>
+            <corpus>BB--</corpus>
+            <corpus>BETV</corpus>
+            <corpus>BR--</corpus>         
+            <corpus>DH--</corpus>
+            <corpus>DR--</corpus>
+            <corpus>DS--</corpus>
+            <corpus>DTRK</corpus>
+            <corpus>EK--</corpus>
+            <corpus>FOLK</corpus>
+            <corpus>FR--</corpus>
+            <corpus>GWSS</corpus>
+            <corpus>HL--</corpus>
+            <corpus>HMAT</corpus>
+            <corpus>IS--</corpus>
+            <corpus>ISW-</corpus>
+            <corpus>ISZ-</corpus>
+            <corpus>JK--</corpus>        
+            <corpus>MEKI</corpus>
+            <corpus>MV--</corpus>
+            <corpus>MVEX</corpus>            
+            <corpus>OS--</corpus>
+            <corpus>PF--</corpus>
+            <corpus>RUDI</corpus>
+            <corpus>SA--</corpus>
+            <corpus>SR--</corpus>
+            <corpus>SV--</corpus>
+            <corpus>SW--</corpus>
+            <corpus>WISC</corpus>
+            <corpus>ZW--</corpus>
+        </corpora>
+    </metadata-item>
+    
+</dgd-metadata>

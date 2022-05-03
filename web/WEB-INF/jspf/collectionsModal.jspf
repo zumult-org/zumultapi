@@ -1,0 +1,126 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal modal-lg" tabindex="-1" role="dialog" id="collectionsModal">
+        <div class="modal-dialog" role="document" style="min-width:80%">
+            <div class="modal-content">
+                
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="parameters-title"><%=myResources.getString("AddToCollection")%></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&#x00D7;</span>
+                    </button>
+                </div>
+                
+                <form action="collectionAdd.jsp">
+                    
+
+                    <div class="modal-body" id="parameters-body">
+                       
+                        <!--     collectionSpeechEventID = "";
+                                collectionTranscriptID = "";
+                                collectionMediaID = "";
+                                collectionStartSelection = "";
+                                collectionEndSelection = "";
+                                collectionPosition = "";
+                                collectionItemType = "";    
+                                -->
+                                
+                        <div style="margin-bottom:10px; padding: 3px;">
+                            <span id="collectionItemType" class="badge badge-pill badge-light">Item type=Transcript</span>
+                            <span id="collectionSpeechEventID" class="badge badge-pill badge-danger">speechEventID=FOLK_E_00057_SE_01</span>
+                            <span id="collectionTranscriptID" class="badge badge-pill badge-primary">transcriptID=FOLK_E_00057_SE_01_T_01</span>
+                            <span id="collectionMediaID" class="badge badge-pill badge-info">mediaID=FOLK_E_00057_SE_01_V_01</span>
+                            <span id="collectionStartSelection" class="badge badge-pill badge-secondary">startAnnotationBlockID=c511</span>
+                            <span id="collectionEndSelection" class="badge badge-pill badge-secondary">endAnnotationBlockID=c517</span>
+                            <span id="collectionPosition" class="badge badge-pill badge-warning">position=9.45</span>
+                            <!-- <span class="badge badge-pill badge-info">Info</span>
+                            <span class="badge badge-pill badge-light">Light</span>
+                            <span class="badge badge-pill badge-dark">Dark</span> -->
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addCollectionLabel"><%=myResources.getString("AddTo")%> </span>
+                            </div>
+                            <select class="form-control" id="existingCollectionName" name="existingCollectionName">
+                                <% 
+                                    IDList virtualCollectionIDs = backend.getVirtualCollectionStore().listVirtualCollections(username);
+                                    for (String id : virtualCollectionIDs){ %>
+                                    <option value="<%=id%>"><%=id%></option>                                        
+                                <% } %>
+                            </select>
+                            <div class="input-group-append">
+                                <a class="btn btn-success" role="button"
+                                        data-toggle="collapse" href="#newCollection" 
+                                        aria-expanded="false" aria-controls="newCollection">
+                                    <i class="fas fa-folder-plus"></i> <%=myResources.getString("NewCollection")%>
+                                </a>   
+                            </div>
+                         </div>                        
+
+
+                        <div class="collapse" id="newCollection">
+                            <div class="card card-body bg-light">
+                            <h6 class="card-subtitle mb-2 text-muted"><%=myResources.getString("CreateNewCollection")%></h6>                                
+                            <small id="nameHelp" class="form-text text-muted"><%=myResources.getString("CollectionNameHint")%></small>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white">Name </span>
+                                </div>
+                                   <input type="text" class="form-control" id="newCollectionName" aria-describedby="newCollectionHelp" 
+                                          name="newCollectionName"
+                                          placeholder="<%=myResources.getString("PlaceholderMyCollection")%>"
+                                          pattern="[A-Za-z0-9_]+"
+                                          >
+                            </div>
+                            
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white"><%=myResources.getString("Title")%> </span>
+                                </div>
+                                <input type="text" class="form-control" id="newCollectionTitle" aria-describedby="newCollectionHelp" 
+                                       name="newCollectionTitle" placeholder="<%=myResources.getString("PlaceholderDiscourseMarkers")%>">
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white"><%=myResources.getString("Subtitle")%> </span>
+                                </div>
+                                <input type="text" class="form-control" id="newCollectionSubitle" aria-describedby="newCollectionHelp" 
+                                       name="newCollectionSubitle" placeholder="<%=myResources.getString("PlaceholderMultiwordDiscourseMarkers")%>">
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white"><%=myResources.getString("Description")%> </span>
+                                </div>
+                                <textarea class="form-control" id="newCollectionCommentTextarea" 
+                                          name="newCollectionComment" rows="3"
+                                          placeholder="<%=myResources.getString("PlaceholderInterestingExamples")%>"
+                                          ></textarea>
+                            </div>
+                            <div class="btn-group float-right" role="group" aria-label="Basic example">
+                                <a class="btn btn-sm btn-secondary" data-toggle="collapse" href="#newCollection"><%=myResources.getString("Cancel")%></a>
+                                <a href="#" class="btn btn-sm btn-success" disabled="disabled" title="<%=myResources.getString("NotYetImplemented")%>"><%=myResources.getString("CreateCollection")%></a>
+                            </div>
+                            </div>
+                        </div>
+
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <a href="javascript:hideCollectionsModal()" class="btn btn-sm btn-secondary"><%=myResources.getString("Cancel")%></a>
+                        <button type="submit" class="btn btn-primary btn-sm" disabled="disabled" title="<%=myResources.getString("NotYetImplemented")%>">
+                            <i class="far fa-plus-square"></i> <%=myResources.getString("AddToCollection")%>
+                        </button>
+                    </div>
+                    
+
+                </form>
+            </div>
+        </div>
+    </div>                
+
