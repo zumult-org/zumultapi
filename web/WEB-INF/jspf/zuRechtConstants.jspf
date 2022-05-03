@@ -1,0 +1,24 @@
+<%-- 
+    Document   : zuRechtConstants
+    Created on : 05.05.2021, 11:42:38
+    Author     : Elena Frick
+    Description: These file contains constants used in zuRecht.jsp, zuRechtMetadataStatisticView.jsp, zuRechtHitStatisticView.jsp
+--%>
+<%@ page pageEncoding="UTF-8" %>             
+
+<script type="text/javascript">    
+
+    var firstButtonLabel='<%=myResources.getString("First")%>';
+    var prevButtonLabel='<%=myResources.getString("Previous")%>';
+    var nextButtonLabel='<%=myResources.getString("Next")%>';
+    var lastButtonLabel='<%=myResources.getString("Last")%>';
+    
+    var searchLoadingIndicatorText ='<%=myResources.getString("LoadingSearch")%>'+ "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>";
+    var imgLoadingIndicatorText = "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>";
+    var kwicURL = '<%=restAPIBaseURL%>' + "/SearchService/kwic";
+    var statisticURL = '<%=restAPIBaseURL%>' + "/SearchService/statistics";
+    
+    var tokenSizeKeyID = "tokenSize";
+    var transcriptionKeyID = "transcription";
+     
+</script>

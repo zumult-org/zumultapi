@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <description>Prototype Implementation of ZuMult</description>
+    <servlet>
+        <servlet-name>DGDLink</servlet-name>
+        <servlet-class>org.zumult.webservices.DGDLink</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getMoreTranscript</servlet-name>
+        <servlet-class>org.zumult.webservices.getMoreTranscript</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getSpeechEvents</servlet-name>
+        <servlet-class>org.zumult.webservices.getSpeechEvents</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getData</servlet-name>
+        <servlet-class>org.zumult.webservices.getData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ZumultDataServlet</servlet-name>
+        <servlet-class>org.zumult.webservices.ZumultDataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DGDLink</servlet-name>
+        <url-pattern>/DGDLink</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getMoreTranscript</servlet-name>
+        <url-pattern>/getMoreTranscript</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getSpeechEvents</servlet-name>
+        <url-pattern>/getSpeechEvents</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ZumultDataServlet</servlet-name>
+        <url-pattern>/ZumultDataServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getData</servlet-name>
+        <url-pattern>/getData</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <!-- (1) resources without protection -->
+    <security-constraint>
+        <display-name>NoLoginRequired</display-name>
+        <web-resource-collection>
+            <web-resource-name>app</web-resource-name>
+            <url-pattern>/index.html</url-pattern>
+            <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/images/*</url-pattern>
+            <url-pattern>/css/*</url-pattern>
+            <url-pattern>/jsp/corpusoverview.jsp</url-pattern>
+            <url-pattern>/jsp/eventstable.jsp</url-pattern>
+            <url-pattern>/jsp/speecheventstable.jsp</url-pattern>
+            <url-pattern>/jsp/speakerstable.jsp</url-pattern>
+            <!--  new 25-11-2020, issue #22 -->
+            <url-pattern>/getData</url-pattern>
+        </web-resource-collection>
+        <!-- OMIT auth-constraint -->
+    </security-constraint>
+    <!-- (2) resources with protection -->
+    <!-- ###CHANGE_FOR_RELEASE### -->
+    <!-- SECURITY -->
+    <!-- can/should be disabled for development / deployment on local host -->
+    <security-constraint>
+        <display-name>LoginFirstConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DGD2Web-Services</web-resource-name>
+            <description>Everything else</description>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>accepted</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/login.jsp?error=true</form-error-page>
+        </form-login-config>
+    </login-config>
+    <!-- This does not do what I want it to do -->
+    <!-- <filter id="PostLoginFilter">
+        <description>Should be running after j_security_check</description>
+        <filter-name>PostLoginFilter</filter-name>
+        <filter-class>org.zumult.webservices.PostLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PostLoginFilter</filter-name>
+        <url-pattern>/j_security_check</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping> -->
+</web-app>

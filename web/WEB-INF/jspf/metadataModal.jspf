@@ -1,0 +1,22 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.io.IOHelper"%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal modal-lg" tabindex="-1" role="dialog" id="metadataModal">
+        <div class="modal-dialog" role="document" style="min-width:80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="metadata-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&#x00D7;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="metadata-body">
+                </div>
+                <div class="modal-footer">
+                    <a href="#" id="metadata-transcript-link" target="_blank">Transkript anzeigen</a>
+                    <a href="#" id="metadata-transcript-dgd-link" target="_blank">Transkript in DGD</a>
+                </div>
+            </div>
+        </div>
+    </div>                
+

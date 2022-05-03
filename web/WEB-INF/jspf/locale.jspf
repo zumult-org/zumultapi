@@ -1,0 +1,20 @@
+<%-- 
+    Document   : locale
+    Created on : 05.05.2021, 11:42:38
+    Author     : Elena Frick
+    Description: These file contains java code for setting Locale for jsp. pages
+--%>
+
+<%
+Locale currentLocale = request.getLocale();
+String pageParam_lang = request.getParameter("lang");
+if (pageParam_lang!=null && !pageParam_lang.isEmpty()){
+    if(pageParam_lang.equals(Locale.GERMAN.toLanguageTag())){
+        currentLocale = new Locale.Builder().setLanguage("de").setRegion("DE").build();
+    }else{
+        currentLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
+    }
+}
+
+ResourceBundle myResources = ResourceBundle.getBundle("resources.MessageBundle", currentLocale);
+%>

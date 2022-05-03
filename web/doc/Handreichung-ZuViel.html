@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script>(function (H) { H.className = H.className.replace(/\bno-js\b/, 'js') })(document.documentElement)</script>
+    <title>Handreichung zur Arbeit mit ZuViel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://purl.org/dc/elements/1.1/" rel="schema.dc" />
+    <meta name="dc.modified" content="2021-12-22T14:18:05Z" />
+    <meta name="generator" content="DocBook xslTNG version 1.6.0 / f33f08db / SAXON HE 10.6" />
+    <link href="./css/docbook.css" rel="stylesheet" />
+    <link href="./css/docbook-screen.css" rel="stylesheet" />
+</head>
+
+<body class="home">
+    <nav class="top"></nav>
+    <main>
+        <article lang="de-DE" class="article">
+            <header>
+                <h1>Handreichung zur Arbeit mit ZuViel</h1>
+                <h2>DFG-Projekt „Zugänge zu multimodalen Korpora gesprochener Sprache –
+                    Vernetzung und zielgruppenspezifische Ausdifferenzierung“ (ZuMult)</h2>
+                <div class="author">
+                    <h3><span class="first-last personname">Cordula Meißner</span></h3>
+                </div>
+                <div class="author">
+                    <h3><span class="first-last personname">Matthias Schwendemann</span></h3>
+                </div>
+                <div class="author">
+                    <h3><span class="first-last personname">Franziska Wallner</span></h3>
+                </div>
+            </header>
+            <div class="list-of-titles">
+                <div class="lot toc">
+                    <div class="title">Table of Contents</div>
+                    <ul class="toc">
+                        <li><a href="#R_s1"><span class="number">1<span class="sep"> </span></span>Handreichung zur
+                                Arbeit mit ZuViel</a>
+                            <ul class="toc">
+                                <li><a href="#_1_%C3%9Cberblick"><span class="number">1<span class="sep">.</span>1<span
+                                                class="sep"> </span></span>1 Überblick</a></li>
+                                <li><a href="#_2_Die_Komponenten"><span class="number">1<span class="sep">.</span>2<span
+                                                class="sep"> </span></span>2 Die Komponenten von ZuViel und ihre
+                                        Nutzungsoptionen</a></li>
+                                <li><a href="#_2.2_Markierungen_im"><span class="number">1<span
+                                                class="sep">.</span>3<span class="sep"> </span></span>2.2 Markierungen
+                                        im Transkript</a></li>
+                                <li><a href="#_2.3_Grundeinstellungen_f%C3%BCr"><span class="number">1<span
+                                                class="sep">.</span>4<span class="sep"> </span></span>2.3
+                                        Grundeinstellungen für das Abspielen der Video- bzw. Audioaufnahme</a></li>
+                                <li><a href="#_2.4_Optionen_f%C3%BCr"><span class="number">1<span
+                                                class="sep">.</span>5<span class="sep"> </span></span>2.4 Optionen für
+                                        Lemmaliste des Sprechereignisses</a></li>
+                                <li><a href="#_2.5_Komprimierte_Navigation"><span class="number">1<span
+                                                class="sep">.</span>6<span class="sep"> </span></span>2.5 Komprimierte
+                                        Navigation im Sprechereignis</a></li>
+                                <li><a href="#_2.6_Auswahl-_und"><span class="number">1<span class="sep">.</span>7<span
+                                                class="sep"> </span></span>2.6 Auswahl- und Downloadoptionen</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#R_s2"><span class="number">2<span class="sep"> </span></span>Quellen</a></li>
+                    </ul>
+                </div>
+            </div>
+            <section id="R_s1" class="section">
+                <header>
+                    <h2><span class="number">1<span class="sep"> </span></span>Handreichung zur Arbeit mit ZuViel</h2>
+                </header>
+                <p>ZuViel (Zugang zu Visualisierungselementen für Transkripte) ist ein Werkzeug zum
+                    Anzeigen von und Arbeiten mit Transkripten. Es wurde im Rahmen des Projekts ZuMult
+                    (Zugang zu multimodalen Korpora gesprochener Sprache) insbesondere für die didaktische
+                    Aufbereitung und Analyse von Sprechereignissen entwickelt. Aufgerufen werden kann das
+                    Interface von ZuViel über die anderen im ZuMult-Projekt entwickelten Werkzeuge <a
+                        href="http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuMal.jsp" class="link">ZuMal</a>
+                    (Zugang zu Merkmalsauswahl von Gesprächen) und <a
+                        href="http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuRecht.jsp?lang=de"
+                        class="link">ZuRecht</a> (Zugang zur Recherche in Transkripten). </p>
+                <p>ZuViel ermöglicht es, im Sprechereignis zu navigieren sowie ausgewählte sprachliche
+                    Phänomene oder Sequenzen zu markieren und zu analysieren.</p>
+                <p>Im Folgenden wird ein Überblick über das Interface und die einzelnen Komponenten von
+                    ZuViel gegeben (<a href="#_1_%C3%9Cberblick" class="link">Abschnitt 1</a>). Daran anschließend
+                    erfolgt eine detaillierte Erläuterung der einzelnen Komponenten (<a href="#_2_Die_Komponenten"
+                        class="link">Abschnitt 2</a>).</p>
+                <section id="_1_Überblick" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>1<span class="sep"> </span></span>1
+                            Überblick</h3>
+                    </header>
+                    <p>Das Interface von ZuViel (Zugang zu Visualisierungselementen für Transkripte)
+                        umfasst vier Komponenten, welche im Folgenden am Beispiel einer Kochinteraktion aus
+                        dem Korpus FOLK erläutert werden (vgl. <a href="#Abb_1" class="link">Abb. 1</a>): </p>
+                    <ol class="orderedlist" type="1">
+                        <li>
+                            <p>In der Mitte wird das Transkript des gewählten Sprechereignisses
+                                angezeigt. Für die Transkriptansicht und Markierungen im Transkript stehen
+                                vielfältige Optionen zur Auswahl (Vgl. <a href="#_2.1_Grundeinstellungen_f%C3%BCr"
+                                    class="link">2.1</a> und <a href="#_2.2_Markierungen_im" class="link">2.2</a>). </p>
+                        </li>
+                        <li>
+                            <p>Auf der rechten Seite befindet sich das Video zum ausgewählten
+                                Sprechereignis. Bei Gesprächen, zu denen kein Video zur Verfügung steht,
+                                findet sich an dieser Stelle die Audioaufnahme. Über den Play-Button kann
+                                das Abspielen des Videos bzw. der Audioaufnahme gestartet werden (vgl. <a
+                                    href="#_2.3_Grundeinstellungen_f%C3%BCr" class="link">2.3</a>).</p>
+                        </li>
+                        <li>
+                            <p>Auf der linken Seite wird die Lemmaliste des Sprechereignisses angezeigt.
+                                Diese enthält alle Wörter, die im Sprechereignis vorkommen sowie eine Angabe
+                                zu ihrer Häufigkeit. Oberhalb dieser Lemmaliste kann eine Referenzwortliste
+                                ausgewählt werden. Alle Wörter aus dem Sprechereignis, die auch in der
+                                ausgewählten Referenzwortliste vorkommen (im Bsp. auf <a href="#Abb_1" class="link">Abb.
+                                    1</a> ist es die Goethe-Zertifikatswortschatzliste B1), werden
+                                mit einem grünen Häkchen versehen (vgl. <a href="#_2.4_Optionen_f%C3%BCr"
+                                    class="link">2.4</a>). </p>
+                        </li>
+                        <li>
+                            <p>Rechts oben erscheint der Density Navigator. Dieser gibt eine kompakte
+                                Übersicht über die zeitliche Anordnung der Gesprächsbeiträge der
+                                verschiedenen Sprecher:innen und ermöglicht eine komprimierte Navigation
+                                durch das Transkript (vgl. <a href="#_2.5_Komprimierte_Navigation"
+                                    class="link">2.5</a>).</p>
+                        </li>
+                    </ol>
+                    <p>Zudem werden in ZuViel verschiedene Möglichkeiten zum Download angeboten (vgl.
+                        <a href="#_2.6_Auswahl-_und" class="link">2.6</a>).
+                    </p>
+                    <div id="Abb_1" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
+                                                class="viewport-cell" style="vertical-align:middle;"><span
+                                                    class="viewport"><img
+                                                        src="Handreichung_Zuviel_final_15-12-21_files/image1.png"
+                                                        style="width:605px;height:323px;" /></span></span></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>1<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 1: Struktur des Interface ZuViel</div>
+                        </header>
+                    </div>
+                </section>
+                <section id="_2_Die_Komponenten" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>2<span class="sep"> </span></span>2 Die
+                            Komponenten von ZuViel und ihre Nutzungsoptionen</h3>
+                    </header>
+                    <h3 id="_2.1_Grundeinstellungen_für" class="bridgehead">2.1 Grundeinstellungen
+                        für die Transkriptansicht eines Sprechereignisses</h3>
+                    <p>Für die Transkriptansicht können verschiedene Anzeigeoptionen gewählt werden.
+                        Voreingestellt ist die aussprachenahe Transkription. Diese erfolgte nach den
+                        Konventionen für computergestützte GAT-Minimaltranskripte in literarischer Umschrift
+                        (vgl. Schmidt/Schütte/Winterscheidt 2015). Neben einer generellen Kleinschreibung
+                        und dem Verzicht auf Interpunktion bedeutet das, dass alle Abweichungen von der
+                        Standardlautung notiert werden. Dazu zählen etwa Reduktionen (z. B.
+                        <em>schäl</em> [schäle] in Beitrag 0006,
+                        <em>schmeiß</em> [schmeiße] in Beitrag 0008 und
+                        <em>würd</em> [würde] in Beitrag 0009, Schnellsprechformen wie
+                        <em>se</em> [sie] in Beitrag 0008 und 0009 oder auch Häsitationen
+                        wie <em>ähm</em> in Beitrag 0006 (vgl. <a href="#Abb_1" class="link">Abb.
+                            1</a>). Auch Pausen (z. B. (.) für eine Mikropause von bis zu 0,2 Sekunden
+                        Dauer), Atmen (°h für Einatmen, h° für Ausatmen) und parasprachliche Merkmale wie
+                        Lachen oder Schmatzen wurden bei der Transkription festgehalten.
+                    </p>
+                    <p>Über den Menüpunkt „Parameter“ kann unter dem Punkt „Transkript“ eine
+                        orthografisch normalisierte Fassung des Transkripts aufgerufen werden (vgl. <a href="#Abb_2"
+                            class="link">Abb. 2</a>). Alle abweichend realisierten sprachlichen
+                        Einheiten werden dann in ihrer standardorthografischen Fassung angezeigt. Bei Bedarf
+                        können die abweichend realisierten sprachlichen Einheiten durch Unterstreichung
+                        hervorgehoben werden. Über den Menüpunkt „Parameter“ ist es auch möglich, sich
+                        anstelle der aussprachenahen Transkription die annotierten Wortarten, die
+                        Grundformen oder auch die phonologische Umschrift anzeigen zu lassen. Unabhängig von
+                        der gewählten Ansicht werden für jedes Token im Transkript die orthografisch
+                        normalisierte Fassung, das Lemma, die Wortart und die phonologische Umschrift
+                        angezeigt, sobald der Cursor auf ein einzelnes Token gelegt wird.</p>
+                    <p>Zudem kann über den Menüpunkt „Parameter“ die Sprechgeschwindigkeit visualisiert
+                        werden. Langsamer gesprochene Einheiten werden dann gesperrt dargestellt, während
+                        schneller gesprochene Einheiten eng gesetzt erscheinen. Darüber hinaus können über
+                        diesen Menüpunkt auch die Schrift und die Schriftgröße verändert werden (vgl. <a href="#Abb_2"
+                            class="link">Abb. 2</a>).</p>
+                    <div id="Abb_2" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><img
+                                        src="Handreichung_Zuviel_final_15-12-21_files/image4.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>2<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 2: Optionen zur Transkriptanzeige in ZuViel
+                            </div>
+                        </header>
+                    </div>
+                    <p>Mithilfe des Icons am linken Zeilenrand können die Annotationen zum jeweiligen
+                        Sprecherbeitrag in Form eines Pop-up-Fensters aufgerufen werden (vgl. <a href="#Abb_3"
+                            class="link">Abb. 3</a>). Durch das Anklicken von Annotationen-Option aus
+                        der Icon-Menüliste werden hier die transkribierten Token, ihre orthografische
+                        Normalisierung, das zugehörige Lemma, die Wortart, die phonologische Umschrift sowie
+                        die Sprechgeschwindigkeit für den ausgewählten Beitrag tabellarisch angezeigt.
+                        Ebenfalls über das Icon am linken Zeilenrand kann die Partituransicht für den
+                        jeweiligen Sprecherbeitrag aufgerufen werden. Auf diese Weise ist es möglich
+                        überlappende Sprecherbeiträge besser zu visualisieren. Zusätzlich ist es mit den
+                        Optionen „Start Selection“ und „End Selection“ möglich, einen Transkriptausschnitt
+                        zu definieren, der dann auch isoliert heruntergeladen und weiterbearbeitet werden
+                        kann (vgl. hierzu <a href="#_2.6_Auswahl-_und" class="link">2.6</a>).</p>
+                    <div id="Abb_3" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><img
+                                        src="Handreichung_Zuviel_final_15-12-21_files/image10.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>2<span class="sep">.</span>2<span
+                                        class="sep"> </span></span>Abb. 3: Anzeige von Annotationen und der Partitur
+                            </div>
+                        </header>
+                    </div>
+                </section>
+                <section id="_2.2_Markierungen_im" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>3<span class="sep"> </span></span>2.2
+                            Markierungen im Transkript</h3>
+                    </header>
+                    <p>In der Menüzeile auf der oberen rechten Seite der ZuViel-Oberfläche befindet sich
+                        ein Eingabefenster, über das Markierungen im Transkript vorgenommen werden können
+                        (vgl. <a href="#Abb_4" class="link">Abb. 4</a>). Zunächst muss hierfür die Eingabeebene
+                        bestimmt werden. Möglich ist dabei die Hervorhebung von normalisierten Formen
+                        (norm), von Lemmata (lemma) oder von Wortarten (pos) nach dem <a
+                            href="http://www.sfs.uni-tuebingen.de/resources/stts-1999.pdf"
+                            class="link">Stuttgart-Tübingen-Tagset</a>, welches um mündliche Kategorien erweitert
+                        wurde (Westpfahl et al. 2017). So lassen sich durch die Eingabe norm=nein alle
+                        Realisierungen von <em>nein</em> im Transkript markieren. Hierzu zählen
+                        etwa die transkribierten Formen <em>nee</em> und
+                        <em>nö</em>. Die Eingabe lemma=gehen markiert sämtliche Flexionsformen
+                        von <em>gehen</em>, so z.B. die transkribierten Formen
+                        <em>geht</em> und <em>ging</em>. Mit der Eingabe von
+                        pos=PTKMA werden sämtliche Modalpartikeln im Transkript hervorgehoben, so etwa
+                        <em>einfach</em>, <em>ja, schon </em>und<em> mal
+                        </em>(vgl. <a href="#Abb_4" class="link">Abb. 4</a>). Links neben dem
+                        Eingabefenster befindet sich eine Eingabehilfe. Diese enthält alle Wortarten des
+                        Stuttgart-Tübingen-Tagsets. Ein Klick auf einen Tag fügt den entsprechenden
+                        Suchausdruck direkt ins Suchfeld ein. Es ist auch möglich mehrere Formen
+                        nacheinander auf unterschiedlichen Eingabeebenen im Transkript zu markieren. So sind
+                        im Transkriptausschnitt in <a href="#Abb_4" class="link">Abb. 4</a> sowohl die
+                        Modalpartikeln als auch die Realisierungen der Form <em>nein</em>
+                        hervorgehoben.
+                    </p>
+                    <div id="Abb_4" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><img
+                                        src="Handreichung_Zuviel_final_15-12-21_files/image15.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>3<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 4: Transkriptausschnitt mit Markierungen aller
+                                Modalpartikeln
+                                (PTKMA) und der Realisierung <em>nee</em> der normalisierten Form
+                                <em>nein</em>
+                            </div>
+                        </header>
+                    </div>
+                </section>
+                <section id="_2.3_Grundeinstellungen_für" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>4<span class="sep"> </span></span>2.3
+                            Grundeinstellungen für das Abspielen der Video- bzw. Audioaufnahme</h3>
+                    </header>
+                    <p>Auf der rechten Seite der Oberfläche von ZuViel befindet sich die Audioaufnahme
+                        oder – sofern verfügbar – ein oder mehrere Videos zum ausgewählten Sprechereignis.
+                        Über den Play-Button kann das Abspielen der Aufnahme gestartet werden. Das Audio
+                        bzw. Video und das Transkript sind miteinander verknüpft. Die jeweils aktuelle
+                        Abspielposition ist in der Transkriptansicht hellblau unterlegt (vgl. <a href="#Abb_5"
+                            class="link">Abb. 5</a>). Das Video ist zudem mit einer Untertitelung
+                        versehen. Voreingestellt ist die aussprachenahe Transkription. Über den Menüpunkt
+                        „Parameter“ kann alternativ die orthografisch normalisierte Fassung eingestellt
+                        werden. Es ist aber auch möglich, die Untertitelung auszublenden. Zudem kann über
+                        den Menüpunkt „Parameter“ die Abspielgeschwindigkeit der Video- bzw. Audioaufnahme
+                        angepasst werden.</p>
+                    <div id="Abb_5" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
+                                                class="viewport-cell" style="vertical-align:middle;"><span
+                                                    class="viewport"><img
+                                                        src="Handreichung_Zuviel_final_15-12-21_files/image16.png"
+                                                        style="width:605px;height:210px;" /></span></span></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>4<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 5: Verbindung von Videountertitelung und
+                                Transkript</div>
+                        </header>
+                    </div>
+                </section>
+                <section id="_2.4_Optionen_für" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>5<span class="sep"> </span></span>2.4
+                            Optionen für Lemmaliste des Sprechereignisses</h3>
+                    </header>
+                    <p>Auf der linken Seite der ZuViel-Oberfläche wird eine automatisch generierte
+                        Lemmaliste des Sprechereignisses angezeigt. Diese enthält alle Grundformen der im
+                        Sprechereignis vorkommenden Token sowie eine Angabe zu ihrer Frequenz. Token, die
+                        nicht automatisch lemmatisiert werden konnten, erscheinen in ihrer transkribierten
+                        Form in der Lemmaliste. Unverständliche Einheiten werden mit +++ ausgewiesen.
+                        Oberhalb der Lemmaliste kann eine Referenzwortliste ausgewählt werden. Alle Wörter
+                        aus dem Sprechereignis, die auch in der ausgewählten Referenzwortliste vorkommen,
+                        werden mit einem Häkchen versehen. Zusätzlich wird dieser Wortschatz auch im
+                        Transkript gelb unterlegt. Bei den hier zur Auswahl stehenden Referenzwortlisten
+                        handelt es sich einerseits um kompetenz- und frequenzbezogene Listen und
+                        andererseits um thematische Listen. Die kompetenzbezogenen Listen entstammen den
+                        Goethe-Zertifikatswortschätzen <a
+                            href="https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf" class="link">-&gt;
+                            A1</a>, <a
+                            href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf"
+                            class="link">-&gt; A2</a> und <a
+                            href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf"
+                            class="link">-&gt; B1</a>. Die frequenzbezogenen Listen (Herder-Listen) beruhen auf den
+                        1000, 2000, 3000, 4000 und 5000 häufigsten Wörtern des Deutschen nach dem
+                        Frequenzwörterbuch von Tschirner/Möhring (2019). Die thematischen Listen umfassen
+                        die Lexik der Wortschatzbereiche „Essen“, „Haus und Wohnung“ und „Schule und
+                        Ausbildung“ und basieren auf dem Übungswortschatz „Sage und Schreibe“
+                        (Fandrych/Tallowitz 2019).</p>
+                    <p>Durch Anklicken eines Lemmas in der Lemmaliste können alle Vorkommen dieses Lemmas
+                        im Transkript hervorgehoben werden. Sie werden dann in roter Umrandung angezeigt
+                        (vgl. <a href="#Abb_6" class="link">Abb. 6</a>). Durch weiteres Klicken kann von einem
+                        Vorkommen zum nächsten gesteuert werden. </p>
+                    <p><a href="#Abb_6" class="link">Abb. 6</a> zeigt, wie das Lemma „Nudel“ ausgewählt wurde.
+                        Durch Klicken springt man von der flektierten Wortform „Nudeln“ zur nächsten (roter
+                        Kasten).</p>
+                    <div id="Abb_6" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><img
+                                        src="Handreichung_Zuviel_final_15-12-21_files/image18.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>5<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 6: Hervorhebung einzelner Wortschatzeinheiten im
+                                Transkript
+                                ausgehend von der Transkript-Lemmaliste</div>
+                        </header>
+                    </div>
+                </section>
+                <section id="_2.5_Komprimierte_Navigation" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>6<span class="sep"> </span></span>2.5
+                            Komprimierte Navigation im Sprechereignis</h3>
+                    </header>
+                    <p>Der Density Navigator befindet sich im Interface auf der rechten Seite oberhalb
+                        der Video- bzw. Audioaufnahme. Durch Klicken auf das Pluszeichen in der rechten
+                        oberen Ecke kann er vergrößert werden. Der Density Navigator gibt eine kompakte
+                        Übersicht über die zeitliche Anordnung der Gesprächsbeiträge der verschiedenen
+                        Sprecher:innen und ermöglicht eine komprimierte Navigation durch das Transkript mit
+                        dem Fokus auf die Häufigkeit von Sprecherwechseln sowie die Ausprägung von
+                        Standardferne und von Sprechgeschwindigkeit. Auf diese Weise können im Transkript
+                        Stellen mit besonders vielen/wenigen Sprecherwechseln, großer/geringer Abweichung
+                        von einer am orthographischen Standard orientierten Aussprache oder hoher/niedriger
+                        Sprechgeschwindigkeit gezielt aufgefunden werden. Die Informationen sind im
+                        Navigator folgendermaßen repräsentiert (vgl. <a href="#Abb_7" class="link">Abb.
+                            7</a>):</p>
+                    <p><strong class="bold">Sprecherbeiträge </strong>sind durch Balken in der
+                        <strong class="bold">Farbe</strong> wiedergegeben, die einer:m Sprecher:in
+                        auch im Transkript zugeordnet ist (in <a href="#Abb_7" class="link">Abb. 7</a> etwa rot
+                        für Sprecher CT).
+                    </p>
+                    <p><strong class="bold">Standardferne</strong> ist durch eine <strong class="bold">hellere
+                            Farbe</strong> dieser Balken kodiert.</p>
+                    <p><strong class="bold">Sprechgeschwindigkeit</strong> ist durch die Anzahl von
+                        <strong class="bold">Pfeilsymbolen</strong> markiert; je mehr Pfeile, desto
+                        höher die Artikulationsrate im betreffenden Beitrag.
+                    </p>
+                    <p>Mit einem Doppelklick auf einen Balken springt man in der Transkriptionsansicht zu
+                        dieser Stelle im Transkript und kann sich durch einen weiteren Doppelklick auf ein
+                        Token in der Zeile im Transkript die Stelle anhören.</p>
+                    <div id="Abb_7" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
+                                                class="viewport-cell" style="vertical-align:middle;"><span
+                                                    class="viewport"><img
+                                                        src="Handreichung_Zuviel_final_15-12-21_files/image19.png"
+                                                        style="width:605px;height:289px;" /></span></span></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>6<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 7: Die im Density Navigator kodierten
+                                Informationen für ein
+                                komprimiertes Suchen innerhalb des Transkripts</div>
+                        </header>
+                    </div>
+                </section>
+                <section id="_2.6_Auswahl-_und" class="section">
+                    <header>
+                        <h3><span class="number">1<span class="sep">.</span>7<span class="sep"> </span></span>2.6
+                            Auswahl- und Downloadoptionen</h3>
+                    </header>
+                    <p>Die Oberfläche von ZuViel ermöglicht vielfältige Auswahl- und Downloadoptionen.
+                        Über das Drucksymbol in der Menüzeile kann die aktuell angezeigte Transkriptansicht
+                        als PDF heruntergeladen und ausgedruckt werden. Hierbei werden sämtliche
+                        Hervorhebungen und Markierungen, die vorab vorgenommen wurden, berücksichtigt. </p>
+                    <p>Es ist auch möglich, lediglich einen Teil des Transkripts herunterzuladen bzw.
+                        auszudrucken. Hierzu klickt man auf das Icon am Zeilenbeginn des gewünschten
+                        Transkriptausschnitts und wählt „Start Selection“. Am Ende des gewünschten
+                        Ausschnitts klickt man erneut auf das Icon am Zeilenbeginn und wählt „End
+                        Selection“. Um den gewünschten Ausschnitt erscheint ein grauer Rahmen (vgl. <a href="#Abb_8"
+                            class="link">Abb. 8</a>). Über den Menüpunkt „Auswahl“ kann der gewählte
+                        Ausschnitt in einem neuen Tab gesondert aufgerufen werden. Hier stehen
+                        unterschiedliche Audio- und Textformate zum Download und zur weiteren Bearbeitung
+                        zur Verfügung.</p>
+                    <div id="Abb_8" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
+                                                class="viewport-cell" style="vertical-align:middle;"><span
+                                                    class="viewport"><img
+                                                        src="Handreichung_Zuviel_final_15-12-21_files/image20.png"
+                                                        style="width:605px;height:369px;" /></span></span></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>7<span class="sep">.</span>1<span
+                                        class="sep"> </span></span>Abb. 8: Auswahl eines Transkriptausschnitts</div>
+                        </header>
+                    </div>
+                    <p>Darüber hinaus besteht auch die Möglichkeit, verschiedene Wortlisten zum
+                        Sprechereignis herunterzuladen bzw. auszudrucken. Durch Klicken auf den Download-
+                        und Printbutton unterhalb der Lemmaliste öffnet sich ein Dialogfenster, welches
+                        verschiedene Optionen anbietet (vgl. <a href="#Abb_9" class="link">Abb. 9</a>): Zu
+                        Auswahl stehen Lemmalisten, Listen transkribierter Formen und Listen orthografisch
+                        normalisierter Formen. Dabei ist es möglich, alle im Sprechereignis vorkommenden
+                        Lemmata bzw. Token auszuwählen bzw. nur diejenigen, die von der jeweils
+                        eingestellten Referenzwortliste gedeckt bzw. nicht gedeckt werden. Zudem kann
+                        eingestellt werden,</p>
+                    <ul class="itemizedlist">
+                        <li>
+                            <p>ob die Lemmata bzw. Token auf den Listen alphabethisch, nach Frequenz oder
+                                chronologisch (also in der Reihenfolge ihres Vorkommens im Transkript)
+                                angeordnet sein sollen,</p>
+                        </li>
+                        <li>
+                            <p>und ob die Listen Frequenzangaben enthalten sollen (frequency list) oder
+                                nicht (simple list)</p>
+                        </li>
+                    </ul>
+                    <div id="Abb_9" class="figure">
+                        <div class="mediaobject">
+                            <div class="imageobject">
+                                <div class="media"><img
+                                        src="Handreichung_Zuviel_final_15-12-21_files/image23.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <header>
+                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
+                                    class="number">1<span class="sep">.</span>7<span class="sep">.</span>2<span
+                                        class="sep"> </span></span>Abb. 9: Downloadoptionen für Wordlisten zum
+                                Sprechereignis</div>
+                        </header>
+                    </div>
+                    <p>Der Download erfolgt im Format txt; eine Weiterverarbeitung – bspw. in Word oder
+                        Excel – ist möglich.</p>
+                    <p>Die in der Menüzeile unter den Punkten „Sprechereignis“ und „Auswahl“ angelegte
+                        Möglichkeit, Kollektionen zu bilden und aufzurufen, ist aktuell noch nicht in der
+                        ZuViel-Oberfläche implementiert.</p>
+                </section>
+            </section>
+            <section id="R_s2" class="section">
+                <header>
+                    <h2><span class="number">2<span class="sep"> </span></span>Quellen</h2>
+                </header>
+                <p>Fandrych, Christian; Tallowitz, Ulrike (2019): Sage und Schreibe: Übungswortschatz
+                    Grundstufe A1–B1 mit Lösungen. Neubearbeitung mit Audio-CD, 1. Auflage. Stuttgart: Ernst
+                    Klett.</p>
+                <p>Schmidt, Thomas; Schütte, Winfried; Winterscheidt, Jenny (2015): cGAT: Konventionen
+                    für das computergestützte Transkribieren in Anlehnung an das Gesprächsanalytische
+                    Transkriptionssystem 2 (GAT2). Online:
+                    https://ids-pub.bsz-bw.de/frontdoor/index/index/docId/4616.</p>
+                <p lang="en-US">Tschirner, Erwin; Möhring, Jupp (2019): A Frequency Dictionary of
+                    German. Core vocabulary for learners. 2. Auflage. London/New York: Routledge.</p>
+                <p><span lang="en-US" class="phrase">Westpfahl, Swantje; Schmidt, Thomas; Jonietz, Jasmin;
+                        Borlinghaus, Anton (2017): </span><em lang="en-US">STTS 2.0.
+                    </em><em>Guidelines für die Annotation von POS-Tags für Transkripte
+                        gesprochener Sprache in Anlehnung an das Stuttgart Tübingen Tagset
+                        (STTS)</em>. Arbeitspapier. Mannheim: Institut für Deutsche Sprache. Unter:
+                    https://ids-pub.bsz-bw.de/files/6063/Westpfahl_Schmidt_Jonietz_Borlinghaus_STTS_2_0_2017.pdf</p>
+            </section>
+        </article>
+    </main>
+    <nav class="bottom"></nav>
+</body>
+
+</html>

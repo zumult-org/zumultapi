@@ -1,0 +1,89 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Set"%>
+<%@page import="org.zumult.objects.MetadataKey"%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@ page pageEncoding="UTF-8" %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="http://agd.ids-mannheim.de/folk.shtml">
+            <% String imgSrc = "../images/agd.png";
+               if (corpusID.startsWith("GWSS")){
+                   imgSrc = "../images/gewiss-logo.png";
+               } else if (corpusID.startsWith("FOLK")){
+                   imgSrc = "../images/folk1.png";
+               }
+            %>
+            <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <!-- ******************* -->
+                <!-- METADATA -->
+                <!-- ******************* -->
+
+                <li class="nav-item active">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="#metadataModal" data-toggle="modal" 
+                       onclick="openMetadataModal('<%= corpusID %>')"
+                       title="Metadaten zu <%= corpusID %> anzeigen"
+                       >
+                        <b>
+                         <%= backend.getCorpus(corpusID).getName("de") %>
+                        </b>
+                    </a>
+                </li>
+                
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       title="Übersicht nach ausgewähltem Metadaten-Feld gruppieren"
+                       >
+                        Gruppieren nach...
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <% 
+                            Set<MetadataKey> allKeys = backend.getCorpus(corpusID).getSpeechEventMetadataKeys();
+                            allKeys.addAll(backend.getCorpus(corpusID).getEventMetadataKeys());
+                            for (MetadataKey key : allKeys){
+                                String keyID = key.getID();
+                                String keyName = key.getName("de");
+                        %>
+                        <a class="dropdown-item" href="speecheventsOverview.jsp?corpusID=<%= corpusID %>&amp;groupingKey=<%=keyID%>">                            
+                            <%= keyName %>
+                        </a>                    
+                        <%
+                            }
+                        %>
+                        
+                        <div class="dropdown-divider"></div>
+                        
+                        <a class="dropdown-item" href="speecheventsOverview.jsp?corpusID=<%= corpusID %>&amp;groupingKey">                            
+                            Keine Gruppierung
+                        </a>                    
+                        
+                    </div>
+                </li>
+
+
+                <!-- ******************* -->
+                <!-- ANSICHT -->
+                <!-- ******************* -->
+                
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="#">Download</a>
+                </li> -->
+            </ul>
+        </div>
+                            
+        <!-- <form class="form-inline" action="javascript:searchFromBox()">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input class="form-control" type="text" placeholder="pos=ART" aria-label="Search" id="searchBox"/>
+        </form>                            -->
+    </nav>                
+
+

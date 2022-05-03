@@ -1,0 +1,132 @@
+<%@page import="org.zumult.io.Constants"%>
+<%@ page pageEncoding="UTF-8" %>             
+
+<script type="text/javascript">    
+
+    var XML_ELEMENT_NAME_REPETITIONS='<%=Constants.REPETITON_XML_ELEMENT_NAME_REPETITIONS %>';
+    var XML_ELEMENT_NAME_REPETITION='<%=Constants.REPETITON_XML_ELEMENT_NAME_REPETITION %>';
+    var XML_ELEMENT_NAME_SPEAKER='<%=Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER %>';
+    var XML_ELEMENT_NAME_SPEAKER_METADATA='<%=Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_METADATA %>';
+    var XML_ELEMENT_NAME_REPETITON_TYPE='<%=Constants.REPETITON_XML_ELEMENT_NAME_REPETITON_TYPE %>';
+    var XML_ELEMENT_NAME_MIN_DISTANCE = '<%= Constants.REPETITON_XML_ELEMENT_NAME_MIN_DISTANCE %>';
+    var XML_ELEMENT_NAME_MAX_DISTANCE = '<%= Constants.REPETITON_XML_ELEMENT_NAME_MAX_DISTANCE %>';
+    var XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS='<%= Constants.REPETITON_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS %>';
+    var XML_ELEMENT_NAME_SPEAKER_CHANGE='<%= Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_CHANGE %>';
+    var XML_ELEMENT_NAME_POSITION_TO_MATCH='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_MATCH %>';
+    var XML_ELEMENT_NAME_POSITION_TO_OVERLAP='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>';
+    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>';
+    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>';
+    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>';
+    var XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY='<%= Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY %>';
+    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION='<%= Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION %>';
+    
+    
+    var regexDistance = /^(0?\d|1\d|20)$/;
+    var regexPositionToSpeakerChange =/^(0?[0-5])$/;
+    
+    function getXMLForRepetitions(){
+        var repetitions = [];
+        repetitions.push(
+            "<",XML_ELEMENT_NAME_REPETITIONS,">"
+        );
+        
+        $('#repetition-search-form').find('.repetitionPropertiesForm').each(function(){
+            var annotationLayer = $(this).find('.annotationLayerSelect').val();
+            var speaker = $(this).find('.speakerSelect').val();
+            var speakerMetadata = "";
+            if(speaker==="false"){
+                speakerMetadata = $(this).find('.speakerMetadataInputField').val()
+                        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                
+            }
+            var minDistance = getDistance(this, '.minDistance', 0, regexDistance);
+            var maxDistance = getDistance(this, '.maxDistance', 20, regexDistance);
+            var speakerChange = $(this).find('.speakerChangeSelect').val();
+            var positionToMatch = $(this).find('.positionToMatch').val();
+            var positionToOverlap = $(this).find('.positionToOverlap').val();
+            var positionToSpeakerChangeType = $(this).find('.positionToSpeakerChangeType').val();
+            var positionToSpeakerChangeMin = 'null';
+            var positionToSpeakerChangeMax = 'null';
+            if(positionToSpeakerChangeType!=='null'){
+                positionToSpeakerChangeMin = getDistance(this, '.positionToSpeakerChangeMin', 0, regexPositionToSpeakerChange);
+                positionToSpeakerChangeMax = getDistance(this, '.positionToSpeakerChangeMax', 0, regexPositionToSpeakerChange);
+            }
+            var ignoreFunctionalWords = false;
+            if ($(this).find('.ignoreFunctionalWordsCheckBox').is(':checked')) {ignoreFunctionalWords = true;}
+            var contextPrecededBy = $(this).find('.repetitionKontextField').val();
+            var contextWithinSpeakerContribution = false;
+            if ($(this).find('.withinContributionCheckBox').is(':checked')) {contextWithinSpeakerContribution = true;}
+                     
+            repetitions.push(
+                "<",XML_ELEMENT_NAME_REPETITION,">",
+                "<",XML_ELEMENT_NAME_REPETITON_TYPE,">",
+                annotationLayer,
+                "</",XML_ELEMENT_NAME_REPETITON_TYPE,">",
+                "<",XML_ELEMENT_NAME_SPEAKER,">",
+                speaker,
+                "</",XML_ELEMENT_NAME_SPEAKER,">",
+                "<",XML_ELEMENT_NAME_SPEAKER_METADATA,">",
+                speakerMetadata,
+                "</",XML_ELEMENT_NAME_SPEAKER_METADATA,">",
+                "<",XML_ELEMENT_NAME_MIN_DISTANCE,">",
+                minDistance,
+                "</",XML_ELEMENT_NAME_MIN_DISTANCE,">",
+                "<",XML_ELEMENT_NAME_MAX_DISTANCE,">",
+                maxDistance,
+                "</",XML_ELEMENT_NAME_MAX_DISTANCE,">",
+                "<",XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS,">",
+                ignoreFunctionalWords,
+                "</",XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS,">",
+                "<",XML_ELEMENT_NAME_SPEAKER_CHANGE,">",
+                speakerChange,
+                "</",XML_ELEMENT_NAME_SPEAKER_CHANGE,">",
+                "<",XML_ELEMENT_NAME_POSITION_TO_MATCH,">",
+                positionToMatch,
+                "</",XML_ELEMENT_NAME_POSITION_TO_MATCH,">",
+                "<",XML_ELEMENT_NAME_POSITION_TO_OVERLAP,">",
+                positionToOverlap,
+                "</",XML_ELEMENT_NAME_POSITION_TO_OVERLAP,">",
+                 "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE,">",
+                positionToSpeakerChangeType,
+                "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE,">",
+                 "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE,">",
+                positionToSpeakerChangeMin,
+                "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE,">",
+                 "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
+                positionToSpeakerChangeMax,
+                "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
+                 "<",XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY,">",
+                contextPrecededBy,
+                "</",XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY,">",
+                 "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
+                contextWithinSpeakerContribution,
+                "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
+                "</",XML_ELEMENT_NAME_REPETITION,">"
+            );
+                        
+        });
+        
+        repetitions.push(
+            "</",XML_ELEMENT_NAME_REPETITIONS,">"
+        );
+                        
+        //alert(repetitions.join(""));
+        return repetitions.join("");
+    }
+    
+    function getDistance(obj, selector, defaultValue, regex){
+        
+        // get value
+        var n = $(obj).find(selector).val();
+
+        //verify value
+        if (n.match(regex)) {                        
+            return n;
+        }else{
+            // use defaut values
+            $(selector).val(defaultValue);
+            return defaultValue;
+        }
+    }
+     
+</script>

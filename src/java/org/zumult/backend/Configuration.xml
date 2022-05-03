@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- ###CHANGE_FOR_RELEASE### -->
+    <backend classPath="org.zumult.backend.implementations.AGDFileSystem">
+    <!--<backend classPath="org.zumult.backend.implementations.DGD2Oracle">  -->
+    <!-- <backend classPath="org.zumult.backend.implementations.COMAFileSystem"> -->
+        <!-- more info here -->
+        
+        <database-url>https://dgd.ids-mannheim.de</database-url>
+        <!-- <database-url>https://pragora-2.ids-mannheim.de</database-url> -->
+        
+        <username>test@zumult.org</username>        
+        <password>Let!Me!In</password>
+ 
+        <!-- ************************** -->
+        <!-- for zumult.ids-mannheim.de -->
+        <!-- ************************** -->
+        <!-- <rest-api-base-url>http://zumult.ids-mannheim.de/ProtoZumult/api</rest-api-base-url>
+        <web-app-base-url>http://zumult.ids-mannheim.de/ProtoZumult</web-app-base-url>
+        <transcript-path>/home/zumult/DATA/iso-transcripts</transcript-path>
+        <protocol-path>/home/zumult/DATA/protocols</protocol-path>
+        <media-path>http://zumult.ids-mannheim.de/video</media-path>
+        <media-archive-path>/srv/archiv</media-archive-path>
+        <media-distribution-path>/srv/video</media-distribution-path>
+        <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
+        <ffmpeg-path>ffmpeg</ffmpeg-path> 
+
+        <metadata-path>/home/zumult/DATA/metadata</metadata-path>
+        <material-path></material-path> 
+        
+        <index-output-path>/home/zumult/INDEX/</index-output-path>        
+        <search-index-path>/home/zumult/INDEX/</search-index-path>   -->
+        
+        <!-- *******   END: for zumult.ids-mannheim.de   ***** -->
+        
+        <!-- ************************** -->
+        <!-- for zumult test server (http://10.0.10.103) -->
+        <!-- ************************** -->
+        <rest-api-base-url>http://dgd02.ids-mannheim.de/ProtoZumult/api</rest-api-base-url>
+        <web-app-base-url>http://dgd02.ids-mannheim.de/ProtoZumult</web-app-base-url>
+        <transcript-path>/home/zumult/DATA/iso-transcripts</transcript-path>
+        <protocol-path>/home/zumult/DATA/protocols</protocol-path>
+        <media-path>http://dgd02.ids-mannheim.de/video</media-path>
+        <media-archive-path>/srv/archiv</media-archive-path>
+        <media-distribution-path>/srv/video</media-distribution-path>
+        <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
+        <ffmpeg-path>ffmpeg</ffmpeg-path> 
+
+        <metadata-path>/home/zumult/DATA/metadata</metadata-path>
+        <material-path></material-path> 
+        
+        <index-output-path>/home/zumult/INDEX/</index-output-path>        
+        <search-index-path>/home/zumult/INDEX/</search-index-path> 
+        <!-- *******   END: for zumult test server   ***** -->
+
+
+        <!-- ************************************ -->
+        <!-- for Thomas' local (Windows) machines -->
+        <!-- ************************************ -->
+        <!-- <rest-api-base-url>http://localhost:8080/DGDRESTTest/api</rest-api-base-url>
+        <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url>
+        <transcript-path>D:\AGD-DATA\dgd2_data\iso-transcripts</transcript-path>
+        <protocol-path>D:\AGD-DATA\dgd2_data\protocols</protocol-path>
+        <metadata-path>D:\AGD-DATA\dgd2_data\metadata</metadata-path>
+        <media-path>http://localhost:8080/video/DISTRIBUTION</media-path>
+        <media-archive-path>N:\ARCHIV</media-archive-path>
+        <media-distribution-path>N:\DISTRIBUTION</media-distribution-path>
+        <media-snippets-path>D:\ZuMult\MEDIA-SNIPPETS</media-snippets-path>
+        <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
+        <material-path></material-path> 
+        
+        <index-input-path>D:\AGD-DATA\dgd2_data\iso-transcripts</index-input-path> 
+        <index-output-path>D:\ZuMult\INDICES\</index-output-path> 
+        
+        <search-index-path>D:\ZuMult\INDICES\</search-index-path> -->
+        <!-- *******   END: for Thomas   ***** -->
+        
+        
+        <!-- ************************************************************** -->
+        <!-- ***** WHAT FOLLOWS IS NOT SPECIFIC TO SERVER OR LOCAL MACHINES -->
+        <!-- ************************************************************** -->
+        
+        
+        <!-- new 25-11-2020, for issue #22 -->
+        <free-data>
+            <free-path>prototypeJson/FOLK.json</free-path>            
+            <free-path>prototypeJson/gesprachstypTreeselectFOLK.json</free-path>
+            <free-path>prototypeJson/themenFOLK.json</free-path>
+            <free-path>prototypeJson/artFOLK.json</free-path>
+            <free-path>prototypeJson/sprachregionTreeselectFOLK.json</free-path>
+            
+            <free-path>prototypeJson/GWSS.json</free-path>
+            <free-path>prototypeJson/gesprachstypTreeselectGWSS.json</free-path>
+            <free-path>prototypeJson/themenGWSS.json</free-path>
+            <free-path>prototypeJson/artGWSS.json</free-path>
+            <free-path>prototypeJson/sprachregionTreeselectGWSS.json</free-path>
+            <free-path>prototypeJson/langGWSS.json</free-path>
+        </free-data>
+
+        
+        <search-index-speaker-based>SB_BETV</search-index-speaker-based>
+        <search-index-speaker-based>SB_GWSS</search-index-speaker-based>
+        <search-index-speaker-based>SB_MEND</search-index-speaker-based>
+        <search-index-speaker-based>SB_FOLK</search-index-speaker-based>
+        <search-index-speaker-based>SB_DNAM</search-index-speaker-based>
+        <search-index-speaker-based>SB_DH--_without_Punct</search-index-speaker-based>
+        <search-index-speaker-based>SB_DH--_with_Punct</search-index-speaker-based>
+        <search-index-speaker-based>SB_HMAT</search-index-speaker-based>
+
+        <search-index-transcript-based>TB_BETV</search-index-transcript-based>
+        <search-index-transcript-based>TB_GWSS</search-index-transcript-based>
+        <search-index-transcript-based>TB_MEND</search-index-transcript-based>
+        <search-index-transcript-based>TB_FOLK</search-index-transcript-based>
+        <search-index-transcript-based>TB_DNAM</search-index-transcript-based>
+        <search-index-transcript-based>TB_DH--_without_Punct</search-index-transcript-based>
+        <search-index-transcript-based>TB_DH--_with_Punct</search-index-transcript-based>
+        <search-index-transcript-based>TB_HMAT</search-index-transcript-based>
+        
+        <!-- This is for a COMAFileSystem backend, we don't need other paths 
+             here, because the COMA files will know themselves where to find everything -->
+        <!-- <metadata-path>N:\Workspace\HZSK</metadata-path>
+        <media-path>N:\DISTRIBUTION</media-path>
+        <material-path></material-path>
+        <index-output-path>D:\ZuMult-Index</index-output-path>
+        <index-input-path>D:\AGD-DATA\dgd2_data\iso-transcripts</index-input-path>
+        <transcript-path>D:\AGD-DATA\dgd2_data\iso-transcripts</transcript-path>
+        <rest-api-base-url>http://localhost:8080/DGDRESTTest/api</rest-api-base-url>
+        <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url> -->
+        
+        
+
+        <!-- START: MTAS and search index configuration parameters -->
+        <mtas-config-path>src\java\org\zumult\sample\query\config\mtas_config_TB.xml</mtas-config-path>
+        <mtas-docker-path>src\java\org\zumult\sample\query\implementations</mtas-docker-path>
+        <mtas-download>build\web\downloads</mtas-download>
+        <search-engine>mtas</search-engine>
+        <!--<corpus-ids-for-idexing>DH-;FOLK;MEND;</corpus-ids-for-idexing>-->
+        <!-- <corpus-ids-for-idexing>DH-;ZW-;FOLK;GWSS;MEND;DNAM</corpus-ids-for-idexing> -->
+        <!-- <corpus-ids-for-indexing>FOLK;GWSS;MEND;DNAM;BETV</corpus-ids-for-indexing> --> <!-- NOTE: add - to ZW and DH -->
+        <corpus-ids-for-indexing>DH--;FOLK;GWSS;MEND;DNAM;BETV;HMAT</corpus-ids-for-indexing>
+        <transcript-id-length>23</transcript-id-length> <!-- e.g. FOLK_E_00266_SE_01_T_06 important for speaker-based search because transcript names are SpeakerIntitials_FOLK_E_00266_SE_01_T_06 -->
+        <!-- NEW 21-09-2020 -->
+        <!-- e.g. index_TB_(FOLK_XX_XX_XXXX) or index_SB_(FOLK_XX_XX_XXXX) -->
+        <search-index-prefix>3</search-index-prefix>
+        <!-- END: MTAS and search index configuration parameters -->
+        
+    </backend> 
+</configuration>

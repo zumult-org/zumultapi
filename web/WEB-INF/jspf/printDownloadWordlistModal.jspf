@@ -1,0 +1,101 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+    <div class="modal modal-lg" tabindex="-1" role="dialog" id="printDownloadWordlistModal">
+        <div class="modal-dialog" role="document" style="min-width:80%">
+            <div class="modal-content">
+                
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="printDownloadWordlistModal-title"><%=myResources.getString("PrintDownloadOptions")%></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&#x00D7;</span>
+                    </button>
+                </div>
+                    
+                
+                <div class="modal-body">
+                    <form id="printDownloadWordlistOptionsForm" action="javascript:printDownloadWordlist()">
+
+                        <div class="form-row">
+                            <legend class="col-form-label col-sm-2 pt-0">Word forms</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="wordformsRadioOptions" id="wordformsLemmaRadio" value="wordformsLemma" checked="checked">
+                                  <label class="form-check-label" for="wordformsLemmaRadio">Lemmas</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="wordformsRadioOptions" id="wordformsLemmaRadio" value="wordformsTranscribed">
+                                  <label class="form-check-label" for="wordformsTranscribedRadio">Transcribed forms</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <legend class="col-form-label col-sm-2 pt-0 label-default">Selection</legend>
+                            
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="selectionRadioOptions" id="selectionAllRadio" value="selectionAll" checked="checked">
+                                  <label class="form-check-label" for="selectionAllRadio">All forms</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="selectionRadioOptions" id="selectionSelectedRadio" value="selectionSelected">
+                                  <label class="form-check-label" for="selectionSelectedRadio">Forms covered by the reference wordlist</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="selectionRadioOptions" id="selectionUnselectedRadio" value="selectionUnselected">
+                                  <label class="form-check-label" for="selectionUnselectedRadio">Forms not covered by the reference wordlist</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <legend class="col-form-label col-sm-2 pt-0">Sorting</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="sortRadioOptions" id="sortABCFreqRadio" value="sortABCFreq" checked="checked">
+                                  <label class="form-check-label" for="sortABCFreqRadio">Alphabetic (frequency list)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="sortRadioOptions" id="sort321Radio" value="sort321">
+                                  <label class="form-check-label" for="sort321Radio">Frequency (frequency list)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="sortRadioOptions" id="sortABCRadio" value="sortABC">
+                                  <label class="form-check-label" for="sortABCRadio">Alphabetic (simple list)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="sortRadioOptions" id="sortChronoRadio" value="sortChrono">
+                                  <label class="form-check-label" for="sortChronoRadio">Chronological (simple list)</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <legend class="col-form-label col-sm-2 pt-0">Output</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="outputRadioOptions" id="outputPrintRadio" value="outputPrint" checked="checked">
+                                  <label class="form-check-label" for="outputPrintRadio">Print</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="outputRadioOptions" id="outputDownloadRadio" value="outputDownload">
+                                  <label class="form-check-label" for="outputDownloadRadio">Download</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <button type="submit" class="btn btn-secondary btn-lg" title="<%=myResources.getString("PrintDownloadOptions")%>"
+                                 data-toggle="modal" data-target="#printDownloadWordlistModal">
+                                <i class="fas fa-download"></i>
+                                <i class="fas fa-print"></i>                     
+                            </button>
+                        </div>
+                        
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

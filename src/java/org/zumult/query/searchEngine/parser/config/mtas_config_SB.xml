@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mtas>
+    
+    <!-- START MTAS INDEX CONFIGURATION -->
+    <index>
+        <!-- START GENERAL SETTINGS MTAS INDEX PROCESS -->
+        <payload index="true" />
+        <offset index="true" />
+        <realoffset index="true" />
+        <parent index="true" />
+        <!-- END GENERAL SETTINGS MTAS INDEX PROCESS -->
+    </index>
+    <!-- END MTAS INDEX CONFIGURATION -->
+    
+    <!-- START CONFIGURATION MTAS ISO/TEI PARSER -->
+        <!--<parser name="mtas.analysis.parser.MtasTEIParser">-->
+    <parser name="org.zumult.query.searchEngine.parser.ZuMultParser">
+        
+        <!-- START GENERAL SETTINGS MTAS ISO/TEI PARSER -->
+        <autorepair value="true" />
+        <makeunique value="true" />
+        <!-- END GENERAL SETTINGS MTAS ISO/TEI PARSER -->
+        
+        <!-- START REFERENCES -->
+	<!--<references>
+            <reference name="ref" ref="corresp" />
+        </references>-->
+        <!-- END REFERENCES -->
+        
+        <!-- START VARIABLES -->
+        <variables>
+            <variable name="when" value="interval">
+                <value>
+                    <item type="attribute" name="interval" />
+                </value>
+            </variable>
+        </variables>
+        <!-- END VARIABLES -->
+        
+        <!-- START MAPPINGS -->
+            
+        <mappings>
+            
+            <!-- START WORDS -->
+            
+            <!-- START: Mapping rules for <w>-elements  --> 
+            
+            <mapping type="word" name="w" start="#" end="#"> <!-- if no start and end then no SETTING REFFERED START AND END POSITIONS AND OFFSETS -->
+                
+                <!-- Normalized tokens. Search example : [norm="Wahlen"] -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="norm" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="norm"/>
+                    </post>
+                </token>
+                
+                <!-- Normalized tokens in lowercase. Search example : [norm_lc="wahlen"]
+                     TODO: fix Umlaute.  -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="norm_lc" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="norm" filter="lowercase" />
+                    </post>
+                </token>
+                
+                <condition>
+                    <item type="attribute" name="norm" />
+                </condition>
+                
+            </mapping>
+            
+            <mapping type="word" name="w" start="#" end="#">
+
+                <!-- POS. Search example : [pos="NN"] -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="pos" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="pos" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="pos" />
+                </condition>           
+            </mapping>
+              
+            <mapping type="word" name="w" start="#" end="#">    
+                           
+                <!-- Lemmas. Search example : [lemma="jetzt"] -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="lemma" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="lemma" />
+                    </post>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="lemma_lc" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="lemma" filter="lowercase" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="lemma" />
+                </condition>
+                
+            </mapping>
+            
+            <mapping type="word" name="w" start="#" end="#">
+
+                <!-- phonetic annotations. Search example : [phon="Sal.tUN"] -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="phon" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="phon" />
+                    </post>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="phon_html" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="phon" filter="html"/>
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="phon" />
+                </condition>           
+            </mapping>
+            
+            <mapping type="word" name="w" start="#" end="#">
+                
+                <!-- Types. Search example : [word.type="assimilated"] -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="word.type" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="type" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="type" />
+                </condition>
+                
+            </mapping>
+            
+            <mapping type="word" name="w" start="#" end="#">
+                
+                <!-- Transcriptions. Search example : [word="jetzt"] -->
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+			<item type="string" value="word" />
+                    </pre>
+                    <post>
+                        <item type="text" />
+                    </post>
+                </token>
+
+                <!-- Transcriptions in low case, e.g. [word_lc="jetzt"] will find "jetzt" and "Jetzt" -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="word_lc" />
+                    </pre>
+                    <post>
+                        <item type="text" filter="lowercase" />
+                    </post>
+                </token>
+                
+                <!-- id for the <w>-element -->
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="string" value="word.id" />
+                    </pre>
+                    <post>
+                        <!-- # refers to xml:id of the element -->
+                        <item type="attribute" name="#" />
+                    </post>
+                </token>
+                
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="token.interval" />
+                    </pre>
+                    <post>
+                        <item type="variableFromAttribute" name="interval" value="start" />
+                        <item type="variableFromAttribute" name="interval" value="end" prefix=" - " />
+                    </post>
+                </token>
+            </mapping>
+            
+            <!-- END: Mapping rules for <w>-elements  -->
+            
+            
+            
+            <!-- START:  Mapping rules for <pc>-elements -->
+            <mapping type="word" name="pc" start="#" end="#">
+                
+                <!-- Transcriptions. Search example : [pc=","] -->
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+			<item type="string" value="pc" />
+                    </pre>
+                    <post>
+                        <item type="text" />
+                    </post>
+                </token>
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="para" />
+                    </pre>
+                    <post>
+                        <item type="name"/>
+                    </post>
+                </token>
+          
+                <!-- id for the <pc>-element -->
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="string" value="pc.id" />
+                    </pre>
+                    <post>
+                        <!-- # refers to xml:id of the element -->
+                        <item type="attribute" name="#" />
+                    </post>
+                </token>
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="token.interval" />
+                    </pre>
+                    <post>
+                        <item type="variableFromAttribute" name="interval" value="start" />
+                        <item type="variableFromAttribute" name="interval" value="end" prefix=" - " />
+                    </post>
+                </token>
+                
+            </mapping>
+            <!-- END: -->
+            
+            
+            
+            <!-- START: Mapping rules for <pause>-elements -->
+            
+            <!--<mapping type="word" name="pause" start="#" end="#">-->
+                <!-- pause. Search example : 
+                <pause/> finds all pauses 
+                 -->
+              <!-- <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="name"/>
+                    </pre>
+                </token>
+            </mapping>-->
+            <mapping type="word" name="pause" start="#" end="#">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="token.interval" />
+                    </pre>
+                    <post>
+                        <item type="variableFromAttribute" name="interval" value="start" />
+                        <item type="variableFromAttribute" name="interval" value="end" prefix=" - " />
+                    </post>
+                </token>
+            </mapping>
+                       
+            <mapping type="word" name="pause" start="#" end="#">
+                <!-- Search example: <pause.proxy/> -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="speaker-silence" />
+                    </pre>
+                </token>
+                <condition>
+                    <item type="attribute" name="class" not="false" condition="proxy" />
+                </condition>
+            </mapping>
+            
+            <mapping type="word" name="pause" start="#" end="#">
+                <!-- Search example: <pause.annotated> -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="pause" />
+                    </pre>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="para" />
+                    </pre>
+                    <post>
+                        <item type="name"/>
+                    </post>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="string" value="pause.id" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="#" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="class" not="true" condition="proxy" />
+                </condition>
+            </mapping>
+     
+
+            
+            <mapping type="word" name="pause" start="#" end="#">
+               <!-- pause type. Search example : [pause.type=".*micro.*"] finds all micro pauses   -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="pause.type" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="type" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="type" />
+                    <item type="attribute" name="class" not="true" condition="proxy"/>
+                </condition>
+            </mapping>
+            
+            <mapping type="word" name="pause" start="#" end="#">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="pause.dur" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="dur" />
+                    </post>          
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="pause.dur.ceil" />
+                    </pre>
+                    <post>
+                        <item type="attribute"  name="dur" filter="ceil" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="dur" />
+                    <item type="attribute" name="class" not="true" condition="proxy"/>
+                </condition>
+            </mapping>
+            
+            <mapping type="word" name="pause" start="#" end="#">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="speaker-silence.dur" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="dur" />
+                    </post>          
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="speaker-silence.dur.ceil" />
+                    </pre>
+                    <post>
+                        <item type="attribute"  name="dur" filter="ceil" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="dur" />
+                    <item type="attribute" name="class" not="false" condition="proxy"/>
+                </condition>
+            </mapping>
+           
+            
+            <!-- END: Mapping rules for <pause>-elements -->
+            
+            
+            
+            
+            
+            
+            <!-- START: Mapping rules for <vocal>-elements -->
+            <mapping type="word" name="vocal" start="#" end="#">
+                                
+                <!-- id for the <vocal>-element -->
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="string" value="vocal.id" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="#" />
+                    </post>
+                </token>
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="para" />
+                    </pre>
+                    <post>
+                        <item type="name"/>
+                    </post>
+                </token>
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="token.interval" />
+                    </pre>
+                    <post>
+                        <item type="variableFromAttribute" name="interval" value="start" />
+                        <item type="variableFromAttribute" name="interval" value="end" prefix=" - " />
+                    </post>
+                </token>
+                   
+            </mapping>
+            
+            
+            <!-- END: Mapping rules for <vocal>-elements -->
+            
+            <!-- START: Mapping rules for <incident>-elements -->
+            
+            <mapping type="word" name="incident" start="#" end="#">
+
+                <!-- id for the <incident>-element -->
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="string" value="incident.id" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="#" />
+                    </post>
+                </token>
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="para" />
+                    </pre>
+                    <post>
+                        <item type="name"/>
+                    </post>
+                </token>
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="token.interval" />
+                    </pre>
+                    <post>
+                        <item type="variableFromAttribute" name="interval" value="start" />
+                        <item type="variableFromAttribute" name="interval" value="end" prefix=" - " />
+                    </post>
+                </token>
+            </mapping>
+            
+            
+            <!-- END: Mapping rules for <incident>-elements -->
+            
+            <!-- END WORDS -->   
+             
+
+            <!-- START WORD ANNOTATIONS -->          
+            <mapping type="wordAnnotation" name="desc">
+                <!-- <incident> and <vocal> Search example : <incident/> finds all events
+                -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="ancestorWordName" />
+                    </pre>
+                    <post>
+                        <item type="text" />
+                    </post>
+                </token>        
+            </mapping>
+
+            <!-- END WORD ANNOTATIONS -->
+            
+            
+            
+            
+            
+            
+            
+            <!-- START GROUPS -->
+            
+            
+            <mapping type="group" name="body">
+                
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="name" />
+                    </pre>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="name" />
+			<item type="string" value=".speaker" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="who" />
+                    </post>
+                </token>
+            </mapping>
+            
+            <!-- Mapping rule for <annotationBlock>-element, e.g. 
+            
+            <annotationBlock xml:id="c7" who="JP" start="TLI_21" end="TLI_22">
+                <u xml:id="u_d1157e3131">
+                    <seg type="contribution" xml:id="seg_d1157e3131">
+                        <anchor synch="TLI_21"/>
+                        <w xml:id="w109" norm="bei" lemma="bei" pos="APPR">bei</w>
+                        <w xml:id="w110" norm="dem" lemma="die" pos="ART">dem</w>
+                        <w xml:id="w111" norm="diesjährigen" lemma="diesjährig" pos="ADJA">diesjährigen</w>
+                        <w xml:id="w112" norm="Wahlkampf" lemma="Wahlkampf" pos="NN">wahlkampf</w>
+                        <w xml:id="w113" norm="haben" lemma="haben" pos="VAFIN">haben</w>
+                        <w xml:id="w114" norm="Sie" lemma="Sie" pos="PPER">sie</w>
+                        <anchor synch="TLI_22"/>
+                    </seg>
+                </u>
+            </annotationBlock>
+
+            -->
+            
+            <mapping type="group" name="annotationBlock" start="start" end="end">
+                
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="name" />
+                    </pre>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="name" />
+			<item type="string" value=".speaker" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="who" />
+                    </post>
+                </token>
+            </mapping>
+
+            
+            <!-- Mapping rule for <u>-element, e.g.
+            
+                <u xml:id="u_d1157e3131">
+                    <seg type="contribution" xml:id="seg_d1157e3131">
+                        <anchor synch="TLI_21"/>
+                        <w xml:id="w109" norm="bei" lemma="bei" pos="APPR">bei</w>
+                        <w xml:id="w110" norm="dem" lemma="die" pos="ART">dem</w>
+                        <w xml:id="w111" norm="diesjährigen" lemma="diesjährig" pos="ADJA">diesjährigen</w>
+                        <w xml:id="w112" norm="Wahlkampf" lemma="Wahlkampf" pos="NN">wahlkampf</w>
+                        <w xml:id="w113" norm="haben" lemma="haben" pos="VAFIN">haben</w>
+                        <w xml:id="w114" norm="Sie" lemma="Sie" pos="PPER">sie</w>
+                        <anchor synch="TLI_22"/>
+                    </seg>
+                </u>
+            
+            -->
+            
+            <mapping type="group" name="u">
+            </mapping>
+            
+            <!-- Mapping rule for <seg>-element, e.g.
+            
+                    <seg type="contribution" xml:id="seg_d1157e3131">
+                        <anchor synch="TLI_21"/>
+                        <w xml:id="w109" norm="bei" lemma="bei" pos="APPR">bei</w>
+                        <w xml:id="w110" norm="dem" lemma="die" pos="ART">dem</w>
+                        <w xml:id="w111" norm="diesjährigen" lemma="diesjährig" pos="ADJA">diesjährigen</w>
+                        <w xml:id="w112" norm="Wahlkampf" lemma="Wahlkampf" pos="NN">wahlkampf</w>
+                        <w xml:id="w113" norm="haben" lemma="haben" pos="VAFIN">haben</w>
+                        <w xml:id="w114" norm="Sie" lemma="Sie" pos="PPER">sie</w>
+                        <anchor synch="TLI_22"/>
+                    </seg>
+            
+            -->
+            <mapping type="group" name="seg">
+                
+                <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="name" />
+                    </pre>
+                </token>
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="name" />
+			<item type="string" value=".speaker" />
+                    </pre>
+                    <post>
+                        <item type="ancestorAttribute" distance="1" name="who" />
+                    </post>
+                </token>
+                
+               <!-- <token type="string" offset="false" realoffset="false" parent="true">
+                    <pre>
+                        <item type="name" />
+                        <item type="string" value=".id" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="#" />
+                    </post>
+                </token> -->
+            </mapping>
+                
+            <mapping type="group" name="seg">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="name" />
+			<item type="string" value=".type" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="type" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="type" />
+                </condition>
+            </mapping>
+            <mapping type="group" name="seg">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="name" />
+			<item type="string" value=".subtype" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="subtype" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="subtype" />
+                </condition>
+            </mapping>
+            
+            <!-- END GROUPS -->
+            
+            <!-- START GROUP ANNOTATIONS -->
+            
+            <!-- Mapping rule for <spanGrp>-element, e.g.
+                
+                <spanGrp type="DK">
+                    <span from="w1200" to="w1211">D3</span>
+                    <span from="w1291" to="w1294">D1_Sprechhandlung-A</span>
+                </spanGrp>
+            -->
+            <mapping type="groupAnnotation" name="spanGrp">
+            </mapping>
+            
+            
+            <!-- Mapping rule for <span>-element, e.g. <span from="w1200" to="w1211">D3</span> or 
+                                                       <span from="TLI_0" to="TLI_2">1</span>-->
+
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <!-- Mapping of span type, e.g <DK = "D3"/> 
+                <speaker-overlap="PS"/> -->
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                    </pre>
+                    <post>
+                        <item type="text" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="true" condition="w"/>
+                    <item type="attribute" name="class" not="true" condition="vocal"/>
+                    <item type="attribute" name="class" not="true" condition="incident"/>
+                    <item type="attribute" name="class" not="true" condition="pause"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="as"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="speaker-overlap"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="alternative"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="overlap-with-common-events"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="another-speaker"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="overlap-with-common-events" />
+                    </pre>
+                    <post>
+                        <item type="text" /> <!--filter="trim"-->
+                    </post>
+                </token>                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="text"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="overlap-with-common-events"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="speaker-overlap" />
+                    </pre>
+                    <post>
+                        <item type="text" /> <!--filter="trim"-->
+                    </post>
+                </token>                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="text"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="speaker-overlap"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="another-speaker" />
+                    </pre>
+                    <post>
+                        <item type="text" /> <!--filter="trim"-->
+                    </post>
+                </token>                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="text"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="another-speaker"/>
+		</condition>
+            </mapping>
+            
+            <!-- Mapping of as-annotations, if they are not empty 
+            Search example: <as = "Zustimmung"/> -->
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                    </pre>
+                    <post>
+                        <item type="text"/>
+                    </post>
+                </token>
+                
+                <condition>
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="as"/>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                   <!-- <item type="text"/>-->
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".ceil"/>
+                    </pre>
+                    <post>
+                        <item type="text" filter="ceil"/>
+                    </post>
+                </token>
+             <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="speech-rate" />
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type"/>
+                        <item type="string" value=".target" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="target" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="target" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                </condition>					
+            </mapping>
+            
+
+
+            <!-- START: Mappings for metadata spanGrp containing type-Attribute -->
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="attribute" name="type" />       <!--   metadata key -->
+                    </pre>
+                    <post>
+                        <item type="text" />                        <!-- metadata value -->
+                    </post>
+                </token>
+                <condition>
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="meta"/>
+                    <item type="attribute" name="type" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+<!--                    <item type="attribute" name="class" not="true" condition="w"/>
+                    <item type="attribute" name="class" not="true" condition="vocal"/>
+                    <item type="attribute" name="class" not="true" condition="incident"/>
+                    <item type="attribute" name="class" not="true" condition="pause"/>-->
+                </condition>					
+            </mapping>
+            <!-- END: Mappings for metadata spanGrp containing type-Attribute -->
+
+
+            <!-- START: Mappings for spans of token-overlap group -->
+        <!--    <mapping type="groupAnnotation" name="span" start="from" end="to">
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".word" />
+                    </pre>
+                    <post>
+                        <item type="text" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="w"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".pos" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="pos" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="pos" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="w"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".norm" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="norm" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="norm" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="w"/>
+		</condition>
+            </mapping>-->
+            
+           <!-- <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".lemma" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="lemma" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="lemma" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="w"/>
+		</condition>
+            </mapping>-->
+            
+           <!-- <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".phon" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="phon" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="phon" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="w"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".word.type" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="type" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="type" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="w"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".pause" />
+                    </pre>
+                </token>
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="pause"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".pause.type" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="type" /> 
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="type" />
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="pause"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".vocal" />
+                    </pre>
+                    <post>
+                        <item type="text" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="vocal"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">    
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                        <item type="string" value=".incident" />
+                    </pre>
+                    <post>
+                        <item type="text" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="attribute" name="class" not="false" condition="incident"/>
+		</condition>
+            </mapping>-->
+            
+            <!-- START: Mappings for spans of token-overlap group -->
+            
+            <!-- END GROUP ANNOTATIONS -->
+            
+            <!-- START RELATIONS -->
+            <!--<mapping type="relation" name="discSpanGrp"> //class="disc"!!!
+            </mapping>
+            <mapping type="relation" name="span">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="ancestorAttribute" distance="0" name="type" />
+                    </pre>
+                    <post>
+                        <item type="text" />
+                    </post>
+		</token>
+                <condition>
+                    <item type="attribute" name="corresp" />
+		</condition>
+            </mapping>-->
+             <!-- END RELATIONS --> 
+
+        <!-- END MAPPINGS -->
+        </mappings>
+    </parser>
+    <!-- END CONFIGURATION MTAS ISO/TEI PARSER -->
+    
+</mtas>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tokenList type="pos">
+    <token form="NE" frequency="0"/>
+    <token form="NN" frequency="0"/>
+    <token form="VAFIN" frequency="0"/>
+    <token form="VAIMP" frequency="0"/>
+    <token form="VAINF" frequency="0"/>
+    <token form="VAPP" frequency="0"/>
+    <token form="VMINF" frequency="0"/>
+    <token form="VMPP" frequency="0"/>
+    <token form="VVFIN" frequency="0"/>
+    <token form="VVIMP" frequency="0"/>
+    <token form="VVINF" frequency="0"/>
+    <token form="VVIZU" frequency="0"/>
+    <token form="VVPP" frequency="0"/>
+    <token form="ADJA" frequency="0"/>
+    <token form="ADJD" frequency="0"/>
+    <token form="ADV" frequency="0"/>
+</tokenList>

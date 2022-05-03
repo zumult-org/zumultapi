@@ -1,0 +1,76 @@
+{
+  "name": "prototype",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start-pc": "poi main.js",
+    "serve-pc": "poi --serve ./src/main.js",
+    "watch-pc": "poi --watch ./src/main.js",
+    "build-pc": "poi --prod ./src/main.js",
+    "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.21",
+    "@fortawesome/free-regular-svg-icons": "^5.10.1",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
+    "@fortawesome/vue-fontawesome": "^0.1.6",
+    "@riophae/vue-treeselect": "^0.3.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.4",
+    "core-js": "^3.8.3",
+    "d3": "^5.9.7",
+    "jquery": "^3.4.1",
+    "lodash": "^4.17.15",
+    "node": "^13.10.1",
+    "node-sass": "^4.12.0",
+    "nprogress": "^0.2.0",
+    "postcss-loader": "^3.0.0",
+    "topojson-client": "^3.0.0",
+    "vue": "^2.6.12",
+    "vue-async-computed": "^3.9.0",
+    "vue-loading-template": "^1.3.2",
+    "vue-progressbar": "^0.7.5",
+    "vue-slider-component": "^3.0.42",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "@vue/babel-preset-app": "^4.5.11",
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-service": "^4.5.11",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "poi": "^12.7.2",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "off"
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

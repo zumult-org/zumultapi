@@ -1,0 +1,1619 @@
+Speech Event	duration	highestPortionSpokenWords	secondHighestPortionSpokenWords	totalSpeakers	speaker	occupation	who	% contributions pro total contributions	% spoken words pro total words	% contributions of 1-2 words pro contribution size of speaker
+FOLK_E_00001_SE_01	0:59:45	81,52	2,49	21
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	1,76	1,44	30,00	
+					FOLK_S_00004	Schüler/in (Berufsschule)	AK	2,12	0,63	41,67	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	1,23	0,21	71,43	
+					FOLK_S_00009	Schüler/in (Berufsschule)	GF	1,76	0,75	30,00	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	1,59	0,41	44,44	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	1,23	0,34	71,43	
+					FOLK_S_00020	Schüler/in (Berufsschule)	JM	6,88	2,49	53,85	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	2,12	0,96	33,33	
+					FOLK_S_00026	Lehrer/in	LB	52,38	81,52	17,51	
+					FOLK_S_00012	Schüler/in (Berufsschule)	MB	0,18	0,01	100,00	
+					FOLK_S_00023	Schüler/in (Berufsschule)	MK	0,88	0,45	20,00	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	3,53	1,86	35,00	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	3,53	1,34	35,00	
+					FOLK_S_00013	Schüler/in (Berufsschule)	PC	2,29	0,84	38,46	
+					FOLK_S_00015	Schüler/in (Berufsschule)	PL	1,94	0,64	36,36	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	1,76	1,06	20,00	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	0,71	0,14	50,00	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	2,29	0,84	30,77	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	4,41	1,79	24,00	
+					FOLK_S_00017	Schüler/in (Berufsschule)	TH	1,06	0,14	83,33	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	1,59	1,34	11,11	
+FOLK_E_00002_SE_01	0:31:01	93,77	6,23	2
+					FOLK_S_00030	Journalist/in	CJ	67,30	93,77	19,72	
+					FOLK_S_00031	Nicht vorhanden	TJ	32,70	6,23	65,22	
+FOLK_E_00003_SE_01	0:20:29	58,15	41,43	3
+					FOLK_S_00057	Student/in	DM	48,61	58,15	13,93	
+					FOLK_S_00060	Nicht dokumentiert	JS	49,80	41,43	30,40	
+					FOLK_S_00074	Nicht dokumentiert	XA	1,59	0,41	50,00	
+FOLK_E_00004_SE_01	1:26:47	74,15	4,79	22
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	2,57	0,29	83,33	
+					FOLK_S_00003	Schüler/in (Berufsschule)	AZ	0,43	0,13	33,33	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	0,14	0,05	0,00	
+					FOLK_S_00009	Schüler/in (Berufsschule)	GF	0,00	0,00	NaN	
+					FOLK_S_00025	Lehrer/in	GS	49,71	74,15	28,74	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	0,00	0,00	NaN	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	2,43	1,39	17,65	
+					FOLK_S_00019	Schüler/in (Berufsschule)	JL	1,00	0,49	28,57	
+					FOLK_S_00020	Schüler/in (Berufsschule)	JM	2,14	1,08	40,00	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	0,29	0,04	50,00	
+					FOLK_S_00012	Schüler/in (Berufsschule)	MB	3,43	1,67	25,00	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	3,00	1,60	23,81	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	6,57	4,47	23,91	
+					FOLK_S_00013	Schüler/in (Berufsschule)	PC	1,00	0,48	14,29	
+					FOLK_S_00015	Schüler/in (Berufsschule)	PL	0,57	0,04	100,00	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	4,00	2,29	35,71	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	1,71	1,20	41,67	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	2,86	1,51	40,00	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	6,43	4,79	8,89	
+					FOLK_S_00017	Schüler/in (Berufsschule)	TH	3,57	1,97	24,00	
+					FOLK_S_00002	Schüler/in (Berufsschule)	TS	1,29	0,52	11,11	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	2,14	1,19	26,67	
+FOLK_E_00005_SE_01	1:15:31	72,04	3,61	22
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	2,02	0,54	71,43	
+					FOLK_S_00004	Schüler/in (Berufsschule)	AK	0,58	0,34	25,00	
+					FOLK_S_00003	Schüler/in (Berufsschule)	AZ	0,29	0,09	0,00	
+					FOLK_S_00007	Schüler/in (Berufsschule)	EF	1,15	0,96	25,00	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	2,02	0,97	42,86	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	1,73	0,69	41,67	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	0,00	0,00	NaN	
+					FOLK_S_00019	Schüler/in (Berufsschule)	JL	0,58	0,43	25,00	
+					FOLK_S_00020	Schüler/in (Berufsschule)	JM	2,88	2,51	25,00	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	2,31	1,09	43,75	
+					FOLK_S_00026	Lehrer/in	LB	47,26	72,04	19,82	
+					FOLK_S_00012	Schüler/in (Berufsschule)	MB	0,43	0,19	66,67	
+					FOLK_S_00023	Schüler/in (Berufsschule)	MK	2,31	1,36	18,75	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	4,18	3,61	24,14	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	2,74	1,63	31,58	
+					FOLK_S_00013	Schüler/in (Berufsschule)	PC	1,01	0,61	0,00	
+					FOLK_S_00015	Schüler/in (Berufsschule)	PL	0,14	0,03	100,00	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	1,15	1,16	12,50	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	1,30	1,96	11,11	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	1,01	0,37	71,43	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	2,88	2,51	15,00	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	1,44	0,81	40,00	
+FOLK_E_00006_SE_01	0:41:58	81,02	2,88	20
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	0,29	0,31	0,00	
+					FOLK_S_00004	Schüler/in (Berufsschule)	AK	3,76	1,60	38,46	
+					FOLK_S_00007	Schüler/in (Berufsschule)	EF	0,58	0,04	100,00	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	2,02	0,53	0,00	
+					FOLK_S_00009	Schüler/in (Berufsschule)	GF	2,02	0,80	14,29	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	0,29	0,07	0,00	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	1,16	0,16	75,00	
+					FOLK_S_00020	Schüler/in (Berufsschule)	JM	3,76	1,73	30,77	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	0,58	0,22	0,00	
+					FOLK_S_00026	Lehrer/in	LB	52,60	81,02	11,54	
+					FOLK_S_00012	Schüler/in (Berufsschule)	MB	0,87	0,15	66,67	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	2,89	1,29	60,00	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	1,16	0,49	25,00	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	3,76	2,42	30,77	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	2,31	0,64	50,00	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	2,02	0,62	71,43	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	4,62	2,88	12,50	
+					FOLK_S_00017	Schüler/in (Berufsschule)	TH	1,45	0,93	20,00	
+					FOLK_S_00002	Schüler/in (Berufsschule)	TS	1,45	0,35	60,00	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	3,76	2,28	23,08	
+FOLK_E_00007_SE_01	1:28:23	66,64	7,22	21
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	1,23	0,63	37,50	
+					FOLK_S_00004	Schüler/in (Berufsschule)	AK	0,15	0,07	0,00	
+					FOLK_S_00003	Schüler/in (Berufsschule)	AZ	0,15	0,02	100,00	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	1,07	0,69	0,00	
+					FOLK_S_00009	Schüler/in (Berufsschule)	GF	0,31	0,05	50,00	
+					FOLK_S_00025	Lehrer/in	GS	49,69	66,64	29,01	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	8,44	5,72	21,82	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	12,58	7,22	32,93	
+					FOLK_S_00019	Schüler/in (Berufsschule)	JL	0,61	0,37	25,00	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	0,92	0,47	33,33	
+					FOLK_S_00012	Schüler/in (Berufsschule)	MB	5,98	3,70	17,95	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	3,07	2,13	25,00	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	2,61	1,84	11,76	
+					FOLK_S_00013	Schüler/in (Berufsschule)	PC	0,31	0,16	50,00	
+					FOLK_S_00015	Schüler/in (Berufsschule)	PL	0,15	0,02	100,00	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	2,61	2,61	29,41	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	1,23	0,85	12,50	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	0,61	0,22	25,00	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	3,53	5,21	13,04	
+					FOLK_S_00017	Schüler/in (Berufsschule)	TH	1,38	0,48	22,22	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	0,61	0,57	0,00	
+FOLK_E_00008_SE_01	0:56:14	81,47	4,52	24
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	0,89	0,17	75,00	
+					FOLK_S_00004	Schüler/in (Berufsschule)	AK	4,24	1,24	47,37	
+					FOLK_S_00003	Schüler/in (Berufsschule)	AZ	0,45	0,10	50,00	
+					FOLK_S_00007	Schüler/in (Berufsschule)	EF	0,00	0,00	NaN	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	0,45	0,14	50,00	
+					FOLK_S_00009	Schüler/in (Berufsschule)	GF	0,00	0,00	NaN	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	1,56	0,36	42,86	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	1,34	0,33	33,33	
+					FOLK_S_00019	Schüler/in (Berufsschule)	JL	0,00	0,00	NaN	
+					FOLK_S_00020	Schüler/in (Berufsschule)	JM	2,46	1,97	36,36	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	0,00	0,00	NaN	
+					FOLK_S_00026	Lehrer/in	LB	50,89	81,47	17,54	
+					FOLK_S_00012	Schüler/in (Berufsschule)	MB	2,46	0,52	36,36	
+					FOLK_S_00023	Schüler/in (Berufsschule)	MK	0,00	0,00	NaN	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	7,37	4,52	33,33	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	1,12	0,30	60,00	
+					FOLK_S_00013	Schüler/in (Berufsschule)	PC	1,12	0,33	40,00	
+					FOLK_S_00015	Schüler/in (Berufsschule)	PL	0,22	0,02	100,00	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	1,34	0,48	50,00	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	1,56	0,73	42,86	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	7,14	2,90	46,88	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	3,57	1,84	18,75	
+					FOLK_S_00017	Schüler/in (Berufsschule)	TH	2,23	0,49	50,00	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	2,01	1,01	33,33	
+FOLK_E_00009_SE_01	0:43:04	82,99	3,86	22
+					FOLK_S_00014	Schüler/in (Berufsschule)	AB	0,60	0,13	50,00	
+					FOLK_S_00004	Schüler/in (Berufsschule)	AK	0,30	0,13	0,00	
+					FOLK_S_00003	Schüler/in (Berufsschule)	AZ	1,49	0,40	0,00	
+					FOLK_S_00021	Schüler/in (Berufsschule)	FG	1,19	0,40	50,00	
+					FOLK_S_00009	Schüler/in (Berufsschule)	GF	0,60	0,09	50,00	
+					FOLK_S_00005	Schüler/in (Berufsschule)	HM	0,00	0,00	NaN	
+					FOLK_S_00018	Schüler/in (Berufsschule)	JK	0,89	0,40	0,00	
+					FOLK_S_00019	Schüler/in (Berufsschule)	JL	0,60	0,05	100,00	
+					FOLK_S_00020	Schüler/in (Berufsschule)	JM	5,36	3,04	27,78	
+					FOLK_S_00011	Schüler/in (Berufsschule)	KB	1,49	0,45	20,00	
+					FOLK_S_00026	Lehrer/in	LB	54,46	82,99	18,03	
+					FOLK_S_00023	Schüler/in (Berufsschule)	MK	0,60	0,62	0,00	
+					FOLK_S_00001	Schüler/in (Berufsschule)	ML	2,98	1,43	40,00	
+					FOLK_S_00008	Schüler/in (Berufsschule)	MS	2,08	0,53	42,86	
+					FOLK_S_00013	Schüler/in (Berufsschule)	PC	0,30	0,04	100,00	
+					FOLK_S_00015	Schüler/in (Berufsschule)	PL	0,00	0,00	NaN	
+					FOLK_S_00022	Schüler/in (Berufsschule)	RG	1,19	0,36	50,00	
+					FOLK_S_00010	Schüler/in (Berufsschule)	RZ	3,87	1,30	53,85	
+					FOLK_S_00024	Schüler/in (Berufsschule)	SK	3,57	1,61	16,67	
+					FOLK_S_00016	Schüler/in (Berufsschule)	TF	7,14	3,86	25,00	
+					FOLK_S_00017	Schüler/in (Berufsschule)	TH	0,30	0,13	0,00	
+					FOLK_S_00006	Schüler/in (Berufsschule)	US	3,57	0,98	16,67	
+FOLK_E_00010_SE_01	0:47:56	53,84	24,20	3
+					FOLK_S_00029	Schüler/in (Grundschule)	NK	29,56	21,80	35,86	
+					FOLK_S_00028	Schüler/in (Grundschule)	SK	27,68	24,20	31,91	
+					FOLK_S_00027	Operator/in ; Wissenschaftler/in	VK	42,29	53,84	27,30	
+FOLK_E_00011_SE_01	3:16:53	51,67	29,69	3
+					FOLK_S_00029	Schüler/in (Grundschule)	NK	25,19	18,54	39,86	
+					FOLK_S_00028	Schüler/in (Grundschule)	SK	33,15	29,69	35,35	
+					FOLK_S_00027	Operator/in ; Wissenschaftler/in	VK	41,46	51,67	27,36	
+FOLK_E_00012_SE_01	0:40:03	55,23	23,13	3
+					FOLK_S_00029	Schüler/in (Grundschule)	NK	27,14	21,64	29,19	
+					FOLK_S_00028	Schüler/in (Grundschule)	SK	31,04	23,13	37,66	
+					FOLK_S_00027	Operator/in ; Wissenschaftler/in	VK	41,82	55,23	22,36	
+FOLK_E_00013_SE_01	0:38:21	85,68	13,86	3
+					FOLK_S_00030	Journalist/in	CJ	64,96	85,68	21,28	
+					FOLK_S_00032	Schüler/in	DJ	0,76	0,46	25,00	
+					FOLK_S_00031	Nicht vorhanden	TJ	34,28	13,86	48,07	
+FOLK_E_00014_SE_01	0:31:08	73,19	26,43	3
+					FOLK_S_00030	Journalist/in	CJ	51,06	73,19	33,33	
+					FOLK_S_00032	Schüler/in	DJ	0,85	0,27	75,00	
+					FOLK_S_00031	Nicht vorhanden	TJ	47,66	26,43	41,96	
+FOLK_E_00015_SE_01	0:47:09	52,29	47,55	2
+					FOLK_S_00334	Hochschullehrer/in	CH	51,04	47,55	11,22	
+					FOLK_S_00335	Student/in	FR	48,44	52,29	45,16	
+FOLK_E_00016_SE_01	0:43:01	94,04	3,75	3
+					FOLK_S_00030	Journalist/in	CJ	52,76	94,04	24,42	
+					FOLK_S_00032	Schüler/in	DJ	9,20	2,21	13,33	
+					FOLK_S_00031	Nicht vorhanden	TJ	38,04	3,75	64,52	
+FOLK_E_00017_SE_01	0:14:10	87,42	11,73	3
+					FOLK_S_00030	Journalist/in	CJ	54,23	87,42	32,47	
+					FOLK_S_00032	Schüler/in	DJ	2,11	0,85	66,67	
+					FOLK_S_00031	Nicht vorhanden	TJ	43,66	11,73	56,45	
+FOLK_E_00018_SE_01	0:21:38	54,46	45,40	2
+					FOLK_S_00034	Student/in	EM	51,90	54,46	20,38	
+					FOLK_S_00033	Student/in	HM	47,70	45,40	29,29	
+FOLK_E_00020_SE_01	0:26:16	38,12	26,98	4
+					FOLK_S_00036	Kaufmann/-frau (Industrie)	CM	33,02	38,12	28,05	
+					FOLK_S_00034	Student/in	EM	17,58	14,39	41,98	
+					FOLK_S_00033	Student/in	HM	17,05	16,06	39,37	
+					FOLK_S_00035	Nicht dokumentiert	SM	23,36	26,98	37,93	
+FOLK_E_00021_SE_01	5:30:09	19,86	17,31	7
+					FOLK_S_00040	Kaufmann/-frau (Bank)	CH	13,52	13,17	41,10	
+					FOLK_S_00041	Lehrer/in	DK	9,20	10,28	35,23	
+					FOLK_S_00039	Mediengestalter/in	JZ	8,92	9,04	39,82	
+					FOLK_S_00045	Redakteur/in	MT	9,39	9,37	43,00	
+					FOLK_S_00042	Angestellte/r (Steuer)	NI	13,13	17,31	34,96	
+					FOLK_S_00043	Jurist/in ; Rechtsanwalt/Rechtsanwältin	PL	15,24	14,69	41,60	
+					FOLK_S_00044	Lehrer/in	SK	18,83	19,86	38,22	
+FOLK_E_00022_SE_01	2:00:16	34,99	34,74	5
+					FOLK_S_00046	Sozialpädagoge/in	AW	24,95	23,43	29,40	
+					FOLK_S_00051	Student/in	BS	6,86	4,42	45,61	
+					FOLK_S_00047	Elektriker/in ; Sozialpädagoge/in	HM	35,96	34,74	35,45	
+					FOLK_S_00050	Nicht dokumentiert	NG	4,03	2,41	37,31	
+					FOLK_S_00048	Sozialpädagoge/in	SZ	28,14	34,99	33,97	
+FOLK_E_00024_SE_01	2:36:01	27,61	24,32	5
+					FOLK_S_00046	Sozialpädagoge/in	AW	25,15	24,32	26,73	
+					FOLK_S_00047	Elektriker/in ; Sozialpädagoge/in	HM	20,52	22,40	35,46	
+					FOLK_S_00049	Sozialpädagoge/in	MS	22,89	21,50	26,36	
+					FOLK_S_00050	Nicht dokumentiert	NG	8,49	4,14	45,56	
+					FOLK_S_00048	Sozialpädagoge/in	SZ	22,79	27,61	33,38	
+FOLK_E_00026_SE_01	2:57:48	29,49	27,64	6
+					FOLK_S_00046	Sozialpädagoge/in	AW	29,60	27,64	27,63	
+					FOLK_S_00051	Student/in	BS	2,62	2,05	28,57	
+					FOLK_S_00047	Elektriker/in ; Sozialpädagoge/in	HM	22,08	24,71	35,71	
+					FOLK_S_00049	Sozialpädagoge/in	MS	17,93	12,94	30,56	
+					FOLK_S_00050	Nicht dokumentiert	NG	4,48	3,14	37,96	
+					FOLK_S_00048	Sozialpädagoge/in	SZ	22,96	29,49	36,17	
+FOLK_E_00027_SE_01	0:33:32	68,47	31,53	2
+					FOLK_S_00182	Student/in	AM	51,53	68,47	17,10	
+					FOLK_S_00186	Student/in	PB	48,47	31,53	37,15	
+FOLK_E_00028_SE_01	0:33:37	62,19	37,80	3
+					FOLK_S_00064	Nicht dokumentiert	BR	49,84	37,80	28,10	
+					FOLK_S_00058	Student/in	FF	49,84	62,19	17,65	
+					FOLK_S_00075	Nicht dokumentiert	XB	0,33	0,02	100,00	
+FOLK_E_00029_SE_01	0:14:51	50,33	49,49	3
+					FOLK_S_00061	Student/in	CA	49,17	50,33	28,09	
+					FOLK_S_00063	Doktorand/in	LU	0,55	0,18	0,00	
+					FOLK_S_00059	Nicht dokumentiert	SA	50,28	49,49	38,46	
+FOLK_E_00030_SE_01	1:22:28	51,95	48,05	2
+					FOLK_S_00182	Student/in	AM	48,65	51,95	23,32	
+					FOLK_S_00186	Student/in	PB	51,35	48,05	27,98	
+FOLK_E_00031_SE_01	0:18:27	59,69	29,69	3
+					FOLK_S_00062	Student/in	CR	40,63	29,69	34,19	
+					FOLK_S_00065	Nicht dokumentiert	EC	17,36	10,62	44,00	
+					FOLK_S_00059	Nicht dokumentiert	SA	42,01	59,69	28,10	
+FOLK_E_00032_SE_01	0:28:07	57,09	41,67	3
+					FOLK_S_00066	Student/in	AK	49,76	57,09	34,95	
+					FOLK_S_00068	Nicht dokumentiert	BÄ	48,31	41,67	14,00	
+					FOLK_S_00076	Nicht dokumentiert	XC	1,93	1,25	25,00	
+FOLK_E_00033_SE_01	0:31:21	63,60	34,87	2
+					FOLK_S_00068	Nicht dokumentiert	BÄ	47,92	34,87	18,11	
+					FOLK_S_00072	Student/in	ST	49,06	63,60	33,08	
+FOLK_E_00034_SE_01	0:30:45	58,11	41,25	3
+					FOLK_S_00068	Nicht dokumentiert	BÄ	50,36	41,25	16,55	
+					FOLK_S_00073	Student/in	KS	47,83	58,11	32,58	
+					FOLK_S_00078	Nicht dokumentiert	XE	1,81	0,63	40,00	
+FOLK_E_00035_SE_01	0:30:53	64,02	34,67	3
+					FOLK_S_00068	Nicht dokumentiert	BÄ	46,21	34,67	32,79	
+					FOLK_S_00071	Student/in	JH	48,11	64,02	18,11	
+					FOLK_S_00079	Nicht dokumentiert	XF	5,68	1,30	66,67	
+FOLK_E_00036_SE_01	0:30:25	58,10	41,11	3
+					FOLK_S_00068	Nicht dokumentiert	BÄ	49,19	41,11	20,49	
+					FOLK_S_00067	Student/in	KD	48,79	58,10	23,14	
+					FOLK_S_00080	Nicht dokumentiert	XG	2,02	0,78	20,00	
+FOLK_E_00037_SE_01	0:29:25	61,56	37,21	3
+					FOLK_S_00068	Nicht dokumentiert	BÄ	49,71	37,21	27,91	
+					FOLK_S_00069	Student/in	MO	48,55	61,56	23,81	
+					FOLK_S_00081	Nicht dokumentiert	XH	1,73	1,23	33,33	
+FOLK_E_00038_SE_01	0:29:08	52,78	44,68	3
+					FOLK_S_00068	Nicht dokumentiert	BÄ	48,31	44,68	20,93	
+					FOLK_S_00070	Student/in	LM	49,44	52,78	36,36	
+					FOLK_S_00082	Nicht dokumentiert	XI	2,25	2,55	0,00	
+FOLK_E_00039_SE_01	1:03:09	55,68	42,79	2
+					FOLK_S_00053	Friseurmeister/in	EL	50,78	42,79	45,72	
+					FOLK_S_00052	Musiktherapeut/in ; Barkeeper/in	NO	47,67	55,68	35,99	
+FOLK_E_00040_SE_01	1:11:31	35,37	32,50	3
+					FOLK_S_00054	Student/in	BS	30,28	32,50	33,91	
+					FOLK_S_00055	Student/in	EP	34,83	35,37	39,37	
+					FOLK_S_00056	Kaufmann/-frau (Bürol)	JM	34,44	31,99	39,06	
+FOLK_E_00042_SE_01	1:04:34	44,07	25,84	4
+					FOLK_S_00182	Student/in	AM	24,96	22,89	21,47	
+					FOLK_S_00193	Student/in	LK	31,35	44,07	12,88	
+					FOLK_S_00184	Student/in	LP	30,47	25,84	25,30	
+					FOLK_S_00183	Student/in	LS	12,56	7,04	50,29	
+FOLK_E_00043_SE_01	0:15:35	52,65	37,27	2
+					FOLK_S_00182	Student/in	AM	47,16	52,65	20,30	
+					FOLK_S_00186	Student/in	PB	48,58	37,27	29,20	
+FOLK_E_00044_SE_01	0:31:39	37,99	31,71	4
+					FOLK_S_00304	Trainer/in ; Behindertenbetreuung	AH	31,80	28,85	37,68	
+					FOLK_S_00305	Wissenschaftler/in	CT	31,34	37,99	27,21	
+					FOLK_S_00289	Radiomoderator/in ; Pflegeassistent/in	GB	30,18	31,71	23,66	
+					FOLK_S_00354	Student/in	KK	5,30	1,34	69,57	
+FOLK_E_00045_SE_01	0:27:19	41,00	30,91	3
+					FOLK_S_00366	Student/in	KL	28,90	28,02	29,21	
+					FOLK_S_00356	Berater/in	OM	40,10	41,00	24,70	
+					FOLK_S_00355	Verkäufer/in (Lebensmittel)	TV	30,52	30,91	15,96	
+FOLK_E_00046_SE_01	0:33:39	34,35	25,64	4
+					FOLK_S_00182	Student/in	AM	35,43	34,35	21,51	
+					FOLK_S_00193	Student/in	LK	18,18	15,74	23,53	
+					FOLK_S_00184	Student/in	LP	24,73	25,64	22,16	
+					FOLK_S_00194	Student/in	VW	21,39	24,25	15,00	
+FOLK_E_00047_SE_01	0:57:56	61,62	37,76	2
+					FOLK_S_00182	Student/in	AM	49,41	61,62	15,69	
+					FOLK_S_00186	Student/in	PB	47,79	37,76	30,41	
+FOLK_E_00048_SE_01	0:53:42	43,15	37,45	3
+					FOLK_S_00182	Student/in	AM	36,32	43,15	23,64	
+					FOLK_S_00184	Student/in	LP	37,12	37,45	28,06	
+					FOLK_S_00183	Student/in	LS	26,56	19,40	49,45	
+FOLK_E_00049_SE_01	0:29:59	54,08	45,92	2
+					FOLK_S_00182	Student/in	AM	49,82	45,92	18,05	
+					FOLK_S_00192	Student/in	PH	50,18	54,08	19,35	
+FOLK_E_00050_SE_01	0:09:54	49,78	27,52	4
+					FOLK_S_00182	Student/in	AM	27,67	27,52	22,81	
+					FOLK_S_00184	Student/in	LP	39,32	49,78	20,99	
+					FOLK_S_00183	Student/in	LS	24,76	15,87	62,75	
+					FOLK_S_00185	Student/in	SK	7,77	6,74	25,00	
+FOLK_E_00052_SE_01	0:30:52	35,68	27,56	4
+					FOLK_S_00182	Student/in	AM	28,52	35,68	27,78	
+					FOLK_S_00184	Student/in	LP	19,54	17,80	36,94	
+					FOLK_S_00183	Student/in	LS	26,41	27,56	40,00	
+					FOLK_S_00185	Student/in	SK	18,66	16,71	24,53	
+FOLK_E_00053_SE_01	0:18:52	33,72	31,22	4
+					FOLK_S_00182	Student/in	AM	33,26	33,72	28,28	
+					FOLK_S_00184	Student/in	LP	24,54	31,22	25,23	
+					FOLK_S_00183	Student/in	LS	25,69	22,60	40,18	
+					FOLK_S_00185	Student/in	SK	14,91	11,22	33,85	
+FOLK_E_00055_SE_01	2:10:30	34,82	33,38	4
+					FOLK_S_00182	Student/in	AM	25,45	24,62	27,15	
+					FOLK_S_00196	Student/in	LM	13,64	7,16	47,14	
+					FOLK_S_00195	Student/in	NH	34,77	34,82	33,28	
+					FOLK_S_00197	Student/in	US	26,02	33,38	35,57	
+FOLK_E_00056_SE_01	0:33:56	58,07	35,53	3
+					FOLK_S_00333	Student/in	AP	43,61	58,07	24,57	
+					FOLK_S_00332	Hochschullehrer/in	JG	44,17	35,53	47,23	
+					FOLK_S_00059	Nicht dokumentiert	SA	12,22	6,41	47,69	
+FOLK_E_00057_SE_01	0:53:41	53,60	46,40	3
+					FOLK_S_00334	Hochschullehrer/in	CH	51,15	46,40	7,46	
+					FOLK_S_00336	Student/in	ME	48,85	53,60	44,79	
+					FOLK_S_00349	Nicht dokumentiert	XK	0,00	0,00	NaN	
+FOLK_E_00058_SE_01	0:53:46	56,34	43,08	3
+					FOLK_S_00337	Hochschullehrer/in	HN	48,16	43,08	23,64	
+					FOLK_S_00338	Student/in	LG	46,76	56,34	41,95	
+					FOLK_S_00350	Nicht dokumentiert	XL	5,08	0,58	82,76	
+FOLK_E_00059_SE_01	0:44:29	54,34	28,94	5
+					FOLK_S_00337	Hochschullehrer/in	HN	29,79	28,94	25,00	
+					FOLK_S_00339	Nicht dokumentiert	HS	18,35	16,08	17,39	
+					FOLK_S_00340	Student/in	MF	48,67	54,34	27,87	
+					FOLK_S_00059	Nicht dokumentiert	SA	1,06	0,24	25,00	
+					FOLK_S_00351	Nicht dokumentiert	XM	1,86	0,40	42,86	
+FOLK_E_00060_SE_01	0:33:57	51,09	47,46	4
+					FOLK_S_00341	Nicht dokumentiert	GK	1,75	0,62	37,50	
+					FOLK_S_00342	Nicht dokumentiert	KR	49,12	51,09	21,88	
+					FOLK_S_00343	Student/in	SB	48,25	47,46	35,45	
+					FOLK_S_00082	Nicht dokumentiert	XI	0,66	0,78	0,00	
+FOLK_E_00061_SE_01	0:27:44	69,86	19,46	6
+					FOLK_S_00334	Hochschullehrer/in	CH	1,85	0,41	40,00	
+					FOLK_S_00345	Nicht dokumentiert	FP	0,00	0,00	NaN	
+					FOLK_S_00344	Hochschullehrer/in	GC	22,96	9,69	40,32	
+					FOLK_S_00337	Hochschullehrer/in	HN	24,07	19,46	41,54	
+					FOLK_S_00346	Student/in	KW	47,78	69,86	24,81	
+					FOLK_S_00078	Nicht dokumentiert	XE	2,22	0,51	33,33	
+FOLK_E_00062_SE_01	0:28:51	66,42	18,12	6
+					FOLK_S_00347	Student/in	AT	46,02	66,42	23,31	
+					FOLK_S_00334	Hochschullehrer/in	CH	3,11	1,16	33,33	
+					FOLK_S_00345	Nicht dokumentiert	FP	0,69	0,33	0,00	
+					FOLK_S_00344	Hochschullehrer/in	GC	24,22	11,86	44,29	
+					FOLK_S_00337	Hochschullehrer/in	HN	18,69	18,12	48,15	
+					FOLK_S_00078	Nicht dokumentiert	XE	5,88	1,85	35,29	
+FOLK_E_00064_SE_01	5:24:40	22,09	15,67	22
+					FOLK_S_00129	Geschäftsführer/in	AK	0,23	0,09	0,00	
+					FOLK_S_00099	Biologe/in ; Verbandsvorsitzende/r	BD	2,49	1,89	27,27	
+					FOLK_S_00439	Pressesprecher/in	EN	0,91	2,65	0,00	
+					FOLK_S_00120	Politiker/in	EP	0,91	1,65	0,00	
+					FOLK_S_00437	Jurist/in ; Berater/in	FB	0,08	0,00	100,00	
+					FOLK_S_00119	Ingenieur/in	FL	5,66	22,09	21,33	
+					FOLK_S_00115	Geograf/in	GH	5,06	6,86	7,46	
+					FOLK_S_00102	Techniker/in ; Kunstmaler/in	GS	0,53	0,42	0,00	
+					FOLK_S_00096	Philosoph/in ; Jurist/in ; Politiker/in	HG	31,50	15,67	14,87	
+					FOLK_S_00101	Student/in ; Stadtrat/-rätin	HR	1,81	1,50	20,83	
+					FOLK_S_00438	Hochschullehrer/in	HW	0,53	1,63	14,29	
+					FOLK_S_00117	Manger/in	IL	2,72	2,07	27,78	
+					FOLK_S_00105	Nicht dokumentiert	JB	1,44	1,30	5,26	
+					FOLK_S_00127	Ingenieur/in ; Designer/in	KB	0,38	0,46	0,00	
+					FOLK_S_00130	Psychologe/in ; Geschäftsführer/in	KR	3,40	6,64	11,11	
+					FOLK_S_00121	Volkswirtschaftler/in ; Berater/in	MH	4,00	5,95	15,09	
+					FOLK_S_00123	Verbandsvorsitzende/r	ML	4,53	2,36	18,33	
+					FOLK_S_00098	Architekt/in ; Amtsleitung	PC	1,21	0,53	25,00	
+					FOLK_S_00126	Informatiker/in ; Geograf/in ; Kartograf/in ; Berater/in	SB	1,13	0,94	20,00	
+					FOLK_S_00106	Jurist/in ; Politiker/in	TG	6,57	4,46	27,59	
+					FOLK_S_00107	Vorstand (Technik)	VK	10,27	12,46	20,59	
+					FOLK_S_00124	Politiker/in ; Politiker/in	WK	1,89	3,29	8,00	
+FOLK_E_00066_SE_01	2:17:27	45,11	22,30	4
+					FOLK_S_00359	Nicht dokumentiert	AL	20,91	20,73	21,69	
+					FOLK_S_00357	Nicht dokumentiert	JO	34,70	45,11	29,30	
+					FOLK_S_00360	Nicht dokumentiert	PA	15,18	11,38	26,42	
+					FOLK_S_00358	Nicht dokumentiert	UD	26,44	22,30	29,06	
+FOLK_E_00068_SE_01	5:25:21	28,93	16,81	24
+					FOLK_S_00099	Biologe/in ; Verbandsvorsitzende/r	BD	1,31	0,30	53,85	
+					FOLK_S_00100	Bürgermeister/in	BP	10,85	28,93	15,81	
+					FOLK_S_00448	Politologe/in ; Abteilungsleitung	DF	1,31	2,98	0,00	
+					FOLK_S_00118	Oberrat/-rätin	EH	5,05	8,77	8,00	
+					FOLK_S_00119	Ingenieur/in	FL	3,63	3,53	13,89	
+					FOLK_S_00131	Ingenieur/in ; Hochschullehrer/in	GE	0,10	0,32	0,00	
+					FOLK_S_00115	Geograf/in	GH	0,96	0,31	36,84	
+					FOLK_S_00102	Techniker/in ; Kunstmaler/in	GS	1,41	0,86	17,86	
+					FOLK_S_00096	Philosoph/in ; Jurist/in ; Politiker/in	HG	27,71	12,45	21,49	
+					FOLK_S_00101	Student/in ; Stadtrat/-rätin	HR	1,06	0,54	23,81	
+					FOLK_S_00117	Manger/in	IL	1,92	1,45	15,79	
+					FOLK_S_00105	Nicht dokumentiert	JB	0,45	0,14	22,22	
+					FOLK_S_00138	Jurist/in	JK	0,40	0,33	25,00	
+					FOLK_S_00097	Verbandsvorsitzende/r	KA	6,11	9,91	14,88	
+					FOLK_S_00449	Journalist/in	KI	0,25	0,35	0,00	
+					FOLK_S_00450	Politologe/in ; Politiker/in	LF	0,66	0,08	69,23	
+					FOLK_S_00176	Fernsehmoderator/in	MO	1,21	1,32	8,33	
+					FOLK_S_00098	Architekt/in ; Amtsleitung	PC	4,44	16,81	7,95	
+					FOLK_S_00104	Ingenieur/in ; Verbandsvorsitzende/r	TB	0,25	0,08	0,00	
+					FOLK_S_00106	Jurist/in ; Politiker/in	TG	8,58	3,48	41,18	
+					FOLK_S_00133	Hochschullehrer/in ; Wissenschaftler/in (Verkehr)	UM	0,05	0,00	100,00	
+					FOLK_S_00107	Vorstand (Technik)	VK	6,87	5,11	39,71	
+					FOLK_S_00125	Ingenieur/in ; Technikvorstand	WA	0,00	0,00	NaN	
+					FOLK_S_00103	Sozialpädagoge/in ; Politiker/in	WW	0,96	0,30	15,79	
+FOLK_E_00069_SE_01	5:04:17	21,69	18,06	24
+					FOLK_S_00111	Jurist/in ; Beamte/r (politisch)	BB	0,05	0,00	100,00	
+					FOLK_S_00435	Journalist/in	BH	0,59	1,97	8,33	
+					FOLK_S_00100	Bürgermeister/in	BP	5,51	11,55	25,00	
+					FOLK_S_00119	Ingenieur/in	FL	0,49	0,59	20,00	
+					FOLK_S_00115	Geograf/in	GH	0,88	1,22	11,11	
+					FOLK_S_00434	Biologe/in	GP	0,20	0,28	0,00	
+					FOLK_S_00102	Techniker/in ; Kunstmaler/in	GS	3,29	3,24	20,90	
+					FOLK_S_00096	Philosoph/in ; Jurist/in ; Politiker/in	HG	34,46	18,06	18,97	
+					FOLK_S_00153	Ingenieur/in	HK	0,15	0,28	0,00	
+					FOLK_S_00101	Student/in ; Stadtrat/-rätin	HR	1,43	2,63	17,24	
+					FOLK_S_00138	Jurist/in	JK	1,08	1,52	13,64	
+					FOLK_S_00162	Geologe/in ; Geschäftsführer/in	JS	4,87	7,32	30,30	
+					FOLK_S_00097	Verbandsvorsitzende/r	KA	0,29	0,32	0,00	
+					FOLK_S_00436	Brandschutzbeauftragte/r	KB	0,64	2,42	15,38	
+					FOLK_S_00155	Ingenieur/in ; Abteilungsleitung	KP	1,03	1,00	23,81	
+					FOLK_S_00140	Jurist/in ; Politologe/in ; Bürgermeister/in	MT	0,34	0,32	0,00	
+					FOLK_S_00098	Architekt/in ; Amtsleitung	PC	1,82	1,08	21,62	
+					FOLK_S_00139	Architekt/in ; Stadtrat/-rätin	PP	0,54	0,56	9,09	
+					FOLK_S_00104	Ingenieur/in ; Verbandsvorsitzende/r	TB	0,29	0,13	33,33	
+					FOLK_S_00106	Jurist/in ; Politiker/in	TG	0,69	0,15	35,71	
+					FOLK_S_00161	Ingenieur/in	UZ	0,44	0,53	11,11	
+					FOLK_S_00107	Vorstand (Technik)	VK	1,03	1,23	28,57	
+					FOLK_S_00154	Ingenieur/in ; Berater/in	WL	9,83	16,32	21,50	
+					FOLK_S_00157	Hochschullehrer/in	WW	17,99	21,69	23,77	
+FOLK_E_00070_SE_01	5:37:04	20,89	17,71	30
+					FOLK_S_00099	Biologe/in ; Verbandsvorsitzende/r	BD	1,60	1,57	16,67	
+					FOLK_S_00100	Bürgermeister/in	BP	0,16	0,01	66,67	
+					FOLK_S_00170	Angestellte/r	CS	0,16	0,03	0,00	
+					FOLK_S_00119	Ingenieur/in	FL	0,05	0,00	100,00	
+					FOLK_S_00451	Journalist/in	GB	0,64	0,71	0,00	
+					FOLK_S_00131	Ingenieur/in ; Hochschullehrer/in	GE	1,28	2,20	12,50	
+					FOLK_S_00115	Geograf/in	GH	0,74	0,38	0,00	
+					FOLK_S_00102	Techniker/in ; Kunstmaler/in	GS	0,96	0,46	16,67	
+					FOLK_S_00096	Philosoph/in ; Jurist/in ; Politiker/in	HG	29,04	12,30	19,96	
+					FOLK_S_00101	Student/in ; Stadtrat/-rätin	HR	2,71	1,22	11,76	
+					FOLK_S_00452	Wirtschaftsprüfer/in ; Geschäftsführer/in	HS	4,79	17,71	4,44	
+					FOLK_S_00117	Manger/in	IL	0,21	0,02	50,00	
+					FOLK_S_00105	Nicht dokumentiert	JB	0,11	0,00	100,00	
+					FOLK_S_00453	Wirtschaftsprüfer/in	JD	2,71	4,59	11,76	
+					FOLK_S_00138	Jurist/in	JK	0,21	0,20	0,00	
+					FOLK_S_00097	Verbandsvorsitzende/r	KA	1,12	0,29	23,81	
+					FOLK_S_00454	Wirtschaftsprüfer/in	KW	2,34	2,09	11,36	
+					FOLK_S_00455	Kaufmann/-frau (Einzelhandel) ; Gewerkschaftssekretär/in ; Gewerkschafter/in ; Politiker/in	LB	0,43	0,90	0,00	
+					FOLK_S_00163	Kaufmann/-frau (Bank) ; Bürgermeister/in	MF	0,11	0,02	50,00	
+					FOLK_S_00121	Volkswirtschaftler/in ; Berater/in	MH	5,37	4,73	17,82	
+					FOLK_S_00176	Fernsehmoderator/in	MO	2,87	2,16	9,26	
+					FOLK_S_00167	Betriebswirt/in ; Geschäftsführer/in	MV	1,54	3,07	13,79	
+					FOLK_S_00098	Architekt/in ; Amtsleitung	PC	2,02	1,75	18,42	
+					FOLK_S_00106	Jurist/in ; Politiker/in	TG	1,60	0,30	40,00	
+					FOLK_S_00456	Nicht dokumentiert	TK	1,76	1,89	18,18	
+					FOLK_S_00107	Vorstand (Technik)	VK	13,72	17,09	27,52	
+					FOLK_S_00112	Mathematiker/in ; Informatiker/in ; Hochschullehrer/in	WH	0,85	1,33	18,75	
+					FOLK_S_00157	Hochschullehrer/in	WI	0,96	0,56	27,78	
+					FOLK_S_00124	Politiker/in ; Politiker/in	WK	6,60	20,89	3,23	
+					FOLK_S_00103	Sozialpädagoge/in ; Politiker/in	WW	3,35	1,03	20,63	
+FOLK_E_00074_SE_01	0:40:25	62,38	37,62	2
+					FOLK_S_00590	Schüler/in (Gymnasium)	BWS2	47,53	37,62	37,61	
+					FOLK_S_00432	Wissenschaftler/in	MF	52,47	62,38	31,30	
+FOLK_E_00076_SE_01	0:20:55	80,79	19,16	2
+					FOLK_S_00032	Schüler/in	DJ	49,71	80,79	18,82	
+					FOLK_S_00031	Nicht vorhanden	TJ	49,71	19,16	38,82	
+FOLK_E_00077_SE_01	0:20:29	50,11	49,81	2
+					FOLK_S_00457	Wissenschaftler/in	LB	50,43	49,81	36,57	
+					FOLK_S_00458	Friseurmeister/in	UG	48,99	50,11	22,94	
+FOLK_E_00079_SE_01	0:28:23	46,66	26,99	4
+					FOLK_S_00462	Student/in	CG	20,16	17,33	25,24	
+					FOLK_S_00464	Account-Manager/in	JS	24,85	26,99	47,24	
+					FOLK_S_00463	Geschäftsführer/in	LH	39,33	46,66	22,39	
+					FOLK_S_00465	Account-Manager/in	LK	15,07	8,95	48,05	
+FOLK_E_00080_SE_01	0:18:35	54,53	44,10	2
+					FOLK_S_00467	Designer/in ; Unternehmer/in	DZ	45,56	54,53	15,04	
+					FOLK_S_00466	PR-Referent/in	VB	51,21	44,10	34,65	
+FOLK_E_00081_SE_01	0:09:00	70,54	29,46	2
+					FOLK_S_00468	Student/in	MS	53,79	70,54	14,08	
+					FOLK_S_00469	Schüler/in	SP	46,21	29,46	45,90	
+FOLK_E_00082_SE_01	0:36:01	30,45	23,84	7
+					FOLK_S_00471	Kaufmann/-frau (Industrie) ; Angestellte/r (Verwaltung)	AD	22,75	23,84	33,81	
+					FOLK_S_00474	Angestellte/r (Verwaltung)	EK	15,49	12,49	30,77	
+					FOLK_S_00475	Kaufmann/-frau (Industrie, Verwaltung)	MB	1,63	1,61	33,33	
+					FOLK_S_00472	Fotograf/in ; Angestellte/r (Verwaltung)	OH	16,03	18,62	29,73	
+					FOLK_S_00473	Lehrer/in ; Angestellte/r (Verwaltung)	SA	7,91	4,29	38,36	
+					FOLK_S_00470	Restaurantfachmann/-frau ; Angestellte/r (Verwaltung)	VF	23,51	30,45	24,88	
+					FOLK_S_00476	Kaufmann/-frau (Bank) ; Student/in	VM	7,04	7,19	26,15	
+FOLK_E_00083_SE_01	0:55:20	88,05	11,81	3
+					FOLK_S_00406	Nicht vorhanden	AS	47,69	11,81	64,08	
+					FOLK_S_00363	Fahrlehrer/in	RK	51,16	88,05	13,12	
+					FOLK_S_00365	Nicht dokumentiert	RT	1,16	0,15	80,00	
+FOLK_E_00084_SE_01	1:09:52	63,87	36,13	2
+					FOLK_S_00478	Nicht dokumentiert	EG	49,95	36,13	28,77	
+					FOLK_S_00477	Student/in	FR	50,05	63,87	18,67	
+FOLK_E_00085_SE_01	0:07:55	57,02	41,57	2
+					FOLK_S_00481	Ingenieur/in ; Sachbearbeiter/in	AH	50,54	41,57	23,40	
+					FOLK_S_00480	Nicht dokumentiert	HH	45,16	57,02	28,57	
+FOLK_E_00086_SE_01	0:17:23	51,29	44,72	2
+					FOLK_S_00272	Schüler/in (Gymnasium)	AAC3	47,20	51,29	34,87	
+					FOLK_S_00273	Schüler/in (Gymnasium)	AAC4	47,52	44,72	27,45	
+FOLK_E_00087_SE_01	0:12:25	53,62	27,18	2
+					FOLK_S_00282	Schüler/in (Gymnasium)	BUC3	48,73	53,62	40,00	
+					FOLK_S_00283	Schüler/in (Gymnasium)	BUC4	36,02	27,18	35,29	
+FOLK_E_00088_SE_01	0:18:07	53,22	46,57	2
+					FOLK_S_00482	Angestellte/r (Medien- und Informationsdienste) ; Student/in	JK	56,23	46,57	28,11	
+					FOLK_S_00483	Deutschtrainer/in ; Autor/in	MK	42,86	53,22	18,44	
+FOLK_E_00089_SE_01	0:19:01	61,25	34,61	2
+					FOLK_S_00292	Schüler/in (Gymnasium)	FFM3	43,05	34,61	45,34	
+					FOLK_S_00293	Schüler/in (Gymnasium)	FFM4	49,47	61,25	20,54	
+FOLK_E_00090_SE_01	0:20:04	58,02	36,30	2
+					FOLK_S_00298	Schüler/in (Gymnasium)	HAN3	46,55	58,02	35,19	
+					FOLK_S_00299	Schüler/in (Gymnasium)	HAN4	48,56	36,30	42,01	
+FOLK_E_00091_SE_01	0:16:55	63,61	27,80	2
+					FOLK_S_00316	Schüler/in (Gymnasium)	TMP3	42,99	27,80	45,14	
+					FOLK_S_00317	Schüler/in (Gymnasium)	TMP4	46,87	63,61	29,30	
+FOLK_E_00092_SE_01	0:07:13	44,98	35,25	3
+					FOLK_S_00485	Journalist/in	ES	35,98	35,25	29,07	
+					FOLK_S_00486	Student/in	SN	26,78	19,78	42,19	
+					FOLK_S_00484	Student/in ; Journalist/in	TH	37,24	44,98	29,21	
+FOLK_E_00093_SE_01	0:20:54	45,34	44,25	2
+					FOLK_S_00318	Schüler/in (Gymnasium)	FRE3	43,53	44,25	34,06	
+					FOLK_S_00319	Schüler/in (Gymnasium)	FRE4	45,11	45,34	33,57	
+FOLK_E_00094_SE_01	0:25:45	50,42	46,06	2
+					FOLK_S_00314	Schüler/in (Gymnasium)	TMP1	47,83	50,42	35,06	
+					FOLK_S_00315	Schüler/in (Gymnasium)	TMP2	48,24	46,06	38,20	
+FOLK_E_00095_SE_01	0:17:04	48,64	44,21	2
+					FOLK_S_00312	Schüler/in (Gymnasium)	SOE3	45,07	44,21	35,00	
+					FOLK_S_00313	Schüler/in (Gymnasium)	SOE4	48,17	48,64	35,67	
+FOLK_E_00096_SE_01	0:11:20	55,19	33,60	2
+					FOLK_S_00310	Schüler/in (Gymnasium)	KLE1	44,87	33,60	57,14	
+					FOLK_S_00311	Schüler/in (Gymnasium)	KLE2	42,95	55,19	50,75	
+FOLK_E_00097_SE_01	0:11:30	45,61	37,16	2
+					FOLK_S_00308	Schüler/in (Gymnasium)	MNH1	43,75	37,16	47,32	
+					FOLK_S_00309	Schüler/in (Gymnasium)	MNH2	43,75	45,61	33,93	
+FOLK_E_00098_SE_01	0:10:55	48,07	45,65	2
+					FOLK_S_00306	Schüler/in (Gymnasium)	LHW1	45,50	45,65	45,83	
+					FOLK_S_00307	Schüler/in (Gymnasium)	LHW2	46,92	48,07	31,31	
+FOLK_E_00099_SE_01	0:14:59	49,25	48,88	2
+					FOLK_S_00302	Schüler/in (Gymnasium)	HUS1	46,94	49,25	32,07	
+					FOLK_S_00303	Schüler/in (Gymnasium)	HUS2	49,49	48,88	41,75	
+FOLK_E_00100_SE_01	0:21:37	56,78	38,39	2
+					FOLK_S_00300	Schüler/in (Gymnasium)	HBG1	46,43	56,78	33,94	
+					FOLK_S_00301	Schüler/in (Gymnasium)	HBG2	49,16	38,39	41,88	
+FOLK_E_00101_SE_01	0:20:25	48,57	48,51	2
+					FOLK_S_00296	Schüler/in (Gymnasium)	HAN1	48,12	48,51	40,10	
+					FOLK_S_00297	Schüler/in (Gymnasium)	HAN2	46,62	48,57	29,57	
+FOLK_E_00102_SE_01	0:09:13	55,92	38,54	2
+					FOLK_S_00294	Schüler/in (Gymnasium)	GSK3	45,73	55,92	37,33	
+					FOLK_S_00295	Schüler/in (Gymnasium)	GSK4	45,73	38,54	37,33	
+FOLK_E_00103_SE_01	0:27:36	61,71	35,24	2
+					FOLK_S_00290	Schüler/in (Gymnasium)	FFM1	47,51	35,24	33,71	
+					FOLK_S_00291	Schüler/in (Gymnasium)	FFM2	47,33	61,71	19,92	
+FOLK_E_00104_SE_01	0:10:02	46,87	43,88	2
+					FOLK_S_00286	Schüler/in (Gymnasium)	DUI1	44,80	46,87	37,37	
+					FOLK_S_00287	Schüler/in (Gymnasium)	DUI2	44,34	43,88	34,69	
+FOLK_E_00105_SE_01	0:32:10	52,86	41,43	2
+					FOLK_S_00284	Schüler/in (Gymnasium)	DRE3	47,36	52,86	26,86	
+					FOLK_S_00285	Schüler/in (Gymnasium)	DRE4	45,74	41,43	36,98	
+FOLK_E_00106_SE_01	0:13:28	44,11	44,06	2
+					FOLK_S_00280	Schüler/in (Gymnasium)	BUC1	43,60	44,06	32,11	
+					FOLK_S_00281	Schüler/in (Gymnasium)	BUC2	44,80	44,11	42,86	
+FOLK_E_00107_SE_01	0:10:00	66,04	27,56	2
+					FOLK_S_00276	Schüler/in (Gymnasium)	BHV3	45,83	27,56	69,09	
+					FOLK_S_00277	Schüler/in (Gymnasium)	BHV4	44,17	66,04	22,64	
+FOLK_E_00108_SE_01	0:15:30	51,83	41,45	2
+					FOLK_S_00278	Schüler/in (Gymnasium)	BLN1	46,54	41,45	30,58	
+					FOLK_S_00279	Schüler/in (Gymnasium)	BLN2	45,77	51,83	35,29	
+FOLK_E_00109_SE_01	0:11:47	52,75	36,33	2
+					FOLK_S_00274	Schüler/in (Gymnasium)	BFD3	44,74	52,75	43,14	
+					FOLK_S_00275	Schüler/in (Gymnasium)	BFD4	44,30	36,33	45,54	
+FOLK_E_00110_SE_01	0:20:53	60,91	35,61	2
+					FOLK_S_00270	Schüler/in (Gymnasium)	AAC1	46,24	35,61	44,19	
+					FOLK_S_00271	Schüler/in (Gymnasium)	AAC2	50,27	60,91	31,55	
+FOLK_E_00111_SE_01	0:15:04	74,67	15,36	4
+					FOLK_S_00083	Krankenpfleger/in	MA	5,51	2,94	57,14	
+					FOLK_S_00085	Krankenpfleger/in	MC	43,31	74,67	10,91	
+					FOLK_S_00090	Verkäufer/in (Möbel) ; Krankenpfleger/in	MJ	18,11	6,58	47,83	
+					FOLK_S_00091	Krankenpfleger/in	MO	28,35	15,36	27,78	
+FOLK_E_00112_SE_01	0:12:14	70,68	17,79	4
+					FOLK_S_00083	Krankenpfleger/in	MA	15,63	4,65	52,00	
+					FOLK_S_00084	Kaufmann/-frau (Bank) ; Krankenpfleger/in	MB	43,75	70,68	15,71	
+					FOLK_S_00090	Verkäufer/in (Möbel) ; Krankenpfleger/in	MJ	26,25	17,79	30,95	
+					FOLK_S_00094	Krankenpfleger/in	MT	12,50	6,67	25,00	
+FOLK_E_00113_SE_01	0:08:04	93,60	4,11	3
+					FOLK_S_00086	Krankenpfleger/in	MD	24,32	2,29	66,67	
+					FOLK_S_00087	Krankenpfleger/in	ME	32,43	4,11	58,33	
+					FOLK_S_00089	Krankenpfleger/in	MH	43,24	93,60	0,00	
+FOLK_E_00114_SE_01	0:43:35	44,29	36,37	4
+					FOLK_S_00086	Krankenpfleger/in	MD	24,14	44,29	24,82	
+					FOLK_S_00087	Krankenpfleger/in	ME	30,82	36,37	22,78	
+					FOLK_S_00090	Verkäufer/in (Möbel) ; Krankenpfleger/in	MJ	12,67	5,98	41,89	
+					FOLK_S_00092	Krankenpfleger/in	MP	32,36	13,36	48,15	
+FOLK_E_00115_SE_01	0:26:04	87,16	9,44	3
+					FOLK_S_00086	Krankenpfleger/in	MD	18,44	3,40	57,58	
+					FOLK_S_00087	Krankenpfleger/in	ME	37,43	9,44	53,73	
+					FOLK_S_00088	Krankenpfleger/in	MG	44,13	87,16	11,39	
+FOLK_E_00116_SE_01	0:04:00	80,13	13,39	3
+					FOLK_S_00086	Krankenpfleger/in	MD	12,50	6,47	50,00	
+					FOLK_S_00087	Krankenpfleger/in	ME	31,25	13,39	46,67	
+					FOLK_S_00093	Altenpfleger/in ; Krankenpfleger/in	MQ	56,25	80,13	14,81	
+FOLK_E_00117_SE_01	0:19:56	94,04	3,22	4
+					FOLK_S_00083	Krankenpfleger/in	MA	23,42	2,20	69,23	
+					FOLK_S_00087	Krankenpfleger/in	ME	9,01	0,48	90,00	
+					FOLK_S_00090	Verkäufer/in (Möbel) ; Krankenpfleger/in	MJ	55,86	94,04	6,45	
+					FOLK_S_00095	Krankenpfleger/in	MU	9,91	3,22	54,55	
+FOLK_E_00118_SE_01	0:29:10	89,88	9,08	3
+					FOLK_S_00083	Krankenpfleger/in	MA	39,75	9,08	51,58	
+					FOLK_S_00087	Krankenpfleger/in	ME	51,88	89,88	19,35	
+					FOLK_S_00095	Krankenpfleger/in	MU	5,02	0,80	50,00	
+FOLK_E_00119_SE_01	0:38:54	57,67	32,44	3
+					FOLK_S_00199	Rettungssanitäter/in ; Student/in	PE	15,29	9,88	39,06	
+					FOLK_S_00191	Student/in	RW	37,16	32,44	34,73	
+					FOLK_S_00198	Designer/in	TI	47,43	57,67	26,70	
+FOLK_E_00120_SE_01	0:42:26	73,14	8,10	16
+					FOLK_S_00225	Schüler/in (Wirtschaftsgymnasium)	AQ	0,30	0,02	100,00	
+					FOLK_S_00221	Schüler/in (Wirtschaftsgymnasium)	BV	7,99	6,25	18,52	
+					FOLK_S_00219	Schüler/in (Wirtschaftsgymnasium)	CY	1,48	0,77	60,00	
+					FOLK_S_00218	Schüler/in (Wirtschaftsgymnasium)	DS	0,89	0,14	66,67	
+					FOLK_S_00220	Schüler/in (Wirtschaftsgymnasium)	FK	0,59	0,04	100,00	
+					FOLK_S_00226	Lehrer/in	HK	47,93	73,14	20,99	
+					FOLK_S_00215	Schüler/in (Wirtschaftsgymnasium)	HY	11,24	8,10	31,58	
+					FOLK_S_00213	Schüler/in (Wirtschaftsgymnasium)	LH	0,30	0,02	100,00	
+					FOLK_S_00214	Schüler/in (Wirtschaftsgymnasium)	NK	1,18	0,83	25,00	
+					FOLK_S_00208	Schüler/in (Wirtschaftsgymnasium)	RW	1,18	0,39	50,00	
+					FOLK_S_00212	Schüler/in (Wirtschaftsgymnasium)	RZ	5,33	2,46	22,22	
+					FOLK_S_00224	Schüler/in (Wirtschaftsgymnasium)	TG	1,48	0,88	40,00	
+					FOLK_S_00222	Schüler/in (Wirtschaftsgymnasium)	TS	1,48	0,67	20,00	
+					FOLK_S_00210	Schüler/in (Wirtschaftsgymnasium)	TZ	2,37	0,51	50,00	
+					FOLK_S_00216	Schüler/in (Wirtschaftsgymnasium)	UT	7,40	3,58	32,00	
+					FOLK_S_00211	Schüler/in (Wirtschaftsgymnasium)	ZF	3,55	1,26	33,33	
+FOLK_E_00121_SE_01	1:18:58	60,40	8,33	18
+					FOLK_S_00256	Schüler/in (Wirtschaftsgymnasium)	AA	0,00	0,00	NaN	
+					FOLK_S_00254	Schüler/in (Wirtschaftsgymnasium)	AK	2,14	1,78	11,76	
+					FOLK_S_00267	Schüler/in (Wirtschaftsgymnasium)	BB	7,43	4,43	20,34	
+					FOLK_S_00259	Schüler/in (Wirtschaftsgymnasium)	CC	4,03	3,27	9,38	
+					FOLK_S_00265	Schüler/in (Wirtschaftsgymnasium)	CF	0,63	0,13	60,00	
+					FOLK_S_00253	Schüler/in (Wirtschaftsgymnasium)	DK	0,00	0,00	NaN	
+					FOLK_S_00260	Schüler/in (Wirtschaftsgymnasium)	GA	1,26	0,55	30,00	
+					FOLK_S_00257	Schüler/in (Wirtschaftsgymnasium)	HM	7,05	8,33	5,36	
+					FOLK_S_00261	Schüler/in (Wirtschaftsgymnasium)	JH	3,02	1,30	25,00	
+					FOLK_S_00263	Schüler/in (Wirtschaftsgymnasium)	JN	2,39	2,99	10,53	
+					FOLK_S_00251	Schüler/in (Wirtschaftsgymnasium)	MB	2,27	3,26	16,67	
+					FOLK_S_00258	Schüler/in (Wirtschaftsgymnasium)	MG	2,14	2,41	11,76	
+					FOLK_S_00269	Nicht dokumentiert	MZ	0,13	0,01	100,00	
+					FOLK_S_00255	Schüler/in (Wirtschaftsgymnasium)	NY	0,13	0,05	0,00	
+					FOLK_S_00266	Schüler/in (Wirtschaftsgymnasium)	PD	2,77	1,13	50,00	
+					FOLK_S_00252	Schüler/in (Wirtschaftsgymnasium)	RC	3,90	4,41	16,13	
+					FOLK_S_00229	Lehrer/in	SM	44,33	60,40	30,68	
+					FOLK_S_00264	Schüler/in (Wirtschaftsgymnasium)	SS	0,13	0,02	100,00	
+FOLK_E_00123_SE_01	0:23:39	89,26	1,73	17
+					FOLK_S_00256	Schüler/in (Wirtschaftsgymnasium)	AA	0,71	0,19	0,00	
+					FOLK_S_00254	Schüler/in (Wirtschaftsgymnasium)	AK	0,71	0,04	100,00	
+					FOLK_S_00267	Schüler/in (Wirtschaftsgymnasium)	BB	4,96	1,38	28,57	
+					FOLK_S_00268	Schüler/in (Wirtschaftsgymnasium)	BZ	2,84	0,61	50,00	
+					FOLK_S_00259	Schüler/in (Wirtschaftsgymnasium)	CC	6,38	1,46	44,44	
+					FOLK_S_00265	Schüler/in (Wirtschaftsgymnasium)	CF	1,42	0,08	100,00	
+					FOLK_S_00253	Schüler/in (Wirtschaftsgymnasium)	DK	0,00	0,00	NaN	
+					FOLK_S_00261	Schüler/in (Wirtschaftsgymnasium)	JH	0,71	0,04	100,00	
+					FOLK_S_00263	Schüler/in (Wirtschaftsgymnasium)	JN	3,55	0,65	20,00	
+					FOLK_S_00262	Schüler/in (Wirtschaftsgymnasium)	LM	5,67	1,23	75,00	
+					FOLK_S_00251	Schüler/in (Wirtschaftsgymnasium)	MB	4,26	1,23	33,33	
+					FOLK_S_00258	Schüler/in (Wirtschaftsgymnasium)	MG	7,09	1,73	40,00	
+					FOLK_S_00255	Schüler/in (Wirtschaftsgymnasium)	NY	0,00	0,00	NaN	
+					FOLK_S_00266	Schüler/in (Wirtschaftsgymnasium)	PD	0,71	0,04	100,00	
+					FOLK_S_00252	Schüler/in (Wirtschaftsgymnasium)	RC	4,96	1,15	42,86	
+					FOLK_S_00264	Schüler/in (Wirtschaftsgymnasium)	SS	0,71	0,12	0,00	
+					FOLK_S_00230	Lehrer/in	US	47,52	89,26	11,94	
+FOLK_E_00124_SE_01	0:40:45	67,02	5,44	20
+					FOLK_S_00238	Schüler/in (Wirtschaftsgymnasium)	CK	0,88	0,59	0,00	
+					FOLK_S_00240	Schüler/in (Wirtschaftsgymnasium)	DG	5,70	5,44	15,38	
+					FOLK_S_00232	Schüler/in (Wirtschaftsgymnasium)	DH	3,07	1,60	21,43	
+					FOLK_S_00233	Schüler/in (Wirtschaftsgymnasium)	ET	1,97	0,97	22,22	
+					FOLK_S_00244	Schüler/in (Wirtschaftsgymnasium)	FH	0,44	0,21	0,00	
+					FOLK_S_00231	Schüler/in (Wirtschaftsgymnasium)	FS	4,82	1,90	45,45	
+					FOLK_S_00243	Schüler/in (Wirtschaftsgymnasium)	KG	1,10	0,51	40,00	
+					FOLK_S_00248	Schüler/in (Wirtschaftsgymnasium)	KL	3,29	4,30	33,33	
+					FOLK_S_00236	Schüler/in (Wirtschaftsgymnasium)	LZ	1,10	1,31	20,00	
+					FOLK_S_00239	Schüler/in (Wirtschaftsgymnasium)	MH	3,73	1,77	35,29	
+					FOLK_S_00235	Schüler/in (Wirtschaftsgymnasium)	MM	1,10	0,23	60,00	
+					FOLK_S_00249	Schüler/in (Wirtschaftsgymnasium)	MS	0,00	0,00	NaN	
+					FOLK_S_00250	Schüler/in (Wirtschaftsgymnasium)	OW	0,00	0,00	NaN	
+					FOLK_S_00247	Schüler/in (Wirtschaftsgymnasium)	PL	2,19	2,00	30,00	
+					FOLK_S_00228	Lehrer/in	PM	49,56	67,02	21,68	
+					FOLK_S_00245	Schüler/in (Wirtschaftsgymnasium)	PS	3,29	3,94	26,67	
+					FOLK_S_00242	Schüler/in (Wirtschaftsgymnasium)	TB	1,54	1,83	14,29	
+					FOLK_S_00246	Schüler/in (Wirtschaftsgymnasium)	UR	5,04	3,12	8,70	
+					FOLK_S_00237	Schüler/in (Wirtschaftsgymnasium)	VP	0,00	0,00	NaN	
+					FOLK_S_00234	Schüler/in (Wirtschaftsgymnasium)	YD	2,19	1,47	30,00	
+FOLK_E_00125_SE_01	1:15:22	65,93	6,24	18
+					FOLK_S_00256	Schüler/in (Wirtschaftsgymnasium)	AA	0,46	0,08	50,00	
+					FOLK_S_00254	Schüler/in (Wirtschaftsgymnasium)	AK	3,45	3,47	0,00	
+					FOLK_S_00267	Schüler/in (Wirtschaftsgymnasium)	BB	5,52	2,95	37,50	
+					FOLK_S_00259	Schüler/in (Wirtschaftsgymnasium)	CC	3,45	0,82	53,33	
+					FOLK_S_00265	Schüler/in (Wirtschaftsgymnasium)	CF	2,53	1,30	27,27	
+					FOLK_S_00253	Schüler/in (Wirtschaftsgymnasium)	DK	0,46	0,12	50,00	
+					FOLK_S_00260	Schüler/in (Wirtschaftsgymnasium)	GA	1,84	0,46	75,00	
+					FOLK_S_00261	Schüler/in (Wirtschaftsgymnasium)	JH	5,29	2,55	17,39	
+					FOLK_S_00263	Schüler/in (Wirtschaftsgymnasium)	JN	5,98	6,24	15,38	
+					FOLK_S_00262	Schüler/in (Wirtschaftsgymnasium)	LM	2,99	1,89	15,38	
+					FOLK_S_00251	Schüler/in (Wirtschaftsgymnasium)	MB	4,60	5,59	20,00	
+					FOLK_S_00258	Schüler/in (Wirtschaftsgymnasium)	MG	2,07	1,19	33,33	
+					FOLK_S_00269	Nicht dokumentiert	MZ	0,00	0,00	NaN	
+					FOLK_S_00255	Schüler/in (Wirtschaftsgymnasium)	NY	1,15	0,09	80,00	
+					FOLK_S_00266	Schüler/in (Wirtschaftsgymnasium)	PD	2,07	1,20	11,11	
+					FOLK_S_00228	Lehrer/in	PM	46,90	65,93	21,57	
+					FOLK_S_00252	Schüler/in (Wirtschaftsgymnasium)	RC	4,60	2,65	25,00	
+					FOLK_S_00264	Schüler/in (Wirtschaftsgymnasium)	SS	2,76	3,03	8,33	
+FOLK_E_00126_SE_01	1:45:49	46,50	8,16	20
+					FOLK_S_00511	Jurist/in ; Jurist/in ; Vereinsvorsitzende/r	CM	2,11	3,53	0,00	
+					FOLK_S_00502	Akademieleitung	ER	3,75	3,70	0,00	
+					FOLK_S_00499	Hochschulpräsident/in	EW	3,75	6,97	0,00	
+					FOLK_S_00505	Kommunikationsdesigner/in ; Fotograf/in ; Bildende/r Künstler/in	FK	0,70	0,42	0,00	
+					FOLK_S_00497	Student/in	FS	0,70	1,59	0,00	
+					FOLK_S_00509	Hochschullehrer/in ; Rektor/in	GK	5,85	4,41	0,00	
+					FOLK_S_00508	Ratsvorsitzende/r	HD	2,11	1,58	0,00	
+					FOLK_S_00503	Kaufmann/-frau (Büro) ; Politiker/in ; Dozent/in	HH	1,17	0,74	0,00	
+					FOLK_S_00501	Hochschulleiter/in	HT	3,28	2,24	21,43	
+					FOLK_S_00504	Musikdirektor/in	IH	1,87	1,51	0,00	
+					FOLK_S_00500	Kirchenmusikdirektor/in	JM	0,47	0,85	0,00	
+					FOLK_S_00496	Jurist/in ; Bürgermeister/in	PK	0,70	4,22	0,00	
+					FOLK_S_00506	Nicht dokumentiert	RE	2,34	1,32	10,00	
+					FOLK_S_00498	Student/in	RG	0,94	1,63	25,00	
+					FOLK_S_00495	Hochschulpräsident/in	RM	2,58	8,16	27,27	
+					FOLK_S_00507	Komponist/in ; Hochschullehrer/in	SC	1,41	1,74	0,00	
+					FOLK_S_00493	Radiomoderator/in	SF	14,52	3,90	20,97	
+					FOLK_S_00512	Sänger/in ; Hochschullehrer/in	SS	1,41	1,07	16,67	
+					FOLK_S_00510	Student/in	SW	2,34	3,11	0,00	
+					FOLK_S_00494	Politiker/in	TB	28,57	46,50	5,74	
+FOLK_E_00127_SE_01	0:40:18	64,57	8,98	22
+					FOLK_S_00238	Schüler/in (Wirtschaftsgymnasium)	CK	1,69	0,63	50,00	
+					FOLK_S_00240	Schüler/in (Wirtschaftsgymnasium)	DG	4,66	3,64	36,36	
+					FOLK_S_00232	Schüler/in (Wirtschaftsgymnasium)	DH	2,12	2,24	40,00	
+					FOLK_S_00233	Schüler/in (Wirtschaftsgymnasium)	ET	3,39	1,40	12,50	
+					FOLK_S_00244	Schüler/in (Wirtschaftsgymnasium)	FH	0,85	0,95	0,00	
+					FOLK_S_00231	Schüler/in (Wirtschaftsgymnasium)	FS	6,78	4,29	31,25	
+					FOLK_S_00241	Schüler/in (Wirtschaftsgymnasium)	JG	3,81	2,83	11,11	
+					FOLK_S_00243	Schüler/in (Wirtschaftsgymnasium)	KG	0,00	0,00	NaN	
+					FOLK_S_00248	Schüler/in (Wirtschaftsgymnasium)	KL	1,27	0,54	33,33	
+					FOLK_S_00236	Schüler/in (Wirtschaftsgymnasium)	LZ	1,27	1,43	0,00	
+					FOLK_S_00239	Schüler/in (Wirtschaftsgymnasium)	MH	3,81	0,75	66,67	
+					FOLK_S_00235	Schüler/in (Wirtschaftsgymnasium)	MM	0,00	0,00	NaN	
+					FOLK_S_00249	Schüler/in (Wirtschaftsgymnasium)	MS	0,00	0,00	NaN	
+					FOLK_S_00269	Nicht dokumentiert	MZ	0,42	0,03	100,00	
+					FOLK_S_00250	Schüler/in (Wirtschaftsgymnasium)	OW	0,00	0,00	NaN	
+					FOLK_S_00247	Schüler/in (Wirtschaftsgymnasium)	PL	4,66	4,95	27,27	
+					FOLK_S_00228	Lehrer/in	PM	46,61	64,57	30,00	
+					FOLK_S_00245	Schüler/in (Wirtschaftsgymnasium)	PS	0,00	0,00	NaN	
+					FOLK_S_00242	Schüler/in (Wirtschaftsgymnasium)	TB	2,12	1,58	0,00	
+					FOLK_S_00246	Schüler/in (Wirtschaftsgymnasium)	UR	2,12	0,89	40,00	
+					FOLK_S_00237	Schüler/in (Wirtschaftsgymnasium)	VP	0,00	0,00	NaN	
+					FOLK_S_00234	Schüler/in (Wirtschaftsgymnasium)	YD	11,86	8,98	10,71	
+FOLK_E_00128_SE_01	1:27:37	66,88	5,81	18
+					FOLK_S_00238	Schüler/in (Wirtschaftsgymnasium)	CK	1,86	1,39	12,50	
+					FOLK_S_00227	Kaufmann/-frau (Industrie) ; Lehrer/in	CS	40,81	66,88	18,23	
+					FOLK_S_00240	Schüler/in (Wirtschaftsgymnasium)	DG	5,23	2,83	24,44	
+					FOLK_S_00232	Schüler/in (Wirtschaftsgymnasium)	DH	3,02	1,84	19,23	
+					FOLK_S_00244	Schüler/in (Wirtschaftsgymnasium)	FH	2,09	0,87	16,67	
+					FOLK_S_00231	Schüler/in (Wirtschaftsgymnasium)	FS	4,53	2,58	25,64	
+					FOLK_S_00243	Schüler/in (Wirtschaftsgymnasium)	KG	2,21	0,56	47,37	
+					FOLK_S_00248	Schüler/in (Wirtschaftsgymnasium)	KL	3,14	5,81	14,81	
+					FOLK_S_00236	Schüler/in (Wirtschaftsgymnasium)	LZ	3,60	1,79	38,71	
+					FOLK_S_00239	Schüler/in (Wirtschaftsgymnasium)	MH	3,49	1,76	30,00	
+					FOLK_S_00235	Schüler/in (Wirtschaftsgymnasium)	MM	1,51	0,63	38,46	
+					FOLK_S_00269	Nicht dokumentiert	MZ	0,00	0,00	NaN	
+					FOLK_S_00247	Schüler/in (Wirtschaftsgymnasium)	PL	2,56	1,79	36,36	
+					FOLK_S_00245	Schüler/in (Wirtschaftsgymnasium)	PS	1,74	0,91	13,33	
+					FOLK_S_00242	Schüler/in (Wirtschaftsgymnasium)	TB	0,81	1,86	0,00	
+					FOLK_S_00246	Schüler/in (Wirtschaftsgymnasium)	UR	2,21	1,57	26,32	
+					FOLK_S_00237	Schüler/in (Wirtschaftsgymnasium)	VP	0,58	0,08	80,00	
+					FOLK_S_00234	Schüler/in (Wirtschaftsgymnasium)	YD	6,16	3,45	32,08	
+FOLK_E_00129_SE_01	0:40:25	59,45	40,55	2
+					FOLK_S_00353	Schüler/in (Gymnasium)	CHE3	49,47	59,45	15,08	
+					FOLK_S_00432	Wissenschaftler/in	MF	50,53	40,55	29,52	
+FOLK_E_00130_SE_01	0:44:14	76,38	23,62	2
+					FOLK_S_00352	Schüler/in (Gymnasium)	NDH4	49,24	76,38	21,13	
+					FOLK_S_00433	Wissenschaftler/in	NL	50,76	23,62	33,50	
+FOLK_E_00132_SE_01	5:32:57	31,67	29,09	5
+					FOLK_S_00178	Wissenschaftler/in	AM	28,56	29,09	37,49	
+					FOLK_S_00181	Wissenschaftler/in	JA	21,03	17,51	41,71	
+					FOLK_S_00180	Wissenschaftler/in	KA	23,66	21,35	38,08	
+					FOLK_S_00177	Wissenschaftler/in	PA	25,89	31,67	26,16	
+					FOLK_S_00179	Kundenbetreuer/in	SÖ	0,30	0,26	58,62	
+FOLK_E_00133_SE_01	0:21:05	37,88	33,09	5
+					FOLK_S_00203	Schüler/in	AM	28,94	26,15	31,28	
+					FOLK_S_00206	Erzieher/in	CM	31,55	33,09	29,13	
+					FOLK_S_00207	Lehrer/in ; Student/in	HM	33,61	37,88	27,76	
+					FOLK_S_00205	Schüler/in (Grundschule)	JM	1,51	0,92	27,27	
+					FOLK_S_00204	Schüler/in (Grundschule)	SM	1,23	0,82	22,22	
+FOLK_E_00134_SE_01	0:15:02	36,30	33,67	4
+					FOLK_S_00320	Rettungsassistent/in	NH1	28,35	33,67	20,37	
+					FOLK_S_00321	Rettungsassistent/in ; Student/in	NH2	15,22	14,48	12,07	
+					FOLK_S_00322	Kaufmann/-frau (Groß- und Einzelhandel) ; Rettungssanitäter/in ; Teamleiter/in	NH3	32,28	36,30	29,27	
+					FOLK_S_00323	Rettungssanitäter/in ; Student/in	NH4	14,44	12,32	23,64	
+FOLK_E_00135_SE_01	0:07:36	51,70	16,47	5
+					FOLK_S_00321	Rettungsassistent/in ; Student/in	NH2	4,67	5,98	40,00	
+					FOLK_S_00324	Rettungssanitäter/in ; Student/in	NH5	16,82	16,47	33,33	
+					FOLK_S_00325	Rettungssanitäter/in	NH6	13,08	7,16	46,43	
+					FOLK_S_00326	Rettungssanitäter/in	NH7	18,22	11,96	48,72	
+					FOLK_S_00327	Rettungsassistent/in	NH8	32,71	51,70	18,57	
+FOLK_E_00136_SE_01	0:13:58	44,08	21,62	5
+					FOLK_S_00320	Rettungsassistent/in	NH1	4,11	4,55	33,33	
+					FOLK_S_00329	Rettungssanitäter/in	NH10	23,29	20,05	31,76	
+					FOLK_S_00330	Nicht dokumentiert	NH11	5,48	3,43	30,00	
+					FOLK_S_00322	Kaufmann/-frau (Groß- und Einzelhandel) ; Rettungssanitäter/in ; Teamleiter/in	NH3	24,93	21,62	31,87	
+					FOLK_S_00328	Kaufmann/-frau (Versicherung) ; Rettungsassistent/in	NH9	32,60	44,08	23,53	
+FOLK_E_00137_SE_01	0:04:40	42,56	36,57	3
+					FOLK_S_00322	Kaufmann/-frau (Groß- und Einzelhandel) ; Rettungssanitäter/in ; Teamleiter/in	NH3	17,91	15,37	45,83	
+					FOLK_S_00324	Rettungssanitäter/in ; Student/in	NH5	35,07	42,56	31,91	
+					FOLK_S_00325	Rettungssanitäter/in	NH6	38,81	36,57	36,54	
+FOLK_E_00138_SE_01	0:12:44	57,15	26,80	5
+					FOLK_S_00320	Rettungsassistent/in	NH1	42,13	57,15	21,08	
+					FOLK_S_00330	Nicht dokumentiert	NH11	7,61	4,41	53,33	
+					FOLK_S_00323	Rettungssanitäter/in ; Student/in	NH4	27,41	26,80	35,19	
+					FOLK_S_00326	Rettungssanitäter/in	NH7	13,96	5,66	72,73	
+					FOLK_S_00328	Kaufmann/-frau (Versicherung) ; Rettungsassistent/in	NH9	0,25	0,41	0,00	
+FOLK_E_00139_SE_01	0:05:14	57,88	25,07	4
+					FOLK_S_00329	Rettungssanitäter/in	NH10	43,05	57,88	16,92	
+					FOLK_S_00331	Mikrotechnologe/in ; Rettungssanitäter/in	NH12	22,52	25,07	26,47	
+					FOLK_S_00326	Rettungssanitäter/in	NH7	7,95	3,67	66,67	
+					FOLK_S_00328	Kaufmann/-frau (Versicherung) ; Rettungsassistent/in	NH9	17,88	9,61	40,74	
+FOLK_E_00140_SE_01	0:19:58	50,52	26,79	5
+					FOLK_S_00329	Rettungssanitäter/in	NH10	28,07	26,79	33,61	
+					FOLK_S_00330	Nicht dokumentiert	NH11	0,24	0,04	100,00	
+					FOLK_S_00321	Rettungsassistent/in ; Student/in	NH2	40,09	50,52	28,82	
+					FOLK_S_00325	Rettungssanitäter/in	NH6	2,83	2,44	25,00	
+					FOLK_S_00326	Rettungssanitäter/in	NH7	22,17	17,71	46,81	
+FOLK_E_00141_SE_01	0:06:36	43,41	18,58	5
+					FOLK_S_00330	Nicht dokumentiert	NH11	5,00	4,62	22,22	
+					FOLK_S_00321	Rettungsassistent/in ; Student/in	NH2	11,11	8,47	30,00	
+					FOLK_S_00324	Rettungssanitäter/in ; Student/in	NH5	18,89	13,57	29,41	
+					FOLK_S_00326	Rettungssanitäter/in	NH7	15,56	18,58	17,86	
+					FOLK_S_00328	Kaufmann/-frau (Versicherung) ; Rettungsassistent/in	NH9	32,22	43,41	20,69	
+FOLK_E_00142_SE_01	0:10:04	70,22	13,28	4
+					FOLK_S_00329	Rettungssanitäter/in	NH10	49,01	70,22	24,24	
+					FOLK_S_00330	Nicht dokumentiert	NH11	19,80	13,28	55,00	
+					FOLK_S_00321	Rettungsassistent/in ; Student/in	NH2	6,44	4,01	38,46	
+					FOLK_S_00326	Rettungssanitäter/in	NH7	14,36	9,93	34,48	
+FOLK_E_00143_SE_01	2:43:03	44,66	43,03	3
+					FOLK_S_00202	Mechaniker/in	GI	21,71	12,27	34,28	
+					FOLK_S_00201	Nicht dokumentiert	HM	39,10	44,66	23,40	
+					FOLK_S_00200	Nicht dokumentiert	JI	38,92	43,03	25,62	
+FOLK_E_00144_SE_01	0:24:11	58,67	41,33	2
+					FOLK_S_00361	Lehrer/in	AN	50,30	58,67	10,84	
+					FOLK_S_00362	Lehrer/in	LS	49,70	41,33	31,71	
+FOLK_E_00146_SE_01	1:01:57	95,78	3,77	5
+					FOLK_S_00404	Nicht vorhanden	EA	2,86	0,27	66,67	
+					FOLK_S_00364	Nicht dokumentiert	GS	38,57	3,77	55,56	
+					FOLK_S_00369	Nicht vorhanden	MB	1,43	0,05	100,00	
+					FOLK_S_00363	Fahrlehrer/in	RK	54,29	95,78	7,02	
+					FOLK_S_00365	Nicht dokumentiert	RT	2,86	0,13	83,33	
+FOLK_E_00147_SE_01	1:25:39	72,25	14,33	3
+					FOLK_S_00515	Matrose/in ; Rentner/in	AK	43,24	72,25	20,12	
+					FOLK_S_00514	Student/in ; Erzieher/in	EH	29,46	13,38	39,47	
+					FOLK_S_00513	Student/in	RK	26,87	14,33	25,64	
+FOLK_E_00148_SE_01	0:55:59	72,84	27,14	2
+					FOLK_S_00517	Bibliothekar/in	HF	50,75	72,84	16,94	
+					FOLK_S_00516	Lehrbeauftragte/r ; Lektor/in	TS	49,11	27,14	34,44	
+FOLK_E_00150_SE_01	0:11:11	73,77	26,23	2
+					FOLK_S_00188	Angestellte/r (Arbeitsförderung) ; Arbeitsvermittler/in	IW	50,77	73,77	18,18	
+					FOLK_S_00189	Angestellte/r (Arbeitsförderung) ; Arbeitsvermittler/in	JS	49,23	26,23	45,31	
+FOLK_E_00151_SE_01	0:05:52	55,62	44,38	2
+					FOLK_S_00190	Rechtspfleger/in ; IT-Mitarbeiter/in	CE	48,57	55,62	17,65	
+					FOLK_S_00288	Angestellte/r (Verwaltung)	DE	51,43	44,38	18,52	
+FOLK_E_00152_SE_01	1:35:48	55,59	44,29	2
+					FOLK_S_00370	Nicht dokumentiert	KL_g	48,64	55,59	40,07	
+					FOLK_S_00371	Polizeibeamte/r	PB_ga	50,64	44,29	30,76	
+FOLK_E_00153_SE_01	0:00:13	50,00	50,00	2
+					FOLK_S_00372	Nicht dokumentiert	KL_f	44,44	50,00	50,00	
+					FOLK_S_00373	Polizeibeamte/r	PB_f	55,56	50,00	0,00	
+FOLK_E_00154_SE_01	0:00:19	54,35	45,65	2
+					FOLK_S_00374	Nicht dokumentiert	KL_e	57,14	45,65	50,00	
+					FOLK_S_00375	Polizeibeamte/r	PB_e	42,86	54,35	0,00	
+FOLK_E_00155_SE_01	0:00:31	84,62	13,46	2
+					FOLK_S_00377	Polizeibeamte/r	PB_d	63,64	84,62	0,00	
+					FOLK_S_00376	Nicht dokumentiert	VA_d	27,27	13,46	66,67	
+FOLK_E_00156_SE_01	0:14:18	52,94	43,74	3
+					FOLK_S_00378	Nicht dokumentiert	KL_d	8,63	3,32	50,00	
+					FOLK_S_00379	Polizeibeamte/r	PB_da	47,48	52,94	22,73	
+					FOLK_S_00376	Nicht dokumentiert	VA_d	43,88	43,74	39,34	
+FOLK_E_00157_SE_01	0:42:55	53,21	46,76	2
+					FOLK_S_00380	Nicht dokumentiert	KL_c	49,27	46,76	32,17	
+					FOLK_S_00381	Polizeibeamte/r	PB_c	50,59	53,21	31,07	
+FOLK_E_00158_SE_01	0:01:30	69,16	30,84	2
+					FOLK_S_00383	Nicht dokumentiert	KL_b	48,28	69,16	14,29	
+					FOLK_S_00384	Polizeibeamte/r	PB_b	51,72	30,84	53,33	
+FOLK_E_00159_SE_01	0:00:36	70,49	29,51	2
+					FOLK_S_00385	Taxifahrer/in	KL_a	55,56	70,49	40,00	
+					FOLK_S_00386	Polizeibeamte/r	PB_a	44,44	29,51	50,00	
+FOLK_E_00160_SE_01	0:35:56	68,80	31,16	2
+					FOLK_S_00385	Taxifahrer/in	KL_a	50,86	68,80	29,47	
+					FOLK_S_00387	Polizeibeamte/r	PB_aa	48,65	31,16	28,28	
+FOLK_E_00161_SE_01	1:29:12	42,10	24,32	6
+					FOLK_S_00392	Sozialpädagoge/in ; Heilpraktiker/in	AJ	14,43	16,37	38,96	
+					FOLK_S_00389	Nicht dokumentiert	AU	5,18	6,90	25,64	
+					FOLK_S_00390	Hausmann/-frau	FK	29,26	24,32	37,22	
+					FOLK_S_00391	Nicht dokumentiert	NM	13,63	9,40	50,65	
+					FOLK_S_00388	Kaufmann/-frau (Reiseverkehr)	TU	35,64	42,10	31,30	
+					FOLK_S_00393	Linguist/in	WE	1,15	0,78	57,69	
+FOLK_E_00162_SE_01	1:36:00	53,16	43,68	3
+					FOLK_S_00394	Student/in	FB	47,40	53,16	27,03	
+					FOLK_S_00395	Student/in	JL	46,44	43,68	25,93	
+					FOLK_S_00444	Nicht dokumentiert	MS	5,11	2,96	33,96	
+FOLK_E_00163_SE_01	0:47:07	67,64	24,31	3
+					FOLK_S_00397	Student/in	CD	46,97	67,64	16,85	
+					FOLK_S_00398	Student/in	EA	15,57	7,75	47,46	
+					FOLK_S_00396	Student/in	OT	36,41	24,31	32,61	
+FOLK_E_00165_SE_01	0:58:05	51,66	39,91	3
+					FOLK_S_00401	Berater/in (Medizin)	BS	38,11	39,91	35,08	
+					FOLK_S_00402	Kaufmann/-frau (Bank) ; Student/in	LB	46,95	51,66	18,61	
+					FOLK_S_00403	Student/in	PS	14,74	8,40	50,00	
+FOLK_E_00166_SE_01	0:35:49	81,39	4,61	16
+					FOLK_S_00238	Schüler/in (Wirtschaftsgymnasium)	CK	4,44	2,08	21,43	
+					FOLK_S_00227	Kaufmann/-frau (Industrie) ; Lehrer/in	CS	48,57	81,39	16,34	
+					FOLK_S_00232	Schüler/in (Wirtschaftsgymnasium)	DH	4,44	4,61	50,00	
+					FOLK_S_00233	Schüler/in (Wirtschaftsgymnasium)	ET	0,63	0,20	0,00	
+					FOLK_S_00244	Schüler/in (Wirtschaftsgymnasium)	FH	0,32	0,10	0,00	
+					FOLK_S_00231	Schüler/in (Wirtschaftsgymnasium)	FS	1,59	0,22	60,00	
+					FOLK_S_00236	Schüler/in (Wirtschaftsgymnasium)	LZ	0,63	0,09	50,00	
+					FOLK_S_00239	Schüler/in (Wirtschaftsgymnasium)	MH	10,79	3,39	26,47	
+					FOLK_S_00235	Schüler/in (Wirtschaftsgymnasium)	MM	0,32	0,05	0,00	
+					FOLK_S_00249	Schüler/in (Wirtschaftsgymnasium)	MS	2,22	0,22	100,00	
+					FOLK_S_00247	Schüler/in (Wirtschaftsgymnasium)	PL	1,27	0,10	100,00	
+					FOLK_S_00245	Schüler/in (Wirtschaftsgymnasium)	PS	0,63	0,10	50,00	
+					FOLK_S_00242	Schüler/in (Wirtschaftsgymnasium)	TB	0,63	0,60	0,00	
+					FOLK_S_00246	Schüler/in (Wirtschaftsgymnasium)	UR	4,13	1,53	30,77	
+					FOLK_S_00237	Schüler/in (Wirtschaftsgymnasium)	VP	0,32	0,09	0,00	
+					FOLK_S_00234	Schüler/in (Wirtschaftsgymnasium)	YD	6,98	3,03	36,36	
+FOLK_E_00167_SE_01	0:45:58	90,05	9,95	3
+					FOLK_S_00404	Nicht vorhanden	EA	48,24	9,95	71,14	
+					FOLK_S_00363	Fahrlehrer/in	RK	51,76	90,05	10,98	
+					FOLK_S_00365	Nicht dokumentiert	RT	0,00	0,00	NaN	
+FOLK_E_00168_SE_01	0:59:47	85,50	13,84	4
+					FOLK_S_00406	Nicht vorhanden	AS	0,24	0,10	50,00	
+					FOLK_S_00363	Fahrlehrer/in	RK	51,02	85,50	11,74	
+					FOLK_S_00365	Nicht dokumentiert	RT	1,20	0,55	40,00	
+					FOLK_S_00405	Koch/Köchin ; Kaufmann/-frau (Industrie) ; Systemadministrator/in	TD	47,54	13,84	76,32	
+FOLK_E_00169_SE_01	0:54:05	83,64	15,29	4
+					FOLK_S_00406	Nicht vorhanden	AS	46,63	15,29	60,64	
+					FOLK_S_00363	Fahrlehrer/in	RK	50,94	83,64	15,81	
+					FOLK_S_00365	Nicht dokumentiert	RT	1,12	0,61	16,67	
+					FOLK_S_00405	Koch/Köchin ; Kaufmann/-frau (Industrie) ; Systemadministrator/in	TD	1,31	0,46	28,57	
+FOLK_E_00171_SE_01	0:51:21	93,31	4,89	4
+					FOLK_S_00404	Nicht vorhanden	EA	1,90	0,26	62,50	
+					FOLK_S_00407	Nicht dokumentiert	PW	37,29	4,89	77,71	
+					FOLK_S_00363	Fahrlehrer/in	RK	54,16	93,31	15,35	
+					FOLK_S_00365	Nicht dokumentiert	RT	6,65	1,53	35,71	
+FOLK_E_00172_SE_01	0:54:36	90,01	9,66	3
+					FOLK_S_00363	Fahrlehrer/in	RK	50,20	90,01	8,80	
+					FOLK_S_00365	Nicht dokumentiert	RT	1,81	0,34	88,89	
+					FOLK_S_00405	Koch/Köchin ; Kaufmann/-frau (Industrie) ; Systemadministrator/in	TD	47,99	9,66	84,10	
+FOLK_E_00173_SE_01	1:38:24	46,47	42,48	3
+					FOLK_S_00409	Krankenpfleger/in ; Betriebswirt/in	SH	15,95	11,04	47,76	
+					FOLK_S_00410	Kaufmann/-frau (Einzelhandel) ; Pharmareferent/in	TB	45,36	46,47	29,66	
+					FOLK_S_00408	Polizeibeamte/r ; Krankenpfleger/in ; Pharmareferent/in ; Personalberater/in	TN	38,69	42,48	31,23	
+FOLK_E_00174_SE_01	1:24:03	52,67	44,37	3
+					FOLK_S_00412	Pharmaberater/in ; Regionalleiter/in	DO	47,05	52,67	23,55	
+					FOLK_S_00411	Assistent/in (kaufmännisch) ; Recruiter/in	MZ	6,95	2,96	72,15	
+					FOLK_S_00408	Polizeibeamte/r ; Krankenpfleger/in ; Pharmareferent/in ; Personalberater/in	TN	46,00	44,37	47,99	
+FOLK_E_00175_SE_01	0:23:40	23,98	23,78	5
+					FOLK_S_00414	Schüler/in (Grundschule)	CW	25,08	23,78	24,27	
+					FOLK_S_00415	Schüler/in (Grundschule)	FW	24,55	23,98	28,21	
+					FOLK_S_00416	Erzieher/in	MW	13,43	16,66	17,97	
+					FOLK_S_00413	Schüler/in	OW	22,35	21,94	25,82	
+					FOLK_S_00417	Lehrer/in ; Student/in	SW	13,85	13,50	37,88	
+FOLK_E_00176_SE_01	0:41:30	59,90	40,10	2
+					FOLK_S_00418	Schüler/in (Gymnasium)	GLZ4	50,55	59,90	37,57	
+					FOLK_S_00433	Wissenschaftler/in	NL	49,45	40,10	39,78	
+FOLK_E_00177_SE_01	0:41:41	70,12	28,57	2
+					FOLK_S_00433	Wissenschaftler/in	NL	46,42	28,57	35,71	
+					FOLK_S_00419	Schüler/in (Gymnasium)	SMA3	49,04	70,12	21,35	
+FOLK_E_00178_SE_01	0:40:21	79,98	19,90	2
+					FOLK_S_00433	Wissenschaftler/in	NL	45,92	19,90	41,59	
+					FOLK_S_00420	Schüler/in (Gymnasium)	WIE2	53,22	79,98	16,13	
+FOLK_E_00179_SE_01	0:52:56	72,27	27,73	2
+					FOLK_S_00433	Wissenschaftler/in	NL	47,42	27,73	38,66	
+					FOLK_S_00421	Schüler/in (Gymnasium)	ZIT4	52,58	72,27	15,27	
+FOLK_E_00180_SE_01	0:28:38	64,99	35,01	2
+					FOLK_S_00271	Schüler/in (Gymnasium)	AAC2	49,76	64,99	26,07	
+					FOLK_S_00433	Wissenschaftler/in	NL	50,24	35,01	29,58	
+FOLK_E_00181_SE_01	0:40:17	54,16	45,74	2
+					FOLK_S_00301	Schüler/in (Gymnasium)	HBG2	49,16	45,74	23,91	
+					FOLK_S_00432	Wissenschaftler/in	MF	50,08	54,16	20,12	
+FOLK_E_00182_SE_01	0:41:15	73,49	26,38	2
+					FOLK_S_00422	Schüler/in (Gymnasium)	KOB2	50,26	73,49	14,38	
+					FOLK_S_00432	Wissenschaftler/in	MF	49,40	26,38	35,89	
+FOLK_E_00183_SE_01	0:38:33	65,01	34,94	2
+					FOLK_S_00432	Wissenschaftler/in	MF	53,75	65,01	30,39	
+					FOLK_S_00423	Schüler/in (Gymnasium)	STP4	46,11	34,94	33,43	
+FOLK_E_00184_SE_01	0:42:08	57,10	42,90	2
+					FOLK_S_00432	Wissenschaftler/in	MF	50,87	42,90	25,00	
+					FOLK_S_00424	Schüler/in	STZ2	49,13	57,10	24,47	
+FOLK_E_00185_SE_01	0:42:04	57,25	42,75	2
+					FOLK_S_00432	Wissenschaftler/in	MF	51,12	42,75	26,91	
+					FOLK_S_00425	Schüler/in (Gymnasium)	VAD2	48,88	57,25	17,87	
+FOLK_E_00186_SE_01	0:37:00	64,17	35,83	2
+					FOLK_S_00426	Schüler/in (Gymnasium)	EST4	49,07	64,17	22,26	
+					FOLK_S_00433	Wissenschaftler/in	NL	50,93	35,83	32,36	
+FOLK_E_00187_SE_01	0:42:06	62,40	37,49	2
+					FOLK_S_00427	Schüler/in (Gymnasium)	EUP1	47,25	62,40	14,66	
+					FOLK_S_00432	Wissenschaftler/in	MF	52,04	37,49	24,91	
+FOLK_E_00188_SE_01	0:10:34	46,67	45,13	2
+					FOLK_S_00428	Schüler/in (Gymnasium)	DUI3	46,84	46,67	40,54	
+					FOLK_S_00429	Schüler/in (Gymnasium)	DUI4	43,46	45,13	33,01	
+FOLK_E_00189_SE_01	0:33:16	50,17	45,73	2
+					FOLK_S_00430	Schüler/in (Gymnasium)	LBG1	47,48	50,17	32,66	
+					FOLK_S_00431	Schüler/in (Gymnasium)	LBG2	47,89	45,73	39,77	
+FOLK_E_00190_SE_01	0:18:12	62,51	37,49	2
+					FOLK_S_00187	Fluggerätemechaniker/in ; Vertriebsleiter/in	AZ	50,00	37,49	30,16	
+					FOLK_S_00188	Angestellte/r (Arbeitsförderung) ; Arbeitsvermittler/in	IW	50,00	62,51	29,37	
+FOLK_E_00191_SE_01	1:02:54	72,13	27,87	2
+					FOLK_S_00522	Student/in	AJ	52,46	72,13	16,18	
+					FOLK_S_00521	Student/in	HF	47,54	27,87	29,29	
+FOLK_E_00193_SE_01	0:58:14	40,91	30,92	3
+					FOLK_S_00525	Erzieher/in ; Lehrer/in	AB	27,30	28,15	34,38	
+					FOLK_S_00526	Buchhändler/in	FL	39,16	40,91	39,22	
+					FOLK_S_00527	Kaufmann/-frau (Bank) ; Hausverwaltung	VS	33,45	30,92	44,90	
+FOLK_E_00194_SE_01	0:16:52	50,21	49,76	2
+					FOLK_S_00529	Kaufmann/-frau (Marketing, in Ausbildung)	JS	49,82	49,76	35,25	
+					FOLK_S_00528	Kaufmann/-frau (Einzelhandel) ; Teamleiter/in	LS	49,82	50,21	33,81	
+FOLK_E_00197_SE_01	0:15:41	44,81	37,42	3
+					FOLK_S_00536	Jurist/in	JN	33,53	37,42	23,21	
+					FOLK_S_00535	Philologe/in ; Lehrbeauftragte/r	MD	31,74	17,77	48,11	
+					FOLK_S_00537	Lehrer/in	SG	34,73	44,81	20,69	
+FOLK_E_00198_SE_01	0:21:58	52,79	46,27	2
+					FOLK_S_00538	Ingenieur/in ; Architekt/in	AR	51,41	52,79	21,09	
+					FOLK_S_00539	Psychologe/in ; Wissenschaftliche/r Mitarbeiter/in	BP	46,99	46,27	28,21	
+FOLK_E_00201_SE_01	1:37:58	33,74	31,59	5
+					FOLK_S_00546	Geschäftsmann/-frau	GB	33,29	31,59	46,21	
+					FOLK_S_00545	Lehrer/in	KH	12,50	20,54	24,61	
+					FOLK_S_00548	Nicht dokumentiert	RH	1,54	0,96	46,15	
+					FOLK_S_00547	Organist/in ; Chorleiter/in ; Geschäftsmann/-frau	SB	21,97	13,15	50,27	
+					FOLK_S_00544	Arzthelfer/in ; Erzieher/in ; Angestellte/r (Verwaltung)	TH	30,57	33,74	35,61	
+FOLK_E_00202_SE_01	1:10:49	25,99	21,79	5
+					FOLK_S_00553	Gastronom/in	DP	19,19	15,12	32,58	
+					FOLK_S_00554	Kaufmann/-frau (Büro)	FB	21,41	19,48	27,83	
+					FOLK_S_00551	Kaufmann/-frau (Heizung und Sanitär) ; Abwassermeister/in	KE	25,39	25,99	25,95	
+					FOLK_S_00550	Chemielaborant/in ; Aushilfe	ME	19,09	17,54	28,68	
+					FOLK_S_00552	Nicht dokumentiert	TE	14,68	21,79	27,06	
+FOLK_E_00203_SE_01	1:26:58	72,74	27,26	2
+					FOLK_S_00556	Student/in	AB	55,48	72,74	23,69	
+					FOLK_S_00555	Schüler/in (Gymnasium)	ME	44,52	27,26	55,25	
+FOLK_E_00204_SE_01	1:16:00	29,11	25,44	4
+					FOLK_S_00557	Student/in ; Werkstudent/in	EW	20,59	21,27	30,98	
+					FOLK_S_00558	Student/in ; Werkstudent/in	LM	24,83	25,44	33,50	
+					FOLK_S_00560	Student/in ; Werkstudent/in	LS	26,60	24,02	38,09	
+					FOLK_S_00559	Student/in	TW	27,45	29,11	29,85	
+FOLK_E_00206_SE_01	1:30:09	89,04	4,36	7
+					FOLK_S_00566	Student/in	BW	8,43	2,22	52,63	
+					FOLK_S_00570	Chemisch-Technische/r Assistent/in ; Student/in	EL	3,55	1,11	31,25	
+					FOLK_S_00569	Wissenschaftliche/r Mitarbeiter/in	EW	45,68	89,04	21,84	
+					FOLK_S_00565	Student/in	JF	5,99	1,21	40,74	
+					FOLK_S_00568	Student/in	KT	16,19	4,36	32,88	
+					FOLK_S_00571	Kaufmann/-frau (Industrie) ; Betriebswirt/in ; Personalreferent/in	MK	3,33	0,57	20,00	
+					FOLK_S_00567	Ingenieur/in ; Student/in	SN	6,21	0,94	46,43	
+FOLK_E_00207_SE_01	0:27:32	55,54	28,31	3
+					FOLK_S_00574	Student/in	EW	40,60	55,54	32,33	
+					FOLK_S_00573	Lehrer/in	LW	31,53	28,31	37,34	
+					FOLK_S_00572	Schüler/in	ZW	27,60	16,08	51,96	
+FOLK_E_00208_SE_01	0:43:13	53,79	29,89	3
+					FOLK_S_00574	Student/in	EW	39,91	53,79	30,54	
+					FOLK_S_00573	Lehrer/in	LW	34,09	29,89	38,61	
+					FOLK_S_00572	Schüler/in	ZW	24,92	16,13	54,11	
+FOLK_E_00209_SE_01	0:24:49	51,57	27,50	3
+					FOLK_S_00574	Student/in	EW	41,07	51,57	34,53	
+					FOLK_S_00573	Lehrer/in	LW	30,94	27,50	41,67	
+					FOLK_S_00572	Schüler/in	ZW	27,26	20,80	51,35	
+FOLK_E_00210_SE_01	2:08:22	43,05	38,97	7
+					FOLK_S_00773	Nicht dokumentiert	AK	2,20	1,59	0,00	
+					FOLK_S_00442	Hochschullehrer/in	EJ	22,20	10,08	7,44	
+					FOLK_S_00440	Wissenschaftler/in ; Hochschullehrer/in	HK	25,14	2,80	68,61	
+					FOLK_S_00774	Freie/r Mitarbeiter/in (Rundfunk) ; Wissenschaftliche/r Mitarbeiter/in ; Politiker/in	KW	0,92	0,03	40,00	
+					FOLK_S_00441	Betonbauer/in ; Rechtsanwalt/Rechtsanwältin ; Beamte/r (höherer Dienst)	PD	17,25	38,97	1,06	
+					FOLK_S_00443	Hochschullehrer/in	PS	23,85	43,05	8,46	
+					FOLK_S_00772	Nicht dokumentiert	UT	0,92	0,30	0,00	
+FOLK_E_00211_SE_01	0:03:17	72,08	24,50	3
+					FOLK_S_00575	Gärtner/in ; Kundenberater/in ; Baumkontrolleur/in	AV	41,89	72,08	12,90	
+					FOLK_S_00576	Nicht dokumentiert	KA	45,95	24,50	23,53	
+					FOLK_S_00577	Nicht dokumentiert	KB	12,16	3,42	77,78	
+FOLK_E_00212_SE_01	0:01:05	70,71	22,14	2
+					FOLK_S_00575	Gärtner/in ; Kundenberater/in ; Baumkontrolleur/in	AV	36,36	22,14	50,00	
+					FOLK_S_00578	Nicht dokumentiert	KC	50,00	70,71	18,18	
+FOLK_E_00213_SE_01	0:13:52	46,59	30,23	3
+					FOLK_S_00579	Gärtner/in ; Kundenberater/in	GL	35,42	46,59	29,27	
+					FOLK_S_00580	Nicht dokumentiert	KF	27,86	30,23	31,78	
+					FOLK_S_00581	Nicht dokumentiert	KG	34,56	21,90	41,88	
+FOLK_E_00214_SE_01	0:02:21	66,45	33,55	2
+					FOLK_S_00582	Biologe/in ; Kaufmann/-frau (Einzelhandel)	CR	47,73	66,45	28,57	
+					FOLK_S_00583	Nicht dokumentiert	KH	52,27	33,55	26,09	
+FOLK_E_00215_SE_01	0:03:39	62,96	35,08	3
+					FOLK_S_00582	Biologe/in ; Kaufmann/-frau (Einzelhandel)	CR	44,55	62,96	22,22	
+					FOLK_S_00584	Nicht dokumentiert	KI	45,54	35,08	50,00	
+					FOLK_S_00585	Nicht dokumentiert	KJ	9,90	1,96	80,00	
+FOLK_E_00216_SE_01	0:03:33	50,48	49,52	2
+					FOLK_S_00582	Biologe/in ; Kaufmann/-frau (Einzelhandel)	CR	48,10	50,48	26,32	
+					FOLK_S_00586	Nicht dokumentiert	KK	51,90	49,52	24,39	
+FOLK_E_00217_SE_01	2:56:49	78,58	15,42	3
+					FOLK_S_00588	Altenpfleger/in	AZ	6,08	6,00	15,57	
+					FOLK_S_00587	Lehrer/in ; Doktorand/in	PZ	51,39	78,58	18,41	
+					FOLK_S_00589	Schüler/in	TZ	42,48	15,42	48,07	
+FOLK_E_00218_SE_01	0:32:02	85,66	14,29	2
+					FOLK_S_00587	Lehrer/in ; Doktorand/in	PZ	54,30	85,66	12,22	
+					FOLK_S_00589	Schüler/in	TZ	44,96	14,29	49,73	
+FOLK_E_00219_SE_01	0:39:11	56,31	43,69	2
+					FOLK_S_00592	Programmiere/in ; Entwickler/in	LH	50,67	43,69	41,85	
+					FOLK_S_00591	Geschäftsführer/in	RD	49,33	56,31	36,20	
+FOLK_E_00220_SE_01	1:26:44	46,16	26,82	3
+					FOLK_S_00594	Student/in	AG	26,67	26,72	27,00	
+					FOLK_S_00595	Student/in	FF	39,16	46,16	24,39	
+					FOLK_S_00593	Student/in	MK	31,67	26,82	34,11	
+FOLK_E_00221_SE_01	0:23:57	67,21	32,79	2
+					FOLK_S_00596	Student/in	DN	48,81	32,79	28,65	
+					FOLK_S_00597	Student/in	LM	51,19	67,21	24,23	
+FOLK_E_00223_SE_01	0:00:52	63,22	35,63	2
+					FOLK_S_00600	Gärtnermeister/in ; Abteilungsleitung	JS	52,17	63,22	33,33	
+					FOLK_S_00601	Nicht dokumentiert	KD	43,48	35,63	40,00	
+FOLK_E_00224_SE_01	0:06:17	76,04	23,43	2
+					FOLK_S_00600	Gärtnermeister/in ; Abteilungsleitung	JS	47,75	76,04	11,32	
+					FOLK_S_00602	Nicht dokumentiert	KE	49,55	23,43	63,64	
+FOLK_E_00225_SE_01	0:47:05	55,55	44,43	3
+					FOLK_S_00604	Student/in	AG	50,81	55,55	24,88	
+					FOLK_S_00603	Student/in	NR	48,94	44,43	27,62	
+					FOLK_S_00605	Krankenpfleger/in (in Ausbildung)	TD	0,25	0,02	100,00	
+FOLK_E_00226_SE_01	0:31:32	71,93	28,07	2
+					FOLK_S_00607	Angestellte/r (Medizin)	MK	49,05	28,07	39,78	
+					FOLK_S_00606	Arzt/Ärztin	SW	50,95	71,93	13,30	
+FOLK_E_00227_SE_01	0:35:33	30,96	29,64	4
+					FOLK_S_00610	Übersetzer/in ; Student/in	AG	27,03	30,96	34,35	
+					FOLK_S_00608	Angestellte/r (Steuer)	IG	21,97	12,16	56,68	
+					FOLK_S_00611	Mathematiker/in ; Software-Entwickler/in	LG	23,50	27,25	30,00	
+					FOLK_S_00609	Mess- und Regelmechaniker/in ; Informatiker/in	PG	27,50	29,64	23,93	
+FOLK_E_00228_SE_01	1:00:23	46,93	34,07	3
+					FOLK_S_00612	Krankenpfleger/in	AM	28,77	18,36	35,66	
+					FOLK_S_00614	Krankenpfleger/in	MS	37,03	46,93	24,52	
+					FOLK_S_00613	Student/in	SH	31,60	34,07	28,36	
+FOLK_E_00229_SE_01	0:00:45	72,36	27,64	2
+					FOLK_S_00616	Apotheker/in	AS	47,62	72,36	0,00	
+					FOLK_S_00615	Project Analyst/in	EM	52,38	27,64	36,36	
+FOLK_E_00230_SE_01	0:00:53	73,76	26,24	2
+					FOLK_S_00616	Apotheker/in	AS	50,00	73,76	10,00	
+					FOLK_S_00617	Nicht dokumentiert	GL	50,00	26,24	40,00	
+FOLK_E_00231_SE_01	0:01:15	75,13	24,87	2
+					FOLK_S_00616	Apotheker/in	AS	50,00	75,13	7,14	
+					FOLK_S_00618	Nicht dokumentiert	CE	50,00	24,87	42,86	
+FOLK_E_00235_SE_01	0:02:49	61,23	38,77	2
+					FOLK_S_00625	Lehrer/in	CD	51,06	38,77	41,67	
+					FOLK_S_00624	Apotheker/in	ST	48,94	61,23	34,78	
+FOLK_E_00237_SE_01	0:00:56	53,01	46,99	2
+					FOLK_S_00628	IT-Fachmann/-frau ; Rentner/in	FS	47,62	46,99	50,00	
+					FOLK_S_00624	Apotheker/in	ST	52,38	53,01	36,36	
+FOLK_E_00238_SE_01	0:01:40	57,38	42,62	2
+					FOLK_S_00629	Chemikant/in	FE	50,00	57,38	30,77	
+					FOLK_S_00624	Apotheker/in	ST	50,00	42,62	23,08	
+FOLK_E_00239_SE_01	0:02:00	67,83	32,17	2
+					FOLK_S_00630	Nicht dokumentiert	JP	50,00	32,17	70,00	
+					FOLK_S_00624	Apotheker/in	ST	50,00	67,83	20,00	
+FOLK_E_00243_SE_01	0:15:35	52,17	47,40	2
+					FOLK_S_00634	Sprachwissenschaftler/in ; Wissenschaftliche/r Mitarbeiter/in	CE	49,21	47,40	30,11	
+					FOLK_S_00635	Lehrer/in ; Lehrbeauftragte/r	IA	48,68	52,17	26,09	
+FOLK_E_00246_SE_01	0:09:45	51,26	48,74	2
+					FOLK_S_00644	Sachbearbeiter/in	AZ	52,78	51,26	28,07	
+					FOLK_S_00643	Schüler/in (Gymnasium)	DZ	47,22	48,74	15,69	
+FOLK_E_00248_SE_01	0:48:34	60,03	39,97	3
+					FOLK_S_00680	Nicht dokumentiert	DP	0,00	0,00	NaN	
+					FOLK_S_00648	Referendar/in	KH	48,01	39,97	42,79	
+					FOLK_S_00649	Studienrat/-rätin	VD	51,99	60,03	13,31	
+FOLK_E_00250_SE_01	0:57:04	60,07	39,89	4
+					FOLK_S_00650	Nicht dokumentiert	HD	0,33	0,02	100,00	
+					FOLK_S_00652	Nicht dokumentiert	JP	0,00	0,00	NaN	
+					FOLK_S_00648	Referendar/in	KH	47,93	39,89	55,52	
+					FOLK_S_00649	Studienrat/-rätin	VD	51,40	60,07	21,22	
+FOLK_E_00251_SE_01	0:19:07	28,38	27,27	7
+					FOLK_S_00659	Student/in	AS	23,85	27,27	33,90	
+					FOLK_S_00655	Student/in	DB	7,95	7,04	33,90	
+					FOLK_S_00658	Student/in	EH	6,87	5,91	35,29	
+					FOLK_S_00654	Techniker/in ; Schüler/in	ML	15,50	13,83	47,83	
+					FOLK_S_00653	Student/in	NJ	25,88	28,38	31,77	
+					FOLK_S_00657	Student/in	SE	0,40	0,16	66,67	
+					FOLK_S_00656	Student/in	SL	16,71	16,60	36,29	
+FOLK_E_00252_SE_01	0:23:53	30,30	22,26	6
+					FOLK_S_00655	Student/in	DB	4,32	4,40	46,34	
+					FOLK_S_00661	Student/in	JR	30,03	30,30	41,05	
+					FOLK_S_00654	Techniker/in ; Schüler/in	ML	20,65	21,06	40,82	
+					FOLK_S_00653	Student/in	NJ	21,81	20,55	36,71	
+					FOLK_S_00656	Student/in	SL	21,18	22,26	34,33	
+					FOLK_S_00660	Student/in	SU	0,32	0,24	33,33	
+FOLK_E_00253_SE_01	0:29:15	43,31	19,80	5
+					FOLK_S_00655	Student/in	DB	3,31	3,24	45,95	
+					FOLK_S_00662	Student/in	FN	34,67	43,31	50,77	
+					FOLK_S_00654	Techniker/in ; Schüler/in	ML	22,97	19,44	45,14	
+					FOLK_S_00653	Student/in	NJ	16,62	14,12	40,86	
+					FOLK_S_00656	Student/in	SL	21,89	19,80	46,53	
+FOLK_E_00254_SE_01	1:36:35	38,38	20,19	5
+					FOLK_S_00667	Sachbearbeiter/in	AM	25,82	38,38	38,43	
+					FOLK_S_00665	Familienhilfe	IT	24,21	20,19	48,77	
+					FOLK_S_00664	Sozialpädagoge/in ; Sozialarbeiter/in	MS	14,97	10,46	38,34	
+					FOLK_S_00663	Hebamme/Geburtshelfer	SF	12,59	10,47	43,43	
+					FOLK_S_00666	Heilpädagoge/in ; Erzieher/in ; Sozialarbeiter/in	SG	19,98	20,11	33,56	
+FOLK_E_00255_SE_01	1:08:19	36,17	27,32	4
+					FOLK_S_00668	Kaufmann/-frau (Bank, Versicherung) ; Sachbearbeiter/in	AG	28,77	36,17	38,05	
+					FOLK_S_00669	Hausmann/-frau	BS	28,58	27,32	28,48	
+					FOLK_S_00671	Arzthelfer/in	JF	19,09	15,74	40,05	
+					FOLK_S_00670	Lehrer/in ; Rentner/in	PD	22,39	20,56	37,98	
+FOLK_E_00256_SE_01	1:12:17	93,61	6,39	2
+					FOLK_S_00674	Student/in	NU	49,59	93,61	3,07	
+					FOLK_S_00673	Dozent/in	ZY	50,41	6,39	87,70	
+FOLK_E_00257_SE_01	0:48:53	86,74	13,26	2
+					FOLK_S_00675	Student/in	AA	49,46	86,74	13,14	
+					FOLK_S_00673	Dozent/in	ZY	50,54	13,26	73,57	
+FOLK_E_00258_SE_01	0:48:30	94,28	5,72	2
+					FOLK_S_00676	Key-Account-Manager/in	AB	48,18	94,28	4,40	
+					FOLK_S_00673	Dozent/in	ZY	51,82	5,72	74,85	
+FOLK_E_00259_SE_01	0:17:09	47,54	28,43	3
+					FOLK_S_00677	Kaufmann/-frau	ES	41,42	47,54	21,09	
+					FOLK_S_00678	Fremdsprachenassistent/in ; Kaufmann/-frau (Industrie) ; Vorstandsassistent/in	IF	29,45	28,43	27,47	
+					FOLK_S_00679	Physiotherapeut/in	MM	24,60	22,18	25,00	
+FOLK_E_00260_SE_01	1:02:15	59,21	40,73	2
+					FOLK_S_00681	Altenpfleger/in	CF	47,63	40,73	33,80	
+					FOLK_S_00682	Student/in	SH	52,04	59,21	30,30	
+FOLK_E_00261_SE_01	0:42:31	80,75	18,90	3
+					FOLK_S_00685	Psychologe/in ; Hochschullehrer/in ; Abteilungsleitung	JP	1,93	0,35	86,67	
+					FOLK_S_00683	Dachdecker/in ; Falkner/in	OB	50,45	80,75	13,52	
+					FOLK_S_00684	Kaufmann/-frau (Bank) ; Wissenschaftliche/r Mitarbeiter/in	VG	47,62	18,90	60,00	
+FOLK_E_00262_SE_01	0:17:02	99,76	0,00	1
+					FOLK_S_00683	Dachdecker/in ; Falkner/in	OB	85,71	99,76	4,63	
+FOLK_E_00263_SE_01	0:35:40	99,07	0,02	2
+					FOLK_S_00683	Dachdecker/in ; Falkner/in	OB	72,63	99,07	15,94	
+					FOLK_S_00686	Schüler/in	SB	1,05	0,02	100,00	
+FOLK_E_00264_SE_01	0:03:33	66,07	19,44	4
+					FOLK_S_00687	Dolmetscher/in	AR	37,18	66,07	13,79	
+					FOLK_S_00685	Psychologe/in ; Hochschullehrer/in ; Abteilungsleitung	JP	6,41	2,25	40,00	
+					FOLK_S_00686	Schüler/in	SB	26,92	19,44	47,62	
+					FOLK_S_00684	Kaufmann/-frau (Bank) ; Wissenschaftliche/r Mitarbeiter/in	VG	29,49	12,25	56,52	
+FOLK_E_00265_SE_01	1:01:32	23,95	17,25	8
+					FOLK_S_00689	Student/in	CL	9,35	7,32	37,97	
+					FOLK_S_00688	Fußpfleger/in	HA	16,70	17,25	37,94	
+					FOLK_S_00691	Sozialpädagoge/in ; Rentner/in	JS	10,12	9,39	41,52	
+					FOLK_S_00695	Student/in	LR	7,76	4,39	35,88	
+					FOLK_S_00690	Lehrer/in	PS	18,29	23,95	22,65	
+					FOLK_S_00692	Krankenpfleger/in ; Abteilungsleitung	SF	13,68	11,90	34,20	
+					FOLK_S_00694	Betriebswirt/in ; Kundenberater/in	SH	9,00	13,60	21,05	
+					FOLK_S_00693	Postbeamte/r	WM	12,37	11,54	37,32	
+FOLK_E_00266_SE_01	2:07:00	16,65	16,41	10
+					FOLK_S_00689	Student/in	CL	12,36	12,63	36,28	
+					FOLK_S_00697	Feinwerkmechaniker/in ; Feinmechaniker/in	EP	13,67	16,65	27,66	
+					FOLK_S_00698	Nicht dokumentiert	GO	0,50	0,26	27,78	
+					FOLK_S_00688	Fußpfleger/in	HA	11,12	14,84	38,29	
+					FOLK_S_00696	Nicht dokumentiert	HH	1,43	0,92	56,86	
+					FOLK_S_00691	Sozialpädagoge/in ; Rentner/in	JS	6,28	7,31	27,68	
+					FOLK_S_00695	Student/in	LR	8,41	4,84	44,33	
+					FOLK_S_00690	Lehrer/in	PS	19,33	16,41	41,01	
+					FOLK_S_00692	Krankenpfleger/in ; Abteilungsleitung	SF	10,00	10,12	32,49	
+					FOLK_S_00693	Postbeamte/r	WM	12,83	14,96	23,80	
+FOLK_E_00267_SE_01	2:36:02	38,55	37,31	4
+					FOLK_S_00699	Hausmann/-frau ; Rentner/in	AR	18,60	15,82	35,70	
+					FOLK_S_00701	Pharmazeutisch-technische/r Assistent/in	IN	28,99	37,31	20,63	
+					FOLK_S_00720	Pharmazeutisch-technische/r Assistent/in	LV	35,73	38,55	33,57	
+					FOLK_S_00700	Apothekenhelfer/in ; Fotograf/in	MB	13,47	7,84	43,22	
+FOLK_E_00268_SE_01	0:40:35	62,79	37,21	2
+					FOLK_S_00702	Student/in	LZ	50,41	62,79	12,83	
+					FOLK_S_00703	Kaufmann/-frau (Versicherung, Finanzen)	MN	49,59	37,21	29,10	
+FOLK_E_00269_SE_01	0:28:55	85,67	14,33	2
+					FOLK_S_00704	Webdesigner/in	KF	51,20	85,67	17,37	
+					FOLK_S_00705	Industriemeister/in ; Fluggerätemechaniker/in	TM	48,80	14,33	69,46	
+FOLK_E_00270_SE_01	0:12:18	50,97	32,42	5
+					FOLK_S_00708	Nicht vorhanden	AO	22,22	9,12	46,55	
+					FOLK_S_00706	Zahntechniker/in	AP	27,59	32,42	12,50	
+					FOLK_S_00806	Nicht dokumentiert	JJ	3,45	1,28	33,33	
+					FOLK_S_00805	Nicht dokumentiert	RJ	4,60	2,39	33,33	
+					FOLK_S_00707	Kaufmann/-frau (Versicherung)	VO	36,02	50,97	14,89	
+FOLK_E_00271_SE_01	1:14:07	74,92	25,08	2
+					FOLK_S_00710	Kaufmann/-frau (Informatik) ; Applikationsmanager/in	BP	52,85	74,92	14,65	
+					FOLK_S_00709	Vertriebssupport	CP	47,15	25,08	40,35	
+FOLK_E_00272_SE_01	0:30:04	50,08	49,80	2
+					FOLK_S_00711	Heilerziehungspfleger/in ; Gesundheits- und Krankenpfleger/in ; Student/in	CW	49,66	50,08	33,94	
+					FOLK_S_00712	Gesundheits- und Krankenpfleger/in ; Student/in	KB	49,89	49,80	30,63	
+FOLK_E_00273_SE_01	2:46:29	41,42	36,24	3
+					FOLK_S_00715	Student/in	AR	33,60	41,42	31,60	
+					FOLK_S_00713	Arzt/Ärztin ; Doktorand/in	CG	31,49	22,29	51,62	
+					FOLK_S_00714	Ingenieur/in	EP	34,65	36,24	39,16	
+FOLK_E_00274_SE_01	1:10:26	62,26	18,53	4
+					FOLK_S_00717	Schüler/in	BM	29,34	18,53	45,90	
+					FOLK_S_00716	Student/in	ES	43,33	62,26	21,62	
+					FOLK_S_00718	Schüler/in	LB	17,44	14,28	32,09	
+					FOLK_S_00719	Schüler/in	SK	8,52	4,64	43,51	
+FOLK_E_00285_SE_01	1:37:51	54,26	42,36	4
+					FOLK_S_00728	Nicht vorhanden	AK	0,14	0,03	100,00	
+					FOLK_S_00726	Nicht vorhanden	LG	0,42	0,11	77,78	
+					FOLK_S_00725	Student/in	SG	45,30	54,26	32,21	
+					FOLK_S_00727	Student/in	SK	44,05	42,36	32,18	
+FOLK_E_00286_SE_01	0:30:54	71,12	28,71	3
+					FOLK_S_00731	Nicht vorhanden	KH	0,76	0,17	75,00	
+					FOLK_S_00730	Student/in	LH	44,97	28,71	46,41	
+					FOLK_S_00729	Rentner/in	TZ	54,27	71,12	27,27	
+FOLK_E_00287_SE_01	1:27:18	26,89	25,22	7
+					FOLK_S_00732	Nicht dokumentiert	AF	22,18	20,35	31,25	
+					FOLK_S_00736	Student/in ; Blogger/in	FB	19,91	25,22	23,40	
+					FOLK_S_00733	Arzthelfer/in	GW	10,74	9,35	35,48	
+					FOLK_S_00735	Student/in	IR	17,37	26,89	25,72	
+					FOLK_S_00734	Kaufmann/-frau (Versicherung)	MB	13,28	10,28	40,29	
+					FOLK_S_00738	Nicht dokumentiert	RF	0,15	0,03	100,00	
+					FOLK_S_00737	Student/in	VF	5,70	4,02	31,08	
+FOLK_E_00288_SE_01	1:34:28	56,22	43,65	3
+					FOLK_S_00739	Schüler/in	AP	52,17	43,65	24,17	
+					FOLK_S_00740	Schüler/in	MB	47,29	56,22	30,82	
+					FOLK_S_00804	Nicht dokumentiert	MP	0,54	0,13	77,78	
+FOLK_E_00289_SE_01	0:14:10	67,39	32,61	2
+					FOLK_S_00742	Gärtner/in ; Student/in ; Verkäufer/in	FS	49,77	67,39	23,85	
+					FOLK_S_00741	Psychologische/r Psychotherapeut/in	PF	50,23	32,61	58,18	
+FOLK_E_00290_SE_01	1:35:37	23,52	14,10	8
+					FOLK_S_00744	Student/in	HH	11,13	12,63	28,23	
+					FOLK_S_00746	Student/in	KH	7,12	8,85	18,62	
+					FOLK_S_00749	Student/in	KS	11,09	12,22	26,62	
+					FOLK_S_00743	Kaufmann/-frau (Veranstaltung) ; Sachbearbeiter/in	KW	11,62	9,92	35,83	
+					FOLK_S_00750	Student/in	LN	12,60	14,10	26,73	
+					FOLK_S_00747	Student/in	NL	19,00	23,52	26,49	
+					FOLK_S_00748	Student/in	TP	8,06	5,22	41,78	
+					FOLK_S_00745	Student/in	TU	9,88	10,62	31,42	
+FOLK_E_00291_SE_01	0:45:05	39,10	26,46	4
+					FOLK_S_00753	Ingenieur/in ; Vertriebsleiter/in	BM	19,72	14,00	42,55	
+					FOLK_S_00751	Student/in	LM	29,86	39,10	24,59	
+					FOLK_S_00754	Student/in	MW	26,29	26,46	35,11	
+					FOLK_S_00752	Sachbearbeiter/in	ZM	23,92	20,42	41,52	
+FOLK_E_00292_SE_01	0:22:48	67,55	32,45	2
+					FOLK_S_00755	Psychologe/in	SH	51,22	67,55	37,41	
+					FOLK_S_00756	Student/in	VS	48,78	32,45	42,86	
+FOLK_E_00293_SE_01	1:42:27	46,28	33,29	3
+					FOLK_S_00759	Student/in	GS	40,60	46,28	20,42	
+					FOLK_S_00757	Student/in	NG	36,44	33,29	27,19	
+					FOLK_S_00758	Student/in	ZF	22,87	20,41	21,93	
+FOLK_E_00294_SE_01	0:50:25	52,87	47,13	2
+					FOLK_S_00760	Student/in	EB	49,85	52,87	33,14	
+					FOLK_S_00761	Kaufmann/-frau (Einzelhandel)	WB	50,15	47,13	34,40	
+FOLK_E_00295_SE_01	0:33:21	63,14	36,86	2
+					FOLK_S_00763	Technische/r Zeichner/in ; Techniker/in ; Vertriebsleiter/in ; Prokurist/in	FA	49,14	36,86	31,14	
+					FOLK_S_00762	Student/in	JA	50,86	63,14	16,95	
+FOLK_E_00296_SE_01	0:58:54	86,03	13,97	2
+					FOLK_S_00765	Student/in ; Grafikdesigner/in	IW	48,38	13,97	56,88	
+					FOLK_S_00764	Online-Merchandiser/in	SB	51,62	86,03	16,38	
+FOLK_E_00298_SE_01	0:02:36	62,89	37,11	2
+					FOLK_S_00771	Gesundheits- und Krankenpfleger/in	AC	50,00	62,89	8,70	
+					FOLK_S_00770	Krankenpfleger/in ; Kaufmann/-frau	HS	50,00	37,11	34,78	
+FOLK_E_00299_SE_01	0:20:49	80,12	19,88	2
+					FOLK_S_00775	Angestellte/r (Steuer)	EL	48,60	19,88	59,62	
+					FOLK_S_00776	Informatiker/in	LL	51,40	80,12	14,55	
+FOLK_E_00300_SE_01	0:31:54	28,13	26,53	5
+					FOLK_S_00778	Fremdsprachenkorrespondent/in ; Student/in	CS	19,78	18,81	36,59	
+					FOLK_S_00781	Student/in	DB	19,21	26,53	16,04	
+					FOLK_S_00780	Student/in	EW	24,09	28,13	32,14	
+					FOLK_S_00779	Student/in	OE	11,97	9,95	34,73	
+					FOLK_S_00777	Student/in	TP	9,25	9,67	31,01	
+FOLK_E_00301_SE_01	1:27:38	48,80	47,92	2
+					FOLK_S_00974	Student/in	FW	48,92	47,92	32,00	
+					FOLK_S_00975	Student/in	IL	48,24	48,80	26,37	
+FOLK_E_00302_SE_01	0:05:25	52,07	29,85	3
+					FOLK_S_00783	Student/in	MD	31,43	52,07	27,27	
+					FOLK_S_00782	Student/in	RN	45,71	29,85	45,83	
+					FOLK_S_00784	Student/in	SR	20,00	17,70	33,33	
+FOLK_E_00303_SE_01	0:50:46	35,06	26,98	4
+					FOLK_S_00787	Angestellte/r (Verwaltung)	EM	32,67	20,39	65,17	
+					FOLK_S_00786	Angestellte/r (Verwaltung)	FA	30,61	35,06	38,26	
+					FOLK_S_00789	Doktorand/in	NM	21,22	26,98	52,66	
+					FOLK_S_00788	Student/in	RC	15,17	17,50	60,53	
+FOLK_E_00304_SE_01	0:02:59	51,98	29,30	3
+					FOLK_S_00791	Student/in	BW	29,58	29,30	9,52	
+					FOLK_S_00793	Bibliothekar/in	EH	40,85	51,98	6,90	
+					FOLK_S_00792	Handelsfachwirt/in ; Student/in ; Hilfskraft (studentisch)	MD	29,58	18,72	38,10	
+FOLK_E_00305_SE_01	0:01:27	59,47	40,53	2
+					FOLK_S_00795	Student/in	CH	51,72	59,47	26,67	
+					FOLK_S_00794	Student/in	DL	48,28	40,53	21,43	
+FOLK_E_00308_SE_01	1:16:31	33,39	23,98	4
+					FOLK_S_00803	Lehrer/in	LD	22,36	20,37	40,38	
+					FOLK_S_00800	Sozialpädagoge/in	LH	29,13	33,39	27,76	
+					FOLK_S_00801	Sozialpädagoge/in	MT	27,14	23,98	37,28	
+					FOLK_S_00802	Jurist/in ; Hausmann/-frau	SD	20,95	22,17	34,31	
+FOLK_E_00309_SE_01	0:48:56	41,31	27,31	3
+					FOLK_S_00807	Arzt/Ärztin	JM	30,11	41,31	31,75	
+					FOLK_S_00810	Nicht vorhanden	SM	28,78	15,55	57,81	
+					FOLK_S_00808	Arzt/Ärztin	TM	25,91	27,31	38,01	
+FOLK_E_00313_SE_01	0:52:49	94,53	3,65	12
+					FOLK_S_00861	Leitung	AR	1,83	0,10	60,00	
+					FOLK_S_00858	Museumsführer/in	BB	52,38	94,53	6,29	
+					FOLK_S_00859	Logopäde/in ; Student/in	BS	0,00	0,00	NaN	
+					FOLK_S_00866	Arzt/Ärztin	GL	1,47	0,15	25,00	
+					FOLK_S_00868	Nicht dokumentiert	HL	0,37	0,02	0,00	
+					FOLK_S_00863	Doktorand/in	JG	2,20	0,37	33,33	
+					FOLK_S_00864	Angestellte/r (kaufmännisch)	MB	7,33	0,89	30,00	
+					FOLK_S_00860	Projektmanager/in	MJ	0,37	0,04	0,00	
+					FOLK_S_00827	Studiotechniker/in ; Rentner/in	OS	0,00	0,00	NaN	
+					FOLK_S_00865	Rentner/in	RB	0,73	0,01	100,00	
+					FOLK_S_00832	Sozialpädagoge/in ; Historiker/in ; Stadtführer/in	RE	0,37	0,03	0,00	
+					FOLK_S_00862	Schüler/in (Grundschule)	UR	28,57	3,65	26,92	
+FOLK_E_00318_SE_01	0:43:09	51,45	48,39	2
+					FOLK_S_00904	Nicht vorhanden	MJ	48,95	51,45	39,66	
+					FOLK_S_00903	Ergotherapeut/in	VB	50,42	48,39	31,38	
+FOLK_E_00319_SE_01	1:47:05	68,43	17,77	4
+					FOLK_S_00907	Student/in	EZ	17,30	11,09	38,32	
+					FOLK_S_00906	Hausmann/-frau	IZ	32,09	17,77	47,36	
+					FOLK_S_00905	Friseur/in	MG	45,35	68,43	14,97	
+					FOLK_S_00985	Friseur/in	SA	0,49	0,13	66,67	
+FOLK_E_00321_SE_01	1:32:22	52,94	47,04	2
+					FOLK_S_00910	Student/in	OW	48,78	47,04	21,28	
+					FOLK_S_00911	Student/in	SL	50,97	52,94	38,25	
+FOLK_E_00322_SE_01	1:04:00	54,90	45,10	2
+					FOLK_S_00913	Physiotherapeut/in ; Trainer/in	CE	50,60	45,10	30,43	
+					FOLK_S_00912	Student/in	MP	49,40	54,90	32,65	
+FOLK_E_00323_SE_01	0:04:33	74,05	25,95	2
+					FOLK_S_00914	Projektmanager/in	AG	50,79	25,95	62,50	
+					FOLK_S_00915	Geschäftsführer/in ; Unternehmer/in	UG	49,21	74,05	19,35	
+FOLK_E_00324_SE_01	0:04:09	89,13	10,87	2
+					FOLK_S_00914	Projektmanager/in	AG	50,00	10,87	70,37	
+					FOLK_S_00915	Geschäftsführer/in ; Unternehmer/in	UG	50,00	89,13	3,70	
+FOLK_E_00325_SE_01	2:45:21	66,70	18,93	4
+					FOLK_S_00916	Nicht dokumentiert	AA	16,27	5,90	65,94	
+					FOLK_S_00918	Maler/in ; Musiker/in	AH	39,78	66,70	15,71	
+					FOLK_S_00919	Rentner/in	ML	22,70	18,93	18,66	
+					FOLK_S_00917	Nicht dokumentiert	NN	20,86	8,39	69,20	
+FOLK_E_00327_SE_01	1:00:24	50,03	49,97	2
+					FOLK_S_00923	Student/in	DP	49,76	50,03	27,01	
+					FOLK_S_00922	Friseur/in ; Verkäufer/in	PC	50,24	49,97	32,05	
+FOLK_E_00329_SE_01	1:57:43	33,46	16,46	9
+					FOLK_S_01001	Nicht dokumentiert	A	2,23	0,53	90,00	
+					FOLK_S_00931	Arzthelfer/in	AF	12,91	16,46	20,73	
+					FOLK_S_00932	Nicht dokumentiert	CK	4,74	4,14	39,41	
+					FOLK_S_00927	Verkäufer/in ; Kraftfahrer/in	CS	12,75	12,65	29,76	
+					FOLK_S_00926	Fachangestellte/r ; Teammanager/in	DA	20,11	33,46	28,29	
+					FOLK_S_00929	Lackierer/in	LE	10,57	10,10	30,08	
+					FOLK_S_00930	Zahnarzthelfer/in	PH	10,71	10,32	32,55	
+					FOLK_S_00928	Ökotrophologe/in ; Lebensmittelkontrolleur/in	VP	8,09	6,79	29,66	
+					FOLK_S_01000	Nicht dokumentiert	W	5,77	1,44	87,44	
+FOLK_E_00330_SE_01	2:14:43	21,30	19,88	14
+					FOLK_S_00944	Student/in	AD	6,75	6,84	34,24	
+					FOLK_S_00941	Student/in	AH	3,27	2,62	46,07	
+					FOLK_S_00937	Student/in	AW	9,94	7,60	33,95	
+					FOLK_S_00943	Student/in	BM	10,50	11,70	27,97	
+					FOLK_S_00935	Student/in	DC	0,95	1,09	23,08	
+					FOLK_S_00940	Student/in	ER	2,90	2,83	35,44	
+					FOLK_S_00946	Student/in	FS	2,20	2,60	30,00	
+					FOLK_S_00934	Student/in	JH	11,08	9,40	40,07	
+					FOLK_S_00938	Student/in	LG	3,01	2,02	47,56	
+					FOLK_S_00939	Doktorand/in	LN	7,93	6,01	41,67	
+					FOLK_S_00945	Student/in	LP	2,31	0,95	63,49	
+					FOLK_S_00933	Student/in	MA	18,94	19,88	33,72	
+					FOLK_S_00942	Mediengestalter/in	RA	3,52	4,43	21,88	
+					FOLK_S_00936	Student/in	RK	13,83	21,30	42,18	
+FOLK_E_00331_SE_01	1:21:27	59,91	39,71	2
+					FOLK_S_00947	Student/in	CA	49,66	39,71	32,08	
+					FOLK_S_00948	Arzthelfer/in	RA	49,79	59,91	23,41	
+FOLK_E_00332_SE_01	0:19:03	50,33	49,67	2
+					FOLK_S_00949	Mediengestalter/in ; Assistent/in (Unternehmenskommunikation) ; Webdesigner/in (Marketing)	AC	51,52	50,33	30,77	
+					FOLK_S_00950	Finanzwirt/in ; Lobbyist/in	CT	48,48	49,67	38,36	
+FOLK_E_00333_SE_01	0:36:50	53,26	46,74	1
+					FOLK_S_00951	Student/in	GG	49,72	53,26	17,84	
+					FOLK_S_00951	Student/in	TT	50,28	46,74	17,65	
+FOLK_E_00334_SE_01	0:36:52	69,02	30,98	2
+					FOLK_S_00953	Chemisch-Technische/r Assistent/in ; Student/in ; Hilfskraft (studentisch)	AS	48,87	30,98	48,46	
+					FOLK_S_00954	Nicht dokumentiert	HR	51,13	69,02	22,06	
+FOLK_E_00335_SE_01	1:26:01	29,14	22,22	6
+					FOLK_S_00955	Wissenschaftliche/r Volontär/in	CB	10,50	9,33	46,74	
+					FOLK_S_00959	Student/in	CH	21,13	21,40	45,71	
+					FOLK_S_00957	Medientechnologe/in (Druck) ; Sales Manager/in	JR	29,74	29,14	39,51	
+					FOLK_S_00960	Software-Entwickler/in	LM	20,00	22,22	35,41	
+					FOLK_S_00956	Student/in	NT	12,11	13,05	32,56	
+					FOLK_S_00958	Filmschaffende/r	SM	6,52	4,85	51,23	
+FOLK_E_00337_SE_01	0:56:21	31,02	20,17	5
+					FOLK_S_00970	Nicht dokumentiert	AS	16,88	31,02	6,15	
+					FOLK_S_00969	Lehrer/in ; Bürgermeister/in	JM	17,66	19,05	14,71	
+					FOLK_S_00972	Nicht dokumentiert	JV	11,69	16,83	11,11	
+					FOLK_S_00971	Landwirt/in ; Bürgermeister/in (stellvertretend)	KC	9,35	11,75	27,78	
+					FOLK_S_00973	Fernsehmoderator/in	SD	23,90	20,17	34,78	
+FOLK_E_00338_SE_01	0:58:27	45,33	22,36	4
+					FOLK_S_00968	Fernsehmoderator/in	JP	25,50	16,76	19,48	
+					FOLK_S_00965	Bürgermeister/in ; Klempner/in	KS	33,77	45,33	5,88	
+					FOLK_S_00966	Nicht dokumentiert	PO	23,18	15,48	20,00	
+					FOLK_S_00967	Gastronom/in	RA	15,23	22,36	8,70	
+FOLK_E_00339_SE_01	1:47:54	75,62	16,26	3
+					FOLK_S_00976	Nicht dokumentiert	AA	20,39	8,09	68,81	
+					FOLK_S_00978	Meister/in ; Rentner/in	JR	41,44	75,62	9,03	
+					FOLK_S_00977	Nicht dokumentiert	NN	37,98	16,26	59,61	
+FOLK_E_00340_SE_01	1:26:18	36,04	23,22	6
+					FOLK_S_00981	Angestellte/r (kaufmännisch)	AW	23,60	23,22	35,36	
+					FOLK_S_00980	Vermessungstechniker/in ; Angestellte/r (kaufmännisch) ; Rentner/in	HK	19,29	20,66	21,39	
+					FOLK_S_00979	Kaufmann/-frau (Industrie) ; Verwaltungsfachangestellte/r ; Angestellte/r (kaufmännisch)	JB	24,29	36,04	20,80	
+					FOLK_S_00982	Kaufmann/-frau (Groß- und Einzelhandel) ; Angestellte/r (kaufmännisch)	ME	22,35	13,49	46,27	
+					FOLK_S_00984	Nicht dokumentiert	SB	0,42	0,11	66,67	
+					FOLK_S_00983	Kaufmann/-frau (Industrie) ; Verwaltungskraft ; Angestellte/r (kaufmännisch)	SM	8,30	6,20	40,78	
+FOLK_E_00342_SE_01	0:59:20	66,71	22,64	3
+					FOLK_S_00988	Nicht vorhanden	HB	42,10	66,71	15,10	
+					FOLK_S_00986	Student/in	RM	22,68	10,62	54,17	
+					FOLK_S_00987	Student/in	YB	34,97	22,64	56,27	
+FOLK_E_00343_SE_01	0:26:56	75,71	24,27	2
+					FOLK_S_00990	Physiotherapeut/in	KL	50,67	75,71	13,76	
+					FOLK_S_00989	Sachbearbeiter/in	SR	49,06	24,27	32,24	
+FOLK_E_00344_SE_01	0:54:37	51,02	48,80	2
+					FOLK_S_00992	Student/in	CB	53,19	48,80	26,82	
+					FOLK_S_00991	Chemisch-Technische/r Assistent/in	CS	46,18	51,02	28,46	
+FOLK_E_00345_SE_01	0:10:13	100,00	0,00	1
+					FOLK_S_00993	Lehrer/in	RJ	100,00	100,00	1,70	
+FOLK_E_00346_SE_01	1:29:54	51,07	39,81	3
+					FOLK_S_00996	Arzthelfer/in ; Kaufmann/-frau	GK	34,53	39,81	18,10	
+					FOLK_S_00995	Großhandelskaufmann/-frau ; Student/in	SF	46,88	51,07	26,99	
+					FOLK_S_00994	Energieanlagenelektroniker/in	SH	18,37	9,10	19,50	
+FOLK_E_00347_SE_01	0:59:00	50,91	31,19	3
+					FOLK_S_00999	Verkäufer/in	BS	43,41	50,91	33,33	
+					FOLK_S_00997	Student/in	MC	32,61	31,19	23,18	
+					FOLK_S_00998	Stahlbauschlosser/in ; Schlosser/in	PS	23,33	17,84	31,94	
+FOLK_E_00348_SE_01	1:20:38	81,98	15,48	3
+					FOLK_S_01003	Rettungssanitäter/in	CS	38,70	15,48	40,93	
+					FOLK_S_01002	Groß-Außenhandelskaufmann/-frau ; Fahrlehrer/in	HM	50,05	81,98	15,11	
+					FOLK_S_01004	Nicht dokumentiert	SR	10,44	2,45	60,34	
+FOLK_E_00349_SE_01	1:27:50	93,98	2,89	6
+					FOLK_S_01009	Schüler/in	AJ	6,07	0,77	50,00	
+					FOLK_S_01007	Fachkraft für Lagerlogistik	FR	8,64	0,94	51,35	
+					FOLK_S_01002	Groß-Außenhandelskaufmann/-frau ; Fahrlehrer/in	HM	54,91	93,98	9,36	
+					FOLK_S_01008	Nicht vorhanden	LD	22,66	2,89	49,48	
+					FOLK_S_01006	Schüler/in	MZ	6,54	1,24	53,57	
+					FOLK_S_01005	Wissenschaftliche/r Mitarbeiter/in	SK	0,70	0,16	66,67	
+FOLK_E_00350_SE_01	1:25:04	90,65	3,81	6
+					FOLK_S_01009	Schüler/in	AJ	20,53	3,68	49,54	
+					FOLK_S_01033	Kaufmann/-frau	EK	2,45	0,24	76,92	
+					FOLK_S_01007	Fachkraft für Lagerlogistik	FR	4,90	1,35	38,46	
+					FOLK_S_01002	Groß-Außenhandelskaufmann/-frau ; Fahrlehrer/in	HM	54,43	90,65	16,26	
+					FOLK_S_01035	Schüler/in	MGB	1,32	0,09	85,71	
+					FOLK_S_01031	IT-Fachinformatiker/in	RR	14,50	3,81	37,66	
+FOLK_E_00351_SE_01	1:23:30	92,97	4,46	6
+					FOLK_S_01009	Schüler/in	AJ	13,50	1,70	57,63	
+					FOLK_S_01033	Kaufmann/-frau	EK	1,83	0,28	62,50	
+					FOLK_S_01002	Groß-Außenhandelskaufmann/-frau ; Fahrlehrer/in	HM	59,50	92,97	11,54	
+					FOLK_S_01031	IT-Fachinformatiker/in	RR	19,22	4,46	34,52	
+					FOLK_S_01030	Schüler/in	VG	0,92	0,05	75,00	
+					FOLK_S_01032	Schüler/in	YM	3,89	0,36	52,94	
+FOLK_E_00352_SE_01	0:25:12	65,07	34,93	2
+					FOLK_S_01010	Kindheitspädagoge/-in	KG	49,01	65,07	36,49	
+					FOLK_S_01011	Praktikant/in ; Sozialpädagogische/r Assistent/in	NL	50,99	34,93	24,68	
+FOLK_E_00353_SE_01	0:45:07	58,20	41,75	2
+					FOLK_S_01013	Student/in	AD	53,42	58,20	28,07	
+					FOLK_S_01012	Student/in	SB	46,43	41,75	29,15	
+FOLK_E_00354_SE_01	0:30:43	75,66	24,34	2
+					FOLK_S_01014	KFZ-Mechaniker/in ; Schichtleiter/in	JM	50,23	75,66	8,76	
+					FOLK_S_01015	Honorarlehrkraft	SM	49,77	24,34	40,93	
+FOLK_E_00355_SE_01	0:52:32	47,70	19,39	4
+					FOLK_S_01058	Schüler/in	AK	19,41	16,32	40,39	
+					FOLK_S_01056	Erzieher/in	CH	37,19	47,70	23,39	
+					FOLK_S_01055	Leitung selbstständiger Musikschule	LK	19,50	16,58	37,25	
+					FOLK_S_01057	Schüler/in	MK	23,80	19,39	46,18	
+FOLK_E_00356_SE_01	0:47:08	34,26	19,11	5
+					FOLK_S_01043	Anlagenbauer/in; Chemikant/in	AH	24,97	34,26	19,90	
+					FOLK_S_01042	Rechtspfleger/in; Wirtschaftsinformatiker/in	HH	18,85	17,36	35,81	
+					FOLK_S_01041	Schüler/in	IH	18,34	14,92	30,56	
+					FOLK_S_01040	Schüler/in	LH	18,98	19,11	28,86	
+					FOLK_S_01044	Schüler/in	SH	18,47	14,19	30,34	
+FOLK_E_00357_SE_01	1:17:10	32,50	23,98	4
+					FOLK_S_01038	Lehrer/in	CP	24,61	23,17	40,55	
+					FOLK_S_01036	Rentner/in	GG	16,14	17,57	33,33	
+					FOLK_S_01039	Fremdsprachenkorrespondent/in	RM	32,97	32,50	36,13	
+					FOLK_S_01037	Student/in	VP	23,93	23,98	39,08	
+FOLK_E_00359_SE_01	0:32:05	60,09	39,91	2
+					FOLK_S_01022	Physiotherapeut/in	AG	52,98	60,09	31,74	
+					FOLK_S_01023	Versicherungskaufmann/-frau	KR	47,02	39,91	39,23	
+FOLK_E_00360_SE_01	0:29:14	84,09	15,91	2
+					FOLK_S_01025	Dentalkaufmann/-frau	ES	47,84	15,91	51,64	
+					FOLK_S_00990	Physiotherapeut/in	KL	52,16	84,09	16,54	
+FOLK_E_00361_SE_01	1:25:39	31,34	16,00	6
+					FOLK_S_01017	Wissenschaftler/in	JW	18,38	14,10	20,00	
+					FOLK_S_01016	Erzieher/in ; Wissenschaftliche/r Mitarbeiter/in	KM	11,76	31,34	0,00	
+					FOLK_S_01018	IT-Manager/in	MD	16,18	16,00	4,55	
+					FOLK_S_01021	Referent/in	ML	3,68	6,40	0,00	
+					FOLK_S_01020	Wissenschaftler/in ; Professor/in	PS	10,29	11,43	7,14	
+					FOLK_S_01019	Akademische/r Mitarbeiter/in	UW	17,65	6,50	25,00	
+FOLK_E_00362_SE_01	0:05:08	51,85	47,50	2
+					FOLK_S_01063	Student/in	NF	50,00	51,85	37,50	
+					FOLK_S_01046	Sachbearbeiter/in	SM	47,50	47,50	47,37	
+FOLK_E_00363_SE_01	0:08:07	68,69	31,31	2
+					FOLK_S_01046	Sachbearbeiter/in	SM	49,48	68,69	12,50	
+					FOLK_S_01062	Student/in	ZH	50,52	31,31	48,98	
+FOLK_E_00364_SE_01	0:08:17	67,95	32,05	2
+					FOLK_S_01060	Student/in	AQ	49,40	32,05	48,19	
+					FOLK_S_01061	Sachbearbeiter/in	KF	50,60	67,95	17,65	
+FOLK_E_00365_SE_01	0:19:36	60,57	39,35	2
+					FOLK_S_01045	Student/in	FJ	49,07	39,35	43,48	
+					FOLK_S_01046	Sachbearbeiter/in	SM	50,67	60,57	30,00	
+FOLK_E_00366_SE_01	0:02:17	55,07	44,93	2
+					FOLK_S_01051	Yogalehrer/in ; Wissenschaftliche/r Mitarbeiter/in	CR	50,00	44,93	50,00	
+					FOLK_S_01059	Reinigungsmitarbeiter/in	MS	50,00	55,07	35,71	
+FOLK_E_00367_SE_01	0:01:18	67,35	32,65	2
+					FOLK_S_01051	Yogalehrer/in ; Wissenschaftliche/r Mitarbeiter/in	CR	50,00	32,65	50,00	
+					FOLK_S_01052	Kassierer/in	NN	50,00	67,35	16,67	
+FOLK_E_00368_SE_01	0:04:36	56,33	43,67	2
+					FOLK_S_01048	Student/in	SL	48,72	43,67	26,32	
+					FOLK_S_01047	Schlüsselmacher/in ; Tischler/in ; Industriekaufmann/-frau ; Hotelkaufmann/-frau	SN	51,28	56,33	35,00	
+FOLK_E_00370_SE_01	1:48:28	54,18	45,82	2
+					FOLK_S_01050	Bäcker/in	AS	49,88	54,18	23,10	
+					FOLK_S_01049	Student/in	SL	50,12	45,82	33,62	
+FOLK_E_00371_SE_01	0:09:24	59,28	40,72	2
+					FOLK_S_01053	KiTa-Leiter/in	HK	49,51	40,72	29,41	
+					FOLK_S_01054	Studierende/r	LR	50,49	59,28	17,31	

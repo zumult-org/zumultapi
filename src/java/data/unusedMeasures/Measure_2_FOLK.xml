@@ -1,0 +1,1532 @@
+<?xml version="1.0" encoding="UTF-8"?><measures-document>
+    <measures speechEventID="FOLK_E_00001_SE_01">
+        <measure lemmas="950"/>
+        <measure tokens="6987"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00002_SE_01">
+        <measure lemmas="708"/>
+        <measure tokens="3047"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00003_SE_01">
+        <measure lemmas="625"/>
+        <measure tokens="4012"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00004_SE_01">
+        <measure lemmas="1273"/>
+        <measure tokens="9982"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00005_SE_01">
+        <measure lemmas="910"/>
+        <measure tokens="6829"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00006_SE_01">
+        <measure lemmas="925"/>
+        <measure tokens="5480"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00007_SE_01">
+        <measure lemmas="1201"/>
+        <measure tokens="9644"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00008_SE_01">
+        <measure lemmas="1049"/>
+        <measure tokens="6378"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00009_SE_01">
+        <measure lemmas="824"/>
+        <measure tokens="4967"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00010_SE_01">
+        <measure lemmas="602"/>
+        <measure tokens="5522"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00011_SE_01">
+        <measure lemmas="1312"/>
+        <measure tokens="24379"/>
+        <measure lemma_token_ratio="0,05"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00012_SE_01">
+        <measure lemmas="460"/>
+        <measure tokens="5176"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00013_SE_01">
+        <measure lemmas="809"/>
+        <measure tokens="4112"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00014_SE_01">
+        <measure lemmas="583"/>
+        <measure tokens="3541"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00015_SE_01">
+        <measure lemmas="1064"/>
+        <measure tokens="7948"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00016_SE_01">
+        <measure lemmas="647"/>
+        <measure tokens="4561"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00017_SE_01">
+        <measure lemmas="400"/>
+        <measure tokens="1639"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00018_SE_01">
+        <measure lemmas="725"/>
+        <measure tokens="4321"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00020_SE_01">
+        <measure lemmas="733"/>
+        <measure tokens="4349"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00021_SE_01">
+        <measure lemmas="3369"/>
+        <measure tokens="56766"/>
+        <measure lemma_token_ratio="0,06"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00022_SE_01">
+        <measure lemmas="1809"/>
+        <measure tokens="19957"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00024_SE_01">
+        <measure lemmas="2359"/>
+        <measure tokens="33583"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00026_SE_01">
+        <measure lemmas="2381"/>
+        <measure tokens="32207"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00027_SE_01">
+        <measure lemmas="741"/>
+        <measure tokens="4933"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00028_SE_01">
+        <measure lemmas="907"/>
+        <measure tokens="4647"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00029_SE_01">
+        <measure lemmas="361"/>
+        <measure tokens="1997"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00030_SE_01">
+        <measure lemmas="1497"/>
+        <measure tokens="10337"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00031_SE_01">
+        <measure lemmas="457"/>
+        <measure tokens="2554"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00032_SE_01">
+        <measure lemmas="739"/>
+        <measure tokens="3973"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00033_SE_01">
+        <measure lemmas="829"/>
+        <measure tokens="5049"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00034_SE_01">
+        <measure lemmas="791"/>
+        <measure tokens="4543"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00035_SE_01">
+        <measure lemmas="858"/>
+        <measure tokens="4461"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00036_SE_01">
+        <measure lemmas="790"/>
+        <measure tokens="4677"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00037_SE_01">
+        <measure lemmas="741"/>
+        <measure tokens="3457"/>
+        <measure lemma_token_ratio="0,21"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00038_SE_01">
+        <measure lemmas="662"/>
+        <measure tokens="3331"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00039_SE_01">
+        <measure lemmas="1143"/>
+        <measure tokens="8353"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00040_SE_01">
+        <measure lemmas="1232"/>
+        <measure tokens="8763"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00042_SE_01">
+        <measure lemmas="1479"/>
+        <measure tokens="15892"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00043_SE_01">
+        <measure lemmas="559"/>
+        <measure tokens="2427"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00044_SE_01">
+        <measure lemmas="933"/>
+        <measure tokens="6983"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00045_SE_01">
+        <measure lemmas="783"/>
+        <measure tokens="5842"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00046_SE_01">
+        <measure lemmas="975"/>
+        <measure tokens="7862"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00047_SE_01">
+        <measure lemmas="1093"/>
+        <measure tokens="9029"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00048_SE_01">
+        <measure lemmas="1282"/>
+        <measure tokens="12389"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00049_SE_01">
+        <measure lemmas="969"/>
+        <measure tokens="6404"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00050_SE_01">
+        <measure lemmas="511"/>
+        <measure tokens="2243"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00052_SE_01">
+        <measure lemmas="814"/>
+        <measure tokens="4190"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00053_SE_01">
+        <measure lemmas="633"/>
+        <measure tokens="3262"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00055_SE_01">
+        <measure lemmas="2433"/>
+        <measure tokens="30702"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00056_SE_01">
+        <measure lemmas="977"/>
+        <measure tokens="5945"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00057_SE_01">
+        <measure lemmas="1306"/>
+        <measure tokens="9080"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00058_SE_01">
+        <measure lemmas="1415"/>
+        <measure tokens="9836"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00059_SE_01">
+        <measure lemmas="1321"/>
+        <measure tokens="8089"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00060_SE_01">
+        <measure lemmas="933"/>
+        <measure tokens="5759"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00061_SE_01">
+        <measure lemmas="866"/>
+        <measure tokens="4893"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00062_SE_01">
+        <measure lemmas="1077"/>
+        <measure tokens="4469"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00064_SE_01">
+        <measure lemmas="4473"/>
+        <measure tokens="52001"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00066_SE_01">
+        <measure lemmas="2979"/>
+        <measure tokens="24815"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00068_SE_01">
+        <measure lemmas="4243"/>
+        <measure tokens="51248"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00069_SE_01">
+        <measure lemmas="4302"/>
+        <measure tokens="50817"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00070_SE_01">
+        <measure lemmas="4478"/>
+        <measure tokens="53422"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00074_SE_01">
+        <measure lemmas="832"/>
+        <measure tokens="5975"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00076_SE_01">
+        <measure lemmas="596"/>
+        <measure tokens="2022"/>
+        <measure lemma_token_ratio="0,29"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00077_SE_01">
+        <measure lemmas="789"/>
+        <measure tokens="3976"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00079_SE_01">
+        <measure lemmas="781"/>
+        <measure tokens="3984"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00080_SE_01">
+        <measure lemmas="486"/>
+        <measure tokens="2395"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00081_SE_01">
+        <measure lemmas="312"/>
+        <measure tokens="1075"/>
+        <measure lemma_token_ratio="0,29"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00082_SE_01">
+        <measure lemmas="995"/>
+        <measure tokens="9390"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00083_SE_01">
+        <measure lemmas="758"/>
+        <measure tokens="5365"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00084_SE_01">
+        <measure lemmas="1415"/>
+        <measure tokens="14731"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00085_SE_01">
+        <measure lemmas="226"/>
+        <measure tokens="692"/>
+        <measure lemma_token_ratio="0,33"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00086_SE_01">
+        <measure lemmas="359"/>
+        <measure tokens="2706"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00087_SE_01">
+        <measure lemmas="334"/>
+        <measure tokens="1914"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00088_SE_01">
+        <measure lemmas="602"/>
+        <measure tokens="3080"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00089_SE_01">
+        <measure lemmas="419"/>
+        <measure tokens="3166"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00090_SE_01">
+        <measure lemmas="373"/>
+        <measure tokens="2856"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00091_SE_01">
+        <measure lemmas="389"/>
+        <measure tokens="2912"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00092_SE_01">
+        <measure lemmas="363"/>
+        <measure tokens="1677"/>
+        <measure lemma_token_ratio="0,22"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00093_SE_01">
+        <measure lemmas="395"/>
+        <measure tokens="2900"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00094_SE_01">
+        <measure lemmas="368"/>
+        <measure tokens="3061"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00095_SE_01">
+        <measure lemmas="368"/>
+        <measure tokens="2700"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00096_SE_01">
+        <measure lemmas="242"/>
+        <measure tokens="1036"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00097_SE_01">
+        <measure lemmas="310"/>
+        <measure tokens="1731"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00098_SE_01">
+        <measure lemmas="224"/>
+        <measure tokens="1358"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00099_SE_01">
+        <measure lemmas="333"/>
+        <measure tokens="3026"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00100_SE_01">
+        <measure lemmas="428"/>
+        <measure tokens="3213"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00101_SE_01">
+        <measure lemmas="347"/>
+        <measure tokens="3242"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00102_SE_01">
+        <measure lemmas="263"/>
+        <measure tokens="1484"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00103_SE_01">
+        <measure lemmas="395"/>
+        <measure tokens="4353"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00104_SE_01">
+        <measure lemmas="249"/>
+        <measure tokens="1394"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00105_SE_01">
+        <measure lemmas="542"/>
+        <measure tokens="5099"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00106_SE_01">
+        <measure lemmas="300"/>
+        <measure tokens="1908"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00107_SE_01">
+        <measure lemmas="219"/>
+        <measure tokens="1145"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00108_SE_01">
+        <measure lemmas="320"/>
+        <measure tokens="2192"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00109_SE_01">
+        <measure lemmas="271"/>
+        <measure tokens="1542"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00110_SE_01">
+        <measure lemmas="366"/>
+        <measure tokens="3190"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00111_SE_01">
+        <measure lemmas="541"/>
+        <measure tokens="2492"/>
+        <measure lemma_token_ratio="0,22"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00112_SE_01">
+        <measure lemmas="521"/>
+        <measure tokens="2048"/>
+        <measure lemma_token_ratio="0,25"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00113_SE_01">
+        <measure lemmas="312"/>
+        <measure tokens="1345"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00114_SE_01">
+        <measure lemmas="1133"/>
+        <measure tokens="9281"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00115_SE_01">
+        <measure lemmas="759"/>
+        <measure tokens="3963"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00116_SE_01">
+        <measure lemmas="173"/>
+        <measure tokens="497"/>
+        <measure lemma_token_ratio="0,35"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00117_SE_01">
+        <measure lemmas="670"/>
+        <measure tokens="3353"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00118_SE_01">
+        <measure lemmas="930"/>
+        <measure tokens="5185"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00119_SE_01">
+        <measure lemmas="1034"/>
+        <measure tokens="6790"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00120_SE_01">
+        <measure lemmas="769"/>
+        <measure tokens="4860"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00121_SE_01">
+        <measure lemmas="1384"/>
+        <measure tokens="11769"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00123_SE_01">
+        <measure lemmas="541"/>
+        <measure tokens="2419"/>
+        <measure lemma_token_ratio="0,22"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00124_SE_01">
+        <measure lemmas="900"/>
+        <measure tokens="5226"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00125_SE_01">
+        <measure lemmas="1375"/>
+        <measure tokens="7677"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00126_SE_01">
+        <measure lemmas="2454"/>
+        <measure tokens="14933"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00127_SE_01">
+        <measure lemmas="784"/>
+        <measure tokens="3414"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00128_SE_01">
+        <measure lemmas="1409"/>
+        <measure tokens="10985"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00129_SE_01">
+        <measure lemmas="1143"/>
+        <measure tokens="8420"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00130_SE_01">
+        <measure lemmas="1050"/>
+        <measure tokens="7132"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00132_SE_01">
+        <measure lemmas="3144"/>
+        <measure tokens="55570"/>
+        <measure lemma_token_ratio="0,06"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00133_SE_01">
+        <measure lemmas="709"/>
+        <measure tokens="5277"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00134_SE_01">
+        <measure lemmas="516"/>
+        <measure tokens="2931"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00135_SE_01">
+        <measure lemmas="351"/>
+        <measure tokens="1370"/>
+        <measure lemma_token_ratio="0,26"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00136_SE_01">
+        <measure lemmas="459"/>
+        <measure tokens="2175"/>
+        <measure lemma_token_ratio="0,21"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00137_SE_01">
+        <measure lemmas="201"/>
+        <measure tokens="596"/>
+        <measure lemma_token_ratio="0,34"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00138_SE_01">
+        <measure lemmas="421"/>
+        <measure tokens="2256"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00139_SE_01">
+        <measure lemmas="257"/>
+        <measure tokens="1026"/>
+        <measure lemma_token_ratio="0,25"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00140_SE_01">
+        <measure lemmas="450"/>
+        <measure tokens="2368"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00141_SE_01">
+        <measure lemmas="314"/>
+        <measure tokens="1079"/>
+        <measure lemma_token_ratio="0,29"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00142_SE_01">
+        <measure lemmas="343"/>
+        <measure tokens="1412"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00143_SE_01">
+        <measure lemmas="2458"/>
+        <measure tokens="29759"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00144_SE_01">
+        <measure lemmas="747"/>
+        <measure tokens="6050"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00146_SE_01">
+        <measure lemmas="846"/>
+        <measure tokens="6080"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00147_SE_01">
+        <measure lemmas="1640"/>
+        <measure tokens="14394"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00148_SE_01">
+        <measure lemmas="1282"/>
+        <measure tokens="11238"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00150_SE_01">
+        <measure lemmas="485"/>
+        <measure tokens="2023"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00151_SE_01">
+        <measure lemmas="274"/>
+        <measure tokens="1127"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00152_SE_01">
+        <measure lemmas="974"/>
+        <measure tokens="12344"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00153_SE_01">
+        <measure lemmas="33"/>
+        <measure tokens="48"/>
+        <measure lemma_token_ratio="0,69"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00154_SE_01">
+        <measure lemmas="29"/>
+        <measure tokens="44"/>
+        <measure lemma_token_ratio="0,66"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00155_SE_01">
+        <measure lemmas="45"/>
+        <measure tokens="62"/>
+        <measure lemma_token_ratio="0,73"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00156_SE_01">
+        <measure lemmas="305"/>
+        <measure tokens="1223"/>
+        <measure lemma_token_ratio="0,25"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00157_SE_01">
+        <measure lemmas="643"/>
+        <measure tokens="6948"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00158_SE_01">
+        <measure lemmas="130"/>
+        <measure tokens="257"/>
+        <measure lemma_token_ratio="0,51"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00159_SE_01">
+        <measure lemmas="37"/>
+        <measure tokens="59"/>
+        <measure lemma_token_ratio="0,63"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00160_SE_01">
+        <measure lemmas="688"/>
+        <measure tokens="6609"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00161_SE_01">
+        <measure lemmas="1792"/>
+        <measure tokens="19215"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00162_SE_01">
+        <measure lemmas="1569"/>
+        <measure tokens="9575"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00163_SE_01">
+        <measure lemmas="949"/>
+        <measure tokens="4799"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00165_SE_01">
+        <measure lemmas="1503"/>
+        <measure tokens="9692"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00166_SE_01">
+        <measure lemmas="898"/>
+        <measure tokens="5566"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00167_SE_01">
+        <measure lemmas="698"/>
+        <measure tokens="6260"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00168_SE_01">
+        <measure lemmas="859"/>
+        <measure tokens="6884"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00169_SE_01">
+        <measure lemmas="789"/>
+        <measure tokens="5915"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00171_SE_01">
+        <measure lemmas="736"/>
+        <measure tokens="6148"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00172_SE_01">
+        <measure lemmas="641"/>
+        <measure tokens="4189"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00173_SE_01">
+        <measure lemmas="1955"/>
+        <measure tokens="19647"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00174_SE_01">
+        <measure lemmas="1881"/>
+        <measure tokens="15170"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00175_SE_01">
+        <measure lemmas="757"/>
+        <measure tokens="5531"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00176_SE_01">
+        <measure lemmas="923"/>
+        <measure tokens="6509"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00177_SE_01">
+        <measure lemmas="908"/>
+        <measure tokens="6863"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00178_SE_01">
+        <measure lemmas="969"/>
+        <measure tokens="7175"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00179_SE_01">
+        <measure lemmas="1142"/>
+        <measure tokens="8717"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00180_SE_01">
+        <measure lemmas="763"/>
+        <measure tokens="4614"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00181_SE_01">
+        <measure lemmas="1141"/>
+        <measure tokens="7919"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00182_SE_01">
+        <measure lemmas="1186"/>
+        <measure tokens="9051"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00183_SE_01">
+        <measure lemmas="787"/>
+        <measure tokens="5918"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00184_SE_01">
+        <measure lemmas="1026"/>
+        <measure tokens="7839"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00185_SE_01">
+        <measure lemmas="877"/>
+        <measure tokens="6763"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00186_SE_01">
+        <measure lemmas="950"/>
+        <measure tokens="5257"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00187_SE_01">
+        <measure lemmas="1016"/>
+        <measure tokens="8840"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00188_SE_01">
+        <measure lemmas="241"/>
+        <measure tokens="1722"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00189_SE_01">
+        <measure lemmas="479"/>
+        <measure tokens="4793"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00190_SE_01">
+        <measure lemmas="716"/>
+        <measure tokens="3615"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00191_SE_01">
+        <measure lemmas="1542"/>
+        <measure tokens="12007"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00193_SE_01">
+        <measure lemmas="1141"/>
+        <measure tokens="10695"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00194_SE_01">
+        <measure lemmas="530"/>
+        <measure tokens="3119"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00197_SE_01">
+        <measure lemmas="698"/>
+        <measure tokens="3366"/>
+        <measure lemma_token_ratio="0,21"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00198_SE_01">
+        <measure lemmas="511"/>
+        <measure tokens="2190"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00201_SE_01">
+        <measure lemmas="2041"/>
+        <measure tokens="17304"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00202_SE_01">
+        <measure lemmas="1691"/>
+        <measure tokens="15911"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00203_SE_01">
+        <measure lemmas="1544"/>
+        <measure tokens="10243"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00204_SE_01">
+        <measure lemmas="1390"/>
+        <measure tokens="14509"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00206_SE_01">
+        <measure lemmas="1648"/>
+        <measure tokens="13939"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00207_SE_01">
+        <measure lemmas="854"/>
+        <measure tokens="4370"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00208_SE_01">
+        <measure lemmas="1034"/>
+        <measure tokens="6096"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00209_SE_01">
+        <measure lemmas="696"/>
+        <measure tokens="3217"/>
+        <measure lemma_token_ratio="0,22"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00210_SE_01">
+        <measure lemmas="2509"/>
+        <measure tokens="16343"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00211_SE_01">
+        <measure lemmas="230"/>
+        <measure tokens="710"/>
+        <measure lemma_token_ratio="0,32"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00212_SE_01">
+        <measure lemmas="98"/>
+        <measure tokens="176"/>
+        <measure lemma_token_ratio="0,56"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00213_SE_01">
+        <measure lemmas="583"/>
+        <measure tokens="3159"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00214_SE_01">
+        <measure lemmas="161"/>
+        <measure tokens="426"/>
+        <measure lemma_token_ratio="0,38"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00215_SE_01">
+        <measure lemmas="237"/>
+        <measure tokens="785"/>
+        <measure lemma_token_ratio="0,30"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00216_SE_01">
+        <measure lemmas="244"/>
+        <measure tokens="705"/>
+        <measure lemma_token_ratio="0,35"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00217_SE_01">
+        <measure lemmas="1643"/>
+        <measure tokens="22946"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00218_SE_01">
+        <measure lemmas="714"/>
+        <measure tokens="5322"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00219_SE_01">
+        <measure lemmas="599"/>
+        <measure tokens="3918"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00220_SE_01">
+        <measure lemmas="1664"/>
+        <measure tokens="16615"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00221_SE_01">
+        <measure lemmas="687"/>
+        <measure tokens="3423"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00223_SE_01">
+        <measure lemmas="98"/>
+        <measure tokens="167"/>
+        <measure lemma_token_ratio="0,59"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00224_SE_01">
+        <measure lemmas="332"/>
+        <measure tokens="1170"/>
+        <measure lemma_token_ratio="0,28"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00225_SE_01">
+        <measure lemmas="1161"/>
+        <measure tokens="8922"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00226_SE_01">
+        <measure lemmas="897"/>
+        <measure tokens="6161"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00227_SE_01">
+        <measure lemmas="952"/>
+        <measure tokens="6633"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00228_SE_01">
+        <measure lemmas="1254"/>
+        <measure tokens="10398"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00229_SE_01">
+        <measure lemmas="82"/>
+        <measure tokens="138"/>
+        <measure lemma_token_ratio="0,59"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00230_SE_01">
+        <measure lemmas="83"/>
+        <measure tokens="142"/>
+        <measure lemma_token_ratio="0,58"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00231_SE_01">
+        <measure lemmas="145"/>
+        <measure tokens="336"/>
+        <measure lemma_token_ratio="0,43"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00235_SE_01">
+        <measure lemmas="155"/>
+        <measure tokens="342"/>
+        <measure lemma_token_ratio="0,45"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00237_SE_01">
+        <measure lemmas="99"/>
+        <measure tokens="180"/>
+        <measure lemma_token_ratio="0,55"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00238_SE_01">
+        <measure lemmas="103"/>
+        <measure tokens="230"/>
+        <measure lemma_token_ratio="0,45"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00239_SE_01">
+        <measure lemmas="64"/>
+        <measure tokens="114"/>
+        <measure lemma_token_ratio="0,56"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00243_SE_01">
+        <measure lemmas="447"/>
+        <measure tokens="1974"/>
+        <measure lemma_token_ratio="0,23"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00246_SE_01">
+        <measure lemmas="325"/>
+        <measure tokens="1289"/>
+        <measure lemma_token_ratio="0,25"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00248_SE_01">
+        <measure lemmas="1177"/>
+        <measure tokens="8532"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00250_SE_01">
+        <measure lemmas="1225"/>
+        <measure tokens="9157"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00251_SE_01">
+        <measure lemmas="773"/>
+        <measure tokens="4410"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00252_SE_01">
+        <measure lemmas="794"/>
+        <measure tokens="5339"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00253_SE_01">
+        <measure lemmas="891"/>
+        <measure tokens="7309"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00254_SE_01">
+        <measure lemmas="1722"/>
+        <measure tokens="18779"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00255_SE_01">
+        <measure lemmas="1706"/>
+        <measure tokens="16666"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00256_SE_01">
+        <measure lemmas="1056"/>
+        <measure tokens="12284"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00257_SE_01">
+        <measure lemmas="858"/>
+        <measure tokens="8827"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00258_SE_01">
+        <measure lemmas="988"/>
+        <measure tokens="9242"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00259_SE_01">
+        <measure lemmas="362"/>
+        <measure tokens="1927"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00260_SE_01">
+        <measure lemmas="1137"/>
+        <measure tokens="7917"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00261_SE_01">
+        <measure lemmas="1119"/>
+        <measure tokens="7887"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00262_SE_01">
+        <measure lemmas="560"/>
+        <measure tokens="2343"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00263_SE_01">
+        <measure lemmas="866"/>
+        <measure tokens="5002"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00264_SE_01">
+        <measure lemmas="257"/>
+        <measure tokens="858"/>
+        <measure lemma_token_ratio="0,30"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00265_SE_01">
+        <measure lemmas="1121"/>
+        <measure tokens="11820"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00266_SE_01">
+        <measure lemmas="1721"/>
+        <measure tokens="23340"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00267_SE_01">
+        <measure lemmas="2496"/>
+        <measure tokens="33763"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00268_SE_01">
+        <measure lemmas="1078"/>
+        <measure tokens="6697"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00269_SE_01">
+        <measure lemmas="673"/>
+        <measure tokens="4719"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00270_SE_01">
+        <measure lemmas="429"/>
+        <measure tokens="2264"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00271_SE_01">
+        <measure lemmas="1193"/>
+        <measure tokens="9239"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00272_SE_01">
+        <measure lemmas="762"/>
+        <measure tokens="3845"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00273_SE_01">
+        <measure lemmas="2921"/>
+        <measure tokens="31680"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00274_SE_01">
+        <measure lemmas="708"/>
+        <measure tokens="10830"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00285_SE_01">
+        <measure lemmas="1604"/>
+        <measure tokens="16033"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00286_SE_01">
+        <measure lemmas="628"/>
+        <measure tokens="3714"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00287_SE_01">
+        <measure lemmas="2174"/>
+        <measure tokens="20944"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00288_SE_01">
+        <measure lemmas="1865"/>
+        <measure tokens="15719"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00289_SE_01">
+        <measure lemmas="403"/>
+        <measure tokens="1807"/>
+        <measure lemma_token_ratio="0,22"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00290_SE_01">
+        <measure lemmas="1316"/>
+        <measure tokens="17523"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00291_SE_01">
+        <measure lemmas="1147"/>
+        <measure tokens="10695"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00292_SE_01">
+        <measure lemmas="557"/>
+        <measure tokens="3180"/>
+        <measure lemma_token_ratio="0,18"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00293_SE_01">
+        <measure lemmas="2161"/>
+        <measure tokens="22744"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00294_SE_01">
+        <measure lemmas="918"/>
+        <measure tokens="9629"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00295_SE_01">
+        <measure lemmas="1007"/>
+        <measure tokens="6642"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00296_SE_01">
+        <measure lemmas="1159"/>
+        <measure tokens="9812"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00298_SE_01">
+        <measure lemmas="156"/>
+        <measure tokens="363"/>
+        <measure lemma_token_ratio="0,43"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00299_SE_01">
+        <measure lemmas="335"/>
+        <measure tokens="1734"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00300_SE_01">
+        <measure lemmas="998"/>
+        <measure tokens="7758"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00301_SE_01">
+        <measure lemmas="1227"/>
+        <measure tokens="9381"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00302_SE_01">
+        <measure lemmas="285"/>
+        <measure tokens="1072"/>
+        <measure lemma_token_ratio="0,27"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00303_SE_01">
+        <measure lemmas="1164"/>
+        <measure tokens="10244"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00304_SE_01">
+        <measure lemmas="172"/>
+        <measure tokens="497"/>
+        <measure lemma_token_ratio="0,35"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00305_SE_01">
+        <measure lemmas="120"/>
+        <measure tokens="236"/>
+        <measure lemma_token_ratio="0,51"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00308_SE_01">
+        <measure lemmas="1247"/>
+        <measure tokens="11086"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00309_SE_01">
+        <measure lemmas="659"/>
+        <measure tokens="5526"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00313_SE_01">
+        <measure lemmas="1299"/>
+        <measure tokens="10221"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00318_SE_01">
+        <measure lemmas="632"/>
+        <measure tokens="3319"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00319_SE_01">
+        <measure lemmas="1235"/>
+        <measure tokens="10382"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00321_SE_01">
+        <measure lemmas="1451"/>
+        <measure tokens="13061"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00322_SE_01">
+        <measure lemmas="1107"/>
+        <measure tokens="9915"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00323_SE_01">
+        <measure lemmas="219"/>
+        <measure tokens="795"/>
+        <measure lemma_token_ratio="0,28"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00324_SE_01">
+        <measure lemmas="225"/>
+        <measure tokens="750"/>
+        <measure lemma_token_ratio="0,30"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00325_SE_01">
+        <measure lemmas="2489"/>
+        <measure tokens="31048"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00327_SE_01">
+        <measure lemmas="965"/>
+        <measure tokens="6383"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00329_SE_01">
+        <measure lemmas="2275"/>
+        <measure tokens="23624"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00330_SE_01">
+        <measure lemmas="2315"/>
+        <measure tokens="24184"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00331_SE_01">
+        <measure lemmas="1293"/>
+        <measure tokens="11531"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00332_SE_01">
+        <measure lemmas="426"/>
+        <measure tokens="1781"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00333_SE_01">
+        <measure lemmas="738"/>
+        <measure tokens="5185"/>
+        <measure lemma_token_ratio="0,14"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00334_SE_01">
+        <measure lemmas="373"/>
+        <measure tokens="2261"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00335_SE_01">
+        <measure lemmas="1047"/>
+        <measure tokens="10343"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00337_SE_01">
+        <measure lemmas="1427"/>
+        <measure tokens="9645"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00338_SE_01">
+        <measure lemmas="1507"/>
+        <measure tokens="9619"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00339_SE_01">
+        <measure lemmas="2008"/>
+        <measure tokens="17846"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00340_SE_01">
+        <measure lemmas="1694"/>
+        <measure tokens="21379"/>
+        <measure lemma_token_ratio="0,08"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00342_SE_01">
+        <measure lemmas="1060"/>
+        <measure tokens="10419"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00343_SE_01">
+        <measure lemmas="659"/>
+        <measure tokens="5061"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00344_SE_01">
+        <measure lemmas="1131"/>
+        <measure tokens="8594"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00345_SE_01">
+        <measure lemmas="122"/>
+        <measure tokens="627"/>
+        <measure lemma_token_ratio="0,19"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00346_SE_01">
+        <measure lemmas="1765"/>
+        <measure tokens="23920"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00347_SE_01">
+        <measure lemmas="1143"/>
+        <measure tokens="10448"/>
+        <measure lemma_token_ratio="0,11"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00348_SE_01">
+        <measure lemmas="1468"/>
+        <measure tokens="14570"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00349_SE_01">
+        <measure lemmas="1159"/>
+        <measure tokens="11673"/>
+        <measure lemma_token_ratio="0,10"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00350_SE_01">
+        <measure lemmas="1188"/>
+        <measure tokens="12629"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00351_SE_01">
+        <measure lemmas="1476"/>
+        <measure tokens="12245"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00352_SE_01">
+        <measure lemmas="718"/>
+        <measure tokens="5878"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00353_SE_01">
+        <measure lemmas="909"/>
+        <measure tokens="7519"/>
+        <measure lemma_token_ratio="0,12"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00354_SE_01">
+        <measure lemmas="940"/>
+        <measure tokens="6444"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00355_SE_01">
+        <measure lemmas="1095"/>
+        <measure tokens="8187"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00356_SE_01">
+        <measure lemmas="908"/>
+        <measure tokens="5444"/>
+        <measure lemma_token_ratio="0,17"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00357_SE_01">
+        <measure lemmas="966"/>
+        <measure tokens="10665"/>
+        <measure lemma_token_ratio="0,09"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00359_SE_01">
+        <measure lemmas="605"/>
+        <measure tokens="3852"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00360_SE_01">
+        <measure lemmas="390"/>
+        <measure tokens="2991"/>
+        <measure lemma_token_ratio="0,13"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00361_SE_01">
+        <measure lemmas="1896"/>
+        <measure tokens="12148"/>
+        <measure lemma_token_ratio="0,16"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00362_SE_01">
+        <measure lemmas="237"/>
+        <measure tokens="679"/>
+        <measure lemma_token_ratio="0,35"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00363_SE_01">
+        <measure lemmas="263"/>
+        <measure tokens="1105"/>
+        <measure lemma_token_ratio="0,24"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00364_SE_01">
+        <measure lemmas="294"/>
+        <measure tokens="1319"/>
+        <measure lemma_token_ratio="0,22"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00365_SE_01">
+        <measure lemmas="422"/>
+        <measure tokens="2851"/>
+        <measure lemma_token_ratio="0,15"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00366_SE_01">
+        <measure lemmas="76"/>
+        <measure tokens="153"/>
+        <measure lemma_token_ratio="0,50"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00367_SE_01">
+        <measure lemmas="40"/>
+        <measure tokens="59"/>
+        <measure lemma_token_ratio="0,68"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00368_SE_01">
+        <measure lemmas="152"/>
+        <measure tokens="314"/>
+        <measure lemma_token_ratio="0,48"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00370_SE_01">
+        <measure lemmas="1377"/>
+        <measure tokens="19093"/>
+        <measure lemma_token_ratio="0,07"/>
+    </measures>
+    <measures speechEventID="FOLK_E_00371_SE_01">
+        <measure lemmas="389"/>
+        <measure tokens="1918"/>
+        <measure lemma_token_ratio="0,20"/>
+    </measures>
+</measures-document>

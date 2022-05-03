@@ -1,0 +1,175 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.objects.Transcript"%>
+<%@page import="java.io.File"%>
+<%@page import="org.w3c.dom.NodeList"%>
+<%@page import="org.zumult.objects.VirtualCollectionItem"%>
+<%@page import="org.w3c.dom.Document"%>
+<%@page import="org.w3c.dom.Element"%>
+<%@page import="org.zumult.backend.Configuration"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Formatter"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Locale"%>
+<%@page import="org.zumult.objects.Measure"%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@page import="org.zumult.objects.SpeechEvent"%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+
+SpeechEvent speechEvent = backendInterface.getSpeechEvent(speechEventID);
+String value_inhalt = "Not found";
+String value_art = "Not found";
+if (speechEvent!=null){
+    value_art = speechEvent.getMetadataValue(metadataKey_art);
+    value_inhalt = speechEvent.getMetadataValue(metadataKey_inhalt);
+    StringBuilder sb = new StringBuilder();
+    for(String transcriptID : list){
+        sb.append(transcriptID);
+        sb.append(", ");           
+    }
+    String transcripts = sb.toString().substring(0, sb.length()-2);
+    String eventClass = "myEvent-" + name + "-" + action.replace(" ", "_").replace(":", "").replace("/", "_");
+%>
+<div class="myEvent <%=eventClass%>" style="display:none;">
+    <h4 class="p-3" style="background-color: #d9edf7; color: #337AB7;"><b><span class="eventTitle" data-eventID='<%=speechEventID%>'><%=value_art%></span></b><span style='font-size: 15px;'>  (<%=transcripts%>)</span></h4>
+<table class="table table-borderless">
+    <tbody class='eventTable'>
+        <tr>
+            <td>Inhalt:</td>
+            <td><%=value_inhalt%></td>
+        </tr>
+        <tr>
+            <td>Ausschnitte:</td>
+            <td class="pt-0 pl-0">
+                <table>
+                    <tbody>
+                        <tr>
+
+                <%  
+                    int count=0; //for table with two images in the row
+                    for(String transcriptID : list){
+                        for(VirtualCollectionItem item : collection){
+
+                            Document virtualCollectionItemDoc = item.getDocument();
+                            Element element = virtualCollectionItemDoc.getDocumentElement();
+                            String docID = element.getAttribute("transcriptID");
+                            NodeList notes = element.getElementsByTagName("note");
+                            String startID = element.getAttribute("startAnnotationBlockID");
+                            String endID = element.getAttribute("endAnnotationBlockID");
+                            String title = element.getElementsByTagName("title").item(0).getTextContent();
+                            String duration = element.getElementsByTagName("duration").item(0).getTextContent();
+                            String speakers = element.getElementsByTagName("speakers").item(0).getTextContent();
+                            NodeList measures = element.getElementsByTagName("measure");
+                            String normRate = "";
+                            String articulationRate = "";
+                            String perMilTokensOverlapsWithMoreThan2Words = "";
+                            String GOETHE_A1 = "";
+                            String GOETHE_A2 = "";
+                            String GOETHE_B1 ="";
+                            String HERDER_1000 ="";
+                            String HERDER_2000 ="";
+                            String HERDER_3000 ="";
+                            String HERDER_4000 ="";
+                            String HERDER_5000 ="";
+
+                            
+                            for(int i=0; i<measures.getLength();i++){
+                                Element measure = (Element) measures.item(i);
+                                String type = measure.getAttribute("type");
+                                if(type.equals("normRate")){
+                                    Formatter formatter1 = new Formatter(new StringBuilder(), Locale.US);
+                                    normRate = formatter1.format("%.0f", Double.parseDouble(measure.getAttribute("normRate").replace(",", "."))).toString() + "%";
+                                }else if(type.equals("articulationRate")){
+                                    articulationRate = measure.getAttribute("articulationRate").replace(",", ".");
+                                }else if (type.equals("perMilTokensOverlapsWithMoreThan2Words")){
+                                    perMilTokensOverlapsWithMoreThan2Words = measure.getAttribute("perMilTokensOverlapsWithMoreThan2Words").replace(",", ".");
+                                }else if (type.equals("intersection")){
+                                    String reference = measure.getAttribute("reference");
+                                    NumberFormat formatter2 = NumberFormat.getPercentInstance();
+                                    formatter2.setMinimumFractionDigits(0);
+                                    String intersectionValue = formatter2.format(Double.parseDouble(measure.getAttribute("tokens_ratio")));
+                                    if(reference.equals("GOETHE_A1")){
+                                        GOETHE_A1 = intersectionValue;
+                                    }else if(reference.equals("GOETHE_A2")){
+                                        GOETHE_A2 = intersectionValue;
+                                    }else if(reference.equals("GOETHE_B1")){
+                                        GOETHE_B1 = intersectionValue;
+                                    }else if(reference.equals("HERDER_1000")){
+                                        HERDER_1000 = intersectionValue;
+                                    }else if(reference.equals("HERDER_2000")){
+                                        HERDER_2000 = intersectionValue;
+                                    }else if(reference.equals("HERDER_3000")){
+                                        HERDER_3000 = intersectionValue;
+                                    }else if(reference.equals("HERDER_4000")){
+                                        HERDER_4000 = intersectionValue;
+                                    }else if(reference.equals("HERDER_5000")){
+                                        HERDER_5000 = intersectionValue;
+                                    }
+
+                                }
+                                
+                            }
+                            
+                            
+                            String url = url_zuviel+ "?transcriptID="+
+                                            docID + "&form=trans&startAnnotationBlockID="+
+                                            startID+"&endAnnotationBlockID="+ endID + "&customTitle="+ title + "&wordlistID=" + collectionTitle.toUpperCase().replace(" ", "_");
+
+                            
+                            if (action.equals("") && docID.equals(transcriptID) && notes.getLength()== 0){
+                                count++;
+
+                    %> 
+                                <td style="width:400px;">        
+                                    <a target="_blank" href="<%=url%>" class='linkWithToolTip'> 
+                                        <p><b><span class="title"><%= title%></span></b><br/>
+                                            <span class='myImage' data-docID='<%=docID%>' data-startAnnotationBlockID='<%=startID%>'/></span>
+                                       <%@include file="zuHandSpeechEventToolTip.jspf" %>
+                                        </p>
+                                    </a>
+                                </td>
+                            <%  
+                                if(count % 2 == 0){
+                                    %></tr><tr><%
+                                }
+                            }else if (docID.equals(transcriptID) && notes.getLength()> 0){
+
+                                if(action.equals(notes.item(0).getTextContent().split(";")[0])){
+                                    count++;
+                                    String format = notes.item(0).getTextContent().split(";")[1];
+                                %>
+
+                                <td style="width:400px">
+                                    
+                                    <form target='_blank' action='<%=url_zuviel%>' method='post'>
+                                        <input type='hidden' name='transcriptID' value="<%=docID%>"/>
+                                        <input type='hidden' name='startAnnotationBlockID' value="<%=startID%>"/>
+                                        <input type='hidden' name='endAnnotationBlockID' value="<%=endID%>"/>
+                                        <input type='hidden' name='customTitle' value="<%=title%>"/>
+                                        <input type='hidden' name='form' value="trans"/>
+                                        <button onclick='openThematicExcerpt(this)' type="button" class="linkWithToolTip btn btn-link pt-0 pl-0 pr-0 text-left">
+                                                <b><span class="title"><%= title%></span><span class="badge badge-light ml-1" style='font-size: 15px;'><%=format%></span></b><br/>
+                                                <span class='myImage' data-docID='<%=docID%>' data-startAnnotationBlockID='<%=startID%>'/></span>
+                                                <%@include file="zuHandSpeechEventToolTip.jspf" %>
+                                        </button>
+                                    </form>
+                                </td>
+                                <%
+
+                                    if(count % 2 == 0){
+                                    %></tr><tr><%
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            %>
+                      </tr>
+                   </tbody>
+                </table>            
+            </td>
+        </tr> 
+    </tbody>
+</table>
+</div>

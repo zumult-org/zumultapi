@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!-- *******************  Tokens and Token-based Annotations *********************** -->
+
+<queries>
+    <query id="1">
+        <string>&lt;annotationBlock/&gt; precededby (&lt;another-speaker/&gt;&lt;para/&gt;{0,10})</string>
+        <description>find all speaker changes (= i.e., find every first contribution from a speaker after the speech of another speaker; 'para' stands here for &lt;pause&gt;-, &lt;vocal&gt;- and &lt;incident&gt;-elements which can occure in the transcription between two speaker contributions)</description>
+        <corpus></corpus>
+    </query>
+    <query id="2">
+        <string>(&lt;seg&gt;[]{0,2}[word="ja"]) precededby &lt;another-speaker/&gt;</string>
+        <description>find all tokens 'ja' with the maximum position of 3 tokens after the speaker change</description>
+        <corpus></corpus>
+    </query>
+    <query id="3">
+        <string>([word="ja"] !within &lt;speaker-overlap/&gt;) followedby &lt;another-speaker/&gt;</string>
+        <description>find all tokens 'ja' that occur at the last position before speaker change</description>
+        <corpus></corpus>
+    </query>
+    <query id="3">
+        <string>(&lt;word/&gt; !within &lt;speaker-overlap/&gt;) followedby &lt;another-speaker/&gt;</string>
+        <description>find all word tokens that occur at the last position before speaker change</description>
+        <corpus></corpus>
+    </query>
+    <query id="4">
+        <string>[lemma="ja"] precededby &lt;pause/&gt;</string>
+        <description>find all forms of 'ja' preceded by an annotated pause (Note: the same query performed in the transcript-based  mode will find all forms of 'ja' preceded by an annotated pause  according to the document order of tokens that does not always reflect their temporal order in the recording, that is, overlaps intersect the temporal order)</description>
+        <corpus></corpus>
+    </query>
+    <query id="5">
+        <string>[#0]|([#1] precededby &lt;speaker-silence/&gt;)</string>
+        <description>find the token with which every speaker starts the conversation</description>
+        <corpus></corpus>
+    </query>
+    <query id="6">
+        <string>[word="ja"][word="ja"]</string>
+        <description>find the repetition of 'ja' realized by the same speaker. (Note: in the transcript-based mode there is no way to restrict the hit to one speaker)</description>
+        <corpus></corpus>
+    </query>
+    <!--<query id="7">
+        <string>&lt;overlap-with-common-events/&gt;</string>
+        <description>find all spans overlapping with any events annotated at a speaker-independent layer. Julias Comment: Does "span" mean an undefined stretch of talk? And does this query find all kinds of as-annotations and speaker-independent annotations from GWSS etc.?</description>
+        <corpus></corpus>
+    </query>-->
+   
+   
+
+   
+   
+   
+</queries>
