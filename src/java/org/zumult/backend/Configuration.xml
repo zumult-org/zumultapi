@@ -137,19 +137,11 @@
         <index-output-path>D:\ZuMult\INDICES\</index-output-path> 
         
         
-        
 
-        <!-- START: MTAS and search index configuration parameters -->
-        <!-- <mtas-config-path>src\java\org\zumult\sample\query\config\mtas_config_TB.xml</mtas-config-path>
-        <mtas-docker-path>src\java\org\zumult\sample\query\implementations</mtas-docker-path>
-        <mtas-download>build\web\downloads</mtas-download>
-        <search-engine>mtas</search-engine> -->
+        <!-- ************************************************************** -->
+        <!-- ***** IDs of corpora available for search   ****************** -->
+        <!-- ************************************************************** -->
         <corpus-ids-for-indexing>DH--;FOLK;GWSS;MEND;DNAM;BETV;HMAT</corpus-ids-for-indexing>
-        <!-- <transcript-id-length>23</transcript-id-length> --> <!-- e.g. FOLK_E_00266_SE_01_T_06 important for speaker-based search because transcript names are SpeakerIntitials_FOLK_E_00266_SE_01_T_06 -->
-        <!-- NEW 21-09-2020 -->
-        <!-- e.g. index_TB_(FOLK_XX_XX_XXXX) or index_SB_(FOLK_XX_XX_XXXX) -->
-        <!-- <search-index-prefix>3</search-index-prefix> -->
-        <!-- END: MTAS and search index configuration parameters -->
         
     </backend> 
 </configuration>
