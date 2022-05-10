@@ -133,8 +133,9 @@
         <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
         
         
+     <!-- are not used and can be deletet   
         <index-input-path>D:\AGD-DATA\dgd2_data\iso-transcripts</index-input-path> 
-        <index-output-path>D:\ZuMult\INDICES\</index-output-path> 
+        <index-output-path>D:\ZuMult\INDICES\</index-output-path> -->
         
         
 
