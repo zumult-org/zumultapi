@@ -49,7 +49,6 @@
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
         
-        <index-output-path>/home/zumult/INDEX/</index-output-path>        
         <search-index-path>/home/zumult/INDEX/</search-index-path>  -->
         <!-- *******   END: for zumult test server   ***** -->
 
@@ -69,8 +68,6 @@
         <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
         <material-path></material-path> 
         
-        <index-input-path>D:\AGD-DATA\dgd2_data\iso-transcripts</index-input-path> 
-        <index-output-path>D:\ZuMult\INDICES\</index-output-path> 
         
         <search-index-path>D:\ZuMult\INDICES\</search-index-path>-->
         <!-- *******   END: for Thomas   ***** -->
