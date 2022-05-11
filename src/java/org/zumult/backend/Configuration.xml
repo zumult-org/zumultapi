@@ -28,7 +28,6 @@
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
         
-        <index-output-path>/home/zumult/INDEX/</index-output-path>        
         <search-index-path>/home/zumult/INDEX/</search-index-path>  -->
         
         <!-- *******   END: for zumult.ids-mannheim.de   ***** -->
@@ -122,8 +121,6 @@
         <media-snippets-path>D:\ZuMult\MEDIA-SNIPPETS</media-snippets-path>
         <material-path></material-path>
         <protocol-path></protocol-path>
-        <index-output-path>D:\ZuMult-Index</index-output-path>
-        <index-input-path>D:\AGD-DATA\dgd2_data\iso-transcripts</index-input-path>
         <transcript-path>D:\AGD-DATA\dgd2_data\iso-transcripts</transcript-path>
         <rest-api-base-url>http://localhost:8080/DGDRESTTest/api</rest-api-base-url>
         <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url>
