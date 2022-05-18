@@ -19,6 +19,7 @@ public class Repetition {
     private final Position position = new Position();
     private final Speaker speaker = new Speaker();
     private RepetitionTypeEnum type = RepetitionTypeEnum.WORD;
+    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
     private final Context context = new Context();
 
     public Repetition(Element el) throws SearchServiceException {
@@ -110,7 +111,10 @@ public class Repetition {
     public RepetitionTypeEnum getType(){
         return this.type;
     }
-        
+    
+    public SimilarityTypeEnum getSimilarityType(){
+        return this.similarity;
+    }
         
     private Boolean getBooleanFromString(String key, String value) throws SearchServiceException{
 
@@ -273,6 +277,10 @@ public class Repetition {
     
     public enum RepetitionTypeEnum {
         LEMMA, WORD, NORM
+    }
+    
+    public enum SimilarityTypeEnum {
+        EQUAL, FUZZY, FUZZY_PLUS, DIFF_PRON
     }
     
     public enum PositionToMatch{
