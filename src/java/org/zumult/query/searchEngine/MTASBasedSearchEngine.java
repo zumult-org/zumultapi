@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -89,9 +90,11 @@ import org.zumult.query.Hit;
 import org.zumult.query.StatisticEntry;
 import org.zumult.query.searchEngine.Repetition.PositionOverlapEnum;
 import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
+import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.text.similarity.FuzzyScore;
 import org.mvel2.MVEL;
 
 /**
@@ -166,6 +169,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     List<String> prefixListPOS = new  ArrayList<String>(){
         { add(Constants.ATTRIBUTE_NAME_POS);}
+    };
+    
+    List<String> prefixListTRANS = new  ArrayList<String>(){
+        { add(Constants.METADATA_KEY_MATCH_TYPE_WORD);}
     };
     
     List<String> prefixListSpeakerOverlap = new ArrayList<String>(){
@@ -1797,6 +1804,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
         }
+
+        // check search mode
+        for (Repetition repetition: repetitions){
+            if(repetition.getType().name().toLowerCase().equals(Constants.METADATA_KEY_MATCH_TYPE_WORD) && 
+                    repetition.getSimilarityType().name().toLowerCase().equals(SimilarityTypeEnum.DIFF_PRON)){
+                throw new SearchServiceException("You can't search for repetitions in transcription if they should have different pronunciation!");            
+            }
+        }
         
         try{
            return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions);
@@ -1848,7 +1863,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                         if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                             String transcriptID = r.document(spans.docID()).get(FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG);
                                             try{
-                                                repetitionSearcher.checkForRepetitions(directory, mtasCodecInfo, r.getSegmentName(), spans, transcriptID, linkedQueue);  
+                                                repetitionSearcher.checkForRepetitions(mtasCodecInfo, r.getSegmentName(), spans, transcriptID, linkedQueue);  
                                             }catch (SeachRepetitionException ex){
                                                thread.interrupt();
                                                throw ex;                                               
@@ -1877,15 +1892,12 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
         
 
-    private ArrayList<String> getPositionsOfRepetitions(Directory directory, CodecInfo mtasCodecInfo,
+    private ArrayList<String> getPositionsOfRepetitions(CodecInfo mtasCodecInfo,
             int docID, int start, int end, String speakerID, 
             ArrayList<Repetition> repetitionSpecifications, 
             Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext,
             String segmentName) throws SearchServiceException, IOException {
 
-        Pattern pattern = Pattern.compile("<[^>]+>");
-        
-        HashMap<String, String> layerMap = new HashMap();
         String currentRepetitionLayer = repetitionSpecifications.get(0).getType().name().toLowerCase();
         
         List<String> currentPrefixListRepetitionLayer = new ArrayList<String>();
@@ -1900,18 +1912,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         if (termsFromCurrentRepetitiionLayer.size() > 0){
 
             // create source object
-            TreeMap<Integer, String> source = new TreeMap<>();
-            for (CodecSearchTree.MtasTreeHit<String> term : termsFromCurrentRepetitiionLayer) {
-                source.put(term.startPosition, CodecUtil.termValue(term.data));
-            }
-            
-            int sourceSize = source.size();
-            layerMap.put(currentRepetitionLayer, String.join(" ", source.values()));
-            
-            /*System.out.println();
-            System.out.println("source: " + source);
-            System.out.println("speaker ID: " + speakerID);
-            */  
+            RepetitionSource rs = new RepetitionSource();
+            rs.addNewLayer(currentRepetitionLayer, termsFromCurrentRepetitiionLayer); 
+            int sourceSize = rs.getStringObjectsForLayer(currentRepetitionLayer).size();
             
             // store last position of the source
             int lastPositionOfTheCurrentMatch = end-1;
@@ -1926,6 +1929,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             
             repetitions:
             for(Repetition repetitionSpecification: repetitionSpecifications){
+                SimilarityTypeEnum similarity = repetitionSpecifications.get(0).getSimilarityType();
                 
                 Boolean ignoreFunctionWords = repetitionSpecification.ignoreFunctionalWords();
                 
@@ -1946,25 +1950,20 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         currentPrefixListRepetitionLayer.clear();
                         currentPrefixListRepetitionLayer.add(currentRepetitionLayer);
                             
-                        if(!layerMap.containsKey(currentRepetitionLayer)){
+                        if(!rs.containsLayer(currentRepetitionLayer)){
                             //create new source string
                             List<CodecSearchTree.MtasTreeHit<String>> termsFromNewRepetitionLayer = mtasCodecInfo
                             .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                             docID, currentPrefixListRepetitionLayer, start,
                             (end - 1));
-                            StringBuilder sb = new StringBuilder();
-                            for (CodecSearchTree.MtasTreeHit<String> term : termsFromNewRepetitionLayer) {
-                                sb.append(CodecUtil.termValue(term.data));
-                                sb.append(" ");
-                            }
-                            layerMap.put(currentRepetitionLayer, sb.toString().trim());
-   
+                            
+                            rs.addNewLayer(currentRepetitionLayer, termsFromNewRepetitionLayer);
                         }
                     }
                 }
                 
+                
                 // set maxDistance
-
                 int maxDistance = MAX_REPETITION_CONTEXT;
                 if (repetitionSpecification.getMaxDistance()!=null && repetitionSpecification.getMaxDistance()< maxDistance){
                     maxDistance = repetitionSpecification.getMaxDistance();
@@ -1988,129 +1987,121 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                                             
                     // get n-gram
                     SortedMap<Integer, String> sortedMap = new TreeMap();
-                    if(cursorPosition+sourceSize == positionsOfTheFollowingWordTokens.size()){ 
-                        for(int i=1; i<=sourceSize; i++){
-                            int startPos = positionsOfTheFollowingWordTokens.get(positionsOfTheFollowingWordTokens.size()-i);
-                            sortedMap.put(startPos, arrayOfTheFollowingWordTokens.get(startPos));
-                            if(i==1){
-                                // store last position of the current repetition
-                                lastPositionOfTheCurrentMatch =  startPos; 
-                            }
-                        }
-                    }else {
-                        Integer lastPosition = positionsOfTheFollowingWordTokens.get(cursorPosition+sourceSize);
-                        sortedMap = arrayOfTheFollowingWordTokens.subMap(firstPosition,lastPosition);
-                                                                
-                        // store last position of the current repetition
-                        lastPositionOfTheCurrentMatch = lastPosition-1;
-                    }
                     
+                    
+                    switch(similarity){
+                        case EQUAL:
+                        case FUZZY:
+                        case FUZZY_PLUS:
+                        case DIFF_PRON:
+                            if(cursorPosition+sourceSize == positionsOfTheFollowingWordTokens.size()){ 
+                                for(int i=1; i<=sourceSize; i++){
+                                    int startPos = positionsOfTheFollowingWordTokens.get(positionsOfTheFollowingWordTokens.size()-i);
+                                    sortedMap.put(startPos, arrayOfTheFollowingWordTokens.get(startPos));
+                                    if(i==1){
+                                        // store last position of the current repetition
+                                        lastPositionOfTheCurrentMatch =  startPos; 
+                                    }
+                                }
+                            }else {
+                                Integer lastPosition = positionsOfTheFollowingWordTokens.get(cursorPosition+sourceSize);
+                                sortedMap = arrayOfTheFollowingWordTokens.subMap(firstPosition,lastPosition);
+
+                                // store last position of the current repetition
+                                lastPositionOfTheCurrentMatch = lastPosition-1;
+                            }
+                                                
+                            break;
+                        default:
+                    }
+                  
                     // get string of the n-gram
                     String possibleRepetitionStr = String.join(" ", sortedMap.values());
                     
-                    //compare to the source                 
-                    if(possibleRepetitionStr.equals(layerMap.get(currentRepetitionLayer))){
-                        // this can be a repetition
-                                                               
-                        boolean speakerCheck = false;
-                        boolean overlapCheck = false;
-                        boolean positionCheck = false;
-                        boolean contextCheck = false;
-                                                            
-                        // first check the speaker
-                        Set<String> speakerSetForRepetition = new HashSet();
-                        for(Integer position: sortedMap.keySet()){
-                            List<CodecSearchTree.MtasTreeHit<String>> speakerTermsForRepetition = mtasCodecInfo
-                                .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                docID, prefixListSpeakerXMLId, position, position);
-                            speakerSetForRepetition.add(CodecUtil.termValue(speakerTermsForRepetition.get(0).data));
-                        }
-                                                                
-                        if(speakerSetForRepetition.size()==1){
-                            String speakerIdOfRepetition = speakerSetForRepetition.iterator().next();
-                            //  System.out.println("speakerIdOfRepetition: " + speakerIdOfRepetition);
+                    // get the appropriate string of the source
+                    String sourceStr = rs.getStringForLayer(currentRepetitionLayer);
+                    
+                    //compare
+                    boolean isRepetition = false;
+                    switch(similarity){
+                        case EQUAL:               
+                           if(possibleRepetitionStr.equals(sourceStr)){
+                               // this can be a repetition
+                               isRepetition=true;
+                           }
+                           break;
+                        case DIFF_PRON:
+                            if(possibleRepetitionStr.equals(sourceStr)){
+                                // get pronunciation values
+                                if(!rs.containsLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD)){
+                                    //create new source string
+                                    List<CodecSearchTree.MtasTreeHit<String>> termsTrans = mtasCodecInfo
+                                         .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                                         docID, prefixListTRANS, start,
+                                         (end - 1));
 
-                            if(repetitionSpecification.isSameSpeaker()==null){
-                                speakerCheck = true;
-                            }else if (repetitionSpecification.isSameSpeaker()==true &&                              
-                                speakerIdOfRepetition.equals(speakerID)){                                       
-                                if(repetitionSpecification.isSpeakerChangedDesired()!=null){
-                                    // now check the speaker change condition
-                                    speakerCheck = checkSpeakerChange(mtasCodecInfo, docID, 
-                                            end, firstPosition-1, 
-                                            prefixListSpeakerXMLId, speakerID,
-                                            repetitionSpecification.isSpeakerChangedDesired());
+                                    rs.addNewLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD, termsTrans);
+                                }
+                               
+                                String sourcePron = rs.getStringForLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD);
+                               
+                               
+                                //create new repetition string
+                                StringBuilder sb = new StringBuilder();
+                                for(Integer position: sortedMap.keySet()){
+                                    List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
+                                        .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                                            docID, prefixListTRANS, position, position);
+                                    sb.append(CodecUtil.termValue(terms.get(0).data));
+                                    sb.append(" ");
+                                }
+                                   
+                                String repetitionPron = sb.toString().trim();
+                                    
+                                // compare pronunciation
+                                if(repetitionPron.equals(sourcePron)){
+                                    isRepetition=false;
                                 }else{
-                                    speakerCheck = true;
-                                }
-                            }else if(repetitionSpecification.isSameSpeaker()==false && 
-                                !speakerIdOfRepetition.equals(speakerID)){
-
-                                // check speaker metadata
-                                String metadataQueryString = repetitionSpecification.getSpeakerMetadata();
-                                if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
-                                    speakerCheck = checkSpeakerMetadata(mtasCodecInfo, docID, end, firstPosition-1, metadataQueryString, pattern);                                   
-                                }else{
-                                    speakerCheck = true;
-                                }
-                            }    
-                                                          
-                            if(speakerCheck){
-                                // check position in relation to speaker change
-                                if(repetitionSpecification.getPositionSpeakerChangeType()!=null){
-                                    positionCheck = checkPositionToSpeakerChange(mtasCodecInfo, docID, sortedMap, speakerIdOfRepetition,
-                                          repetitionSpecification.getPositionSpeakerChangeType(), 
-                                            repetitionSpecification.getMinPositionSpeakerChange(),  
-                                            repetitionSpecification.getMaxPositionSpeakerChange(),
-                                          prefixListSpeakerXMLId);
-                                }else {
-                                    positionCheck= true;
-                                }
+                                    // this can be a repetition
+                                    isRepetition=true;
+                                }                                
                             }
-                        }
-                        
-                        if(positionCheck){
-                            // check overlap condition
-                            if(repetitionSpecification.getPositionOverlap()!=null){
-                                overlapCheck = checkPositionToOverlap(mtasCodecInfo, docID, sortedMap,
-                                            repetitionSpecification.getPositionOverlap());
-                            }else{
-                                overlapCheck=true;
+                           break;
+                        case FUZZY:
+                            if(!possibleRepetitionStr.equals(sourceStr)){                          
+                                isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
                             }
-                        }
-                        
-                        if(overlapCheck){
-                            // check context
-                            String str = repetitionSpecification.getPrecededby();
-                            if(str!=null && !str.isEmpty()){
-                                contextCheck = checkContext(positionsWithContext, str, segmentName, docID, sortedMap.firstKey());
-                            }else{
-                                contextCheck=true;
-                            }
-                        }
-                        
-                        if(contextCheck){
+                            break;
                             
-                            // now check the word token number between source and the repetition
-                           // System.out.println("Checking word max distance: "  + positionsOfTheFollowingWordTokens.get(0) + "-" + firstPosition);
+                        case FUZZY_PLUS:
+                            isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
+                            break;
+                        default:
+                    }
+
+                        
+                    if(isRepetition && checkConditions(sortedMap, speakerID, segmentName, positionsWithContext, firstPosition,
+                                            mtasCodecInfo, docID, end, repetitionSpecification)){
+                            
+                        // now check the word token number between source and the repetition
+                        // System.out.println("Checking word max distance: "  + positionsOfTheFollowingWordTokens.get(0) + "-" + firstPosition);
                        
-                            SortedMap<Integer, String> mapOfWordTokensBetween = arrayOfTheFollowingWordTokens.subMap(positionsOfTheFollowingWordTokens.get(0), firstPosition); 
-                            int numberOfWordTokensBetweenSourceAndRepetition = mapOfWordTokensBetween.size();
-                          //  System.out.println("maxDistance: " + maxDistance);
-                            //System.out.println("numberOfWordTokensBetweenSourceAndRepetition: " + numberOfWordTokensBetweenSourceAndRepetition);
-                            if(numberOfWordTokensBetweenSourceAndRepetition>maxDistance){
-                                break repetitions;
-                            }
-
-                            //add matches
-                            for(Integer position: sortedMap.keySet()){              
-                                repetitions.add(String.valueOf(position));
-                            }
-
-                            found = true;
-                            break; /* repetition is found, break the search in the word list and 
-                            go to next repetition specification*/
+                        SortedMap<Integer, String> mapOfWordTokensBetween = arrayOfTheFollowingWordTokens.subMap(positionsOfTheFollowingWordTokens.get(0), firstPosition); 
+                        int numberOfWordTokensBetweenSourceAndRepetition = mapOfWordTokensBetween.size();
+                        //  System.out.println("maxDistance: " + maxDistance);
+                        //System.out.println("numberOfWordTokensBetweenSourceAndRepetition: " + numberOfWordTokensBetweenSourceAndRepetition);
+                        if(numberOfWordTokensBetweenSourceAndRepetition>maxDistance){
+                            break repetitions;
                         }
+
+                        //add matches
+                        for(Integer position: sortedMap.keySet()){              
+                            repetitions.add(String.valueOf(position));
+                        }
+
+                        found = true;
+                        break; /* repetition is found, break the search in the word list and 
+                        go to next repetition specification*/
                     }
 
                     cursorPosition++;
@@ -2118,10 +2109,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
             }
 
-            if(found){
-                source.keySet().forEach(position -> {              
-                    repetitions.add(String.valueOf(position));
-                });
+            if(found){             
+                repetitions.addAll(rs.getPositions());
                 return repetitions;                             
             }else{
                 return null;
@@ -2130,6 +2119,159 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             return null;
         }
         
+    }
+    
+    private class RepetitionSource {
+        private ArrayList<String> layers = new ArrayList();
+        private HashMap<String, String> layerMap = new HashMap();
+        private HashMap<String, SortedMap<Integer, String>> layerMap2 = new HashMap();
+        
+        SortedMap<Integer, String> getStringObjectsForLayer(String annotationLayer){
+            return layerMap2.get(annotationLayer);
+        }
+        
+        String getStringForLayer(String annotationLayer){
+            return layerMap.get(annotationLayer);
+        }
+        
+        boolean containsLayer(String annotationLayer){
+            if (layers.contains(annotationLayer)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+        void addNewLayer(String currentRepetitionLayer, List<CodecSearchTree.MtasTreeHit<String>> termsFromCurrentRepetitiionLayer){
+            SortedMap<Integer, String> source = new TreeMap<>();
+            for (CodecSearchTree.MtasTreeHit<String> term : termsFromCurrentRepetitiionLayer) {
+                source.put(term.startPosition, CodecUtil.termValue(term.data));
+            }
+            
+            layers.add(currentRepetitionLayer);
+            layerMap.put(currentRepetitionLayer, String.join(" ", source.values()));
+            layerMap2.put(currentRepetitionLayer, source);
+            
+        }
+        
+        ArrayList<String> getPositions(){
+            ArrayList<String> positions = new ArrayList();
+            layerMap2.entrySet().iterator().next().getValue().keySet().forEach(position -> {              
+                    positions.add(String.valueOf(position));
+                });
+            return positions;
+        }
+        
+    }
+        
+    private boolean isFuzzyRepetition(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions){
+        Object[] sourceList = source.values().toArray();
+        Object[] possibleRepetitionList = possibleRepetitions.values().toArray();
+        boolean isRepetition=true;
+        for(int i=0; i<sourceList.length;i++){
+            String s1 = (String) sourceList[i];
+            String s2 = (String) possibleRepetitionList[i];
+            if(getFuzzyScore(s1, s2)<=15){
+                // this can't be a repetition
+                isRepetition = false;
+                break;
+            }
+        }
+        return isRepetition;
+    }
+    
+    private Boolean checkConditions(SortedMap<Integer, String> sortedMap, String speakerID, String segmentName,
+            Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext, Integer firstPosition,
+            CodecInfo mtasCodecInfo, int docID, int end, Repetition repetitionSpecification) throws IOException, SearchServiceException{
+        Pattern pattern = Pattern.compile("<[^>]+>");
+        
+        boolean speakerCheck = false;
+        boolean overlapCheck = false;
+        boolean positionCheck = false;
+        boolean contextCheck = false;
+                                                            
+        // first identify the speaker
+        Set<String> speakerSetForRepetition = new HashSet();
+        for(Integer position: sortedMap.keySet()){
+            List<CodecSearchTree.MtasTreeHit<String>> speakerTermsForRepetition = mtasCodecInfo
+            .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                docID, prefixListSpeakerXMLId, position, position);
+                speakerSetForRepetition.add(CodecUtil.termValue(speakerTermsForRepetition.get(0).data));
+        }
+                                                                
+        if(speakerSetForRepetition.size()==1){
+            String speakerIdOfRepetition = speakerSetForRepetition.iterator().next();
+            //  System.out.println("speakerIdOfRepetition: " + speakerIdOfRepetition);
+
+            if(repetitionSpecification.isSameSpeaker()==null){ // speaker is not specified
+                speakerCheck = true;
+                
+            }else if (repetitionSpecification.isSameSpeaker()==true &&                              
+                speakerIdOfRepetition.equals(speakerID)){  // repetition is realized by the same speaker
+                
+                 // check the speaker change condition
+                if(repetitionSpecification.isSpeakerChangedDesired()!=null){
+                    speakerCheck = checkSpeakerChange(mtasCodecInfo, docID, 
+                        end, firstPosition-1, prefixListSpeakerXMLId, speakerID,
+                        repetitionSpecification.isSpeakerChangedDesired());
+                }else{
+                    speakerCheck = true;
+                }
+                
+            }else if(repetitionSpecification.isSameSpeaker()==false && 
+                !speakerIdOfRepetition.equals(speakerID)){ // repetition is realized by another speaker
+
+                // check speaker metadata
+                String metadataQueryString = repetitionSpecification.getSpeakerMetadata();
+                if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
+                    speakerCheck = checkSpeakerMetadata(mtasCodecInfo, docID, end, firstPosition-1, metadataQueryString, pattern);                                   
+                }else{
+                    speakerCheck = true;
+                }
+            }    
+                                                          
+            if(speakerCheck){
+                // check position in relation to speaker change
+                if(repetitionSpecification.getPositionSpeakerChangeType()!=null){
+                    positionCheck = checkPositionToSpeakerChange(mtasCodecInfo, docID, sortedMap, speakerIdOfRepetition,
+                    repetitionSpecification.getPositionSpeakerChangeType(), 
+                    repetitionSpecification.getMinPositionSpeakerChange(),  
+                    repetitionSpecification.getMaxPositionSpeakerChange(),
+                    prefixListSpeakerXMLId);
+                }else {
+                    positionCheck= true;
+                }
+            }
+        }else{
+            // if more than one speaker
+            return false;
+        }
+                        
+        if(positionCheck){
+            // check overlap condition
+            if(repetitionSpecification.getPositionOverlap()!=null){
+                overlapCheck = checkPositionToOverlap(mtasCodecInfo, docID, sortedMap,
+                    repetitionSpecification.getPositionOverlap());
+            }else{
+                overlapCheck=true;
+            }
+        }
+                        
+        if(overlapCheck){
+            // check context
+            String str = repetitionSpecification.getPrecededby();
+            if(str!=null && !str.isEmpty()){
+                contextCheck = checkContext(positionsWithContext, str, segmentName, docID, sortedMap.firstKey());
+            }else{
+                contextCheck=true;
+            }
+        }
+                        
+        if(contextCheck){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     private Boolean checkSpeakerMetadata(CodecInfo mtasCodecInfo, int docID, 
@@ -2573,7 +2715,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         *  segment name and docID into a LinkedBlockingQueue
         * 
         */
-        void checkForRepetitions(Directory directory, CodecInfo mtasCodecInfo, String segmentName, Spans spans, String transcriptID, 
+        void checkForRepetitions(CodecInfo mtasCodecInfo, String segmentName, Spans spans, String transcriptID, 
                 LinkedBlockingQueue<String> linkedQueue) throws IOException {
             
             ThreadLocal threadLocal = new ThreadLocal();
@@ -2610,7 +2752,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 ArrayList<String> found=null;
 
                                 try {                               
-                                    found = getPositionsOfRepetitions(directory, mtasCodecInfo,
+                                    found = getPositionsOfRepetitions(mtasCodecInfo,
                                             docID, start, end, speakerID, repetitionSpecifications, positionsWithContext, segmentName);
                                 }catch (SearchServiceException ex) {
                                     throw new SeachRepetitionException(ex);
@@ -2811,4 +2953,15 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private interface HitReader{
         public void readFrom(File file);
     }
+    
+    private static int getFuzzyScore(String s1, String s2){
+        FuzzyScore o =  new FuzzyScore(new Locale("de"));
+        int fs = o.fuzzyScore(s1, s2);
+        if (fs==0){
+            fs = o.fuzzyScore(s2, s1);;
+        }
+        return fs;
+    }
+    
+
 }
