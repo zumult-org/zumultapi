@@ -280,7 +280,7 @@ public class Repetition {
     }
     
     public enum SimilarityTypeEnum {
-        EQUAL, FUZZY, FUZZY_PLUS, DIFF_PRON
+        EQUAL, FUZZY, FUZZY_PLUS, DIFF_PRON, DIFF_NORM
     }
     
     public enum PositionToMatch{

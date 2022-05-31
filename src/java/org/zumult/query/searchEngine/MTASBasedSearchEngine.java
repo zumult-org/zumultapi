@@ -2725,10 +2725,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {              
                 arrayList.add( new Object[]{spans.docID(), spans.startPosition(), spans.endPosition()} );
             }
-            int targetSize = 5000;
-            List<List<Object[]>> largeList = ListUtils.partition(arrayList, targetSize);
-            largeList.parallelStream().forEach((List<Object[]> x) -> {
-                x.forEach(obj -> {
+            arrayList.forEach( obj -> {
                     int docID = (int) obj[0];
                     int start = (int) obj[1];
                     int end = (int) obj[2];
@@ -2786,8 +2783,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
                     } 
                 });
-            });
-                    
+                 
         
             if(  (Boolean)  threadLocal.get()  )  {
                 transcripts_total++;
