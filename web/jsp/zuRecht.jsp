@@ -34,7 +34,7 @@
 <%
     
 String pageParam_q = request.getParameter("q");
-String pageParam_cq = request.getParameter("cq");
+String pageParam_cq = request.getParameter("cq"); // e.g. &cq=GWSS
 List userSpecifiedCorpora = null;   
 if (pageParam_cq!=null){
    String[] pageParam_corpora = pageParam_cq.split("\\|");
@@ -63,6 +63,7 @@ if (pageParam_context!=null && Pattern.matches("\\d{1,2}-t,\\d{1,2}-t", pagePara
     }    
 }
 String pageParam_count = request.getParameter("count");
+String pageParam_mode = request.getParameter("mode"); // e.g. &mode=SPEAKER_BASED_INDEX
 
 // get part-of-speech tagset
 BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
@@ -794,6 +795,20 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                       $('#queryInputField').val(qValue);
                     <%
                 }
+
+                if(pageParam_mode!=null){
+
+                    %>
+                     var modeValue = '<%=pageParam_mode%>';
+                     if(modeValue==="<%=DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name()%>"){
+                        var searchTypeSelect = $('.searchTypeSelect');
+                        var text = "<%=myResources.getString("SearchByIndividualSpeakers")%>";
+                        var val = "<%=DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name()%>";
+                        updateSearchButton(searchTypeSelect, val, text);
+                    }
+                    
+                    <%
+                }
                         
                  if(pageParam_count!=null){
                     %>
@@ -937,7 +952,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     */
 
                     $("#kwic-search-form").submit(function(){
-                        
+                                                
                         if(ajaxSearchRequest){
                             ajaxSearchRequest.abort();
                             ajaxSearchRequest = null;
@@ -968,7 +983,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             $("#kwic-search-result-area").find(".wait-query-tab").css("display", "block");
                             
                             // send request
-                            ajaxCallToGetKWIC('#kwic-search-result-area', ajaxSearchRequest, kwicURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context);
+                            ajaxCallToGetKWIC('#kwic-search-result-area', kwicURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context);
                         }
 
                         // prevent page reload
@@ -1019,7 +1034,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             $("#repetition-search-result-area").find(".wait-query-tab").css("display", "block");
                             
                             // send request
-                            ajaxCallToGetKWICForRepetitions('#repetition-search-result-area', ajaxRepetitionSearchRequest, repetitionURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions);
+                            ajaxCallToGetKWICForRepetitions('#repetition-search-result-area', repetitionURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions);
                         }
 
 
@@ -1037,22 +1052,27 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*                      ajax calls                        */
             /**********************************************************/
             
-            function ajaxCallToGetKWICForRepetitions(selector, request, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions){                        
+            function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions){                        
                             
-                request = $.ajax({
+                ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
+                    timeout: 180000,
                     data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions},
                     dataType: "text",
 
                     success: function(xml, status) { 
                         //alert(xml);
-                        viewResult(selector, xml, request, url, context);
+                        viewResult(selector, xml, url, context);
    
                     },
                     error: function(xhr, status, error){
                         $(selector).find(".wait-query-tab").css("display", "none");
-                        if (status === "abort"){
+                        if (status === "timeout"){
+                            alert('Your request will take a long time. Please constrain the search query \n\
+                (e.g. to a certain lemma [lemma=\"wissen\"], part of speech [pos=\"NN\"] \n\
+or grammatical structure [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"])');
+                        } else if (status === "abort"){
                             //ignore
                         }else {
                             if (xhr.responseText.startsWith("Please check the query syntax")){
@@ -1067,29 +1087,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     }
                 });
            }
-           
-            function ajaxCallToGetMoreKWIC(selector, request, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions){
-      
-                request = $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions},                      
-                    dataType: "text",
 
-                    success: function(xml, status) {
-                        $(selector).find(".wait-query-tab").css("display", "none");                                                      
-                        displayKWIC(selector, xml);                                    
-                    },
-                    error: function(xhr, status, error){
-                        $(selector).find(".wait-query-tab").css("display", "none");
-                        processError(xhr, status);                            
-                    }
-                });
-            }
-            
-            function ajaxCallToGetKWIC(selector, request, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context){                        
+            function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context){                        
                          
-                request = $.ajax({
+                ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
                     data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context },
@@ -1097,12 +1098,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                     success: function(xml, status) { 
                         //alert(xml);
-                        viewResult(selector, xml, request, url, context);
+                        viewResult(selector, xml, url, context);
    
                     },
                     error: function(xhr, status, error){
                         if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
-                            ajaxCallToGetKWIC(selector, request, url, completeSearchQuerySyntax(q), corpusQueryStr, pageLength, pageIndex, searchType, context);                          
+                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr, pageLength, pageIndex, searchType, context);                          
                         }else {
                             $(selector).find(".wait-query-tab").css("display", "none");
                             if (status === "abort"){
@@ -1122,9 +1123,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
            }
            
-            function ajaxCallToGetMetadataForDownload(request, corpusQueryStr, searchType){
+            function ajaxCallToGetMetadataForDownload(corpusQueryStr, searchType){
                 
-                request =   $.ajax({
+                ajaxDownLoadMetadataRequest = $.ajax({
                     type: "GET",
                     url: metadataDownLoadURL,
                     data: { cq: corpusQueryStr, mode: searchType, locale: '<%=currentLocale.toLanguageTag()%>'},
@@ -1164,9 +1165,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
             
-            function ajaxCallForKWICDownload(request, queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload){
+            function ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload){
                 
-                request =   $.ajax({
+                ajaxDownLoadRequest = $.ajax({
                     type: "POST",
                     url: kwicExportURL,
                     data: { q: decodeHTMLQuery(queryStr), cq :corpusQueryStr, count : to, offset : from, mode : searchType, context : context, format: format, addMeta: customMetadataForDownload},
@@ -1197,13 +1198,49 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                 });
             }
+              
+            function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context){
+                 ajaxSearchRequest= $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context},                      
+                        dataType: "text",
+
+                        success: function(xml, status) {
+                            $(selector).find(".wait-query-tab").css("display", "none");                                                      
+                            displayKWIC(selector, xml);                                    
+                        },
+                        error: function(xhr, status, error){
+                            $(selector).find(".wait-query-tab").css("display", "none");
+                            processError(xhr, status);                            
+                        }
+                    });
+            }
+            
+            function ajaxCallToGetMoreKWICForRepetition(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions){
+                ajaxRepetitionSearchRequest = $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions},                      
+                        dataType: "text",
+
+                        success: function(xml, status) {
+                            $(selector).find(".wait-query-tab").css("display", "none");                                                      
+                            displayKWIC(selector, xml);                                    
+                        },
+                        error: function(xhr, status, error){
+                            $(selector).find(".wait-query-tab").css("display", "none");
+                            processError(xhr, status);                            
+                        }
+                    });
+            }
             
 
             /*********************************************/
             /*             display kwic methods          */
             /*********************************************/
             
-            function viewResult(selector, xml, request, url, context){
+            function viewResult(selector, xml, url, context){
            
                 $(selector).find(".wait-query-tab").css("display", "none");
                 
@@ -1238,7 +1275,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     $(selector).find('.query_summary').append("<span id='search-results'><%=myResources.getString("Total")%>: </span>" + "<span id='total-hits'>" + totalHits + "</span>");
                             
                     // add pagination
-                    addPagination(selector, request, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions);
+                    addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions);
 
                     // add results
                     displayKWIC(selector, xml);
@@ -1307,7 +1344,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
 
                     $("#modal-kwicDownloadOptions").off().on('shown.bs.modal', function (){
-                        ajaxCallToGetMetadataForDownload(ajaxDownLoadMetadataRequest, corpusQueryStr, searchType);
+                        ajaxCallToGetMetadataForDownload(corpusQueryStr, searchType);
                     });
 
                     $("#modal-kwicDownloadOptions").on("hidden.bs.modal", function () {
@@ -1368,7 +1405,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 $("#modal-kwicDownloadOptions-spinner").css("display", "block");
 
                                                 // send request
-                                                ajaxCallForKWICDownload(ajaxDownLoadRequest, queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload);
+                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload);
                                                 
                                             }else{
                                                 alert("A minimum of 1 item can be downloaded!")
@@ -1395,7 +1432,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
            
-            function addPagination(selector, request, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions){
+            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions){
                 var paging = $("<ul></ul>").addClass("pagination-sm justify-content-center kwic-pagination");
                 $(selector).find('.paging_container').append(paging);
 
@@ -1424,8 +1461,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         // send request
                         //if(selector==="#repetition-search-result-area"){
 
-                        ajaxCallToGetMoreKWIC(selector, request, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions);                  
-
+                        if(selector==="#kwic-search-result-area"){
+                            ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context);                  
+                        }else{
+                            ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions);
+                        }
                       }
                 });            
             }

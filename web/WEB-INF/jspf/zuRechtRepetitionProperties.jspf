@@ -94,7 +94,7 @@
                     
                 <div class="form-check form-check-inline">
                     <label class="form-check-label mr-2">max.</label>
-                    <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="20">
+                    <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="10">
                     <label class="form-check-label mr-2 ml-2"><%=myResources.getString("WordTokens")%></label>
                 </div>
                     
