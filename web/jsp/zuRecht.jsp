@@ -339,7 +339,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             </div>
 
                             <!-- result presentation area -->
-                            <div id="kwic-search-result-area"></div>
+                            <div id="kwic-search-result-area" class="searchResultArea"></div>
 
 
                         </div>
@@ -615,7 +615,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             </div>
                             
                             <!-- result presentation area -->
-                            <div id="repetition-search-result-area"></div>
+                            <div id="repetition-search-result-area" class="searchResultArea"></div>
                         </div>
 <!------------------------------------------- END: Repetitions tab ------------------------------------------>
                     </div>
@@ -1048,6 +1048,24 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
             });
             
+            
+            function abortSearch(obj){
+                $(obj).parents('.wait-query-tab').css("display", "none");
+                var parentId = $(obj).parents('.searchResultArea').attr('id');
+                if(parentId === "repetition-search-result-area"){
+                    if(ajaxRepetitionSearchRequest){
+                        ajaxRepetitionSearchRequest.abort();
+                        ajaxRepetitionSearchRequest = null;
+                    }
+                }else if (parentId === "kwic-search-result-area"){
+                    if(ajaxSearchRequest){
+                            ajaxSearchRequest.abort();
+                            ajaxSearchRequest = null;
+                    }
+                }
+                
+            }
+            
             /**********************************************************/
             /*                      ajax calls                        */
             /**********************************************************/
@@ -1069,9 +1087,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     error: function(xhr, status, error){
                         $(selector).find(".wait-query-tab").css("display", "none");
                         if (status === "timeout"){
-                            alert('Your request will take a long time. Please constrain the search query \n\
-                (e.g. to a certain lemma [lemma=\"wissen\"], part of speech [pos=\"NN\"] \n\
-or grammatical structure [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"])');
+                            alert('Your request will take a long time.' +
+                                    ' Please constrain the search query, ' + 
+                                    'e.g. to a certain lemma: [lemma=\"wissen\"],'+
+                                    ' a certain part of speech: [pos=\"NN\"] or '+
+                                    'a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. '+
+                                    'You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>');
                         } else if (status === "abort"){
                             //ignore
                         }else {
@@ -1217,7 +1238,7 @@ or grammatical structure [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"])');
                     });
             }
             
-            function ajaxCallToGetMoreKWICForRepetition(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions){
+            function ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions){
                 ajaxRepetitionSearchRequest = $.ajax({
                         type: "POST",
                         url: url,
@@ -1601,7 +1622,7 @@ or grammatical structure [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"])');
                     // set query
                     //var queryStr = getSearchQuery(xml);           
                  
-                    $('#queryInputField').val(queryStr.replace(/&#xD;/g, ""). replace(/&lt;/g, "<").replace(/&gt;/g, ">") +" within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"/>");
+                    $('#queryInputField').val(queryStr.replace(/&#xD;/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">") +" within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"/>");
                     
                     // set corpora
                     

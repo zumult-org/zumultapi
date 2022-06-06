@@ -144,7 +144,7 @@ public class Repetition {
     }
     
     private void setPrecededby(String precededby){
-        this.context.precededby = precededby;
+        this.context.precededby = precededby.replace("&lt;", "<").replace("&gt;", ">");
     }
     
     private void setSpeaker(Boolean speaker){
