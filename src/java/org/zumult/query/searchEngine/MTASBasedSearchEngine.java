@@ -93,7 +93,6 @@ import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
 import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.text.similarity.FuzzyScore;
 import org.mvel2.MVEL;
 
@@ -152,7 +151,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private static final String[] NOT_COUNT =
         {     
-            "NGHES" /* äh, ähm, hä*/, "UI", "SPELL", "AB", "XY"
+            "NGHES" /* äh, ähm, hä*/, "UI", "AB", "XY"
         };
     
     List<String> prefixListInterval = new  ArrayList<String>(){
@@ -2082,17 +2081,6 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         
                     if(isRepetition && checkConditions(sortedMap, speakerID, segmentName, positionsWithContext, firstPosition,
                                             mtasCodecInfo, docID, end, repetitionSpecification)){
-                            
-                        // now check the word token number between source and the repetition
-                        // System.out.println("Checking word max distance: "  + positionsOfTheFollowingWordTokens.get(0) + "-" + firstPosition);
-                       
-                        SortedMap<Integer, String> mapOfWordTokensBetween = arrayOfTheFollowingWordTokens.subMap(positionsOfTheFollowingWordTokens.get(0), firstPosition); 
-                        int numberOfWordTokensBetweenSourceAndRepetition = mapOfWordTokensBetween.size();
-                        //  System.out.println("maxDistance: " + maxDistance);
-                        //System.out.println("numberOfWordTokensBetweenSourceAndRepetition: " + numberOfWordTokensBetweenSourceAndRepetition);
-                        if(numberOfWordTokensBetweenSourceAndRepetition>maxDistance){
-                            break repetitions;
-                        }
 
                         //add matches
                         for(Integer position: sortedMap.keySet()){              
@@ -2336,9 +2324,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             if(precededBy!=null && !precededBy.isEmpty()){
                 String queryString = "<word/> precededby " + precededBy;
                 if(within){
-                    queryString = "(" + queryString + ") within <annotationBlock/>";
+                    //queryString = "(" + queryString + ") within <annotationBlock/>";
+                    queryString = "(" + precededBy + "<word/>) within <annotationBlock/>";
                 }
-            
+                
                 for (String indexPath: indexPaths){
                     Directory directory;
                     try {
@@ -2353,14 +2342,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 while (iterator.hasNext()) {
                                     LeafReaderContext lrc = iterator.next();
                                     Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
-                                    SegmentReader r = (SegmentReader) lrc.reader();    
+                                    SegmentReader r = (SegmentReader) lrc.reader(); 
                                     if (spans != null) {
                                         while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
                                             if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                                 while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
                                                     int docID = spans.docID();    
                                                     String segmentName = r.getSegmentName();
-                                                    int position = spans.startPosition();
+                                                    int position = spans.endPosition()-1;
 
                                                     Set<Integer> set = new HashSet();
                                                     Map<Integer, Set<Integer>> map = new HashMap();
@@ -2568,7 +2557,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                             // end of document
                             break;
                         }else{
-                            if(CodecUtil.termValue(terms.get(0).data).startsWith("w")){
+                            if(CodecUtil.termValue(terms2.get(0).data).startsWith("w")){
                               wordToken++;  
                             }
                         }

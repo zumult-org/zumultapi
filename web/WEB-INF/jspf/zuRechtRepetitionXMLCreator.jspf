@@ -96,7 +96,7 @@
                 positionToSpeakerChangeMax,
                 "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
                  "<",XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY,">",
-                contextPrecededBy,
+                contextPrecededBy.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
                 "</",XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY,">",
                  "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
                 contextWithinSpeakerContribution,

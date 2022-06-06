@@ -72,12 +72,8 @@
               style="cursor: pointer; text-decoration: underline; text-align: right; color: #337AB7;"><%=myResources.getString("ShowMore")%></span>
 
     </div>
-    
-    <!-- additional properties-->
-    <div class="additionalRepetitionProperties" style="display:none">
-       
-                    
-        <div class="row">
+              
+    <div class="row">
                 
             <!-- distance properties -->
             <div class="ml-3 input-group input-group-sm mt-2">
@@ -94,24 +90,31 @@
                     
                 <div class="form-check form-check-inline">
                     <label class="form-check-label mr-2">max.</label>
-                    <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="10">
+                    <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="5">
                     <label class="form-check-label mr-2 ml-2"><%=myResources.getString("WordTokens")%></label>
                 </div>
                     
                 <div class="form-check form-check-inline">
                     <input class="form-check-input form-control-sm ignoreFunctionalWordsCheckBox" type="checkbox">
-                    <label class="form-check-label"><%=myResources.getString("IgnoreFunctionalWords")%></label>
+                    <label class="form-check-label"><%=myResources.getString("IgnoreFunctionalWords")%><i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("IgnoreFunctionWordsInfo")%>" ></i></label>
                 </div>
             </div> 
                 
         </div>
+    
+    <!-- additional properties-->
+    <div class="additionalRepetitionProperties" style="display:none">
+       
+                    
+
     
         <div class="row">
 
             <!-- position to speaker overlaps --> 
             <div class="ml-3 mt-2 input-group input-group-sm firstInRow">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><%=myResources.getString("PositionToSpeakerOverlap")%></span>
+                    <span class="input-group-text"><%=myResources.getString("SpeakerOverlap")%>
+                    <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SpeakerOverlapInfo")%>" ></i></span>
                 </div>
                 <select class="form-control positionToOverlap">
                     <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
@@ -126,7 +129,8 @@
             <div class="ml-3 mt-2">
                 <div class="input-group input-group-sm" >
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><%=myResources.getString("PositionToSpeakerChange")%></span>
+                        <span class="input-group-text"><%=myResources.getString("PositionToSpeakerChange")%>
+                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("PositionToSpeakerChangeInfo")%>" ></i></span>
                     </div>
                     <select class="form-control positionToSpeakerChangeType" onchange="addDistanceToSpeakerChange(this)">
                         <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
