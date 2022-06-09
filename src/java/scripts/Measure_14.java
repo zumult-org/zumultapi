@@ -53,7 +53,7 @@ public class Measure_14 {  // measure "oralPhenomena"
         }
     }
     
-    private void doit() throws IOException{
+    public void doit() throws IOException{
         getMeasure("FOLK");
         //getMeasure("GWSS");
     }

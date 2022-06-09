@@ -42,7 +42,7 @@ public class Measure_13 { // measure "pos"
         }
     }
     
-    private void doit() throws IOException{
+    public void doit() throws IOException{
         getMeasure("FOLK");
         getMeasure("GWSS");
     }
