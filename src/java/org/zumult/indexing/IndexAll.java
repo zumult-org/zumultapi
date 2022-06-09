@@ -43,7 +43,7 @@ public class IndexAll implements Indexer {
             new Measure_7().doit();                         // ==> data/Measure_7.xml -- Normalisation rate     
             new Measure_8().doit();                         // ==> data/Measure_8.xml -- Overlap measures, this one takes long, about 3 hours!
             new Measure_12().index();                       // ==> data/Measure_12.xml -- Speech rate, this one takes long, about 1 hour!     
-            //new Measure_13().doit();                       // ==> added this, don't know what it is yet -- pos
+            new Measure_13().doit();                       // ==> added this, don't know what it is yet -- pos
             //new Measure_14().doit();                        // ==> added this, don't know what it is yet -- oral phenomena
             
             // Metadata indices for corpora
