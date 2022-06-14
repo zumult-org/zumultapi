@@ -1798,17 +1798,29 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     @Override
     public SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString, String metadataQueryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions) throws SearchServiceException, IOException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException{
         
         if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
         }
 
-        // check search mode
+        // check search mode        
         for (Repetition repetition: repetitions){
-            if(repetition.getType().name().toLowerCase().equals(Constants.METADATA_KEY_MATCH_TYPE_WORD) && 
-                    repetition.getSimilarityType().name().toLowerCase().equals(SimilarityTypeEnum.DIFF_PRON)){
-                throw new SearchServiceException("You can't search for repetitions in transcription if they should have different pronunciation!");            
+            String repetitionType = repetition.getType().name().toLowerCase();
+            SimilarityTypeEnum similarityType = repetition.getSimilarityType();
+
+            switch(similarityType){
+                case DIFF_PRON:
+                    if(repetitionType.equals(Constants.METADATA_KEY_MATCH_TYPE_WORD)){
+                        throw new SearchServiceException("You can't search for repetitions in transcription if they should have different pronunciation!");            
+                    }
+                    break;
+                case DIFF_NORM:
+                    if(repetitionType.equals(Constants.ATTRIBUTE_NAME_NORM)){
+                        throw new SearchServiceException("You can't search for repetitions in the normalized layer if normalized forms should differ!");            
+                    }
+                    break;
+                default:
             }
         }
         
@@ -1993,6 +2005,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         case FUZZY:
                         case FUZZY_PLUS:
                         case DIFF_PRON:
+                        case DIFF_NORM:
+                        case OWN_LEMMA_LIST:
                             if(cursorPosition+sourceSize == positionsOfTheFollowingWordTokens.size()){ 
                                 for(int i=1; i<=sourceSize; i++){
                                     int startPos = positionsOfTheFollowingWordTokens.get(positionsOfTheFollowingWordTokens.size()-i);
@@ -2023,41 +2037,60 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     //compare
                     boolean isRepetition = false;
                     switch(similarity){
-                        case EQUAL:               
+                        case EQUAL:
+                        case OWN_LEMMA_LIST:
                            if(possibleRepetitionStr.equals(sourceStr)){
                                // this can be a repetition
                                isRepetition=true;
                            }
                            break;
+                        
                         case DIFF_PRON:
+                        case DIFF_NORM:
                             if(possibleRepetitionStr.equals(sourceStr)){
-                                // get pronunciation values
-                                if(!rs.containsLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD)){
+                                
+                                    List<String> prefixList = new  ArrayList<String>();
+                                    String layer="";
+                                switch(similarity){
+                                    case DIFF_PRON:                                     
+                                        layer = Constants.METADATA_KEY_MATCH_TYPE_WORD;
+                                        prefixList.add(layer);
+                                        break;
+                                    case DIFF_NORM:
+                                        layer = Constants.ATTRIBUTE_NAME_NORM;
+                                        prefixList.add(layer);
+                                        break;                                   
+                                }
+                                
+                                // get pronunciation/norm values
+                                if(!rs.containsLayer(layer)){
                                     //create new source string
                                     List<CodecSearchTree.MtasTreeHit<String>> termsTrans = mtasCodecInfo
                                          .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                         docID, prefixListTRANS, start,
+                                         docID, prefixList, start,
                                          (end - 1));
 
-                                    rs.addNewLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD, termsTrans);
+                                    rs.addNewLayer(layer, termsTrans);
                                 }
                                
-                                String sourcePron = rs.getStringForLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD);
-                               
+                                String sourcePron = rs.getStringForLayer(layer);   
                                
                                 //create new repetition string
                                 StringBuilder sb = new StringBuilder();
                                 for(Integer position: sortedMap.keySet()){
                                     List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
                                         .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                            docID, prefixListTRANS, position, position);
+                                            docID, prefixList, position, position);
                                     sb.append(CodecUtil.termValue(terms.get(0).data));
                                     sb.append(" ");
                                 }
                                    
                                 String repetitionPron = sb.toString().trim();
+                                
+                                //System.out.println("rs: " + rs);
+                                //System.out.println(sourcePron + " + " + repetitionPron);
                                     
-                                // compare pronunciation
+                                // compare pronunciation/norm value
                                 if(repetitionPron.equals(sourcePron)){
                                     isRepetition=false;
                                 }else{
@@ -2071,10 +2104,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
                             }
                             break;
-                            
+
                         case FUZZY_PLUS:
-                            isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
-                            break;
+                           if(possibleRepetitionStr.equals(sourceStr)){
+                               isRepetition=true;
+                           }else{
+                               isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
+                           }
+                           break;
                         default:
                     }
 

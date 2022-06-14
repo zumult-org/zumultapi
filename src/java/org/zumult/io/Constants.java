@@ -273,20 +273,23 @@ public class Constants {
     public static final String DIFF_NORM = "diffNorm";
     
     // repetition xml
-    public static final String REPETITON_XML_ELEMENT_NAME_REPETITIONS="repetitions";
-    public static final String REPETITON_XML_ELEMENT_NAME_REPETITION="repetition";
-    public static final String REPETITON_XML_ELEMENT_NAME_SPEAKER="speaker";
-    public static final String REPETITON_XML_ELEMENT_NAME_SPEAKER_METADATA="speakerMetadata";
-    public static final String REPETITON_XML_ELEMENT_NAME_REPETITON_TYPE="repetitionType";
-    public static final String REPETITON_XML_ELEMENT_NAME_MIN_DISTANCE="minDistance";
-    public static final String REPETITON_XML_ELEMENT_NAME_MAX_DISTANCE="maxDistance";
-    public static final String REPETITON_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS="ignoreFunctionalWords";
-    public static final String REPETITON_XML_ELEMENT_NAME_SPEAKER_CHANGE="speakerChange";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_MATCH="positionToMatch";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_OVERLAP="positionToOverlap";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE="positionToSpeakerChangeType";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE="positionToSpeakerChangeMin";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE="positionToSpeakerChangeMax";
-    public static final String REPETITON_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY="precededby";
-    public static final String REPETITON_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION="withinSpeakerContribution"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITIONS="repetitions";
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITION="repetition";
+    public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER="speaker";
+    public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA="speakerMetadata";
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE="repetitionType";
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE="repetitionSimilarityType";
+    public static final String REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE="minDistance";
+    public static final String REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE="maxDistance";
+    public static final String REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS="ignoreFunctionalWords";
+    public static final String REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER="ignoreTokenOrder";
+    public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE="speakerChange";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH="positionToMatch";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP="positionToOverlap";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE="positionToSpeakerChangeType";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE="positionToSpeakerChangeMin";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE="positionToSpeakerChangeMax";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY="precededby";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION="withinSpeakerContribution"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
 }

@@ -5,6 +5,7 @@
  */
 package org.zumult.query.searchEngine;
 
+import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.zumult.io.Constants;
 import org.zumult.query.SearchServiceException;
@@ -19,39 +20,44 @@ public class Repetition {
     private final Position position = new Position();
     private final Speaker speaker = new Speaker();
     private RepetitionTypeEnum type = RepetitionTypeEnum.WORD;
-    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
+    private SimilarityTypeEnum similarity = SimilarityTypeEnum.FUZZY;
     private final Context context = new Context();
+    private boolean ignoreTokenOrder = true;
 
     public Repetition(Element el) throws SearchServiceException {
  
-        setRepetitionType(el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_REPETITON_TYPE).item(0).getTextContent());
-        setSpeaker(getBooleanFromString(Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER).item(0).getTextContent()));   
-        setSpeakerMetadata(el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_METADATA).item(0).getTextContent());
-        setSpeakerChange(getBooleanFromString(Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_CHANGE, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_CHANGE).item(0).getTextContent()));
-        setOptionIgnoreFunctionalWords(getBooleanFromString(Constants.REPETITON_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS).item(0).getTextContent()));
-        setMinMaxDistance(getIntegerFromString(Constants.REPETITON_XML_ELEMENT_NAME_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_MIN_DISTANCE).item(0).getTextContent()), 
-                getIntegerFromString(Constants.REPETITON_XML_ELEMENT_NAME_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_MAX_DISTANCE).item(0).getTextContent()));
-        setPositionOverlap(el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_OVERLAP).item(0).getTextContent());
-        setPositionSpeakerChange(el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE).item(0).getTextContent(), 
-                getIntegerFromString(Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE).item(0).getTextContent()), 
-                getIntegerFromString(Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE).item(0).getTextContent()));
-        setPrecededby(el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY).item(0).getTextContent());
-        setOptionWithinSpeakerContribution(getBooleanFromString(Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION, el.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION).item(0).getTextContent()));
+        setRepetitionType(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE).item(0).getTextContent());
+        setSimilarityType(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE).item(0).getTextContent());
+        setSpeaker(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER).item(0).getTextContent()));   
+        setSpeakerMetadata(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA).item(0).getTextContent());
+        setSpeakerChange(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE).item(0).getTextContent()));
+        setOptionIgnoreFunctionalWords(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS).item(0).getTextContent()));
+        setOptionIgnoreTokenOrder(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER).item(0).getTextContent()));
+        setMinMaxDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE).item(0).getTextContent()), 
+                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE).item(0).getTextContent()));
+        setPositionOverlap(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP).item(0).getTextContent());
+        setPositionSpeakerChange(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE).item(0).getTextContent(), 
+                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE).item(0).getTextContent()), 
+                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE).item(0).getTextContent()));
+        setPrecededby(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY).item(0).getTextContent());
+        setOptionWithinSpeakerContribution(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION).item(0).getTextContent()));
     }
     
 
     
-    public Repetition(String type, Boolean sameSpeakerAsSource, 
-            Boolean speakerChange, Boolean ignoreFunctionalWords, String positionOverlap, 
+    public Repetition(String type, String similarity, Boolean sameSpeakerAsSource, 
+            Boolean speakerChange, Boolean ignoreFunctionalWords, Boolean ignoreTokenOrder, String positionOverlap, 
             Integer minDistanceToSource, Integer maxDistanceToSource, String metadataQueryString,
             String positionSpeakerChangeType, Integer positionSpeakerChangeMin, 
             Integer positionSpeakerChangeMax, String precededby, Boolean withinSpeakerContribution) throws SearchServiceException{
         
         setRepetitionType(type);
+        setSimilarityType(similarity);
         setSpeaker(sameSpeakerAsSource); 
         setSpeakerMetadata(metadataQueryString);
         setSpeakerChange(speakerChange);
         setOptionIgnoreFunctionalWords(ignoreFunctionalWords);
+        setOptionIgnoreTokenOrder(ignoreTokenOrder);
         setMinMaxDistance(minDistanceToSource, maxDistanceToSource);
         setPositionOverlap(positionOverlap);
         setPositionSpeakerChange(positionSpeakerChangeType, positionSpeakerChangeMin, positionSpeakerChangeMax);
@@ -74,6 +80,10 @@ public class Repetition {
     
     public Boolean ignoreFunctionalWords(){
         return this.distanceToPreviousElement.ignoreFunctionalWords;
+    }
+    
+    public Boolean ignoreTokenOrder(){
+        return this.ignoreTokenOrder;
     }
     
     public PositionOverlapEnum getPositionOverlap(){
@@ -161,6 +171,24 @@ public class Repetition {
         this.distanceToPreviousElement.speakerChange = speakerChange;
     }
     
+    private void setSimilarityType(String similarity) throws SearchServiceException{
+                if(similarity!=null && !similarity.isEmpty()){
+            try{
+                this.similarity = SimilarityTypeEnum.valueOf(similarity);
+            }catch (IllegalArgumentException ex){
+                StringBuilder sb = new StringBuilder();
+                sb.append(". Similarity type ").append(similarity).append(" is not supported. Supported similarity types are: ");
+                for (RepetitionTypeEnum ob : RepetitionTypeEnum.values()){
+                    sb.append(ob.name());
+                    sb.append(", ");
+                }
+                throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
+            }
+        }else {
+            throw new SearchServiceException("You have not specified the type of repetition similarity!");
+        }
+    }
+    
     private void setRepetitionType(String type) throws SearchServiceException{
         if(type!=null && !type.isEmpty()){
             try{
@@ -201,6 +229,12 @@ public class Repetition {
         }
     }
     
+    private void setOptionIgnoreTokenOrder(Boolean ignoreTokenOrder) throws SearchServiceException{
+        if(ignoreTokenOrder!=null){
+            this.ignoreTokenOrder = ignoreTokenOrder;
+        }
+    }
+        
     private void setPositionOverlap(String positionOverlap) throws SearchServiceException{
             if(positionOverlap!=null && !positionOverlap.isEmpty() && !positionOverlap.equals("null")){
             try{
@@ -280,11 +314,26 @@ public class Repetition {
     }
     
     public enum SimilarityTypeEnum {
-        EQUAL, FUZZY, FUZZY_PLUS, DIFF_PRON, DIFF_NORM
+        EQUAL, 
+        
+        FUZZY, /* */
+        FUZZY_PLUS, 
+        
+        /* In the case of a word sequence, 
+        it is sufficient if the entire string differs, 
+        not every single word */
+        DIFF_PRON, /* e.g. selektive klopfreglung -> selektive klopfregelung */
+        DIFF_NORM, /* mit allen drei würfeln dieselbe augenzahl würfeln */
+        
+        OWN_LEMMA_LIST;
     }
     
     public enum PositionToMatch{
         FOLLOWEDBY, PRECEDEDBY
+    }
+    
+    public class Synonyms extends ArrayList<ArrayList<String>>{
+        
     }
 
 }

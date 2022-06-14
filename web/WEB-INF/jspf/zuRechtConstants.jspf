@@ -15,8 +15,7 @@
     
     var searchLoadingIndicatorText ='<%=myResources.getString("LoadingSearch")%>'+ 
             "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>" + 
-            "<span class='ml-4 abortSearch mt-2' onclick='abortSearch(this)' "+
-             "style='cursor: pointer; text-decoration: underline; text-align: right; color: #337AB7;'><%=myResources.getString("AbortSearch")%></span>";
+            "<button type='button' class='btn btn-dark btn-sm ml-4 abortSearch mt-2' onclick='abortSearch(this)'><%=myResources.getString("AbortSearch")%></button>";
     var imgLoadingIndicatorText = "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>";
     var kwicURL = '<%=restAPIBaseURL%>' + "/SearchService/kwic";
     var statisticURL = '<%=restAPIBaseURL%>' + "/SearchService/statistics";
