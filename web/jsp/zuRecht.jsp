@@ -571,24 +571,36 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             <h2><%=myResources.getString("SearchForRepetitions")%></h2>
                             <form id="repetition-search-form" autocomplete="off">
                                 <p><%=myResources.getString("SpecifyTheElementYouAreLookingFor")%></p>
-                                
-                                <div class="input-group mb-1">
-                                   
-                                    <input type="text" id="repetitionQueryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("ForExample")%> [pos=&quot;NN&quot;]">
-                                    <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
-                                            <span><i class="fa fa-search"></i></span>
-                                        </button>
-                                        <button type="button" class="btn border-success btn-sm px-3" data-toggle="modal" data-target="#modal-repetitionsTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                          <span><i class="fa fa-ellipsis-v"></i></span>
-                                        </button>              
-                                        <button type="button" class="btn border-success btn-sm px-3" id="btn-open-repetitions-help" title="<%=myResources.getString("OpenHelp")%>">
-                                          <span><i class="fa fa-question"></i></span>
-                                        </button>
+
+                                <div class="row-div" style="display: flex;">
+                                    
+                                    <div class="mr-2" style="width: 350px;display:none" id="lemmaFileForRepetitioinSearchGroup">                      
+                                        <div class="input-group input-group-sm mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Browse</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="lemmaFileForRepetitioinSearch" onClick="emulateClickOnInputFile()" value="<%=myResources.getString("ChooseYourFile")%>" />
+                                        </div>
+                                        <input type="file" id="fileForRepetitioinSearch" hidden="true" onchange="on()"   />
+                                    </div>  
+                                      
+                                    <div class="input-group mb-1">                                   
+                                        <input type="text" id="repetitionQueryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("ForExample")%> [pos=&quot;NN&quot;]">
+                                        <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
+                                                <span><i class="fa fa-search"></i></span>
+                                            </button>
+                                            <button type="button" class="btn border-success btn-sm px-3" data-toggle="modal" data-target="#modal-repetitionsTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
+                                              <span><i class="fa fa-ellipsis-v"></i></span>
+                                            </button>              
+                                            <button type="button" class="btn border-success btn-sm px-3" id="btn-open-repetitions-help" title="<%=myResources.getString("OpenHelp")%>">
+                                              <span><i class="fa fa-question"></i></span>
+                                            </button>
+                                        </div>
                                     </div>
+                                  
                                 </div>
-                                          
                                 <%@include file="../WEB-INF/jspf/zuRechtRepetitionProperties.jspf" %>
                                 
                             </form>
@@ -1009,35 +1021,53 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             ajaxRepetitionSearchRequest.abort();
                             ajaxRepetitionSearchRequest = null;
                         }
+                        
+                        
+                        
+                        if($('#lemmaFileForRepetitioinSearchGroup').css('display')==="none"){
+                            searchRepetitions(null);
+                        }else{
+                            var x = $('#fileForRepetitioinSearch').val();
+                            if(x===""){
+                                alert("Please upload your lemma list!");
+                            }else{
+                                var txt = x.substring(x.length-4);
+                                if (txt!=='.txt'){
+                                    alert("Only .txt files are supported!");
+                                }else{
 
-                        // get input parameter
-                        var q = $('#repetitionQueryInputField').val().replace(/\“/g, "\"").replace(/\„/g, "\"");                    
-                        var searchType = getSearchType();     
-                        var pageLength = $('#repetition-search-form').find('.pageLength').val();
-                        var pageIndex = $('#repetition-search-form').find('.pageIndex').val();
-                        var leftContext = $('#repetition-search-form').find('.leftContext').val();
-                        var rightContext = $('#repetition-search-form').find('.rightContext').val();                
-                        var context = leftContext+ "-t," + rightContext + "-t";
-                        var repetitions = getXMLForRepetitions();
-                        var corpusQueryStr = getCorpusQueryStr();
+                                    // Check for the various File API support.
+                                    if (window.File && window.FileReader && window.FileList && window.Blob) {
 
-                        if (corpusQueryStr!==''){
+                                        // read file
+                                        const file = $('#fileForRepetitioinSearch')[0].files[0];
 
-                            // delete search results of the previous query                
-                            $("#repetition-search-result-area").find('.paging_container').empty();     // delete paging
-                            $("#repetition-search-result-area").find('.query_summary').empty();        // delete the number of total hits
-                            $("#repetition-search-result-area").find('.KWICSearch-result').empty();    // delete the summary of the performed search 
-                            
-                            emptyPage('#repetition-search-result-area');                        // delete search results                    
-                            
-                            // start loding indicator for ajax requests
-                            $("#repetition-search-result-area").find(".wait-query-tab").css("display", "block");
-                            
-                            // send request
-                            ajaxCallToGetKWICForRepetitions('#repetition-search-result-area', repetitionURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions);
+                                        if(file){
+                                            var reader = new FileReader();
+
+                                            reader.onload = function (evt) {
+                                                var text = evt.target.result;
+                                                var synonyms = "<" + '<%= Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS%>' 
+                                                        + ">" + text + "</" + '<%= Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS%>' + ">";
+                                                searchRepetitions(synonyms);
+                                            };
+
+                                            reader.onerror = function (evt) {
+                                                alert("An error ocurred reading the file");
+                                            };
+
+                                            reader.readAsText(file, "UTF-8"); 
+                                        }
+
+                                    } else {
+                                        alert('The File APIs are not fully supported in this browser.');
+                                    }
+                                }             
+                            }
                         }
 
-
+                        
+                        
                         // prevent page reload
                         return false;
 
@@ -1048,7 +1078,41 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
             });
             
+            function searchRepetitions(synonyms){
             
+                alert(synonyms);
+            
+                // get input parameter
+                var q = $('#repetitionQueryInputField').val().replace(/\“/g, "\"").replace(/\„/g, "\"");                    
+                var searchType = getSearchType();     
+                var pageLength = $('#repetition-search-form').find('.pageLength').val();
+                var pageIndex = $('#repetition-search-form').find('.pageIndex').val();
+                var leftContext = $('#repetition-search-form').find('.leftContext').val();
+                var rightContext = $('#repetition-search-form').find('.rightContext').val();                
+                var context = leftContext+ "-t," + rightContext + "-t";
+                var repetitions = getXMLForRepetitions();
+                        
+                if(repetitions){
+                    var corpusQueryStr = getCorpusQueryStr();
+
+                    if (corpusQueryStr!==''){
+
+                        // delete search results of the previous query                
+                        $("#repetition-search-result-area").find('.paging_container').empty();     // delete paging
+                        $("#repetition-search-result-area").find('.query_summary').empty();        // delete the number of total hits
+                        $("#repetition-search-result-area").find('.KWICSearch-result').empty();    // delete the summary of the performed search 
+
+                        emptyPage('#repetition-search-result-area');                        // delete search results                    
+
+                        // start loding indicator for ajax requests
+                        $("#repetition-search-result-area").find(".wait-query-tab").css("display", "block");
+
+                        // send request
+                        ajaxCallToGetKWICForRepetitions('#repetition-search-result-area', repetitionURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms);
+                    }
+                }
+            }
+                    
             function abortSearch(obj){
                 $(obj).parents('.wait-query-tab').css("display", "none");
                 var parentId = $(obj).parents('.searchResultArea').attr('id');
@@ -1070,13 +1134,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*                      ajax calls                        */
             /**********************************************************/
             
-            function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions){                        
+            function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms){                        
                             
                 ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
                     timeout: 180000,
-                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions},
+                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms},
                     dataType: "text",
 
                     success: function(xml, status) { 
@@ -1238,11 +1302,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     });
             }
             
-            function ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions){
+            function ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms){
                 ajaxRepetitionSearchRequest = $.ajax({
                         type: "POST",
                         url: url,
-                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions},                      
+                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms},                      
                         dataType: "text",
 
                         success: function(xml, status) {
@@ -1278,6 +1342,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 var itemsPerPage = getItemsPerPage(xml);
                 
                 var repetitions=getRepetitions(xml);
+                var synonyms = getSynonyms(xml);
 
                 //display summary + button for opening metadata view (GET)
 
@@ -1296,7 +1361,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     $(selector).find('.query_summary').append("<span id='search-results'><%=myResources.getString("Total")%>: </span>" + "<span id='total-hits'>" + totalHits + "</span>");
                             
                     // add pagination
-                    addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions);
+                    addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms);
 
                     // add results
                     displayKWIC(selector, xml);
@@ -1453,7 +1518,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
            
-            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions){
+            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms){
                 var paging = $("<ul></ul>").addClass("pagination-sm justify-content-center kwic-pagination");
                 $(selector).find('.paging_container').append(paging);
 
@@ -1485,7 +1550,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         if(selector==="#kwic-search-result-area"){
                             ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context);                  
                         }else{
-                            ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions);
+                            ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms);
                         }
                       }
                 });            
@@ -2089,6 +2154,31 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }
             }
             
+            function enableFileUpload(obj){
+                if($(obj).val()==='8'){
+                    $('#lemmaFileForRepetitioinSearchGroup').css("display", "block");               
+                }else{
+                    // check the value of the other form
+                    var parent = $(obj).parents('.repetitionPropertiesForm');
+                    var index = $(parent).index();
+                    var anotherValue;
+                    if(index<=2){
+                        // check if the second form is displayed
+                        var anotherParent = $(parent).next('.repetitionPropertiesForm');
+                        if (anotherParent!==null){
+                            // get value of the second form
+                            anotherValue = $(anotherParent).find('.repetitionSearchModeSelect').val();
+                        }
+                    }else{
+                        // get value of the first form
+                        anotherValue = $(parent).prev('.repetitionPropertiesForm').find('.repetitionSearchModeSelect').val();
+                    }
+                    if(anotherValue!=='8'){
+                        $('#lemmaFileForRepetitioinSearchGroup').css("display", "none");
+                    }
+                }
+            }
+            
             function enableSpeakerMetadata(obj){
                 var parent = $(obj).parents('.repetitionPropertiesForm');
                 var index = $(parent).index();
@@ -2184,6 +2274,23 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
             
+
+            
+            /**************************************************/
+            /*             methods for synonyms               */
+            /**************************************************/
+            
+            function emulateClickOnInputFile(){
+                $('#fileForRepetitioinSearch').click();
+            }
+            
+            function on(){
+                var fileName = $('#fileForRepetitioinSearch').val();
+                $('#lemmaFileForRepetitioinSearch').val(fileName);
+            }
+            
+            
+      
         </script>
     </body>
 </html>

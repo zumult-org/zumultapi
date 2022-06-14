@@ -7,19 +7,19 @@ package org.zumult.query.implementations;
 
 import org.w3c.dom.Document;
 import org.zumult.objects.implementations.AbstractXMLObject;
-import org.zumult.query.AdditionalSearchConstraints;
+import org.zumult.query.AdditionalSearchConstraint;
 
 /**
  *
  * @author Frick
  */
-public class DGD2AdditionalSearchConstraints extends AbstractXMLObject implements AdditionalSearchConstraints {
+public class DGD2AdditionalSearchConstraint extends AbstractXMLObject implements AdditionalSearchConstraint {
     
-    public DGD2AdditionalSearchConstraints(Document xmlDocument) {
+    public DGD2AdditionalSearchConstraint(Document xmlDocument) {
         super(xmlDocument);
     }
 
-    DGD2AdditionalSearchConstraints(String repetitionsStr) {
+    DGD2AdditionalSearchConstraint(String repetitionsStr) {
         super(repetitionsStr);
     }
 }

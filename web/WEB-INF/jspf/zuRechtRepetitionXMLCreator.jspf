@@ -1,29 +1,33 @@
+<%@page import="org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum"%>
+<%@page import="org.zumult.query.searchEngine.Repetition.RepetitionTypeEnum"%>
 <%@page import="org.zumult.io.Constants"%>
 <%@ page pageEncoding="UTF-8" %>             
 
 <script type="text/javascript">    
 
-    var XML_ELEMENT_NAME_REPETITIONS='<%=Constants.REPETITON_XML_ELEMENT_NAME_REPETITIONS %>';
-    var XML_ELEMENT_NAME_REPETITION='<%=Constants.REPETITON_XML_ELEMENT_NAME_REPETITION %>';
-    var XML_ELEMENT_NAME_SPEAKER='<%=Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER %>';
-    var XML_ELEMENT_NAME_SPEAKER_METADATA='<%=Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_METADATA %>';
-    var XML_ELEMENT_NAME_REPETITON_TYPE='<%=Constants.REPETITON_XML_ELEMENT_NAME_REPETITON_TYPE %>';
-    var XML_ELEMENT_NAME_MIN_DISTANCE = '<%= Constants.REPETITON_XML_ELEMENT_NAME_MIN_DISTANCE %>';
-    var XML_ELEMENT_NAME_MAX_DISTANCE = '<%= Constants.REPETITON_XML_ELEMENT_NAME_MAX_DISTANCE %>';
-    var XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS='<%= Constants.REPETITON_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS %>';
-    var XML_ELEMENT_NAME_SPEAKER_CHANGE='<%= Constants.REPETITON_XML_ELEMENT_NAME_SPEAKER_CHANGE %>';
-    var XML_ELEMENT_NAME_POSITION_TO_MATCH='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_MATCH %>';
-    var XML_ELEMENT_NAME_POSITION_TO_OVERLAP='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>';
-    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>';
-    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>';
-    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE='<%= Constants.REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>';
-    var XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY='<%= Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY %>';
-    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION='<%= Constants.REPETITON_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION %>';
+    var XML_ELEMENT_NAME_REPETITIONS='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS %>';
+    var XML_ELEMENT_NAME_REPETITION='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITION %>';
+    var XML_ELEMENT_NAME_SPEAKER='<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER %>';
+    var XML_ELEMENT_NAME_SPEAKER_METADATA='<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA %>';
+    var XML_ELEMENT_NAME_REPETITON_TYPE='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>';
+    var XML_ELEMENT_NAME_MIN_DISTANCE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>';
+    var XML_ELEMENT_NAME_MAX_DISTANCE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>';
+    var XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS='<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS %>';
+    var XML_ELEMENT_NAME_SPEAKER_CHANGE='<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>';
+    var XML_ELEMENT_NAME_POSITION_TO_MATCH='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>';
+    var XML_ELEMENT_NAME_POSITION_TO_OVERLAP='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>';
+    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>';
+    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>';
+    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>';
+    var XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY %>';
+    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION %>';
+    var XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>';
+    var XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER = '<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>';
     
     
     var regexDistance = /^(0?\d|1\d|20)$/;
     var regexPositionToSpeakerChange =/^(0?[0-5])$/;
-    
+
     function getXMLForRepetitions(){
         var repetitions = [];
         repetitions.push(
@@ -31,7 +35,52 @@
         );
         
         $('#repetition-search-form').find('.repetitionPropertiesForm').each(function(){
-            var annotationLayer = $(this).find('.annotationLayerSelect').val();
+            //var annotationLayer = $(this).find('.annotationLayerSelect').val();
+            var repetitionSearchMode = $(this).find('.repetitionSearchModeSelect').val();
+            var annotationLayer;
+            var similarityType;
+            
+            switch (repetitionSearchMode) {
+                case "1":
+                  annotationLayer = "<%=RepetitionTypeEnum.WORD%>";
+                  similarityType = "<%=SimilarityTypeEnum.EQUAL%>";
+                  break;
+                case "2":
+                   annotationLayer = "<%=RepetitionTypeEnum.NORM%>";
+                   similarityType = "<%=SimilarityTypeEnum.EQUAL%>";
+                  break;
+                case "3":
+                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                  similarityType = "<%=SimilarityTypeEnum.EQUAL%>";
+                  break;
+                case "4":
+                  annotationLayer = "<%=RepetitionTypeEnum.WORD%>";
+                  similarityType = "<%=SimilarityTypeEnum.DIFF_NORM%>";
+                  break;
+                case "5":
+                  annotationLayer = "<%=RepetitionTypeEnum.NORM%>";
+                  similarityType = "<%=SimilarityTypeEnum.DIFF_PRON%>";
+                  break;
+                case "6":
+                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                  similarityType = "<%=SimilarityTypeEnum.DIFF_NORM%>";
+                  break;
+                case "7":
+                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                  similarityType = "<%=SimilarityTypeEnum.FUZZY_PLUS %>";
+                  break;
+                case "8":
+                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                  similarityType = "<%=SimilarityTypeEnum.OWN_LEMMA_LIST%>";    
+                  break;
+                case "9":
+                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                  similarityType = "<%=SimilarityTypeEnum.FUZZY%>";
+                  break;
+                default:
+                    alert("Search mode " + repetitionSearchMode + "is not supported!");
+            }
+
             var speaker = $(this).find('.speakerSelect').val();
             var speakerMetadata = "";
             if(speaker==="false"){
@@ -44,6 +93,7 @@
             var speakerChange = $(this).find('.speakerChangeSelect').val();
             var positionToMatch = $(this).find('.positionToMatch').val();
             var positionToOverlap = $(this).find('.positionToOverlap').val();
+            var ignoreTokenOrder = $(this).find('.ignoreTokenOrder').val();
             var positionToSpeakerChangeType = $(this).find('.positionToSpeakerChangeType').val();
             var positionToSpeakerChangeMin = 'null';
             var positionToSpeakerChangeMax = 'null';
@@ -56,12 +106,15 @@
             var contextPrecededBy = $(this).find('.repetitionKontextField').val();
             var contextWithinSpeakerContribution = false;
             if ($(this).find('.withinContributionCheckBox').is(':checked')) {contextWithinSpeakerContribution = true;}
-                     
+
             repetitions.push(
                 "<",XML_ELEMENT_NAME_REPETITION,">",
                 "<",XML_ELEMENT_NAME_REPETITON_TYPE,">",
                 annotationLayer,
                 "</",XML_ELEMENT_NAME_REPETITON_TYPE,">",
+                "<",XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE,">",
+                similarityType,
+                "</",XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE,">",
                 "<",XML_ELEMENT_NAME_SPEAKER,">",
                 speaker,
                 "</",XML_ELEMENT_NAME_SPEAKER,">",
@@ -101,6 +154,9 @@
                  "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
                 contextWithinSpeakerContribution,
                 "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
+                "<",XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER,">",
+                ignoreTokenOrder,
+                "</",XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER,">",
                 "</",XML_ELEMENT_NAME_REPETITION,">"
             );
                         
@@ -128,5 +184,5 @@
             return defaultValue;
         }
     }
-     
+    
 </script>

@@ -42,6 +42,7 @@ import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.TimeUtilities;
 import org.zumult.objects.Transcript;
+import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
@@ -192,11 +193,14 @@ public class SearchResultSerializer {
             if(obj.getAdditionalSearchConstraints()!=null){
                 Element additionalSearchConstraints = document.createElement(ADDITIONAL_SAERCH_CONSTRAINTS);
                 
-                NodeList nodes = obj.getAdditionalSearchConstraints().getDocument().getChildNodes();
-                for (int i=0; i<nodes.getLength(); i++){
-                    Node node = document.importNode(nodes.item(i), true);
-                    additionalSearchConstraints.appendChild(node);
+                for (AdditionalSearchConstraint additionalSearchConstraint: obj.getAdditionalSearchConstraints()){
+                    NodeList nodes = additionalSearchConstraint.getDocument().getChildNodes();
+                    for (int i=0; i<nodes.getLength(); i++){
+                        Node node = document.importNode(nodes.item(i), true);
+                        additionalSearchConstraints.appendChild(node);
+                    }
                 }
+                
                 root.appendChild(additionalSearchConstraints);
             }
 

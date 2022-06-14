@@ -6,6 +6,8 @@
 package org.zumult.backend;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
@@ -208,6 +210,19 @@ public interface BackendInterface {
      * @param metadataIDs           the list of metadata IDs whose values should be retrieved for each hit 
      *                              It can be used when downloading KWIC inclusive metadata
      * @param repetitions           the specification of desired repetitions. e.g. in the xml-format
+     *                              &lt;repetitions&gt;
+     *                                   &lt;repetition&gt;
+     *                                      &lt;repetitionType&gt;LEMMA&lt;/repetitionType&gt;
+     *                                      &lt;repetitionSimilarityType&gt;OWN_LEMMA_LIST&lt;/repetitionSimilarityType&gt;
+     *                                      &lt;speaker&gt;null&lt;/speaker&gt;
+     *                                      &lt;minDistance&gt;0&lt;/minDistance&gt;
+     *                                      &lt;maxDistance&gt;5&lt;/maxDistance&gt;
+     *                                      ...
+     *                                    &lt;repetition&gt;
+     *                                  ...
+     *                              &lt;repetitions&gt;
+     * @param synonyms              the specification of synonyms, e.g. in the xml-format 
+     *                              &lt;synonyms&gt;Katze,Mitze;Junge,Kerl,Mann;Fernseher,Glotze;&lt;/synonyms&gt;
      * 
      * @return the {@code SearchResultPlus} object
      * @throws SearchServiceException if input parameters can not be parsed
@@ -215,7 +230,7 @@ public interface BackendInterface {
      */
     public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions) throws SearchServiceException, IOException;
+            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException;
     
     /**
      * Searches in the specified search index according to the specified parameters 
