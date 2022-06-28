@@ -20,7 +20,7 @@ public class Repetition {
     private final Position position = new Position();
     private final Speaker speaker = new Speaker();
     private RepetitionTypeEnum type = RepetitionTypeEnum.WORD;
-    private SimilarityTypeEnum similarity = SimilarityTypeEnum.FUZZY;
+    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
     private final Context context = new Context();
     private boolean ignoreTokenOrder = true;
 

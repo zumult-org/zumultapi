@@ -1800,11 +1800,12 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
             ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException{
         
+        // check metadata before searching
         if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
         }
 
-        // check search mode        
+        // check search mode before searching   
         for (Repetition repetition: repetitions){
             String repetitionType = repetition.getType().name().toLowerCase();
             SimilarityTypeEnum similarityType = repetition.getSimilarityType();
@@ -1820,12 +1821,16 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         throw new SearchServiceException("You can't search for repetitions in the normalized layer if normalized forms should differ!");            
                     }
                     break;
+                case OWN_LEMMA_LIST:
+                    if(!repetitionType.equals(Constants.ATTRIBUTE_NAME_LEMMA)){
+                        throw new SearchServiceException("Please specify 'LEMMA' as repetition type if you are searching by synonyms!");            
+                    }
                 default:
             }
         }
         
         try{
-           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions);
+           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions, synonyms);
         }catch(SeachRepetitionException ex){
             throw new SearchServiceException(ex.getCause().getMessage());                  
         }
@@ -1834,12 +1839,12 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions) throws IOException, SearchServiceException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws IOException, SearchServiceException{
         
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
         
-        RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions);
+        RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions, synonyms);
         
         for (String indexPath: indexPaths){
             Directory directory;
@@ -1907,7 +1912,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             int docID, int start, int end, String speakerID, 
             ArrayList<Repetition> repetitionSpecifications, 
             Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext,
-            String segmentName) throws SearchServiceException, IOException {
+            String segmentName, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException {
 
         String currentRepetitionLayer = repetitionSpecifications.get(0).getType().name().toLowerCase();
         
@@ -1943,6 +1948,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 SimilarityTypeEnum similarity = repetitionSpecifications.get(0).getSimilarityType();
                 
                 Boolean ignoreFunctionWords = repetitionSpecification.ignoreFunctionalWords();
+                Boolean ignoreTokenOrder = repetitionSpecification.ignoreTokenOrder();
                 
                 repetitionSpecificationIndex++;
                 
@@ -2038,12 +2044,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     boolean isRepetition = false;
                     switch(similarity){
                         case EQUAL:
-                        case OWN_LEMMA_LIST:
-                           if(possibleRepetitionStr.equals(sourceStr)){
+                            if(possibleRepetitionStr.equals(sourceStr)){
                                // this can be a repetition
                                isRepetition=true;
-                           }
-                           break;
+                            }
+                            break;
                         
                         case DIFF_PRON:
                         case DIFF_NORM:
@@ -2112,6 +2117,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
                            }
                            break;
+                        case OWN_LEMMA_LIST:
+                               isRepetition = checkSynonyms(sourceStr, possibleRepetitionStr, synonyms);
                         default:
                     }
 
@@ -2142,6 +2149,42 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             }
         }else{
             return null;
+        }
+        
+    }
+    
+    private Boolean checkSynonyms(String sourceStr, String possibleRepetitionStr, HashMap<String, HashSet> synonyms){
+        String[] array1 = sourceStr.split(" ");
+        String[] array2 = possibleRepetitionStr.split(" ");
+        if(array1.length==array2.length){
+        try{
+        for(int i=0; i< array1.length; i++){ 
+            if(!array1[i].equals(array2[i])){
+                if(synonyms.containsKey(array1[i])){
+                    if (!synonyms.get(array1[i]).contains(array2[i])){
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+                                    
+        }
+        
+        }catch(ArrayIndexOutOfBoundsException ex){
+            for(int i=0; i< array1.length; i++){  
+                System.out.println(array1[i]);
+            }
+            System.out.println("------");
+            for(int i=0; i< array1.length; i++){  
+                System.out.println(array2[i]);
+            }
+
+            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return true;
+        }else{
+            return false;
         }
         
     }
@@ -2680,14 +2723,17 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         int hitNumber = 0;
         ArrayList<Repetition> repetitionSpecifications;
         Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext;
+        HashMap<String, HashSet> synonyms;
         
-        RepetitionSearcher(ArrayList<String> indexPaths, Integer from, Integer to, Boolean cutoff, ArrayList<Repetition> repetitionSpecifications) throws SearchServiceException {
+        RepetitionSearcher(ArrayList<String> indexPaths, Integer from, Integer to, 
+                Boolean cutoff, ArrayList<Repetition> repetitionSpecifications, HashMap<String, HashSet> synonyms) throws SearchServiceException {
             this.indexPaths = indexPaths;
             this.from = from;
             this.to = to;
             this.cutoff = cutoff;
             this.repetitionSpecifications = repetitionSpecifications;
             this.positionsWithContext = getPositionsForContext(repetitionSpecifications, indexPaths);
+            this.synonyms = synonyms;
         }
         /**
         *    Reads hits from sorted file
@@ -2776,7 +2822,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                                 try {                               
                                     found = getPositionsOfRepetitions(mtasCodecInfo,
-                                            docID, start, end, speakerID, repetitionSpecifications, positionsWithContext, segmentName);
+                                            docID, start, end, speakerID, repetitionSpecifications, positionsWithContext, segmentName, synonyms);
                                 }catch (SearchServiceException ex) {
                                     throw new SeachRepetitionException(ex);
                                 }                  

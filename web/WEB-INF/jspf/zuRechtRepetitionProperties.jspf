@@ -6,40 +6,24 @@
     
     <div class="row">
    
-        <!-- repetition type -->
-   <!--     <div class="ml-3 mt-2">
-            <div class="input-group input-group-sm firstInRow">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><%=myResources.getString("AnnotationLayer")%>
-                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("AnnotationLayerInfo")%>" ></i>
-                    </span>
-                </div>
-                <select class="form-control annotationLayerSelect">
-                    <option value="<%=RepetitionTypeEnum.WORD%>"><%=myResources.getString("TranscribedForm")%></option>
-                    <option value="<%=RepetitionTypeEnum.NORM%>" selected="selected"><%=myResources.getString("NormalizedForm")%></option>
-                    <option value="<%=RepetitionTypeEnum.LEMMA%>"><%=myResources.getString("Lemma")%></option>
-                </select>                          
-            </div>
-        </div>-->
-   
         <!-- search type -->
         <div class="ml-3 mt-2 firstInRow">
             <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Suchmodus
-                        <i class="ml-2 fa fa-info-circle" title="???" ></i>
+                    <span class="input-group-text"><%=myResources.getString("SearchModeRepetition")%>
+                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SearchModeRepetitionInfo")%>" ></i>
                     </span>
                 </div>
                 <select class="form-control repetitionSearchModeSelect" onchange='enableFileUpload(this)'>
-                    <option value=1>gleiche Transkription</option>
-                    <option value=2 selected="selected">gleiche Normalisierung</option>
-                    <option value=3 >gleiche Lemma</option>
-                    <option value=4 >gleiche Transk. + untersch. Normalisierung</option>
-                    <option value=5 >gleiche Norm. + untersch. Transkr.</option>
-                    <option value=6 >gleiche Lemma + untersch. Normalisierung</option>
-                    <option value=7 >Fuzzy-Suche auf der Lemma-Ebene</option>
-                    <option value=8 >Erweiterte Suche mit eigener Lemma-Liste</option>
-                    <option value=9 >Fuzzy-Test</option>
+                    <option value=1><%=myResources.getString("SameTranscription")%></option>
+                    <option value=2 selected="selected"><%=myResources.getString("SameNorm")%></option>
+                    <option value=3 ><%=myResources.getString("SameLemma")%></option>
+                    <option value=4 ><%=myResources.getString("SameTranscriptionDiffNorm")%></option>
+                    <option value=5 ><%=myResources.getString("SameNormDiffTranscription")%></option>
+                    <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>
+                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
+                    <option value=8 ><%=myResources.getString("ExtendedSearchWithOwnLemmaList")%></option>
+                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>
                 </select>                          
             </div>
         </div>
@@ -48,7 +32,9 @@
         <!-- speaker -->     
         <div class="ml-3 mt-2 input-group input-group-sm" style="width:200px; float:left;">
             <div class="input-group-prepend">
-                <span class="input-group-text"><%=myResources.getString("Speaker")%></span>
+                <span class="input-group-text"><%=myResources.getString("Speaker")%>
+                    <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SpeakerRepetitionInfo")%>" ></i>
+                </span>
             </div>
             <select class="form-control speakerSelect" onchange='enableSpeakerMetadata(this)'>
                 <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
