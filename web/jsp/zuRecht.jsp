@@ -190,7 +190,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     <!-- <ul class="nav nav-tabs small justify-content-end" id="myTab" role="tablist">-->
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" id="query-tab" href="#query-tab-content" role="tab"><%=myResources.getString("Query")%></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" id="vocabulary-tab" href="#vocabulary-tab-content" role="tab"><%=myResources.getString("Vocabulary")%></a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" id="repetitions-tab" href="#repetitions-tab-content" role="tab"><%=myResources.getString("Repetitions")%></a></li>
+                        <!--<li class="nav-item"><a class="nav-link" data-toggle="tab" id="repetitions-tab" href="#repetitions-tab-content" role="tab"><%=myResources.getString("Repetitions")%></a></li>-->
                     </ul>
 
                     <!-- Tab panes -->
@@ -1080,7 +1080,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             
             function searchRepetitions(synonyms){
             
-                alert(synonyms);
+                //alert(synonyms);
             
                 // get input parameter
                 var q = $('#repetitionQueryInputField').val().replace(/\“/g, "\"").replace(/\„/g, "\"");                    

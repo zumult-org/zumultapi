@@ -6,8 +6,6 @@
 package org.zumult.backend;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
@@ -222,7 +220,7 @@ public interface BackendInterface {
      *                                  ...
      *                              &lt;repetitions&gt;
      * @param synonyms              the specification of synonyms, e.g. in the xml-format 
-     *                              &lt;synonyms&gt;Katze,Mitze;Junge,Kerl,Mann;Fernseher,Glotze;&lt;/synonyms&gt;
+     *                              &lt;synonyms&gt;Katze,Mieze,Kätzchen;Junge,Kerl,Mann;Fernseher,Glotze;&lt;/synonyms&gt;
      * 
      * @return the {@code SearchResultPlus} object
      * @throws SearchServiceException if input parameters can not be parsed

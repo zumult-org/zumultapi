@@ -103,7 +103,7 @@ public interface SearchEngineInterface {
      * @param metadataIDs           the list of metadata IDs whose values should be retrieved for each hit. 
      *                              It can be used when downloading KWIC inclusive metadata
      * @param repetitions           the array of {@code Repetition} objects
-     * @param synonyms              the map  of synonym sets, e.g. {Mann=[Kerl, Junge], Fernseher=[Glotze], Katze=[Mitze], Kerl=[Mann, Junge], Junge=[Mann, Kerl], Glotze=[Fehrnseher], Mitze=[Katze]}
+     * @param synonyms              the map  of synonym sets, e.g. {Mann=[Kerl, Junge], Fernseher=[Glotze], Katze=[Mieze, Kätzchen], ...}
      * 
      * @return the {@code SearchEngineResponseHitList} object
      * @throws SearchServiceException  if the query string or the metadata query string cannot be parsed
