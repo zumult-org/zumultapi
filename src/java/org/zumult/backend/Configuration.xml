@@ -112,6 +112,8 @@
         <search-index-transcript-based>TB_DH--_with_Punct</search-index-transcript-based>
         <search-index-transcript-based>TB_HMAT</search-index-transcript-based>
         
+        <corpus-ids-for-indexing>DH--;FOLK;GWSS;MEND;DNAM;BETV;HMAT</corpus-ids-for-indexing>
+        
         <!-- This is for a COMAFileSystem backend, we don't need other paths 
              here, because the COMA files will know themselves where to find everything -->
         <metadata-path>N:\Workspace\HZSK</metadata-path>
@@ -127,21 +129,6 @@
         <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
         
         
-        
-        
-        
-
-        <!-- START: MTAS and search index configuration parameters -->
-        <!-- <mtas-config-path>src\java\org\zumult\sample\query\config\mtas_config_TB.xml</mtas-config-path>
-        <mtas-docker-path>src\java\org\zumult\sample\query\implementations</mtas-docker-path>
-        <mtas-download>build\web\downloads</mtas-download>
-        <search-engine>mtas</search-engine> -->
-        <corpus-ids-for-indexing>DH--;FOLK;GWSS;MEND;DNAM;BETV;HMAT</corpus-ids-for-indexing>
-        <!-- <transcript-id-length>23</transcript-id-length> --> <!-- e.g. FOLK_E_00266_SE_01_T_06 important for speaker-based search because transcript names are SpeakerIntitials_FOLK_E_00266_SE_01_T_06 -->
-        <!-- NEW 21-09-2020 -->
-        <!-- e.g. index_TB_(FOLK_XX_XX_XXXX) or index_SB_(FOLK_XX_XX_XXXX) -->
-        <!-- <search-index-prefix>3</search-index-prefix> -->
-        <!-- END: MTAS and search index configuration parameters -->
         
     </backend> 
 </configuration>
