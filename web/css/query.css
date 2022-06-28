@@ -48,6 +48,7 @@ button:disabled {cursor: not-allowed; pointer-events: all !important;}
 /***************** repetition search form style ****************************************/
 #btn-open-repetitions-help {background-color: #d9edf7;}
 .firstInRow {width:350px; float:left;}
+.firstInRowPrepend {width:225px;}
 
 /***************** vocabulary search form style ********************/
 

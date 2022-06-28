@@ -5,6 +5,8 @@
  */
 package org.zumult.query;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Elena Frick
@@ -16,6 +18,6 @@ public interface SearchResult {
     public MetadataQuery getMetadataQuery();
     public String getSearchMode();
     public long getSearchTime();
-    public AdditionalSearchConstraints getAdditionalSearchConstraints();
+    public ArrayList<AdditionalSearchConstraint> getAdditionalSearchConstraints();
     
 }

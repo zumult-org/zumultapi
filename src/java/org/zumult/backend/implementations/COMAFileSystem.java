@@ -642,7 +642,7 @@ public class COMAFileSystem implements BackendInterface {
 
 
     @Override
-    public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions) throws SearchServiceException, IOException {
+    public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   

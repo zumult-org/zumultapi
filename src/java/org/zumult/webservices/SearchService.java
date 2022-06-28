@@ -657,10 +657,11 @@ public class SearchService {
                              @FormParam("offset") Integer pageStartIndex, // starts with 0
                              @FormParam("cutoff") Boolean cutoff,
                              @FormParam("mode") String searchMode,
-                             @FormParam("repetitions") String repetitions) throws Exception {
+                             @FormParam("repetitions") String repetitions,
+                             @FormParam("synonyms") String synonyms) throws Exception {
 
         buildResponse = getRepetitions(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
-                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat, repetitions);
+                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat, repetitions, synonyms);
         
         return buildResponse;
           
@@ -672,13 +673,13 @@ public class SearchService {
     
     private Response getRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, String context, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String repetitions){
+            Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String repetitions, String synonyms){
 
         Response response;
         try {
 
             SearchResultPlus searchResultPlus = backendInterface.searchRepetitions(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
-                pageLength, pageIndex, cutoff, mode, null, repetitions);
+                pageLength, pageIndex, cutoff, mode, null, repetitions, synonyms);
             KWIC result = backendInterface.getKWIC(searchResultPlus, context);
             
             switch (responseFormat){

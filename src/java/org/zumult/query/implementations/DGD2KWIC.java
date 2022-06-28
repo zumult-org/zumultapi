@@ -8,7 +8,6 @@ package org.zumult.query.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.zumult.io.Constants;
-import org.zumult.query.AdditionalSearchConstraints;
 import org.zumult.query.Hit;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
@@ -18,6 +17,7 @@ import org.zumult.query.MetadataQuery;
 import org.zumult.query.Pagination;
 import org.zumult.query.SearchQuery;
 import org.zumult.query.serialization.SearchResultSerializer;
+import org.zumult.query.AdditionalSearchConstraint;
 
 /**
  *
@@ -136,7 +136,7 @@ public class DGD2KWIC<T> extends DGD2AbstractKWIC implements KWIC {
     }
 
     @Override
-    public AdditionalSearchConstraints getAdditionalSearchConstraints() {
+    public ArrayList<AdditionalSearchConstraint> getAdditionalSearchConstraints() {
         return this.searchResult.getAdditionalSearchConstraints();
     }
 
