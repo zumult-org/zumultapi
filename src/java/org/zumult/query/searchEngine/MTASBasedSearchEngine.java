@@ -93,7 +93,6 @@ import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
 import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.text.similarity.FuzzyScore;
 import org.mvel2.MVEL;
 
@@ -152,7 +151,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private static final String[] NOT_COUNT =
         {     
-            "NGHES" /* äh, ähm, hä*/, "UI", "SPELL", "AB", "XY"
+            "NGHES" /* äh, ähm, hä*/, "UI", "AB", "XY"
         };
     
     List<String> prefixListInterval = new  ArrayList<String>(){
@@ -1799,22 +1798,39 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     @Override
     public SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString, String metadataQueryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions) throws SearchServiceException, IOException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException{
         
+        // check metadata before searching
         if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
         }
 
-        // check search mode
+        // check search mode before searching   
         for (Repetition repetition: repetitions){
-            if(repetition.getType().name().toLowerCase().equals(Constants.METADATA_KEY_MATCH_TYPE_WORD) && 
-                    repetition.getSimilarityType().name().toLowerCase().equals(SimilarityTypeEnum.DIFF_PRON)){
-                throw new SearchServiceException("You can't search for repetitions in transcription if they should have different pronunciation!");            
+            String repetitionType = repetition.getType().name().toLowerCase();
+            SimilarityTypeEnum similarityType = repetition.getSimilarityType();
+
+            switch(similarityType){
+                case DIFF_PRON:
+                    if(repetitionType.equals(Constants.METADATA_KEY_MATCH_TYPE_WORD)){
+                        throw new SearchServiceException("You can't search for repetitions in transcription if they should have different pronunciation!");            
+                    }
+                    break;
+                case DIFF_NORM:
+                    if(repetitionType.equals(Constants.ATTRIBUTE_NAME_NORM)){
+                        throw new SearchServiceException("You can't search for repetitions in the normalized layer if normalized forms should differ!");            
+                    }
+                    break;
+                case OWN_LEMMA_LIST:
+                    if(!repetitionType.equals(Constants.ATTRIBUTE_NAME_LEMMA)){
+                        throw new SearchServiceException("Please specify 'LEMMA' as repetition type if you are searching by synonyms!");            
+                    }
+                default:
             }
         }
         
         try{
-           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions);
+           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions, synonyms);
         }catch(SeachRepetitionException ex){
             throw new SearchServiceException(ex.getCause().getMessage());                  
         }
@@ -1823,12 +1839,12 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions) throws IOException, SearchServiceException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws IOException, SearchServiceException{
         
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
         
-        RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions);
+        RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions, synonyms);
         
         for (String indexPath: indexPaths){
             Directory directory;
@@ -1896,7 +1912,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             int docID, int start, int end, String speakerID, 
             ArrayList<Repetition> repetitionSpecifications, 
             Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext,
-            String segmentName) throws SearchServiceException, IOException {
+            String segmentName, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException {
 
         String currentRepetitionLayer = repetitionSpecifications.get(0).getType().name().toLowerCase();
         
@@ -1932,6 +1948,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 SimilarityTypeEnum similarity = repetitionSpecifications.get(0).getSimilarityType();
                 
                 Boolean ignoreFunctionWords = repetitionSpecification.ignoreFunctionalWords();
+                Boolean ignoreTokenOrder = repetitionSpecification.ignoreTokenOrder();
                 
                 repetitionSpecificationIndex++;
                 
@@ -1994,6 +2011,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         case FUZZY:
                         case FUZZY_PLUS:
                         case DIFF_PRON:
+                        case DIFF_NORM:
+                        case OWN_LEMMA_LIST:
                             if(cursorPosition+sourceSize == positionsOfTheFollowingWordTokens.size()){ 
                                 for(int i=1; i<=sourceSize; i++){
                                     int startPos = positionsOfTheFollowingWordTokens.get(positionsOfTheFollowingWordTokens.size()-i);
@@ -2024,41 +2043,59 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     //compare
                     boolean isRepetition = false;
                     switch(similarity){
-                        case EQUAL:               
-                           if(possibleRepetitionStr.equals(sourceStr)){
+                        case EQUAL:
+                            if(possibleRepetitionStr.equals(sourceStr)){
                                // this can be a repetition
                                isRepetition=true;
-                           }
-                           break;
+                            }
+                            break;
+                        
                         case DIFF_PRON:
+                        case DIFF_NORM:
                             if(possibleRepetitionStr.equals(sourceStr)){
-                                // get pronunciation values
-                                if(!rs.containsLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD)){
+                                
+                                    List<String> prefixList = new  ArrayList<String>();
+                                    String layer="";
+                                switch(similarity){
+                                    case DIFF_PRON:                                     
+                                        layer = Constants.METADATA_KEY_MATCH_TYPE_WORD;
+                                        prefixList.add(layer);
+                                        break;
+                                    case DIFF_NORM:
+                                        layer = Constants.ATTRIBUTE_NAME_NORM;
+                                        prefixList.add(layer);
+                                        break;                                   
+                                }
+                                
+                                // get pronunciation/norm values
+                                if(!rs.containsLayer(layer)){
                                     //create new source string
                                     List<CodecSearchTree.MtasTreeHit<String>> termsTrans = mtasCodecInfo
                                          .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                         docID, prefixListTRANS, start,
+                                         docID, prefixList, start,
                                          (end - 1));
 
-                                    rs.addNewLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD, termsTrans);
+                                    rs.addNewLayer(layer, termsTrans);
                                 }
                                
-                                String sourcePron = rs.getStringForLayer(Constants.METADATA_KEY_MATCH_TYPE_WORD);
-                               
+                                String sourcePron = rs.getStringForLayer(layer);   
                                
                                 //create new repetition string
                                 StringBuilder sb = new StringBuilder();
                                 for(Integer position: sortedMap.keySet()){
                                     List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
                                         .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                            docID, prefixListTRANS, position, position);
+                                            docID, prefixList, position, position);
                                     sb.append(CodecUtil.termValue(terms.get(0).data));
                                     sb.append(" ");
                                 }
                                    
                                 String repetitionPron = sb.toString().trim();
+                                
+                                //System.out.println("rs: " + rs);
+                                //System.out.println(sourcePron + " + " + repetitionPron);
                                     
-                                // compare pronunciation
+                                // compare pronunciation/norm value
                                 if(repetitionPron.equals(sourcePron)){
                                     isRepetition=false;
                                 }else{
@@ -2072,27 +2109,22 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
                             }
                             break;
-                            
+
                         case FUZZY_PLUS:
-                            isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
-                            break;
+                           if(possibleRepetitionStr.equals(sourceStr)){
+                               isRepetition=true;
+                           }else{
+                               isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
+                           }
+                           break;
+                        case OWN_LEMMA_LIST:
+                               isRepetition = checkSynonyms(sourceStr, possibleRepetitionStr, synonyms);
                         default:
                     }
 
                         
                     if(isRepetition && checkConditions(sortedMap, speakerID, segmentName, positionsWithContext, firstPosition,
                                             mtasCodecInfo, docID, end, repetitionSpecification)){
-                            
-                        // now check the word token number between source and the repetition
-                        // System.out.println("Checking word max distance: "  + positionsOfTheFollowingWordTokens.get(0) + "-" + firstPosition);
-                       
-                        SortedMap<Integer, String> mapOfWordTokensBetween = arrayOfTheFollowingWordTokens.subMap(positionsOfTheFollowingWordTokens.get(0), firstPosition); 
-                        int numberOfWordTokensBetweenSourceAndRepetition = mapOfWordTokensBetween.size();
-                        //  System.out.println("maxDistance: " + maxDistance);
-                        //System.out.println("numberOfWordTokensBetweenSourceAndRepetition: " + numberOfWordTokensBetweenSourceAndRepetition);
-                        if(numberOfWordTokensBetweenSourceAndRepetition>maxDistance){
-                            break repetitions;
-                        }
 
                         //add matches
                         for(Integer position: sortedMap.keySet()){              
@@ -2117,6 +2149,42 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             }
         }else{
             return null;
+        }
+        
+    }
+    
+    private Boolean checkSynonyms(String sourceStr, String possibleRepetitionStr, HashMap<String, HashSet> synonyms){
+        String[] array1 = sourceStr.split(" ");
+        String[] array2 = possibleRepetitionStr.split(" ");
+        if(array1.length==array2.length){
+        try{
+        for(int i=0; i< array1.length; i++){ 
+            if(!array1[i].equals(array2[i])){
+                if(synonyms.containsKey(array1[i])){
+                    if (!synonyms.get(array1[i]).contains(array2[i])){
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+                                    
+        }
+        
+        }catch(ArrayIndexOutOfBoundsException ex){
+            for(int i=0; i< array1.length; i++){  
+                System.out.println(array1[i]);
+            }
+            System.out.println("------");
+            for(int i=0; i< array1.length; i++){  
+                System.out.println(array2[i]);
+            }
+
+            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return true;
+        }else{
+            return false;
         }
         
     }
@@ -2336,9 +2404,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             if(precededBy!=null && !precededBy.isEmpty()){
                 String queryString = "<word/> precededby " + precededBy;
                 if(within){
-                    queryString = "(" + queryString + ") within <annotationBlock/>";
+                    //queryString = "(" + queryString + ") within <annotationBlock/>";
+                    queryString = "(" + precededBy + "<word/>) within <annotationBlock/>";
                 }
-            
+                
                 for (String indexPath: indexPaths){
                     Directory directory;
                     try {
@@ -2353,14 +2422,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 while (iterator.hasNext()) {
                                     LeafReaderContext lrc = iterator.next();
                                     Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
-                                    SegmentReader r = (SegmentReader) lrc.reader();    
+                                    SegmentReader r = (SegmentReader) lrc.reader(); 
                                     if (spans != null) {
                                         while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
                                             if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                                 while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
                                                     int docID = spans.docID();    
                                                     String segmentName = r.getSegmentName();
-                                                    int position = spans.startPosition();
+                                                    int position = spans.endPosition()-1;
 
                                                     Set<Integer> set = new HashSet();
                                                     Map<Integer, Set<Integer>> map = new HashMap();
@@ -2568,7 +2637,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                             // end of document
                             break;
                         }else{
-                            if(CodecUtil.termValue(terms.get(0).data).startsWith("w")){
+                            if(CodecUtil.termValue(terms2.get(0).data).startsWith("w")){
                               wordToken++;  
                             }
                         }
@@ -2654,14 +2723,17 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         int hitNumber = 0;
         ArrayList<Repetition> repetitionSpecifications;
         Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext;
+        HashMap<String, HashSet> synonyms;
         
-        RepetitionSearcher(ArrayList<String> indexPaths, Integer from, Integer to, Boolean cutoff, ArrayList<Repetition> repetitionSpecifications) throws SearchServiceException {
+        RepetitionSearcher(ArrayList<String> indexPaths, Integer from, Integer to, 
+                Boolean cutoff, ArrayList<Repetition> repetitionSpecifications, HashMap<String, HashSet> synonyms) throws SearchServiceException {
             this.indexPaths = indexPaths;
             this.from = from;
             this.to = to;
             this.cutoff = cutoff;
             this.repetitionSpecifications = repetitionSpecifications;
             this.positionsWithContext = getPositionsForContext(repetitionSpecifications, indexPaths);
+            this.synonyms = synonyms;
         }
         /**
         *    Reads hits from sorted file
@@ -2725,10 +2797,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {              
                 arrayList.add( new Object[]{spans.docID(), spans.startPosition(), spans.endPosition()} );
             }
-            int targetSize = 5000;
-            List<List<Object[]>> largeList = ListUtils.partition(arrayList, targetSize);
-            largeList.parallelStream().forEach((List<Object[]> x) -> {
-                x.forEach(obj -> {
+            arrayList.forEach( obj -> {
                     int docID = (int) obj[0];
                     int start = (int) obj[1];
                     int end = (int) obj[2];
@@ -2753,7 +2822,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                                 try {                               
                                     found = getPositionsOfRepetitions(mtasCodecInfo,
-                                            docID, start, end, speakerID, repetitionSpecifications, positionsWithContext, segmentName);
+                                            docID, start, end, speakerID, repetitionSpecifications, positionsWithContext, segmentName, synonyms);
                                 }catch (SearchServiceException ex) {
                                     throw new SeachRepetitionException(ex);
                                 }                  
@@ -2786,8 +2855,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
                     } 
                 });
-            });
-                    
+                 
         
             if(  (Boolean)  threadLocal.get()  )  {
                 transcripts_total++;

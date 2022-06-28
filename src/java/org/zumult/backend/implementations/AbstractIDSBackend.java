@@ -502,13 +502,13 @@ public abstract class AbstractIDSBackend implements BackendInterface {
     @Override
     public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
-            Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions) throws SearchServiceException, IOException {
+            Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {
                         
         Searcher searcher = new DGD2Searcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
         searcher.setCollection(corpusQuery, metadataQuery);
         searcher.setPagination(pageLength , pageIndex);
-        return searcher.searchRepetitions(searchIndex, cutoff, metadataIDs, repetitions);
+        return searcher.searchRepetitions(searchIndex, cutoff, metadataIDs, repetitions, synonyms);
     }
     
   

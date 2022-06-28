@@ -10,6 +10,6 @@ import org.zumult.objects.XMLSerializable;
  *
  * @author Frick
  */
-public interface AdditionalSearchConstraints extends XMLSerializable {
+public interface AdditionalSearchConstraint extends XMLSerializable {
   
 }

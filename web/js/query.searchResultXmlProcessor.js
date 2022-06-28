@@ -63,3 +63,12 @@ function getRepetitions(xml){
         return null;
     }
 }
+
+function getSynonyms(xml){
+    var pattern = /<synonyms>[\s\S]*?<\/synonyms>/;
+    if (xml.match(pattern)){
+        return xml.match(pattern)[0];
+    }else{
+        return null;
+    }
+}
