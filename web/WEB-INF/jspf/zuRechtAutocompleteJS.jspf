@@ -150,8 +150,8 @@
     }
             
     function createAutocompleteWithPOS(selector, inputRight, inputLeft){
-        var parser = new DOMParser();
-        var posTagSetXML = parser.parseFromString(posTagSet, "text/xml");
+        //var parser = new DOMParser();
+        //var posTagSetXML = parser.parseFromString(posTagSet, "text/xml");
                                     
         var sel = $('<select/>')
             .addClass('form-control form-control-sm autocompleteForQueryInputField')

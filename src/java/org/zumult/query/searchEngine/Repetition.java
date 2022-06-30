@@ -6,6 +6,9 @@
 package org.zumult.query.searchEngine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.w3c.dom.Element;
 import org.zumult.io.Constants;
 import org.zumult.query.SearchServiceException;
@@ -31,7 +34,7 @@ public class Repetition {
         setSpeaker(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER).item(0).getTextContent()));   
         setSpeakerMetadata(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA).item(0).getTextContent());
         setSpeakerChange(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE).item(0).getTextContent()));
-        setOptionIgnoreFunctionalWords(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS).item(0).getTextContent()));
+        setIgnoredCustomPOS(new HashSet<String>(Arrays.asList(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS).item(0).getTextContent().split(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR))));    
         setOptionIgnoreTokenOrder(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER).item(0).getTextContent()));
         setMinMaxDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE).item(0).getTextContent()), 
                 getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE).item(0).getTextContent()));
@@ -46,7 +49,7 @@ public class Repetition {
 
     
     public Repetition(String type, String similarity, Boolean sameSpeakerAsSource, 
-            Boolean speakerChange, Boolean ignoreFunctionalWords, Boolean ignoreTokenOrder, String positionOverlap, 
+            Boolean speakerChange, Set<String> ignoredCustomPOS, Boolean ignoreTokenOrder, String positionOverlap, 
             Integer minDistanceToSource, Integer maxDistanceToSource, String metadataQueryString,
             String positionSpeakerChangeType, Integer positionSpeakerChangeMin, 
             Integer positionSpeakerChangeMax, String precededby, Boolean withinSpeakerContribution) throws SearchServiceException{
@@ -56,7 +59,7 @@ public class Repetition {
         setSpeaker(sameSpeakerAsSource); 
         setSpeakerMetadata(metadataQueryString);
         setSpeakerChange(speakerChange);
-        setOptionIgnoreFunctionalWords(ignoreFunctionalWords);
+        setIgnoredCustomPOS(ignoredCustomPOS);
         setOptionIgnoreTokenOrder(ignoreTokenOrder);
         setMinMaxDistance(minDistanceToSource, maxDistanceToSource);
         setPositionOverlap(positionOverlap);
@@ -78,8 +81,8 @@ public class Repetition {
         return this.distanceToPreviousElement.speakerChange;
     }
     
-    public Boolean ignoreFunctionalWords(){
-        return this.distanceToPreviousElement.ignoreFunctionalWords;
+    public Set<String> getIgnoredCustomPOS(){
+        return this.distanceToPreviousElement.ignoredCustomPOS;
     }
     
     public Boolean ignoreTokenOrder(){
@@ -125,7 +128,7 @@ public class Repetition {
     public SimilarityTypeEnum getSimilarityType(){
         return this.similarity;
     }
-        
+
     private Boolean getBooleanFromString(String key, String value) throws SearchServiceException{
 
         switch(value){
@@ -223,9 +226,9 @@ public class Repetition {
         }
     }
     
-    private void setOptionIgnoreFunctionalWords(Boolean ignoreFunctionalWords) throws SearchServiceException{
-        if(ignoreFunctionalWords!=null){
-            this.distanceToPreviousElement.ignoreFunctionalWords = ignoreFunctionalWords;
+    private void setIgnoredCustomPOS(Set<String> ignoredCustomPOS) throws SearchServiceException{
+        if(ignoredCustomPOS!=null){
+            this.distanceToPreviousElement.ignoredCustomPOS = ignoredCustomPOS;
         }
     }
     
@@ -288,7 +291,8 @@ public class Repetition {
     private class Distance {        
         Integer minDistance; //if null, then irrelevant
         Integer maxDistance; //if null, then irrelevant
-        Boolean ignoreFunctionalWords = false;
+        //Boolean ignoreFunctionalWords = false;
+        Set<String> ignoredCustomPOS = new HashSet();
         Boolean speakerChange;   /* true - speaker change is required, 
                                 false - speaker change is not allowed,
                                 null - speaker change is irrelevant */
