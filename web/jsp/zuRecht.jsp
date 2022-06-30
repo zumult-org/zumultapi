@@ -667,6 +667,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 .query-description {color: black;}\n\
                                             </style>";
 
+                
+            var posTagSetXML = new DOMParser().parseFromString('<%=annotationTagSetXML%>', "text/xml");
+            var arrayWithPosToBeIgnored = ['AB','XY','NGIRR', 'ITJ', 'NGHES', 'ART'];
     
             $(document).ready(function(){
                 //alert("Page loaded");
@@ -679,6 +682,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     addAutocompleteToInputField(this);
                 });
                 
+                
+                addPOSToBeIgnoredWhenSearchingRepetitions('.ignorePOSforDistance');
 
                 $('#corpus-info-button').on("click", function(){
                     var url = '<%=webAppBaseURL%>' + "/jsp/corpusoverview.jsp#FOLK";
@@ -1139,7 +1144,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
-                    timeout: 180000,
+                    timeout: 300000,
                     data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms},
                     dataType: "text",
 
@@ -2124,8 +2129,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).find('.speakerMetadataGroup').css('display', 'none');
                 $(obj).find('.speakerChangeSelectGroup').css('display', 'none');
 
-                $(obj).find('.ignoreFunctionalWordsCheckBox').prop( "checked", false);
                 $(obj).find('.withinContributionCheckBox').prop( "checked", false);
+                
+                $(obj).find("input[name='posToBeIgnored']").each(function () {
+                    $(this).prop( "checked", false);;
+                });
 
                 setDefaulValue($(obj).find('.minDistance'));
                 setDefaulValue($(obj).find('.maxDistance'));
@@ -2238,6 +2246,43 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             /**************************************************/
+            /*                pos methods                     */
+            /**************************************************/
+            function addPOSToBeIgnoredWhenSearchingRepetitions(selector){
+                
+                //add pos to be ignored for repetitions
+                $(posTagSetXML).find("[name='POS-tags']").children("category").each(function () {
+                    $(this).children("category").each(function () {
+                        addPOSToBeIgnored(this, selector);
+                    });
+                });
+                
+                $(posTagSetXML).find("[name='Extra-tags']").children("category").each(function () {
+                    addPOSToBeIgnored(this, selector);
+                });
+            }
+            
+            function addPOSToBeIgnored(obj, selector){
+                var subCategoryTag = $(obj).find("tag").attr("name");
+
+                if (jQuery.inArray(subCategoryTag, arrayWithPosToBeIgnored) > -1){
+                    
+                    var subCategoryName = $(obj).attr("name");
+                    var subCategoryDescription = " (<em style='background:#f3f3f3;'>"+ $(obj).find("description").text() + "</em>)";  
+                    
+                    if(subCategoryTag==="XY"){
+                        subCategoryDescription="";
+                    }
+                    
+                    var label = $('<label/>')
+                            .addClass('mb-0')
+                            .html("<input name='posToBeIgnored' class='ml-2' type='checkbox' value='"+subCategoryTag+"'/> "+subCategoryTag+" <small>"+subCategoryName + subCategoryDescription + "</small>")
+                            .appendTo($(selector));                   
+                }
+                
+            }
+            
+            /**************************************************/
             /*             query builder methods          */
             /**************************************************/
             
@@ -2288,6 +2333,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 var fileName = $('#fileForRepetitioinSearch').val();
                 $('#lemmaFileForRepetitioinSearch').val(fileName);
             }
+            
+            
+            
             
             
       

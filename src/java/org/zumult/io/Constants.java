@@ -282,6 +282,7 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE="minDistance";
     public static final String REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE="maxDistance";
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS="ignoreFunctionalWords";
+    public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS="ignoredCustomPOS";
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER="ignoreTokenOrder";
     public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE="speakerChange";
     public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH="positionToMatch";
@@ -292,4 +293,6 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY="precededby";
     public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION="withinSpeakerContribution"; 
     public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
+    
+    public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR="\\|";
 }

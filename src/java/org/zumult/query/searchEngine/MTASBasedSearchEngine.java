@@ -178,6 +178,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         { add("speaker-overlap");}
     };
     
+    List<String> prefixListSpeakerOverlap2 = new ArrayList<String>(){
+        { add("word.type");}
+    };
+    
     private static final String DONE = "DONE";
     
 
@@ -1800,6 +1804,15 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
             ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException{
         
+        // check queryString
+        if (queryString.matches("\\[(word|lemma|norm)=\"\\.(\\*|\\+)\"\\]") || 
+                queryString.matches("<(word|lemma|norm)/>")){
+            throw new SearchServiceException("Your request will take too long. Please constrain the search query, "
+                    + "e.g. to a certain lemma: [lemma=\"wissen\"], a certain part of speech: [pos=\"NN\"] or "
+                    + "a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. "
+                    + "You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>");
+        }
+        
         // check metadata before searching
         if(metadataQueryString!=null && !metadataQueryString.isEmpty()){
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
@@ -1947,7 +1960,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             for(Repetition repetitionSpecification: repetitionSpecifications){
                 SimilarityTypeEnum similarity = repetitionSpecifications.get(0).getSimilarityType();
                 
-                Boolean ignoreFunctionWords = repetitionSpecification.ignoreFunctionalWords();
+                Set ignoredCustomPOS = repetitionSpecification.getIgnoredCustomPOS();
                 Boolean ignoreTokenOrder = repetitionSpecification.ignoreTokenOrder();
                 
                 repetitionSpecificationIndex++;
@@ -1994,7 +2007,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 //get the following text
                 TreeMap<Integer, String> arrayOfTheFollowingWordTokens = new TreeMap<>();
                 arrayOfTheFollowingWordTokens = addTokens(arrayOfTheFollowingWordTokens, mtasCodecInfo, docID, lastPositionOfTheCurrentMatch, 
-                    maxDistance + sourceSize, currentPrefixListRepetitionLayer, ignoreFunctionWords);
+                    maxDistance + sourceSize, currentPrefixListRepetitionLayer, ignoredCustomPOS);
 
                 // iterate through arrayOfTheFollowingWordTokens/positionsOfTheFollowingWordTokens
                 List<Integer> positionsOfTheFollowingWordTokens = new ArrayList<>(arrayOfTheFollowingWordTokens.keySet());
@@ -2318,7 +2331,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         if(positionCheck){
             // check overlap condition
             if(repetitionSpecification.getPositionOverlap()!=null){
-                overlapCheck = checkPositionToOverlap(mtasCodecInfo, docID, sortedMap,
+                overlapCheck = checkPositionToOverlap2(mtasCodecInfo, docID, sortedMap,
                     repetitionSpecification.getPositionOverlap());
             }else{
                 overlapCheck=true;
@@ -2565,6 +2578,101 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         return overlapCheck;
     }
     
+    
+    private boolean checkPositionToOverlap2(
+            CodecInfo mtasCodecInfo, int docID, SortedMap<Integer, String> sortedMap,
+            PositionOverlapEnum positionOverlap) throws IOException, SearchServiceException{
+        boolean overlapCheck = false;
+        switch(positionOverlap){
+            case WITHIN:
+                overlapCheck= true;
+                for(Integer position: sortedMap.keySet()){
+                    List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
+                            .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                            docID, prefixListSpeakerOverlap2, position, position);
+                    if(terms.isEmpty()){
+                        overlapCheck=false;
+                        break;
+                    }else{
+                        if(CodecUtil.termValue(terms.get(0).data).contains("ol-in")){
+                           // within overlap 
+                        }else{
+                            overlapCheck=false;
+                            break;
+                        }
+                     
+                    }
+                }
+                break;  
+            case NOT_WITHIN:
+                overlapCheck= true;
+                for(Integer position: sortedMap.keySet()){
+                    List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
+                            .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                            docID, prefixListSpeakerOverlap2, position, position);
+                    if(!terms.isEmpty()){       
+                        if(CodecUtil.termValue(terms.get(0).data).contains("ol-in")){
+                           overlapCheck=false;
+                           break;
+                        }
+                    }
+                }
+                break;
+            case PRECEDEDBY:
+                Integer firstPosition = sortedMap.firstKey()-1;
+                List<CodecSearchTree.MtasTreeHit<String>> terms1 = mtasCodecInfo
+                            .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                            docID, prefixListSpeakerOverlap2, firstPosition, firstPosition);
+                if(!terms1.isEmpty()){ 
+                    if(CodecUtil.termValue(terms1.get(0).data).contains("ol-in")){
+                        overlapCheck=true;
+                    }
+                }
+
+                break;
+            case FOLLOWEDBY:
+                Integer lastPosition = sortedMap.lastKey() + 1;
+                List<CodecSearchTree.MtasTreeHit<String>> terms2 = mtasCodecInfo
+                            .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                            docID, prefixListSpeakerOverlap2, lastPosition, lastPosition);
+                if(!terms2.isEmpty()){
+                    if(CodecUtil.termValue(terms2.get(0).data).contains("ol-in")){
+                        overlapCheck=true;
+                    }
+                }
+
+                break;
+            case INTERSECTING:
+                boolean positionWithin = false;
+                boolean positionOutside = false;
+                for(Integer position: sortedMap.keySet()){
+                   List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
+                            .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                            docID, prefixListSpeakerOverlap2, position, position);
+                    if(terms.isEmpty()){
+                        positionOutside=true;
+                    }else{
+                        
+                        if(CodecUtil.termValue(terms.get(0).data).contains("ol-in")){
+                            positionWithin=true;
+                        }else{
+                            positionOutside=true;
+                        }
+                        
+                    }
+                }
+                
+                if(positionWithin && positionOutside){
+                    overlapCheck= true;
+                }
+                break;
+            default:
+                throw new SearchServiceException("Please check the overlap condition. "
+                    + "Possible values are 'within', '!within', 'precededby', 'followedby', 'intersecting'");
+            }
+        return overlapCheck;
+    }
+    
     private boolean checkPositionToSpeakerChange(CodecInfo mtasCodecInfo, int docID, SortedMap<Integer, String> sortedMap,
             String speakerIdOfRepetition, PositionSpeakerChangeEnum positionSpeakerChangeType, 
             int minPositionSpeakerChange, int maxPositionSpeakerChange, List<String> prefixListSpeaker) throws SearchServiceException, IOException{
@@ -2659,22 +2767,22 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         return test;
     }
     
-    private int isFunctionalWord(CodecInfo mtasCodecInfo, int docID, int currentPosition) throws IOException{
+    private int isFunctionalWord(CodecInfo mtasCodecInfo, int docID, int currentPosition, Set<String> ignoredCustomPOS) throws IOException{
         
         List<CodecSearchTree.MtasTreeHit<String>> termsPOS = mtasCodecInfo
             .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                 docID, prefixListPOS, currentPosition,
                 currentPosition);
 
-        if(!Arrays.asList(NOT_COUNT).contains(CodecUtil.termValue(termsPOS.get(0).data))){
-            return 1;
-        }else{
+        if(ignoredCustomPOS.contains(CodecUtil.termValue(termsPOS.get(0).data))){
             return 0;
+        }else{
+            return 1;
         }
     }
     
     private TreeMap<Integer, String> addTokens(TreeMap<Integer, String> wordTokenMap, CodecInfo mtasCodecInfo, int docID, int startPosition,
-            int maxNumber, List<String> annotationLayerPrefix, Boolean ignoreFunctionWords) throws IOException{
+            int maxNumber, List<String> annotationLayerPrefix, Set<String> ignoredCustomPOS) throws IOException{
 
         int wordTokenIndex=1;
         TreeMap<Integer, String> map = new TreeMap();
@@ -2694,11 +2802,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         for (Map.Entry<Integer,String> entry : map.entrySet()){
             if (wordTokenIndex<=maxNumber){               
                 wordTokenMap.put(entry.getKey(), entry.getValue());
-                if (ignoreFunctionWords){
-                    // functional words should not be count
-                    wordTokenIndex = wordTokenIndex + isFunctionalWord(mtasCodecInfo, docID, entry.getKey());
-                }else{
+                if (ignoredCustomPOS.isEmpty()){
                     wordTokenIndex++;
+                }else{
+                     // functional words should not be count
+                    wordTokenIndex = wordTokenIndex + isFunctionalWord(mtasCodecInfo, docID, entry.getKey(), ignoredCustomPOS);
                 }
             }else{
                 break;

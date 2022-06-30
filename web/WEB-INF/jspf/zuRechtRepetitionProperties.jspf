@@ -101,11 +101,14 @@
                     <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="5">
                     <label class="form-check-label mr-3 ml-2"><%=myResources.getString("WordTokens")%></label>
                 </div>
-                    
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input form-control-sm ignoreFunctionalWordsCheckBox" type="checkbox">
-                    <label class="form-check-label"><%=myResources.getString("IgnoreFunctionalWords")%><i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("IgnoreFunctionWordsInfo")%>" ></i></label>
-                </div>
+
+                <!-- ignore selected pos -->     
+              <div>
+                    <span class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        <em><%=myResources.getString("IgnoreFunctionalWords")%></em>
+                    </span>
+                    <div class="dropdown-menu pt-0 ignorePOSforDistance" style="width: 500px;height: 100px;overflow: auto;"></div>
+               </div>  
             </div> 
         </div>
     </div>
@@ -164,7 +167,7 @@
                         <span class="input-group-text"><%=myResources.getString("MultiWordRepetition")%>
                         <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("MultiWordRepetitionInfo")%>" ></i></span>
                     </div>
-                    <select class="form-control ignoreTokenOrder">
+                    <select class="form-control ignoreTokenOrder" disabled>
                         <option value=false selected="selected"><%=myResources.getString("TokenOrderRelevant")%></option>
                         <option value=true><%=myResources.getString("TokenOrderNotRelevant")%></option>
                     </select>                          
