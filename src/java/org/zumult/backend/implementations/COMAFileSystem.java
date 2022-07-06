@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
+import org.zumult.io.COMAUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AdditionalMaterialMetadata;
 import org.zumult.objects.AnnotationLayer;
@@ -307,8 +308,31 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public IDList getVideos4SpeechEvent(String speechEventID) throws IOException {
-        // This may be difficult because there is no mapping for this
-        return new IDList("video");
+        try {
+            // need to distinguish audio and video -- not so easy...
+            // let's say for now that we only need WAV files
+            IDList result = new IDList("Media");
+            SpeechEvent communication = getSpeechEvent(speechEventID);
+            /*
+            <Media Id="MID7D516D45-D94A-24EF-8D21-4B0A4DC891CA">
+            <Description>
+            <Key Name="Type">digital</Key>
+            </Description>
+            <NSLink>Shirin_Zhi_Zhi/MT_270110_Shirin/MT_270110_Shirin.wav</NSLink>
+            <Filename>MT_270110_Shirin.wav</Filename>
+            
+            */
+            NodeList allVideos = (NodeList)
+                    xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.mp4' or substring(Filename, string-length(Filename)-3)='.MP4']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<allVideos.getLength(); i++){
+                Element mediaElement = ((Element)(allVideos.item(i)));
+                result.add(mediaElement.getAttribute("Id"));
+            }
+            return result;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }
     }
 
     @Override
@@ -369,6 +393,7 @@ public class COMAFileSystem extends AbstractBackend {
             Corpus corpus = getCorpus(corpusID);
             Document comaDocument = corpus.getDocument();
             Set<String> valueSet = new HashSet<>();
+            // this will go wrong, for example if both Transcript and Speaker have a key "name"!
             NodeList allKeys = (NodeList) xPath.evaluate("//Key[@Name='" + metadataKeyID + "']", comaDocument, XPathConstants.NODESET);
             for (int i=0; i<allKeys.getLength(); i++){
                 Element keyElement = ((Element)(allKeys.item(i)));
@@ -458,12 +483,24 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public String getSpeechEvent4Transcript(String transcriptID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String corpusID = findCorpusID(transcriptID);
+            Corpus corpus = getCorpus(corpusID);
+            Document corpusDocument = corpus.getDocument();
+            String xp = "//Transcription[@Id='" + transcriptID + "']";
+            Element tryElement = (Element) (Node) xPath.evaluate(xp, corpusDocument, XPathConstants.NODE);
+            if (tryElement!=null){
+                return tryElement.getAttribute("Id");
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public String getEvent4SpeechEvent(String speechEventID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return speechEventID;
     }
 
     @Override
@@ -575,7 +612,31 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            // within a given object type, key names in COMA should be unique
+            Corpus corpus = getCorpus(corpusID);
+            
+            String comaNameOfObject = COMAUtilities.getComaNameForZumultName(type);
+
+            NodeList allKeys = (NodeList) xPath.evaluate("//Key[ancestor::*[@Id][1]/name()='" + comaNameOfObject + "']", 
+                    corpus.getDocument(), XPathConstants.NODESET);
+            Set<String> allKeyNames = new HashSet<>();
+            for (int i=0; i<allKeys.getLength(); i++){
+                Element keyElement = ((Element)(allKeys.item(i)));
+                String keyName = keyElement.getAttribute("Name");
+                allKeyNames.add(keyName);
+            }
+            
+            Set<MetadataKey> returnValue = new HashSet<>();
+            // to do
+            
+            
+            
+            return returnValue;
+        } catch (IOException | XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
