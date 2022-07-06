@@ -5,10 +5,11 @@
  */
 package org.zumult.query.implementations;
 
-import org.zumult.query.AdditionalSearchConstraints;
+import java.util.ArrayList;
 import org.zumult.query.MetadataQuery;
 import org.zumult.query.SearchQuery;
 import org.zumult.query.SearchResult;
+import org.zumult.query.AdditionalSearchConstraint;
 
 /**
  *
@@ -22,7 +23,7 @@ public class DGD2SearchResult implements SearchResult {
     private int totalTranscripts;
     private String searchMode;
     private long searchTime;
-    private AdditionalSearchConstraints additionalSearchConstraints;
+    private ArrayList<AdditionalSearchConstraint> additionalSearchConstraints;
     
 
     @Override
@@ -80,11 +81,11 @@ public class DGD2SearchResult implements SearchResult {
     }
 
     @Override
-    public AdditionalSearchConstraints getAdditionalSearchConstraints() {
+    public ArrayList<AdditionalSearchConstraint> getAdditionalSearchConstraints() {
         return additionalSearchConstraints;
     }
     
-    public void setAdditionalSearchConstraints(AdditionalSearchConstraints additionalSearchConstraints) {
+    public void setAdditionalSearchConstraints(ArrayList<AdditionalSearchConstraint> additionalSearchConstraints) {
         this.additionalSearchConstraints = additionalSearchConstraints;
     }
 

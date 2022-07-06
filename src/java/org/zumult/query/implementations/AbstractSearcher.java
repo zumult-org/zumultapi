@@ -7,6 +7,8 @@ package org.zumult.query.implementations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,7 +22,6 @@ import org.zumult.io.IOHelper;
 import org.zumult.io.TimeUtilities;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
-import org.zumult.query.AdditionalSearchConstraints;
 import org.zumult.query.Hit;
 import org.zumult.query.SearchResult;
 import org.zumult.query.SearchResultPlus;
@@ -33,6 +34,7 @@ import org.zumult.query.searchEngine.SearchEngineResponse;
 import org.zumult.query.searchEngine.SearchEngineResponseHitList;
 import org.zumult.query.searchEngine.SearchEngineResponseStatistics;
 import org.zumult.query.searchEngine.SortTypeEnum;
+import org.zumult.query.AdditionalSearchConstraint;
 
 /**
  *
@@ -303,7 +305,7 @@ public abstract class AbstractSearcher {
 
     
     
-    public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitionsStr) throws IOException, SearchServiceException {
+    public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitionsStr, String synonymStr) throws IOException, SearchServiceException {
         
         // set cutoff
         Boolean count = Constants.DEFAULT_CUTOFF;
@@ -314,21 +316,58 @@ public abstract class AbstractSearcher {
         // set index
         DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
         
+        // create a list for additional search constraints
+         ArrayList<AdditionalSearchConstraint> additionalSearchConstraints = new ArrayList();
+        
         // create a list with repetition-objects
         ArrayList<Repetition> repetitions = new ArrayList();
-        AdditionalSearchConstraints additionalSearchConstraints = new DGD2AdditionalSearchConstraints(repetitionsStr);
+        
         try {
             Document doc = (Document) IOHelper.DocumentFromText(repetitionsStr);
-            NodeList nodes = doc.getElementsByTagName(Constants.REPETITON_XML_ELEMENT_NAME_REPETITION);
+            NodeList nodes = doc.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_REPETITION);
             for (int i=0; i<nodes.getLength(); i++){
                 Element element = ((Element)(nodes.item(i)));
                 Repetition r = new Repetition(element);
                 repetitions.add(r);
             }
+            additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(repetitionsStr));
 
         } catch (SAXException | ParserConfigurationException ex) {
            throw new SearchServiceException ("Please check the xml format of repetition-parameter!");
-        } 
+        }
+        
+        
+        //create a list of synonyms
+        HashMap<String, HashSet> synonymMap = new HashMap();
+
+        if(synonymStr!=null && !synonymStr.isEmpty()){
+            String synonyms = synonymStr.replaceAll("\\s+","");
+        
+            try {
+                Document doc = (Document) IOHelper.DocumentFromText(synonyms);
+                NodeList nodes = doc.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS);
+
+                Element element = ((Element)(nodes.item(0)));
+                String[] wordSets = element.getTextContent().split(";");
+                for (String wordSet : wordSets) {
+                    ArrayList<String> wordList = new ArrayList(Arrays.asList(wordSet.split(",")));
+
+                    for(String word: wordList){
+                        HashSet words = new HashSet(wordList);
+                        words.remove(word);
+                        if(synonymMap.containsKey(word)){
+                            words.addAll(synonymMap.get(word));
+                        }
+                        synonymMap.put(word, words);
+                    }
+                }
+
+                additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(synonyms));
+            } catch (SAXException | ParserConfigurationException ex) {
+               throw new SearchServiceException ("Please check the xml format of synonyms!");
+            }
+        }
+
         
         /* Search with MTAS using cqp query language */
         final long timeStart_search = System.currentTimeMillis();
@@ -336,7 +375,7 @@ public abstract class AbstractSearcher {
         MTASBasedSearchEngine se = new MTASBasedSearchEngine();
         SearchEngineResponseHitList mtasSearchResult = se.searchRepetitions(getIndexPaths(index), 
                 query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), pagination.getPageStartIndex() + 1, 
-                pagination.getPageStartIndex() + pagination.getItemsPerPage(), count, metadataIDs, repetitions);
+                pagination.getPageStartIndex() + pagination.getItemsPerPage(), count, metadataIDs, repetitions, synonymMap);
 
         final long timeEnd_search = System.currentTimeMillis();
         long millis_search = timeEnd_search - timeStart_search;

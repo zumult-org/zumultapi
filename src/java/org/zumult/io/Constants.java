@@ -84,8 +84,8 @@ public class Constants {
             "ESSEN", "HAUS_UND_WOHNUNG", "SCHULE_UND_AUSBILDUNG"
         };
     
-    public static String THEMATIC_WORDLISTS_PATH = "/data";
-    public static String WORD_FIELD_PATTERN = "WORTFELD_(.+?)\\.txt";
+    public static final String THEMATIC_WORDLISTS_PATH = "/data";
+    public static final String WORD_FIELD_PATTERN = "WORTFELD_(.+?)\\.txt";
     public static final String CORPUS_DELIMITER = "|";
     public static final String SPEAKER_DELIMITER = " ";
     public static final String TOKEN_DELIMITER = "|";
@@ -94,43 +94,43 @@ public class Constants {
     public static final String CORPUS_SIGLE_PATTERN = "corpusSigle=(.*)";
     public static final String CORPUS_SIGLE = "corpusSigle";
             
-    public static String METADATA_KEY_MATCH_TYPE_WORD ="word";
-    public static String METADATA_KEY_MATCH_TYPE_WORD_TYPE ="word.type";
-    public static String METADATA_KEY_MATCH_TYPE_PARA ="para";
-    public static String METADATA_KEY_MATCH_TYPE_PAUSE_DURATION = "pause.dur";
-    public static String METADATA_KEY_MATCH_TYPE_PAUSE_DURATION_CEIL = "pause.dur.ceil";
-    public static String METADATA_KEY_MATCH_TYPE_PAUSE_TYPE = "pause.type";
-    public static String METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER = "annotationBlock.speaker";
+    public static final String METADATA_KEY_MATCH_TYPE_WORD ="word";
+    public static final String METADATA_KEY_MATCH_TYPE_WORD_TYPE ="word.type";
+    public static final String METADATA_KEY_MATCH_TYPE_PARA ="para";
+    public static final String METADATA_KEY_MATCH_TYPE_PAUSE_DURATION = "pause.dur";
+    public static final String METADATA_KEY_MATCH_TYPE_PAUSE_DURATION_CEIL = "pause.dur.ceil";
+    public static final String METADATA_KEY_MATCH_TYPE_PAUSE_TYPE = "pause.type";
+    public static final String METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER = "annotationBlock.speaker";
     
-    public static String METADATA_KEY_MATCH_LOWERCASE ="_lc";
+    public static final String METADATA_KEY_MATCH_LOWERCASE ="_lc";
     
     
     // additional metadata
-    public static String METADATA_KEY_EVENT_DGD_ID = "e_dgd_kennung";
-    public static String METADATA_KEY_SPEAKER_DGD_ID = "s_dgd_kennung";
-    public static String METADATA_KEY_TRANSCRIPT_DGD_ID = "t_dgd_kennung";
-    public static String METADATA_KEY_SPEECH_EVENT_DGD_ID = "se_dgd_kennung";
-    public static String METADATA_KEY_SPEECH_EVENT_SPEECH_NOTES = "e_se_grad_der_muendlichkeit";
-    public static String METADATA_KEY_SPEECH_EVENT_DGD_ID_temp = "e_se_dgd_kennung";
-    public static String METADATA_KEY_SPEAKER_YEAR_OF_BIRTH = "s_geb";
-    public static String METADATA_KEY_EVENT_DAUER_SEC =  "e_dauer_sec";
-    public static String METADATA_KEY_EVENT_DURATION= "e_dauer";
-    public static String METADATA_KEY_SPEAKER_BIRTH_DATE = "s_geb_jahr";
-    public static String METADATA_KEY_SPEAKER_BIRTH_AGE = "ses_alter_s";
+    public static final String METADATA_KEY_EVENT_DGD_ID = "e_dgd_kennung";
+    public static final String METADATA_KEY_SPEAKER_DGD_ID = "s_dgd_kennung";
+    public static final String METADATA_KEY_TRANSCRIPT_DGD_ID = "t_dgd_kennung";
+    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID = "se_dgd_kennung";
+    public static final String METADATA_KEY_SPEECH_EVENT_SPEECH_NOTES = "e_se_grad_der_muendlichkeit";
+    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID_temp = "e_se_dgd_kennung";
+    public static final String METADATA_KEY_SPEAKER_YEAR_OF_BIRTH = "s_geb";
+    public static final String METADATA_KEY_EVENT_DAUER_SEC =  "e_dauer_sec";
+    public static final String METADATA_KEY_EVENT_DURATION= "e_dauer";
+    public static final String METADATA_KEY_SPEAKER_BIRTH_DATE = "s_geb_jahr";
+    public static final String METADATA_KEY_SPEAKER_BIRTH_AGE = "ses_alter_s";
 
     
     // not indexed speaker metadata (in TB mode)
-    public static String METADATA_KEY_SPEAKER_NAME = "s_name";
-    public static String METADATA_KEY_SPEAKER_OTHER_NAMES = "s_sonstige_bezeichnungen";
-    public static String METADATA_KEY_SPEAKER_PSEUDONYM = "s_pseudonym";
+    public static final String METADATA_KEY_SPEAKER_NAME = "s_name";
+    public static final String METADATA_KEY_SPEAKER_OTHER_NAMES = "s_sonstige_bezeichnungen";
+    public static final String METADATA_KEY_SPEAKER_PSEUDONYM = "s_pseudonym";
     
-    public static String SPANGRP_SUBTYPE_TIME_BASED = "time-based";
-    public static String SPANGRP_TYPE_SPEAKER_OVERLAP = "speaker-overlap";
-    public static String SPANGRP_TYPE_META = "meta";
-    public static String SPANGRP_TYPE_OVERLAP_WITH_COMMON_EVENTS = "overlap-with-common-events";
-    public static String SPANGRP_TYPE_TOKEN_OVERLAP = "token-overlap";
-    public static String SPANGRP_TYPE_ANOTHER_SPEAKER = "another-speaker";// if current speaker is silent, but another one s talking
-    public static String SPANGRP_TYPE_REPETITION = "repetition";
+    public static final String SPANGRP_SUBTYPE_TIME_BASED = "time-based";
+    public static final String SPANGRP_TYPE_SPEAKER_OVERLAP = "speaker-overlap";
+    public static final String SPANGRP_TYPE_META = "meta";
+    public static final String SPANGRP_TYPE_OVERLAP_WITH_COMMON_EVENTS = "overlap-with-common-events";
+    public static final String SPANGRP_TYPE_TOKEN_OVERLAP = "token-overlap";
+    public static final String SPANGRP_TYPE_ANOTHER_SPEAKER = "another-speaker";// if current speaker is silent, but another one s talking
+    public static final String SPANGRP_TYPE_REPETITION = "repetition";
     
     public static final String SEARCH_TYPE_DOWNLOAD = "download";
     public static final String SEARCH_TYPE_STANDARD = "standard";
@@ -163,31 +163,31 @@ public class Constants {
     public static final String XML_NAMESPACE_URL = "http://www.w3.org/XML/1998/namespace";
     public static final String TEI_NAMESPACE_URL = "http://www.tei-c.org/ns/1.0";
     
-    public static String ATTRIBUTE_NAME_START = "start";
-    public static String ATTRIBUTE_NAME_END = "end";
-    public static String ATTRIBUTE_NAME_TYPE = "type";
-    public static String ATTRIBUTE_NAME_SUBTYPE = "subtype";
-    public static String ATTRIBUTE_NAME_FROM = "from";
-    public static String ATTRIBUTE_NAME_TO = "to";
-    public static String ATTRIBUTE_NAME_WHO = "who";
-    public static String ATTRIBUTE_NAME_TARGET = "target";
-    public static String ATTRIBUTE_NAME_SYNCH = "synch";
-    public static String ATTRIBUTE_NAME_N = "n";
-    public static String ATTRIBUTE_NAME_DUR = "dur";
-    public static String ATTRIBUTE_NAME_REND = "rend";
-    public static String ATTRIBUTE_NAME_DESC = "desc";
-    public static String ATTRIBUTE_NAME_ITERVAL = "interval";
-    public static String ATTRIBUTE_NAME_CLASS = "class";
-    public static String ATTRIBUTE_NAME_PROXY_START = "proxy_start";
-    public static String ATTRIBUTE_NAME_PROXY_END = "proxy_end";
-    public static String ATTRIBUTE_VALUE_PROXY = "proxy";
-    public static String ATTRIBUTE_NAME_DUR_ROUND = "dur-round";
-    public static String ATTRIBUTE_NAME_DUR_CEIL = "dur-ceil";
-    public static String ATTRIBUTE_NAME_ID = "id";
-    public static String ATTRIBUTE_NAME_LEMMA = "lemma";
-    public static String ATTRIBUTE_NAME_NORM ="norm";
-    public static String ATTRIBUTE_NAME_POS ="pos";
-    public static String ATTRIBUTE_NAME_PHON ="phon";
+    public static final String ATTRIBUTE_NAME_START = "start";
+    public static final String ATTRIBUTE_NAME_END = "end";
+    public static final String ATTRIBUTE_NAME_TYPE = "type";
+    public static final String ATTRIBUTE_NAME_SUBTYPE = "subtype";
+    public static final String ATTRIBUTE_NAME_FROM = "from";
+    public static final String ATTRIBUTE_NAME_TO = "to";
+    public static final String ATTRIBUTE_NAME_WHO = "who";
+    public static final String ATTRIBUTE_NAME_TARGET = "target";
+    public static final String ATTRIBUTE_NAME_SYNCH = "synch";
+    public static final String ATTRIBUTE_NAME_N = "n";
+    public static final String ATTRIBUTE_NAME_DUR = "dur";
+    public static final String ATTRIBUTE_NAME_REND = "rend";
+    public static final String ATTRIBUTE_NAME_DESC = "desc";
+    public static final String ATTRIBUTE_NAME_ITERVAL = "interval";
+    public static final String ATTRIBUTE_NAME_CLASS = "class";
+    public static final String ATTRIBUTE_NAME_PROXY_START = "proxy_start";
+    public static final String ATTRIBUTE_NAME_PROXY_END = "proxy_end";
+    public static final String ATTRIBUTE_VALUE_PROXY = "proxy";
+    public static final String ATTRIBUTE_NAME_DUR_ROUND = "dur-round";
+    public static final String ATTRIBUTE_NAME_DUR_CEIL = "dur-ceil";
+    public static final String ATTRIBUTE_NAME_ID = "id";
+    public static final String ATTRIBUTE_NAME_LEMMA = "lemma";
+    public static final String ATTRIBUTE_NAME_NORM ="norm";
+    public static final String ATTRIBUTE_NAME_POS ="pos";
+    public static final String ATTRIBUTE_NAME_PHON ="phon";
     
     public static final String ELEMENT_NAME_BODY = "body";
     public static final String ELEMENT_NAME_ANNOTATION_BLOCK = "annotationBlock";
@@ -273,20 +273,23 @@ public class Constants {
     public static final String DIFF_NORM = "diffNorm";
     
     // repetition xml
-    public static final String REPETITON_XML_ELEMENT_NAME_REPETITIONS="repetitions";
-    public static final String REPETITON_XML_ELEMENT_NAME_REPETITION="repetition";
-    public static final String REPETITON_XML_ELEMENT_NAME_SPEAKER="speaker";
-    public static final String REPETITON_XML_ELEMENT_NAME_SPEAKER_METADATA="speakerMetadata";
-    public static final String REPETITON_XML_ELEMENT_NAME_REPETITON_TYPE="repetitionType";
-    public static final String REPETITON_XML_ELEMENT_NAME_MIN_DISTANCE="minDistance";
-    public static final String REPETITON_XML_ELEMENT_NAME_MAX_DISTANCE="maxDistance";
-    public static final String REPETITON_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS="ignoreFunctionalWords";
-    public static final String REPETITON_XML_ELEMENT_NAME_SPEAKER_CHANGE="speakerChange";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_MATCH="positionToMatch";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_OVERLAP="positionToOverlap";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE="positionToSpeakerChangeType";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE="positionToSpeakerChangeMin";
-    public static final String REPETITON_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE="positionToSpeakerChangeMax";
-    public static final String REPETITON_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY="precededby";
-    public static final String REPETITON_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION="withinSpeakerContribution"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITIONS="repetitions";
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITION="repetition";
+    public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER="speaker";
+    public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA="speakerMetadata";
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE="repetitionType";
+    public static final String REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE="repetitionSimilarityType";
+    public static final String REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE="minDistance";
+    public static final String REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE="maxDistance";
+    public static final String REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS="ignoreFunctionalWords";
+    public static final String REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER="ignoreTokenOrder";
+    public static final String REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE="speakerChange";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH="positionToMatch";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP="positionToOverlap";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE="positionToSpeakerChangeType";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE="positionToSpeakerChangeMin";
+    public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE="positionToSpeakerChangeMax";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY="precededby";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION="withinSpeakerContribution"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
 }

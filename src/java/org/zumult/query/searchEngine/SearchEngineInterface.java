@@ -7,6 +7,8 @@ package org.zumult.query.searchEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import org.zumult.objects.IDList;
 import org.zumult.query.SearchServiceException;
 
@@ -101,11 +103,12 @@ public interface SearchEngineInterface {
      * @param metadataIDs           the list of metadata IDs whose values should be retrieved for each hit. 
      *                              It can be used when downloading KWIC inclusive metadata
      * @param repetitions           the array of {@code Repetition} objects
+     * @param synonyms              the map  of synonym sets, e.g. {Mann=[Kerl, Junge], Fernseher=[Glotze], Katze=[Mieze, Kätzchen], ...}
      * 
      * @return the {@code SearchEngineResponseHitList} object
      * @throws SearchServiceException  if the query string or the metadata query string cannot be parsed
      * @throws IOException  if there are problems with accessing the search index
      */
     public SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString, String metadataQueryString,
-            Integer from, Integer to, Boolean cutoff, IDList metadataIDs, ArrayList<Repetition> repetitions) throws SearchServiceException, IOException;
+            Integer from, Integer to, Boolean cutoff, IDList metadataIDs, ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException;
 }
