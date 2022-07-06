@@ -298,35 +298,6 @@ public class AGDFileSystem extends AbstractIDSBackend {
     }*/
 
 
-
-
-    @Override
-    public AnnotationBlock getAnnotationBlock(String transcriptID, String annotationBlockId) throws IOException {
-        try {
-            Transcript transcript = getTranscript(transcriptID);
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            xPath.setNamespaceContext(new ISOTEINamespaceContext());
-            // 05-05-2021 - it seems that this is called not only for annotationBlocks 
-            // but for highest level elements in general
-            // it is inaptly named then... Ignoring this for the time being
-            //String xpathString = "//tei:annotationBlock[@xml:id='" + annotationBlockId + "']";
-            String xpathString = "//tei:body/*[@xml:id='" + annotationBlockId + "']";
-            //System.out.println(xpathString);
-            Element annotationBlock = (Element)xPath.evaluate(xpathString,
-                    transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-            if (annotationBlock==null){
-                throw new IOException("No element with ID " + annotationBlockId);
-            }
-            annotationBlock.getParentNode().removeChild(annotationBlock);
-            AnnotationBlock ab = new DGD2AnnotationBlock(IOHelper.ElementToString(annotationBlock));
-            return ab;
-        } catch (XPathExpressionException | TransformerException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        }
-        
-    }
-
     @Override
     public String getDescription() {
         return "AGD@IDS Backend using the plain file system";        
