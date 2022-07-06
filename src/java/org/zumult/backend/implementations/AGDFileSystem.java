@@ -23,11 +23,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
+import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
+import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
@@ -354,7 +356,7 @@ public class AGDFileSystem extends AbstractIDSBackend {
     public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
         IDList list = new IDList("AvailableValue");
         try {
-            String path = "/data/ZuMultAvailableAnnotationValues.xml";
+            String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
             String xml = new Scanner(AGDFileSystem.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
             Document doc = IOHelper.DocumentFromText(xml);
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -388,7 +390,32 @@ public class AGDFileSystem extends AbstractIDSBackend {
 
     @Override
     public Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationType) {
-        return IOHelper.getAnnotationLayersForCorpus(corpusID, annotationType);        
+        Set<AnnotationLayer> annotationLayers = new HashSet();
+        try {          
+            Corpus corpus = getCorpus(corpusID);
+            
+            if (annotationType!=null){
+                try{
+                    AnnotationTypeEnum annotationTypeEnum = AnnotationTypeEnum.valueOf(annotationType.toUpperCase());
+                    switch(annotationTypeEnum){
+                        case TOKEN:
+                            annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+                        case SPAN:
+                            annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
+                        default:
+                            // will NOT execute
+                    }
+                }catch(NullPointerException ex){
+                    throw new NullPointerException(annotationType + "cound not be found!");    
+                }
+            }else{
+                annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+            }
+                        
+        } catch (IOException ex) {
+            throw new NullPointerException(corpusID + "cound not be found!");
+        }
+        return annotationLayers;
     }
     
     @Override

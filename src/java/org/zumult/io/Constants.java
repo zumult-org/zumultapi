@@ -77,6 +77,8 @@ public class Constants {
     public static String WITHOUT_PUNCTUTION_EXT ="without_Punct";
     public static String WITH_PUNCTUTION_EXT ="with_Punct";
     
+    public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
+    
     public static String[] LEIPZIG_WORDLISTS =
         {
             "GOETHE_A1", "GOETHE_A2", "GOETHE_B1",
