@@ -70,7 +70,7 @@ import org.zumult.query.Searcher;
  *
  * @author thomas.schmidt
  */
-public abstract class AbstractIDSBackend implements BackendInterface {
+public abstract class AbstractIDSBackend extends AbstractBackend {
 
     @Override
     public IDList getCorpora() throws IOException {
@@ -320,30 +320,7 @@ public abstract class AbstractIDSBackend implements BackendInterface {
         return additionalMaterialMetadata;
     }
     
-    @Override
-    public IDList getTranscripts4Corpus(String corpusID) throws IOException {
-        IDList allTranscripts = new IDList("transcript");
-        IDList events = getEvents4Corpus(corpusID);
-        for (String eventID : events) {
-            IDList speechEvents = getEvent(eventID).getSpeechEvents();
-            for (String speechEventID : speechEvents) {
-                IDList transcripts = getSpeechEvent(speechEventID).getTranscripts();
-                allTranscripts.addAll(transcripts);
-            }
-        }
-        return allTranscripts;
-    }
 
-    @Override
-    public IDList getSpeechEvents4Corpus(String corpusID) throws IOException {
-        IDList allSpeechEvents = new IDList("speech-event");
-        IDList events = getEvents4Corpus(corpusID);
-        for (String eventID : events) {
-            IDList speechEvents = getEvent(eventID).getSpeechEvents();
-            allSpeechEvents.addAll(speechEvents);
-        }
-        return allSpeechEvents;
-    }
 
 
     @Override
@@ -421,52 +398,6 @@ public abstract class AbstractIDSBackend implements BackendInterface {
         return new FileSystemVirtualCollectionStore();
     }
 
-    @Override
-    public String getAnnotationBlockID4TokenID(String transcriptID, String tokenID) throws IOException {
-        try {
-            Transcript transcript = getTranscript(transcriptID);
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            xPath.setNamespaceContext(new ISOTEINamespaceContext());
-            String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
-            Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-            if (annotationBlock != null) {
-                return annotationBlock.getAttribute("xml:id");
-            }
-            return null;
-        } catch (XPathExpressionException ex) {
-            throw new IOException(ex);
-        }
-    }
-
-    @Override
-    public String getNearestAnnotationBlockID4TokenID(String transcriptID, String tokenID) throws IOException {
-        try {
-            Transcript transcript = getTranscript(transcriptID);
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            xPath.setNamespaceContext(new ISOTEINamespaceContext());
-            String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
-            Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-            if (annotationBlock != null) {
-                return annotationBlock.getAttribute("xml:id");
-            } else {
-                // if the element with the id is not part of an ab, return the first preceding or following annotation block
-                xpathString = "//*[@xml:id='" + tokenID + "']/preceding-sibling::tei:annotationBlock[1]";
-                annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-                if (annotationBlock != null) {
-                    return annotationBlock.getAttribute("xml:id");
-                } else {
-                    xpathString = "//*[@xml:id='" + tokenID + "']/following-sibling::tei:annotationBlock[1]";
-                    annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-                    if (annotationBlock != null) {
-                        return annotationBlock.getAttribute("xml:id");
-                    }
-                }
-                return null;
-            }
-        } catch (XPathExpressionException ex) {
-            throw new IOException(ex);
-        }
-    }
     
     
     @Override

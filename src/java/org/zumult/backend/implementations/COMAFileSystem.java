@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -24,13 +23,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.zumult.backend.BackendInterface;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
 import org.zumult.io.IOHelper;
-import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AdditionalMaterialMetadata;
-import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.Corpus;
@@ -49,7 +45,6 @@ import org.zumult.objects.implementations.COMACommunication;
 import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
-import org.zumult.objects.implementations.DGD2AnnotationBlock;
 import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SearchResult;
 import org.zumult.query.SearchServiceException;
@@ -62,7 +57,7 @@ import org.zumult.query.SampleQuery;
  *
  * @author thomas.schmidt
  */
-public class COMAFileSystem implements BackendInterface {
+public class COMAFileSystem extends AbstractBackend {
     
     XPath xPath = XPathFactory.newInstance().newXPath();
     File topFolder = new File(Configuration.getMetadataPath());
@@ -70,17 +65,17 @@ public class COMAFileSystem implements BackendInterface {
 
     @Override
     public String getID() {
-        return "agd.ids-mannheim.de";
+        return "TO DO";
     }
 
     @Override
     public String getName() {
-        return "Archiv f\u00fcr Gesprochenes Deutsch";
+        return "TO DO";
     }
 
     @Override
     public String getAcronym() {
-        return "AGD";
+        return "TO DO";
     }
 
     @Override
@@ -429,39 +424,7 @@ public class COMAFileSystem implements BackendInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public String getAnnotationBlockID4TokenID(String transcriptID, String tokenID) throws IOException {
-        try {
-            Transcript transcript = getTranscript(transcriptID);
-            XPath xPathForHere = XPathFactory.newInstance().newXPath();
-            xPathForHere.setNamespaceContext(new ISOTEINamespaceContext());
-            String xpathString = "//tei:annotationBlock[descendant::tei:w[@xml:id='" + tokenID + "']]";
-            Element annotationBlock = (Element)xPathForHere.evaluate(xpathString,
-                    transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-            return annotationBlock.getAttribute("xml:id");
-        } catch (XPathExpressionException ex) {
-            throw new IOException(ex);
-        }
-    }
 
-    @Override
-    public AnnotationBlock getAnnotationBlock(String transcriptID, String annotationBlockId) throws IOException {
-        try {
-            Transcript transcript = getTranscript(transcriptID);
-            XPath xPathForHere = XPathFactory.newInstance().newXPath();
-            xPathForHere.setNamespaceContext(new ISOTEINamespaceContext());
-            String xpathString = "//tei:annotationBlock[@xml:id='" + annotationBlockId + "']";
-            //System.out.println(xpathString);
-            Element annotationBlock = (Element)xPathForHere.evaluate(xpathString,
-                    transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-            annotationBlock.getParentNode().removeChild(annotationBlock);
-            AnnotationBlock ab = new DGD2AnnotationBlock(IOHelper.ElementToString(annotationBlock));
-            return ab;
-        } catch (XPathExpressionException | TransformerException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        }
-    }
 
     @Override
     public Speaker getSpeakerInSpeechEvent(String speechEventID, String speakerID) {
@@ -487,10 +450,6 @@ public class COMAFileSystem implements BackendInterface {
         return null;
     }
 
-    @Override
-    public IDList getTranscripts4Corpus(String corpusID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public MetadataKey findMetadataKeyByID(String id) {
@@ -522,17 +481,6 @@ public class COMAFileSystem implements BackendInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 }
 
-    @Override
-    public IDList getSpeechEvents4Corpus(String corpusID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-
-    @Override
-    public String getNearestAnnotationBlockID4TokenID(String transcriptID, String tokenID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String getEvent4Transcript(String transcriptID) throws IOException {
