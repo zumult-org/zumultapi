@@ -178,5 +178,15 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     public Set<AnnotationLayer> getAnnotationLayers() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Set<AnnotationLayer> getTokenBasedAnnotationLayers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<AnnotationLayer> getSpanBasedAnnotationLayers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

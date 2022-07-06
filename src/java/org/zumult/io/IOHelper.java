@@ -353,60 +353,6 @@ public class IOHelper {
          return result;
      }    
     
-    
-    public static Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationLayerType) {
-        AnnotationTypeEnum annotationType = null;
-        Set<AnnotationLayer> result = new HashSet<>();
-        String path = "/data/ZuMultAvailableAnnotationValues.xml";
-        String xPathString = "//available-values/corpus[@corpus=\""+corpusID+"\"]/key";
-        XPath xPath = XPathFactory.newInstance().newXPath();
-            
-        try{
-            // check annotation type exists
-            if (annotationLayerType!=null){
-                annotationType = AnnotationTypeEnum.valueOf(annotationLayerType.toUpperCase());
-            }
-
-            String xml = new Scanner(IOHelper.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);    
-            NodeList nodes = (NodeList)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
-            for (int i=0; i<nodes.getLength(); i++){               
-                Element keyElement = ((Element)(nodes.item(i)));
-                AnnotationTypeEnum type = AnnotationTypeEnum.valueOf(keyElement.getAttribute("type").toUpperCase());
-                if (annotationType==null || annotationType.equals(type)){
-                    
-                    String id = keyElement.getAttribute("id");
-                    
-                    NodeList names = keyElement.getElementsByTagName("name");
-                    Map<String, String> map = new HashMap();
-                    for (int j=0; j<names.getLength(); j++){ 
-                        Element nameElement = ((Element)(names.item(j)));
-                        map.put(nameElement.getAttribute("lang"),nameElement.getTextContent());
-                    }  
-
-                    AnnotationLayer key = new DGD2AnnotationLayer(id, map, type);
-                    result.add(key);
-                }
-            }
-            
-            return result;
-
-        }catch (NullPointerException ex){
-            StringBuilder sb = new StringBuilder();
-            sb.append(". There is no annotation layer of the type ").append(annotationLayerType).append(". Supported types are: ");
-                for (AnnotationTypeEnum ob : AnnotationTypeEnum.values()){
-                        sb.append(ob.name());
-                        sb.append(", ");
-                    }
-            throw new NullPointerException(sb.toString().trim().replaceFirst(",$",""));
-        }catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(IOHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return null;
-
-    }
-    
     public static Map<String, String> sortMapByValue(Map<String, String> map){
         List<Map.Entry<String, String>> list = new ArrayList(map.entrySet());
 

@@ -242,7 +242,7 @@ public interface BackendInterface {
      * @param corpusQuery           the corpus query string that specifies in which corpora to search for {@code queryString}, 
      *                              e.g. corpusSigle="FOLK|GWSS|DH", not null
      * @param metadataQuery         the metadata query string that constraints the search result to specified metadata, e.g. tokenSize=2, may be null
-     * @param metadataKeyID         the metadata key ID for which the hit distribution is to be calculated.
+     * @param metadataKeyID         the metadata key ID for which the hit distribution is to be calculated, e.g. 'pos'
      * @param pageLength            the number of the {@code StatisticEntry} objects that should be returned with {@code SearchStatistics}. 
      *                              If null, the default value is used.
      * @param pageIndex             the number of the first {@code StatisticEntry} object that should be returned with {@code SearchStatistics}, 

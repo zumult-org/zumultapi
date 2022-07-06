@@ -5,8 +5,10 @@
  */
 package org.zumult.objects.implementations;
 
+import java.util.HashMap;
 import org.w3c.dom.Element;
 import java.util.Map;
+import org.w3c.dom.NodeList;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTypeEnum;
 
@@ -39,9 +41,15 @@ public class DGD2AnnotationLayer implements AnnotationLayer {
             <value freq="43">Beendigung</value>
         </key>       
         */
-        /*this.id = keyElement.getAttribute("id");
-        this.name = keyElement.getAttribute("name");
-        this.type = AnnotationTypeEnum.valueOf(keyElement.getAttribute("type").toUpperCase());*/
+        this.id = keyElement.getAttribute("id");
+        Map<String, String> map = new HashMap();
+        NodeList nodes = keyElement.getElementsByTagName("name");
+        for (int i=0; i<nodes.getLength(); i++){
+            Element el = (Element) nodes.item(i);
+            map.put(el.getAttribute("lang"), el.getTextContent());              
+        }
+        this.names = map;
+        this.type = AnnotationTypeEnum.valueOf(keyElement.getAttribute("type").toUpperCase());
     }
     
     @Override
