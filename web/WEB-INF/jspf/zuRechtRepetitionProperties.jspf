@@ -5,37 +5,44 @@
 <div class="repetitionPropertiesForm">
     
     <div class="row">
-                
-        <!-- repetition type -->
-        <div class="ml-3 mt-2">
-            <div class="input-group input-group-sm firstInRow">
+   
+        <!-- search type -->
+        <div class="ml-3 mt-2 firstInRow">
+            <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><%=myResources.getString("AnnotationLayer")%>
-                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("AnnotationLayerInfo")%>" ></i>
+                    <span class="input-group-text"><%=myResources.getString("SearchModeRepetition")%>
+                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SearchModeRepetitionInfo")%>" ></i>
                     </span>
                 </div>
-                <select class="form-control annotationLayerSelect">
-                    <option value="<%=RepetitionTypeEnum.WORD%>"><%=myResources.getString("TranscribedForm")%></option>
-                    <option value="<%=RepetitionTypeEnum.NORM%>" selected="selected"><%=myResources.getString("NormalizedForm")%></option>
-                    <option value="<%=RepetitionTypeEnum.LEMMA%>"><%=myResources.getString("Lemma")%></option>
+                <select class="form-control repetitionSearchModeSelect" onchange='enableFileUpload(this)'>
+                    <option value=1><%=myResources.getString("SameTranscription")%></option>
+                    <option value=2 selected="selected"><%=myResources.getString("SameNorm")%></option>
+                    <option value=3 ><%=myResources.getString("SameLemma")%></option>
+                    <option value=4 ><%=myResources.getString("SameTranscriptionDiffNorm")%></option>
+                    <option value=5 ><%=myResources.getString("SameNormDiffTranscription")%></option>
+                    <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>
+                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
+                    <option value=8 ><%=myResources.getString("ExtendedSearchWithOwnLemmaList")%></option>
+                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>
                 </select>                          
             </div>
         </div>
 
-        <!-- speaker -->
-        <div class="ml-3 mt-2">
-            <div class="input-group input-group-sm">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><%=myResources.getString("Speaker")%></span>
-                </div>
-                <select class="form-control speakerSelect" onchange='enableSpeakerMetadata(this)'>
-                    <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
-                    <option value=true><%=myResources.getString("SameSpeaker")%></option>
-                    <option value=false><%=myResources.getString("AnotherSpeaker")%></option>
-                </select>                          
-            </div>
-        </div> 
 
+        <!-- speaker -->     
+        <div class="ml-3 mt-2 input-group input-group-sm" style="width:200px; float:left;">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><%=myResources.getString("Speaker")%>
+                    <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SpeakerRepetitionInfo")%>" ></i>
+                </span>
+            </div>
+            <select class="form-control speakerSelect" onchange='enableSpeakerMetadata(this)'>
+                <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
+                <option value=true><%=myResources.getString("SameSpeaker")%></option>
+                <option value=false><%=myResources.getString("AnotherSpeaker")%></option>
+            </select>                          
+        </div> 
+                
         <!-- speaker change -->
         <div class="ml-3 speakerChangeSelectGroup mt-2" style="display:none;">
             <div class="input-group input-group-sm">           
@@ -63,7 +70,7 @@
                 <div>
                 <input type="text" class="form-control form-control-sm speakerMetadataInputField inputFieldWithAutocomplete"
                     placeholder="<%=myResources.getString("ForExample")%> <s_geschlecht=&quot;Männlich&quot;/>"
-                    style="width: 380px;">
+                    style="width: 300px;">
                 </div>
             </div>
         </div>
@@ -72,15 +79,12 @@
               style="cursor: pointer; text-decoration: underline; text-align: right; color: #337AB7;"><%=myResources.getString("ShowMore")%></span>
 
     </div>
-    
-    <!-- additional properties-->
-    <div class="additionalRepetitionProperties" style="display:none">
-       
-                    
-        <div class="row">
-                
-            <!-- distance properties -->
-            <div class="ml-3 input-group input-group-sm mt-2">
+   
+    <div class="row">
+  
+        <!-- distance properties -->
+        <div class="ml-3 mt-2">
+            <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><%=myResources.getString("Distance")%>
                         <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("DistanceInfo")%>" ></i>
@@ -94,39 +98,28 @@
                     
                 <div class="form-check form-check-inline">
                     <label class="form-check-label mr-2">max.</label>
-                    <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="20">
-                    <label class="form-check-label mr-2 ml-2"><%=myResources.getString("WordTokens")%></label>
+                    <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistance" maxlength="2" value="5">
+                    <label class="form-check-label mr-3 ml-2"><%=myResources.getString("WordTokens")%></label>
                 </div>
                     
                 <div class="form-check form-check-inline">
                     <input class="form-check-input form-control-sm ignoreFunctionalWordsCheckBox" type="checkbox">
-                    <label class="form-check-label"><%=myResources.getString("IgnoreFunctionalWords")%></label>
+                    <label class="form-check-label"><%=myResources.getString("IgnoreFunctionalWords")%><i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("IgnoreFunctionWordsInfo")%>" ></i></label>
                 </div>
             </div> 
-                
         </div>
+    </div>
     
+    <!-- additional properties-->
+    <div class="additionalRepetitionProperties" style="display:none">
+
         <div class="row">
-
-            <!-- position to speaker overlaps --> 
-            <div class="ml-3 mt-2 input-group input-group-sm firstInRow">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><%=myResources.getString("PositionToSpeakerOverlap")%></span>
-                </div>
-                <select class="form-control positionToOverlap">
-                    <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
-                    <option value="<%=PositionOverlapEnum.WITHIN%>"><%=myResources.getString("Within")%></option>
-                    <option value="<%=PositionOverlapEnum.NOT_WITHIN%>"><%=myResources.getString("Outside")%></option>
-                   <!-- <option value="<%=PositionOverlapEnum.FOLLOWEDBY%>"><%=myResources.getString("ImmediatelyFollowedBy")%></option>
-                    <option value="<%=PositionOverlapEnum.PRECEDEDBY%>"><%=myResources.getString("ImmediatelyPrecededBy")%></option>-->
-                </select>                          
-            </div>
-
             <!-- position to speaker change -->
-            <div class="ml-3 mt-2">
+            <div class="ml-3 mt-2 firstInRow">
                 <div class="input-group input-group-sm" >
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><%=myResources.getString("PositionToSpeakerChange")%></span>
+                    <div class="input-group-prepend" ">
+                        <span class="input-group-text firstInRowPrepend"><%=myResources.getString("PositionToSpeakerChange")%>
+                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("PositionToSpeakerChangeInfo")%>" ></i></span>
                     </div>
                     <select class="form-control positionToSpeakerChangeType" onchange="addDistanceToSpeakerChange(this)">
                         <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
@@ -136,7 +129,7 @@
                 </div>
             </div>
             
-            <div class="form-check form-check-inline ml-2 mt-2">
+            <div class="form-check form-check-inline ml-3 mt-2">
                 <label class="form-check-label mr-2" >min.</label>
                 <input type="text" style="height:25px;width:35px;" disabled class="form-control form-control-sm positionToSpeakerChangeMin" maxlength="1" value="0">
             </div>
@@ -144,16 +137,49 @@
                 <label class="form-check-label mr-2 ">max.</label>
                 <input type="text" style="height:25px;width:35px;" disabled class="form-control form-control-sm positionToSpeakerChangeMax" maxlength="1" value="5">
                 <label class="form-check-label ml-2"><%=myResources.getString("WordTokens")%></label>
-            </div>
-            
+            </div>            
         </div>
-            
+        
         <div class="row">
+
+            <!-- position to speaker overlaps --> 
+            <div class="ml-3 mt-2 input-group input-group-sm firstInRow">
+                <div class="input-group-prepend">
+                    <span class="input-group-text "><%=myResources.getString("SpeakerOverlap")%>
+                    <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SpeakerOverlapInfo")%>" ></i></span>
+                </div>
+                <select class="form-control positionToOverlap">
+                    <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
+                    <option value="<%=PositionOverlapEnum.WITHIN%>"><%=myResources.getString("Within")%></option>
+                    <option value="<%=PositionOverlapEnum.NOT_WITHIN%>"><%=myResources.getString("Outside")%></option>
+                   <!-- <option value="<%=PositionOverlapEnum.FOLLOWEDBY%>"><%=myResources.getString("ImmediatelyFollowedBy")%></option>
+                    <option value="<%=PositionOverlapEnum.PRECEDEDBY%>"><%=myResources.getString("ImmediatelyPrecededBy")%></option>-->
+                </select>                          
+            </div>
+                
+            <!-- repetition of the word sequence --> 
+            <div class="ml-3 mt-2">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><%=myResources.getString("MultiWordRepetition")%>
+                        <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("MultiWordRepetitionInfo")%>" ></i></span>
+                    </div>
+                    <select class="form-control ignoreTokenOrder">
+                        <option value=false selected="selected"><%=myResources.getString("TokenOrderRelevant")%></option>
+                        <option value=true><%=myResources.getString("TokenOrderNotRelevant")%></option>
+                    </select>                          
+                </div>
+            </div>
+
+        </div>     
+                    
+        <div class="row">
+            
            <!-- context -->
            <div class="ml-3 mt-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><%=myResources.getString("RepetitionKontext")%>
+                        <span class="input-group-text firstInRowPrepend"><%=myResources.getString("RepetitionKontext")%>
                             <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("RepetitionKontextInfo")%>" ></i>                        
                         </span>
                     </div>
@@ -165,8 +191,8 @@
                     </div>
                 </div>  
             </div>  
-        </div>  
-            
+        </div> 
+                               
         <!-- add and delete the second repetition form -->
         <div class="addOneMoreRepetitionPropertiesForm mt-2"> <span onclick='displayOneMoreRepetitionPropertiesForm(this)' 
               style="cursor: pointer; text-decoration: underline; text-align: right; color: #337AB7;"><%=myResources.getString("OneMoreRepetition")%></span>
