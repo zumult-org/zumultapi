@@ -10,5 +10,13 @@ package org.zumult.objects;
  * @author Thomas.Schmidt
  */
 public enum ObjectTypesEnum {
-    EVENT, SPEAKER, SPEECH_EVENT, SPEAKER_IN_SPEECH_EVENT, TRANSCRIPT, HIT
+    CORPUS, 
+    EVENT, 
+    SPEAKER, 
+    SPEECH_EVENT, 
+    SPEAKER_IN_SPEECH_EVENT, 
+    TRANSCRIPT, 
+    MEDIA,
+    ADDITIONAL_MATERIAL,    
+    HIT
 }
