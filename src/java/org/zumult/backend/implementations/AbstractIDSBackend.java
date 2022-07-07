@@ -168,10 +168,11 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         return transcriptID.substring(0,18);
     }
     
-    @Override
+    // removed 07-07-2022, issue #45
+    /*@Override
     public String getEvent4Transcript(String transcriptID) throws IOException {
         return transcriptID.substring(0,12);
-    }
+    }*/
 
     @Override
     public String getEvent4SpeechEvent(String speechEventID) throws IOException {
@@ -406,7 +407,10 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             String metadataQuery, String searchIndex, String transcriptID, String tokenAttribute) throws SearchServiceException, IOException{
         Searcher searcher = new DGD2Searcher();
         searcher.setQuery("("+ queryString + ")"+ " within <"+ Constants.METADATA_KEY_TRANSCRIPT_DGD_ID +"=\"" + transcriptID + "\"/>", queryLanguage, queryLanguageVersion);
-        searcher.setCollection("corpusSigle=" + getCorpus4Event(getEvent4Transcript(transcriptID)), metadataQuery);
+        // changed 07-07-2022, issue #45
+        String eventID = getEvent4SpeechEvent(getSpeechEvent4Transcript(transcriptID));        
+        //searcher.setCollection("corpusSigle=" + getCorpus4Event(getEvent4Transcript(transcriptID)), metadataQuery);
+        searcher.setCollection("corpusSigle=" + getCorpus4Event(eventID), metadataQuery);
         return searcher.searchTokensForTranscript(searchIndex, tokenAttribute);
 
     }
