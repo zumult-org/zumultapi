@@ -444,8 +444,10 @@ public class CorporaResource {
         IDList speechEventsList = backendInterface.getSpeechEvents4Event(eventID);
         IDList transcriptsList = backendInterface.getTranscripts4SpeechEvent(speechEventID);
 
-        TranscriptMetadata transcriptMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptID);
-        String transcriptMetadataXml = transcriptMetadata.toXML();
+        // changed 07-07-2022, issue #41
+        /*TranscriptMetadata transcriptMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptID);
+        String transcriptMetadataXml = transcriptMetadata.toXML();*/
+        String transcriptMetadataXml = "<TranscriptMetadata/>";
         xmlDocument.addContent(IOUtilities.readElementFromString(transcriptMetadataXml));
         xmlString = IOUtilities.elementToString(xmlDocument);
 
@@ -660,8 +662,10 @@ public class CorporaResource {
         IDList speechEventsList = backendInterface.getSpeechEvents4Event(eventID);
         IDList audiosList = backendInterface.getAudios4SpeechEvent(speechEventID);
         IDList videosList = backendInterface.getVideos4SpeechEvent(speechEventID);
-        MediaMetadata mediaMetadata = backendInterface.getMediaMetadata4Media(eventID, mediaID);
-        String mediaMetadataXml = mediaMetadata.toXML();
+        // changed 07-07-2022, issue #41
+        /*MediaMetadata mediaMetadata = backendInterface.getMediaMetadata4Media(eventID, mediaID);
+        String mediaMetadataXml = mediaMetadata.toXML();*/
+        String mediaMetadataXml = "<MediaMetadata/>";
         xmlDocument.addContent(IOUtilities.readElementFromString(mediaMetadataXml));
         xmlString = IOUtilities.elementToString(xmlDocument);
 
