@@ -221,7 +221,6 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
     
     @Override
     public Set<AnnotationLayer> getAnnotationLayers() {
-        //return IOHelper.getAnnotationLayersForCorpus(getID(), null );
         return getAnnotationLayersForType(null);
         
     }

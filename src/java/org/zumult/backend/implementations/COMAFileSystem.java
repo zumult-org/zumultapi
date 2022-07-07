@@ -606,11 +606,6 @@ public class COMAFileSystem implements BackendInterface {
     }
 
     @Override
-    public Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String lang) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Set<AnnotationLayer> getAnnotationLayersForSearch(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -622,11 +617,6 @@ public class COMAFileSystem implements BackendInterface {
 
     @Override
     public Set<MetadataKey> getMetadataKeysForSearch(String corpusQuery, String searchIndex, String metadataKeyType) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
