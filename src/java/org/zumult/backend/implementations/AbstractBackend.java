@@ -20,7 +20,7 @@ import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.DGD2AnnotationBlock;
+import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 
 /**
  *
@@ -47,7 +47,7 @@ public abstract class AbstractBackend implements BackendInterface {
                 throw new IOException("No element with ID " + annotationBlockId);
             }
             annotationBlock.getParentNode().removeChild(annotationBlock);
-            AnnotationBlock ab = new DGD2AnnotationBlock(IOHelper.ElementToString(annotationBlock));
+            AnnotationBlock ab = new ISOTEIAnnotationBlock(IOHelper.ElementToString(annotationBlock));
             return ab;
         } catch (XPathExpressionException | TransformerException ex) {
             Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);

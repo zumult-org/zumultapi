@@ -38,7 +38,7 @@ import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.DGD2AnnotationBlock;
+import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.objects.implementations.DGD2AnnotationTagSet;
 import org.zumult.objects.implementations.DGD2Corpus;
 import org.zumult.objects.implementations.DGD2Event;

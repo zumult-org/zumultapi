@@ -8,7 +8,9 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
-import org.zumult.io.COMAUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AdditionalMaterialMetadata;
 import org.zumult.objects.AnnotationLayer;
@@ -37,6 +38,7 @@ import org.zumult.objects.Measure;
 import org.zumult.objects.Media;
 import org.zumult.objects.MediaMetadata;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
@@ -46,6 +48,7 @@ import org.zumult.objects.implementations.COMACommunication;
 import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
+import org.zumult.objects.implementations.DGD2MetadataKey;
 import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SearchResult;
 import org.zumult.query.SearchServiceException;
@@ -63,6 +66,32 @@ public class COMAFileSystem extends AbstractBackend {
     XPath xPath = XPathFactory.newInstance().newXPath();
     File topFolder = new File(Configuration.getMetadataPath());
     
+    static final Map<String, String> id2Corpus = new HashMap<>();
+    static final Map<String, String> id2parentID = new HashMap<>();
+    
+    static {
+        try {
+            // Make a map with IDs
+            COMAFileSystem comaFileSystem = new COMAFileSystem();
+            IDList corpora = comaFileSystem.getCorpora();
+            for (String corpusID : corpora){
+                Corpus corpus = comaFileSystem.getCorpus(corpusID);
+                String xp = "//*[@Id]";
+                XPath xPath2 = XPathFactory.newInstance().newXPath();
+                NodeList allIDElements = (NodeList) xPath2.evaluate(xp, corpus.getDocument().getDocumentElement(), XPathConstants.NODESET);
+                for (int i=0; i<allIDElements.getLength(); i++){
+                    Element idElement = ((Element)(allIDElements.item(i)));
+                    id2Corpus.put(idElement.getAttribute("Id"), corpusID);
+                    Element parentElement = (Element) (Node) xPath2.evaluate("ancestor::*[@Id][1]", idElement, XPathConstants.NODE);
+                    if (parentElement!=null){
+                        id2parentID.put(idElement.getAttribute("Id"), parentElement.getAttribute("Id"));
+                    }
+                }
+            }
+        } catch (IOException | XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public String getID() {
@@ -338,25 +367,29 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public IDList getTranscripts4Audio(String audioID) throws IOException {
         // This may be difficult because there is no mapping for this
-        return new IDList("transcript");
+        // it's two up, it seems
+        String speechEventID = id2parentID.get(id2parentID.get(audioID));
+        return getTranscripts4SpeechEvent(speechEventID);
     }
 
     @Override
     public IDList getTranscripts4Video(String videoID) throws IOException {
         // This may be difficult because there is no mapping for this
-        return new IDList("transcript");
+        // it's two up, it seems
+        String speechEventID = id2parentID.get(id2parentID.get(videoID));
+        return getTranscripts4SpeechEvent(speechEventID);
     }
 
     @Override
     public IDList getAudios4Transcript(String transcriptID) throws IOException {
         // This may be difficult because there is no mapping for this
-        return new IDList("audio");
+        return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
     }
 
     @Override
     public IDList getVideos4Transcript(String transcriptID) throws IOException {
         // This may be difficult because there is no mapping for this
-        return new IDList("video");
+        return getVideos4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
     }
 
     @Override
@@ -459,7 +492,8 @@ public class COMAFileSystem extends AbstractBackend {
     }
 
     private String findCorpusID(String someID) throws IOException {
-        for (String corpusID : getCorpora()){            
+        return id2Corpus.get(someID);
+        /*for (String corpusID : getCorpora()){            
             try {
                 Corpus tryCorpus = getCorpus(corpusID);
                 Document tryCorpusDocument = tryCorpus.getDocument();
@@ -472,13 +506,14 @@ public class COMAFileSystem extends AbstractBackend {
                 Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
             }            
         }
-        return null;
+        return null;*/
     }
 
 
     @Override
     public MetadataKey findMetadataKeyByID(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         return new DGD2MetadataKey("a", "b", ObjectTypesEnum.SPEECH_EVENT);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -487,7 +522,7 @@ public class COMAFileSystem extends AbstractBackend {
             String corpusID = findCorpusID(transcriptID);
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
-            String xp = "//Transcription[@Id='" + transcriptID + "']";
+            String xp = "//Transcription[@Id='" + transcriptID + "']/ancestor::Communication";
             Element tryElement = (Element) (Node) xPath.evaluate(xp, corpusDocument, XPathConstants.NODE);
             if (tryElement!=null){
                 return tryElement.getAttribute("Id");
@@ -605,7 +640,7 @@ public class COMAFileSystem extends AbstractBackend {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    /*@Override
     public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
         try {
             // within a given object type, key names in COMA should be unique
@@ -632,7 +667,7 @@ public class COMAFileSystem extends AbstractBackend {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
 
     @Override
     public Set<MetadataKey> getMetadataKeysForGroupingHits(String corpusQuery, String searchIndex, String metadataKeyType) throws SearchServiceException, IOException {
