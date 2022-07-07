@@ -363,36 +363,6 @@ public class AGDFileSystemTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getAnnotationLayersForCorpus method, of class AGDFileSystem.
-     */
-    @Test
-    public void testGetAnnotationLayersForCorpus() {
-        System.out.println("getAnnotationLayersForCorpus");
-        String corpusID = "";
-        String annotationType = "";
-        AGDFileSystem instance = new AGDFileSystem();
-        Set<AnnotationLayer> expResult = null;
-        Set<AnnotationLayer> result = instance.getAnnotationLayersForCorpus(corpusID, annotationType);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of getMetadataKeysForCorpus method, of class AGDFileSystem.
-     */
-    @Test
-    public void testGetMetadataKeysForCorpus() {
-        System.out.println("getMetadataKeysForCorpus");
-        String corpusID = "";
-        String type = "";
-        AGDFileSystem instance = new AGDFileSystem();
-        Set<MetadataKey> expResult = null;
-        Set<MetadataKey> result = instance.getMetadataKeysForCorpus(corpusID, type);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }
