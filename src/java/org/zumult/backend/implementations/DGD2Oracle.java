@@ -45,7 +45,7 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.implementations.DGD2Event;
 import org.zumult.objects.implementations.DGD2Speaker;
-import org.zumult.objects.implementations.DGD2AnnotationBlock;
+import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -604,7 +604,7 @@ public class DGD2Oracle extends AbstractIDSBackend {
             String xml = HTTPMethodHelper.callCommand("getAnnotationBlockXML", parameters);        
             xml = HTTPMethodHelper.stripXMLResponse(xml);
             Document doc = IOHelper.DocumentFromText(xml);
-            AnnotationBlock annotationBlock = new DGD2AnnotationBlock(doc);
+            AnnotationBlock annotationBlock = new ISOTEIAnnotationBlock(doc);
             return annotationBlock;
         } catch (ParserConfigurationException | SAXException ex) {
             throw new IOException(ex);

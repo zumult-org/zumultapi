@@ -37,6 +37,14 @@ public class TestCOMABackend {
             System.out.println(":" + Configuration.getMetadataPath());
             BackendInterface bi = new COMAFileSystem();
             
+            IDList audios4Transcript = bi.getAudios4Transcript("CIDID93045167-C4FF-8EF6-36B8-F08AC9F9E331");
+            for (String a : audios4Transcript) System.out.println(a);
+            
+            IDList transcripts4Audio = bi.getTranscripts4Audio("MID7D516D45-D94A-24EF-8D21-4B0A4DC891CA");
+            for (String t : transcripts4Audio) System.out.println(t);
+            
+            System.exit(0);
+            
             
             SpeechEvent se = bi.getSpeechEvent("CID06C693EF-494A-913E-EBF1-6C9618CDCC46");
             //System.out.println(se.toXML());
