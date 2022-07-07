@@ -243,8 +243,11 @@ public class MetadataResource {
                 Element metadatumElement2 = new Element("metadatum").setAttribute("key", "size_in_bytes");
 
                 audioMetadata.addContent(linkUrl);
-                String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getDuration();
-                String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaFileSizeInBytes();
+                // 07-07-2022, changed for issue #41
+                //String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getDuration();
+                //String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaFileSizeInBytes();
+                String durationMetadata = Double.toString(backendInterface.getMedia(audio).getDuration());
+                String fileSizeMetadata = "0";
                 metadatumElement1.addContent(durationMetadata);
                 metadatumElement2.addContent(fileSizeMetadata);
                 metadataElement.addContent(metadatumElement1);
