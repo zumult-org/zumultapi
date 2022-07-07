@@ -7,7 +7,6 @@ package org.zumult.query;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.IDList;

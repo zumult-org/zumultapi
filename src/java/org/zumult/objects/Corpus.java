@@ -31,6 +31,8 @@ public interface Corpus extends XMLSerializable, Identifiable {
     
     //public Set<String> getAnnotationTypes();
     public Set<AnnotationLayer> getAnnotationLayers();
+    public Set<AnnotationLayer> getTokenBasedAnnotationLayers();
+    public Set<AnnotationLayer> getSpanBasedAnnotationLayers();
 
     public Set<String> getSpeakerLocationTypes();
    

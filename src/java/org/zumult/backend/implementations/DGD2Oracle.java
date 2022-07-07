@@ -641,17 +641,4 @@ public class DGD2Oracle extends AbstractIDSBackend {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String lang) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-
-
 } 
