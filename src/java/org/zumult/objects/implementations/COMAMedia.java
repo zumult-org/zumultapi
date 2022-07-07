@@ -11,45 +11,34 @@ import org.zumult.objects.Media;
  *
  * @author thomas.schmidt
  */
-public class COMAMedia implements Media {
+public class COMAMedia extends AbstractMedia {
 
-    String id;    
-    String urlString;
     
     public COMAMedia(String id, String urlString){
-        this.id = id;
-        this.urlString = urlString;
+        super(id, urlString);
     }
 
     @Override
     public MEDIA_TYPE getType() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public String getURL() {
-        return urlString;
-    }
-
-    @Override
-    public String getID() {
-        return id;
-    }
-
+    
     @Override
     public Media getPart(double startInSeconds, double endInSeconds) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] idAndUrl = cut(startInSeconds, endInSeconds);
+        return new COMAMedia(idAndUrl[0], idAndUrl[0]);
     }
-
-    @Override
-    public double getDuration() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public Media getVideoImage(double positionInSeconds) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] idAndUrl = still(positionInSeconds);
+        if (idAndUrl!=null){
+            return new COMAMedia(idAndUrl[0], idAndUrl[0]);            
+        }
+        return null;
     }
+
+
     
     
 }
