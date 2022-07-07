@@ -18,7 +18,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Location;
@@ -85,7 +87,9 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
 
     @Override
     public IDList getSpeechEvents() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IDList result = new IDList("speechEvent");
+        result.add(getID());
+        return result;
     }
 
 
@@ -106,17 +110,53 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
 
     @Override
     public IDList getTranscripts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IDList result = new IDList("transcript");
+        try {
+            String xPathString = "descendant::Transcription";
+            NodeList transcriptionNodeList = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<transcriptionNodeList.getLength(); i++){
+                Element transcriptionElement = (Element)(transcriptionNodeList.item(i));
+                String tID = transcriptionElement.getAttribute("Id");
+                result.add(tID);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(DGD2Event.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     @Override
     public IDList getMedia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IDList result = new IDList("media");
+        try {
+            String xPathString = "descendant::Media";
+            NodeList mediaNodeList = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<mediaNodeList.getLength(); i++){
+                Element mediaElement = (Element)(mediaNodeList.item(i));
+                String mID = mediaElement.getAttribute("Id");
+                result.add(mID);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(DGD2Event.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     @Override
     public IDList getSpeakers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        IDList result = new IDList("speaker");
+        try {
+            String xPathString = "descendant::Person";
+            NodeList personNodeList = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<personNodeList.getLength(); i++){
+                Element personElement = (Element)(personNodeList.item(i));
+                String pID = personElement.getTextContent();
+                result.add(pID);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(DGD2Event.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     @Override

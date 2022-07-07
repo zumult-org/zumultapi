@@ -189,7 +189,8 @@ public class COMAFileSystem extends AbstractBackend {
             Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
             File corpusFolder = new File(topFolder, corpusID);
-            String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+            //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+            String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
             return new COMAMedia(mediaID, urlString);
             
         } catch (XPathExpressionException ex) {
@@ -512,8 +513,18 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public MetadataKey findMetadataKeyByID(String id) {
-         return new DGD2MetadataKey("a", "b", ObjectTypesEnum.SPEECH_EVENT);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            IDList corpora = getCorpora();
+            for (String corpusID : corpora){
+                Corpus corpus = getCorpus(corpusID);
+                for (MetadataKey key : corpus.getMetadataKeys()){
+                    if (key.getID().equals(id)) return key;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -545,13 +556,13 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public String getCorpus4Event(String eventID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id2Corpus.get(eventID);
     }
     
     @Override
     public Media getMedia(String mediaID, Media.MEDIA_FORMAT format) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-}
+        return getMedia(mediaID);
+    }
 
 
     // removed 07-07-2022, issue #45
@@ -633,7 +644,12 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public IDList getCorporaForSearch(String searchIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return getCorpora();
+        } catch (IOException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new IDList("corpus");
     }
 
     @Override
