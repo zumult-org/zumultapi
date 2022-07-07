@@ -26,11 +26,9 @@ import static org.zumult.io.IOUtilities.buildStream;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
-import org.zumult.objects.MediaMetadata;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.TranscriptMetadata;
 
 @Path("corpora")
 @Produces(MediaType.APPLICATION_XML)

@@ -7,7 +7,6 @@ package org.zumult.webservices;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.DefaultValue;
@@ -31,7 +30,6 @@ import static org.zumult.io.IOUtilities.buildStream;
 import org.zumult.io.MediaUtilities;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
-import org.zumult.objects.MediaMetadata;
 
 /**
  *

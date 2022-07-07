@@ -26,16 +26,13 @@ import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.io.IOUtilities;
-import org.zumult.objects.AdditionalMaterialMetadata;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
-import org.zumult.objects.MediaMetadata;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
-import org.zumult.objects.TranscriptMetadata;
 
 /**
  *

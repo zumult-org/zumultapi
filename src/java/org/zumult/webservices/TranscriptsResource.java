@@ -26,7 +26,6 @@ import org.zumult.backend.Configuration;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.TranscriptMetadata;
 
 /**
  *
