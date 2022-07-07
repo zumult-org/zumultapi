@@ -554,10 +554,11 @@ public class COMAFileSystem extends AbstractBackend {
 }
 
 
-    @Override
+    // removed 07-07-2022, issue #45
+    /*@Override
     public String getEvent4Transcript(String transcriptID) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
 
     @Override
     public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String mode) throws SearchServiceException, IOException {

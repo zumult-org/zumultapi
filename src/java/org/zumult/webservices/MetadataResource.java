@@ -432,7 +432,9 @@ public class MetadataResource {
             
             if (metadataKey!=null){
                 if (metadataKey.getLevel().equals(ObjectTypesEnum.EVENT)){
-                    String eventID = backendInterface.getEvent4Transcript(transcriptID);
+                    // changed 07-07-2022, issue #45
+                    //String eventID = backendInterface.getEvent4Transcript(transcriptID);
+                    String eventID = backendInterface.getEvent4SpeechEvent(backendInterface.getSpeechEvent4Transcript(transcriptID));
                     Event event = backendInterface.getEvent(eventID);
                     if (event!=null){
                         result = event.getMetadataValue(metadataKey);

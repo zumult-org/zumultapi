@@ -88,7 +88,9 @@ public class DGD2SpeechEvent extends AbstractXMLObject implements SpeechEvent {
     public IDList getTranscripts() {
         IDList result = new IDList("transcript");
         try {
-            String xPathString = "//Transkript";
+            // changed 07-07-2022, issue #45
+            //String xPathString = "//Transkript";
+            String xPathString = "//Transkript[not(@Kennung='Nicht vorhanden')]";
             NodeList transcriptNodeList = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<transcriptNodeList.getLength(); i++){
                 Element tElement = (Element)(transcriptNodeList.item(i));
