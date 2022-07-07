@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author Thomas_Schmidt
  */
-public interface Corpus extends XMLSerializable, Identifiable {
+public interface Corpus extends XMLSerializable, Identifiable, Metadatable {
     
     
     public String getAcronym();

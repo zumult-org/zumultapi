@@ -6,6 +6,7 @@
 package org.zumult.objects.implementations;
 
 import org.zumult.objects.Media;
+import org.zumult.objects.MetadataKey;
 
 /**
  *
@@ -37,6 +38,11 @@ public class DGD2Media extends AbstractMedia {
             return new DGD2Media(idAndUrl[0], idAndUrl[0]);            
         }
         return null;
+    }
+
+    @Override
+    public String getMetadataValue(MetadataKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

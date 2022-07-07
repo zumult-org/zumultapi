@@ -11,9 +11,9 @@ import java.util.List;
  *
  * @author Thomas_Schmidt
  */
-public interface Speaker extends XMLSerializable, Identifiable {
+public interface Speaker extends XMLSerializable, Identifiable, Metadatable {
     
-    public String getMetadataValue(MetadataKey key);  
+    // public String getMetadataValue(MetadataKey key);  
     public List<Location> getLocations(String locationType);
     
     // removed 07-07-2022, issue #40

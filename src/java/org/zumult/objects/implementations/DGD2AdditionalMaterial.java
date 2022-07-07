@@ -6,7 +6,7 @@
 package org.zumult.objects.implementations;
 
 import org.zumult.objects.AdditionalMaterial;
-import org.zumult.objects.Media;
+import org.zumult.objects.MetadataKey;
 
 /**
  *
@@ -37,6 +37,11 @@ public class DGD2AdditionalMaterial implements AdditionalMaterial {
     @Override
     public String getID() {
         return id;
+    }
+
+    @Override
+    public String getMetadataValue(MetadataKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

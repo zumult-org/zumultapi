@@ -26,7 +26,6 @@ import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.MetadataKey;
 import org.zumult.io.Constants;
-import java.io.File;
 
 /**
  *
@@ -292,6 +291,11 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
         }
         return result;
 
+    }
+
+    @Override
+    public String getMetadataValue(MetadataKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

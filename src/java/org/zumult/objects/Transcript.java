@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Thomas_Schmidt
  */
-public interface Transcript extends XMLSerializable, Identifiable {
+public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     
     public int getNumberOfTokens();
     public int getNumberOfTypes();
