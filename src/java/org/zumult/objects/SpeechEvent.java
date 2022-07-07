@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Thomas_Schmidt
  */
-public interface SpeechEvent extends Identifiable, XMLSerializable {
+public interface SpeechEvent extends Identifiable, XMLSerializable, Metadatable {
     
     public String getType();
     
@@ -19,7 +19,7 @@ public interface SpeechEvent extends Identifiable, XMLSerializable {
     
     public List<String> getTopics();
     
-    public String getMetadataValue(MetadataKey key);
+    //public String getMetadataValue(MetadataKey key);
     
     public IDList getTranscripts();
     public IDList getMedia();

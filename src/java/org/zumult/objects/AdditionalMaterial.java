@@ -9,7 +9,7 @@ package org.zumult.objects;
  *
  * @author josip.batinic
  */
-public interface AdditionalMaterial extends Identifiable {
+public interface AdditionalMaterial extends Identifiable, Metadatable {
     public static enum FILE_TYPE {
         PDF, TXT
     };

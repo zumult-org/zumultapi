@@ -11,13 +11,13 @@ import java.util.Date;
  *
  * @author Thomas_Schmidt
  */
-public interface Event extends XMLSerializable, Identifiable {
+public interface Event extends XMLSerializable, Identifiable, Metadatable {
     
     public Date getDate();
     
     public Location getLocation();
     
-    public String getMetadataValue(MetadataKey key);
+    //public String getMetadataValue(MetadataKey key);
     
     public IDList getSpeechEvents();
     

@@ -9,7 +9,7 @@ package org.zumult.objects;
  *
  * @author Thomas_Schmidt
  */
-public interface Media extends Identifiable {
+public interface Media extends Identifiable, Metadatable {
     
     public static enum MEDIA_TYPE {AUDIO, VIDEO, IMAGE};
     public static enum MEDIA_FORMAT {WAV, MP3, MPEG4_ARCHIVE, MPEG4_WEB, JPG, PNG};

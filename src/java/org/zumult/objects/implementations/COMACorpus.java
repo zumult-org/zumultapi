@@ -188,5 +188,10 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     public Set<AnnotationLayer> getSpanBasedAnnotationLayers() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String getMetadataValue(MetadataKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -9,6 +9,6 @@ package org.zumult.objects;
  *
  * @author Thomas_Schmidt
  */
-public interface SpeakerInSpeechEvent {
+public interface SpeakerInSpeechEvent extends Metadatable {
     
 }

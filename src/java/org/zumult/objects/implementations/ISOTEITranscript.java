@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
+import org.zumult.objects.MetadataKey;
 import org.zumult.objects.TokenFilter;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
@@ -660,6 +661,11 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
             return "";
         }
         
+    }
+
+    @Override
+    public String getMetadataValue(MetadataKey key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
