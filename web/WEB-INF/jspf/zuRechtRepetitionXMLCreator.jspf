@@ -12,7 +12,7 @@
     var XML_ELEMENT_NAME_REPETITON_TYPE='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>';
     var XML_ELEMENT_NAME_MIN_DISTANCE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>';
     var XML_ELEMENT_NAME_MAX_DISTANCE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>';
-    var XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS='<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS %>';
+    var XML_ELEMENT_NAME_IGNORED_CUSTOM_POS='<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS %>';
     var XML_ELEMENT_NAME_SPEAKER_CHANGE='<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>';
     var XML_ELEMENT_NAME_POSITION_TO_MATCH='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>';
     var XML_ELEMENT_NAME_POSITION_TO_OVERLAP='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>';
@@ -101,8 +101,14 @@
                 positionToSpeakerChangeMin = getDistance(this, '.positionToSpeakerChangeMin', 0, regexPositionToSpeakerChange);
                 positionToSpeakerChangeMax = getDistance(this, '.positionToSpeakerChangeMax', 0, regexPositionToSpeakerChange);
             }
-            var ignoreFunctionalWords = false;
-            if ($(this).find('.ignoreFunctionalWordsCheckBox').is(':checked')) {ignoreFunctionalWords = true;}
+
+            var checkedPOSToBeIgnored = [];
+            $(this).find("input[name='posToBeIgnored']:checked").each(function () {
+                checkedPOSToBeIgnored.push($(this).val());
+            });
+            
+            var ignoredCustomPOS = checkedPOSToBeIgnored.join('<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR %>');   
+            
             var contextPrecededBy = $(this).find('.repetitionKontextField').val();
             var contextWithinSpeakerContribution = false;
             if ($(this).find('.withinContributionCheckBox').is(':checked')) {contextWithinSpeakerContribution = true;}
@@ -127,9 +133,9 @@
                 "<",XML_ELEMENT_NAME_MAX_DISTANCE,">",
                 maxDistance,
                 "</",XML_ELEMENT_NAME_MAX_DISTANCE,">",
-                "<",XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS,">",
-                ignoreFunctionalWords,
-                "</",XML_ELEMENT_NAME_IGNORE_FUNCTIONAL_WORDS,">",
+                "<",XML_ELEMENT_NAME_IGNORED_CUSTOM_POS,">",
+                ignoredCustomPOS,
+                "</",XML_ELEMENT_NAME_IGNORED_CUSTOM_POS,">",
                 "<",XML_ELEMENT_NAME_SPEAKER_CHANGE,">",
                 speakerChange,
                 "</",XML_ELEMENT_NAME_SPEAKER_CHANGE,">",
@@ -166,7 +172,7 @@
             "</",XML_ELEMENT_NAME_REPETITIONS,">"
         );
                         
-        //alert(repetitions.join(""));
+        alert(repetitions.join(""));
         return repetitions.join("");
     }
     

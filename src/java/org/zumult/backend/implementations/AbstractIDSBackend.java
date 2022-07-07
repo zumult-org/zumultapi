@@ -35,6 +35,7 @@ import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AdditionalMaterialMetadata;
 import org.zumult.objects.AnnotationLayer;
+import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
@@ -587,6 +588,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+       
     @Override
     public Set<MetadataKey> getMetadataKeysForGroupingHits(String corpusQuery, String searchIndex, String type) throws SearchServiceException, IOException{
         // get all available metadata Keys
@@ -670,6 +672,78 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
     public IDList getCorporaForSearch(String searchIndex){
         Searcher searcher = new DGD2Searcher();
         return searcher.getCorporaForSearch(searchIndex);
+    }
+    
+    private Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationType) {
+        Set<AnnotationLayer> annotationLayers = new HashSet();
+        try {          
+            Corpus corpus = getCorpus(corpusID);
+            
+            if (annotationType!=null){
+                try{
+                    AnnotationTypeEnum annotationTypeEnum = AnnotationTypeEnum.valueOf(annotationType.toUpperCase());
+                    switch(annotationTypeEnum){
+                        case TOKEN:
+                            annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+                        case SPAN:
+                            annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
+                        default:
+                            // will NOT execute
+                    }
+                }catch(NullPointerException ex){
+                    throw new NullPointerException(annotationType + "cound not be found!");    
+                }
+            }else{
+                annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+            }
+                        
+        } catch (IOException ex) {
+            throw new NullPointerException(corpusID + "cound not be found!");
+        }
+        return annotationLayers;
+    }
+        
+    private Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
+        Set<MetadataKey> metadataKeys = new HashSet();
+        ObjectTypesEnum objectTypesEnum = null;
+
+        try{
+            Corpus corpus = getCorpus(corpusID);
+            
+            // check if metadataKey type exists
+            if (type!=null){
+                objectTypesEnum = ObjectTypesEnum.valueOf(type.toUpperCase());
+            }
+            
+            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.EVENT)){
+                metadataKeys.addAll(corpus.getEventMetadataKeys());
+            }
+            
+            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEAKER)){
+                metadataKeys.addAll(corpus.getSpeakerMetadataKeys());
+            }
+            
+            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEECH_EVENT)){
+                metadataKeys.addAll(corpus.getSpeechEventMetadataKeys());
+            }
+            
+            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEAKER_IN_SPEECH_EVENT)){
+                metadataKeys.addAll(corpus.getSpeakerInSpeechEventMetadataKeys());
+            }
+            
+            return metadataKeys;
+
+        }catch (NullPointerException ex){
+            StringBuilder sb = new StringBuilder();
+            sb.append(". There is no metadata for ").append(type).append(". Supported types are: ");
+                for (ObjectTypesEnum ob : ObjectTypesEnum.values()){
+                        sb.append(ob.name());
+                        sb.append(", ");
+                    }
+            throw new NullPointerException(sb.toString().trim().replaceFirst(",$",""));
+        } catch (IOException ex) {
+            throw new NullPointerException(corpusID + "cound not be found!");
+        }
     }
 
 }

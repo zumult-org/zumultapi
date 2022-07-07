@@ -23,11 +23,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
+import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
+import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
@@ -325,7 +327,7 @@ public class AGDFileSystem extends AbstractIDSBackend {
     public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
         IDList list = new IDList("AvailableValue");
         try {
-            String path = "/data/ZuMultAvailableAnnotationValues.xml";
+            String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
             String xml = new Scanner(AGDFileSystem.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
             Document doc = IOHelper.DocumentFromText(xml);
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -357,55 +359,4 @@ public class AGDFileSystem extends AbstractIDSBackend {
         }
     }
 
-    @Override
-    public Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationType) {
-        return IOHelper.getAnnotationLayersForCorpus(corpusID, annotationType);        
-    }
-    
-    @Override
-    public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
-        Set<MetadataKey> metadataKeys = new HashSet();
-        ObjectTypesEnum objectTypesEnum = null;
-
-        try{
-            Corpus corpus = getCorpus(corpusID);
-            
-            // check if metadataKey type exists
-            if (type!=null){
-                objectTypesEnum = ObjectTypesEnum.valueOf(type.toUpperCase());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.EVENT)){
-                metadataKeys.addAll(corpus.getEventMetadataKeys());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEAKER)){
-                metadataKeys.addAll(corpus.getSpeakerMetadataKeys());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEECH_EVENT)){
-                metadataKeys.addAll(corpus.getSpeechEventMetadataKeys());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEAKER_IN_SPEECH_EVENT)){
-                metadataKeys.addAll(corpus.getSpeakerInSpeechEventMetadataKeys());
-            }
-            
-            return metadataKeys;
-
-        }catch (NullPointerException ex){
-            StringBuilder sb = new StringBuilder();
-            sb.append(". There is no metadata for ").append(type).append(". Supported types are: ");
-                for (ObjectTypesEnum ob : ObjectTypesEnum.values()){
-                        sb.append(ob.name());
-                        sb.append(", ");
-                    }
-            throw new NullPointerException(sb.toString().trim().replaceFirst(",$",""));
-        } catch (IOException ex) {
-            throw new NullPointerException(corpusID + "cound not be found!");
-        }
-  
-    }
-    
- 
 }

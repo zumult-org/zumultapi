@@ -6,7 +6,6 @@
 package org.zumult.objects.implementations;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -23,8 +22,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
+import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.MetadataKey;
+import org.zumult.io.Constants;
+import java.io.File;
 
 /**
  *
@@ -219,8 +221,53 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
     
     @Override
     public Set<AnnotationLayer> getAnnotationLayers() {
-        return IOHelper.getAnnotationLayersForCorpus(getID(), null );
+        return getAnnotationLayersForType(null);
+        
     }
+    
+    @Override
+    public Set<AnnotationLayer> getTokenBasedAnnotationLayers(){
+        Set<AnnotationLayer> result = new HashSet();
+        result.addAll(getAnnotationLayersForType(AnnotationTypeEnum.TOKEN));
+        return result;
+    }
+    
+    @Override
+    public Set<AnnotationLayer> getSpanBasedAnnotationLayers(){
+        Set<AnnotationLayer> result = new HashSet();
+        result.addAll(getAnnotationLayersForType(AnnotationTypeEnum.SPAN));
+        return result;
+    }
+    
+    private Set<AnnotationLayer> getAnnotationLayersForType(AnnotationTypeEnum type){
+        Set<AnnotationLayer> result = new HashSet<>();
+        try {
+            
+            String path = Constants.DATA_ANNOTATIONS_PATH + "AnnotationLayerSelection.xml";
+            String xml = new Scanner(IOHelper.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            Document doc = IOHelper.DocumentFromText(xml); 
+            
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            StringBuilder xPathString = new StringBuilder();
+            xPathString.append("//key[");
+            if(type!=null){
+                xPathString.append("@type='"+type.name().toLowerCase() +"' and ");
+            }
+                xPathString.append("descendant::corpus='" + getID() + "']");
+
+            NodeList nodes = (NodeList)xPath.evaluate(xPathString.toString(), doc.getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){
+                Element keyElement = ((Element)(nodes.item(i)));
+                AnnotationLayer key = new DGD2AnnotationLayer(keyElement);
+                result.add(key);                
+            }
+            
+        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
+            Logger.getLogger(DGD2Corpus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
     
     @Override
     public Set<String> getSpeakerLocationTypes() {

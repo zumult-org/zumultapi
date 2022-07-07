@@ -85,6 +85,8 @@
                             <a href="#repetitions">Repetitions</a><br />  
                             <a href="#n-grams">N-grams</a><br />
                             <a href="#speaker-change">Speaker changes</a><br />
+                            <a href="#differences-trans-norm">Differences between transcribed and normalized forms</a><br />
+                            <a href="#number-of-tokens">Number of tokens</a><br />
                         </span>
                     </p>
                 
@@ -389,7 +391,9 @@
             <!-- text -->
             <div>
                 <p>
-                    Another possible value of the <i>word.type</i>-attribute is "ol-in". This value were used to annotate all tokens within speaker overlaps: 
+                    Other possible values of the <i>word.type</i>-attribute are e.g. "ol-in" used to annotate all tokens within speaker overlaps 
+                    and "diffNorm" for marking tokens that had to be normalized, 
+                    e.g. <i>net</i> (normalized form: 'nicht'), <i>tach</i> (normalized form: 'Tag') or <i>weeß</i> (normalized form: 'weiß'):
                 </p>
             </div>
             
@@ -397,8 +401,18 @@
             <div class="query-example clearfix" onclick="copyQuery(this)">
                 <div class="float-left">[word.type=".*ol-in.*"]</div>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="query-description">(matches: all tokens occurring within speaker overlaps)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[word.type=".*diffNorm.*"]</div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;
+                <span class="query-description">(matches: all tokens whose normalized form differs from the transcription)</span>
                 <input type="hidden" class="mode" value=""/>
                 <div class="float-right">Corpus: FOLK</div>
             </div>
@@ -2667,9 +2681,36 @@
                 <br>The specifications of metadata values are case-sensitive!</span>
             </div>
             
+            
             <!-- blank line -->
             <br>
+            
+            <!-- text -->
+            <div>
+                <p>Some metadata categories can have multiple values separated by a semicolon. 
+                   By typing the '&lt;'-character into the CQP input field, 
+                   the Query Builder can be opened and used to display all possible values of the selected metadata.</p>
+            </div> 
+                        
+            <div><img src="../images/query_help/query_builder_001.png" style="width: 60%; height: 60%" alt="Query Builder" /></div>
 
+            <!-- blank line -->
+            <br>
+            
+            <!-- note -->
+            <div class="query-note">
+                <span><b>NOTE:</b>
+                <br>Please consider the difference between the following queries:
+                <br>
+                <br><b>&lt;ses_sprachen_s="Deutsch \(L2\)"/&gt;</b> matches speakers classified as "Deutsch (L2)".
+                <br><b>&lt;ses_sprachen_s="Deutsch \(L2\).*"/&gt;</b> matches speakers classified as "Deutsch (L2)", "Deutsch (L2) ; Bulgarisch", 
+                "Deutsch (L2) ; Englisch", "Deutsch (L2) ; Englisch (L1)", "Deutsch (L2) ; Englisch (L2)", etc.
+                </span>
+            </div>
+            
+            <!-- blank line -->
+            <br>
+            
             <!-- title -->           
             <div><span class="badge  badge-secondary" id="negation">Negation</span></div>
             
@@ -3135,8 +3176,6 @@
             <!-- blank line -->
             <br>
             
-
-            
             <!-- title -->           
             <div><span class="badge  badge-secondary" id="speaker-change">Speaker changes</span></div>
             
@@ -3195,7 +3234,117 @@
                 <input type="hidden" class="mode" value="SPEAKER_BASED_INDEX_WITHOUT_PUNCT"/>
                 <div class="float-right">Corpus: FOLK</div>
             </div>
+            
+
+            <!-- blank line -->
+            <br>
+            
+            <!-- title -->           
+            <div><span class="badge  badge-secondary" id="differences-trans-norm">Differences between transcribed and normalized forms</span></div>
+            
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>The following query may be used to match all tokens whose normalized form differs from the transcription, e.g.
+                    <i>net</i> (normalized form: 'nicht'), <i>tach</i> (normalized form: 'Tag') or <i>weeß</i> (normalized form: 'weiß'):
+                </p>
+            </div>
+
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[word.type=".*diffNorm.*"]</div>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
+            
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>Some more examples:
+                </p>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[pos="NN" & word.type=".*diffNorm.*"]</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;(matches: all nouns with different transcribed and normalized forms, e.g. <i>tach</i> (normalized form 'Tag'))</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[!word.type=".*diffNorm.*"]</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    (matches: all word tokens with equal transcribed and normalized forms, e.g. <i>tag</i> (normalized form 'Tag'))</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
                 
+           
+            <!-- blank line -->
+            <br>
+            
+            <!-- title -->           
+            <div><span class="badge  badge-secondary" id="number-of-tokens">Number of tokens</span></div>
+            
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>To get the number of word tokens in a certain corpus, speech event or in all speech events of the specified type, 
+                    you can use the attribute <i>word</i> located in the angle brackets and combine it with different metadata. 
+                    Please find some examples below:
+                </p>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;word/&gt;</div>
+                <span class="query-description">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;(matches: all word tokens in the selected corpus)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;word/&gt; within &lt;t_dgd_kennung="FOLK_E_00121_SE_01_T_03"/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;(matches: all word tokens in the transcript 'FOLK_E_00121_SE_01_T_03')</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;word/&gt; within &lt;e_se_art="Unterrichtsstunde in der Berufsschule"/&gt;
+                </div>
+                <span class="query-description">
+                    &nbsp;&nbsp;&nbsp;&nbsp;(matches: all word tokens in the speech events of type 'lessons in vocational school')</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: FOLK</div>
+            </div>
 </div>
 <div class="modal-footer">
     <button class="btn" style="background-color: #337AB7;color: #ffffff" onclick="printQueryHelp()"><span class="fa fa-print" aria-hidden="true"></span> Print</button>
