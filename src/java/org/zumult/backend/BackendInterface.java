@@ -92,11 +92,10 @@ public interface BackendInterface {
     //public String getMetadataValue(String level, String DGDObjectID, String metadatum);
     //public String getMetadataValue(String level, String DGDObjectID, String metadatum, String speakerID);
     
-    public MediaMetadata getMediaMetadata4Media(String eventID, String mediaID);
-    
+    // 07-07-2022, removed, issue #41
+    /*public MediaMetadata getMediaMetadata4Media(String eventID, String mediaID);    
     public TranscriptMetadata getTranscriptMetadata4Transcript(String eventID, String transcriptID);
-
-    public AdditionalMaterialMetadata getAdditionalMaterialMetadata4Corpus(String corpusID);
+    public AdditionalMaterialMetadata getAdditionalMaterialMetadata4Corpus(String corpusID);*/
     
     // new 18-03-2019, TS
     public String getAnnotationBlockID4TokenID(String transcriptID, String tokenID) throws IOException;

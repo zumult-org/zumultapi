@@ -443,12 +443,14 @@ public class COMAFileSystem extends AbstractBackend {
         return null;
     }
 
-    @Override
+    // 07-07-2022, removed, issue #41
+    /* @Override
     public MediaMetadata getMediaMetadata4Media(String eventID, String mediaID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
 
-    @Override
+    // 07-07-2022, removed, issue #41
+    /* @Override
     public TranscriptMetadata getTranscriptMetadata4Transcript(String eventID, String transcriptID) {
         try {
             String corpusID = findCorpusID(eventID);
@@ -469,18 +471,19 @@ public class COMAFileSystem extends AbstractBackend {
                       <Key Name="Alignment status">fully aligned</Key>
                       <Key Name="Annotation type: disfluency"            
             */
-        } catch (IOException ex) {
+        /*} catch (IOException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         // difficulty here: need to implement TranscriptMetadata for Coma
         // not sure how to do this yet
         return null;
-    }
+    }*/
 
-    @Override
+    // 07-07-2022, removed, issue #41
+    /* @Override
     public AdditionalMaterialMetadata getAdditionalMaterialMetadata4Corpus(String corpusID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    } */
 
 
 

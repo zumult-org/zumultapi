@@ -244,7 +244,8 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         return getAvailableValues(corpusID, metadataKey.getID());
     }
 
-    @Override
+    // 07-07-2022, removed, issue #41
+    /*@Override
     public MediaMetadata getMediaMetadata4Media(String eventID, String mediaID) {
         DGD2MediaMetadata mediaMetadata = null;
         try {
@@ -267,9 +268,10 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             Logger.getLogger(AbstractIDSBackend.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mediaMetadata;
-    }
+    }*/
 
-    @Override
+    // 07-07-2022, removed, issue #41
+    /*@Override
     public TranscriptMetadata getTranscriptMetadata4Transcript(String eventID, String transcriptID) {
         DGD2TranscriptMetadata transcriptMetadata = null;
         try {
@@ -292,9 +294,10 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             Logger.getLogger(AbstractIDSBackend.class.getName()).log(Level.SEVERE, null, ex);
         }
         return transcriptMetadata;
-    }
+    }*/
 
-    @Override
+    // 07-07-2022, removed, issue #41
+    /*@Override
     public AdditionalMaterialMetadata getAdditionalMaterialMetadata4Corpus(String corpusID) {
         AdditionalMaterialMetadata additionalMaterialMetadata = null;
         try {
@@ -320,7 +323,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             Logger.getLogger(AbstractIDSBackend.class.getName()).log(Level.SEVERE, null, ex);
         }
         return additionalMaterialMetadata;
-    }
+    }*/
     
 
 
