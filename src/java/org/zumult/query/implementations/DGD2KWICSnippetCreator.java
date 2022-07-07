@@ -29,7 +29,7 @@ import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.DGD2AnnotationBlock;
+import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.query.Hit;
 import org.zumult.query.KWICContext;
 import org.zumult.query.implementations.DGD2KWICSnippet.DGD2KWICSnippetToken;
@@ -254,7 +254,7 @@ public class DGD2KWICSnippetCreator {
                     Element siblingElem = (Element) sibling;
                     if(sibling.getLocalName().equals(Constants.ELEMENT_NAME_ANNOTATION_BLOCK)){
            
-                        AnnotationBlock annotationBlock = new DGD2AnnotationBlock(IOHelper.ElementToString(siblingElem));
+                        AnnotationBlock annotationBlock = new ISOTEIAnnotationBlock(IOHelper.ElementToString(siblingElem));
                         Document annotationBlockDoc = annotationBlock.getDocument();
                         String speaker = annotationBlockDoc.getDocumentElement().getAttribute(Constants.ATTRIBUTE_NAME_WHO);
                         speaker = getSpeakerInitials(speaker, transcriptDoc);
@@ -335,7 +335,7 @@ public class DGD2KWICSnippetCreator {
 
                     if(sibling.getLocalName().equals(Constants.ELEMENT_NAME_ANNOTATION_BLOCK)){
 
-                        AnnotationBlock annotationBlock = new DGD2AnnotationBlock(IOHelper.ElementToString(siblingElem));
+                        AnnotationBlock annotationBlock = new ISOTEIAnnotationBlock(IOHelper.ElementToString(siblingElem));
                         Document annotationBlockDoc = annotationBlock.getDocument();
                         String speaker = annotationBlockDoc.getDocumentElement().getAttribute(Constants.ATTRIBUTE_NAME_WHO);
                         speaker = getSpeakerInitials(speaker, transcriptDoc);
