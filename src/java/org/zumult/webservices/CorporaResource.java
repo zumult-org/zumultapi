@@ -411,10 +411,15 @@ public class CorporaResource {
 
                 transcriptMetadata.addContent(transcriptMetadataUrl);
                 transcriptFile.addContent(transcriptFileUrl);
-                String durationMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptIdString).getDuration();
-                String fileSizeMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptIdString).getTranscriptFileSizeInBytes();
-                String typesMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptIdString).getTypes();
-                String tokensMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptIdString).getTokens();
+                // 07-07-2022, changed for issue #41
+                //String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getDuration();
+                //String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaFileSizeInBytes();
+                //String typesMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptIdString).getTypes();
+                //String tokensMetadata = backendInterface.getTranscriptMetadata4Transcript(eventID, transcriptIdString).getTokens();
+                String durationMetadata = Double.toString(backendInterface.getTranscript(transcriptIdString).getEndTime() - backendInterface.getTranscript(transcriptIdString).getStartTime());
+                String fileSizeMetadata = "0";
+                String typesMetadata = Integer.toString(backendInterface.getTranscript(transcriptIdString).getNumberOfTypes());
+                String tokensMetadata = Integer.toString(backendInterface.getTranscript(transcriptIdString).getNumberOfTokens());
                 metadatumElement1.addContent(durationMetadata);
                 metadatumElement2.addContent(fileSizeMetadata);
                 metadatumElement3.addContent(typesMetadata);
@@ -593,7 +598,9 @@ public class CorporaResource {
         IDList videosList = backendInterface.getVideos4SpeechEvent(speechEventID);
         for (String audio : audiosList) {
             if (!audio.isEmpty()) {
-                String mediaDFId = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaDigitalFileID();
+                // changed 07-07-2022, issue #41
+                //String mediaDFId = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaDigitalFileID();
+                String mediaDFId = backendInterface.getMedia(audio).getID();
                 String linkUrl = UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path(mediaDFId + ".mp3").build().toString();
                 Element listElement = new Element("audio");
                 Element audioUrl = new Element("audio_file_url");//(speechEventsList.getObjectName().toLowerCase());
@@ -604,8 +611,11 @@ public class CorporaResource {
 
                 audioMetadata.addContent(UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path(audio).path("metadata").build().toString());
                 audioUrl.addContent(linkUrl);
-                String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getDuration();
-                String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaFileSizeInBytes();
+                // 07-07-2022, changed for issue #41
+                //String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getDuration();
+                //String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaFileSizeInBytes();
+                String durationMetadata = Double.toString(backendInterface.getMedia(audio).getDuration());
+                String fileSizeMetadata = "0";
                 metadatumElement1.addContent(durationMetadata);
                 metadatumElement2.addContent(fileSizeMetadata);
                 metadataElement.addContent(metadatumElement1);
@@ -620,7 +630,9 @@ public class CorporaResource {
 
         for (String video : videosList) {
             if (!video.isEmpty()) {
-                String mediaDFId = backendInterface.getMediaMetadata4Media(eventID, video).getMediaDigitalFileID();
+                // changed 07-07-2022, issue #41
+                //String mediaDFId = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaDigitalFileID();
+                String mediaDFId = backendInterface.getMedia(video).getID();
 //                        System.out.println("mediaDFId: " + mediaDFId);
                 String linkUrl = UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path(mediaDFId + ".mp4").build().toString();
                 Element listElement = new Element("video");
@@ -632,8 +644,11 @@ public class CorporaResource {
 
                 audioMetadata.addContent(UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path(video).path("metadata").build().toString());
                 audioUrl.addContent(linkUrl);
-                String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, video).getDuration();
-                String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, video).getMediaFileSizeInBytes();
+                // 07-07-2022, changed for issue #41
+                //String durationMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getDuration();
+                //String fileSizeMetadata = backendInterface.getMediaMetadata4Media(eventID, audio).getMediaFileSizeInBytes();
+                String durationMetadata = Double.toString(backendInterface.getMedia(video).getDuration());
+                String fileSizeMetadata = "0";
                 metadatumElement1.addContent(durationMetadata);
                 metadatumElement2.addContent(fileSizeMetadata);
                 metadataElement.addContent(metadatumElement1);
