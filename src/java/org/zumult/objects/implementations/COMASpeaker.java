@@ -73,11 +73,6 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
     }
 
     @Override
-    public String getOccupation(String speakerID) {
-        return "";
-    }
-
-    @Override
     public String getID() {
         return getDocument().getDocumentElement().getAttribute("Id");
     }

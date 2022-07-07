@@ -138,7 +138,9 @@ public class Measure_10_2 {
                             if (getIdNoNode(persons.item(n)) != null) {
                                 agdID = getIdNoNode(persons.item(n)).getTextContent();
                                 Speaker thisSpeaker = backendInterface.getSpeaker(agdID);
-                                occupation = thisSpeaker.getOccupation(agdID);
+                                // changed 07-07-2022, issue #40
+                                //occupation = thisSpeaker.getOccupation(agdID);
+                                occupation = thisSpeaker.getMetadataValue(backendInterface.findMetadataKeyByID("v_s_berufe"));
                                 System.out.println("OCCUPATION: " + occupation);
                             }
                             System.out.println("initials: " + initials);

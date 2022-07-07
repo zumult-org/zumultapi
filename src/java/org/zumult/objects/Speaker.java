@@ -15,5 +15,7 @@ public interface Speaker extends XMLSerializable, Identifiable {
     
     public String getMetadataValue(MetadataKey key);  
     public List<Location> getLocations(String locationType);
-    public String getOccupation(String speakerID);
+    
+    // removed 07-07-2022, issue #40
+    // public String getOccupation(String speakerID);
 }

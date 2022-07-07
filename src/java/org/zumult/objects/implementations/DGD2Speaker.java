@@ -79,9 +79,10 @@ public class DGD2Speaker extends AbstractXMLObject implements Speaker {
         return result;
     }
     
-    @Override
+    // removed 07-07-2022, issue #40
+    /*@Override
     public String getOccupation(String speakerID) {
         return getDocument().getElementsByTagName("Berufe").item(0).getTextContent();
-    }
+    }*/ 
     
 }
