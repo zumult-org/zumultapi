@@ -113,8 +113,6 @@ public interface BackendInterface {
     public IDList getMeasures4Corpus(String corpusID);
 
     //new 21.07.2020, Elena
-    public Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationLayerType);
-    public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type);
     public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID);   
     public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException;
     //public IDList getAvailableAnnotatationTagSets();
