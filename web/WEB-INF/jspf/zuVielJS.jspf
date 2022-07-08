@@ -352,6 +352,7 @@
     }
 
     function reloadTranscript(gotoID){
+        //alert("Yip!");
         $('#waitSpinner').toggle();
         
         var waitHTML = '<i class="fas fa-spinner fa-spin"></i><p style="color:gray"><%=myResources.getString("WaitTranscriptLoading")%></p>';
@@ -393,6 +394,7 @@
                     }
 
                     $('#waitSpinner').toggle();
+                    //alert("Yip!");
                 }
               );                
 
@@ -418,6 +420,7 @@
     }
     
     function reloadWordlist(){
+        //alert("Yip!");
         $('#waitSpinner').toggle();
         var wordlistDropdown = document.getElementById('refwordlist');
         var selectedWordlist = wordlistDropdown.options[wordlistDropdown.selectedIndex].value;
