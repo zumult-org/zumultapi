@@ -31,7 +31,7 @@
                        title="<%=myResources.getString("DisplayMetadata")%> <%= speechEventID %>"
                        >
                         <b>
-                        <%= backend.getSpeechEvent(speechEventID).getMetadataValue(backend.findMetadataKeyByID("v_e_se_art")) %> 
+                        <%= backend.getSpeechEvent(speechEventID).getName()  %> 
                         </b><br/>
                         <span class="titleID"><%= transcriptID %></span>
                     </a>

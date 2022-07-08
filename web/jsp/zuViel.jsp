@@ -223,6 +223,8 @@
     IDList videos = backend.getVideos4Transcript(transcriptID);   
     IDList audios = backend.getAudios4Transcript(transcriptID);
     
+    String speechEventName = backend.getSpeechEvent(speechEventID).getName();
+    
     Transcript partTranscript = transcript;
     if (aroundAnnotationBlockID.length()>0 && howMuchAround.length()>0){
         startAnnotationBlockID = transcript.getAnnotationBlockID(aroundAnnotationBlockID, -Integer.parseInt(howMuchAround));
@@ -361,7 +363,6 @@
             <!-- *********************** -->
             <div class="col-sm-2" id="columnLeft" style="overflow-y: auto;">
                 <div style="position:fixed">
-                    
                     
                     <!-- **************************** -->
                     <!-- ***** WORDLIST SELECTION   * -->
@@ -544,7 +545,7 @@
                     } else { %>
                             <audio id="masterMediaPlayer" width="480" controls="controls" style="width:480px;">
                                 <source src="<%=backend.getMedia(audios.get(0)).getURL()%>" type="audio/mp3">
-                            </audio>                                                
+                            </audio>                                             
                     <% } %>
                     </div>
                     
