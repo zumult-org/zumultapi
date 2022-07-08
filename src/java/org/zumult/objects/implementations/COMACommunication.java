@@ -75,8 +75,9 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
 
     @Override
     public String getMetadataValue(MetadataKey key) {
+        if (key==null) return "null";
         try {
-            String xPathString = "descendant::Key[@Name='" + key.getID() + "']/text()";
+            String xPathString = "descendant::Key[@Name='" + key.getName("en") + "']/text()";
             String value = xPath.evaluate(xPathString, getDocument().getDocumentElement());
             return value;
         } catch (XPathExpressionException ex) {

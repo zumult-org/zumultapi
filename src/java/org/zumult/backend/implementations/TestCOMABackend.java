@@ -15,6 +15,7 @@ import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
@@ -37,13 +38,16 @@ public class TestCOMABackend {
             System.out.println(":" + Configuration.getMetadataPath());
             BackendInterface bi = new COMAFileSystem();
             
+            Corpus corpus = bi.getCorpus("hamatac");
+            System.out.println(corpus.getDescription("de"));
+            
             IDList audios4Transcript = bi.getAudios4Transcript("CIDID93045167-C4FF-8EF6-36B8-F08AC9F9E331");
             for (String a : audios4Transcript) System.out.println(a);
             
             IDList transcripts4Audio = bi.getTranscripts4Audio("MID7D516D45-D94A-24EF-8D21-4B0A4DC891CA");
             for (String t : transcripts4Audio) System.out.println(t);
             
-            System.exit(0);
+            //System.exit(0);
             
             
             SpeechEvent se = bi.getSpeechEvent("CID06C693EF-494A-913E-EBF1-6C9618CDCC46");
@@ -62,14 +66,12 @@ public class TestCOMABackend {
             Speaker s = bi.getSpeaker("IDCFE47938-ECCF-C666-4B4C-167C67319AB1");
             System.out.println(s.toXML());
             
-            
             Transcript t = bi.getTranscript("CIDID93045167-C4FF-8EF6-36B8-F08AC9F9E331");
-            //System.out.println(t.toXML());
+            System.out.println(t.toXML());
             
             Media m = bi.getMedia("MID7D516D45-D94A-24EF-8D21-4B0A4DC891CA");
             System.out.println(m.getURL());
             
-            Corpus corpus = bi.getCorpus("hamatac");
             String acronym = corpus.getAcronym();
             String desc = corpus.getDescription("en");
             String name = corpus.getName("en");
@@ -81,8 +83,12 @@ public class TestCOMABackend {
             for (MetadataKey key : metadataKeys){
                 System.out.println(key.getID());
                 
-                IDList avV = bi.getAvailableValues(corpus.getID(), key);
-                for (String av : avV) System.out.println("   " + av);
+                if (key.getLevel()==ObjectTypesEnum.SPEECH_EVENT){
+                    System.out.println("=========>" + se.getMetadataValue(key));
+                }
+                
+                //IDList avV = bi.getAvailableValues(corpus.getID(), key);
+                //for (String av : avV) System.out.println("   " + av);
             }
             
             
@@ -94,9 +100,9 @@ public class TestCOMABackend {
                 System.out.println(id);
                 for (MetadataKey mk : corpus.getSpeechEventMetadataKeys()){
                     String v = bi.getEvent(id).getMetadataValue(mk);
-                    System.out.println(bi.getEvent(id).getLocation().getCountry());
-                    System.out.println(v);
-                    System.out.println(bi.getEvent(id).getDate().toString());
+                    //System.out.println(bi.getEvent(id).getLocation().getCountry());
+                    System.out.println(mk.getID() + " / " + mk.getName("de") + " : " + v);
+                    //System.out.println(bi.getEvent(id).getDate().toString());
                 }
             }
 
@@ -105,7 +111,7 @@ public class TestCOMABackend {
                 System.out.println(id);
                 for (MetadataKey mk : corpus.getSpeakerMetadataKeys()){
                     String v = bi.getSpeaker(id).getMetadataValue(mk);
-                    System.out.println(bi.getSpeaker(id).getLocations("Residence").get(0).getCountry());
+                    //System.out.println(bi.getSpeaker(id).getLocations("Residence").get(0).getCountry());
                     System.out.println(mk.getName("de") + " : " + v);
                     //System.out.println(bi.getSpeaker(id).getDate().toString());
                 }
