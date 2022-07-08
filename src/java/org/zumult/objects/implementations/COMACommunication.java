@@ -184,5 +184,10 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
     public Measure getMeasureValue(String type, String reference, String key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String getName() {
+        return this.getDocument().getDocumentElement().getAttribute("Name");
+    }
     
 }
