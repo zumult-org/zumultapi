@@ -15,6 +15,8 @@ public interface SpeechEvent extends Identifiable, XMLSerializable, Metadatable 
     
     public String getType();
     
+    public String getName();
+    
     public String getContentSummary();
     
     public List<String> getTopics();

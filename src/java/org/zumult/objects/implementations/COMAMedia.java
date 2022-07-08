@@ -32,7 +32,7 @@ public class COMAMedia extends AbstractMedia {
     
     @Override
     public Media getVideoImage(double positionInSeconds) {
-        String[] idAndUrl = still(positionInSeconds);
+        String[] idAndUrl = still(positionInSeconds); 
         if (idAndUrl!=null){
             return new COMAMedia(idAndUrl[0], idAndUrl[0]);            
         }
