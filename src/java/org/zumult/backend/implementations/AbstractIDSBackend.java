@@ -46,7 +46,6 @@ import org.zumult.objects.implementations.DGD2Media;
 import org.zumult.objects.implementations.DGD2MetadataKey;
 import org.zumult.objects.implementations.DGD2Speaker;
 import org.zumult.objects.implementations.DGD2SpeechEvent;
-import org.zumult.query.SearchResult;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.implementations.DGD2Searcher;
 import org.zumult.query.implementations.DGD2KWIC;
@@ -392,53 +391,6 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         return new FileSystemVirtualCollectionStore();
     }
 
-    
-    
-    @Override
-    public IDList searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, 
-            String metadataQuery, String searchIndex, String transcriptID, String tokenAttribute) throws SearchServiceException, IOException{
-        Searcher searcher = new DGD2Searcher();
-        searcher.setQuery("("+ queryString + ")"+ " within <"+ Constants.METADATA_KEY_TRANSCRIPT_DGD_ID +"=\"" + transcriptID + "\"/>", queryLanguage, queryLanguageVersion);
-        // changed 07-07-2022, issue #45
-        String eventID = getEvent4SpeechEvent(getSpeechEvent4Transcript(transcriptID));        
-        //searcher.setCollection("corpusSigle=" + getCorpus4Event(getEvent4Transcript(transcriptID)), metadataQuery);
-        searcher.setCollection("corpusSigle=" + getCorpus4Event(eventID), metadataQuery);
-        return searcher.searchTokensForTranscript(searchIndex, tokenAttribute);
-
-    }
-
-    @Override
-    public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String searchIndex) throws SearchServiceException, IOException {
-        Searcher searcher = new DGD2Searcher();
-        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
-        searcher.setCollection(corpusQuery, metadataQuery);
-        return searcher.search(searchIndex);
-    }
-    
-    @Override
-    public SearchResultPlus search(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
-            Boolean cutoff, String searchIndex, IDList metadataIDs) throws SearchServiceException, IOException {
-                        
-        Searcher searcher = new DGD2Searcher();
-        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
-        searcher.setCollection(corpusQuery, metadataQuery);
-        searcher.setPagination(pageLength , pageIndex);
-        return searcher.search(searchIndex, cutoff, metadataIDs);
-    }
-    
-    @Override
-    public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
-            Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {
-                        
-        Searcher searcher = new DGD2Searcher();
-        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
-        searcher.setCollection(corpusQuery, metadataQuery);
-        searcher.setPagination(pageLength , pageIndex);
-        return searcher.searchRepetitions(searchIndex, cutoff, metadataIDs, repetitions, synonyms);
-    }
-    
   
     @Override
     public KWIC getKWIC(SearchResultPlus searchResultPlus, String context) throws SearchServiceException, IOException {
@@ -742,4 +694,11 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         }
     }
 
+    @Override
+    public Searcher getSearcher() {
+        return new DGD2Searcher();
+    }
+
+    
+    
 }
