@@ -45,12 +45,12 @@ import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
 import org.zumult.objects.implementations.ISOTEITranscript;
-import org.zumult.query.SearchResult;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
+import org.zumult.query.Searcher;
 
 /**
  *
@@ -570,17 +570,6 @@ public class COMAFileSystem extends AbstractBackend {
     }*/
 
     @Override
-    public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String mode) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IDList searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, String mode, String transcriptID, String tokenAttribute) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public ArrayList<SampleQuery> getSampleQueries(String corpusID, String mode) throws SearchServiceException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -697,6 +686,11 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Searcher getSearcher() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   
