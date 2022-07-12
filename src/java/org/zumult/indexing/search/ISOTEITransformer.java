@@ -56,7 +56,7 @@ public abstract class ISOTEITransformer {
     static boolean ADD_SPEAKER_OVERLAPS = true;
     static boolean ADD_TOKEN_START_AND_END = true;
     static boolean ADD_DIFF_NORM = true;
-    static boolean ADD_OCCURRENCE = true;
+    static boolean ADD_OCCURRENCE = false;
     
     static Set<String> corpusIDsForIndexing;
     static String DIR_IN;
