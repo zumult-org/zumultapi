@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scripts;
+package org.zumult.indexing.measures;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -18,7 +18,7 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
-import org.zumult.io.IOHelper;
+import org.zumult.io.Constants;
 import org.zumult.io.XMLReader;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
@@ -52,13 +52,9 @@ public class Measure_1 {
     String[] WORDLISTS = {  "GOETHE_A1", "GOETHE_A2", "GOETHE_B1", 
                             "HERDER_1000", "HERDER_2000", "HERDER_3000", "HERDER_4000", "HERDER_5000"};
 
-    //String CORPUS = "GWSS";
-    //String CORPUS = "FOLK";
-    String[] corpusIDs = {"FOLK", "GWSS"};
 
-    
-    String data_path = "src\\java\\data\\";
-    //String IDLists_path = data_path + "IDLists\\";
+    String[] corpusIDs = {"FOLK", "GWSS"};   
+    String OUTPUT_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
 
     
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException, TransformerException {
@@ -173,20 +169,14 @@ public class Measure_1 {
             }
 
             xml.append("</measures-document>");
-
-
-    //        String OUT_FILE_XML = "F:\\WebApplication3\\src\\java\\data\\Measure_1_" + CORPUS + ".xml";        
-            String OUT_FILE_XML = data_path + "Measure_1_Elena" + CORPUS + ".xml";        
-            Path fileXML = Paths.get(OUT_FILE_XML);
-            Files.write(fileXML, xml.toString().getBytes("UTF-8"));
+            
+            String fileName = "Measure_1_" + CORPUS + ".xml";
+            String path = new File(OUTPUT_PATH + fileName).getPath();
+            System.out.println(fileName + " is written to " + path);
+            String xmlString = xml.toString();
+            Files.write(Paths.get(path), xmlString.getBytes("UTF-8"));
         }        
-        
-        /*String txt = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/measures2txt.xsl", xml.toString());
-        
-//        String OUT_FILE_TXT = "F:\\WebApplication3\\src\\java\\data\\Measure_1_" + CORPUS + ".txt";        
-        String OUT_FILE_TXT = data_path + "Measure_1_" + CORPUS + ".txt";        
-        Path fileTXT = Paths.get(OUT_FILE_TXT);
-        Files.write(fileTXT, txt.getBytes("UTF-8"));        */
+
     }
     
 }
