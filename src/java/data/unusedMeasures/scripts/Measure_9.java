@@ -10,7 +10,7 @@
 // I DID NOT CHANGE THE NAMES OFD THE FILES. I WILL CLEAN EVERYTHING UP ONCE ALL THE MEASURES
 // ARE COMPLETED, CHECKED, AND APPROVED
 ///////////////////////////////////////////////////////////////////////////////////////////////
-package scripts;
+package data.unusedMeasures.scripts;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class Measure_9 {
         try {
             new Measure_9().doit();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException | SAXException | ParserConfigurationException ex) {
-            Logger.getLogger(Measure_1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Measure_9.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

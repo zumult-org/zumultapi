@@ -97,7 +97,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         <script src="../js/zuRecht.collapsible.js" type="text/javascript"></script>
         <script src="../js/query.stringConverter.js" type="text/javascript"></script>
         <script src="../js/zuRecht.corpusCheckbox.js" type="text/javascript"></script>
-        <script src="../js/query.searchResultXmlProcessor.js" type="text/javascript"></script>
         <script src="../js/xslTransformation.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="../css/query.css" />
         
@@ -900,7 +899,19 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                                             if (radioValue==="lemma"){
 
-                                                query += "[lemma=\"(";
+                                                query += "[";
+                                                var i;
+                                                for (i = 0; i < lines.length; i++) {
+                                                    query += "lemma=\"" + lines[i].replace(/\n/g, "\"").trim() + "\"";
+                                                    if(i!==lines.length-1){
+                                                       query +=  " | ";
+                                                    }
+                                                }
+                                                query += "]";
+                                           
+                                                /*
+                                                 * 
+                                                 query += "[lemma=\"(";
                                                 var i;
                                                 for (i = 0; i < lines.length; i++) {
                                                     query += lines[i];
@@ -908,7 +919,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                        query +=  "|";
                                                     }
                                                 }
-                                                query += ")\"]";
+                                                query += ")\"]"; 
+                                                 */
 
 
                                             }else if (radioValue==="query"){                                       
@@ -1334,20 +1346,18 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            
                 $(selector).find(".wait-query-tab").css("display", "none");
                 
-                var queryStr = getSearchQuery(xml);
-                var queryString = decodeHTMLQuery(queryStr);
-
-                var corpusQueryStr = getCorpusQuery(xml);
-                var corpora = getCorpora(xml);
-
-                var totalHits = getTotalHits(xml); 
-                var totalHitsNumber = parseInt(totalHits);
-
-                var searchType = getSearchMode(xml);
-                var itemsPerPage = getItemsPerPage(xml);
+                // get parameters of the search query
+                var xmlDocument = $.parseXML(xml);
+                var $xmlObject = $(xmlDocument);
                 
-                var repetitions=getRepetitions(xml);
-                var synonyms = getSynonyms(xml);
+                var totalHits = $xmlObject.find('total').text();
+                var queryStr=$xmlObject.find('query').html();
+                var corpusQueryStr=$xmlObject.find('corpusQuery').text(); 
+                var corpora = getCorporaFromCorpusQuery(corpusQueryStr);
+                var searchType = $xmlObject.find('code').text();    
+                var itemsPerPage = $xmlObject.find('itemsPerPage').text();
+                var repetitions = $xmlObject.find('repetitions').text();
+                var synonyms = $xmlObject.find('synonyms').text();
 
                 //display summary + button for opening metadata view (GET)
 
@@ -1361,12 +1371,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }                              
                         
                 addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery);
-                                    
-                if (totalHitsNumber > 0){
+                        
+                if (parseInt(totalHits) > 0){
                     $(selector).find('.query_summary').append("<span id='search-results'><%=myResources.getString("Total")%>: </span>" + "<span id='total-hits'>" + totalHits + "</span>");
                             
                     // add pagination
-                    addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms);
+                    addPagination(selector, url, totalHits, itemsPerPage, decodeHTMLQuery(queryStr), corpusQueryStr, searchType, context, repetitions, synonyms);
 
                     // add results
                     displayKWIC(selector, xml);
@@ -1647,15 +1657,20 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 data.append('hitsParam', '<%=myResources.getString("Hits")%>');
                 data.append('transcriptIDParam', '<%=myResources.getString("TranscriptID")%>');
                 
-                // transform and view result
+                // transform result
                 var fragment = transform(xml, "zuRechtVocabularySearchStatistics2Html.xsl", data); // implemented in xslTransformation.js
 
-                var total = getTotalHits(xml);              
-                var corpora = getCorpora(xml);
-                var queryStr = getSearchQuery(xml);
-                var corpusQueryStr = getCorpusQuery(xml);
-                
+                // get parameters of the search query
+                var xmlDocument = $.parseXML(xml);
+                var $xmlObject = $(xmlDocument);
+                var total = $xmlObject.find('total').text();
+                var corpusQueryStr=$xmlObject.find('corpusQuery').text();  
+                var queryStr=$xmlObject.find('query').html();                
+                var corpora = getCorporaFromCorpusQuery(corpusQueryStr);
+
+                // view result
                 $('#statistics-result').html(fragment);
+                
                 // add summary
                 $('#statistics-result').prepend("<div><h4><%=myResources.getString("Results")%></h4> <%=myResources.getString("ForSearchingVocabulary")%> " + 
                         title + " (in "+ corpora.replace(/\s+\|\s+/g, ", ") + ")</div>");
@@ -1689,9 +1704,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     // get transcript id
                     var transcriptID = this.getAttribute('data-value-source');
                     
-                    // set query
-                    //var queryStr = getSearchQuery(xml);           
-                 
+                    // set query                       
                     $('#queryInputField').val(queryStr.replace(/&#xD;/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">") +" within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"/>");
                     
                     // set corpora
@@ -1810,6 +1823,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /**************************************************/
             /*             other help methods          */
             /**************************************************/
+
+            function getCorporaFromCorpusQuery(corpusQueryStr){
+                var pattern = /corpusSigle=(.*)/;
+                var match = pattern.exec(corpusQueryStr);
+                var str = match[1].replace(/\"/g, "");
+                return str;
+            }            
 
             function updateSearchButton(searchTypeSelect, val, text){
                 searchTypeSelect.find('.icon').remove();

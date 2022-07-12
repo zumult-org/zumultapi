@@ -633,8 +633,10 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
                     switch(annotationTypeEnum){
                         case TOKEN:
                             annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+                            break;
                         case SPAN:
                             annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
+                            break;
                         default:
                             // will NOT execute
                     }
