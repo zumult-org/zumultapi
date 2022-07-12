@@ -8,6 +8,7 @@ package org.zumult.indexing;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.backend.BackendInterface;
+import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
@@ -42,8 +44,10 @@ public class AGDAvailableMetadataValues implements Indexer {
     }
     
     //String ALL_CORPORA = "/data/AllCorpora.xml";
+    //String OUT = "D:\\WebApplication3\\src\\java\\data\\AGDAvailableMetadataValues.xml";
     String METADATA_SELECTION = "/data/MetadataSelection.xml";
-    String OUT = "D:\\WebApplication3\\src\\java\\data\\AGDAvailableMetadataValues.xml";
+    String FILE_NAME = "AGDAvailableMetadataValues.xml";  
+    String OUTPUT = System.getProperty("user.dir") + "/src/java/data/" + FILE_NAME;
 
     @Override
     public void index() throws IOException {        
@@ -156,7 +160,12 @@ public class AGDAvailableMetadataValues implements Indexer {
             }
             String xmlString = IOUtilities.documentToString(document);
             System.out.println(xmlString);
-            Files.write(new File(OUT).toPath(), xmlString.getBytes("UTF-8"));
+            
+            //Files.write(new File(OUT).toPath(), xmlString.getBytes("UTF-8"));
+            
+            String path = new File(OUTPUT).getPath();
+            Files.write(Paths.get(path), xmlString.getBytes("UTF-8"));
+            System.out.println(FILE_NAME + " is written to " + path);
             
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(AGDAvailableMetadataValues.class.getName()).log(Level.SEVERE, null, ex);
