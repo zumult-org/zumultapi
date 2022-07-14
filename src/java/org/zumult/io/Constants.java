@@ -78,6 +78,7 @@ public class Constants {
     public static String WITH_PUNCTUTION_EXT ="with_Punct";
     
     public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
+    public static final String DATA_MEASURES_PATH = "/data/measures/";
     
     public static String[] LEIPZIG_WORDLISTS =
         {

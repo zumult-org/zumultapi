@@ -38,9 +38,9 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
     public static void main(String[] args) {        
         try {
             
-            corpusIDsForIndexing = new HashSet<>(Arrays.asList("GWSS"));
-            DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input";
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_TB_GWSS";
+            corpusIDsForIndexing = new HashSet<>(Arrays.asList("FOLK"));
+            DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input"; //iso-tei transcripts
+            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_TB_FOLK_11_07_2022";
             
             new ISOTEI2TranscriptBasedFormat().doit();
             

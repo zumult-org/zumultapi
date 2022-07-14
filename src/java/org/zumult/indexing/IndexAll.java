@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
-import scripts.Measure_1;
-import scripts.Measure_12;
-import scripts.Measure_13;
-import scripts.Measure_14;
-import scripts.Measure_7;
-import scripts.Measure_8;
+import org.zumult.indexing.measures.Measure_1;
+import org.zumult.indexing.measures.Measure_12;
+import org.zumult.indexing.measures.Measure_13;
+import org.zumult.indexing.measures.Measure_14;
+import org.zumult.indexing.measures.Measure_7;
+import org.zumult.indexing.measures.Measure_8;
 
 /**
  *

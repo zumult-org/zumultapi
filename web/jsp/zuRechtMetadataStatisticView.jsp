@@ -60,7 +60,6 @@
         
         <script src="../js/zuRecht.collapsible.js" type="text/javascript"></script>
         <script src="../js/query.stringConverter.js" type="text/javascript"></script>
-        <script src="../js/query.searchResultXmlProcessor.js" type="text/javascript"></script>
         
         <link rel="stylesheet" type="text/css" href="../css/query.css" />
 

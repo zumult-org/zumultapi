@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scripts;
+package data.unusedMeasures.scripts;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,7 +54,7 @@ public class Measure_5 {
         try {
             new Measure_5().doit();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException | SAXException | ParserConfigurationException ex) {
-            Logger.getLogger(Measure_1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Measure_5.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

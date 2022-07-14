@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scripts;
+package org.zumult.indexing.measures;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +21,7 @@ import org.w3c.dom.NodeList;
 import org.zumult.indexing.Indexer;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.io.Constants;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
@@ -41,6 +43,7 @@ public class Measure_12 implements Indexer {
 
     XPath xPath = XPathFactory.newInstance().newXPath();
     String[] corpusIDs = {"FOLK", "GWSS"};
+    String OUTPUT_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
     
 
     @Override
@@ -117,12 +120,16 @@ public class Measure_12 implements Indexer {
                 }       
                 xml.append("</measures-document>");
 
-
-
-                String OUT_FILE_XML = "D:\\WebApplication3\\src\\java\\data\\Measure_12_" + corpusID + ".xml";        
+                //String OUT_FILE_XML = "D:\\WebApplication3\\src\\java\\data\\Measure_12_" + corpusID + ".xml";        
                 //String OUT_FILE_XML = data_path + "Measure_12_" + CORPUS + ".xml";        
-                Path fileXML = Paths.get(OUT_FILE_XML);
-                Files.write(fileXML, xml.toString().getBytes("UTF-8"));        
+                //Path fileXML = Paths.get(OUT_FILE_XML);
+                //Files.write(fileXML, xml.toString().getBytes("UTF-8"));        
+                
+                String fileName = "Measure_12_" + corpusID + ".xml";
+                String path = new File(OUTPUT_PATH + fileName).getPath();
+                System.out.println(fileName + " is written to " + path);
+                String xmlString = xml.toString();
+                Files.write(Paths.get(path), xmlString.getBytes("UTF-8"));
 
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | XPathExpressionException ex) {
                 Logger.getLogger(Measure_12.class.getName()).log(Level.SEVERE, null, ex);

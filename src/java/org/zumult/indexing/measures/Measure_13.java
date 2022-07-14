@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scripts;
+package org.zumult.indexing.measures;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,8 +31,11 @@ import org.zumult.query.SearchServiceException;
  */
 public class Measure_13 { // measure "pos"
     BackendInterface backendInterface;
-    private static final File DONWLOAD_DIRECTORY = new File(new File(Constants.class.getProtectionDomain().getCodeSource().getLocation().getPath()).
-            getParentFile().getParentFile(), "downloads");  // \ids-sample\build\web\downloads
+  /*  private static final File DONWLOAD_DIRECTORY = new File(new File(Constants.class.getProtectionDomain().getCodeSource().getLocation().getPath()).
+            getParentFile().getParentFile(), "downloads");  // \ids-sample\build\web\downloads*/
+    
+    String[] corpusIDs = {"FOLK", "GWSS"};
+    String OUTPUT_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
     
     public static void main(String[] args) {
         try {
@@ -43,13 +46,15 @@ public class Measure_13 { // measure "pos"
     }
     
     public void doit() throws IOException{
-        getMeasure("FOLK");
-        getMeasure("GWSS");
+        for (String CorpusID : corpusIDs){
+            getMeasure(CorpusID);
+        }
     }
     
     private void getMeasure(String corpusID) throws IOException{
         
-        File file = new File(DONWLOAD_DIRECTORY + "//Measure_13_" +corpusID+".xml");
+        //File file = new File(DONWLOAD_DIRECTORY + "//Measure_13_" +corpusID+".xml");
+        File file = new File(OUTPUT_PATH + "/Measure_13_" +corpusID+".xml");
         OutputStreamWriter bw = null;
         try{
             backendInterface = BackendInterfaceFactory.newBackendInterface(); 

@@ -140,7 +140,10 @@
                 dataType = true;
             }      
 
-            var distinctItems  = getDistinctValues(xmlText);
+           // var distinctItems  = getDistinctValues(xmlText);
+            var xmlDocument = $.parseXML(xmlText);
+            var $xmlObject = $(xmlDocument); 
+            var distinctItems=parseInt($xmlObject.find('distinctValues').text());
 
             if (distinctItems > offset + count){
                 $("body").append("<button id='btn-showMore' class='btn btn-success ml-3 mb-3'>Show more</button>");
@@ -293,23 +296,34 @@
         //cell.find(".KWICSearch-result").css("display", "block");
     }
 
+    function getHitsTotal(xml){
+        var xmlDocument = $.parseXML(xml);
+        var $xmlObject = $(xmlDocument);
+        var totalHits = $xmlObject.find('total').text();
+        return totalHits;
+    }
+    
     function displayKWIC(cell, xml){
-        var queryStr = getSearchQuery(xml);
+        var xmlDocument = $.parseXML(xml);
+        var $xmlObject = $(xmlDocument);
+        
+        var queryStr=$xmlObject.find('query').html();          
         var decodedQueryStr = decodeHTMLQuery(queryStr);
-        var corpusQueryStr = getCorpusQuery(xml); 
+        
+        var corpusQueryStr=$xmlObject.find('corpusQuery').text(); 
         var decodedCorpusQueryStr = decodeHTMLQuery(corpusQueryStr);
 
-        var metadataQueryStr = getMetadataQuery(xml);
+        var metadataQueryStr=$xmlObject.find('metadataQuery').text();
         var decodedMetadataQueryStr = null;
         if(metadataQueryStr !==""){
             decodedMetadataQueryStr = decodeHTMLQuery(metadataQueryStr);
         }
 
-        var totalHits = getTotalHits(xml); 
+        var totalHits = $xmlObject.find('total').text();
         var totalHitsNumber = parseInt(totalHits);
-        var searchType = getSearchMode(xml);
-        var itemsPerPage = getItemsPerPage(xml);
-
+        var searchType = $xmlObject.find('code').text();    
+        var itemsPerPage = $xmlObject.find('itemsPerPage').text();
+        
                     //display summary   
                    /*  cell.find(".KWICSearch-result").append("<div class='clearfix'>\n\
                             <div class='float-left'>CQP Query: <i>" + queryStr + "</i></div>\n\
@@ -404,7 +418,7 @@
             success: function(xml, status) {
                 //alert(xml);
                 cell.find(".wait-query-tab").css("display", "none");
-                if(getTotalHits(xml)===nOfHits){  
+                if(getHitsTotal(xml)===nOfHits){  
                     displayKWIC(cell, xml);  
                 }else{
                     cell.html("<span style='color:red'>KWIC is not possible</span>");
@@ -432,7 +446,7 @@
                 success: function(xml, status) {
                     //alert(xml);
                     cell.find(".wait-query-tab").css("display", "none");
-                        if(getTotalHits(xml)===numberOfHits){  
+                        if(getHitsTotal(xml)===numberOfHits){  
                             displayKWIC(cell, xml);  
                         }else{
                             cell.find(".wait-query-tab").css("display", "block"); 
@@ -461,7 +475,7 @@
                 success: function(xml, status) {
                     //alert(xml);
                     cell.find(".wait-query-tab").css("display", "none");
-                    if(getTotalHits(xml)===numberOfHits){  
+                    if(getHitsTotal(xml)===numberOfHits){  
                         displayKWIC(cell, xml);  
                     }else{
                         //cell.html("<span style='color:red'>KWIC is not possible</span>");

@@ -21,9 +21,9 @@
                     <option value=4 ><%=myResources.getString("SameTranscriptionDiffNorm")%></option>
                     <option value=5 ><%=myResources.getString("SameNormDiffTranscription")%></option>
                     <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>
-                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
+                 <!--   <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
                     <option value=8 ><%=myResources.getString("ExtendedSearchWithOwnLemmaList")%></option>
-                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>
+                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>-->
                 </select>                          
             </div>
         </div>
@@ -167,7 +167,7 @@
                         <span class="input-group-text"><%=myResources.getString("MultiWordRepetition")%>
                         <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("MultiWordRepetitionInfo")%>" ></i></span>
                     </div>
-                    <select class="form-control ignoreTokenOrder" disabled>
+                    <select class="form-control ignoreTokenOrder">
                         <option value=false selected="selected"><%=myResources.getString("TokenOrderRelevant")%></option>
                         <option value=true><%=myResources.getString("TokenOrderNotRelevant")%></option>
                     </select>                          

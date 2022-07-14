@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scripts;
+package org.zumult.indexing.measures;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,17 +50,13 @@ public class Measure_8 {
     }
     
     String[] corpusIDs = {"FOLK", "GWSS"};
+    String data_path = "src\\java\\data\\";
 
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException {
         // Connect to DGD
         BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
         for (String corpusID : corpusIDs){
             try {
-                //String corpusID = "FOLK";
-                //String corpusID = "GWSS";
-
-                String data_path = "src\\java\\data\\";
-                //String IDLists_path = data_path + "IDLists\\";
 
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder docBuilder = docFactory.newDocumentBuilder();

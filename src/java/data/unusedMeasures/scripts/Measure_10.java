@@ -11,7 +11,7 @@
 // ARE COMPLETED, CHECKED, AND APPROVED
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-package scripts;
+package data.unusedMeasures.scripts;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,7 +66,7 @@ public class Measure_10 {
         try {
             new Measure_10().doit();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException | SAXException | ParserConfigurationException ex) {
-            Logger.getLogger(Measure_1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Measure_10.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

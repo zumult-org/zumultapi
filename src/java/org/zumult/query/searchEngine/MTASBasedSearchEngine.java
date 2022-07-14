@@ -29,6 +29,7 @@ import java.nio.file.Paths;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -2060,66 +2061,41 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                             if(possibleRepetitionStr.equals(sourceStr)){
                                // this can be a repetition
                                isRepetition=true;
+                            }else{
+                                if(ignoreTokenOrder){
+                                    String possibleRepetitionStrSorted = sortedValues(sortedMap.values());
+                                    String sourceStrSorted = sortedValues(rs.getStringObjectsForLayer(currentRepetitionLayer).values());
+                                    if(possibleRepetitionStrSorted.equals(sourceStrSorted)){
+                                        // this can be a repetition
+                                        isRepetition=true;
+                                    }
+                                }
                             }
                             break;
                         
                         case DIFF_PRON:
                         case DIFF_NORM:
                             if(possibleRepetitionStr.equals(sourceStr)){
-                                
-                                    List<String> prefixList = new  ArrayList<String>();
-                                    String layer="";
-                                switch(similarity){
-                                    case DIFF_PRON:                                     
-                                        layer = Constants.METADATA_KEY_MATCH_TYPE_WORD;
-                                        prefixList.add(layer);
-                                        break;
-                                    case DIFF_NORM:
-                                        layer = Constants.ATTRIBUTE_NAME_NORM;
-                                        prefixList.add(layer);
-                                        break;                                   
+                                // this can be a repetition
+                                List<String> prefixList = getPrefixListForNewLayer(similarity);                              
+                                rs.addNewLayer(mtasCodecInfo, docID, prefixList, start, end);
+                                isRepetition = checkAdditionalLayer(rs, prefixList, mtasCodecInfo, sortedMap, docID);                      
+                            }else{
+                                if(ignoreTokenOrder){
+                                    String possibleRepetitionStrSorted = sortedValues(sortedMap.values());
+                                    String sourceStrSorted = sortedValues(rs.getStringObjectsForLayer(currentRepetitionLayer).values());
+                                    if(possibleRepetitionStrSorted.equals(sourceStrSorted)){
+                                        // this can be a repetition
+                                        List<String> prefixList = getPrefixListForNewLayer(similarity);                              
+                                        rs.addNewLayer(mtasCodecInfo, docID, prefixList, start, end);
+                                        isRepetition = checkAdditionalLayer(rs, prefixList, mtasCodecInfo, sortedMap, docID);
+                                    }
                                 }
-                                
-                                // get pronunciation/norm values
-                                if(!rs.containsLayer(layer)){
-                                    //create new source string
-                                    List<CodecSearchTree.MtasTreeHit<String>> termsTrans = mtasCodecInfo
-                                         .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                         docID, prefixList, start,
-                                         (end - 1));
-
-                                    rs.addNewLayer(layer, termsTrans);
-                                }
-                               
-                                String sourcePron = rs.getStringForLayer(layer);   
-                               
-                                //create new repetition string
-                                StringBuilder sb = new StringBuilder();
-                                for(Integer position: sortedMap.keySet()){
-                                    List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
-                                        .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
-                                            docID, prefixList, position, position);
-                                    sb.append(CodecUtil.termValue(terms.get(0).data));
-                                    sb.append(" ");
-                                }
-                                   
-                                String repetitionPron = sb.toString().trim();
-                                
-                                //System.out.println("rs: " + rs);
-                                //System.out.println(sourcePron + " + " + repetitionPron);
-                                    
-                                // compare pronunciation/norm value
-                                if(repetitionPron.equals(sourcePron)){
-                                    isRepetition=false;
-                                }else{
-                                    // this can be a repetition
-                                    isRepetition=true;
-                                }                                
                             }
                            break;
                         case FUZZY:
                             if(!possibleRepetitionStr.equals(sourceStr)){                          
-                                isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
+                                isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, ignoreTokenOrder);
                             }
                             break;
 
@@ -2127,11 +2103,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                            if(possibleRepetitionStr.equals(sourceStr)){
                                isRepetition=true;
                            }else{
-                               isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap);
+                               isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, ignoreTokenOrder);
                            }
                            break;
                         case OWN_LEMMA_LIST:
-                               isRepetition = checkSynonyms(sourceStr, possibleRepetitionStr, synonyms);
+                               isRepetition = checkSynonyms(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, synonyms, ignoreTokenOrder);
                         default:
                     }
 
@@ -2166,7 +2142,85 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
     }
     
-    private Boolean checkSynonyms(String sourceStr, String possibleRepetitionStr, HashMap<String, HashSet> synonyms){
+    private boolean checkAdditionalLayer(RepetitionSource rs, List<String> prefixList, 
+            CodecInfo mtasCodecInfo, SortedMap<Integer, String> sortedMap, int docID) throws IOException{
+        String sourcePron = rs.getStringForLayer(prefixList.get(0));   
+        String repetitionPron = getNewRepStr(mtasCodecInfo, sortedMap, docID, prefixList);
+        return !repetitionPron.equals(sourcePron);
+    }
+    
+    private List<String> getPrefixListForNewLayer(SimilarityTypeEnum similarity){
+        List<String> prefixList = new  ArrayList<String>();
+        String layer="";
+        switch(similarity){
+            case DIFF_PRON:                                     
+                layer = Constants.METADATA_KEY_MATCH_TYPE_WORD;
+                prefixList.add(layer);
+                break;
+            case DIFF_NORM:
+                layer = Constants.ATTRIBUTE_NAME_NORM;
+                prefixList.add(layer);
+            break;                                   
+        }
+        return prefixList;
+                                
+                    
+    }
+    
+    private String getNewRepStr(CodecInfo mtasCodecInfo, 
+            SortedMap<Integer, String> sortedMap, int docID, List<String> prefixList) throws IOException{
+        //create new repetition string
+        StringBuilder sb = new StringBuilder();
+        for(Integer position: sortedMap.keySet()){
+            List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
+                .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                docID, prefixList, position, position);
+                sb.append(CodecUtil.termValue(terms.get(0).data));
+                sb.append(" ");
+        }
+                                   
+        String repetitionPron = sb.toString().trim();
+        return repetitionPron;
+    }
+    
+    private String sortedValues(Collection<String> collection){
+        ArrayList<String> array = new ArrayList<String>(collection);
+        Collections.sort(array);
+        return String.join(" ", array);
+    }
+    
+    private Boolean checkSynonyms(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, HashMap<String, HashSet> synonyms, Boolean ignoreTokenOrder){
+        
+        ArrayList<String> sourceArray = new ArrayList<String>(source.values());
+        if(ignoreTokenOrder){
+            Collections.sort(sourceArray);
+        }
+        Object[] sourceList = sourceArray.toArray();
+        
+        ArrayList<String> possibleRepetitionArray = new ArrayList<String>(possibleRepetitions.values());
+        if(ignoreTokenOrder){
+            Collections.sort(possibleRepetitionArray);
+        }
+        Object[] possibleRepetitionList = possibleRepetitionArray.toArray();
+
+        boolean isRepetition=true;
+        for(int i=0; i<sourceList.length;i++){
+            String s1 = (String) sourceList[i];
+            String s2 = (String) possibleRepetitionList[i];
+            if(!s1.equals(s2)){
+                if(synonyms.containsKey(s1)){
+                    if (!synonyms.get(s1).contains(s2)){
+                        isRepetition = false;
+                        break;
+                    }
+                }else{
+                    isRepetition= false;
+                    break;
+                }
+            }
+        }
+        return isRepetition;
+        /*
         String[] array1 = sourceStr.split(" ");
         String[] array2 = possibleRepetitionStr.split(" ");
         if(array1.length==array2.length){
@@ -2198,7 +2252,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             return true;
         }else{
             return false;
-        }
+        }*/
         
     }
     
@@ -2235,6 +2289,17 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             
         }
         
+        void addNewLayer(CodecInfo mtasCodecInfo, int docID, List<String> prefixList, int start, int end) throws IOException{
+            if(!containsLayer(prefixList.get(0))){
+                //create new source string
+                List<CodecSearchTree.MtasTreeHit<String>> termsTrans = mtasCodecInfo
+                    .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
+                        docID, prefixList, start,(end - 1));
+
+                addNewLayer(prefixList.get(0), termsTrans);
+           }                              
+        }
+        
         ArrayList<String> getPositions(){
             ArrayList<String> positions = new ArrayList();
             layerMap2.entrySet().iterator().next().getValue().keySet().forEach(position -> {              
@@ -2245,9 +2310,19 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
     }
         
-    private boolean isFuzzyRepetition(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions){
-        Object[] sourceList = source.values().toArray();
-        Object[] possibleRepetitionList = possibleRepetitions.values().toArray();
+    private boolean isFuzzyRepetition(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, Boolean ignoreTokenOrder){
+        ArrayList<String> sourceArray = new ArrayList<String>(source.values());
+        if(ignoreTokenOrder){
+            Collections.sort(sourceArray);
+        }
+        Object[] sourceList = sourceArray.toArray();
+        
+        ArrayList<String> possibleRepetitionArray = new ArrayList<String>(possibleRepetitions.values());
+        if(ignoreTokenOrder){
+            Collections.sort(possibleRepetitionArray);
+        }
+        Object[] possibleRepetitionList = possibleRepetitionArray.toArray();
+
         boolean isRepetition=true;
         for(int i=0; i<sourceList.length;i++){
             String s1 = (String) sourceList[i];
