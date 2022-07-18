@@ -50,7 +50,7 @@ public class Measure_8 {
     }
     
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String data_path = "src\\java\\data\\";
+    String data_path = "src\\java\\data\\measures\\";
 
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException {
         // Connect to DGD

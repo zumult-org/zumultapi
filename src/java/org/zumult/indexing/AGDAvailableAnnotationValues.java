@@ -48,12 +48,12 @@ import org.zumult.query.StatisticEntry;
 public class AGDAvailableAnnotationValues implements Indexer {
     
     BackendInterface backend;
-    String FILE_NAME = "AGDAvailableAnnotationValues.xml";
+    String FILE_NAME = "ZuMultAvailableAnnotationValues_trans.xml";
     String OUTPUT = System.getProperty("user.dir") + "/src/java" + Constants.DATA_ANNOTATIONS_PATH  + FILE_NAME;
     
     /*  false - the values are counted from the transcripts, 
         true - the values are counted from the search index */
-    boolean search = true;  
+    boolean search = false;  
 
     public static void main(String[] args) {
         new AGDAvailableAnnotationValues().index();

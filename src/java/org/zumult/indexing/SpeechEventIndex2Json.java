@@ -41,10 +41,10 @@ public class SpeechEventIndex2Json implements Indexer {
             try {
                 //String XML_IN = "/data/" + corpusID + "_SpeechEventIndex.xml";
                 //String JSON_STRING = new IOHelper().applyInternalStylesheetToInternalFile(XSL, XML_IN);
-                String XML_IN = "D:\\WebApplication3\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
+                String XML_IN = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
                 String xml_string = IOHelper.readUTF8(new File(XML_IN));
                 String JSON_STRING = new IOHelper().applyInternalStylesheetToString(XSL, xml_string);
-                String JSON_OUT = "D:\\WebApplication3\\src\\java\\data\\prototypeJson\\" + corpusID + ".json";
+                String JSON_OUT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\prototypeJson\\" + corpusID + ".json";
                 Files.write(new File(JSON_OUT).toPath(), JSON_STRING.getBytes("UTF-8"));        
             } catch (TransformerException ex) {
                 Logger.getLogger(SpeechEventIndex2Json.class.getName()).log(Level.SEVERE, null, ex);

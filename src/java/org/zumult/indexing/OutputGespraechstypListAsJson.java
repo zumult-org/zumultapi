@@ -7,9 +7,16 @@ package org.zumult.indexing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,8 +66,11 @@ public class OutputGespraechstypListAsJson implements Indexer {
                 JSONArray jsonArray = new JSONArray();
 
                 JSONParser jsonParser = new JSONParser();
-                FileReader reader = new FileReader(corpusJsonPath);
-                JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(reader);
+                //FileReader reader = new FileReader(corpusJsonPath, "UTF_8");
+                FileInputStream fis = new FileInputStream(corpusJsonPath);
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+
+                JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(isr);
 
                 // iterate per speechevent
                 corpusJsonObject.forEach(speechEvent -> {
@@ -72,6 +82,8 @@ public class OutputGespraechstypListAsJson implements Indexer {
                     String activity = (String) speechEventObject.get("activity");*/
 
 
+                    List topics = (List) speechEventObject.get("themen");
+                    System.out.println(topics);
                     String domainOfInteraction = (String) speechEventObject.get("interaktionsdomäne");
                     List areaOfLifeStringArray = (ArrayList) speechEventObject.get("lebensbereich");
                     String activity = (String) speechEventObject.get("aktivität");
@@ -194,9 +206,16 @@ public class OutputGespraechstypListAsJson implements Indexer {
 
                 // write to json
                 if (!jsonArray.isEmpty()) {
-                    FileWriter file = new FileWriter(DATA_PATH + "prototypeJson/gesprachstypTreeselect" + corpusID + ".json");
+                    
+                    FileOutputStream fos = new FileOutputStream(DATA_PATH + "prototypeJson/gesprachstypTreeselect" + corpusID + ".json");
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                    BufferedWriter bw = new BufferedWriter(osw);
+                    bw.append(jsonArray.toString());
+                    bw.flush();
+                    
+                /*  FileWriter file = new FileWriter(DATA_PATH + "prototypeJson/gesprachstypTreeselect" + corpusID + ".json");
                     file.write(jsonArray.toString());
-                    file.flush();
+                    file.flush();*/
                 }
             }
 

@@ -25,14 +25,14 @@ import org.zumult.query.searchEngine.SearchIndex;
 public class SearchIndexer implements Indexer {
     
     private static final String MTAS_CONFIG_FILE_PATH = "src\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
-    private static final String MTAS_CONFIG_FILE_NAME = "mtas_config_TB.xml";
+    private static final String MTAS_CONFIG_FILE_NAME = "mtas_config_SB.xml";
     private static final String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
-    private static final String INDEX_NAME = "TB_FOLK";
+    private static final String INDEX_NAME = "SB_FOLK";
     public static final String[] INPUT_DIRECTORIES = 
         {
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\FOLK", 
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\GWSS"
-            "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_TB_FOLK_11_07_2022" // 12.07.2022
+            "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_14_07_2022" // 12.07.2022
         };
     
     /**

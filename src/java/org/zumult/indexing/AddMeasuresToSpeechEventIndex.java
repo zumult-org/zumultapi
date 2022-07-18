@@ -45,13 +45,22 @@ public class AddMeasuresToSpeechEventIndex implements Indexer {
     @Override
     public void index() throws IOException {
         for (String corpusID : corpusIDs){
-            String SPEECH_EVENT_INDEX_IN = "D:\\WebApplication3\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
+            /*
+                        String SPEECH_EVENT_INDEX_IN = "D:\\WebApplication3\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
             String MEASURE_1_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_1_" + corpusID + ".xml";
             String MEASURE_7_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_7_" + corpusID + ".xml";
             String MEASURE_8_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_8_" + corpusID + ".xml";
             String MEASURE_12_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_12_" + corpusID + ".xml";
             String MEASURE_13_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_13_" + corpusID + ".xml";
             String MEASURE_14_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_14_" + corpusID + ".xml";
+            */
+            String SPEECH_EVENT_INDEX_IN = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
+            String MEASURE_1_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_1_" + corpusID + ".xml";
+            String MEASURE_7_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_7_" + corpusID + ".xml";
+            String MEASURE_8_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_8_" + corpusID + ".xml";
+            String MEASURE_12_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_12_" + corpusID + ".xml";
+            String MEASURE_13_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_13_" + corpusID + ".xml";
+            String MEASURE_14_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_14_" + corpusID + ".xml";
             try {
                 Document inDocument = IOHelper.readDocument(new File(SPEECH_EVENT_INDEX_IN));
                 Document measure1Document = IOHelper.readDocument(new File(MEASURE_1_DOCUMENT));

@@ -172,7 +172,7 @@
             "</",XML_ELEMENT_NAME_REPETITIONS,">"
         );
                         
-        alert(repetitions.join(""));
+       // alert(repetitions.join(""));
         return repetitions.join("");
     }
     
