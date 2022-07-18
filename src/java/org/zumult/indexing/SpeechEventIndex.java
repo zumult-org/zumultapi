@@ -166,8 +166,11 @@ public class SpeechEventIndex implements Indexer {
                 }
                 String xmlString = IOUtilities.documentToString(document);
                 //System.out.println(xmlString);
-                String OUT = "D:\\WebApplication3\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
-                Files.write(new File(OUT).toPath(), xmlString.getBytes("UTF-8"));
+                //String OUT = "D:\\WebApplication3\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
+                String OUTPUT = System.getProperty("user.dir") + "/src/java/data/"  + corpusID + "_SpeechEventIndex.xml";
+                Files.write(new File(OUTPUT).toPath(), xmlString.getBytes("UTF-8"));
+
+                
 
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ParserConfigurationException ex) {
                 Logger.getLogger(SpeechEventIndex.class.getName()).log(Level.SEVERE, null, ex);

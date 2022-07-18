@@ -31,6 +31,7 @@
             <corpus>HL--</corpus>
             <corpus>HMAT</corpus>
             <corpus>HMOT</corpus>
+            <corpus>IPER</corpus>
             <corpus>IS--</corpus>
             <corpus>ISW-</corpus>
             <corpus>ISZ-</corpus>
@@ -78,6 +79,7 @@
             <corpus>HMAT</corpus>
             <corpus>HMOT</corpus>
             <corpus>MIKO</corpus>
+            <corpus>IPER</corpus>
             <corpus>IS--</corpus>
             <corpus>ISW-</corpus>
             <corpus>ISZ-</corpus>
@@ -140,6 +142,7 @@
             <corpus>HL--</corpus>
             <corpus>HMAT</corpus>
             <corpus>HMOT</corpus>
+            <corpus>IPER</corpus>
             <corpus>IS--</corpus>
             <corpus>ISW-</corpus>
             <corpus>ISZ-</corpus>
@@ -189,6 +192,7 @@
             <corpus>HL--</corpus>
             <corpus>HMAT</corpus>
             <corpus>HMOT</corpus>
+            <corpus>IPER</corpus>
             <corpus>IS--</corpus>
             <corpus>ISW-</corpus>
             <corpus>ISZ-</corpus>
@@ -645,8 +649,7 @@
             <corpus>FGOP</corpus>
             <corpus>FOLK</corpus>
             <corpus>FR--</corpus>
-            <!-- Das Format bei GWSS ist anders, z.B.: 	"1 Vortragender, 1 Moderator, ca. 25 Zuhörer" -->
-            <!-- <corpus>GWSS</corpus> -->
+            <corpus>GWSS</corpus>
             <corpus>HL--</corpus>
             <corpus>HMAT</corpus>
             <corpus>HMOT</corpus>

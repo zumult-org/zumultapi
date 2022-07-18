@@ -484,11 +484,12 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             try {
                 String actualPath = AbstractIDSBackend.class.getProtectionDomain().getCodeSource().getLocation().getPath();
                 //File folder = new File(IOHelper.getProjectFile(actualPath), "WEB-INF\\classes\\data");
-                File folder = new File(
+                File folder = new File(new File(
                             new File(
                                 new File(IOHelper.getProjectFile(actualPath), "WEB-INF"),
                             "classes"),
-                        "data");
+                        "data"), 
+                    "measures");
                 File[] listOfFiles = folder.listFiles();
                 for (File file : listOfFiles) {
                     if (file.isFile() && file.getName().equals(fileName)) {
