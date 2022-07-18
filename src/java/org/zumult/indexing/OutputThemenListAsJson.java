@@ -7,9 +7,15 @@ package org.zumult.indexing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,8 +57,11 @@ public class OutputThemenListAsJson implements Indexer {
                 JSONArray jsonArray = new JSONArray();
 
                 JSONParser jsonParser = new JSONParser();
-                FileReader reader = new FileReader(corpusJsonPath);
-                JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(reader);
+               // FileReader reader = new FileReader(corpusJsonPath);
+                
+                FileInputStream fis = new FileInputStream(corpusJsonPath);
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(isr);
 
                 // iterate per speechevent
                 corpusJsonObject.forEach(speechEvent -> {
@@ -75,9 +84,14 @@ public class OutputThemenListAsJson implements Indexer {
                 System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonArray));
 
 //              write to json
-                FileWriter file = new FileWriter(DATA_PATH + "prototypeJson/themen" + corpusID + ".json");
+               /* FileWriter file = new FileWriter(DATA_PATH + "prototypeJson/themen" + corpusID + ".json");
                 file.write(jsonArray.toString());
-                file.flush();
+                file.flush();*/
+                    FileOutputStream fos = new FileOutputStream(DATA_PATH + "prototypeJson/themen" + corpusID + ".json");
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                    BufferedWriter bw = new BufferedWriter(osw);
+                    bw.append(jsonArray.toString());
+                    bw.flush();
             }
 
             long end = System.currentTimeMillis();

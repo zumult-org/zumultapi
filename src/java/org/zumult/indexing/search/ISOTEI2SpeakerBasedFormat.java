@@ -41,7 +41,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
             
             corpusIDsForIndexing = new HashSet<>(Arrays.asList("FOLK"));
             DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input";  //iso-tei transcripts
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_11_07_2022";
+            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_14_07_2022";
             
             new ISOTEI2SpeakerBasedFormat().doit();
             
