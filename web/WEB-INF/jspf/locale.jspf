@@ -14,6 +14,8 @@ if (pageParam_lang!=null && !pageParam_lang.isEmpty()){
     }else{
         currentLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
     }
+}else {
+    currentLocale = new Locale.Builder().setLanguage("de").setRegion("DE").build();
 }
 
 ResourceBundle myResources = ResourceBundle.getBundle("resources.MessageBundle", currentLocale);

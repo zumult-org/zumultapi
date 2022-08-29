@@ -20,6 +20,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 
 /**
@@ -41,6 +42,7 @@ public class AddMeasuresToSpeechEventIndex implements Indexer {
     
     //String corpusID = "FOLK";
     String[] corpusIDs = {"FOLK", "GWSS"};
+    String MEASURE_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
 
     @Override
     public void index() throws IOException {
@@ -55,12 +57,12 @@ public class AddMeasuresToSpeechEventIndex implements Indexer {
             String MEASURE_14_DOCUMENT = "D:\\WebApplication3\\src\\java\\data\\Measure_14_" + corpusID + ".xml";
             */
             String SPEECH_EVENT_INDEX_IN = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
-            String MEASURE_1_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_1_" + corpusID + ".xml";
-            String MEASURE_7_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_7_" + corpusID + ".xml";
-            String MEASURE_8_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_8_" + corpusID + ".xml";
-            String MEASURE_12_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_12_" + corpusID + ".xml";
-            String MEASURE_13_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_13_" + corpusID + ".xml";
-            String MEASURE_14_DOCUMENT = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\java\\data\\measures\\Measure_14_" + corpusID + ".xml";
+            String MEASURE_1_DOCUMENT = MEASURE_PATH + "Measure_1_" + corpusID + ".xml";
+            String MEASURE_7_DOCUMENT = MEASURE_PATH + "Measure_7_" + corpusID + ".xml";
+            String MEASURE_8_DOCUMENT = MEASURE_PATH + "Measure_8_" + corpusID + ".xml";
+            String MEASURE_12_DOCUMENT = MEASURE_PATH + "Measure_12_" + corpusID + ".xml";
+            String MEASURE_13_DOCUMENT = MEASURE_PATH + "Measure_13_" + corpusID + ".xml";
+            String MEASURE_14_DOCUMENT = MEASURE_PATH + "Measure_14_" + corpusID + ".xml";
             try {
                 Document inDocument = IOHelper.readDocument(new File(SPEECH_EVENT_INDEX_IN));
                 Document measure1Document = IOHelper.readDocument(new File(MEASURE_1_DOCUMENT));

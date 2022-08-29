@@ -12,10 +12,12 @@
     var prevButtonLabel='<%=myResources.getString("Previous")%>';
     var nextButtonLabel='<%=myResources.getString("Next")%>';
     var lastButtonLabel='<%=myResources.getString("Last")%>';
-    
-    var searchLoadingIndicatorText ='<%=myResources.getString("LoadingSearch")%>'+ 
-            "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>" + 
-            "<button type='button' class='btn btn-dark btn-sm ml-4 abortSearch mt-2' onclick='abortSearch(this)'><%=myResources.getString("AbortSearch")%></button>";
+
+    var searchLoadingIndicatorText ='<%=myResources.getString("LoadingSearch")%>'+
+            "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>";
+
+    var searchLoadingIndicatorAbortButton = "<button type='button' class='btn btn-dark btn-sm ml-4 abortSearch mt-2' onclick='abortSearch(this)'><%=myResources.getString("AbortSearch")%></button>";
+
     var imgLoadingIndicatorText = "<img src='../images/loading.gif' width='64' height='64' alt='Loading indicator'/>";
     var kwicURL = '<%=restAPIBaseURL%>' + "/SearchService/kwic";
     var statisticURL = '<%=restAPIBaseURL%>' + "/SearchService/statistics";

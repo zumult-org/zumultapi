@@ -42,7 +42,7 @@ public class AGDAvailableMetadataValues implements Indexer {
         }
     }
 
-    String METADATA_SELECTION = "/data/MetadataSelection.xml";
+    //String METADATA_SELECTION = "/data/MetadataSelection.xml";
     String FILE_NAME = "AGDAvailableMetadataValues.xml";  
     String OUTPUT = System.getProperty("user.dir") + "/src/java/data/" + FILE_NAME;
 

@@ -412,7 +412,7 @@
         <xpath>Basisdaten/Datum/YYYY-MM-DD</xpath>
         <level>event-metadata</level>
         <dgd-parameter-name>v_e_datum</dgd-parameter-name>
-        <example>1961 oder 2007-2009</example>
+        <example>2008-10-25 oder 2007 oder 2007|2008|2009</example>
         <corpora>
             <corpus>AD--</corpus>
             <corpus>BB--</corpus>

@@ -383,13 +383,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }
     }
         
-    private MtasSpanQuery createQuery(String field, String queryString, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException {
+    private MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException {
         try{
             System.out.println("PARAMETER (CQP QUERY): " + queryString);
             Reader reader = new BufferedReader(new StringReader(queryString));
             MtasCQLParser p = new MtasCQLParser(reader);
-            return p.parse(field, null, null, ignore, maximumIgnoreLength);
+            return p.parse(field, null, variables, ignore, maximumIgnoreLength);
         }catch (TokenMgrError | ParseException | IllegalArgumentException ex) {
+            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
             throw new SearchServiceException("Please check the query syntax: " + ex.getMessage());
         }        
     }
@@ -539,7 +540,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     try{   
                         indexReader = DirectoryReader.open(directory);
 
-                        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null);
+                        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
 
                         ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
                         searcher = new IndexSearcher(indexReader);
@@ -610,7 +611,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         /*System.out.println("PARAMETER (FROM): " + from);
         System.out.println("PARAMETER (TO): " + to);*/
         
-        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null);
+        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
         
         if (metadataQueryString == null || metadataQueryString.isEmpty()){
             // search hits without metadata
@@ -1145,7 +1146,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 try{
                     indexReader = DirectoryReader.open(directory);
 
-                    MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null);
+                    MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
 
                     ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
                     searcher = new IndexSearcher(indexReader);
@@ -1269,7 +1270,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             Integer from, Integer to, SortTypeEnum sortType, String metadataKeyID) throws SearchServiceException, IOException {
 
             //System.out.println("-- method: searchStatistic");
-            MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null);
+            MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
             
             int hits_total = 0;
             int transcripts_total = 0;
@@ -1867,7 +1868,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             if (directory != null) {
 
                 try{   
-                    MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null);
+                    MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
                     indexReader = DirectoryReader.open(directory);              
                     searcher = new IndexSearcher(indexReader);
                     SpanWeight spanweight = ((MtasSpanQuery) q.rewrite(indexReader)).createWeight(searcher, ScoreMode.COMPLETE, 0);
@@ -2503,7 +2504,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         if (directory != null) {
                             try (IndexReader indexReader = DirectoryReader.open(directory)) {
                                 IndexSearcher searcher = new IndexSearcher(indexReader);
-                                MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null);
+                                MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
                                 SpanWeight spanweight = ((MtasSpanQuery) q.rewrite(indexReader)).createWeight(searcher, ScoreMode.COMPLETE, 0);
                                 ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
 

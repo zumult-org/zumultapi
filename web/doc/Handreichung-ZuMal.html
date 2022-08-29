@@ -1,1190 +1,452 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script>(function (H) { H.className = H.className.replace(/\bno-js\b/, 'js') })(document.documentElement)</script>
-    <title>Handreichung zur Arbeit mit ZuMal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://purl.org/dc/elements/1.1/" rel="schema.dc" />
-    <meta name="dc.modified" content="2021-12-22T13:37:57Z" />
-    <meta name="generator" content="DocBook xslTNG version 1.6.0 / f33f08db / SAXON HE 10.6" />
-    <link href="./css/docbook.css" rel="stylesheet" />
-    <link href="./css/docbook-screen.css" rel="stylesheet" />
-</head>
-
-<body class="home">
-    <nav class="top"></nav>
-    <main>
-        <article lang="de-DE" class="article">
-            <header>
-                <h1>Handreichung zur Arbeit mit ZuMal</h1>
-                <h2>DFG-Projekt „Zugänge zu multimodalen Korpora gesprochener Sprache
-                    Vernetzung und zielgruppenspezifische Ausdifferenzierung“ (ZuMult)</h2>
-                <div class="author">
-                    <h3><span class="first-last personname">Cordula Meißner</span></h3>
-                </div>
-                <div class="author">
-                    <h3><span class="first-last personname">Matthias Schwendemann</span></h3>
-                </div>
-                <div class="author">
-                    <h3><span class="first-last personname">Franziska Wallner</span></h3>
-                </div>
-            </header>
-            <div class="list-of-titles">
-                <div class="lot toc">
-                    <div class="title">Table of Contents</div>
-                    <ul class="toc">
-                        <li><a href="#R_s1"><span class="number">1<span class="sep"> </span></span>ZuMal: Auswahl von
-                                Sprechereignissen</a>
-                            <ul class="toc">
-                                <li><a href="#_1__%C3%9Cberblick"><span class="number">1<span class="sep">.</span>1<span
-                                                class="sep"> </span></span>1 Überblick</a></li>
-                                <li><a href="#_2__Metadatenbezogene"><span class="number">1<span
-                                                class="sep">.</span>2<span class="sep"> </span></span>2
-                                        Metadatenbezogene Auswahlparameter</a>
-                                    <ul class="toc">
-                                        <li><a href="#_2.1__Gespr%C3%A4chstyp"><span class="number">1<span
-                                                        class="sep">.</span>2<span class="sep">.</span>1<span
-                                                        class="sep"> </span></span>2.1 Gesprächstyp</a></li>
-                                        <li><a href="#_2.2_Sprachen"><span class="number">1<span
-                                                        class="sep">.</span>2<span class="sep">.</span>2<span
-                                                        class="sep"> </span></span>2.2 Sprachen</a></li>
-                                        <li><a href="#_2.3_Art"><span class="number">1<span class="sep">.</span>2<span
-                                                        class="sep">.</span>3<span class="sep"> </span></span>2.3 Art
-                                            </a></li>
-                                        <li><a href="#_2.4_Themen"><span class="number">1<span
-                                                        class="sep">.</span>2<span class="sep">.</span>4<span
-                                                        class="sep"> </span></span>2.4 Themen</a></li>
-                                        <li><a href="#_2.5__Sprachregion"><span class="number">1<span
-                                                        class="sep">.</span>2<span class="sep">.</span>5<span
-                                                        class="sep"> </span></span>2.5 Sprachregion</a></li>
-                                        <li><a href="#_2.6__Dauer"><span class="number">1<span
-                                                        class="sep">.</span>2<span class="sep">.</span>6<span
-                                                        class="sep"> </span></span>2.6 Dauer</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#_3_Schwierigkeitsbezogene_Auswahlpar"><span class="number">1<span
-                                                class="sep">.</span>3<span class="sep"> </span></span>3
-                                        Schwierigkeitsbezogene Auswahlparameter und Filter</a>
-                                    <ul class="toc">
-                                        <li><a href="#_3.1_Wortschatz_Niveaustufe_"><span class="number">1<span
-                                                        class="sep">.</span>3<span class="sep">.</span>1<span
-                                                        class="sep"> </span></span>3.1 Wortschatz (Niveaustufe)</a></li>
-                                        <li><a href="#_3.2_Standardn%C3%A4he_Normalisierungsra"><span
-                                                    class="number">1<span class="sep">.</span>3<span
-                                                        class="sep">.</span>2<span class="sep"> </span></span>3.2
-                                                Standardnähe (Normalisierungsrate)</a></li>
-                                        <li><a href="#_3.3_Sprechgeschwindigkeit_Artikula"><span class="number">1<span
-                                                        class="sep">.</span>3<span class="sep">.</span>3<span
-                                                        class="sep"> </span></span>3.3 Sprechgeschwindigkeit
-                                                (Artikulationsrate)</a></li>
-                                        <li><a href="#_3.4_%C3%9Cberlappungen"><span class="number">1<span
-                                                        class="sep">.</span>3<span class="sep">.</span>4<span
-                                                        class="sep"> </span></span>3.4 Überlappungen</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#_4_Ph%C3%A4nomenbezogene_Auswahlparameter"><span class="number">1<span
-                                                class="sep">.</span>4<span class="sep"> </span></span>4 Phänomenbezogene
-                                        Auswahlparameter und Filter</a>
-                                    <ul class="toc">
-                                        <li><a href="#_4.1__Wortarten"><span class="number">1<span
-                                                        class="sep">.</span>4<span class="sep">.</span>1<span
-                                                        class="sep"> </span></span>4.1 Wortarten</a></li>
-                                        <li><a href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom"><span
-                                                    class="number">1<span class="sep">.</span>4<span
-                                                        class="sep">.</span>2<span class="sep"> </span></span>4.2
-                                                Ausgewählte Mündlichkeitsphänomene</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#_5_Ergebnisliste"><span class="number">1<span class="sep">.</span>5<span
-                                                class="sep"> </span></span>5 Ergebnisliste</a></li>
-                                <li><a href="#_6__Visualisierung"><span class="number">1<span class="sep">.</span>6<span
-                                                class="sep"> </span></span>6 Visualisierung der Ergebnismenge</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#R_s2"><span class="number">2<span class="sep"> </span></span>Quellen</a></li>
-                    </ul>
-                </div>
-            </div>
-            <section id="R_s1" class="section">
-                <header>
-                    <h2><span class="number">1<span class="sep"> </span></span>ZuMal: Auswahl von Sprechereignissen</h2>
-                </header>
-                <p>ZuMal (Zugang zu Merkmalsauswahl von Gesprächen) ist ein spezifisch für
-                    Fremdsprachendidaktiker:innen entwickeltes Werkzeug zur gezielten Auswahl von
-                    Sprechereignissen<sup id="__EN1__-fref" db-footnote="1" class="footnote-number"><a
-                            href="#__EN1__-fnote">1</a></sup> aus ausgewählten Korpora der Datenbank für gesprochenes
-                    Deutsch (DGD) nach
-                    sprachdidaktisch relevanten und schwierigkeitsbezogenen Kriterien. Hierfür werden zum
-                    einen Filter bereitgestellt, die ausgewählte Metadaten der Sprechereignisse abbilden.
-                    Dazu zählen u.a. der Gesprächstyp, die Art des Gesprächs, die Gesprächsthemen, die
-                    Sprachregion und die Dauer des Gesprächs. Zum anderen wird für einige Filter auf
-                    Informationen zurückgegriffen, die mit computerlinguistischen Methoden automatisch aus
-                    den Korpusdaten berechnet werden können und eher schwierigkeitsbezogene Parameter
-                    abbilden. Zu diesen Parametern gehören der Wortschatz, die
-                    Standardnähe/-ferne, die Sprechgeschwindigkeit und die Anzahl an
-                    Überlappungen verschiedener Sprecher:innen. Zusätzlich stehen Filter zur
-                    Verfügung, die eine Auswahl der Sprechereignisse nach den darin vorkommenden Wortarten
-                    und Mündlichkeitsphänomenen ermöglichen.</p>
-                <p>Im Folgenden erhalten Sie zunächst einen Überblick zum Aufbau von ZuMal (<a
-                        href="#_1__%C3%9Cberblick" class="link">1</a>). Anschließend werden die verschiedenen Filter
-                    beschrieben: zunächst die Auswahlfilter, die sich auf die Metadaten der Texte beziehen
-                    (<a href="#_2__Metadatenbezogene" class="link">2</a>), dann die schwierigkeitsbezogenen
-                    Filter (<a href="#_3_Schwierigkeitsbezogene_Auswahlpar" class="link">3</a>) und zuletzt die
-                    phänomenbezogenen Filter (<a href="#_4_Ph%C3%A4nomenbezogene_Auswahlparameter" class="link">4</a>).
-                    Dabei erfolgt hinsichtlich der schwierigkeitsbezogenen Auswahlkriterien
-                    (Wortschatz (<a href="#_3.1_Wortschatz_Niveaustufe_" class="link">3.1</a>), Standardnähe
-                    (<a href="#_3.2_Standardn%C3%A4he_Normalisierungsra" class="link">3.2</a>),
-                    Sprechgeschwindigkeit (<a href="#_3.3_Sprechgeschwindigkeit_Artikula" class="link">3.3</a>)
-                    und Überlappungen (<a href="#_3.4_%C3%9Cberlappungen" class="link">3.4</a>)) sowie für die
-                    phänomenbezogenen Filter zu den Wortarten (<a href="#_4.1__Wortarten" class="link">4.1</a>)
-                    und die Mündlichkeitsphänomene (<a href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom"
-                        class="link">4.2</a>) zusätzlich eine Erläuterung des technischen Hintergrunds sowie eine
-                    didaktische Einordnung der Relevanz dieser Auswahlkriterien. Abschließend erhalten Sie
-                    Informationen zur dynamischen Ergebnisliste (<a href="#_5_Ergebnisliste" class="link">5</a>)
-                    und zur Visualisierung der Ergebnismenge als Streudiagramm (<a href="#_6__Visualisierung"
-                        class="link">6</a>).</p>
-                <section id="_1__Überblick" class="section">
-                    <header>
-                        <h3><span class="number">1<span class="sep">.</span>1<span class="sep"> </span></span>1
-                            Überblick</h3>
-                    </header>
-                    <p>Die Oberfläche von ZuMal (Zugang zu Merkmalsauswahl von Gesprächen) umfasst drei
-                        Komponenten: links das Menü der Auswahlparameter (rot), rechts unten die
-                        Ergebnisliste mit den ermittelten Sprechereignissen im Tabellenformat (orange) und
-                        darüber rechts oben eine Visualisierung der Ergebnismenge als Streudiagramm (blau)
-                        (vgl. <a href="#Abb_1" class="link">Abb. 1</a>).</p>
-                    <div id="Abb_1" class="figure">
-                        <div class="mediaobject">
-                            <div class="imageobject">
-                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                class="viewport-cell" style="vertical-align:middle;"><span
-                                                    class="viewport"><img
-                                                        src="Handreichung%20ZuMal_final_13-12-21_files/image1.png"
-                                                        style="width:616px;height:318px;" /></span></span></span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <header>
-                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                    class="number">1<span class="sep">.</span>1<span class="sep">.</span>1<span
-                                        class="sep"> </span></span>Abbildung 1: Struktur des Werkzeugs ZuMal</div>
-                        </header>
-                    </div>
-                    <p>Ganz oben links wird die Auswahl des Korpus getroffen. Der Prototyp ZuMal kann für
-                        die DGD-Korpora FOLK und GWSS genutzt werden (vgl. <a href="#Abb_2" class="link">Abb.
-                            2</a>). Das FOLK-Korpus ist das „Forschungs- und Lehrkorpus Gesprochenes
-                        Deutsch“, in dem sich private, institutionelle und öffentliche Gespräche aus dem
-                        deutschsprachigen Raum finden. Das FOLK-Korpus wird regelmäßig erweitert und neue
-                        Sprechereignissen werden in das bestehende Korpus integriert. Das Korpus
-                        „Gesprochene Wissenschaftssprache“ (GWSS) beinhaltet universitäre Prüfungsgespräche
-                        sowie Vorträge von Expert:innen und Studierenden aus dem akademischen Kontext. Die
-                        einzelnen Gespräche in GWSS wurden dabei nicht nur in Deutschland, sondern
-                        zusätzlich in Bulgarien, Finnland, Italien, Polen und dem Vereinigten Königreich
-                        Großbritannien erhoben.</p>
-                    <div id="Abb_2" class="figure">
-                        <div class="mediaobject">
-                            <div class="imageobject">
-                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                class="viewport-cell" style="vertical-align:middle;"><span
-                                                    class="viewport"><img
-                                                        src="Handreichung%20ZuMal_final_13-12-21_files/image2.png"
-                                                        style="width:487px;height:256px;" /></span></span></span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <header>
-                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                    class="number">1<span class="sep">.</span>1<span class="sep">.</span>2<span
-                                        class="sep"> </span></span>Abbildung 2: Auswahl des Korpus im Werkzeug ZuMal
-                            </div>
-                        </header>
-                    </div>
-                    <p>Durch das Setzen eines Filters für einen der angebotenen Auswahlparameter auf der
-                        linken Seite werden automatisch rechts (im Streudiagramm und in der tabellarischen
-                        Ergebnisliste) alle Informationen zu den Sprechereignissen, die diese
-                        Auswahlkriterien erfüllen, angeboten. <a href="#Abb_3" class="link">Abb. 3</a> zeigt dies
-                        für die Auswahl nach den Kriterien Gesprächsart „Telefongespräch“ und Dauer von
-                        maximal 30 Minuten im FOLK-Korpus. Es können mehrere Auswahlfilter miteinander
-                        kombiniert werden, um möglichst passende Sprechereignisse aus den Korpora
-                        herauszufiltern. Im vorliegenden Beispiel ergeben sich durch die gesetzten Filter 17
-                        entsprechende Sprechereignisse (DGD-Version 2.16, 17.5.2021). In der Ergebnisliste
-                        werden die Werte der schwierigkeitsbezogenen Parameter (Normalisierungsrate,
-                        Überlappungen, Artikulation, Deckung mit einer Wortschatzliste) für diese
-                        Sprechereignisse tabellarisch angezeigt (rot). Die Ergebnisvisualisierung als
-                        Streudiagramm veranschaulicht das Verhältnis zwischen den Telefongesprächen der
-                        Treffermenge anhand der für die Achsen eingestellten Parameter (in Voreinstellung
-                        Normalisierungsrate (Standardnähe/-ferne) sowie Sprechgeschwindigkeit
-                        (Artikulationsrate), blau). Es wird anschaulich, dass eines der Telefongespräche
-                        deutlich standardferner realisiert ist (orange) und die Sprechereignisse sich auch
-                        hinsichtlich der durchschnittlichen Sprechgeschwindigkeit unterscheiden.</p>
-                    <div id="Abb_3" class="figure">
-                        <div class="mediaobject">
-                            <div class="imageobject">
-                                <div class="media"><img
-                                        src="Handreichung%20ZuMal_final_13-12-21_files/image4.png" />
-                                </div>
-                            </div>
-                        </div>
-                        <header>
-                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                    class="number">1<span class="sep">.</span>1<span class="sep">.</span>3<span
-                                        class="sep"> </span></span>Abbildung 3: Beispiel für das Zusammenwirken der
-                                Komponenten in ZuMal: Angebotene
-                                Informationen für die Auswahl nach der Gesprächsart "Telefongespräch" und Dauer
-                                von maximal 30 Minuten im FOLK-Korpus.</div>
-                        </header>
-                    </div>
-                    <p>Das gezeigte Beispiel veranschaulicht das Grundprinzip der Funktion von ZuMal. Im
-                        Folgenden werden die Auswahlparameter in ihren Funktionalitäten im Einzelnen
-                        beschrieben. </p>
-                </section>
-                <section id="_2__Metadatenbezogene" class="section">
-                    <header>
-                        <h3><span class="number">1<span class="sep">.</span>2<span class="sep"> </span></span>2
-                            Metadatenbezogene Auswahlparameter</h3>
-                    </header>
-                    <p>Bezogen auf die <a
-                            href="http://agd.ids-mannheim.de/download/FOLK_Z_10_Kurzuebersicht_Metadatensystematik_FOLK.pdf"
-                            class="link">-&gt; Metadaten</a> der Sprechereignisse stehen insgesamt sechs verschiedene
-                        Auswahlparameter zur Verfügung, anhand deren die Gespräche gefiltert werden können.
-                        Diese beziehen sich auf den Gesprächstyp (nur in FOLK) (<a href="#_2.1__Gespr%C3%A4chstyp"
-                            class="link">2.1</a>), die Erst- und Zweitsprachen der
-                        beteiligten Sprechenden (nur in GWSS) (<a href="#_2.2_Sprachen" class="link">2.2</a>),
-                        die Art des Gesprächs (<a href="#_2.3_Art" class="link">2.3</a>), das Thema (<a
-                            href="#_2.4_Themen" class="link">2.4</a>), die Sprachregion (<a href="#_2.5__Sprachregion"
-                            class="link">2.5</a>) und die Dauer des Gesprächs (<a href="#_2.6__Dauer"
-                            class="link">2.6</a>).</p>
-                    <section id="_2.1__Gesprächstyp" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>2<span class="sep">.</span>1<span
-                                        class="sep"> </span></span>2.1 Gesprächstyp</h4>
-                        </header>
-                        <p>Unter der Rubrik „Gesprächstyp“ können für das FOLK-Korpus entsprechend seines
-                            Korpusdesigns die Interaktionsparameter <em>Interaktionsdomäne,
-                                Lebensbereich </em>und<em> Aktivität </em>spezifiziert
-                            werden<em>. </em>Diese drei Auswahlparameter sind hierarchisch
-                            angeordnet: Den Interaktionsdomänen (privat, institutionell, öffentlich,
-                            sonstige) sind <em>Lebensbereiche </em>zugeordnet (z.B.
-                            institutionell &gt; Bildung, Behörden, Vereinsleben...) und den Lebensbereichen
-                            <em>Aktivitäten</em> (z.B. Bildung &gt; Unterricht, Prüfung,
-                            Fahrstunde...). Für private Gespräche erfolgt keine weitere Differenzierung auf
-                            der Ebene des Lebensbereichs.
-                        </p>
-                        <p>Die Auswahl erscheint in Form eines ausklappbaren Menüs (vgl. <a href="#Abb_4"
-                                class="link">Abb. 4</a>). Durch Anklicken der grauen Pfeilsymbole
-                            öffnet sich die nächste Auswahlebene. In Klammern wird die Anzahl der für den
-                            jeweiligen Gesprächstyp verfügbaren Datensätze angezeigt (z.B. 19
-                            Prüfungsgespräche). Durch Anklicken der Checkboxen lässt sich eine Auswahl
-                            vornehmen.</p>
-                        <p>Für das GWSS-Korpus wird anstatt dieses Auswahlparameters der Parameter
-                            „Sprachen“ angeboten, der im nächsten Punkt beschrieben wird. </p>
-                        <div id="Abb_4" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image5.png"
-                                                            style="width:548px;height:473px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>2<span class="sep">.</span>1<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 4: Der
-                                    Auswahlparameter "Gesprächstyp" für das Korpus FOLK</div>
-                            </header>
-                        </div>
-                    </section>
-                    <section id="_2.2_Sprachen" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>2<span class="sep">.</span>2<span
-                                        class="sep"> </span></span>2.2 Sprachen</h4>
-                        </header>
-                        <p>Für GWSS wird der Auswahlparameter „Sprachen“ angeboten, der die Erstsprachen
-                            (L1) und Zweitsprachen (L2) der beteiligten Gesprächsteilnehmenden spezifiziert
-                            (vgl. <a href="#Abb_5" class="link">Abb: 5</a>). </p>
-                        <p>Für den Auswahlparameter „Sprachen“ wurden in jedem Sprechereignis alle
-                            Sprecher:innen berücksichtigt, die mehr als 10 % Sprechanteil besitzen. Für
-                            diese Sprechenden wurde dann überprüft, ob sie Deutsch oder eine andere Sprache
-                            als L1 bzw. als L2 sprechen. In GWSS finden sich neben Sprecher:innen des
-                            Deutschen als L1 und L2 Sprecher:innen mit Englisch als L1 und L2, Italienisch
-                            als L1 und Polnisch als L1. Wenn sowohl L1-Sprecher:innen als auch
-                            L2-Sprecher:innen mit jeweils über 10% Sprecheranteil enthalten waren, dann
-                            wurden die Ereignisse sowohl L1 als auch L2 zugeordnet. Sprecher:innen zu denen
-                            keine Metadaten vorlagen wurden für den Parameter „Sprachen“ nicht
-                            berücksichtigt.</p>
-                        <div id="Abb_5" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image6.png"
-                                                            style="width:605px;height:390px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>2<span class="sep">.</span>2<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 5: Der
-                                    Auswahlparameter "Sprachen" für das Korpus GWSS</div>
-                            </header>
-                        </div>
-                    </section>
-                    <section id="_2.3_Art" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>2<span class="sep">.</span>3<span
-                                        class="sep"> </span></span>2.3 Art </h4>
-                        </header>
-                        <p>Unter dem Auswahlparameter „Art“ kann anhand spezifischerer Kurzbezeichnungen
-                            von Sprechereignissen ausgewählt werden. Es handelt sich bei FOLK um
-                            Ad-hoc-Bezeichnungen, die den Gesprächen zugewiesen wurden. Bei GWSS finden sich
-                            hier die im Korpus ausdifferenzierten Genres der Wissenschaftskommunikation
-                            (vgl. <a href="#Abb_6" class="link">Abb. 6</a>). Für die Auswahl kann die angebotene
-                            Liste durchgescrollt oder ein Suchwort eingegeben werden, für das dann
-                            übereinstimmende Treffer angeboten werden. </p>
-                        <div id="Abb_6" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><img
-                                            src="Handreichung%20ZuMal_final_13-12-21_files/image9.png" />
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>2<span class="sep">.</span>3<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 6: Der
-                                    Auswahlparameter "Art" für die Korpora FOLK (links) und GWSS
-                                    (rechts)</div>
-                            </header>
-                        </div>
-                    </section>
-                    <section id="_2.4_Themen" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>2<span class="sep">.</span>4<span
-                                        class="sep"> </span></span>2.4 Themen</h4>
-                        </header>
-                        <p>Unter dem Auswahlparameter „Themen“ kann in den Korpora nach inhaltlichen
-                            Schlagworten gesucht werden, die zu den einzelnen Sprechereignissen festgehalten
-                            wurden. Bei FOLK handelt es sich hier um nicht-systematisierte, arbiträr
-                            vergebene Stichworte zum Inhalt der Gespräche. Es gibt keine 1:1-Zuordnung, da
-                            in den Sprechereignissen i. d. R. mehrere Themen besprochen werden. Da die Menge
-                            der vorhandenen Stichworte sehr groß ist, funktioniert der Filter für das
-                            FOLK-Korpus nur stabil, wenn bereits zuvor eine Einschränkung der Ergebnismenge
-                            (etwa auf einen Gesprächstyp) vorgenommen wird. Für <a href="#Abb_7" class="link">Abb.
-                                7</a> wurde über den Filter „Art“ eine Voreinschränkung auf „WG-Gespräch“
-                            getroffen (vgl. Ergebnismenge auf der linken Seite). </p>
-                        <p>Beim GWSS-Korpus umfasst die Auswahl Stichworte zu Prüfungsthemen in den
-                            Prüfungsgesprächen sowie Vortragstitel im Falle der studentischen und
-                            Expertenvorträge (vgl. <a href="#Abb_7" class="link">Abb.7</a>, rechte Seite). </p>
-                        <div id="Abb_7" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><img
-                                            src="Handreichung%20ZuMal_final_13-12-21_files/image13.png" />
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>2<span class="sep">.</span>4<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 7: Der
-                                    Auswahlparameter "Themen" in FOLK (links) und GWSS (rechts)</div>
-                            </header>
-                        </div>
-                    </section>
-                    <section id="_2.5__Sprachregion" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>2<span class="sep">.</span>5<span
-                                        class="sep"> </span></span>2.5 Sprachregion</h4>
-                        </header>
-                        <p>Unter dem Auswahlparameter „Sprachregion“ kann eine Auswahl nach dem
-                            Aufnahmeort des Sprechereignisses getroffen werden. In vielen Fällen sind die
-                            Sprechenden im Sprechereignis dann durch diese Region sprachlich geprägt, sodass
-                            zusätzlich sprachregionale Merkmale im Sprechereignis wiederzufinden sind. Für
-                            das FOLK-Korpus werden hier sechs übergeordnete Sprachräume (nach Lameli 2008)
-                            und 15 diesen zugeordneten Sprachregionen (nach Wiesinger 1983) angeboten. Für
-                            GWSS sind die Aufnahmeorte (Bulgarien, Deutschland, Finnland, Italien, Polen,
-                            Vereinigtes Königreich Großbritannien und Nordirland) entsprechend des
-                            Korpusdesigns nur auf Länderebene differenziert (vgl. <a href="#Abb_8" class="link">Abb.
-                                8</a>). </p>
-                        <div id="Abb_8" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><img
-                                            src="Handreichung%20ZuMal_final_13-12-21_files/image17.png" />
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>2<span class="sep">.</span>5<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 8: Der
-                                    Auswahlparameter "Sprachregion" in FOLK (links) und GWSS
-                                    (rechts)</div>
-                            </header>
-                        </div>
-                    </section>
-                    <section id="_2.6__Dauer" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>2<span class="sep">.</span>6<span
-                                        class="sep"> </span></span>2.6 Dauer</h4>
-                        </header>
-                        <p>Unter dem Auswahlparameter „Dauer“ können Sprechereignisse nach ihrer Länge
-                            ausgewählt werden. Durch das das Bewegen des Schiebereglers kann die gewünschte
-                            minimale und maximale Dauer eingestellt werden (vgl. <a href="#Abb_9" class="link">Abb.
-                                9</a>). <a href="#Abb_9" class="link">Abb. 9</a> zeigt die Auswahl von
-                            Sprechereignissen mit bis zu 30 Minuten Länge. Der ausgewählte Bereich erscheint
-                            optisch in einem dunkleren Blau hervorgehoben.</p>
-                        <div id="Abb_9" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image19.png"
-                                                            style="width:481px;height:173px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>2<span class="sep">.</span>6<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 9: Der
-                                    Auswahlparameter "Dauer"</div>
-                            </header>
-                        </div>
-                    </section>
-                </section>
-                <section id="_3_Schwierigkeitsbezogene_Auswahlpar" class="section">
-                    <header>
-                        <h3><span class="number">1<span class="sep">.</span>3<span class="sep"> </span></span>3
-                            Schwierigkeitsbezogene Auswahlparameter und Filter</h3>
-                    </header>
-                    <p>Es stehen insgesamt vier schwierigkeitsbezogene Auswahlparameter zur Verfügung.
-                        Diese beziehen sich auf den in den Gesprächen verwendeten Wortschatz (<a
-                            href="#_3.1_Wortschatz_Niveaustufe_" class="link">3.1</a>), die Standardnähe bzw. -ferne
-                        (<a href="#_3.2_Standardn%C3%A4he_Normalisierungsra" class="link">3.2</a>), die
-                        Sprechgeschwindigkeit (<a href="#_3.3_Sprechgeschwindigkeit_Artikula" class="link">3.3</a>) und
-                        die im Gespräch vorhandenen Überlappungen mehrerer
-                        Gesprächsteilnehmer:innen (<a href="#_3.4_%C3%9Cberlappungen" class="link">3.4</a>). Diese
-                        werden im Folgenden jeweils zunächst bezogen auf ihre allgemeine Funktionalität
-                        beschrieben. Daran schließen sich für jeden Auswahlparameter Beschreibungen zum
-                        technischen Hintergrund und zu didaktischen Perspektiven an.</p>
-                    <section id="_3.1_Wortschatz_Niveaustufe_" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>3<span class="sep">.</span>1<span
-                                        class="sep"> </span></span>3.1 Wortschatz (Niveaustufe)</h4>
-                        </header>
-                        <p><strong class="bold">a) Erläuterung</strong></p>
-                        <p>Der Auswahlparameter „Wortschatz (Niveaustufe)“ (vgl. <a href="#Abb_10" class="link">Abb.
-                                10</a>) ist nur für die deutschsprachigen Daten verfügbar. Mit
-                            diesem Filter kann eingestellt werden, in welchem Umfang der Wortschatz des
-                            gesuchten Sprechereignisses durch eine bestimmte Wortschatzliste abgedeckt sein
-                            soll. Diese Wortschatzlisten umfassen Wortschatz, der den einzelnen Niveaustufen
-                            des Gemeinsamen Europäischen Referenzrahmens (GER) bzw. bestimmten
-                            Frequenzstufen zugeordnet ist. Zur Auswahl stehen insgesamt acht Listen: Die
-                            Goethe-Zertifikatswortschätze <a
-                                href="https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf"
-                                class="link">A1</a>, <a
-                                href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf"
-                                class="link">A2</a> und <a
-                                href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf"
-                                class="link">B1</a> sowie die 1000, 2000, 3000, 4000 und 5000 häufigsten Wörter des
-                            Deutschen nach dem Frequenzwörterbuch von Tschirner/Möhring (2019). Diese finden
-                            sich in ZuMal (Zugang zu Merkmalsauswahl von Gesprächen) unter den Bezeichnungen
-                            Herder_1000, Herder_2000, Herder_3000, Herder_4000 und Herder_5000, da diese
-                            Listen maßgeblich am Herder-Institut der Universität Leipzig entwickelt wurden.
-                            Im Drop-Down-Menü „Wortschatzliste“ wird die gewünschte Liste ausgewählt. In den
-                            Auswahlfenstern „Deckung in %“ wird eingestellt, zu welchem Anteil die laufenden
-                            Wörter (Token) des gesuchten Sprechereignisses durch diese Liste abgedeckt sein
-                            sollen. Alternativ zur Eingabe von Zahlenwerten kann hier auch der
-                            Auswahlbereich auf der unterhalb abgebildeten Messlatte mithilfe des
-                            Schiebereglers festgelgt werden. Abb. 10 zeigt die Einstellungen für das
-                            Auswahlkriterium „mindestens 80% A1-Wortschatz“.</p>
-                        <div id="Abb_10" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><img
-                                            src="Handreichung%20ZuMal_final_13-12-21_files/image22.png" />
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>3<span class="sep">.</span>1<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 10: Der
-                                    Auswahlparameter "Wortschatz"</div>
-                            </header>
-                        </div>
-                        <p><strong class="bold">b) Technischer Hintergrund</strong></p>
-                        <p>Es wird auf Ebene der Lemmata (Nennformen) ein Abgleich der im Sprechereignis
-                            enthaltenen Wörter bzw. Wortformen mit den verschiedenen Wortschatzlisten
-                            durchgeführt. Hierzu wird geprüft, ob das zu jedem laufenden Wort (Token)
-                            zugehörige Lemma Bestandteil der jeweiligen Wortschatzliste ist. Auf dieser
-                            Grundlage wird berechnet, zu welchem prozentualen Anteil die in einem
-                            Sprechereignis vorhandenen Wortformen mit dem Wortschatz der jeweiligen Liste
-                            übereinstimmen. Ausgeschlossen wurden bei dem Abgleich Kategorien, die
-                            höchstwahrscheinlich nicht in den Vergleichslisten vorkommen und gleichzeitig
-                            das Verständnis nicht beeinträchtigen. Dazu zählen etwa Häsitationen wie
-                            <em>äh</em> öder <em>öh</em>, Rezeptionssignale wie
-                            <em>hm</em>, <em>oh</em> oder
-                            <em>ne</em>, Eigennamen, Zahlen, Buchstabiertes oder auch
-                            Abbrüche. Zu berücksichtigen ist darüber hinaus, dass der Abgleich des
-                            Wortschatzes nur auf Formativebene und daher ohne eine Berücksichtigung von
-                            Lesarten erfolgt.
-                        </p>
-                        <p><strong class="bold">c) Didaktische Anmerkungen</strong></p>
-                        <p><strong class="bold">Hinweise zu den Goethe-Zertifikatswortschätzen
-                                (</strong><a href="https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf"
-                                class="link">-&gt; A1</a><strong class="bold">, </strong><a
-                                href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf"
-                                class="link">-&gt; A2</a><strong class="bold">, </strong><a
-                                href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf"
-                                class="link">-&gt; B1</a><strong class="bold">)</strong></p>
-                        <p>Der Abgleich des im Sprechereignis enthaltenen Wortschatzes mit den
-                            Goethe-Zertifikatswortschatzlisten ermöglicht eine wortschatzbezogene Einstufung
-                            der einzelnen Sprechereignisse nach dem Sprachniveau. Die
-                            Goethe-Zertifikatswortschatzlisten umfassen nach kommunikativ-pragmatischen
-                            Kriterien zusammengestellten Wortschatz, welcher den Niveaustufen des
-                            Gemeinsamen europäischen Referenzrahmens (GER) A1, A2 und B1 zugeordnet
-                            ist.<sup> </sup>Sie bieten Lehrenden und Autor:innen von
-                            Lehrmaterialien eine Orientierung, welcher Wortschatz auf welchem Sprachniveau
-                            vermittelt werden sollte. Grundlage für den Abgleich der Sprechereignisse mit
-                            den Goethe-Zertifikatswortschätzen ist die Annahme, dass Lernende auf einer
-                            bestimmten Niveaustufe, bereits mit dem Wortschatz der jeweiligen
-                            Goethe-Zertifikatswortschatzliste vertraut sind. So sollte bspw. der Wortschatz
-                            eines Sprechereignisses mit einer hohen Deckung durch die A2-Wortschatzliste für
-                            einen Lernenden auf dem Niveau A2 kein Problem darstellen.</p>
-                        <p><strong class="bold">Hinweise zu den Herder-Listen</strong></p>
-                        <p>Der Abgleich des im Sprechereignis enthaltenen Wortschatzes mit den
-                            Herder-Listen ermöglicht dessen frequenzorientierte Einstufung. Die
-                            Herder-Listen wurden am Herder-Institut der Universität Leipzig auf der
-                            Grundlage des 20 Millionen Wörter umfassenden Korpus (New Leipzig Corpus of
-                            Contemporary German) erstellt. Dieses Korpus basiert auf aktuellen Sprachdaten
-                            und enthält vier Teilkorpora mit jeweils fünf Millionen Wörtern aus den Domänen
-                            Gesprochene Sprache, Literatur, Presse und Wissenschaftssprache. Es bietet damit
-                            ein ausgewogenes Bild des aktuellen Gebrauchs der deutschen Sprache. Die
-                            Herder-Listen umfassen die häufigsten 1000, 2000, 3000, 4000 und 5000 Wörter
-                            dieses Korpus. Die Häufigkeit eines Wortes gilt als ein wichtiger Indikator zur
-                            Beurteilung seiner Relevanz für das Sprachenlernen. So zeigen Studien hohe
-                            Korrelationen zwischen Wortschatzwissen, welches in Einstufungstests auf der
-                            Grundlage von frequenzbasiert ermitteltem Wortschatz gemessen wurde, und Lese-
-                            (und sogar Hör-)fähigkeiten. Je mehr besonders häufige Wörter des Deutschen
-                            seitens der Lernenden beherrscht werden, desto besser fallen ihre Lese- und
-                            Hörfähigkeiten aus (z.B. Tschirner / Hacking / Rubio, 2018). Frequenzbasierte
-                            Ansätze plädieren daher dafür, dass die häufigsten Wörter Gegenstand der
-                            Sprachvermittlung sein sollten – insbesondere dann, wenn neben
-                            alltagssprachlichen auch bildungssprachliche Kompetenzen vermittelt werden
-                            sollen (Tschirner 2019, 104). </p>
-                        <p>Analysen zum Zusammenhang von rezeptiven, auf die Lesekompetenz bezogenen
-                            Wortschatzumfang und den Niveaustufen des GER ergaben die in der folgenden
-                            Tabelle dargestellten Zuordnungen:</p>
-                        <figure id="_3.1_Wortschatz_Niveaustufe__tab1" class="table">
-                            <header>
-                                <div class="title"><span class="label">Table<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>3<span class="sep">.</span>1<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>GER-Niveau und
-                                    Wortschatzumfang nach Tschirner 2019,101</div>
-                            </header>
-                            <table>
-                                <colgroup>
-                                    <col style="width: 25%" />
-                                    <col style="width: 15%" />
-                                    <col style="width: 15%" />
-                                    <col style="width: 15%" />
-                                    <col style="width: 15%" />
-                                    <col style="width: 15%" />
-                                </colgroup>
-                                <tbody>
-                                    <tr>
-                                        <td class="left top">
-                                            <p>GER-Niveau</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>A1</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>A2</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>B1</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>B2</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>C1</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left top">
-                                            <p>Wortschatzumfang</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>837</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>1.640</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>3.246</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>4.049</p>
-                                        </td>
-                                        <td class="center top">
-                                            <p>5.655</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </figure>
-                        <p>Auf Grundlage dieser Zuordnungen gibt der Abgleich des im Sprechereignis
-                            enthaltenen Wortschatzes mit den Herder-Listen Hinweise darauf, inwieweit ein
-                            Transkript für Lernende auf einer bestimmten Niveaustufe geeignet sein könnte. </p>
-                        <p>Zu berücksichtigen dabei ist, dass die Auswahl der Wörter in den
-                            Goethe-Zertifikatswortschatzlisten und den Herder-Listen sowohl Schnittmengen
-                            (insbesondere im hochfrequenten Bereich etwa bei den Funktionswörtern) als auch
-                            Unterschiede aufweist. Welche Wortschatzliste sich für eine Lernendengruppe
-                            tatsächlich eignet, hängt daher stark davon ab, ob das Curriculum bzw. das
-                            bislang verwendete Lehrmaterial und die darin enthaltene Wortschatzauswahl eher
-                            kommunikativ-pragmatischen Kriterien folgt und sich an den
-                            Goethe-Zertifikatswortschätzen orientiert oder ob sie stärker frequenzbasiert
-                            ist und auf sich auf Häufigkeitslisten stützt.</p>
-                        <p><strong class="bold">Hinweise zur Textdeckung</strong></p>
-                        <p>Grundlage für die Ermittlung der Textdeckung sind Schätzungen dazu, wie viele
-                            Wörter eines Textes Lernenden bekannt sein müssen, um den Text zu verstehen.
-                            Eine Studie zum Hörverständnis im Englischen als Fremdsprache konnte zeigen,
-                            dass eine Textdeckung von 90 bis 95% ein ausreichendes Hörverständnis ermöglicht
-                            (van Zeeland/Schmitt 2013). Mit anderen Worten: Wenn Lernende 90 bis 95% der
-                            Wörter eines Sprechereignisses kennen, ist davon auszugehen, dass sie das
-                            Sprechereignis vom Wortschatz her gut verstehen können.</p>
-                        <p>Im FOLK-Korpus findet sich eine hinreichende Anzahl an Sprechereignissen mit
-                            einer Textdeckung von mindestens 85%. Für sprachdidaktische Zwecke ist eine
-                            solche Textdeckung ein guter Ausgangswert, da es sich bei dem nicht gedeckten
-                            Wortschatz zumindest teilweise um unverständliche Textstellen sowie um aus
-                            Datenschutzgründen verrauschte Sequenzen handelt. </p>
-                        <p>Darüber hinaus konnte in einer neueren Studie zum Leseverständnis gezeigt
-                            werden, dass bei einer Textdeckung von 90% die Lernenden rund die Hälfte des
-                            unbekannten Wortschatzes aus dem Kontext erschließen können (Laufer 2020). Die
-                            Kombination aus bekanntem und erschlossenem Wortschatz ergibt damit eine
-                            Textdeckung von 95%. Auf dieser Grundlage wird empfohlen, im
-                            Fremdsprachenunterricht mit Texten zu arbeiten, die maximal 5% bis 10%
-                            unbekannte Lexik enthalten (ebd.). Für die Auswahl der Sprechereignisse bedeutet
-                            dies, dass ein Deckungswert von mindestens 90% angestrebt werden sollte. Liegt
-                            ein Sprechereignis unter diesem Wert, ist es ratsam, den nicht gedeckten und
-                            damit für die Lernenden vermutlich unbekannten Wortschatz mit entsprechenden
-                            Erläuterungen zur Verfügung zu stellen. Möglich wird dies über die im Werkzeug
-                            ZuViel (Zugang zu Visualisierungselementen für Transkripte) zugänglichen Listen,
-                            welche den durch eine bestimmte Wortschatzliste nicht gedeckten Wortschatz
-                            enthalten.</p>
-                    </section>
-                    <section id="_3.2_Standardnähe_Normalisierungsra" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>3<span class="sep">.</span>2<span
-                                        class="sep"> </span></span>3.2 Standardnähe (Normalisierungsrate)</h4>
-                        </header>
-                        <p><strong class="bold">a) Erläuterung</strong></p>
-                        <p>Der Auswahlparameter „Standardnähe (Normalisierungsrate)“ ist nur für die
-                            deutschsprachigen Daten verfügbar. Mit ihm kann eine Auswahl danach getroffen
-                            werden, wie groß der Anteil normalisierter Token im gesuchten Gespräch sein
-                            soll, d.h. wie viele Token von einem an der Schriftsprache orientierten Standard
-                            abweichend realisiert sein dürfen. Der Parameter wird dabei mithilfe der
-                            Normalisierungsrate operationalisiert. Bei der Normalisierung wird einem Token
-                            seine Entsprechung in einem an der Schriftsprache orientierten Standard
-                            zugeordnet. Ein niedriger Anteil normalisierter Token weist daher auf ein eher
-                            standardnahes Gespräch. <a href="#Abb_11" class="link">Abb. 11</a> zeigt die
-                            Einstellung für die Filterung nach relativ standardnah realisierten Gesprächen
-                            mit maximal 10% an Token, bei denen aussprachenahe Transkription und
-                            orthografische Normalisierung voneinander abweichen.</p>
-                        <div id="Abb_11" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image24.png"
-                                                            style="width:480px;height:162px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>3<span class="sep">.</span>2<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 11: Der
-                                    Auswahlparameter "Standardnähe (Normalisierungsrate)"</div>
-                            </header>
-                        </div>
-                        <p><strong class="bold">b) Technischer Hintergrund</strong></p>
-                        <p>Die Sprechereignisse liegen einerseits aussprachenah nach cGAT2
-                            Minimaltranskript (vgl. Schmidt / Schütte / Winterscheidt, 2015) verschriftet
-                            vor. Andererseits gibt es eine automatisch erstellte orthografisch
-                            normalisierte, d.h. den Konventionen der Schriftsprache angepasste Fassung
-                            dieser Transkripte. Anhand eines Abgleichs dieser beiden Fassungen wird die
-                            Anzahl der Unterschiede zwischen aussprachenaher Transkription und ihrer
-                            orthografisch normalisierten Fassung berechnet („Normalisierungsrate“).
-                            Ausgenommen werden dabei Unterschiede, die nur auf die konventionelle
-                            Kleinschreibung im aussprachenahen Transkript zurückzuführen sind. </p>
-                        <p><strong class="bold">c) Didaktische Anmerkungen</strong></p>
-                        <p>Mithilfe dieses Parameters können Sprechereignisse nach dem Umfang der
-                            Wortformen eingeschätzt werden, die abweichend von einer am geschriebenen
-                            Standard orientierten Form realisiert werden. Es kann bspw. nach Gesprächen
-                            gefiltert werden, die besonders wenige oder besonders viele Abweichungen
-                            enthalten. Ein niedriger Wert, also eine niedrige Normalisierungsrate, lässt auf
-                            wenige Abweichungen und damit auf „Standardnähe“ schließen. Eine hohe
-                            Normalisierungsrate hingegen ist durch viele Abweichungen verursacht. Dies
-                            deutet darauf hin, dass ein Sprechereignis eher als „standardfern“ einzustufen
-                            ist. Es ist davon auszugehen, dass Sprechereignisse mit hoher
-                            Normalisierungsrate für Lernende potenziell anspruchsvoller sind.</p>
-                    </section>
-                    <section id="_3.3_Sprechgeschwindigkeit_Artikula" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>3<span class="sep">.</span>3<span
-                                        class="sep"> </span></span>3.3 Sprechgeschwindigkeit (Artikulationsrate)</h4>
-                        </header>
-                        <p><strong class="bold">a) Erläuterung</strong></p>
-                        <p>Der Auswahlparameter „Sprechgeschwindigkeit (Artikulationsrate)“ erlaubt eine
-                            Selektion nach Werten für die Anzahl der durchschnittlich in einem Gespräch pro
-                            Sekunde artikulierten Silben. Der Auswahlparameter wird dabei mit der
-                            Artikulationsrate operationalisiert. Diese gibt an, wie viele Silben pro Sekunde
-                            in einem Sprechereignis artikuliert, d.h. gesprochen werden. Der Wert der
-                            Artikulationsrate liegt im FOLK-Korpus zwischen 2,04 (Kommunikation mit Tieren)
-                            und 6,49 (Training in einer Hilfsorganisation), im GWSS-Korpus zwischen 0,80
-                            (Expertenvortrag) und 5,64 (Studentischer Vortrag) Silben pro Sekunde. Innerhalb
-                            dieser Spanne kann eine Auswahl getroffen werden. <a href="#Abb_12" class="link">Abb.
-                                12</a> zeigt exemplarisch die Einstellung für eine mäßig hohe
-                            Artikulationsrate von bis zu vier Silben pro Sekunde.</p>
-                        <div id="Abb_12" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image25.png"
-                                                            style="width:480px;height:219px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>3<span class="sep">.</span>3<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 12: Der
-                                    Auswahlparameter "Sprechgeschwindigkeit"</div>
-                            </header>
-                        </div>
-                        <p><strong class="bold">b) Technischer Hintergrund</strong></p>
-                        <p>Mithilfe einer automatischen Umwandlung der aussprachenahen Transkriptionen in
-                            die phonemische Umschrift SAMPA (ASCII-basierte Lautschrift), in welcher
-                            Silbengrenzen markiert sind, kann für jedes Sprechereignis die Zahl der pro
-                            Sekunde artikulierten Silben („Artikulationsrate“) berechnet werden. Auf dieser
-                            Grundlage wird für jedes Sprechereignis die durchschnittliche Artikulationsrate
-                            ermittelt. </p>
-                        <p><strong class="bold">c) Didaktische Anmerkungen</strong></p>
-                        <p>Durch diesen Parameter ist es möglich, die Gespräche global nach Unterschieden
-                            in der durchschnittlichen Artikulationsrate einzuschätzen und dementsprechend
-                            durchschnittlich langsamer oder schneller realisierte Gespräche auszuwählen.
-                            Dabei wird davon ausgegangen, dass Sprechereignisse mit einer höheren
-                            Sprechgeschwindigkeit für Lernende anspruchsvoller sind. Zu berücksichtigen ist
-                            jedoch, dass einige Sprechereignisse schneller und langsamer gesprochene Phasen
-                            aufweisen. Durch die Berechnung der durchschnittlichen Artikulationsrate kann
-                            dies nicht sichtbar gemacht werden.</p>
-                    </section>
-                    <section id="_3.4_Überlappungen" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>3<span class="sep">.</span>4<span
-                                        class="sep"> </span></span>3.4 Überlappungen</h4>
-                        </header>
-                        <p><strong class="bold">a) Erläuterung</strong></p>
-                        <p>Unter dem Auswahlparameter „Überlappungen“ können Sprechereignisse nach dem
-                            Anteil überlappend gesprochener Sequenzen ausgewählt werden. Es kann eine Spanne
-                            für den Anteil von Überlappungen (d.h. zwei und mehr gleichzeitig
-                            ausgesprochenen Wörtern) pro 1000 Token festgelegt werden. Die Werte hierzu
-                            reichen im FOLK-Korpus von 0 (Sportinteraktion) bis 66,94 (Tischgespräch), in
-                            GWSS von 0 (Vorträge, einzelne Prüfungsgespräche) bis 20,03 (Diskussion nach
-                            studentischem Vortrag). <a href="#Abb_13" class="link">Abb. 13</a> zeigt eine Auswahl
-                            für überlappungsarme Gespräche mit maximal fünf Überlappungen pro 1000
-                            Token.</p>
-                        <div id="Abb_13" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image26.png"
-                                                            style="width:480px;height:213px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>3<span class="sep">.</span>4<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 13: Der
-                                    Auswalparameter "Überlappungen"</div>
-                            </header>
-                        </div>
-                        <p><strong class="bold">b) Technischer Hintergrund</strong></p>
-                        <p>In der aussprachenahen Transkription sind überlappend geäußerte Sequenzen
-                            festgehalten. Dies erlaubt eine automatische Auszählung für jedes
-                            Sprechereignis. Auf dieser Grundlage werden für jedes Sprechereignis Angaben zur
-                            Häufigkeit von Überlappungen mit mehr als zwei Token pro 1000 Token angeboten. </p>
-                        <p><strong class="bold">c) Didaktische Anmerkungen</strong></p>
-                        <p>Mithilfe dieses Auswahlparameters können überlappungsreichere und
-                            überlappungsärmere Sprechereignisse ausgewählt werden. Dabei wird davon
-                            ausgegangen, dass ein hoher Anteil an überlappend gesprochenen Sequenzen das
-                            Hörverständnis beeinträchtigen kann. Zu berücksichtigen ist jedoch, dass die
-                            Überlappungen in den Sprechereignissen nicht gleichmäßig verteilt sind und der
-                            Wert nur eine Orientierung bietet, wie viel Überlappungen pro 1000 Token im
-                            Transkript grundsätzlich enthalten sind. Ein hoher Anteil schließt nicht
-                            unbedingt aus, dass das Sprechereignis auch überlappungsarme Phasen enthält, die
-                            didaktisch von Interesse sein könnten.</p>
-                    </section>
-                </section>
-                <section id="_4_Phänomenbezogene_Auswahlparameter" class="section">
-                    <header>
-                        <h3><span class="number">1<span class="sep">.</span>4<span class="sep"> </span></span>4
-                            Phänomenbezogene Auswahlparameter und Filter</h3>
-                    </header>
-                    <p>Es stehen für die deutschsprachigen Daten zwei weitere Auswahlparameter zur
-                        Verfügung, die auf dem Vorkommen ausgewählter Phänomene in den Sprechereignissen
-                        beruhen. Diese beziehen sich zum einen auf die in den Gesprächen vorkommenden
-                        Wortarten (<a href="#_4.1__Wortarten" class="link">4.1</a>) und zum anderen auf
-                        ausgewählte Mündlichkeitsphänomene (<a
-                            href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom" class="link">4.2</a>). Sie
-                        werden im
-                        Folgenden jeweils zunächst bezogen auf ihre allgemeine Funktionalität beschrieben.
-                        Daran schließen sich für jeden Auswahlparameter Beschreibungen zum technischen
-                        Hintergrund und zu didaktischen Perspektiven an.</p>
-                    <section id="_4.1__Wortarten" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>4<span class="sep">.</span>1<span
-                                        class="sep"> </span></span>4.1 Wortarten</h4>
-                        </header>
-                        <p><strong class="bold">a) Erläuterung</strong></p>
-                        <p>Mithilfe des Auswahlparameters „Wortarten“ kann der prozentuale Anteil
-                            ausgewählter Wortarten in den Gesprächen festgelegt werden. Es kann nach Nomen
-                            (NN), Eigennamen (NE), Verben (V), Adjektiven (ADJ), Adverbien (ADV) und
-                            trennbaren Verben in Distanzstellung (PTKVZ) gefiltert werden (vgl. <a href="#Abb_14"
-                                class="link">Abb. 14</a>). Der prozentuale Anteil von Nomen liegt in
-                            FOLK beispielsweise zwischen 5,59 % (Pausenkommunikation im Theater) und 18,9 %
-                            (Plenarsitzung im Bundestag). Für GWSS liegen die Werte für Nomen zwischen 8,68
-                            % (Studentischer Vortrag mit anschließender Diskussion) und 29,18 %
-                            (Prüfungsgespräch).<sup id="__EN2__-fref" db-footnote="2" class="footnote-number"><a
-                                    href="#__EN2__-fnote">2</a></sup> Der Filter steht lediglich für die
-                            deutschsprachigen Daten zur
-                            Verfügung.</p>
-                        <div id="Abb_14" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image27.png"
-                                                            style="width:424px;height:480px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>4<span class="sep">.</span>1<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 14: Der
-                                    Auswahlparameter "Wortarten"</div>
-                            </header>
-                        </div>
-                        <p><strong class="bold">b) Technischer Hintergrund</strong></p>
-                        <p>Alle im Sprechereignis enthaltenen Token wurden mit einer Wortartinformation
-                            versehen (POS-Tagging). Genutzt wurde dabei das um mündliche Kategorien
-                            erweiterte <a href="http://www.sfs.uni-tuebingen.de/resources/stts-1999.pdf"
-                                class="link">Stuttgart-Tübingen-Tagset</a> (Westpfahl et al. 2017). Auf dieser
-                            Grundlage können für jedes Gespräch automatisiert die prozentualen Anteile der
-                            einzelnen Wortarten berechnet werden.</p>
-                        <p><strong class="bold">c) Didaktische Anmerkungen</strong></p>
-                        <p>Über den Auswahlparameter „Wortarten“ können Sprechereignisse gezielt nach den
-                            in ihnen (oft oder selten) vorkommenden Wortarten ausgewählt werden. Es können
-                            bspw. Gespräche mit einer großen Anzahl an Nomen ausgewählt werden oder auch
-                            Gespräche, die viele trennbare Verben in Distanzstellung enthalten, was gerade
-                            auf den Sprachniveaus A1, A2 und B1 einen wesentlichen Lerngegenstand
-                            darstellt.</p>
-                    </section>
-                    <section id="_4.2_Ausgewählte_Mündlichkeitsphänom" class="section">
-                        <header>
-                            <h4><span class="number">1<span class="sep">.</span>4<span class="sep">.</span>2<span
-                                        class="sep"> </span></span>4.2 Ausgewählte Mündlichkeitsphänomene</h4>
-                        </header>
-                        <p><strong class="bold">a)</strong>
-                            <strong class="bold">Erläuterung</strong>
-                        </p>
-                        <p>Mithilfe des Auswahlparameters „Ausgewählte Mündlichkeitsphänomene“ kann nach
-                            dem prozentualen Anteil ausgewählter Phänomene der Mündlichkeit in den
-                            Gesprächen gefiltert werden. Hier stehen Häsitationen (NGHES), Interjektionen,
-                            Responsive und Rezeptionssignale (NGIRR), Modalpartikeln (PTKMA), Diskursmarker
-                            (SEDM), Tag Questions (SEQU) und Klitisierungen (CLITIC) zur Auswahl (vgl. <a href="#Abb_15"
-                                class="link">Abb. 15</a>). Der prozentuale Anteil der Modalpartikeln
-                            liegt in FOLK zwischen 0 % (Gespräch im Polizeirevier) und 4,8 %
-                            (Pausenkommunikation im Theater).</p>
-                        <div id="Abb_15" class="figure">
-                            <div class="mediaobject">
-                                <div class="imageobject">
-                                    <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                    class="viewport-cell" style="vertical-align:middle;"><span
-                                                        class="viewport"><img
-                                                            src="Handreichung%20ZuMal_final_13-12-21_files/image28.png"
-                                                            style="width:480px;height:546px;" /></span></span></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <header>
-                                <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                        class="number">1<span class="sep">.</span>4<span class="sep">.</span>2<span
-                                            class="sep">.</span>1<span class="sep"> </span></span>Abbildung 15: Der
-                                    Auswahlparameter "Ausgewählte Mündlichkeitsphänomene"</div>
-                            </header>
-                        </div>
-                        <p><strong class="bold">b) Technischer Hintergrund</strong></p>
-                        <p>Alle im Sprechereignis enthaltenen Token wurden mit einer Wortartinformation
-                            versehen (POS-Tagging). Genutzt wurde dabei das um mündliche Kategorien
-                            erweiterte <a href="http://www.sfs.uni-tuebingen.de/resources/stts-1999.pdf"
-                                class="link">Stuttgart-Tübingen-Tagset</a> (Westpfahl et al. 2017). Auf dieser
-                            Grundlage können für jedes Gespräch automatisiert die prozentualen Anteile der
-                            Wortarten berechnet werden, die als besonders typisch für die gesprochene
-                            Sprache gelten (so etwa Modalpartikeln (PTKMA), Diskursmarker (SEDM), Tag
-                            Questions (SEQU)). </p>
-                        <p><strong class="bold">Hinweis zu den Klitisierungen</strong></p>
-                        <p>Im Auswahlparameter „Ausgewählte Mündlichkeitsphänomene“ ist es möglich, nach
-                            Sprechereignisse nach ihrem Anteil an Klitisierungen (CLITIC) zu filtern. Als
-                            Klitisierung werden dabei alle Phänomene erfasst, die (a) mit als assimiliert
-                            transkribiert wurden oder (b) bei denen einem Token zwei oder mehr POS-Tags
-                            zugeordnet wurden. Ausgeschlossen, und damit nicht als Klitisierung gezählt,
-                            werden alle POS-Tag-Kombinationen, die nur einmal (n=1) in den Korpora zu finden
-                            sind und zusätzlich alle POS-Tag-Kombinationen, die Abbrüche (ABB),
-                            fremdsprachliches Material (FM) oder Rezeptionssignale oder Häsitationspartikeln
-                            etc. (NGIRR; NGHES) beinhalten. Außerdem kann nur nach Kombinationen gefiltert
-                            werden, die mit einem bestimmten prozentualen Anteil in der Gesamttreffermenge
-                            des POS-Tag-Kombinationen zu finden sind. Hierzu werden alle Kombinationen
-                            hinsichtlich ihres Perzentilranges überprüft und die Kombinationen
-                            ausgeschlossen, die unter dem 5. Perzentil liegen. </p>
-                        <p><strong class="bold">c) Didaktische Anmerkungen</strong></p>
-                        <p>Mithilfe dieses Auswahlparameters lassen sich die Gespräche nach verschiedenen
-                            Mündlichkeitsphänomenen filtern. Dies ist aus didaktischer Sicht gewinnbringend,
-                            da so gezielt nach Sprechereignissen gesucht werden kann, die ein oder mehrere
-                            bestimmte Phänomene der gesprochenen Sprache besonders häufig enthalten.
-                            Lehrende können somit schneller Sprechereignisse auffinden, die sich für die
-                            Veranschaulichung dieser Phänomene besonders eignen. Denkbar ist auch, dass
-                            mithilfe des Filters Sprechereignisse ausgewählt werden, die nur einen geringen
-                            oder moderaten Anteil an Phänomenen der gesprochenen Sprache enthalten, da ein
-                            sehr häufiges Auftreten dieser Phänomene die Lernenden vor zusätzliche
-                            Verstehensprobleme stellen könnte. Deutlich wird dies etwa an den sehr
-                            unterschiedlichen Realisierungsformen von Ausdrücken wie
-                            <em>hast</em>
-                            <em>du</em>. Hier lassen sich in FOLK und GWSS Realisierungen wie
-                            <em>hasdu</em>, <em>hasch</em>,
-                            <em>hasse</em> oder auch <em>hoschd</em> finden, die
-                            stark von den üblicherweise vermittelten standardnahen Formen abweichen.
-                        </p>
-                    </section>
-                </section>
-                <section id="_5_Ergebnisliste" class="section">
-                    <header>
-                        <h3><span class="number">1<span class="sep">.</span>5<span class="sep"> </span></span>5
-                            Ergebnisliste</h3>
-                    </header>
-                    <p>Ist eine Auswahl nach einem oder mehreren Parametern getroffen, wird die
-                        entsprechende Ergebnismenge auf der rechten Seite des Werkzeugs ZuMal (Zugang zu
-                        Merkmalsauswahl von Gesprächen) im unteren Bereich in einer tabellarischen
-                        Listenansicht angezeigt. Wurde keine Auswahl vorgenommen, sind hier alle im Korpus
-                        verfügbaren Sprechereignisse zu sehen. In der Grundeinstellung werden hier die
-                        Parameter „ID“, „Art“, „Dauer“, „Normalisierungsrate“ und der „ZuViel-Link“ zur
-                        Weiterbearbeitung des Transkripts im Werkzeug ZuViel (Zugang zu
-                        Visualisierungselementen für Transkripte) angezeigt. Es ist aber möglich, auch jeden
-                        anderen der in den Abschnitten 2 bis 4 vorgestellten Auswahlparameter der
-                        Ergebnisliste hinzuzufügen. Dabei können sowohl einzelne oder auch alle
-                        Wortschatzlisten (vgl. 3.1) wie auch einzelne oder alle Wortarten (vgl. 4.1) und
-                        Mündlichkeitsphänomene (vgl. 4.2) ausgewählt werden. Die Tabellenansicht bietet für
-                        alle Parameter die Möglichkeit des auf- bzw. absteigenden Sortierens. Auf diese
-                        Weise kann die Ergebnismenge näher eingeschätzt werden. <a href="#Abb_16" class="link">Abb.
-                            16</a> zeigt die in <a href="#_1__%C3%9Cberblick" class="link">Kapitel 1</a> getroffene
-                        Auswahl nach Telefongesprächen in FOLK mit einer Dauer von maximal 30 Minuten
-                        sortiert nach der Normalisierungsrate (=Standardnähe/-ferne).</p>
-                    <div id="Abb_16" class="figure">
-                        <div class="mediaobject">
-                            <div class="imageobject">
-                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                class="viewport-cell" style="vertical-align:middle;"><span
-                                                    class="viewport"><img
-                                                        src="Handreichung%20ZuMal_final_13-12-21_files/image29.png"
-                                                        style="width:605px;height:228px;" /></span></span></span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <header>
-                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                    class="number">1<span class="sep">.</span>5<span class="sep">.</span>1<span
-                                        class="sep"> </span></span>Abbildung 16: Ansicht der Ergebnisliste für die
-                                Auswahl nach Gesprächsart
-                                "Telefongespräche" und einer Dauer von maximal 30 Minuten und sortiert nach
-                                ihrer Normalisierungsrate.</div>
-                        </header>
-                    </div>
-                </section>
-                <section id="_6__Visualisierung" class="section">
-                    <header>
-                        <h3><span class="number">1<span class="sep">.</span>6<span class="sep"> </span></span>6
-                            Visualisierung der Ergebnismenge</h3>
-                    </header>
-                    <p>Im rechten oberen Teil des Interfaces werden die mithilfe der unter <a
-                            href="#_2__Metadatenbezogene" class="link">2.</a>, <a
-                            href="#_3_Schwierigkeitsbezogene_Auswahlpar" class="link">3.</a> und <a
-                            href="#_4_Ph%C3%A4nomenbezogene_Auswahlparameter" class="link">4.</a> dargestellten
-                        Auswahlparametern ermittelten Sprechereignisse grafisch präsentiert. Dies geschieht
-                        durch die Visualisierung der Ergebnismenge mittels eines zweidimensionalen
-                        Streudiagramm. Eine solche Darstellung ermöglicht es, sehr schnell die verschiedenen
-                        Sprechereignisse vergleichend einzuschätzen. Es können jeweils zwei Parameter, d.h.
-                        einer für die x-Achse und einer für die y-Achse, ausgewählt werden. Die Ergebnisse
-                        werden dann nach ihren Werten für diese gewählten Parameter gegenübergestellt. Zur
-                        Wahl stehen dafür die Dauer als metadatenbezogener Parameter sowie alle
-                        schwierigkeits- und phänomenbezogenen Parameter und ihre feineren Unterteilungen
-                        (Wortschatzlisten (vgl. <a href="#_3.1_Wortschatz_Niveaustufe_" class="link">3.1</a>),
-                        Wortarten (vgl. <a href="#_4.1__Wortarten" class="link">4.1</a>) und ausgewählte
-                        Mündlichkeitsphänomene (vgl. <a href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom"
-                            class="link">4.2</a>)). <a href="#Abb_17" class="link">Abb. 17</a> zeigt für die Auswahl an
-                        maximal 30-minütigen Telefongesprächen in FOLK deren Verteilung nach der Abdeckung
-                        durch A2-Wortschatz (x-Achse) und Standardnähe (Normalisierungsrate) (y-Achse). Es
-                        wird deutlich, dass sich die Gespräche kaum hinsichtlich des Wortschatzniveaus
-                        unterscheiden: Alle liegen bezüglich der x-Achse dicht beieinander im Raum zwischen
-                        etwa 85 und 90% Deckung durch den Goethe-A2-Wortschatz. Anders ist es jedoch mit
-                        Blick auf die Standardnähe (Normalisierungsrate): Für diesen auf der y-Achse
-                        abgetragenen Parameter zeigt sich v.a. für ein Gespräch ein deutlicher Abstand
-                        aufgrund eines höheren Wertes der Normalisierungsrate (fast 50%). Auf diese Weise
-                        wird durch die Visualisierung der Ergebnismenge einen schnelleren optisch
-                        vermittelten Überblick über die Zusammensetzung der Treffermenge ermöglicht. </p>
-                    <div id="Abb_17" class="figure">
-                        <div class="mediaobject">
-                            <div class="imageobject">
-                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                class="viewport-cell" style="vertical-align:middle;"><span
-                                                    class="viewport"><img
-                                                        src="Handreichung%20ZuMal_final_13-12-21_files/image30.png"
-                                                        style="width:604px;height:204px;" /></span></span></span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <header>
-                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                    class="number">1<span class="sep">.</span>6<span class="sep">.</span>1<span
-                                        class="sep"> </span></span>Abbildung 17: Ansicht der Visualisierung der
-                                Ergebnismenge von maximal 30-minütigen
-                                Telefongesprächen im FOLK-Korpus mit der Wahl des Parameters "Goethe-A2“ zur
-                                Bestimmung der Textdeckung für die x-Achse und "Normalisierungsrate
-                                (Standardnähe)" für die y-Achse.</div>
-                        </header>
-                    </div>
-                    <p>Die in der Visualisierung dargestellten Punkte repräsentieren einzelne
-                        Sprechereignisse. Durch Anklicken des jeweiligen Punktes öffnet sich ein Fenster mit
-                        näheren Informationen zu diesem Sprechereignis. Auch in der tabellarischen
-                        Ergebnisliste wird der entsprechende Datensatz hervorgehoben (grüne Unterlegung,
-                        vgl. <a href="#Abb_18" class="link">Abb. 18</a>). Durch nochmaliges Anklicken des Punktes
-                        lässt sich das Informationsfenster wieder schließen. <a href="#Abb_18" class="link">Abb.
-                            18</a> illustriert dies für das Sprechereignis aus <a href="#Abb_17" class="link">Abb.
-                            17</a>, welches sich durch eine besonders hohe Normalisierungsrate
-                        ausgezeichnet hat.</p>
-                    <div id="Abb_18" class="figure">
-                        <div class="mediaobject">
-                            <div class="imageobject">
-                                <div class="media"><span class="viewport-table"><span class="viewport-row"><span
-                                                class="viewport-cell" style="vertical-align:middle;"><span
-                                                    class="viewport"><img
-                                                        src="Handreichung%20ZuMal_final_13-12-21_files/image31.png"
-                                                        style="width:604px;height:289px;" /></span></span></span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <header>
-                            <div class="title"><span class="label">Figure<span class="sep"> </span></span><span
-                                    class="number">1<span class="sep">.</span>6<span class="sep">.</span>2<span
-                                        class="sep"> </span></span>Abbildung 18: Informationsfenster zu einem Punkt
-                                (Sprechereignis) in der Visualisierung der
-                                Ergebnismenge</div>
-                        </header>
-                    </div>
-                </section>
-            </section>
-            <section id="R_s2" class="section">
-                <header>
-                    <h2><span class="number">2<span class="sep"> </span></span>Quellen</h2>
-                </header>
-                <p>Hirschfeld, Hagen (2019): Korpuslinguistik. Eine Einführung. Berlin: J.B.
-                    Metzler.</p>
-                <p>Lameli, Alfred (2008): Deutsche Sprachlandschaften. In: Nationalatlas aktuell 9
-                    (08/2008). Leipzig: Leibniz-Institut für Länderkunde (IfL). </p>
-                <p lang="en-US">Laufer, Batia (2020): Lexical Coverages, Inferencing Unknown Words
-                    and Reading Comprehension: How Are They Related? <span lang="de-DE" class="phrase">In: TESOL
-                        QUARTERLY. 10.1002/tesq.3004.</span></p>
-                <p>Schmidt, Thomas; Schütte, Winfried; Winterschaidt, Jenny (2015): cGAT: Konventionen
-                    für das computergestützte Transkribieren in Anlehnung an das Gesprächsanalytische
-                    Transkritionssystem 2 (GAT2). Unter:
-                    https://ids-pub.bsz-bw.de/frontdoor/deliver/index/docId/4616/file/Schmidt_Schuette_Winterscheid_cGAT_2015.pdf.
-                </p>
-                <p lang="en-US">Schmitt, Norbert; Jiang, Xiangying; Grabe, William (2011): The
-                    percentage of words known in a text and reading comprehension. <span lang="de-DE" class="phrase">In:
-                        The Modern Language Journal 95, 26–43. </span></p>
-                <p>Tschirner, Erwin (2019): Der rezeptive Wortschatzbedarf im Deutschen als Fremdsprache.
-                    In: T. Studer, I. Thonhauser, &amp; E. Peyer., eds., Akten der XVI. Internationalen
-                    Deutschlehrertagung (IDT) (pp. 98-111). Erich Schmidt.</p>
-                <p>Tschirner, Erwin; Hacking, Jane F.; Rubio, Fernando (2018): The relationshi between
-                    reading proficiency and vocabulary size: An empirical investigation. <span lang="en-US"
-                        class="phrase">The American Association of University Supervisors, Coordinators
-                        and Directors of Foreign Language Programs (AAUSC), 58–77.</span></p>
-                <p lang="en-US">Tschirner, Erwin; Möhring, Jupp (2019): A Frequency Dictionary of
-                    German. Core vocabulary for learners. 2. Auflage. London/New York: Routledge.</p>
-                <p><span lang="en-US" class="phrase">Westpfahl, Swantje; Schmidt, Thomas; Jonietz, Jasmin;
-                        Borlinghaus, Anton (2017): </span><em lang="en-US">STTS 2.0.
-                    </em><em>Guidelines für die Annotation von POS-Tags für Transkripte
-                        gesprochener Sprache in Anlehnung an das Stuttgart Tübingen Tagset
-                        (STTS)</em>. Arbeitspapier. Mannheim: Institut für Deutsche Sprache. Unter:
-                    https://ids-pub.bsz-bw.de/files/6063/Westpfahl_Schmidt_Jonietz_Borlinghaus_STTS_2_0_2017.pdf</p>
-                <p>Wiesinger, Peter (1983): Die Einteilung der deutschen Dialekte. In: Besch, Werner;
-                    Knoop, Ulrich; Putschke, Wolfgang; Wiegand, Herbert Ernst (Hrsg.): Dialektologie. Ein
-                    Handbuch zur deutschen und allgemeinen Dialektforschung. Berlin/New York: De Gruyter,
-                    807–900.</p>
-                <p lang="en-US"><span lang="de-DE" class="phrase">Van Zeeland, Hilde; Schmitt, Norbert.
-                    </span>(2012): Lexical Coverage in L1 and L2 Listening Comprehension: The Same or
-                    Different from Reading Comprehension?. Applied Linguistics. 34. 457–479.
-                    10.1093/applin/ams074.</p>
-            </section>
-        </article>
-    </main>
-    <footer>
-        <div class="footnotes">
-            <hr />
-            <div class="footnote" id="__EN1__-fnote">
-                <div class="footnote-number"><sup db-footnote="1" class="footnote-number"><a
-                            href="#__EN1__-fref">1</a></sup></div>
-                <div class="footnote-body">
-                    <p>Der Begriff Sprechereignis wird dabei synonym zum Begriff Gespräch verwendet
-                        und bezeichnet in den vorhandenen Korpora erfasste Situationen, in denen
-                        Menschen miteinander sprechen. Diese Situationen liegen dabei in transkribierter
-                        Form und zusätzlich als Audio- oder Videodateien vor.</p>
-                </div>
-            </div>
-            <div class="footnote" id="__EN2__-fnote">
-                <div class="footnote-number"><sup db-footnote="2" class="footnote-number"><a
-                            href="#__EN2__-fref">2</a></sup></div>
-                <div class="footnote-body">
-                    <p>Zu beachten ist an dieser Stelle, dass über ZuMal auch nicht-deutsche
-                        Gespräche aus GWSS angesteuert werden können. Für diese liegt der
-                        prozentuale Anteil an Wortarten jeweils bei null, da sich das verwendete
-                        POS-Tagset auf das Deutsche bezieht.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <nav class="bottom"></nav>
-</body>
-
-</html>
+<html xmlns:ng="http://docbook.org/docbook-ng"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Handreichung zur Arbeit mit ZuMal</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div lang="de-DE" class="article"><div class="titlepage"><div><div><h1 class="title"><a name="d5e1"></a>Handreichung zur Arbeit mit ZuMal</h1></div><div><h3 class="subtitle"><i>DFG-Projekt &#8222;Zug&auml;nge zu multimodalen Korpora gesprochener Sprache
+            Vernetzung und zielgruppenspezifische Ausdifferenzierung&#8220; (ZuMult)</i></h3></div><div><div class="author"><h3 class="author">Cordula Mei&szlig;ner</h3></div></div><div><div class="author"><h3 class="author">Matthias Schwendemann</h3></div></div><div><div class="author"><h3 class="author">Franziska Wallner</h3></div></div></div><hr></div><div class="toc"><p><b>Inhaltsverzeichnis</b></p><dl class="toc"><dt><span class="section"><a href="#d5e11">ZuMal: Auswahl von Sprechereignissen</a></span></dt><dd><dl><dt><span class="section"><a href="#_1__%C3%9Cberblick">1 &Uuml;berblick</a></span></dt><dt><span class="section"><a href="#_2__Metadatenbezogene">2 Metadatenbezogene Auswahlparameter</a></span></dt><dt><span class="section"><a href="#_3_Schwierigkeitsbezogene_Auswahlpar">3 Schwierigkeitsbezogene Auswahlparameter und Filter</a></span></dt><dt><span class="section"><a href="#_4_Ph%C3%A4nomenbezogene_Auswahlparameter">4 Ph&auml;nomenbezogene Auswahlparameter und Filter</a></span></dt><dt><span class="section"><a href="#_5_Ergebnisliste">5 Ergebnisliste</a></span></dt><dt><span class="section"><a href="#_6__Visualisierung">6 Visualisierung der Ergebnismenge</a></span></dt></dl></dd><dt><span class="section"><a href="#d5e352">Quellen</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e11"></a>ZuMal: Auswahl von Sprechereignissen</h2></div></div></div><p>ZuMal (Zugang zu Merkmalsauswahl von Gespr&auml;chen) ist ein spezifisch f&uuml;r
+            Fremdsprachendidaktiker:innen entwickeltes Werkzeug zur gezielten Auswahl von
+                Sprechereignissen<a href="#ftn.__EN1__" class="footnote" name="__EN1__"><sup class="footnote">[1]</sup></a> aus ausgew&auml;hlten Korpora der Datenbank f&uuml;r gesprochenes Deutsch (DGD) nach
+            sprachdidaktisch relevanten und schwierigkeitsbezogenen Kriterien. Hierf&uuml;r werden zum
+            einen Filter bereitgestellt, die ausgew&auml;hlte Metadaten der Sprechereignisse abbilden.
+            Dazu z&auml;hlen u.a. der Gespr&auml;chstyp, die Art des Gespr&auml;chs, die Gespr&auml;chsthemen, die
+            Sprachregion und die Dauer des Gespr&auml;chs. Zum anderen wird f&uuml;r einige Filter auf
+            Informationen zur&uuml;ckgegriffen, die mit computerlinguistischen Methoden automatisch aus
+            den Korpusdaten berechnet werden k&ouml;nnen und eher schwierigkeitsbezogene Parameter
+            abbilden. Zu diesen Parametern geh&ouml;ren der Wortschatz, die
+                Standardn&auml;he/-ferne, die Sprechgeschwindigkeit und die Anzahl an
+                &Uuml;berlappungen verschiedener Sprecher:innen. Zus&auml;tzlich stehen Filter zur
+            Verf&uuml;gung, die eine Auswahl der Sprechereignisse nach den darin vorkommenden Wortarten
+            und M&uuml;ndlichkeitsph&auml;nomenen erm&ouml;glichen.</p><p>Im Folgenden erhalten Sie zun&auml;chst einen &Uuml;berblick zum Aufbau von ZuMal (<a class="link" href="#_1__%C3%9Cberblick" title="1 &Uuml;berblick">1</a>). Anschlie&szlig;end werden die verschiedenen Filter
+            beschrieben: zun&auml;chst die Auswahlfilter, die sich auf die Metadaten der Texte beziehen
+                (<a class="link" href="#_2__Metadatenbezogene" title="2 Metadatenbezogene Auswahlparameter">2</a>), dann die schwierigkeitsbezogenen
+            Filter (<a class="link" href="#_3_Schwierigkeitsbezogene_Auswahlpar" title="3 Schwierigkeitsbezogene Auswahlparameter und Filter">3</a>) und zuletzt die
+            ph&auml;nomenbezogenen Filter (<a class="link" href="#_4_Ph%C3%A4nomenbezogene_Auswahlparameter" title="4 Ph&auml;nomenbezogene Auswahlparameter und Filter">4</a>). Dabei erfolgt hinsichtlich der schwierigkeitsbezogenen Auswahlkriterien
+            zus&auml;tzlich eine Erl&auml;uterung des technischen Hintergrunds sowie eine didaktische
+            Einordnung der Relevanz dieser Auswahlkriterien. Diese bezieht sich auf die
+            Auswahlfilter Wortschatz (<a class="link" href="#_3.1_Wortschatz_Niveaustufe_" title="3.1 Wortschatz (Niveaustufe)">3.1</a>),
+            Standardn&auml;he (<a class="link" href="#_3.2_Standardn%C3%A4he_Normalisierungsra" title="3.2 Standardn&auml;he (Normalisierungsrate)">3.2</a>),
+            Sprechgeschwindigkeit (<a class="link" href="#_3.3_Sprechgeschwindigkeit_Artikula" title="3.3 Sprechgeschwindigkeit (Artikulationsrate)">3.3</a>)
+            und &Uuml;berlappungen (<a class="link" href="#_3.4_%C3%9Cberlappungen" title="3.4 &Uuml;berlappungen">3.4</a>)) sowie auf die
+            ph&auml;nomenbezogenen Filter zu den Wortarten (<a class="link" href="#_4.1__Wortarten" title="4.1 Wortarten">4.1</a>)
+            und die M&uuml;ndlichkeitsph&auml;nomene (<a class="link" href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom" title="4.2 Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene">4.2</a>). Abschlie&szlig;end erhalten Sie Informationen zur dynamischen Ergebnisliste
+                (<a class="link" href="#_5_Ergebnisliste" title="5 Ergebnisliste">5</a>) und zur Visualisierung der Ergebnismenge
+            als Streudiagramm (<a class="link" href="#_6__Visualisierung" title="6 Visualisierung der Ergebnismenge">6</a>).</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_1__%C3%9Cberblick"></a>1 &Uuml;berblick</h3></div></div></div><p>Die Oberfl&auml;che von ZuMal (Zugang zu Merkmalsauswahl von Gespr&auml;chen) umfasst drei
+                Komponenten: links das Men&uuml; der Auswahlparameter (rot), rechts unten die
+                Ergebnisliste mit den ermittelten Sprechereignissen im Tabellenformat (orange) und
+                dar&uuml;ber rechts oben eine Visualisierung der Ergebnismenge als Streudiagramm (blau)
+                (vgl. <a class="link" href="#Abb_1" title="Abbildung 1. Struktur des Werkzeugs ZuMal">Abb. 1</a>).</p><div class="figure"><a name="Abb_1"></a><p class="title"><b>Abbildung 1. Struktur des Werkzeugs ZuMal</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image1.png" width="616" height="318" alt="Struktur des Werkzeugs ZuMal"></div></div></div><br class="figure-break"><p>Ganz oben links wird die Auswahl des Korpus getroffen. Der Prototyp ZuMal kann f&uuml;r
+                die DGD-Korpora FOLK und GWSS genutzt werden (vgl. <a class="link" href="#Abb_2" title="Abbildung 2. Auswahl des Korpus im Werkzeug ZuMal">Abb.
+                    2</a>). Das FOLK-Korpus ist das &#8222;Forschungs- und Lehrkorpus Gesprochenes
+                Deutsch&#8220;, in dem sich private, institutionelle und &ouml;ffentliche Gespr&auml;che aus dem
+                deutschsprachigen Raum finden. Das FOLK-Korpus wird regelm&auml;&szlig;ig erweitert und neue
+                Sprechereignissen werden in das bestehende Korpus integriert. Das Korpus
+                &#8222;Gesprochene Wissenschaftssprache&#8220; (GWSS) beinhaltet universit&auml;re Pr&uuml;fungsgespr&auml;che
+                sowie Vortr&auml;ge von Expert:innen und Studierenden aus dem akademischen Kontext. Die
+                einzelnen Gespr&auml;che in GWSS wurden dabei nicht nur in Deutschland, sondern
+                zus&auml;tzlich in Bulgarien, Finnland, Italien, Polen und dem Vereinigten K&ouml;nigreich
+                Gro&szlig;britannien erhoben.</p><div class="figure"><a name="Abb_2"></a><p class="title"><b>Abbildung 2. Auswahl des Korpus im Werkzeug ZuMal</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image2.png" width="487" height="256" alt="Auswahl des Korpus im Werkzeug ZuMal"></div></div></div><br class="figure-break"><p>Durch das Setzen eines Filters f&uuml;r einen der angebotenen Auswahlparameter auf der
+                linken Seite werden automatisch rechts (im Streudiagramm und in der tabellarischen
+                Ergebnisliste) alle Informationen zu den Sprechereignissen, die diese
+                Auswahlkriterien erf&uuml;llen, angeboten. <a class="link" href="#Abb_3" title="Abbildung 3. Beispiel f&uuml;r das Zusammenwirken der Komponenten in ZuMal: Angebotene Informationen f&uuml;r die Auswahl nach der Gespr&auml;chsart &#34;Telefongespr&auml;ch&#34; und Dauer von maximal 30 Minuten im FOLK-Korpus.">Abb. 3</a> zeigt dies
+                f&uuml;r die Auswahl nach den Kriterien Gespr&auml;chsart &#8222;Telefongespr&auml;ch&#8220; und Dauer von
+                maximal 30 Minuten im FOLK-Korpus. Es k&ouml;nnen mehrere Auswahlfilter miteinander
+                kombiniert werden, um m&ouml;glichst passende Sprechereignisse aus den Korpora
+                herauszufiltern. Im vorliegenden Beispiel ergeben sich durch die gesetzten Filter 17
+                entsprechende Sprechereignisse (DGD-Version 2.16, 17.5.2021). In der Ergebnisliste
+                werden die Werte der schwierigkeitsbezogenen Parameter (Normalisierungsrate,
+                &Uuml;berlappungen, Artikulation, Deckung mit einer Wortschatzliste) f&uuml;r diese
+                Sprechereignisse tabellarisch angezeigt (rot). Die Ergebnisvisualisierung als
+                Streudiagramm veranschaulicht das Verh&auml;ltnis zwischen den Telefongespr&auml;chen der
+                Treffermenge anhand der f&uuml;r die Achsen eingestellten Parameter (in Voreinstellung
+                Normalisierungsrate (Standardn&auml;he/-ferne) sowie Sprechgeschwindigkeit
+                (Artikulationsrate), blau). Es wird anschaulich, dass eines der Telefongespr&auml;che
+                deutlich standardferner realisiert ist (orange) und die Sprechereignisse sich auch
+                hinsichtlich der durchschnittlichen Sprechgeschwindigkeit unterscheiden.</p><div class="figure"><a name="Abb_3"></a><p class="title"><b>Abbildung 3. Beispiel f&uuml;r das Zusammenwirken der Komponenten in ZuMal: Angebotene
+                    Informationen f&uuml;r die Auswahl nach der Gespr&auml;chsart "Telefongespr&auml;ch" und Dauer
+                    von maximal 30 Minuten im FOLK-Korpus.</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image4.png" alt="Beispiel f&uuml;r das Zusammenwirken der Komponenten in ZuMal: Angebotene Informationen f&uuml;r die Auswahl nach der Gespr&auml;chsart &#34;Telefongespr&auml;ch&#34; und Dauer von maximal 30 Minuten im FOLK-Korpus."></div></div></div><br class="figure-break"><p>Das gezeigte Beispiel veranschaulicht das Grundprinzip der Funktion von ZuMal. Im
+                Folgenden werden die Auswahlparameter in ihren Funktionalit&auml;ten im Einzelnen
+                beschrieben. </p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_2__Metadatenbezogene"></a>2 Metadatenbezogene Auswahlparameter</h3></div></div></div><p>Bezogen auf die <a class="link" href="http://agd.ids-mannheim.de/download/FOLK_Z_10_Kurzuebersicht_Metadatensystematik_FOLK.pdf" target="_top">-&gt; Metadaten</a> der Sprechereignisse stehen insgesamt sechs verschiedene
+                Auswahlparameter zur Verf&uuml;gung, anhand deren die Gespr&auml;che gefiltert werden k&ouml;nnen.
+                Diese beziehen sich auf den Gespr&auml;chstyp (nur in FOLK) (<a class="link" href="#_2.1__Gespr%C3%A4chstyp" title="2.1 Gespr&auml;chstyp">2.1</a>), die Erst- und Zweitsprachen der
+                beteiligten Sprechenden (nur in GWSS) (<a class="link" href="#_2.2_Sprachen" title="2.2 Sprachen">2.2</a>),
+                die Art des Gespr&auml;chs (<a class="link" href="#_2.3_Art" title="2.3 Art">2.3</a>), das Thema (<a class="link" href="#_2.4_Themen" title="2.4 Themen">2.4</a>), die Sprachregion (<a class="link" href="#_2.5__Sprachregion" title="2.5 Sprachregion">2.5</a>) und die Dauer des Gespr&auml;chs (<a class="link" href="#_2.6__Dauer" title="2.6 Dauer">2.6</a>).</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_2.1__Gespr%C3%A4chstyp"></a>2.1 Gespr&auml;chstyp</h4></div></div></div><p>Unter der Rubrik &#8222;Gespr&auml;chstyp&#8220; k&ouml;nnen f&uuml;r das FOLK-Korpus entsprechend seines
+                    Korpusdesigns die Interaktionsparameter <span class="emphasis"><em>Interaktionsdom&auml;ne,
+                        Lebensbereich </em></span>und<span class="emphasis"><em> Aktivit&auml;t </em></span>spezifiziert
+                        werden<span class="emphasis"><em>. </em></span>Diese drei Auswahlparameter sind hierarchisch
+                    angeordnet: Den Interaktionsdom&auml;nen (privat, institutionell, &ouml;ffentlich,
+                    sonstige) sind <span class="emphasis"><em>Lebensbereiche </em></span>zugeordnet (z.B.
+                    institutionell &gt; Bildung, Beh&ouml;rden, Vereinsleben...) und den Lebensbereichen
+                        <span class="emphasis"><em>Aktivit&auml;ten</em></span> (z.B. Bildung &gt; Unterricht, Pr&uuml;fung,
+                    Fahrstunde...). F&uuml;r private Gespr&auml;che erfolgt keine weitere Differenzierung auf
+                    der Ebene des Lebensbereichs.</p><p>Die Auswahl erscheint in Form eines ausklappbaren Men&uuml;s (vgl. <a class="link" href="#Abb_4" title="Abbildung 4. Der Auswahlparameter &#34;Gespr&auml;chstyp&#34; f&uuml;r das Korpus FOLK">Abb. 4</a>). Durch Anklicken der grauen Pfeilsymbole
+                    &ouml;ffnet sich die n&auml;chste Auswahlebene. In Klammern wird die Anzahl der f&uuml;r den
+                    jeweiligen Gespr&auml;chstyp verf&uuml;gbaren Datens&auml;tze angezeigt (z.B. 19
+                    Pr&uuml;fungsgespr&auml;che). Durch Anklicken der Checkboxen l&auml;sst sich eine Auswahl
+                    vornehmen. Eine Mehrfachauswahl ist m&ouml;glich.</p><p>F&uuml;r das GWSS-Korpus wird anstatt dieses Auswahlparameters der Parameter
+                    &#8222;Sprachen&#8220; angeboten, der im n&auml;chsten Punkt beschrieben wird. </p><div class="figure"><a name="Abb_4"></a><p class="title"><b>Abbildung 4. Der Auswahlparameter "Gespr&auml;chstyp" f&uuml;r das Korpus FOLK</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image5.png" width="548" height="473" alt="Der Auswahlparameter &#34;Gespr&auml;chstyp&#34; f&uuml;r das Korpus FOLK"></div></div></div><br class="figure-break"></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_2.2_Sprachen"></a>2.2 Sprachen</h4></div></div></div><p>F&uuml;r GWSS wird der Auswahlparameter &#8222;Sprachen&#8220; angeboten, der die Erstsprachen
+                    (L1) und Zweitsprachen (L2) der beteiligten Gespr&auml;chsteilnehmenden spezifiziert
+                    (vgl. <a class="link" href="#Abb_5" title="Abbildung 5. Der Auswahlparameter &#34;Sprachen&#34; f&uuml;r das Korpus GWSS">Abb: 5</a>). </p><p>F&uuml;r den Auswahlparameter &#8222;Sprachen&#8220; wurden in jedem Sprechereignis alle
+                    Sprecher:innen ber&uuml;cksichtigt, die mehr als 10 % Sprechanteil besitzen. F&uuml;r
+                    diese Sprechenden wurde dann &uuml;berpr&uuml;ft, ob sie Deutsch oder eine andere Sprache
+                    als L1 bzw. als L2 sprechen. In GWSS finden sich neben Sprecher:innen des
+                    Deutschen als L1 und L2 Sprecher:innen mit Englisch als L1 und L2, Italienisch
+                    als L1 und Polnisch als L1. Wenn sowohl L1-Sprecher:innen als auch
+                    L2-Sprecher:innen mit jeweils &uuml;ber 10% Sprecheranteil enthalten waren, dann
+                    wurden die Ereignisse sowohl L1 als auch L2 zugeordnet. Sprecher:innen zu denen
+                    keine Metadaten vorlagen wurden f&uuml;r den Parameter &#8222;Sprachen&#8220; nicht
+                    ber&uuml;cksichtigt. Durch Anklicken der Checkboxen l&auml;sst sich eine Auswahl
+                    vornehmen. Eine Mehrfachauswahl ist m&ouml;glich.</p><div class="figure"><a name="Abb_5"></a><p class="title"><b>Abbildung 5. Der Auswahlparameter "Sprachen" f&uuml;r das Korpus GWSS</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image6.png" width="605" height="390" alt="Der Auswahlparameter &#34;Sprachen&#34; f&uuml;r das Korpus GWSS"></div></div></div><br class="figure-break"></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_2.3_Art"></a>2.3 Art </h4></div></div></div><p>Unter dem Auswahlparameter &#8222;Art&#8220; kann anhand spezifischerer Kurzbezeichnungen
+                    von Sprechereignissen ausgew&auml;hlt werden. Es handelt sich bei FOLK um
+                    Ad-hoc-Bezeichnungen, die den Gespr&auml;chen zugewiesen wurden. Bei GWSS finden sich
+                    hier die im Korpus ausdifferenzierten Genres der Wissenschaftskommunikation
+                    (vgl. <a class="link" href="#Abb_6" title="Abbildung 6. Der Auswahlparameter &#34;Art&#34; f&uuml;r die Korpora FOLK (links) und GWSS (rechts)">Abb. 6</a>). F&uuml;r die Auswahl kann die angebotene
+                    Liste durchgescrollt oder ein Suchwort eingegeben werden, f&uuml;r das dann
+                    &uuml;bereinstimmende Treffer angeboten werden. Durch Anklicken der Checkboxen l&auml;sst
+                    sich eine Auswahl vornehmen. Eine Mehrfachauswahl ist m&ouml;glich.</p><div class="figure"><a name="Abb_6"></a><p class="title"><b>Abbildung 6. Der Auswahlparameter "Art" f&uuml;r die Korpora FOLK (links) und GWSS
+                        (rechts)</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image9.png" alt="Der Auswahlparameter &#34;Art&#34; f&uuml;r die Korpora FOLK (links) und GWSS (rechts)"></div></div></div><br class="figure-break"></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_2.4_Themen"></a>2.4 Themen</h4></div></div></div><p>Unter dem Auswahlparameter &#8222;Themen&#8220; kann in den Korpora nach inhaltlichen
+                    Schlagworten gesucht werden, die zu den einzelnen Sprechereignissen festgehalten
+                    wurden. Bei FOLK handelt es sich hier um nicht-systematisierte, arbitr&auml;r
+                    vergebene Stichworte zum Inhalt der Gespr&auml;che. Es gibt keine 1:1-Zuordnung, da
+                    in den Sprechereignissen i. d. R. mehrere Themen besprochen werden. Da die Menge
+                    der vorhandenen Stichworte sehr gro&szlig; ist, funktioniert der Filter f&uuml;r das
+                    FOLK-Korpus nur stabil, wenn bereits zuvor eine Einschr&auml;nkung der Ergebnismenge
+                    (etwa auf einen Gespr&auml;chstyp) vorgenommen wird. F&uuml;r <a class="link" href="#Abb_7" title="Abbildung 7. Der Auswahlparameter &#34;Themen&#34; in FOLK (links) und GWSS (rechts)">Abb.
+                        7</a> wurde &uuml;ber den Filter &#8222;Art&#8220; eine Voreinschr&auml;nkung auf &#8222;WG-Gespr&auml;ch&#8220;
+                    getroffen (vgl. Ergebnismenge auf der linken Seite). Durch Anklicken der
+                    Checkboxen l&auml;sst sich eine Auswahl vornehmen. Eine Mehrfachauswahl ist
+                    m&ouml;glich.</p><p>Beim GWSS-Korpus umfasst die Auswahl Stichworte zu Pr&uuml;fungsthemen in den
+                    Pr&uuml;fungsgespr&auml;chen sowie Vortragstitel im Falle der studentischen und
+                    Expertenvortr&auml;ge (vgl. <a class="link" href="#Abb_7" title="Abbildung 7. Der Auswahlparameter &#34;Themen&#34; in FOLK (links) und GWSS (rechts)">Abb.7</a>, rechte Seite). </p><div class="figure"><a name="Abb_7"></a><p class="title"><b>Abbildung 7. Der Auswahlparameter "Themen" in FOLK (links) und GWSS (rechts)</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image13.png" alt="Der Auswahlparameter &#34;Themen&#34; in FOLK (links) und GWSS (rechts)"></div></div></div><br class="figure-break"></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_2.5__Sprachregion"></a>2.5 Sprachregion</h4></div></div></div><p>Unter dem Auswahlparameter &#8222;Sprachregion&#8220; kann eine Auswahl nach dem
+                    Aufnahmeort des Sprechereignisses getroffen werden. In vielen F&auml;llen sind die
+                    Sprechenden im Sprechereignis dann durch diese Region sprachlich gepr&auml;gt, sodass
+                    zus&auml;tzlich sprachregionale Merkmale im Sprechereignis wiederzufinden sind. F&uuml;r
+                    das FOLK-Korpus werden hier sechs &uuml;bergeordnete Sprachr&auml;ume (nach Lameli 2008)
+                    und 15 diesen zugeordneten Sprachregionen (nach Wiesinger 1983) angeboten. F&uuml;r
+                    GWSS sind die Aufnahmeorte (Bulgarien, Deutschland, Finnland, Italien, Polen,
+                    Vereinigtes K&ouml;nigreich Gro&szlig;britannien und Nordirland) entsprechend des
+                    Korpusdesigns nur auf L&auml;nderebene differenziert (vgl. <a class="link" href="#Abb_8" title="Abbildung 8. Der Auswahlparameter &#34;Sprachregion&#34; in FOLK (links) und GWSS (rechts)">Abb.
+                        8</a>). Durch Anklicken der Checkboxen l&auml;sst sich eine Auswahl vornehmen.
+                    Eine Mehrfachauswahl ist m&ouml;glich.</p><div class="figure"><a name="Abb_8"></a><p class="title"><b>Abbildung 8. Der Auswahlparameter "Sprachregion" in FOLK (links) und GWSS
+                        (rechts)</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image17.png" alt="Der Auswahlparameter &#34;Sprachregion&#34; in FOLK (links) und GWSS (rechts)"></div></div></div><br class="figure-break"></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_2.6__Dauer"></a>2.6 Dauer</h4></div></div></div><p>Unter dem Auswahlparameter &#8222;Dauer&#8220; k&ouml;nnen Sprechereignisse nach ihrer L&auml;nge
+                    ausgew&auml;hlt werden. Durch das Bewegen des Schiebereglers kann die gew&uuml;nschte
+                    minimale und maximale Dauer eingestellt werden. <a class="link" href="#Abb_9" title="Abbildung 9. Der Auswahlparameter &#34;Dauer&#34; in FOLK (links) und GWSS (rechts)">Abb.
+                        9</a> zeigt die Auswahl von Sprechereignissen mit einer L&auml;nge von bis zu
+                    30 Minuten L&auml;nge. Der ausgew&auml;hlte Bereich erscheint optisch in einem dunkleren
+                    Blau hervorgehoben.</p><div class="figure"><a name="Abb_9"></a><p class="title"><b>Abbildung 9. Der Auswahlparameter "Dauer" in FOLK (links) und GWSS (rechts)</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image19.png" width="481" height="173" alt="Der Auswahlparameter &#34;Dauer&#34; in FOLK (links) und GWSS (rechts)"></div></div></div><br class="figure-break"></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_3_Schwierigkeitsbezogene_Auswahlpar"></a>3 Schwierigkeitsbezogene Auswahlparameter und Filter</h3></div></div></div><p>Es stehen insgesamt vier schwierigkeitsbezogene Auswahlparameter zur Verf&uuml;gung.
+                Diese beziehen sich auf den in den Gespr&auml;chen verwendeten Wortschatz (<a class="link" href="#_3.1_Wortschatz_Niveaustufe_" title="3.1 Wortschatz (Niveaustufe)">3.1</a>), die Standardn&auml;he bzw. -ferne
+                    (<a class="link" href="#_3.2_Standardn%C3%A4he_Normalisierungsra" title="3.2 Standardn&auml;he (Normalisierungsrate)">3.2</a>), die
+                Sprechgeschwindigkeit (<a class="link" href="#_3.3_Sprechgeschwindigkeit_Artikula" title="3.3 Sprechgeschwindigkeit (Artikulationsrate)">3.3</a>) und die im Gespr&auml;ch vorhandenen &Uuml;berlappungen mehrerer
+                Gespr&auml;chsteilnehmer:innen (<a class="link" href="#_3.4_%C3%9Cberlappungen" title="3.4 &Uuml;berlappungen">3.4</a>). Diese
+                werden im Folgenden jeweils zun&auml;chst bezogen auf ihre allgemeine Funktionalit&auml;t
+                beschrieben. Daran schlie&szlig;en sich f&uuml;r jeden Auswahlparameter Beschreibungen zum
+                technischen Hintergrund und zu didaktischen Perspektiven an.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_3.1_Wortschatz_Niveaustufe_"></a>3.1 Wortschatz (Niveaustufe)</h4></div></div></div><p><span class="bold"><strong>a) Erl&auml;uterung</strong></span></p><p>Der Auswahlparameter &#8222;Wortschatz (Niveaustufe)&#8220; (vgl. <a class="link" href="#Abb_10" title="Abbildung 10. Der Auswahlparameter &#34;Wortschatz&#34;">Abb. 10</a>) ist nur f&uuml;r die deutschsprachigen Daten verf&uuml;gbar. Mit
+                    diesem Filter kann eingestellt werden, in welchem Umfang der Wortschatz des
+                    gesuchten Sprechereignisses durch eine bestimmte Wortschatzliste abgedeckt sein
+                    soll. Diese Wortschatzlisten umfassen Wortschatz, der den einzelnen Niveaustufen
+                    des Gemeinsamen Europ&auml;ischen Referenzrahmens (GER) bzw. bestimmten
+                    Frequenzstufen zugeordnet ist. Zur Auswahl stehen insgesamt acht Listen: Die
+                    Goethe-Zertifikatswortsch&auml;tze <a class="link" href="https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf" target="_top">A1</a>, <a class="link" href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf" target="_top">A2</a> und <a class="link" href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf" target="_top">B1</a> sowie die 1000, 2000, 3000, 4000 und 5000 h&auml;ufigsten W&ouml;rter des
+                    Deutschen nach dem Frequenzw&ouml;rterbuch von Tschirner/M&ouml;hring (2019). Diese finden
+                    sich in ZuMal (Zugang zu Merkmalsauswahl von Gespr&auml;chen) unter den Bezeichnungen
+                    Herder_1000, Herder_2000, Herder_3000, Herder_4000 und Herder_5000, da diese
+                    Listen ma&szlig;geblich am Herder-Institut der Universit&auml;t Leipzig entwickelt wurden.
+                    Im Drop-Down-Men&uuml; &#8222;Wortschatzliste&#8220; wird die gew&uuml;nschte Liste ausgew&auml;hlt. In den
+                    Auswahlfenstern &#8222;Deckung in %&#8220; wird eingestellt, zu welchem Anteil die laufenden
+                    W&ouml;rter (Token) des gesuchten Sprechereignisses durch diese Liste abgedeckt sein
+                    sollen. Alternativ zur Eingabe von Zahlenwerten kann hier auch der
+                    Auswahlbereich auf der unterhalb abgebildeten Messlatte mithilfe des
+                    Schiebereglers festgelgt werden. Abb. 10 zeigt die Einstellungen f&uuml;r das
+                    Auswahlkriterium &#8222;mindestens 80% A1-Wortschatz&#8220;.</p><div class="figure"><a name="Abb_10"></a><p class="title"><b>Abbildung 10. Der Auswahlparameter "Wortschatz"</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image22.png" alt="Der Auswahlparameter &#34;Wortschatz&#34;"></div></div></div><br class="figure-break"><p><span class="bold"><strong>b) Technischer Hintergrund</strong></span></p><p>Es wird auf Ebene der Lemmata (Nennformen) ein Abgleich der im Sprechereignis
+                    enthaltenen W&ouml;rter bzw. Wortformen mit den verschiedenen Wortschatzlisten
+                    durchgef&uuml;hrt. Hierzu wird gepr&uuml;ft, ob das zu jedem laufenden Wort (Token)
+                    zugeh&ouml;rige Lemma Bestandteil der jeweiligen Wortschatzliste ist. Auf dieser
+                    Grundlage wird berechnet, zu welchem prozentualen Anteil die in einem
+                    Sprechereignis vorhandenen Wortformen mit dem Wortschatz der jeweiligen Liste
+                    &uuml;bereinstimmen. Ausgeschlossen wurden bei dem Abgleich Kategorien, die
+                    h&ouml;chstwahrscheinlich nicht in den Vergleichslisten vorkommen und gleichzeitig
+                    das Verst&auml;ndnis nicht beeintr&auml;chtigen. Dazu z&auml;hlen etwa H&auml;sitationen wie
+                        <span class="emphasis"><em>&auml;h</em></span> &ouml;der <span class="emphasis"><em>&ouml;h</em></span>, Rezeptionssignale wie
+                        <span class="emphasis"><em>hm</em></span>, <span class="emphasis"><em>oh</em></span> oder
+                        <span class="emphasis"><em>ne</em></span>, Eigennamen, Zahlen, Buchstabiertes oder auch
+                    Abbr&uuml;che. Zu ber&uuml;cksichtigen ist dar&uuml;ber hinaus, dass der Abgleich des
+                    Wortschatzes nur auf Formativebene und daher ohne eine Ber&uuml;cksichtigung von
+                    Lesarten erfolgt. </p><p><span class="bold"><strong>c) Didaktische Anmerkungen</strong></span></p><p><span class="bold"><strong>Hinweise zu den Goethe-Zertifikatswortsch&auml;tzen
+                        (</strong></span><a class="link" href="https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf" target="_top">-&gt; A1</a><span class="bold"><strong>, </strong></span><a class="link" href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf" target="_top">-&gt; A2</a><span class="bold"><strong>, </strong></span><a class="link" href="https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf" target="_top">-&gt; B1</a><span class="bold"><strong>)</strong></span></p><p>Der Abgleich des im Sprechereignis enthaltenen Wortschatzes mit den
+                    Goethe-Zertifikatswortschatzlisten erm&ouml;glicht eine wortschatzbezogene Einstufung
+                    der einzelnen Sprechereignisse nach dem Sprachniveau. Die
+                    Goethe-Zertifikatswortschatzlisten umfassen nach kommunikativ-pragmatischen
+                    Kriterien zusammengestellten Wortschatz, welcher den Niveaustufen des
+                    Gemeinsamen europ&auml;ischen Referenzrahmens (GER) A1, A2 und B1 zugeordnet ist. Sie
+                    bieten Lehrenden und Autor:innen von Lehrmaterialien eine Orientierung, welcher
+                    Wortschatz auf welchem Sprachniveau vermittelt werden sollte. Grundlage f&uuml;r den
+                    Abgleich der Sprechereignisse mit den Goethe-Zertifikatswortsch&auml;tzen ist die
+                    Annahme, dass Lernende auf einer bestimmten Niveaustufe, bereits mit dem
+                    Wortschatz der jeweiligen Goethe-Zertifikatswortschatzliste vertraut sind. So
+                    sollte bspw. der Wortschatz eines Sprechereignisses mit einer hohen Deckung
+                    durch die A2-Wortschatzliste f&uuml;r einen Lernenden auf dem Niveau A2 kein Problem
+                    darstellen.</p><p><span class="bold"><strong>Hinweise zu den Herder-Listen</strong></span></p><p>Der Abgleich des im Sprechereignis enthaltenen Wortschatzes mit den
+                    Herder-Listen erm&ouml;glicht dessen frequenzorientierte Einstufung. Die
+                    Herder-Listen wurden am Herder-Institut der Universit&auml;t Leipzig auf der
+                    Grundlage des 20 Millionen W&ouml;rter umfassenden Korpus (New Leipzig Corpus of
+                    Contemporary German) erstellt. Dieses Korpus basiert auf aktuellen Sprachdaten
+                    und enth&auml;lt vier Teilkorpora mit jeweils f&uuml;nf Millionen W&ouml;rtern aus den Dom&auml;nen
+                    Gesprochene Sprache, Literatur, Presse und Wissenschaftssprache. Es bietet damit
+                    ein ausgewogenes Bild des aktuellen Gebrauchs der deutschen Sprache. Die
+                    Herder-Listen umfassen die h&auml;ufigsten 1000, 2000, 3000, 4000 und 5000 W&ouml;rter
+                    dieses Korpus. Die H&auml;ufigkeit eines Wortes gilt als ein wichtiger Indikator zur
+                    Beurteilung seiner Relevanz f&uuml;r das Sprachenlernen. So zeigen Studien hohe
+                    Korrelationen zwischen Wortschatzwissen, welches in Einstufungstests auf der
+                    Grundlage von frequenzbasiert ermitteltem Wortschatz gemessen wurde, und Lese-
+                    (und sogar H&ouml;r-)f&auml;higkeiten. Je mehr besonders h&auml;ufige W&ouml;rter des Deutschen
+                    seitens der Lernenden beherrscht werden, desto besser fallen ihre Lese- und
+                    H&ouml;rf&auml;higkeiten aus (z.B. Tschirner&nbsp;/&nbsp;Hacking&nbsp;/&nbsp;Rubio, 2018). Frequenzbasierte
+                    Ans&auml;tze pl&auml;dieren daher daf&uuml;r, dass die h&auml;ufigsten W&ouml;rter Gegenstand der
+                    Sprachvermittlung sein sollten &#8211; insbesondere dann, wenn neben
+                    alltagssprachlichen auch bildungssprachliche Kompetenzen vermittelt werden
+                    sollen (vgl. Tschirner 2019, 104). </p><p>Analysen zum Zusammenhang von rezeptiven, auf die Lesekompetenz bezogenen
+                    Wortschatzumfang und den Niveaustufen des GER ergaben die in der folgenden
+                    Tabelle dargestellten Zuordnungen:</p><div class="table"><a name="d5e171"></a><p class="title"><b>Tabelle 1. GER-Niveau und Wortschatzumfang nach Tschirner 2019, 101</b></p><div class="table-contents"><table class="table" summary="GER-Niveau und Wortschatzumfang nach Tschirner 2019, 101" border="1"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"></colgroup><tbody valign="top"><tr><td align="left" valign="top"><p>GER-Niveau</p></td><td align="center" valign="top"><p>A1</p></td><td align="center" valign="top"><p>A2</p></td><td align="center" valign="top"><p>B1</p></td><td align="center" valign="top"><p>B2</p></td><td align="center" valign="top"><p>C1</p></td></tr><tr><td align="left" valign="top"><p>Wortschatzumfang</p></td><td align="center" valign="top"><p>837</p></td><td align="center" valign="top"><p>1.640</p></td><td align="center" valign="top"><p>3.246</p></td><td align="center" valign="top"><p>4.049</p></td><td align="center" valign="top"><p>5.655</p></td></tr></tbody></table></div></div><br class="table-break"><p>Auf Grundlage dieser Zuordnungen gibt der Abgleich des im Sprechereignis
+                    enthaltenen Wortschatzes mit den Herder-Listen Hinweise darauf, inwieweit ein
+                    Transkript f&uuml;r Lernende auf einer bestimmten Niveaustufe geeignet sein k&ouml;nnte. </p><p>Zu ber&uuml;cksichtigen dabei ist, dass die Auswahl der W&ouml;rter in den
+                    Goethe-Zertifikatswortschatzlisten und den Herder-Listen sowohl Schnittmengen
+                    (insbesondere im hochfrequenten Bereich etwa bei den Funktionsw&ouml;rtern) als auch
+                    Unterschiede aufweist. Welche Wortschatzliste sich f&uuml;r eine Lernendengruppe
+                    tats&auml;chlich eignet, h&auml;ngt daher stark davon ab, ob das Curriculum bzw. das
+                    bislang verwendete Lehrmaterial und die darin enthaltene Wortschatzauswahl eher
+                    kommunikativ-pragmatischen Kriterien folgt und sich an den
+                    Goethe-Zertifikatswortsch&auml;tzen orientiert oder ob sie st&auml;rker frequenzbasiert
+                    ist und auf sich auf H&auml;ufigkeitslisten st&uuml;tzt.</p><p><span class="bold"><strong>Hinweise zur Textdeckung</strong></span></p><p>Grundlage f&uuml;r die Ermittlung der Textdeckung sind Sch&auml;tzungen dazu, wie viele
+                    W&ouml;rter eines Textes Lernenden bekannt sein m&uuml;ssen, um den Text zu verstehen.
+                    Eine Studie zum H&ouml;rverst&auml;ndnis im Englischen als Fremdsprache konnte zeigen,
+                    dass eine Textdeckung von 90 bis 95% ein ausreichendes H&ouml;rverst&auml;ndnis erm&ouml;glicht
+                    (vgl. van Zeeland/Schmitt 2013). Mit anderen Worten: Wenn Lernende 90 bis 95%
+                    der W&ouml;rter eines Sprechereignisses kennen, ist davon auszugehen, dass sie das
+                    Sprechereignis vom Wortschatz her gut verstehen k&ouml;nnen.</p><p>Im FOLK-Korpus findet sich eine hinreichende Anzahl an Sprechereignissen mit
+                    einer Textdeckung von mindestens 85%. F&uuml;r sprachdidaktische Zwecke ist eine
+                    solche Textdeckung ein guter Ausgangswert, da es sich bei dem nicht gedeckten
+                    Wortschatz zumindest teilweise um unverst&auml;ndliche Textstellen sowie um aus
+                    Datenschutzgr&uuml;nden verrauschte Sequenzen handelt. </p><p>Dar&uuml;ber hinaus konnte in einer neueren Studie zum Leseverst&auml;ndnis gezeigt
+                    werden, dass bei einer Textdeckung von 90% die Lernenden rund die H&auml;lfte des
+                    unbekannten Wortschatzes aus dem Kontext erschlie&szlig;en k&ouml;nnen (vgl. Laufer 2020).
+                    Die Kombination aus bekanntem und erschlossenem Wortschatz ergibt damit eine
+                    Textdeckung von 95%. Auf dieser Grundlage wird empfohlen, im
+                    Fremdsprachenunterricht mit Texten zu arbeiten, die maximal 5% bis 10%
+                    unbekannte Lexik enthalten (ebd.). F&uuml;r die Auswahl der Sprechereignisse bedeutet
+                    dies, dass ein Deckungswert von mindestens 90% angestrebt werden sollte. Liegt
+                    ein Sprechereignis unter diesem Wert, ist es ratsam, den nicht gedeckten und
+                    damit f&uuml;r die Lernenden vermutlich unbekannten Wortschatz mit entsprechenden
+                    Erl&auml;uterungen zur Verf&uuml;gung zu stellen. M&ouml;glich wird dies &uuml;ber die im Werkzeug
+                    ZuViel (Zugang zu Visualisierungselementen f&uuml;r Transkripte) zug&auml;nglichen Listen,
+                    welche den durch eine bestimmte Wortschatzliste nicht gedeckten Wortschatz
+                    enthalten.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_3.2_Standardn%C3%A4he_Normalisierungsra"></a>3.2 Standardn&auml;he (Normalisierungsrate)</h4></div></div></div><p><span class="bold"><strong>a) Erl&auml;uterung</strong></span></p><p>Der Auswahlparameter &#8222;Standardn&auml;he (Normalisierungsrate)&#8220; ist nur f&uuml;r die
+                    deutschsprachigen Daten verf&uuml;gbar. Mit ihm kann eine Auswahl danach getroffen
+                    werden, wie gro&szlig; der Anteil normalisierter Token im gesuchten Gespr&auml;ch sein
+                    soll, d.h. wie viele Token von einem an der Schriftsprache orientierten Standard
+                    abweichend realisiert sein d&uuml;rfen. Der Parameter wird dabei mithilfe der
+                    Normalisierungsrate operationalisiert. Bei der Normalisierung wird einem Token
+                    seine Entsprechung in einem an der Schriftsprache orientierten Standard
+                    zugeordnet. Ein niedriger Anteil normalisierter Token weist daher auf ein eher
+                    standardnahes Gespr&auml;ch. <a class="link" href="#Abb_11" title="Abbildung 11. Der Auswahlparameter &#34;Standardn&auml;he (Normalisierungsrate)&#34;">Abb. 11</a> zeigt die
+                    Einstellung f&uuml;r die Filterung nach relativ standardnah realisierten Gespr&auml;chen
+                    mit maximal 10% an Token, bei denen aussprachenahe Transkription und
+                    orthografische Normalisierung voneinander abweichen.</p><div class="figure"><a name="Abb_11"></a><p class="title"><b>Abbildung 11. Der Auswahlparameter "Standardn&auml;he (Normalisierungsrate)"</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image24.png" width="480" height="162" alt="Der Auswahlparameter &#34;Standardn&auml;he (Normalisierungsrate)&#34;"></div></div></div><br class="figure-break"><p><span class="bold"><strong>b) Technischer Hintergrund</strong></span></p><p>Die Sprechereignisse liegen einerseits aussprachenah nach cGAT2
+                    Minimaltranskript (vgl. Schmidt&nbsp;/&nbsp;Sch&uuml;tte&nbsp;/&nbsp;Winterscheidt, 2015) verschriftet
+                    vor. Andererseits gibt es eine automatisch erstellte orthografisch
+                    normalisierte, d.h. den Konventionen der Schriftsprache angepasste Fassung
+                    dieser Transkripte. Anhand eines Abgleichs dieser beiden Fassungen wird die
+                    Anzahl der Unterschiede zwischen aussprachenaher Transkription und ihrer
+                    orthografisch normalisierten Fassung berechnet (&#8222;Normalisierungsrate&#8220;).
+                    Ausgenommen werden dabei Unterschiede, die nur auf die konventionelle
+                    Kleinschreibung im aussprachenahen Transkript zur&uuml;ckzuf&uuml;hren sind. </p><p><span class="bold"><strong>c) Didaktische Anmerkungen</strong></span></p><p>Mithilfe dieses Parameters k&ouml;nnen Sprechereignisse nach dem Umfang der
+                    Wortformen eingesch&auml;tzt werden, die abweichend von einer am geschriebenen
+                    Standard orientierten Form realisiert werden. Es kann bspw. nach Gespr&auml;chen
+                    gefiltert werden, die besonders wenige oder besonders viele Abweichungen
+                    enthalten. Ein niedriger Wert, also eine niedrige Normalisierungsrate, l&auml;sst auf
+                    wenige Abweichungen und damit auf &#8222;Standardn&auml;he&#8220; schlie&szlig;en. Eine hohe
+                    Normalisierungsrate hingegen ist durch viele Abweichungen verursacht. Dies
+                    deutet darauf hin, dass ein Sprechereignis eher als &#8222;standardfern&#8220; einzustufen
+                    ist. Es ist davon auszugehen, dass Sprechereignisse mit hoher
+                    Normalisierungsrate f&uuml;r Lernende potenziell anspruchsvoller sind.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_3.3_Sprechgeschwindigkeit_Artikula"></a>3.3 Sprechgeschwindigkeit (Artikulationsrate)</h4></div></div></div><p><span class="bold"><strong>a) Erl&auml;uterung</strong></span></p><p>Der Auswahlparameter &#8222;Sprechgeschwindigkeit (Artikulationsrate)&#8220; erlaubt eine
+                    Selektion nach Werten f&uuml;r die Anzahl der durchschnittlich in einem Gespr&auml;ch pro
+                    Sekunde artikulierten Silben. Der Auswahlparameter wird dabei mit der
+                    Artikulationsrate operationalisiert. Diese gibt an, wie viele Silben pro Sekunde
+                    in einem Sprechereignis artikuliert, d.h. gesprochen werden. Der Wert der
+                    Artikulationsrate liegt im FOLK-Korpus zwischen 2,04 (Kommunikation mit Tieren)
+                    und 6,49 (Training in einer Hilfsorganisation), im GWSS-Korpus zwischen 0,80
+                    (Expertenvortrag) und 5,64 (Studentischer Vortrag) Silben pro Sekunde. Innerhalb
+                    dieser Spanne kann eine Auswahl getroffen werden. <a class="link" href="#Abb_12" title="Abbildung 12. Der Auswahlparameter &#34;Sprechgeschwindigkeit&#34;">Abb.
+                        12</a> zeigt exemplarisch die Einstellung f&uuml;r eine m&auml;&szlig;ig hohe
+                    Artikulationsrate von bis zu vier Silben pro Sekunde.</p><div class="figure"><a name="Abb_12"></a><p class="title"><b>Abbildung 12. Der Auswahlparameter "Sprechgeschwindigkeit"</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image25.png" width="480" height="219" alt="Der Auswahlparameter &#34;Sprechgeschwindigkeit&#34;"></div></div></div><br class="figure-break"><p><span class="bold"><strong>b) Technischer Hintergrund</strong></span></p><p>Mithilfe einer automatischen Umwandlung der aussprachenahen Transkriptionen in
+                    die phonemische Umschrift SAMPA (ASCII-basierte Lautschrift), in welcher
+                    Silbengrenzen markiert sind, kann f&uuml;r jedes Sprechereignis die Zahl der pro
+                    Sekunde artikulierten Silben (&#8222;Artikulationsrate&#8220;) berechnet werden. Auf dieser
+                    Grundlage wird f&uuml;r jedes Sprechereignis die durchschnittliche Artikulationsrate
+                    ermittelt. </p><p><span class="bold"><strong>c) Didaktische Anmerkungen</strong></span></p><p>Durch diesen Parameter ist es m&ouml;glich, die Gespr&auml;che global nach Unterschieden
+                    in der durchschnittlichen Artikulationsrate einzusch&auml;tzen und dementsprechend
+                    durchschnittlich langsamer oder schneller realisierte Gespr&auml;che auszuw&auml;hlen.
+                    Dabei wird davon ausgegangen, dass Sprechereignisse mit einer h&ouml;heren
+                    Sprechgeschwindigkeit f&uuml;r Lernende anspruchsvoller sind. Zu ber&uuml;cksichtigen ist
+                    jedoch, dass einige Sprechereignisse schneller und langsamer gesprochene Phasen
+                    aufweisen. Durch die Berechnung der durchschnittlichen Artikulationsrate kann
+                    dies nicht sichtbar gemacht werden.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_3.4_%C3%9Cberlappungen"></a>3.4 &Uuml;berlappungen</h4></div></div></div><p><span class="bold"><strong>a) Erl&auml;uterung</strong></span></p><p>Unter dem Auswahlparameter &#8222;&Uuml;berlappungen&#8220; k&ouml;nnen Sprechereignisse nach dem
+                    Anteil &uuml;berlappend gesprochener Sequenzen ausgew&auml;hlt werden. Es kann eine Spanne
+                    f&uuml;r den Anteil von &Uuml;berlappungen (d.h. zwei und mehr gleichzeitig
+                    ausgesprochenen W&ouml;rtern) pro 1000 Token festgelegt werden. Die Werte hierzu
+                    reichen im FOLK-Korpus von 0 (Sportinteraktion) bis 66,94 (Tischgespr&auml;ch), in
+                    GWSS von 0 (Vortr&auml;ge, einzelne Pr&uuml;fungsgespr&auml;che) bis 20,03 (Diskussion nach
+                    studentischem Vortrag). <a class="link" href="#Abb_13" title="Abbildung 13. Der Auswalparameter &#34;&Uuml;berlappungen&#34;">Abb. 13</a> zeigt eine Auswahl
+                    f&uuml;r &uuml;berlappungsarme Gespr&auml;che mit maximal f&uuml;nf &Uuml;berlappungen pro 1000
+                    Token.</p><div class="figure"><a name="Abb_13"></a><p class="title"><b>Abbildung 13. Der Auswalparameter "&Uuml;berlappungen"</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image26.png" width="480" height="213" alt="Der Auswalparameter &#34;&Uuml;berlappungen&#34;"></div></div></div><br class="figure-break"><p><span class="bold"><strong>b) Technischer Hintergrund</strong></span></p><p>In der aussprachenahen Transkription sind &uuml;berlappend ge&auml;u&szlig;erte Sequenzen
+                    festgehalten. Dies erlaubt eine automatische Ausz&auml;hlung f&uuml;r jedes
+                    Sprechereignis. Auf dieser Grundlage werden f&uuml;r jedes Sprechereignis Angaben zur
+                    H&auml;ufigkeit von &Uuml;berlappungen mit mehr als zwei Token pro 1000 Token angeboten. </p><p><span class="bold"><strong>c) Didaktische Anmerkungen</strong></span></p><p>Mithilfe dieses Auswahlparameters k&ouml;nnen &uuml;berlappungsreichere und
+                    &uuml;berlappungs&auml;rmere Sprechereignisse ausgew&auml;hlt werden. Dabei wird davon
+                    ausgegangen, dass ein hoher Anteil an &uuml;berlappend gesprochenen Sequenzen das
+                    H&ouml;rverst&auml;ndnis beeintr&auml;chtigen kann. Zu ber&uuml;cksichtigen ist jedoch, dass die
+                    &Uuml;berlappungen in den Sprechereignissen nicht gleichm&auml;&szlig;ig verteilt sind und der
+                    Wert nur eine Orientierung bietet, wie viel &Uuml;berlappungen pro 1000 Token im
+                    Transkript grunds&auml;tzlich enthalten sind. Ein hoher Anteil schlie&szlig;t nicht
+                    unbedingt aus, dass das Sprechereignis auch &uuml;berlappungsarme Phasen enth&auml;lt, die
+                    didaktisch von Interesse sein k&ouml;nnten.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_4_Ph%C3%A4nomenbezogene_Auswahlparameter"></a>4 Ph&auml;nomenbezogene Auswahlparameter und Filter</h3></div></div></div><p>Es stehen f&uuml;r die deutschsprachigen Daten zwei weitere Auswahlparameter zur
+                Verf&uuml;gung, die auf dem Vorkommen ausgew&auml;hlter Ph&auml;nomene in den Sprechereignissen
+                beruhen. Diese beziehen sich zum einen auf die in den Gespr&auml;chen vorkommenden
+                Wortarten (<a class="link" href="#_4.1__Wortarten" title="4.1 Wortarten">4.1</a>) und zum anderen auf
+                ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene (<a class="link" href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom" title="4.2 Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene">4.2</a>). Sie werden im
+                Folgenden jeweils zun&auml;chst bezogen auf ihre allgemeine Funktionalit&auml;t beschrieben.
+                Daran schlie&szlig;en sich f&uuml;r jeden Auswahlparameter Beschreibungen zum technischen
+                Hintergrund und zu didaktischen Perspektiven an.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_4.1__Wortarten"></a>4.1 Wortarten</h4></div></div></div><p><span class="bold"><strong>a) Erl&auml;uterung</strong></span></p><p>Mithilfe des Auswahlparameters &#8222;Wortarten&#8220; kann der prozentuale Anteil
+                    ausgew&auml;hlter Wortarten in den Gespr&auml;chen festgelegt werden. Es kann nach Nomen
+                    (NN), Eigennamen (NE), Verben (V), Adjektiven (ADJ), Adverbien (ADV) und
+                    trennbaren Verben in Distanzstellung (PTKVZ) gefiltert werden (vgl. <a class="link" href="#Abb_14" title="Abbildung 14. Der Auswahlparameter &#34;Wortarten&#34;">Abb. 14</a>). Der prozentuale Anteil von Nomen liegt in
+                    FOLK beispielsweise zwischen 5,59 % (Pausenkommunikation im Theater) und 18,9 %
+                    (Plenarsitzung im Bundestag). F&uuml;r GWSS liegen die Werte f&uuml;r Nomen zwischen 8,68
+                    % (Studentischer Vortrag mit anschlie&szlig;ender Diskussion) und 29,18 %
+                        (Pr&uuml;fungsgespr&auml;ch).<a href="#ftn.__EN2__" class="footnote" name="__EN2__"><sup class="footnote">[2]</sup></a> Der Filter steht lediglich f&uuml;r die deutschsprachigen Daten zur
+                    Verf&uuml;gung.</p><div class="figure"><a name="Abb_14"></a><p class="title"><b>Abbildung 14. Der Auswahlparameter "Wortarten"</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image27.png" width="424" height="480" alt="Der Auswahlparameter &#34;Wortarten&#34;"></div></div></div><br class="figure-break"><p><span class="bold"><strong>b) Technischer Hintergrund</strong></span></p><p>Alle im Sprechereignis enthaltenen Token wurden mit einer Wortartinformation
+                    versehen (POS-Tagging). Genutzt wurde dabei das um m&uuml;ndliche Kategorien
+                    erweiterte <a class="link" href="http://www.sfs.uni-tuebingen.de/resources/stts-1999.pdf" target="_top">Stuttgart-T&uuml;bingen-Tagset</a> (vgl. Westpfahl et al. 2017). Auf dieser
+                    Grundlage k&ouml;nnen f&uuml;r jedes Gespr&auml;ch automatisiert die prozentualen Anteile der
+                    einzelnen Wortarten berechnet werden.</p><p><span class="bold"><strong>c) Didaktische Anmerkungen</strong></span></p><p>&Uuml;ber den Auswahlparameter &#8222;Wortarten&#8220; k&ouml;nnen Sprechereignisse gezielt nach den
+                    in ihnen (oft oder selten) vorkommenden Wortarten ausgew&auml;hlt werden. Es k&ouml;nnen
+                    bspw. Gespr&auml;che mit einer gro&szlig;en Anzahl an Nomen ausgew&auml;hlt werden oder auch
+                    Gespr&auml;che, die viele trennbare Verben in Distanzstellung enthalten, was gerade
+                    auf den Sprachniveaus A1, A2 und B1 einen wesentlichen Lerngegenstand
+                    darstellt.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom"></a>4.2 Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene</h4></div></div></div><p><span class="bold"><strong>a)</strong></span>
+                    <span class="bold"><strong>Erl&auml;uterung</strong></span></p><p>Mithilfe des Auswahlparameters &#8222;Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene&#8220; kann nach
+                    dem prozentualen Anteil ausgew&auml;hlter Ph&auml;nomene der M&uuml;ndlichkeit in den
+                    Gespr&auml;chen gefiltert werden. Hier stehen H&auml;sitationen (NGHES), Interjektionen,
+                    Responsive und Rezeptionssignale (NGIRR), Modalpartikeln (PTKMA), Diskursmarker
+                    (SEDM), Tag Questions (SEQU) und Klitisierungen (CLITIC) zur Auswahl (vgl. <a class="link" href="#Abb_15" title="Abbildung 15. Der Auswahlparameter &#34;Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene&#34;">Abb. 15</a>). Beispielsweise liegt der prozentuale
+                    Anteil der Modalpartikeln in FOLK zwischen 0 % (Gespr&auml;ch im Polizeirevier) und
+                    4,8 % (Pausenkommunikation im Theater).</p><div class="figure"><a name="Abb_15"></a><p class="title"><b>Abbildung 15. Der Auswahlparameter "Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene"</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image28.png" width="480" height="546" alt="Der Auswahlparameter &#34;Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene&#34;"></div></div></div><br class="figure-break"><p><span class="bold"><strong>b) Technischer Hintergrund</strong></span></p><p>Alle im Sprechereignis enthaltenen Token wurden mit einer Wortartinformation
+                    versehen (POS-Tagging). Genutzt wurde dabei das um m&uuml;ndliche Kategorien
+                    erweiterte <a class="link" href="http://www.sfs.uni-tuebingen.de/resources/stts-1999.pdf" target="_top">Stuttgart-T&uuml;bingen-Tagset</a> (vgl. Westpfahl et al. 2017). Auf dieser
+                    Grundlage k&ouml;nnen f&uuml;r jedes Gespr&auml;ch automatisiert die prozentualen Anteile der
+                    Wortarten berechnet werden, die als besonders typisch f&uuml;r die gesprochene
+                    Sprache gelten (so etwa Modalpartikeln (PTKMA), Diskursmarker (SEDM), Tag
+                    Questions (SEQU)). </p><p><span class="bold"><strong>Hinweis zu den Klitisierungen</strong></span></p><p>Im Auswahlparameter &#8222;Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene&#8220; ist es m&ouml;glich, nach
+                    Sprechereignisse nach ihrem Anteil an Klitisierungen (CLITIC) zu filtern. Als
+                    Klitisierung werden dabei alle Ph&auml;nomene erfasst, die (a) als assimiliert
+                    transkribiert wurden oder (b) bei denen einem Token zwei oder mehr POS-Tags
+                    zugeordnet wurden. Ausgeschlossen, und damit nicht als Klitisierung gez&auml;hlt,
+                    werden alle POS-Tag-Kombinationen, die nur einmal (n=1) in den Korpora zu finden
+                    sind und zus&auml;tzlich alle POS-Tag-Kombinationen, die Abbr&uuml;che (ABB),
+                    fremdsprachliches Material (FM) oder Rezeptionssignale oder H&auml;sitationspartikeln
+                    etc. (NGIRR; NGHES) beinhalten. Au&szlig;erdem kann nur nach Kombinationen gefiltert
+                    werden, die mit einem bestimmten prozentualen Anteil in der Gesamttreffermenge
+                    des POS-Tag-Kombinationen zu finden sind. Hierzu werden alle Kombinationen
+                    hinsichtlich ihres Perzentilranges &uuml;berpr&uuml;ft und die Kombinationen
+                    ausgeschlossen, die unter dem 5. Perzentil liegen. </p><p><span class="bold"><strong>c) Didaktische Anmerkungen</strong></span></p><p>Mithilfe dieses Auswahlparameters lassen sich die Gespr&auml;che nach verschiedenen
+                    M&uuml;ndlichkeitsph&auml;nomenen filtern. Dies ist aus didaktischer Sicht gewinnbringend,
+                    da so gezielt nach Sprechereignissen gesucht werden kann, die ein oder mehrere
+                    bestimmte Ph&auml;nomene der gesprochenen Sprache besonders h&auml;ufig enthalten.
+                    Lehrende k&ouml;nnen somit schneller Sprechereignisse auffinden, die sich f&uuml;r die
+                    Veranschaulichung dieser Ph&auml;nomene besonders eignen. Denkbar ist auch, dass
+                    mithilfe des Filters Sprechereignisse ausgew&auml;hlt werden, die nur einen geringen
+                    oder moderaten Anteil an Ph&auml;nomenen der gesprochenen Sprache enthalten, da ein
+                    sehr h&auml;ufiges Auftreten dieser Ph&auml;nomene die Lernenden vor zus&auml;tzliche
+                    Verstehensprobleme stellen k&ouml;nnte. Deutlich wird dies etwa an den sehr
+                    unterschiedlichen Realisierungsformen von Ausdr&uuml;cken wie
+                        <span class="emphasis"><em>hast</em></span>
+                    <span class="emphasis"><em>du</em></span>. Hier lassen sich in FOLK und GWSS Realisierungen wie
+                        <span class="emphasis"><em>hasdu</em></span>, <span class="emphasis"><em>hasch</em></span>,
+                        <span class="emphasis"><em>hasse</em></span> oder auch <span class="emphasis"><em>hoschd</em></span> finden, die
+                    stark von den &uuml;blicherweise vermittelten standardnahen Formen abweichen. </p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_5_Ergebnisliste"></a>5 Ergebnisliste</h3></div></div></div><p>Ist eine Auswahl nach einem oder mehreren Parametern getroffen, wird die
+                entsprechende Ergebnismenge auf der rechten Seite des Werkzeugs ZuMal (Zugang zu
+                Merkmalsauswahl von Gespr&auml;chen) im unteren Bereich in einer tabellarischen
+                Listenansicht angezeigt. Wurde keine Auswahl vorgenommen, sind hier alle im Korpus
+                verf&uuml;gbaren Sprechereignisse zu sehen. In der Grundeinstellung werden hier die
+                Parameter &#8222;ID&#8220;, &#8222;Art&#8220;, &#8222;Dauer&#8220;, &#8222;Normalisierungsrate&#8220; und der &#8222;ZuViel-Link&#8220; zur
+                Weiterbearbeitung des Transkripts im Werkzeug ZuViel (Zugang zu
+                Visualisierungselementen f&uuml;r Transkripte) angezeigt. Es ist aber m&ouml;glich, auch jeden
+                anderen der in den Abschnitten 2 bis 4 vorgestellten Auswahlparameter der
+                Ergebnisliste hinzuzuf&uuml;gen. Dabei k&ouml;nnen sowohl einzelne oder auch alle
+                Wortschatzlisten (vgl. 3.1) wie auch einzelne oder alle Wortarten (vgl. 4.1) und
+                M&uuml;ndlichkeitsph&auml;nomene (vgl. 4.2) ausgew&auml;hlt werden. Die Tabellenansicht bietet f&uuml;r
+                alle Parameter die M&ouml;glichkeit des auf- bzw. absteigenden Sortierens. Auf diese
+                Weise kann die Ergebnismenge n&auml;her eingesch&auml;tzt werden. <a class="link" href="#Abb_16" title="Abbildung 16. Ansicht der Ergebnisliste f&uuml;r die Auswahl nach Gespr&auml;chsart &#34;Telefongespr&auml;che&#34; und einer Dauer von maximal 30 Minuten und sortiert nach ihrer Normalisierungsrate.">Abb.
+                    16</a> zeigt die in <a class="link" href="#_1__%C3%9Cberblick" title="1 &Uuml;berblick">Kapitel 1</a> getroffene
+                Auswahl nach Telefongespr&auml;chen in FOLK mit einer Dauer von maximal 30 Minuten
+                sortiert nach der Normalisierungsrate (=Standardn&auml;he/-ferne).</p><div class="figure"><a name="Abb_16"></a><p class="title"><b>Abbildung 16. Ansicht der Ergebnisliste f&uuml;r die Auswahl nach Gespr&auml;chsart
+                    "Telefongespr&auml;che" und einer Dauer von maximal 30 Minuten und sortiert nach
+                    ihrer Normalisierungsrate.</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image29.png" width="605" height="228" alt="Ansicht der Ergebnisliste f&uuml;r die Auswahl nach Gespr&auml;chsart &#34;Telefongespr&auml;che&#34; und einer Dauer von maximal 30 Minuten und sortiert nach ihrer Normalisierungsrate."></div></div></div><br class="figure-break"></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_6__Visualisierung"></a>6 Visualisierung der Ergebnismenge</h3></div></div></div><p>Im rechten oberen Teil des Interfaces werden die mithilfe der unter <a class="link" href="#_2__Metadatenbezogene" title="2 Metadatenbezogene Auswahlparameter">2.</a>, <a class="link" href="#_3_Schwierigkeitsbezogene_Auswahlpar" title="3 Schwierigkeitsbezogene Auswahlparameter und Filter">3.</a> und <a class="link" href="#_4_Ph%C3%A4nomenbezogene_Auswahlparameter" title="4 Ph&auml;nomenbezogene Auswahlparameter und Filter">4.</a> dargestellten
+                Auswahlparametern ermittelten Sprechereignisse grafisch pr&auml;sentiert. Dies geschieht
+                durch die Visualisierung der Ergebnismenge mittels eines zweidimensionalen
+                Streudiagramm. Eine solche Darstellung erm&ouml;glicht es, sehr schnell die verschiedenen
+                Sprechereignisse vergleichend einzusch&auml;tzen. Es k&ouml;nnen jeweils zwei Parameter, d.h.
+                einer f&uuml;r die x-Achse und einer f&uuml;r die y-Achse, ausgew&auml;hlt werden. Die Ergebnisse
+                werden dann nach ihren Werten f&uuml;r diese gew&auml;hlten Parameter gegen&uuml;bergestellt. Zur
+                Wahl stehen daf&uuml;r die Dauer als metadatenbezogener Parameter sowie alle
+                schwierigkeits- und ph&auml;nomenbezogenen Parameter und ihre feineren Unterteilungen
+                (Wortschatzlisten (vgl. <a class="link" href="#_3.1_Wortschatz_Niveaustufe_" title="3.1 Wortschatz (Niveaustufe)">3.1</a>),
+                Wortarten (vgl. <a class="link" href="#_4.1__Wortarten" title="4.1 Wortarten">4.1</a>) und ausgew&auml;hlte
+                M&uuml;ndlichkeitsph&auml;nomene (vgl. <a class="link" href="#_4.2_Ausgew%C3%A4hlte_M%C3%BCndlichkeitsph%C3%A4nom" title="4.2 Ausgew&auml;hlte M&uuml;ndlichkeitsph&auml;nomene">4.2</a>)). <a class="link" href="#Abb_17" title="Abbildung 17. Ansicht der Visualisierung der Ergebnismenge von maximal 30-min&uuml;tigen Telefongespr&auml;chen im FOLK-Korpus mit der Wahl des Parameters &#34;Goethe-A2&#8220; zur Bestimmung der Textdeckung f&uuml;r die x-Achse und &#34;Normalisierungsrate (Standardn&auml;he)&#34; f&uuml;r die y-Achse.">Abb. 17</a> zeigt f&uuml;r die Auswahl an
+                maximal 30-min&uuml;tigen Telefongespr&auml;chen in FOLK deren Verteilung nach der Abdeckung
+                durch A2-Wortschatz (x-Achse) und Standardn&auml;he (Normalisierungsrate) (y-Achse). Es
+                wird deutlich, dass sich die Gespr&auml;che kaum hinsichtlich des Wortschatzniveaus
+                unterscheiden: Alle liegen bez&uuml;glich der x-Achse dicht beieinander im Raum zwischen
+                etwa 85 und 90% Deckung durch den Goethe-A2-Wortschatz. Anders ist es jedoch mit
+                Blick auf die Standardn&auml;he (Normalisierungsrate): F&uuml;r diesen auf der y-Achse
+                abgetragenen Parameter zeigt sich v.a. f&uuml;r ein Gespr&auml;ch ein deutlicher Abstand
+                aufgrund eines h&ouml;heren Wertes der Normalisierungsrate (fast 50%). Auf diese Weise
+                wird durch die Visualisierung der Ergebnismenge einen schnelleren optisch
+                vermittelten &Uuml;berblick &uuml;ber die Zusammensetzung der Treffermenge erm&ouml;glicht. </p><div class="figure"><a name="Abb_17"></a><p class="title"><b>Abbildung 17. Ansicht der Visualisierung der Ergebnismenge von maximal 30-min&uuml;tigen
+                    Telefongespr&auml;chen im FOLK-Korpus mit der Wahl des Parameters "Goethe-A2&#8220; zur
+                    Bestimmung der Textdeckung f&uuml;r die x-Achse und "Normalisierungsrate
+                    (Standardn&auml;he)" f&uuml;r die y-Achse.</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image30.png" width="604" height="204" alt="Ansicht der Visualisierung der Ergebnismenge von maximal 30-min&uuml;tigen Telefongespr&auml;chen im FOLK-Korpus mit der Wahl des Parameters &#34;Goethe-A2&#8220; zur Bestimmung der Textdeckung f&uuml;r die x-Achse und &#34;Normalisierungsrate (Standardn&auml;he)&#34; f&uuml;r die y-Achse."></div></div></div><br class="figure-break"><p>Die in der Visualisierung dargestellten Punkte repr&auml;sentieren einzelne
+                Sprechereignisse. Durch Anklicken des jeweiligen Punktes &ouml;ffnet sich ein Fenster mit
+                n&auml;heren Informationen zu diesem Sprechereignis. Auch in der tabellarischen
+                Ergebnisliste wird der entsprechende Datensatz hervorgehoben (gr&uuml;ne Unterlegung,
+                vgl. <a class="link" href="#Abb_18" title="Abbildung 18. Informationsfenster zu einem Punkt (Sprechereignis) in der Visualisierung der Ergebnismenge">Abb. 18</a>). Durch nochmaliges Anklicken des Punktes
+                l&auml;sst sich das Informationsfenster wieder schlie&szlig;en. <a class="link" href="#Abb_18" title="Abbildung 18. Informationsfenster zu einem Punkt (Sprechereignis) in der Visualisierung der Ergebnismenge">Abb.
+                    18</a> illustriert dies f&uuml;r das Sprechereignis aus <a class="link" href="#Abb_17" title="Abbildung 17. Ansicht der Visualisierung der Ergebnismenge von maximal 30-min&uuml;tigen Telefongespr&auml;chen im FOLK-Korpus mit der Wahl des Parameters &#34;Goethe-A2&#8220; zur Bestimmung der Textdeckung f&uuml;r die x-Achse und &#34;Normalisierungsrate (Standardn&auml;he)&#34; f&uuml;r die y-Achse.">Abb. 17</a>, welches sich durch eine besonders hohe Normalisierungsrate
+                ausgezeichnet hat.</p><div class="figure"><a name="Abb_18"></a><p class="title"><b>Abbildung 18. Informationsfenster zu einem Punkt (Sprechereignis) in der Visualisierung der
+                    Ergebnismenge</b></p><div class="figure-contents"><div class="mediaobject"><img src="Handreichung%20ZuMal_final_13-12-21_files/image31.png" width="604" height="289" alt="Informationsfenster zu einem Punkt (Sprechereignis) in der Visualisierung der Ergebnismenge"></div></div></div><br class="figure-break"></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e352"></a>Quellen</h2></div></div></div><p>Hirschfeld, Hagen (2019): Korpuslinguistik. Eine Einf&uuml;hrung. Berlin: J.B.
+            Metzler.</p><p>Lameli, Alfred (2008): Deutsche Sprachlandschaften. In: Nationalatlas aktuell 9
+            (08/2008). Leipzig: Leibniz-Institut f&uuml;r L&auml;nderkunde (IfL). </p><p lang="en-US">Laufer, Batia (2020): Lexical Coverages, Inferencing Unknown Words
+            and Reading Comprehension: How Are They Related? <span lang="de-DE" class="phrase">In: TESOL
+                QUARTERLY. 10.1002/tesq.3004.</span></p><p>Schmidt, Thomas; Sch&uuml;tte, Winfried; Winterschaidt, Jenny (2015): cGAT: Konventionen
+            f&uuml;r das computergest&uuml;tzte Transkribieren in Anlehnung an das Gespr&auml;chsanalytische
+            Transkritionssystem 2 (GAT2). Unter:
+            https://ids-pub.bsz-bw.de/frontdoor/deliver/index/docId/4616/file/Schmidt_Schuette_Winterscheid_cGAT_2015.pdf.</p><p lang="en-US">Schmitt, Norbert; Jiang, Xiangying; Grabe, William (2011): The
+            percentage of words known in a text and reading comprehension. <span lang="de-DE" class="phrase">In: The Modern Language Journal 95, 26&#8211;43. </span></p><p>Tschirner, Erwin (2019): Der rezeptive Wortschatzbedarf im Deutschen als Fremdsprache.
+            In: T. Studer, I. Thonhauser, &amp; E. Peyer., eds., Akten der XVI. Internationalen
+            Deutschlehrertagung (IDT) (pp. 98-111). Erich Schmidt.</p><p>Tschirner, Erwin; Hacking, Jane F.; Rubio, Fernando (2018): The relationship between
+            reading proficiency and vocabulary size: An empirical investigation. <span lang="en-US" class="phrase">The American Association of University Supervisors, Coordinators
+                and Directors of Foreign Language Programs (AAUSC), 58&#8211;77.</span></p><p lang="en-US">Tschirner, Erwin; M&ouml;hring, Jupp (2019): A Frequency Dictionary of
+            German. Core vocabulary for learners. 2. Auflage. London/New York: Routledge.</p><p><span lang="en-US" class="phrase">Westpfahl, Swantje; Schmidt, Thomas; Jonietz, Jasmin;
+                Borlinghaus, Anton (2017): </span><span lang="en-US" class="emphasis"><em>STTS 2.0.
+                </em></span><span class="emphasis"><em>Guidelines f&uuml;r die Annotation von POS-Tags f&uuml;r Transkripte
+                gesprochener Sprache in Anlehnung an das Stuttgart T&uuml;bingen Tagset
+            (STTS)</em></span>. Arbeitspapier. Mannheim: Institut f&uuml;r Deutsche Sprache. Unter:
+            https://ids-pub.bsz-bw.de/files/6063/Westpfahl_Schmidt_Jonietz_Borlinghaus_STTS_2_0_2017.pdf</p><p>Wiesinger, Peter (1983): Die Einteilung der deutschen Dialekte. In: Besch, Werner;
+            Knoop, Ulrich; Putschke, Wolfgang; Wiegand, Herbert Ernst (Hrsg.): Dialektologie. Ein
+            Handbuch zur deutschen und allgemeinen Dialektforschung. Berlin/New York: De Gruyter,
+            807&#8211;900.</p><p lang="en-US"><span lang="de-DE" class="phrase">Van Zeeland, Hilde; Schmitt, Norbert.
+            </span>(2012): Lexical Coverage in L1 and L2 Listening Comprehension: The Same or
+            Different from Reading Comprehension?. Applied Linguistics. 34. 457&#8211;479.
+            10.1093/applin/ams074.</p></div><div class="footnotes"><br><hr style="width:100; text-align:left;margin-left: 0"><div id="ftn.__EN1__" class="footnote"><p><a href="#__EN1__" class="para"><sup class="para">[1] </sup></a>Der Begriff Sprechereignis wird dabei synonym zum Begriff Gespr&auml;ch verwendet
+                    und bezeichnet in den vorhandenen Korpora erfasste Situationen, in denen
+                    Menschen miteinander sprechen. Diese Situationen liegen dabei in transkribierter
+                    Form und zus&auml;tzlich als Audio- oder Videodateien vor.</p></div><div id="ftn.__EN2__" class="footnote"><p><a href="#__EN2__" class="para"><sup class="para">[2] </sup></a>Zu beachten ist an dieser Stelle, dass &uuml;ber ZuMal auch nicht-deutsche
+                            Gespr&auml;che aus GWSS angesteuert werden k&ouml;nnen. F&uuml;r diese liegt der
+                            prozentuale Anteil an Wortarten jeweils bei null, da sich das verwendete
+                            POS-Tagset auf das Deutsche bezieht.</p></div></div></div></body></html>

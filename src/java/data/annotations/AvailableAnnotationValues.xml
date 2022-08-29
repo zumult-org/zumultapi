@@ -149,12 +149,12 @@
             <value freq="864">assimilated ol-in</value>
         </key>
         <key id="vocal" type="token"><name lang="en">Breathing</name><name lang="de">Ein-/Ausatmen</name>
-            <value freq="100955">short breathe in</value>
-            <value freq="27374">medium breathe in</value>
-            <value freq="15012">short breathe out</value>
-            <value freq="5496">long breathe in</value>
-            <value freq="3704">medium breathe out</value>
-            <value freq="1044">long breathe out</value>
+            <value freq="108416">short breathe in</value>
+            <value freq="29661">medium breathe in</value>
+            <value freq="16892">short breathe out</value>
+            <value freq="3998">medium breathe out</value>
+            <value freq="1076">long breathe out</value>
+            <value freq="5747">long breathe in</value>
         </key>
         <key id="incident" type="token"><name lang="en">Non-verbal event</name><name lang="de">Nonverbale Kommunikationselemente</name></key>
     </corpus>
@@ -240,13 +240,17 @@
         <key id="pos" type="token"><name lang="en">Part-of-Speech</name><name lang="de">Wortart</name></key>
         <key id="phon" type="token"><name lang="en">Phonetic Form</name><name lang="de">Phonetische Form</name></key>
         <key id="word.type" type="token"><name lang="en">Additional Token Annotations</name><name lang="de">Zusätzliche Tokenannotationen</name>
-            <value freq="18837">uncertain</value>
-            <value freq="15860">assimilated</value>
-            <value freq="15786">ol-in</value>
-            <value freq="1248">uncertain ol-in</value>
-            <value freq="396">assimilated ol-in</value>
-            <value freq="313">assimilated uncertain</value>
+            <value freq="77352">diffNorm</value>
+            <value freq="102">assimilated uncertain diffNorm</value>
             <value freq="37">assimilated uncertain ol-in</value>
+            <value freq="15786">ol-in</value>
+            <value freq="6195">assimilated</value>
+            <value freq="9665">assimilated diffNorm</value>
+            <value freq="1248">uncertain ol-in</value>
+            <value freq="211">assimilated uncertain</value>
+            <value freq="1821">uncertain diffNorm</value>
+            <value freq="396">assimilated ol-in</value>
+            <value freq="17016">uncertain</value>
         </key>
         <key id="vocal" type="token"><name lang="en">Breathing</name><name lang="de">Ein-/Ausatmen</name>
             <value freq="36396">short breathe in</value>

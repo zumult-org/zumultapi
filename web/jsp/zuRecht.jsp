@@ -971,7 +971,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 // load html for displaying kwic results
                 $("#kwic-search-result-area").load(zuRechtKWICResultView, function() {
              
-                    $("#kwic-search-result-area").find(".wait-query-tab").html(searchLoadingIndicatorText);
+                    $("#kwic-search-result-area").find(".wait-query-tab").html(searchLoadingIndicatorText).append(searchLoadingIndicatorAbortButton);
  
                     // add html for audio
                    /* $(".kwic-card").append("<div class='card-footer'>\n\
@@ -1030,7 +1030,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 // load html for displaying kwic results for repetition search
                 $("#repetition-search-result-area").load(zuRechtKWICResultView, function() {
              
-                    $("#repetition-search-result-area").find(".wait-query-tab").html(searchLoadingIndicatorText);
+                    $("#repetition-search-result-area").find(".wait-query-tab").html(searchLoadingIndicatorText).append(searchLoadingIndicatorAbortButton);
 
                     $("#repetition-search-form").submit(function(){
 
