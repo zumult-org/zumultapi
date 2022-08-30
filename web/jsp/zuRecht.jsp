@@ -296,7 +296,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             </div>        
 
                             <div class="modal" id="modal-searchTabOptions" role="dialog">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-scrollable">
                                   <div class="modal-content">
                                     <div class="modal-header">
                                         <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
@@ -306,8 +306,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                         <%@include file="../WEB-INF/jspf/zuRechtPageLengthOptions.jspf" %>
                                         <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
                                         <div class="form-group">
-                                            <label for="customSimpleQuerySyntaxLevel"><%=myResources.getString("SelectLevelForSimpleSearches")%> <small><i><%=myResources.getString("SelectLevelForSimpleSearchesExample")%></i></small></label>
-                                            <select class="form-control" id="customSimpleQuerySyntaxLevel">
+                                            <span><b><%=myResources.getString("LevelForSimpleSearches")%></b></span>
+                                            <div style="line-height:80%"><small><i><%=myResources.getString("SelectLevelForSimpleSearches")%> <%=myResources.getString("SelectLevelForSimpleSearchesExample")%></i></small></div>
+                                            <select class="form-control form-control-sm mt-3" id="customSimpleQuerySyntaxLevel">
                                                 <option value="word"><%=myResources.getString("TranscribedForm")%></option>
                                                 <option value="norm" selected><%=myResources.getString("NormalizedForm")%></option>
                                                 <option value="lemma"><%=myResources.getString("Lemma")%></option>
@@ -573,14 +574,14 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                                 <div class="row-div" style="display: flex;">
                                     
-                                    <div class="mr-2" style="width: 350px;display:none" id="lemmaFileForRepetitioinSearchGroup">                      
+                                    <div class="mr-2 customFileGroup" style="width: 350px;display:none" >                      
                                         <div class="input-group input-group-sm mb-1">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Browse</span>
                                             </div>
-                                            <input type="text" class="form-control" id="lemmaFileForRepetitioinSearch" onClick="emulateClickOnInputFile()" value="<%=myResources.getString("ChooseYourFile")%>" />
+                                            <input type="text" class="form-control customFileInput" onClick="emulateClickOnInputFile(this)" value="<%=myResources.getString("ChooseYourFile")%>" />
                                         </div>
-                                        <input type="file" id="fileForRepetitioinSearch" hidden="true" onchange="on()"   />
+                                        <input type="file" class="customFile" hidden="true" onchange="on(this)"   />
                                     </div>  
                                       
                                     <div class="input-group mb-1">                                   
@@ -1037,14 +1038,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         if(ajaxRepetitionSearchRequest){
                             ajaxRepetitionSearchRequest.abort();
                             ajaxRepetitionSearchRequest = null;
-                        }
+                        }                      
                         
-                        
-                        
-                        if($('#lemmaFileForRepetitioinSearchGroup').css('display')==="none"){
+                        var customFileGroup = $('#repetition-search-form').find('.customFileGroup');
+                        if($(customFileGroup).css('display')==="none"){
                             searchRepetitions(null);
                         }else{
-                            var x = $('#fileForRepetitioinSearch').val();
+                            var x = $(customFileGroup).find('.customFile').val();
                             if(x===""){
                                 alert("Please upload your lemma list!");
                             }else{
@@ -1057,7 +1057,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     if (window.File && window.FileReader && window.FileList && window.Blob) {
 
                                         // read file
-                                        const file = $('#fileForRepetitioinSearch')[0].files[0];
+                                        const file = $(customFileGroup).find('.customFile')[0].files[0];
 
                                         if(file){
                                             var reader = new FileReader();
@@ -2182,9 +2182,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }
             }
             
-            function enableFileUpload(obj){
+            function enableFileUploadForRepetitionSearch(obj){
                 if($(obj).val()==='8'){
-                    $('#lemmaFileForRepetitioinSearchGroup').css("display", "block");               
+                    $('#repetition-search-form').find('.customFileGroup').css("display", "block");               
                 }else{
                     // check the value of the other form
                     var parent = $(obj).parents('.repetitionPropertiesForm');
@@ -2202,7 +2202,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         anotherValue = $(parent).prev('.repetitionPropertiesForm').find('.repetitionSearchModeSelect').val();
                     }
                     if(anotherValue!=='8'){
-                        $('#lemmaFileForRepetitioinSearchGroup').css("display", "none");
+                        $('#repetition-search-form').find('.customFileGroup').css("display", "none");
                     }
                 }
             }
@@ -2345,13 +2345,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*             methods for synonyms               */
             /**************************************************/
             
-            function emulateClickOnInputFile(){
-                $('#fileForRepetitioinSearch').click();
+            function emulateClickOnInputFile(obj){
+                $(obj).parents('.customFileGroup').find('.customFile').click();
             }
             
-            function on(){
-                var fileName = $('#fileForRepetitioinSearch').val();
-                $('#lemmaFileForRepetitioinSearch').val(fileName);
+            function on(obj){
+                var fileName = $(obj).val();
+                $(obj).parents('.customFileGroup').find('.customFileInput').val(fileName);
             }
             
             

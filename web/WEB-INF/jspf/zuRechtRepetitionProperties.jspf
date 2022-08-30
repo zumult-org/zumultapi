@@ -14,16 +14,16 @@
                         <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SearchModeRepetitionInfo")%>" ></i>
                     </span>
                 </div>
-                <select class="form-control repetitionSearchModeSelect" onchange='enableFileUpload(this)'>
+                <select class="form-control repetitionSearchModeSelect" onchange='enableFileUploadForRepetitionSearch(this)'>
                     <option value=1><%=myResources.getString("SameTranscription")%></option>
                     <option value=2 selected="selected"><%=myResources.getString("SameNorm")%></option>
                     <option value=3 ><%=myResources.getString("SameLemma")%></option>
                     <option value=4 ><%=myResources.getString("SameTranscriptionDiffNorm")%></option>
                     <option value=5 ><%=myResources.getString("SameNormDiffTranscription")%></option>
                     <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>
-                 <!--   <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
+                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
                     <option value=8 ><%=myResources.getString("ExtendedSearchWithOwnLemmaList")%></option>
-                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>-->
+                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>
                 </select>                          
             </div>
         </div>
