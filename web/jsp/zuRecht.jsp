@@ -231,6 +231,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     <input type="text" id="queryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("SearchInputFieldPlaceholder")%> ">
                                     <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>                                    
                                     <input type="hidden" name="simpleQuerySyntaxLevel" id="simpleQuerySyntaxLevel" value="norm"/>
+                                    <input type="hidden" name="customWordLists" class="customWordLists" value=""/>
 
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
@@ -249,6 +250,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                 <span class='form-check float-left' style="margin-left: 10px;">
                                     <input type="checkbox" class="form-check-input" checked name="punctCheck" id="punctCheck">
                                     <label class="form-check-label" for="punctCheck"><%=myResources.getString("IgnorePunctuation")%></label>
+                                    <button type="button" id="open-my-vocabulary-lists-btn" class="btn btn-light btn-sm ml-2" data-toggle="modal" 
+                                            data-target="#modal-myVocabularyLists"><%=myResources.getString("MyWordLists")%></button>
                                 </span>
                                 <p class="collapsible" id="examples-collapsible" onclick="openContent(this)"><%=myResources.getString("Examples")%></p>
                                 <div class="content" id="sampleQueries-content">
@@ -263,7 +266,25 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                   <div class="modal-content"></div>
                                 </div>
                             </div>
-
+                            
+                            <div class="modal" id="modal-myVocabularyLists" role="dialog">
+                                <div class="modal-dialog modal-lg"> 
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title"><%=myResources.getString("MyWordLists")%></h2>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <%@include file="../WEB-INF/jspf/zuRechtCustomVariables.jspf" %>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
+                                            <button type="button" class="btn btn-success btnOK">OK</button>
+                                        </div>
+                                    </div>          
+                                </div>
+                            </div>
+                            
                             <div class="modal" id="modal-kwicDownloadOptions" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -305,19 +326,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     <div class="modal-body">    
                                         <%@include file="../WEB-INF/jspf/zuRechtPageLengthOptions.jspf" %>
                                         <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
-                                        <div class="form-group">
-                                            <span><b><%=myResources.getString("LevelForSimpleSearches")%></b></span>
-                                            <div style="line-height:80%"><small><i><%=myResources.getString("SelectLevelForSimpleSearches")%> <%=myResources.getString("SelectLevelForSimpleSearchesExample")%></i></small></div>
-                                            <select class="form-control form-control-sm mt-3" id="customSimpleQuerySyntaxLevel">
-                                                <option value="word"><%=myResources.getString("TranscribedForm")%></option>
-                                                <option value="norm" selected><%=myResources.getString("NormalizedForm")%></option>
-                                                <option value="lemma"><%=myResources.getString("Lemma")%></option>
-                                            </select>
-                                        </div>
+                                        <%@include file="../WEB-INF/jspf/zuRechtSimpleSearchOptions.jspf" %>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                        <button type="button" id="modal-searchTabOptions-btnOK" class="btn btn-success">OK</button>
+                                        <button type="button" class="btn btn-success btnOK">OK</button>
                                     </div>
                                   </div>
                                 </div>
@@ -464,7 +477,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                                <button type="button" id="modal-vocabularyTabOptions-btnOK" class="btn btn-success">OK</button>
+                                                <button type="button" class="btn btn-success btnOK">OK</button>
                                             </div>
                                           </div>
                                         </div>
@@ -573,16 +586,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                 <p><%=myResources.getString("SpecifyTheElementYouAreLookingFor")%></p>
 
                                 <div class="row-div" style="display: flex;">
-                                    
-                                    <div class="mr-2 customFileGroup" style="width: 350px;display:none" >                      
-                                        <div class="input-group input-group-sm mb-1">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Browse</span>
-                                            </div>
-                                            <input type="text" class="form-control customFileInput" onClick="emulateClickOnInputFile(this)" value="<%=myResources.getString("ChooseYourFile")%>" />
-                                        </div>
-                                        <input type="file" class="customFile" hidden="true" onchange="on(this)"   />
-                                    </div>  
+
+                                    <%@include file="../WEB-INF/jspf/zuRechtFileUpload.jspf" %> 
                                       
                                     <div class="input-group mb-1">                                   
                                         <input type="text" id="repetitionQueryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("ForExample")%> [pos=&quot;NN&quot;]">
@@ -620,7 +625,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                        <button type="button" id="modal-repetitionsTabOptions-btnOK" class="btn btn-success">OK</button>
+                                        <button type="button" class="btn btn-success btnOK">OK</button>
                                     </div>
                                   </div>
                                 </div>
@@ -670,6 +675,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
             var posTagSetXML = new DOMParser().parseFromString('<%=annotationTagSetXML%>', "text/xml");
             var arrayWithPosToBeIgnored = ['AB','XY','NGIRR', 'ITJ', 'NGHES', 'ART'];
+            let customVarMap = new Map();
     
             $(document).ready(function(){
                 //alert("Page loaded");
@@ -723,23 +729,42 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }
                     %>
  
-                
-                $("#modal-repetitionsTabOptions-btnOK").on('click',function(){ 
+                $("#modal-repetitionsTabOptions").find('.btnOK').on('click',function(){
                     configurePageLength('#modal-repetitionsTabOptions', '#repetition-search-form');
                     configureContext('#modal-repetitionsTabOptions', '#repetition-search-form');
                     
                     $('#modal-repetitionsTabOptions').modal('hide');
                 });
 
+                $("#modal-myVocabularyLists").find('.btnOK').on('click',function(){
+                    var modalWindow = $(this).closest('.modal');
+                    
+                    // check if correct input
+                    var testVar = checkCustomVar(modalWindow);
+                    if(testVar[0]){
+                        if(testVar[1]){
+                            // read and save custom variables
+                            $.when(readCustomVar(modalWindow)).done(function(){
+                                $(modalWindow).modal('hide');
+                            });
+                        }else{
+                            // no custom wordlists
+                            $('#kwic-search-form').find('.customWordLists').val('');
+                            $(modalWindow).modal('hide');
+                        }
+                    }
+                });
                 
-                $("#modal-searchTabOptions-btnOK").on('click',function(){
-                    configurePageLength('#modal-searchTabOptions', '#kwic-search-form');
-                    configureContext('#modal-searchTabOptions', '#kwic-search-form');
+                $("#modal-searchTabOptions").find('.btnOK').on('click',function(){
+                    var modalWindow = $(this).closest('.modal');
+                    
+                    configurePageLength(modalWindow, '#kwic-search-form');
+                    configureContext(modalWindow, '#kwic-search-form');
                     
                     var selectedLevel = $('#customSimpleQuerySyntaxLevel option:selected').val();
                     $("#simpleQuerySyntaxLevel").val(selectedLevel);
-
-                    $('#modal-searchTabOptions').modal('hide');
+                    
+                    $(modalWindow).modal('hide');
                 });
                 
                 $("#modal-audioPlayNotShowAnymore-btn").on('click', function(){
@@ -748,7 +773,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
                 
                 
-                $("#modal-vocabularyTabOptions-btnOK").on('click',function(){
+                $("#modal-vocabularyTabOptions").find('.btnOK').on('click',function(){
                     var selectedOption = $('#customNumberOfDocs option:selected').text();
                     $("#numberOfDocs").val(selectedOption);
                     
@@ -987,35 +1012,39 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             ajaxSearchRequest.abort();
                             ajaxSearchRequest = null;
                         }
+           
+                            // get input parameter
+                            var q = $('#queryInputField').val().replace(/\“/g, "\"").replace(/\„/g, "\"");                    
+                            var pageLength = $(this).find('.pageLength').val();
+                            var pageIndex = $(this).find('.pageIndex').val();
+                            var searchType = getSearchType();
+                            var leftContext = $(this).find('.leftContext').val();
+                            var rightContext = $(this).find('.rightContext').val();                
+                            var context = leftContext+ "-t," + rightContext + "-t";
+                            
+                            $.when(writeCustomVarForQuery(this, q)).done(function(){
 
-                        // get input parameter
-                        var q = $('#queryInputField').val().replace(/\“/g, "\"").replace(/\„/g, "\"");                    
-                        var pageLength = $('#kwic-search-form').find('.pageLength').val();
-                        var pageIndex = $('#kwic-search-form').find('.pageIndex').val();
-                        var searchType = getSearchType();
-                        var leftContext = $('#kwic-search-form').find('.leftContext').val();
-                        var rightContext = $('#kwic-search-form').find('.rightContext').val();                
-                        var context = leftContext+ "-t," + rightContext + "-t";
+                                var meta = getCustomWordLists();                            
+                                var corpusQueryStr = getCorpusQueryStr();
 
-                        var corpusQueryStr = getCorpusQueryStr();
+                                if (corpusQueryStr!==''){
 
-                        if (corpusQueryStr!==''){
-
-                            // delete search results of the previous query                
-                            $("#kwic-search-result-area").find('.paging_container').empty();     // delete paging
-                            $("#kwic-search-result-area").find(".query_summary").empty();        // delete the number of total hits
-                            $("#kwic-search-result-area").find('.KWICSearch-result').empty();    // delete the summary of the performed search 
-                            emptyPage('#kwic-search-result-area');                        // delete search results
+                                    // delete search results of the previous query                
+                                    $("#kwic-search-result-area").find('.paging_container').empty();     // delete paging
+                                    $("#kwic-search-result-area").find(".query_summary").empty();        // delete the number of total hits
+                                    $("#kwic-search-result-area").find('.KWICSearch-result').empty();    // delete the summary of the performed search 
+                                    emptyPage('#kwic-search-result-area');                        // delete search results
 
 
                             
-                            // start loding indicator for ajax requests
-                            $("#kwic-search-result-area").find(".wait-query-tab").css("display", "block");
-                            
-                            // send request
-                            ajaxCallToGetKWIC('#kwic-search-result-area', kwicURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context);
-                        }
+                                    // start loding indicator for ajax requests
+                                    $("#kwic-search-result-area").find(".wait-query-tab").css("display", "block");
 
+                                    // send request
+                                    ajaxCallToGetKWIC('#kwic-search-result-area', kwicURL, q, corpusQueryStr, meta, pageLength, pageIndex, searchType, context);
+                                }
+                            });
+                        
                         // prevent page reload
                         return false;
 
@@ -1027,6 +1056,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $('#modal-repetitionsTabOptions').find('.customRightContextLength').val(DEFAULT_KWIC_RIGHT_CONTEXT_FOR_REPETITIONS);
                 
                 $('#repetition-search-form').find('.rightContext').val(DEFAULT_KWIC_RIGHT_CONTEXT_FOR_REPETITIONS);
+                
+                $('#repetition-search-form').find('.customFileGroup').css({"display":"none", "width":"350px"}).addClass("mr-2");
                 
                 // load html for displaying kwic results for repetition search
                 $("#repetition-search-result-area").load(zuRechtKWICResultView, function() {
@@ -1094,6 +1125,17 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
                 
             });
+            
+            
+            function getCustomWordLists(){
+                var wordLists = $('#kwic-search-form').find('.customWordLists').val();
+                                                                            
+                var meta = '';
+                    if (wordLists!==''){
+                        meta = customWordListsID + "=" + wordLists;
+                }
+                return meta;                    
+            }
             
             function searchRepetitions(synonyms){
             
@@ -1190,12 +1232,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
            }
 
-            function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context){                        
+            function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  meta, pageLength, pageIndex, searchType, context){                        
                          
                 ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
-                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context },
+                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, meta: meta },
                     dataType: "text",
 
                     success: function(xml, status) { 
@@ -1205,7 +1247,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     },
                     error: function(xhr, status, error){
                         if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
-                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr, pageLength, pageIndex, searchType, context);                          
+                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr,  meta, pageLength, pageIndex, searchType, context);                          
                         }else {
                             $(selector).find(".wait-query-tab").css("display", "none");
                             if (status === "abort"){
@@ -1267,12 +1309,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
             
-            function ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload){
+            function ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, meta){
                 
                 ajaxDownLoadRequest = $.ajax({
                     type: "POST",
                     url: kwicExportURL,
-                    data: { q: decodeHTMLQuery(queryStr), cq :corpusQueryStr, count : to, offset : from, mode : searchType, context : context, format: format, addMeta: customMetadataForDownload},
+                    data: { q: decodeHTMLQuery(queryStr), cq :corpusQueryStr, count : to, offset : from, mode : searchType, context : context, format: format, addMeta: customMetadataForDownload, meta: meta},
                     dataType: "xml",
                     success: function(xml, status) { 
                         //alert(xml);
@@ -1301,11 +1343,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
               
-            function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context){
+            function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, metadataQueryStr){
                  ajaxSearchRequest= $.ajax({
                         type: "POST",
                         url: url,
-                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context},                      
+                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, meta: metadataQueryStr},                      
                         dataType: "text",
 
                         success: function(xml, status) {
@@ -1358,6 +1400,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 var itemsPerPage = $xmlObject.find('itemsPerPage').text();
                 var repetitions = $xmlObject.find('repetitions').text();
                 var synonyms = $xmlObject.find('synonyms').text();
+                var metadataQueryStr = $xmlObject.find('metadataQuery').text();
 
                 //display summary + button for opening metadata view (GET)
 
@@ -1370,13 +1413,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     query = shortQuery;
                 }                              
                         
-                addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery);
+                addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, metadataQueryStr);
                         
                 if (parseInt(totalHits) > 0){
                     $(selector).find('.query_summary').append("<span id='search-results'><%=myResources.getString("Total")%>: </span>" + "<span id='total-hits'>" + totalHits + "</span>");
                             
                     // add pagination
-                    addPagination(selector, url, totalHits, itemsPerPage, decodeHTMLQuery(queryStr), corpusQueryStr, searchType, context, repetitions, synonyms);
+                    addPagination(selector, url, totalHits, itemsPerPage, decodeHTMLQuery(queryStr), corpusQueryStr, searchType, context, repetitions, synonyms, metadataQueryStr);
 
                     // add results
                     displayKWIC(selector, xml);
@@ -1405,7 +1448,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 addEventListenerToOscillogramButtons();
             }
                                   
-            function addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery){
+            function addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, meta){
            
                 $(selector).find('.KWICSearch-result').empty();
                 
@@ -1423,6 +1466,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
+                        <input type='hidden' name='meta' value='"+ meta +"' />\n\
                         <input type='hidden' name='metadataKeyID' value='"+ tokenSizeKeyID +"' />\n\
                         <a class='btn btn-outline-secondary btn-sm py-0'  href='#' \n\
                         onclick='openMetadata(this)'>"+'<%=myResources.getString("GroupHits")%>' +"</a>\n\
@@ -1436,6 +1480,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
+                        <input type='hidden' name='meta' value='"+ meta +"' />\n\
                         <input type='hidden' name='metadataKeyID' value='<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>' />\n\
                         <a class='btn btn-outline-secondary btn-sm py-0'  href='#' \n\
                         onclick='openMetadata(this)'><%=myResources.getString("OpenMetadataView")%></a>\n\
@@ -1506,7 +1551,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 $("#modal-kwicDownloadOptions-spinner").css("display", "block");
 
                                                 // send request
-                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload);
+                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, meta);
                                                 
                                             }else{
                                                 alert("A minimum of 1 item can be downloaded!")
@@ -1525,15 +1570,15 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }
                 
                 $("#showMoreQuery").on('click', function(){
-                    addResultsHead(selector, longQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery);
+                    addResultsHead(selector, longQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, meta);
                 });
                                     
                 $("#showLessQuery").on('click', function(){
-                    addResultsHead(selector, shortQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery);
+                    addResultsHead(selector, shortQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, meta);
                 });
             }
            
-            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms){
+            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms, metadataQueryStr){
                 var paging = $("<ul></ul>").addClass("pagination-sm justify-content-center kwic-pagination");
                 $(selector).find('.paging_container').append(paging);
 
@@ -1563,7 +1608,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         //if(selector==="#repetition-search-result-area"){
 
                         if(selector==="#kwic-search-result-area"){
-                            ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context);                  
+                            ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, metadataQueryStr);                  
                         }else{
                             ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms);
                         }
@@ -1843,12 +1888,117 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     
                     updateSampleQueries();
             }
-                     
+               
+
+            function checkCustomVar(selectorModal){
+                var check = true;
+                var defWordLists = false;
+                let array = new Array();
+                $(selectorModal).find('.customVariableGroup').each(function(){
+                    var customVariable = $(this).find('.customVariable').val();
+                    var customFile = $(this).find('.customFile').val();
+                        
+                    if (customVariable!=='' & customFile!==''){
+                  
+                        if (!customVariable.match(/^\\$[A-Za-z0-9]+$/g)) {
+                            check = false;
+                            alert("Der Variablenname soll mit '$' beginnen" +
+                                   " und darf keine Leer- und Sonderzeichen enthalten, "+
+                                   "z.B. '$1', '$var1' oder '$words'.");
+                            return false;
+                        }else{
+                            if(array.includes(customVariable)){
+                                check = false;
+                                alert("Jede Variable darf nur einmal vorkommen.");
+                                return false;
+                            }else{
+                                array.push(customVariable);
+                                defWordLists = true;   
+                            }
+                        }
+                        
+                    }else{
+                        if (customVariable==='' & customFile!==''){
+                            check = false;
+                            alert("You habe loaded wordlists. Please define variables for them!");
+                            return false;
+                        }else if(customVariable!=='' & customFile===''){
+                            check = false;
+                            alert("You have defined some variables. Please load wordlists for them!");  
+                            return false;
+                        }
+                    }
+                
+                });
+                return [check, defWordLists];
+            }
+            
+        
+            function readCustomVar(selectorModal){
+                
+                // Check for File API support.
+                if (window.File && window.FileReader && window.FileList && window.Blob) {
+                    
+                    customVarMap.clear();
+                    $(selectorModal).find('.customVariableGroup').each(function(){
+                        var customVariable = $(this).find('.customVariable').val();
+                        if (customVariable!==''){ 
+                            const file = $(this).find('.customFile')[0].files[0];
+                            if(file){
+                                customVarMap.set(customVariable, file);
+                            }else{
+                                alert("Can't read file " + file.name);
+                            }
+                        }
+                    });
+                
+                } else {
+                    alert('The File APIs are not fully supported in this browser.');
+                }
+            }
+            
+            async function writeCustomVarForQuery(selectorForm, query){
+                var result ="";
+                    for (let [key, value] of customVarMap) {           
+                        if (query.includes(key)){
+                            let text = await readWordListAsCommaSeparated(value);
+                            result = result + key.substring(1) + ":" + text + ";";
+                        }
+                    }
+                    result = result.substring(0, result.length - 1);
+                    $(selectorForm).find('.customWordLists').val(result);
+            }
+            
+            function addCommas(text){
+                var lines = text.split(/\r?\n/);
+                var wordList = ''; 
+                var i;
+                for (i = 0; i < lines.length; i++) {
+                    wordList += lines[i].trim();
+                    if(i!==lines.length-1){
+                        wordList +=  ",";
+                    }
+                }
+                return wordList;
+            }
+                
+                    
+        async function readWordListAsCommaSeparated(file) {
+            let text = await new Promise((resolve) => {
+                let reader = new FileReader();
+                reader.onload = (evt) => resolve(addCommas(evt.target.result));
+                reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name);
+                reader.readAsText(file, "UTF-8");
+            });
+
+            return text;
+        }
+
             function configurePageLength(selectorModal, selectorForm){
                 var selectedOption = $(selectorModal).find('.customPageLength option:selected').text();
                 $(selectorForm).find('.pageLength').val(selectedOption);       
             }
-
+            
             function configureContext(selectorModal, selectorForm){
                 var defaultContextLength = 3;
                 var regex = /^(0?\d|1\d|2[0-5])$/;
@@ -2342,7 +2492,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
             
             /**************************************************/
-            /*             methods for synonyms               */
+            /*             methods for file upload               */
             /**************************************************/
             
             function emulateClickOnInputFile(obj){
@@ -2354,11 +2504,15 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).parents('.customFileGroup').find('.customFileInput').val(fileName);
             }
             
+            function deleteFile(obj){
+                $(obj).prev().val('');
+                $(obj).parents('.customFileGroup').find('.customFile').val('');
+                
+            }
+            
+
             
             
-            
-            
-      
         </script>
     </body>
 </html>

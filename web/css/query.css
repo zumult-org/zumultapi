@@ -11,6 +11,7 @@ and open the template in the editor.
 
 blue: #337AB7, #89B4D9, #d9edf7
 grey: #f3f3f3
+green: #5cb85c 
 
 */
 
@@ -44,6 +45,10 @@ button:disabled {cursor: not-allowed; pointer-events: all !important;}
 #queryInputField {border-color: #4d7997;}
 #sampleQueries-content .form-control option:checked  {background-color: #89B4D9;}
 #btn-open-query-help{background-color: #d9edf7;}
+
+#open-my-vocabulary-lists-btn {border-color:#C7C8CA;}
+.trashIconBtn:hover {color: #337AB7;}
+.trashIconBtn {cursor: pointer;}
 
 /***************** repetition search form style ****************************************/
 #btn-open-repetitions-help {background-color: #d9edf7;}

@@ -15,6 +15,7 @@
     var query = '<%= query.replace("\\", "\\\\") %>';
     var corpusQueryStr = '<%= corpusQuery %>';          
     var mode = '<%=mode %>';
+    var meta = '<%=meta %>';
     var count = 100;
     var offset = 0;
     var sortType = '<%= SortTypeEnum.ABS_DESC.name() %>';
@@ -106,7 +107,7 @@
         //example for GET: http://localhost:8084/DGDRESTTest/jsp/zuRechtMetadataStatisticView.jsp?q=<af/>&cq=corpusSigle=%22FOLK%22&metadataKeyID=t_dgd_kennung
         type: "POST",
         url: statisticURL,
-        data: { q: query, cq :corpusQueryStr, count : count, offset: offset, metadataKeyID : metadataKeyID, mode: mode, sort: sortType },
+        data: { q: query, cq :corpusQueryStr, count : count, offset: offset, metadataKeyID : metadataKeyID, mode: mode, sort: sortType, meta: meta },
         dataType: "text",
 
         success: function(xmlText, status) {
@@ -156,7 +157,7 @@
 
                         type: "POST",
                         url: statisticURL,
-                        data: { q: query, cq :corpusQueryStr, count : count, offset: newOffset, metadataKeyID : metadataKeyID, mode: mode, sort: sortType },
+                        data: { q: query, cq :corpusQueryStr, count : count, offset: newOffset, metadataKeyID : metadataKeyID, mode: mode, sort: sortType, meta: meta },
                         dataType: "xml",
 
                         success: function(xml, status) {
@@ -407,12 +408,17 @@
         });            
     }
 
-    function searchByCorpusQuery(cell, q, cq, meta, pLength, pIndex, m, c, nOfHits){
+    function searchByCorpusQuery(cell, q, cq, additionalMetadata, pLength, pIndex, m, c, nOfHits){
         //alert("query: "  + q + " meta: " + meta);
+        var metadataStr = additionalMetadata;
+            if(meta!==''){
+                metadataStr = metadataStr + "&" + meta;
+            }
+            
         $.ajax({
             type: "POST",
             url: kwicURL,
-            data: { q: q, cq : cq, meta: meta, count : pLength, offset : pIndex, mode : m, context : c},
+            data: { q: q, cq : cq, meta: metadataStr, count : pLength, offset : pIndex, mode : m, context : c},
             dataType: "text",
 
             success: function(xml, status) {
@@ -433,14 +439,20 @@
         });
     }
 
-    function startAjaxForSearchByMetadata(pageLength, pageIndex, context, numberOfHits, meta, newQuery, cell){
+    function startAjaxForSearchByMetadata(pageLength, pageIndex, context, numberOfHits, additionalMetadata, newQuery, cell){
         cell.load("zuRechtKWICResultView.html", function() {
             cell.find(".wait-query-tab").html(searchLoadingIndicatorText);
             cell.find(".wait-query-tab").css("display", "block");
+            
+            var metadataStr = additionalMetadata;
+            if(meta!==''){
+                metadataStr = metadataStr + "&" + meta;
+            }
+            
             $.ajax({
                 type: "POST",
                 url: kwicURL,
-                data: { q: newQuery, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : mode, context : context },
+                data: { q: newQuery, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : mode, context : context, meta: metadataStr },
                 dataType: "text",
 
                 success: function(xml, status) {
@@ -450,26 +462,31 @@
                             displayKWIC(cell, xml);  
                         }else{
                             cell.find(".wait-query-tab").css("display", "block"); 
-                            searchByCorpusQuery(cell, query, corpusQueryStr, meta, pageLength, pageIndex, mode, context, numberOfHits);
+                            searchByCorpusQuery(cell, query, corpusQueryStr, additionalMetadata, pageLength, pageIndex, mode, context, numberOfHits);
                         }
                 },
                 error: function(xhr, status, error){
-                    searchByCorpusQuery(cell, query, corpusQueryStr, meta, pageLength, pageIndex, mode, context, numberOfHits);           
+                    searchByCorpusQuery(cell, query, corpusQueryStr, additionalMetadata, pageLength, pageIndex, mode, context, numberOfHits);           
                 }
             });
         });
     }
 
-    function startAjaxForSearchByTokenAnnotations(pageLength, pageIndex, context, numberOfHits, meta, newQuery, cell, metadataKeyID, newMetadataKeyValue){
+    function startAjaxForSearchByTokenAnnotations(pageLength, pageIndex, context, numberOfHits, additionalMetadata, newQuery, cell, metadataKeyID, newMetadataKeyValue){
 
         cell.load("zuRechtKWICResultView.html", function() {
             cell.find(".wait-query-tab").html(searchLoadingIndicatorText);
             cell.find(".wait-query-tab").css("display", "block");
             //alert("query: "  + newQuery + " meta: " + meta);
+   
+            var metadataStr = additionalMetadata;
+            if(meta!==''){
+                metadataStr = metadataStr + "&" + meta;
+            }
             $.ajax({
                 type: "POST",
                 url: kwicURL,
-                data: { q: newQuery, cq : corpusQueryStr, meta: meta, count : pageLength, offset : pageIndex, mode : mode, context : context },
+                data: { q: newQuery, cq : corpusQueryStr, meta: metadataStr, count : pageLength, offset : pageIndex, mode : mode, context : context },
                 dataType: "text",
 
                 success: function(xml, status) {

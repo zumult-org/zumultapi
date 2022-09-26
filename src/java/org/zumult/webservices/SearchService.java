@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
@@ -57,13 +58,17 @@ import org.zumult.query.SearchResultPlus;
  */
 @Path("/SearchService")
 
-/* Sample URL Requests: http://localhost:8084/DGDRESTTest/api/SearchService */
+/* Sample URL Requests: http://zumult.ids-mannheim.de/ProtoZumult/api/SearchService */
 
 public class SearchService {
     BackendInterface backendInterface;
     Response buildResponse = null;
     final String zumultApiBaseURL = Configuration.getRestAPIBaseURL();
-
+    //private static final String IP_NOT_VALID_MASSAGE = "IP address is not valid!";
+    
+    /*@Context
+    private HttpServletRequest httpServletRequest;
+    */
     @Context
     private UriInfo context;
     
@@ -234,7 +239,7 @@ public class SearchService {
                         context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat);
         
         return buildResponse;
-           
+   
     }
     
     @POST
@@ -252,7 +257,7 @@ public class SearchService {
                              @FormParam("offset") Integer pageStartIndex, // starts with 0
                              @FormParam("cutoff") Boolean cutoff,
                              @FormParam("mode") String searchMode) throws Exception {
-
+        
         buildResponse = getKWIC(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
                         context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat);
         
@@ -352,6 +357,13 @@ public class SearchService {
                                         @FormParam("sort") String sortType,
                                         @FormParam("mode") String searchMode) throws Exception {       
         
+        
+    /*    String client_ip = httpServletRequest.getRemoteAddr();
+        if (!(ClientIPValidator.validateClientIP(client_ip))){
+            buildResponse = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
+            return buildResponse;
+        }
+      */  
         try {
             SearchStatistics result = backendInterface.getSearchStatistics(queryString, queryLanguage, 
                     queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType);
@@ -414,6 +426,13 @@ public class SearchService {
                              @FormParam("mode") String searchIndex,
                              @FormParam("addMeta") String metadata) throws Exception {
         
+        
+    /*    String client_ip = httpServletRequest.getRemoteAddr();
+        if (!(ClientIPValidator.validateClientIP(client_ip))){
+            buildResponse = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
+            return buildResponse;
+        }
+      */  
         IDList metadataIDs = new IDList("metadataIDs");
         if(metadata!=null && !metadata.isEmpty()){      
             for (String metadataKey: Arrays.asList(metadata.split(" "))){
@@ -676,6 +695,13 @@ public class SearchService {
             Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String repetitions, String synonyms){
 
         Response response;
+        
+     /*   String client_ip = httpServletRequest.getRemoteAddr();
+        if (!(ClientIPValidator.validateClientIP(client_ip))){
+            response = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
+            return response;
+        }
+       */ 
         try {
 
             SearchResultPlus searchResultPlus = backendInterface.searchRepetitions(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
@@ -709,6 +735,13 @@ public class SearchService {
             Integer pageIndex, Boolean cutoff, String mode, String responseFormat){
 
         Response response;
+        
+     /*   String client_ip = httpServletRequest.getRemoteAddr();
+        if (!(ClientIPValidator.validateClientIP(client_ip))){
+            response = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
+            return response;
+        }
+      */  
         try {
 
             /*KWIC result = backendInterface.getKWIC(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
@@ -744,7 +777,15 @@ public class SearchService {
             String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, 
             Integer pageLength, Integer pageStartIndex, String mode, String sortType, String responseFormat){
 
-        Response response;        
+        Response response;
+        
+   /*     String client_ip = httpServletRequest.getRemoteAddr();
+        if (!(ClientIPValidator.validateClientIP(client_ip))){
+            response = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
+            return response;
+        }
+    */    
+
         try {
             SearchStatistics result = backendInterface.getSearchStatistics(queryString, queryLanguage, 
                     queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, mode, sortType);
@@ -773,7 +814,14 @@ public class SearchService {
     private Response searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, 
             String searchMode, String transcriptID, String tokenAttribute, String responseFormat){
        
-        Response response;        
+        Response response; 
+        
+    /*     String client_ip = httpServletRequest.getRemoteAddr();
+        if (!(ClientIPValidator.validateClientIP(client_ip))){
+            response = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
+            return response;
+        }
+    */   
         try {
 
             IDList result = backendInterface.searchTokensForTranscript(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 

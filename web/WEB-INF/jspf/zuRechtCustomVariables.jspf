@@ -1,0 +1,19 @@
+<div class="form-group">
+    <div style="line-height:80%"><small><i><%=myResources.getString("CustomWordListsInfo1")%></i></small></div>
+    <div style="line-height:80%" class="mt-2"><small><i><%=myResources.getString("CustomWordListsInfo2")%></i></small></div>
+ 
+    <% for(int i=1; i<5; i++){ %>
+    <div class="row mt-2 customVariableGroup">
+        <div class="col-3">
+            <label><%=myResources.getString("Variable")%> </label>
+            <input type="text" class="form-control-sm form-control customVariable">
+        </div>
+        <div class="col-9">
+            <label><%=myResources.getString("Wordlist")%> <small><i>(<%=myResources.getString("TXTFile")%>)</i></small></label>
+            <%@include file="zuRechtFileUpload.jspf" %> 
+            
+        </div>
+    </div>
+        <% } %>
+
+</div>

@@ -36,7 +36,7 @@ public abstract class AbstractMedia implements Media {
             case VIDEO:
                 //File outputFile = new File(new File(Configuration.getMediaSnippetsPath()), thisID + ".mp4");
                 try {
-                    File outputFile = File.createTempFile(getID() + "_", ".mp4");
+                    File outputFile = File.createTempFile(thisID, ".mp4");
                     // issue #70
                     outputFile.deleteOnExit();
                     MediaUtilities.cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
@@ -48,7 +48,7 @@ public abstract class AbstractMedia implements Media {
             case AUDIO:
                 //File outputFile2 = new File(new File(Configuration.getMediaSnippetsPath()), thisID + ".wav");
                 try {
-                    File outputFile2 = File.createTempFile(getID() + "_", ".wav");
+                    File outputFile2 = File.createTempFile(thisID, ".wav");
                     // issue #70
                     outputFile2.deleteOnExit();
                     MediaUtilities.cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());

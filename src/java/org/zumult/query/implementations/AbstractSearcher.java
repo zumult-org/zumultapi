@@ -156,7 +156,7 @@ public abstract class AbstractSearcher {
             SearchEngineResponseStatistics mtasSearchResult = null;   
 
             mtasSearchResult = se.searchMetadataStatistics(getIndexPaths(index), 
-                    query.getReplacedQueryString(), null, pagination.getPageStartIndex() + 1, 
+                    query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), pagination.getPageStartIndex() + 1, 
                     pagination.getPageStartIndex() + pagination.getItemsPerPage(), sort, metadataKey.getID());
 
             final long timeEnd_search = System.currentTimeMillis();
@@ -277,9 +277,9 @@ public abstract class AbstractSearcher {
         }else{
         
             SearchEngineResponseStatistics mtasSearchResultPre = se.searchMetadataStatistics(getIndexPaths(index), 
-                        query.getReplacedQueryString(), null, 1, Constants.DEFAULT_PAGE_LENGTH, SortTypeEnum.ABS_DESC, tokenAttribute);
+                        query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), 1, Constants.DEFAULT_PAGE_LENGTH, SortTypeEnum.ABS_DESC, tokenAttribute);
             SearchEngineResponseStatistics mtasSearchResult = se.searchMetadataStatistics(getIndexPaths(index), 
-                        query.getReplacedQueryString(), null, 1, mtasSearchResultPre.getNumberOfDistinctValues(), SortTypeEnum.ABS_DESC, tokenAttribute);
+                        query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), 1, mtasSearchResultPre.getNumberOfDistinctValues(), SortTypeEnum.ABS_DESC, tokenAttribute);
 
             final long timeEnd_search = System.currentTimeMillis();
             long millis_search = timeEnd_search - timeStart_search;
