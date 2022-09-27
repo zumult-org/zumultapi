@@ -102,7 +102,7 @@ public class Measure_14 {  // measure "oralPhenomena"
                 
                 // search all <w>-elements 
                 String query = "<word/> within <"+ Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID +"=\""+speechEventID+"\"/>";                
-                SearchResultPlus sr = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null);
+                SearchResultPlus sr = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null, null);
                 int wordTokenTotal = sr.getTotalHits();
                 
                 System.out.println("originalTokens: " + originalTokens + "; wordTokenTotal: " + wordTokenTotal);
@@ -206,7 +206,7 @@ public class Measure_14 {  // measure "oralPhenomena"
     private int search(String pos, String speechEventID, String corpusID) throws SearchServiceException, IOException{
         String query = "[pos=\""+pos+"\"] within <"+ Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID +"=\""+speechEventID+"\"/>";                
         System.out.println(query);
-        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null);
+        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null, null);
         return searchResult.getTotalHits();
     }
     
@@ -254,7 +254,7 @@ public class Measure_14 {  // measure "oralPhenomena"
         String[] pos = str.split("\\|");
         String query = "([pos=\""+pos[0]+"\"][pos=\""+pos[1]+"\" & word.type=\".*assimilated.*\"]) within <"+ Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID +"=\""+speechEventID+"\"/>";                
         System.out.println(query);
-        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null);
+        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null, null);
         return searchResult.getTotalHits();
     }
     
@@ -279,10 +279,10 @@ public class Measure_14 {  // measure "oralPhenomena"
             SearchStatistics searchStatistics2 = null;
             
             searchStatistics1 = backendInterface.getSearchStatistics("[pos=\".+ .+\"]", null, null, "corpusSigle=\""+ corpusID + "\"", null, "pos",
-                    1000, 0, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", "ABS_DESC");
+                    1000, 0, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", "ABS_DESC", null);
             
             searchStatistics2 = backendInterface.getSearchStatistics("<word/>[word.type=\".*assimilated.*\"]", null, null, "corpusSigle=\""+ corpusID + "\"", null, "pos",
-                    1000, 0, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", "ABS_DESC");
+                    1000, 0, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", "ABS_DESC", null);
                         
             
             ArrayList<StatisticEntry> statistics1 = searchStatistics1.getStatistics();

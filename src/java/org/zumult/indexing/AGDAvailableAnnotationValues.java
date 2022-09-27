@@ -177,14 +177,14 @@ public class AGDAvailableAnnotationValues implements Indexer {
           
                 String corpusQuery = "corpusSigle=\""+ corpusID + "\"";
                 String query = "<"+annoLayer+"/>";
-                SearchResult sr = backend.search(query, null, null, corpusQuery, null, "TRANSCRIPT_BASED_INDEX");
+                SearchResult sr = backend.search(query, null, null, corpusQuery, null, "TRANSCRIPT_BASED_INDEX", null);
                 int size = sr.getTotalHits();
                 if(size > 7000000){
                     System.out.println(annoLayer + ": too many values: " + size);
                 }else {
                     System.out.println(annoLayer + ": "+ size);
                     SearchStatistics searchStatistics = backend.getSearchStatistics(query, null, null, corpusQuery, null, annoLayer,
-                                size, 0, "TRANSCRIPT_BASED_INDEX", "ABS_DESC");
+                                size, 0, "TRANSCRIPT_BASED_INDEX", "ABS_DESC", null);
                     ArrayList<StatisticEntry> statistics = searchStatistics.getStatistics();
 
                     statistics.forEach(se -> {

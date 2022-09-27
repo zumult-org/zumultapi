@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -234,9 +236,10 @@ public class SearchService {
                              @QueryParam("count") Integer pageLength,
                              @QueryParam("offset") Integer pageStartIndex, // starts with 0
                              @QueryParam("cutoff") Boolean cutoff,
-                             @QueryParam("mode") String searchMode) throws Exception {
+                             @QueryParam("mode") String searchMode,
+                             @QueryParam("customWordLists") String wordLists) throws Exception {
         buildResponse = getKWIC(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
-                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat);
+                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat, wordLists);
         
         return buildResponse;
    
@@ -256,10 +259,11 @@ public class SearchService {
                              @FormParam("count") Integer pageLength,
                              @FormParam("offset") Integer pageStartIndex, // starts with 0
                              @FormParam("cutoff") Boolean cutoff,
-                             @FormParam("mode") String searchMode) throws Exception {
+                             @FormParam("mode") String searchMode,
+                             @FormParam("customWordLists") String wordLists) throws Exception {
         
         buildResponse = getKWIC(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
-                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat);
+                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat, wordLists);
         
         return buildResponse;
           
@@ -282,9 +286,10 @@ public class SearchService {
                              @QueryParam("count") Integer pageLength,
                              @QueryParam("offset") Integer pageStartIndex, // starts with 0
                              @QueryParam("sort") String sortType,
-                             @QueryParam("mode") String searchMode) throws Exception {
+                             @QueryParam("mode") String searchMode,
+                             @QueryParam("customWordLists") String wordLists) throws Exception {
         
-        buildResponse = getStatistics(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType, responseFormat);
+        buildResponse = getStatistics(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType, responseFormat, wordLists);
         return buildResponse;
   
     }
@@ -304,9 +309,10 @@ public class SearchService {
                                         @FormParam("count") Integer pageLength,
                                         @FormParam("offset") Integer pageStartIndex, // starts with 0
                                         @FormParam("sort") String sortType,
-                                        @FormParam("mode") String searchMode) throws Exception {
+                                        @FormParam("mode") String searchMode,
+                                        @FormParam("customWordLists") String wordLists) throws Exception {
         
-        buildResponse = getStatistics(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType, responseFormat);
+        buildResponse = getStatistics(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType, responseFormat, wordLists);
         return buildResponse;
 
     }
@@ -327,11 +333,12 @@ public class SearchService {
                                         @DefaultValue("xml") @FormParam("format") String responseFormat,
                                         @FormParam("transcriptID") String transcriptID,
                                         @FormParam("tokenAttribute") String tokenAttribute,                              
-                                        @FormParam("mode") String searchMode) throws Exception {
+                                        @FormParam("mode") String searchMode,
+                                        @FormParam("customWordLists") String wordLists) throws Exception {
         
 
         buildResponse = searchTokensForTranscript(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
-            searchMode, transcriptID, tokenAttribute, responseFormat);
+            searchMode, transcriptID, tokenAttribute, responseFormat, wordLists);
         
         return buildResponse;
 
@@ -355,7 +362,8 @@ public class SearchService {
                                         @FormParam("count") Integer pageLength,
                                         @FormParam("offset") Integer pageStartIndex, // starts with 0
                                         @FormParam("sort") String sortType,
-                                        @FormParam("mode") String searchMode) throws Exception {       
+                                        @FormParam("mode") String searchMode, 
+                                        @FormParam("customWordLists") String wordLists) throws Exception {       
         
         
     /*    String client_ip = httpServletRequest.getRemoteAddr();
@@ -363,10 +371,13 @@ public class SearchService {
             buildResponse = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
             return buildResponse;
         }
-      */  
+      */ 
+        
+        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
+        
         try {
             SearchStatistics result = backendInterface.getSearchStatistics(queryString, queryLanguage, 
-                    queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType);
+                    queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, searchMode, sortType, additionalSearchConstraints);
                 
             switch (responseFormat){
                 case "json":
@@ -424,7 +435,8 @@ public class SearchService {
                              @FormParam("offset") Integer pageStartIndex, // starts with 0
                              @FormParam("cutoff") Boolean cutoff,
                              @FormParam("mode") String searchIndex,
-                             @FormParam("addMeta") String metadata) throws Exception {
+                             @FormParam("addMeta") String metadata,
+                             @FormParam("customWordLists") String wordLists) throws Exception {
         
         
     /*    String client_ip = httpServletRequest.getRemoteAddr();
@@ -433,6 +445,9 @@ public class SearchService {
             return buildResponse;
         }
       */  
+    
+        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
+        
         IDList metadataIDs = new IDList("metadataIDs");
         if(metadata!=null && !metadata.isEmpty()){      
             for (String metadataKey: Arrays.asList(metadata.split(" "))){
@@ -442,7 +457,7 @@ public class SearchService {
         
         try {
             SearchResultPlus searchResultPlus = backendInterface.search(queryString, queryLanguage, queryLanguageVersion, 
-                    corpusQuery, metadataQuery, pageLength, pageStartIndex, cutoff, searchIndex, metadataIDs);
+                    corpusQuery, metadataQuery, pageLength, pageStartIndex, cutoff, searchIndex, metadataIDs, additionalSearchConstraints);
             KWIC result = backendInterface.exportKWIC(searchResultPlus, context, fileFormat);
             
             switch (responseFormat){
@@ -677,10 +692,11 @@ public class SearchService {
                              @FormParam("cutoff") Boolean cutoff,
                              @FormParam("mode") String searchMode,
                              @FormParam("repetitions") String repetitions,
-                             @FormParam("synonyms") String synonyms) throws Exception {
+                             @FormParam("synonyms") String synonyms, 
+                             @FormParam("customWordLists") String wordLists) throws Exception {
 
         buildResponse = getRepetitions(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
-                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat, repetitions, synonyms);
+                        context, pageLength, pageStartIndex, cutoff, searchMode, responseFormat, repetitions, synonyms, wordLists);
         
         return buildResponse;
           
@@ -692,9 +708,10 @@ public class SearchService {
     
     private Response getRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, String context, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String repetitions, String synonyms){
+            Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String repetitions, String synonyms, String wordLists){
 
         Response response;
+        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
         
      /*   String client_ip = httpServletRequest.getRemoteAddr();
         if (!(ClientIPValidator.validateClientIP(client_ip))){
@@ -705,7 +722,7 @@ public class SearchService {
         try {
 
             SearchResultPlus searchResultPlus = backendInterface.searchRepetitions(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
-                pageLength, pageIndex, cutoff, mode, null, repetitions, synonyms);
+                pageLength, pageIndex, cutoff, mode, null, repetitions, synonyms, additionalSearchConstraints);
             KWIC result = backendInterface.getKWIC(searchResultPlus, context);
             
             switch (responseFormat){
@@ -732,9 +749,10 @@ public class SearchService {
     
     private Response getKWIC(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, String context, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String mode, String responseFormat){
+            Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String wordLists){
 
         Response response;
+        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
         
      /*   String client_ip = httpServletRequest.getRemoteAddr();
         if (!(ClientIPValidator.validateClientIP(client_ip))){
@@ -748,7 +766,7 @@ public class SearchService {
                         pageLength, pageIndex, cutoff, mode, context);*/
             
             SearchResultPlus searchResultPlus = backendInterface.search(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
-                pageLength, pageIndex, cutoff, mode, null);
+                pageLength, pageIndex, cutoff, mode, null, additionalSearchConstraints);
             KWIC result = backendInterface.getKWIC(searchResultPlus, context);
                     
             switch (responseFormat){
@@ -775,10 +793,10 @@ public class SearchService {
     
     private Response getStatistics(String queryString, String queryLanguage, 
             String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, 
-            Integer pageLength, Integer pageStartIndex, String mode, String sortType, String responseFormat){
+            Integer pageLength, Integer pageStartIndex, String mode, String sortType, String responseFormat, String wordLists){
 
         Response response;
-        
+        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
    /*     String client_ip = httpServletRequest.getRemoteAddr();
         if (!(ClientIPValidator.validateClientIP(client_ip))){
             response = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
@@ -788,7 +806,8 @@ public class SearchService {
 
         try {
             SearchStatistics result = backendInterface.getSearchStatistics(queryString, queryLanguage, 
-                    queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, pageLength, pageStartIndex, mode, sortType);
+                    queryLanguageVersion, corpusQuery, metadataQuery, metadataKeyID, 
+                    pageLength, pageStartIndex, mode, sortType, additionalSearchConstraints);
                 
             switch (responseFormat){
                 case "json":
@@ -812,9 +831,10 @@ public class SearchService {
     }
     
     private Response searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, 
-            String searchMode, String transcriptID, String tokenAttribute, String responseFormat){
+            String searchMode, String transcriptID, String tokenAttribute, String responseFormat, String wordLists){
        
         Response response; 
+        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
         
     /*     String client_ip = httpServletRequest.getRemoteAddr();
         if (!(ClientIPValidator.validateClientIP(client_ip))){
@@ -825,7 +845,7 @@ public class SearchService {
         try {
 
             IDList result = backendInterface.searchTokensForTranscript(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
-            searchMode, transcriptID, tokenAttribute);
+            searchMode, transcriptID, tokenAttribute, additionalSearchConstraints);
             
             switch (responseFormat){
                 case "json":
@@ -848,6 +868,15 @@ public class SearchService {
         return response;
     }
     
-    
+    private Map<String, String> createAdditionalSearchConstraintsMap(String wordLists){
+        if (wordLists!=null && !wordLists.isEmpty()){
+            Map<String, String> map = new HashMap();
+            map.put(Constants.CUSTOM_WORDLISTS_KEY, wordLists);
+            return map;
+        }else{
+            return null;
+        }
+        
+    }
 
 }

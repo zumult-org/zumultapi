@@ -1023,8 +1023,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             var context = leftContext+ "-t," + rightContext + "-t";
                             
                             $.when(writeCustomVarForQuery(this, q)).done(function(){
-
-                                var meta = getCustomWordLists();                            
+                                var wordLists = createXMLElement('<%= Constants.CUSTOM_WORDLISTS_KEY%>', $('#kwic-search-form').find('.customWordLists').val());
+                                
                                 var corpusQueryStr = getCorpusQueryStr();
 
                                 if (corpusQueryStr!==''){
@@ -1041,7 +1041,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     $("#kwic-search-result-area").find(".wait-query-tab").css("display", "block");
 
                                     // send request
-                                    ajaxCallToGetKWIC('#kwic-search-result-area', kwicURL, q, corpusQueryStr, meta, pageLength, pageIndex, searchType, context);
+                                    ajaxCallToGetKWIC('#kwic-search-result-area', kwicURL, q, corpusQueryStr, wordLists, pageLength, pageIndex, searchType, context);
                                 }
                             });
                         
@@ -1126,17 +1126,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
             });
             
-            
-            function getCustomWordLists(){
-                var wordLists = $('#kwic-search-form').find('.customWordLists').val();
-                                                                            
-                var meta = '';
-                    if (wordLists!==''){
-                        meta = customWordListsID + "=" + wordLists;
-                }
-                return meta;                    
-            }
-            
+
             function searchRepetitions(synonyms){
             
                 //alert(synonyms);
@@ -1152,6 +1142,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 var repetitions = getXMLForRepetitions();
                         
                 if(repetitions){
+                                      
+                    $.when(writeCustomVarForQuery('#kwic-search-form', q)).done(function(){               
+                    var wordLists = createXMLElement('<%= Constants.CUSTOM_WORDLISTS_KEY%>', $('#kwic-search-form').find('.customWordLists').val());
+
                     var corpusQueryStr = getCorpusQueryStr();
 
                     if (corpusQueryStr!==''){
@@ -1167,8 +1161,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         $("#repetition-search-result-area").find(".wait-query-tab").css("display", "block");
 
                         // send request
-                        ajaxCallToGetKWICForRepetitions('#repetition-search-result-area', repetitionURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms);
+                        ajaxCallToGetKWICForRepetitions('#repetition-search-result-area', repetitionURL, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms, wordLists);
                     }
+                    
+                });
                 }
             }
                     
@@ -1193,13 +1189,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*                      ajax calls                        */
             /**********************************************************/
             
-            function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms){                        
+            function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms, wordLists){                        
                             
                 ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
                     timeout: 300000,
-                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms},
+                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms, customWordLists: wordLists},
                     dataType: "text",
 
                     success: function(xml, status) { 
@@ -1232,12 +1228,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
            }
 
-            function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  meta, pageLength, pageIndex, searchType, context){                        
+            function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context){                        
                          
                 ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
-                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, meta: meta },
+                    data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, customWordLists: wordLists},
                     dataType: "text",
 
                     success: function(xml, status) { 
@@ -1247,7 +1243,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     },
                     error: function(xhr, status, error){
                         if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
-                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr,  meta, pageLength, pageIndex, searchType, context);                          
+                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context);                          
                         }else {
                             $(selector).find(".wait-query-tab").css("display", "none");
                             if (status === "abort"){
@@ -1309,12 +1305,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
             
-            function ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, meta){
+            function ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists){
                 
                 ajaxDownLoadRequest = $.ajax({
                     type: "POST",
                     url: kwicExportURL,
-                    data: { q: decodeHTMLQuery(queryStr), cq :corpusQueryStr, count : to, offset : from, mode : searchType, context : context, format: format, addMeta: customMetadataForDownload, meta: meta},
+                    data: { q: decodeHTMLQuery(queryStr), cq :corpusQueryStr, count : to, offset : from, mode : searchType, context : context, format: format, addMeta: customMetadataForDownload, customWordLists: wordLists},
                     dataType: "xml",
                     success: function(xml, status) { 
                         //alert(xml);
@@ -1343,11 +1339,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
             }
               
-            function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, metadataQueryStr){
+            function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, wordLists){
                  ajaxSearchRequest= $.ajax({
                         type: "POST",
                         url: url,
-                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, meta: metadataQueryStr},                      
+                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, customWordLists: wordLists},                      
                         dataType: "text",
 
                         success: function(xml, status) {
@@ -1361,11 +1357,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     });
             }
             
-            function ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms){
+            function ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms, wordLists){
                 ajaxRepetitionSearchRequest = $.ajax({
                         type: "POST",
                         url: url,
-                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms},                      
+                        data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms, customWordLists: wordLists},                      
                         dataType: "text",
 
                         success: function(xml, status) {
@@ -1398,9 +1394,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 var corpora = getCorporaFromCorpusQuery(corpusQueryStr);
                 var searchType = $xmlObject.find('code').text();    
                 var itemsPerPage = $xmlObject.find('itemsPerPage').text();
-                var repetitions = $xmlObject.find('repetitions').text();
-                var synonyms = $xmlObject.find('synonyms').text();
-                var metadataQueryStr = $xmlObject.find('metadataQuery').text();
+                var repetitions = createXMLElement('<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS%>', $xmlObject.find('repetitions').html());
+                var synonyms = createXMLElement('<%= Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS%>', $xmlObject.find('synonyms').text());
+                var wordLists = createXMLElement('<%= Constants.CUSTOM_WORDLISTS_KEY%>', $xmlObject.find('wordLists').text());
 
                 //display summary + button for opening metadata view (GET)
 
@@ -1413,13 +1409,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     query = shortQuery;
                 }                              
                         
-                addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, metadataQueryStr);
+                addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, wordLists);
                         
                 if (parseInt(totalHits) > 0){
                     $(selector).find('.query_summary').append("<span id='search-results'><%=myResources.getString("Total")%>: </span>" + "<span id='total-hits'>" + totalHits + "</span>");
                             
                     // add pagination
-                    addPagination(selector, url, totalHits, itemsPerPage, decodeHTMLQuery(queryStr), corpusQueryStr, searchType, context, repetitions, synonyms, metadataQueryStr);
+                    addPagination(selector, url, totalHits, itemsPerPage, decodeHTMLQuery(queryStr), corpusQueryStr, searchType, context, repetitions, synonyms, wordLists);
 
                     // add results
                     displayKWIC(selector, xml);
@@ -1448,7 +1444,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 addEventListenerToOscillogramButtons();
             }
                                   
-            function addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, meta){
+            function addResultsHead(selector, query, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, wordLists){
            
                 $(selector).find('.KWICSearch-result').empty();
                 
@@ -1466,7 +1462,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
-                        <input type='hidden' name='meta' value='"+ meta +"' />\n\
+                        <input type='hidden' name='wordLists' value='"+ wordLists +"' />\n\
                         <input type='hidden' name='metadataKeyID' value='"+ tokenSizeKeyID +"' />\n\
                         <a class='btn btn-outline-secondary btn-sm py-0'  href='#' \n\
                         onclick='openMetadata(this)'>"+'<%=myResources.getString("GroupHits")%>' +"</a>\n\
@@ -1480,7 +1476,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
-                        <input type='hidden' name='meta' value='"+ meta +"' />\n\
+                        <input type='hidden' name='wordLists' value='"+ wordLists +"' />\n\
                         <input type='hidden' name='metadataKeyID' value='<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>' />\n\
                         <a class='btn btn-outline-secondary btn-sm py-0'  href='#' \n\
                         onclick='openMetadata(this)'><%=myResources.getString("OpenMetadataView")%></a>\n\
@@ -1551,7 +1547,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 $("#modal-kwicDownloadOptions-spinner").css("display", "block");
 
                                                 // send request
-                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, meta);
+                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists);
                                                 
                                             }else{
                                                 alert("A minimum of 1 item can be downloaded!")
@@ -1570,15 +1566,15 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }
                 
                 $("#showMoreQuery").on('click', function(){
-                    addResultsHead(selector, longQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, meta);
+                    addResultsHead(selector, longQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, wordLists);
                 });
                                     
                 $("#showLessQuery").on('click', function(){
-                    addResultsHead(selector, shortQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, meta);
+                    addResultsHead(selector, shortQuery, queryStr, corpusQueryStr, searchType, longQuery, shortQuery, wordLists);
                 });
             }
            
-            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms, metadataQueryStr){
+            function addPagination(selector, url, totalHits, itemsPerPage, queryString, corpusQueryStr, searchType, context, repetitions, synonyms, wordLists){
                 var paging = $("<ul></ul>").addClass("pagination-sm justify-content-center kwic-pagination");
                 $(selector).find('.paging_container').append(paging);
 
@@ -1608,9 +1604,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         //if(selector==="#repetition-search-result-area"){
 
                         if(selector==="#kwic-search-result-area"){
-                            ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, metadataQueryStr);                  
+                            ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, wordLists);                  
                         }else{
-                            ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms);
+                            ajaxCallToGetMoreKWICForRepetitions(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, repetitions, synonyms, wordLists);
                         }
                       }
                 });            
@@ -1729,7 +1725,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 addRelativeNumberOfHits();
                 addTypesOfHits(queryStr, corpusQueryStr);
                              
-                $('button.btn-open-lemma-table').on('click', function(){                  
+                $('button.btn-open-lemma-table').on('click', function(){    
                      var form = $(this).parents('form');
                      var transcriptID = this.getAttribute('data-value-source');
                      var newQueryStr = encodeSpecialUmlauts(queryStr) + " within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"&#47;>";
@@ -1960,7 +1956,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             async function writeCustomVarForQuery(selectorForm, query){
                 var result ="";
                     for (let [key, value] of customVarMap) {           
-                        if (query.includes(key)){
+                        if (query.includes(key + " ") || query.includes(key + "]") ){
                             let text = await readWordListAsCommaSeparated(value);
                             result = result + key.substring(1) + ":" + text + ";";
                         }
@@ -2510,8 +2506,16 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
             }
             
-
+            function createXMLElement(name, content){
+                if(content!==''){
+                    content = "<" + name 
+                        + ">" + content + "</" + name + ">";
+                }
+                return content;
+            }
             
+            
+ 
             
         </script>
     </body>

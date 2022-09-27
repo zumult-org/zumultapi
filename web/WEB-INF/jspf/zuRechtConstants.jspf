@@ -24,6 +24,6 @@
     
     var tokenSizeKeyID = "tokenSize";
     var transcriptionKeyID = "transcription";
-    var customWordListsID ="wordLists";
+    var customWordListsID ="customWordLists";
      
 </script>

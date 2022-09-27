@@ -7,6 +7,7 @@ package org.zumult.backend;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import org.zumult.objects.AnnotationBlock;
@@ -139,7 +140,7 @@ public interface BackendInterface {
      * @throws IOException 
      */ 
     public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, String searchIndex) throws SearchServiceException, IOException;
+            String corpusQuery, String metadataQuery, String searchIndex, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
     
     /**
      * Searches in the specified search index according to the specified parameters.
@@ -174,7 +175,7 @@ public interface BackendInterface {
      */
     public SearchResultPlus search(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs) throws SearchServiceException, IOException;
+            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
     
     /**
      * Searches for repetitions in the specified search index according to the specified parameters.
@@ -223,7 +224,7 @@ public interface BackendInterface {
      */
     public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException;
+            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
     
     /**
      * Searches in the specified search index according to the specified parameters 
@@ -256,7 +257,7 @@ public interface BackendInterface {
      */
     public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, 
             String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, 
-            Integer pageLength, Integer pageIndex, String searchIndex, String sortType) throws SearchServiceException, IOException;
+            Integer pageLength, Integer pageIndex, String searchIndex, String sortType, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
     
     /**
      * Searches in the specified transcript according to the specified parameters, 
@@ -283,7 +284,7 @@ public interface BackendInterface {
      * @throws IOException 
      */
     public IDList searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, 
-            String searchIndex, String transcriptID, String tokenAttribute) throws SearchServiceException, IOException;
+            String searchIndex, String transcriptID, String tokenAttribute, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
     
     /**********************************************************************************/
     /*                          kwic methods                                          */ 

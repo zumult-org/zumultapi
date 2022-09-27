@@ -29,7 +29,7 @@
         String metadataKeyID = request.getParameter("metadataKeyID");
         String metadataKeyName="";
         String mode = request.getParameter("mode");
-        String meta = request.getParameter("meta");
+        String wordLists = request.getParameter("wordLists");
         
         int DEFAULT_QUERY_LENGTH = 1000;
                

@@ -42,7 +42,7 @@ public class TestSearchEngine {
         SearchEngineResponseHitList result= se.searchRepetitions(
                 new ArrayList<String>(Arrays.asList("C:\\Users\\Frick\\IDS\\ZuMult\\indices\\TB_FOLK")), 
                 //"[word=\".+\" & !norm=\"das\"] precededby [norm=\"was\"][norm=\"heißt\"][norm=\"denn\"]?", null, 0, 10, null, null, RepetitionTypeEnum.WORD, false, repetition);
-                "[pos=\"NN\"]", null, 0, 10, null, null, repetition, null);
+                "[pos=\"NN\"]", null, 0, 10, null, null, repetition, null, null);
                 //"[word=\"vier\"][word=\"krawatten\"]", null, 0, 10, null, null, repetition);
                 //"[word=\"fronleichnam\"] within <s_geschlecht=\"Weiblich\"/>", null, 0, 10, RepetitionTypeEnum.WORD, true, twoRepetitions);
                 //"([]{3,5}) fullyalignedwith <annotationBlock/>", null, 0, 10, RepetitionTypeEnum.WORD, false, repetition);
