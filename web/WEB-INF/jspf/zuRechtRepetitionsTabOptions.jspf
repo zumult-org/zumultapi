@@ -1,0 +1,18 @@
+<div class="modal" id="modal-repetitionsTabOptions" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>     
+            </div>
+            <div class="modal-body">
+                <%@include file="zuRechtPageLengthOptions.jspf" %>
+                <%@include file="zuRechtContextOptions.jspf" %> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
+                <button type="button" class="btn btn-success btnOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

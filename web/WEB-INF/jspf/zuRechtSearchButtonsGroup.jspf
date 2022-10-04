@@ -1,0 +1,11 @@
+<div class="input-group-append">
+    <button type="submit" class="btn btn-success border-success btn-sm mb-1" title="<%=myResources.getString("SearchBtn")%>">
+        <span><i class="fa fa-search"></i></span>
+    </button>
+    <button type="button" class="btn border-success btn-sm px-3 mb-1 btn-open-search-options" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
+        <span><i class="fa fa-ellipsis-v"></i></span>
+    </button>
+    <button type="button" class="btn border-success btn-sm px-3 mb-1 btn-open-help" title="<%=myResources.getString("OpenHelp")%>">
+        <span><i class="fa fa-question"></i></span>
+    </button>
+</div>

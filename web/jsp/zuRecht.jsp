@@ -232,19 +232,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>                                    
                                     <input type="hidden" name="simpleQuerySyntaxLevel" id="simpleQuerySyntaxLevel" value="norm"/>
                                     <input type="hidden" name="customWordLists" class="customWordLists" value=""/>
-
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
-                                        <!-- <button type="submit" class="btn btn-sm"> -->
-                                            <span><i class="fa fa-search"></i></span>
-                                        </button>
-                                        <button type="button" class="btn border-success btn-sm px-3" data-toggle="modal" data-target="#modal-searchTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                          <span><i class="fa fa-ellipsis-v"></i></span>
-                                        </button>              
-                                        <button type="button" class="btn border-success btn-sm px-3" id="btn-open-query-help" title="<%=myResources.getString("OpenHelp")%>">
-                                          <span><i class="fa fa-question"></i></span>
-                                        </button>
-                                    </div>
+                                    <%@include file="../WEB-INF/jspf/zuRechtSearchButtonsGroup.jspf" %>
                                 </div>
 
                                 <span class='form-check float-left' style="margin-left: 10px;">
@@ -261,13 +249,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             </form>
 
                             <!-- Modals -->
-                            <div class="modal fade" id="modal-queryHelp" role="dialog">
+                            <div class="modal fade" id="modal-queryHelp" role="dialog" data-keyboard="false" data-backdrop="static">
                                 <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                   <div class="modal-content"></div>
                                 </div>
                             </div>
                             
-                            <div class="modal" id="modal-myVocabularyLists" role="dialog">
+                            <div class="modal" id="modal-myVocabularyLists" role="dialog" data-keyboard="false" data-backdrop="static">
                                 <div class="modal-dialog modal-lg"> 
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -285,38 +273,38 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                 </div>
                             </div>
                             
-                            <div class="modal" id="modal-kwicDownloadOptions" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title"><%=myResources.getString("DownloadOptions")%></h2>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                    </div>      
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="customNumberOfHitsForDownload"><%=myResources.getString("NumberOfHitsForDownload")%></label>
-                                            <input class="form-control" type="number" min=1 max='<%=Constants.MAX_NUMBER_FOR_KWIC_DOWNLOAD%>' value='<%= defaultNumberForDownload%>' id="customNumberOfHitsForDownload">
+                            <div class="modal" id="modal-kwicDownloadOptions" role="dialog" data-keyboard="false" data-backdrop="static">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title"><%=myResources.getString("DownloadOptions")%></h2>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>     
+                                        </div>      
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="customNumberOfHitsForDownload"><%=myResources.getString("NumberOfHitsForDownload")%></label>
+                                                <input class="form-control" type="number" min=1 max='<%=Constants.MAX_NUMBER_FOR_KWIC_DOWNLOAD%>' value='<%= defaultNumberForDownload%>' id="customNumberOfHitsForDownload">
+                                            </div>
+                                            <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
+                                            <div class="form-group">                                       
+                                                <label for="customMetadataForDownload"><%=myResources.getString("Metadata")%> (<%=myResources.getString("HoldCTRLToSelectAndDeselectMoreThanOne")%>):</label>
+                                                <select multiple class="form-control" id="customMetadataForDownload" size="10"></select>
+                                            </div>
                                         </div>
-                                        <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
-                                        <div class="form-group">                                       
-                                            <label for="customMetadataForDownload"><%=myResources.getString("Metadata")%> (<%=myResources.getString("HoldCTRLToSelectAndDeselectMoreThanOne")%>):</label>
-                                            <select multiple class="form-control" id="customMetadataForDownload" size="10"></select>
+                                        <div class="modal-footer">
+                                            <div id="modal-kwicDownloadOptions-spinner" class="float-left" style="display:none;">
+                                                <i class="fa fa-spinner fa-spin"></i>
+                                                    <%=myResources.getString("PreparingDownload")%>, <%=myResources.getString("PleaseWait").toLowerCase()%>...
+                                            </div>
+                                            <button type="button" id="modal-kwicDownloadOptions-btnOK" class="btn btn-success">
+                                                <i class="fa fa-download"></i> <%=myResources.getString("Download")%>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div id="modal-kwicDownloadOptions-spinner" class="float-left" style="display:none;">
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                                <%=myResources.getString("PreparingDownload")%>, <%=myResources.getString("PleaseWait").toLowerCase()%>...
-                                        </div>
-                                        <button type="button" id="modal-kwicDownloadOptions-btnOK" class="btn btn-success">
-                                            <i class="fa fa-download"></i> <%=myResources.getString("Download")%>
-                                        </button>
                                     </div>
                                 </div>
-                            </div>
                             </div>        
 
-                            <div class="modal" id="modal-searchTabOptions" role="dialog">
+                            <div class="modal" id="modal-searchTabOptions" role="dialog" data-keyboard="false" data-backdrop="static">
                                 <div class="modal-dialog modal-dialog-scrollable">
                                   <div class="modal-content">
                                     <div class="modal-header">
@@ -376,26 +364,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                                         <div class="input-group mb-3">
                                             <div class="custom-file input-group-prepend">
-
                                               <input type="file" style="display: none;" class="custom-file-input form-control-sm" id="customFile" name="filename">
                                               <label class="custom-file-label text-left border-success col-form-label-sm" for="customFile"><%=myResources.getString("ChooseYourFile")%></label>
-
-
                                             </div>
                                             <input type="hidden" name="numberOfDocs" id="numberOfDocs" value="10"/>
                                             <input type="hidden" name="sortType" id="sortType" value="<%=SortTypeEnum.ABS_DESC.name() %>"/>
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-success border-success btn-sm mb-1" title="<%=myResources.getString("SearchBtn")%>">
-                                                  <span><i class="fa fa-search"></i></span>
-                                                </button>
-                                                <button type="button" class="btn border-success btn-sm px-3 mb-1" data-toggle="modal" data-target="#modal-vocabularyTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                                  <span><i class="fa fa-ellipsis-v"></i></span>
-                                                </button>
-                                                <button type="button" class="btn border-success btn-sm px-3 mb-1" id="btn-open-vocabulary-help" title="<%=myResources.getString("OpenHelp")%>">
-                                                  <span><i class="fa fa-question"></i></span>
-                                                </button>
-                                            </div>
+                                            <%@include file="../WEB-INF/jspf/zuRechtSearchButtonsGroup.jspf" %>
                                         </div>
 
 
@@ -427,10 +401,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     <div class="table-wrapper table-responsive" id="statistics-result"></div>
 
 
-                                    <!-- Modals -->
+                                    <!-- Modals: START -->
 
-
-                                    <div class="modal fade" id="modal-vocabulary-queryHelp" role="dialog">
+                                    <div class="modal fade" id="modal-vocabulary-queryHelp" role="dialog" data-keyboard="false" data-backdrop="static">
                                         <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                         <!-- <div class="modal-dialog mw-100 w-75" modal-dialog-scrollable> -->
                                             <div class="modal-content">
@@ -438,141 +411,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                         </div>
                                     </div>
 
-
-                                    <div class="modal" id="modal-vocabularyTabOptions" role="dialog">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="customNumberOfDocs"><%=myResources.getString("DocumentsPerPage")%></label>
-                                                    <select class="form-control" id="customNumberOfDocs">
-                                                        <option>10</option>
-                                                        <option>50</option>
-                                                        <option>100</option>   
-                                                        <option>250</option>
-                                                  </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div><%=myResources.getString("SortBy")%></div>
-                                                    <div class="form-check-inline mt-2">
-                                                        <label class="form-check-label" for="radio-absolute">
-                                                                <input type="radio" class="form-check-input" id="radio-absolute" name="sort-type" value="<%=SortTypeEnum.ABS_DESC.name() %>" checked><%=myResources.getString("AbsoluteNumberOfHits")%>
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check-inline">
-                                                        <label class="form-check-label" for="radio-relative">
-                                                            <input type="radio" class="form-check-input" id="radio-relative" name="sort-type" value="<%=SortTypeEnum.REL_DESC.name() %>"><%=myResources.getString("RelativeNumberOfHits")%>
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check-inline">
-                                                        <label class="form-check-label" for="radio-relative">
-                                                            <input type="radio" class="form-check-input" id="radio-relative" name="sort-type" value="<%=SortTypeEnum.TYPES.name() %>"><%=myResources.getString("Types")%>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                                <button type="button" class="btn btn-success btnOK">OK</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal" id="modal-thematicVocabularyLists" role="dialog">
-                                        <div class="modal-dialog modal-xl"> 
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                                <!--<h2 class="modal-title">Thematic Vocabulary Lists</h2>-->
-                                                <h2 class="modal-title"><%=myResources.getString("PreselectedThematicVocabulary")%> <%=myResources.getString("ForRelevantTopicsInGFLDidactics")%></h2>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                            </div>
-                                            <div class="modal-body">
-                                                <!--<p>Here some text</p>-->
-                                                <div class="accordion md-accordion" id="thematic-vocabulary-list-accordion" role="tablist" aria-multiselectable="true">
-                                                    <%
-                                                        File inputDir = new File(getServletContext().getRealPath(Constants.THEMATIC_WORDLISTS_PATH)); 
-
-                                                        File[] files = inputDir.listFiles();
-                                                        if (files.length > 0){
-
-                                                            final Pattern pattern = Pattern.compile(Constants.WORD_FIELD_PATTERN, Pattern.DOTALL);
-
-                                                            //int index = 0;
-                                                            for (File file : files) {
-                                                                String path = file.getPath();
-                                                                final Matcher matcher = pattern.matcher(path);
-                                                                if(matcher.find()){
-                                                                    //index = index+1;
-                                                                    String id = matcher.group(1);
-                                                                    String topic = id.replace("_"," ");
-
-                                                                    %>
-
-                                                                    <div class="card" id="vocabulary-lists-card">
-
-                                                                    <div class="card-header" role="tab" id="<%="vocabulary-list-topic-"+id%>">
-                                                                        <div class="form-check">
-
-                                                                            <input type="radio" class="form-check-input mt-2" id="<%="radio-"+id%>" name="vocabulary-list-name" value="<%=id%>" checked>
-
-                                                                            <label class="form-check-label" for="<%="radio-"+id%>">
-                                                                              <a data-toggle="collapse" href="<%="#vocabulary-list-content-"+id%>"
-                                                                                aria-expanded="false"><%=topic%>
-                                                                                <!--<span class="icon mr-3"><i class='fa fa-angle-down'></i></span>-->
-                                                                              </a>     
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div id="<%="vocabulary-list-content-"+id%>" class="collapse" role="tabpanel" aria-labelledby="<%="vocabulary-list-topic-"+id%>" data-parent="#thematic-vocabulary-list-accordion">
-                                                                        <div class="m-3 vocabulary-list-content" id='<%=id%>'>
-
-                                                                    <%
-                                                                        Scanner fileReader = new Scanner(file, "utf-8");
-                                                                        while (fileReader.hasNextLine()) {
-                                                                              String line = fileReader.nextLine();
-
-                                                                              %>  <%=line.replaceAll("<", "&lt;").replaceAll(">", "&gt;")%><br/> <%
-                                                                        }
-                                                                        fileReader.close();
-
-                                                                    %>
-                                                                        </div>
-                                                                </div>
-                                                            </div>
-                                                                <%
-                                                                }
-
-                                                            }
-                                                        }else{
-                                                            %>
-
-                                                                <div class="card">
-                                                                    <div class="card-header"><%=myResources.getString("NoVocabularyListsAvailable")%></div>
-                                                                </div>
-
-                                                            <%
-                                                        }
-
-
-                                                    %>
-
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer justify-content-between">
-                                                <button type="button" class="btn btn-success" id="modal-thematicVocabularyLists-btnQuery"><%=myResources.getString("SearchBtn")%>
-                                                </button>
-                                                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
+                                    <%@include file="../WEB-INF/jspf/zuRechtVocabularyTabOptions.jspf" %>
+                                    <%@include file="../WEB-INF/jspf/zuRechtThematicVocabularyLists.jspf" %>
+                                              
+                                    <!-- Modals: END -->
                                 </div>
                             </div>
                         </div>
@@ -582,55 +424,24 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 <!------------------------------------------- START: Repetitions tab ------------------------------------------>
                         <div class="tab-pane mt-3" id="repetitions-tab-content">
                             <h2><%=myResources.getString("SearchForRepetitions")%></h2>
+                            
+                            <!-- search input form -->
                             <form id="repetition-search-form" autocomplete="off">
                                 <p><%=myResources.getString("SpecifyTheElementYouAreLookingFor")%></p>
-
                                 <div class="row-div" style="display: flex;">
-
                                     <%@include file="../WEB-INF/jspf/zuRechtFileUpload.jspf" %> 
-                                      
                                     <div class="input-group mb-1">                                   
                                         <input type="text" id="repetitionQueryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("ForExample")%> [pos=&quot;NN&quot;]">
                                         <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
-                                                <span><i class="fa fa-search"></i></span>
-                                            </button>
-                                            <button type="button" class="btn border-success btn-sm px-3" data-toggle="modal" data-target="#modal-repetitionsTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                              <span><i class="fa fa-ellipsis-v"></i></span>
-                                            </button>              
-                                            <button type="button" class="btn border-success btn-sm px-3" id="btn-open-repetitions-help" title="<%=myResources.getString("OpenHelp")%>">
-                                              <span><i class="fa fa-question"></i></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                  
+                                        <%@include file="../WEB-INF/jspf/zuRechtSearchButtonsGroup.jspf" %>
+                                    </div> 
                                 </div>
-                                <%@include file="../WEB-INF/jspf/zuRechtRepetitionProperties.jspf" %>
-                                
+                                <%@include file="../WEB-INF/jspf/zuRechtRepetitionProperties.jspf" %>                                
                             </form>
-                                          
-                            <!-- Modals -->
-                            
-                            <div class="modal" id="modal-repetitionsTabOptions" role="dialog">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                    </div>
-                                    <div class="modal-body">
-                                        <%@include file="../WEB-INF/jspf/zuRechtPageLengthOptions.jspf" %>
-                                        <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                        <button type="button" class="btn btn-success btnOK">OK</button>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            
+           
+                            <!-- modals -->
+                            <%@include file="../WEB-INF/jspf/zuRechtRepetitionsTabOptions.jspf" %>
+
                             <!-- result presentation area -->
                             <div id="repetition-search-result-area" class="searchResultArea"></div>
                         </div>
@@ -702,16 +513,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     urlTest.searchParams.set('lang',value);
                     window.location = urlTest;
                 });
-                
-                //opens a modal window with query help information
-                $('#btn-open-query-help').on("click", function(){
-                    $('#modal-queryHelp').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
-                }); 
+                             
                 
                 
                 // set context options according to url parameters
-                    <%
-                    
+                    <%                    
                     if(pageParam_leftContext!=null){
                     %>
                     var leftContextValue = '<%=pageParam_leftContext%>';
@@ -783,10 +589,31 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     $('#modal-vocabularyTabOptions').modal('hide');
                 });
                 
-                $('#btn-open-vocabulary-help').on("click", function(){
-                    //e.preventDefault();
+                /********** click events for buttons with help infos **********************/
+                
+                $('#kwic-search-form').find('.btn-open-help').on("click", function(){
+                    $('#modal-queryHelp').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
+                }); 
+                
+                $('#vocabulary-search-form').find('.btn-open-help').on("click", function(){
                     $('#modal-vocabulary-queryHelp').modal('show').find('.modal-content').load(zuRechtVocabularyTabHelp);
                 });
+                
+                /********** click events for buttons with search options **********************/
+
+                $('#vocabulary-search-form').find('.btn-open-search-options').on("click", function(){
+                    $('#modal-vocabularyTabOptions').modal('show');
+                });
+                
+                $('#kwic-search-form').find('.btn-open-search-options').on("click", function(){
+                    $('#modal-searchTabOptions').modal('show');
+                });
+                
+                $('#repetition-search-form').find('.btn-open-search-options').on("click", function(){
+                    $('#modal-repetitionsTabOptions').modal('show');
+                });
+                
+                
                 
                 $("#modal-thematicVocabularyLists-btnQuery").on('click', function(){
 

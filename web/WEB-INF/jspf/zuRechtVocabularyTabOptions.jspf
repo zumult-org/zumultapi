@@ -1,0 +1,43 @@
+<div class="modal" id="modal-vocabularyTabOptions" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>     
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="customNumberOfDocs"><b><%=myResources.getString("DocumentsPerPage")%></b></label>
+                    <select class="form-control" id="customNumberOfDocs">
+                        <option>10</option>
+                        <option>50</option>
+                        <option>100</option>   
+                        <option>250</option>
+                    </select>
+                </div>
+            <div class="form-group">
+                <div><b><%=myResources.getString("SortBy")%></b></div>
+                    <div class="form-check-inline mt-2">
+                        <label class="form-check-label" for="radio-absolute">
+                            <input type="radio" class="form-check-input" id="radio-absolute" name="sort-type" value="<%=SortTypeEnum.ABS_DESC.name() %>" checked><%=myResources.getString("AbsoluteNumberOfHits")%>
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio-relative">
+                            <input type="radio" class="form-check-input" id="radio-relative" name="sort-type" value="<%=SortTypeEnum.REL_DESC.name() %>"><%=myResources.getString("RelativeNumberOfHits")%>
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio-relative">
+                            <input type="radio" class="form-check-input" id="radio-relative" name="sort-type" value="<%=SortTypeEnum.TYPES.name() %>"><%=myResources.getString("Types")%>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
+                <button type="button" class="btn btn-success btnOK">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

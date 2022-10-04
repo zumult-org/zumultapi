@@ -1,0 +1,85 @@
+<div class="modal" id="modal-thematicVocabularyLists" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<h2 class="modal-title">Thematic Vocabulary Lists</h2>-->
+                <h2 class="modal-title"><%=myResources.getString("PreselectedThematicVocabulary")%> <%=myResources.getString("ForRelevantTopicsInGFLDidactics")%></h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>     
+            </div>
+            <div class="modal-body">
+                <!--<p>Here some text</p>-->
+                <div class="accordion md-accordion" id="thematic-vocabulary-list-accordion" role="tablist" aria-multiselectable="true">
+                    <%
+                        File inputDir = new File(getServletContext().getRealPath(Constants.THEMATIC_WORDLISTS_PATH)); 
+
+                        File[] files = inputDir.listFiles();
+                            if (files.length > 0){
+
+                                final Pattern pattern = Pattern.compile(Constants.WORD_FIELD_PATTERN, Pattern.DOTALL);
+
+                                    for (File file : files) {
+                                        String path = file.getPath();
+                                        final Matcher matcher = pattern.matcher(path);
+                                        if(matcher.find()){
+                                            String id = matcher.group(1);
+                                            String topic = id.replace("_"," ");
+
+                    %>
+
+                        <div class="card" id="vocabulary-lists-card">
+
+                            <div class="card-header" role="tab" id="<%="vocabulary-list-topic-"+id%>">
+                                <div class="form-check">
+
+                                    <input type="radio" class="form-check-input mt-2" id="<%="radio-"+id%>" name="vocabulary-list-name" value="<%=id%>" checked>
+
+                                    <label class="form-check-label" for="<%="radio-"+id%>">
+                                        <a data-toggle="collapse" href="<%="#vocabulary-list-content-"+id%>" aria-expanded="false"><%=topic%>
+                                        <!--<span class="icon mr-3"><i class='fa fa-angle-down'></i></span>-->
+                                        </a>     
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="<%="vocabulary-list-content-"+id%>" class="collapse" role="tabpanel" aria-labelledby="<%="vocabulary-list-topic-"+id%>" data-parent="#thematic-vocabulary-list-accordion">
+                            <div class="m-3 vocabulary-list-content" id='<%=id%>'>
+
+                                <%
+                                    Scanner fileReader = new Scanner(file, "utf-8");
+                                    while (fileReader.hasNextLine()) {
+                                        String line = fileReader.nextLine();
+
+                                        %>  <%=line.replaceAll("<", "&lt;").replaceAll(">", "&gt;")%><br/> <%
+                                    }
+                                    fileReader.close();
+
+                                %>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                                    }
+
+                                }
+                            }else{
+                    %>
+
+                    <div class="card">
+                        <div class="card-header"><%=myResources.getString("NoVocabularyListsAvailable")%></div>
+                    </div>
+
+                    <%
+                        }
+
+
+                    %>
+
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-success" id="modal-thematicVocabularyLists-btnQuery"><%=myResources.getString("SearchBtn")%></button>
+                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
+            </div>
+        </div>
+    </div>
+</div>
