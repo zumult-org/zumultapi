@@ -38,6 +38,7 @@ public class Configuration {
     private static String mediaDistributionPath;
     private static String mediaSnippetsPath;
     private static String ffmpegPath;
+    private static String quantificationPath;
     
     private static String transcriptPath;
     private static String protocolPath;
@@ -69,6 +70,7 @@ public class Configuration {
             // this is for getting an attribute value, looks pretty clumsy...
             backendInterfaceClassPath = doc.getElementsByTagName("backend").item(0).getAttributes().getNamedItem("classPath").getTextContent();
             
+            quantificationPath = doc.getElementsByTagName("quantification-path").item(0).getTextContent();
             mediaPath = doc.getElementsByTagName("media-path").item(0).getTextContent();
             mediaArchivePath = doc.getElementsByTagName("media-archive-path").item(0).getTextContent();
             mediaDistributionPath = doc.getElementsByTagName("media-distribution-path").item(0).getTextContent();
@@ -109,6 +111,10 @@ public class Configuration {
 
     public static String getMediaPath(){
         return mediaPath;
+    }
+    
+    public static String getQuantificationPath(){
+        return quantificationPath;
     }
     
     public static String getMediaArchivePath() {
