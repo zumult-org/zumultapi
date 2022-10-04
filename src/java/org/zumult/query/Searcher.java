@@ -7,6 +7,7 @@ package org.zumult.query;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.IDList;
@@ -22,6 +23,7 @@ public interface Searcher {
     public void setCollection(String corpusQueryStr, String metadataQueryStr) throws SearchServiceException;
     public void setQuery(String queryString, String queryLanguage, String queryLanguageVersion) throws SearchServiceException;
     public void setPagination(Integer pageLength , Integer pageStartIndex);
+    public void setAdditionalSearchConstraints(Map<String, String> additionalSearchConstraints) throws SearchServiceException;
     public SearchResult search(String searchIndex) throws SearchServiceException, IOException;
     public SearchResultPlus search(String searchIndex, Boolean cutoff, IDList metadataIDs) throws SearchServiceException, IOException;
     public SearchStatistics getStatistics(String searchIndex, String sortType, MetadataKey metadataKey) throws SearchServiceException, IOException;

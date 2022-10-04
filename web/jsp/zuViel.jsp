@@ -160,8 +160,8 @@
     if (tokenList==null){   
         String query = request.getParameter("q");
         if (query!=null && !query.isEmpty()){
-            IDList tokenIDs = backend.searchTokensForTranscript(query, null, null, null, null, null, transcriptID, "id");
-            IDList lemmas = backend.searchTokensForTranscript(query, null, null, null, null, null, transcriptID, "lemma");
+            IDList tokenIDs = backend.searchTokensForTranscript(query, null, null, null, null, null, transcriptID, "id", null);
+            IDList lemmas = backend.searchTokensForTranscript(query, null, null, null, null, null, transcriptID, "lemma", null);
             highlightIDsArray[0] = String.join(" ", tokenIDs);
             tokenList = String.join(";", lemmas);
         } else{

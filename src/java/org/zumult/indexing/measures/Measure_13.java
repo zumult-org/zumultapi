@@ -84,7 +84,7 @@ public class Measure_13 { // measure "pos"
                 
                 // search all <w>-elements 
                 String query = "<word/> within <" + Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID + "=\""+speechEventID+"\"/>";                
-                SearchResultPlus sr = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null);
+                SearchResultPlus sr = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null, null);
                 int wordTokenTotal = sr.getTotalHits();
                 
                 System.out.println("originalTokens: " + originalTokens + "; wordTokenTotal: " + wordTokenTotal);
@@ -147,7 +147,7 @@ public class Measure_13 { // measure "pos"
     private int search(String pos, String speechEventID, String corpusID) throws SearchServiceException, IOException{
         String query = "[pos=\""+pos+"\"] within <"+ Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID +"=\""+speechEventID+"\"/>";                
         System.out.println(query);
-        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null);
+        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\""+ corpusID + "\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null, null);
         return searchResult.getTotalHits();
     }
     

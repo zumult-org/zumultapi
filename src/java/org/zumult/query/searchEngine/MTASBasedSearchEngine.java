@@ -361,15 +361,15 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private String getDistinctValues(String queryString, String transcript, String metadataKeyID, ArrayList<String> indexPaths, 
-            Integer from, Integer to, SortTypeEnum sortType, String typeName) throws SearchServiceException, IOException{
+            Integer from, Integer to, SortTypeEnum sortType, String typeName, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException{
         String newQueryString = "(" + queryString + ") within <"+ metadataKeyID + "=\""+ transcript + "\"/>";
-        SearchEngineResponseStatistics statistics = searchStatistics(indexPaths, newQueryString, from, to, sortType, typeName);
+        SearchEngineResponseStatistics statistics = searchStatistics(indexPaths, newQueryString, from, to, sortType, typeName, wordLists);
         return String.valueOf(statistics.getNumberOfDistinctValues());
     }
 
     private String getRelativeValue(ArrayList<String> indexPaths, String metadataValue, int hits, String metadataKeyID) throws SearchServiceException, IOException{
         String qs = "<word/> within <" + metadataKeyID + "=\"" + metadataValue +"\"/>";
-        SearchEngineResponse sr = search(indexPaths, qs, null);
+        SearchEngineResponse sr = search(indexPaths, qs, null, null);
         int token_total = sr.getHitsTotal();                    
         double tokenTotal = Double.parseDouble(String.valueOf(token_total));
         Double rel = hits*100/ tokenTotal;
@@ -385,7 +385,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
     private MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException {
         try{
-            System.out.println("PARAMETER (CQP QUERY): " + queryString);
+            log.log(Level.INFO, ": {0}", queryString);
             Reader reader = new BufferedReader(new StringReader(queryString));
             MtasCQLParser p = new MtasCQLParser(reader);
             return p.parse(field, null, variables, ignore, maximumIgnoreLength);
@@ -522,7 +522,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
      
 
     @Override
-    public SearchEngineResponse search(ArrayList<String> indexPaths, String queryString, String metadataQueryString) throws SearchServiceException, IOException {
+    public SearchEngineResponse search(ArrayList<String> indexPaths, String queryString, String metadataQueryString, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException {
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
         
@@ -540,7 +540,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     try{   
                         indexReader = DirectoryReader.open(directory);
 
-                        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
+                        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, wordLists, null, null);
 
                         ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
                         searcher = new IndexSearcher(indexReader);
@@ -604,17 +604,17 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
   
     @Override
     public SearchEngineResponseHitList searchKWIC(ArrayList<String> indexPaths, String queryString, String metadataQueryString, Integer from, Integer to, 
-            Boolean cutoff, IDList metadataIDs) throws SearchServiceException, IOException {
+            Boolean cutoff, IDList metadataIDs, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException {
         
-        System.out.println("-- method: searchKWIC --");
+        /*System.out.println("-- method: searchKWIC --");
         System.out.println("metadataQueryString: " + metadataQueryString);
-        /*System.out.println("PARAMETER (FROM): " + from);
+        System.out.println("PARAMETER (FROM): " + from);
         System.out.println("PARAMETER (TO): " + to);*/
         
-        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
+        MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, wordLists, null, null);
         
         if (metadataQueryString == null || metadataQueryString.isEmpty()){
-            // search hits without metadata
+            // search hits without metadata        
             return searchKWICStandard(indexPaths, q, from, to, cutoff, metadataIDs);
             
         }else { 
@@ -627,6 +627,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 metadata = Arrays.stream(IOHelper.HTML2IPA(metadataQueryString).split(METADATA_QUERY_DELIMITER))
                         .map(s -> s.split("=")).collect(Collectors.toMap(s -> s[0], s-> s[1]));
             }
+         
+
+            
             if(metadata.size()>1){
                 throw new SearchServiceException("Metadata query with multiple parameters is not supported yet!");
             }else{
@@ -1105,8 +1108,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     @Override
     public SearchEngineResponseStatistics searchMetadataStatistics(ArrayList<String> indexPaths, String queryString, String metadataQueryString,
-            Integer from, Integer to, SortTypeEnum sortType, String metadataKeyID) throws SearchServiceException, IOException {
+            Integer from, Integer to, SortTypeEnum sortType, String metadataKeyID, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException {
         
+
         if(metadataQueryString==null || metadataQueryString.isEmpty()){
             
             //System.out.println("-- method: searchMetadataStatistic");
@@ -1120,7 +1124,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 but it should not be used with indices from the SPEAKER-BASED MODE!!!=> ERROR */
                 return searchDocumentStatistics(indexPaths, queryString, to, sortType); 
             }else{
-                return searchStatistics(indexPaths, queryString, from, to, sortType, metadataKeyID);
+                return searchStatistics(indexPaths, queryString, from, to, sortType, metadataKeyID, wordLists);
             }
         }else{
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
@@ -1267,10 +1271,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private SearchEngineResponseStatistics searchStatistics(ArrayList<String> indexPaths, String queryString, 
-            Integer from, Integer to, SortTypeEnum sortType, String metadataKeyID) throws SearchServiceException, IOException {
+            Integer from, Integer to, SortTypeEnum sortType, String metadataKeyID, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException {
 
             //System.out.println("-- method: searchStatistic");
-            MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
+            MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, wordLists, null, null);
             
             int hits_total = 0;
             int transcripts_total = 0;
@@ -1443,14 +1447,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                             if(nextLine.equals(firstLine)){
                                 index1++;
                             }else{
-                                String distValues = getDistinctValues(queryString, firstLine, metadataKeyID, indexPaths, 0, 0, SortTypeEnum.ABS_DESC, Constants.ATTRIBUTE_NAME_LEMMA);
+                                String distValues = getDistinctValues(queryString, firstLine, metadataKeyID, indexPaths, 0, 0, SortTypeEnum.ABS_DESC, Constants.ATTRIBUTE_NAME_LEMMA, wordLists);
                                 bw2.write(temp.substring(0,temp.length()- String.valueOf(distValues).length()) + distValues + " " + firstLine + " " + index1);
                                 bw2.newLine();
                                 firstLine = nextLine;
                                 index1=1;
                             }  
                         }
-                        String distValues = getDistinctValues(queryString, firstLine, metadataKeyID, indexPaths, 0, 0, SortTypeEnum.ABS_DESC, Constants.ATTRIBUTE_NAME_LEMMA);
+                        String distValues = getDistinctValues(queryString, firstLine, metadataKeyID, indexPaths, 0, 0, SortTypeEnum.ABS_DESC, Constants.ATTRIBUTE_NAME_LEMMA, wordLists);
                         bw2.write(temp.substring(0,temp.length()- String.valueOf(distValues).length()) + distValues + " " + firstLine + " " + index1);
                     }else{
                         throw new SearchServiceException("Sort type " + sortType + " is not supported yet!");
@@ -1804,7 +1808,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     @Override
     public SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString, String metadataQueryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException{
         
         // check queryString
         if (queryString.matches("\\[(word|lemma|norm)=\"\\.(\\*|\\+)\"\\]") || 
@@ -1845,7 +1849,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }
         
         try{
-           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions, synonyms);
+           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions, synonyms, wordLists);
         }catch(SeachRepetitionException ex){
             throw new SearchServiceException(ex.getCause().getMessage());                  
         }
@@ -1854,7 +1858,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms) throws IOException, SearchServiceException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> wordLists) throws IOException, SearchServiceException{
         
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
@@ -1868,7 +1872,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             if (directory != null) {
 
                 try{   
-                    MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
+                    MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, wordLists, null, null);
                     indexReader = DirectoryReader.open(directory);              
                     searcher = new IndexSearcher(indexReader);
                     SpanWeight spanweight = ((MtasSpanQuery) q.rewrite(indexReader)).createWeight(searcher, ScoreMode.COMPLETE, 0);

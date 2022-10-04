@@ -1,6 +1,6 @@
 <div class="form-group">
-    <label><%=myResources.getString("HitsPerPage")%></label>
-    <select class="form-control customPageLength">
+    <label><b><%=myResources.getString("HitsPerPage")%></b></label>
+    <select class="form-control form-control-sm customPageLength">
         <option>10</option>
         <option selected>20</option>
         <option>50</option>

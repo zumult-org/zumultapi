@@ -171,21 +171,21 @@
                 var cell = $(obj).parent();
                 $(obj).remove();   
                 
-                var meta = null;
+                var additionalMetadata = null;
                 var newQuery = query;
                 
                 if(metadataKeyID===tokenSizeKeyID){
-                    meta = metadataKeyID + "=" + escapeParentheses(newMetadataKeyValue);
-                    startAjaxForSearchByTokenAnnotations(pageLength, pageIndex, context, numberOfHits, meta, newQuery, cell, metadataKeyID, newMetadataKeyValue);
+                    additionalMetadata = metadataKeyID + "=" + escapeParentheses(newMetadataKeyValue);
+                    startAjaxForSearchByTokenAnnotations(pageLength, pageIndex, context, numberOfHits, additionalMetadata, newQuery, cell, metadataKeyID, newMetadataKeyValue);
                 }else if (tokenAnnotations.includes(metadataKeyID)){
                     //alert("metadataKeyID: " + metadataKeyID);
                     newQuery = getNewQueryForSearchByTokenAnnotations(metadataKeyID, newMetadataKeyValue);
                     //alert("newMetadataKeyValue " + newMetadataKeyValue);
-                    startAjaxForSearchByTokenAnnotations(pageLength, pageIndex, context, numberOfHits, meta, newQuery, cell, metadataKeyID, newMetadataKeyValue);
+                    startAjaxForSearchByTokenAnnotations(pageLength, pageIndex, context, numberOfHits, additionalMetadata, newQuery, cell, metadataKeyID, newMetadataKeyValue);
                 }else{                     
-                    meta = metadataKeyID + "=" + newMetadataKeyValue;
+                    additionalMetadata = metadataKeyID + "=" + newMetadataKeyValue;
                     newQuery = getNewQueryForSearchByMetadata(metadataKeyID, newMetadataKeyValue);
-                    startAjaxForSearchByMetadata(pageLength, pageIndex, context, numberOfHits, meta, newQuery, cell);
+                    startAjaxForSearchByMetadata(pageLength, pageIndex, context, numberOfHits, additionalMetadata, newQuery, cell);
                 }
             }
 

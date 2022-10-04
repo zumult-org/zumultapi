@@ -117,14 +117,14 @@
 
             function getKWIC(obj, pageLength,pageIndex, context, metadataKeyID, numberOfHits){
                 var newMetadataKeyValue = $(obj).parent().parent().find('td.metadataValues').text();
-                var meta = metadataKeyID + "=" + newMetadataKeyValue;
+                var additionalMetadata = metadataKeyID + "=" + newMetadataKeyValue;
                 
                 var newQuery = getNewQueryForSearchByMetadata(metadataKeyID, newMetadataKeyValue);
                 
                 var cell = $(obj).parent();
                 $(obj).remove();
                             
-                startAjaxForSearchByMetadata(pageLength, pageIndex, context, numberOfHits, meta, newQuery, cell);
+                startAjaxForSearchByMetadata(pageLength, pageIndex, context, numberOfHits, additionalMetadata, newQuery, cell);
             }
             
         </script>

@@ -5,11 +5,13 @@
  */
 package org.zumult.query.implementations;
 
+import java.util.stream.Collectors;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
@@ -45,6 +47,31 @@ public abstract class AbstractSearcher {
     protected DGD2Pagination pagination = new DGD2Pagination();
     protected DGD2SearchQuery query = new DGD2SearchQuery();
     protected DGD2MetadataQuery metadataQuery = new DGD2MetadataQuery();
+    protected HashMap<String, String[]> wordListsMap = null;
+    protected HashMap<String, HashSet> synonymsMap = null;
+    ArrayList<AdditionalSearchConstraint> additionalSearchConstraints = new ArrayList();
+    
+    public void setAdditionalSearchConstraints(Map<String, String> constraints) throws SearchServiceException {
+                        
+        if (constraints!=null){
+            String wordLists = constraints.get(Constants.CUSTOM_WORDLISTS_KEY);
+            if(wordLists!=null && !wordLists.isEmpty() && !wordLists.equals("null")){
+                try {
+                    Document doc = (Document) IOHelper.DocumentFromText(wordLists);
+                    NodeList nodes = doc.getElementsByTagName(Constants.CUSTOM_WORDLISTS_KEY);
+                    Element element = ((Element)(nodes.item(0)));
+                    HashMap<String, String[]> variables = (HashMap<String, String[]>) Arrays.stream(element.getTextContent().split(";"))
+                                .map(s -> s.split(":")).collect(Collectors.toMap(s -> s[0], s-> s[1].split(",")));
+                    wordListsMap = variables;
+                    additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(wordLists));
+                }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException e){
+                    throw new SearchServiceException("Please check the syntax of your wordlists!");
+                }catch (IOException e){
+                    throw new SearchServiceException("Please check the syntax of your wordlists!");
+                }
+            }
+        }
+    }
     
     public void setPagination(Integer pageLength , Integer pageStartIndex){
         
@@ -156,8 +183,8 @@ public abstract class AbstractSearcher {
             SearchEngineResponseStatistics mtasSearchResult = null;   
 
             mtasSearchResult = se.searchMetadataStatistics(getIndexPaths(index), 
-                    query.getReplacedQueryString(), null, pagination.getPageStartIndex() + 1, 
-                    pagination.getPageStartIndex() + pagination.getItemsPerPage(), sort, metadataKey.getID());
+                    query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), pagination.getPageStartIndex() + 1, 
+                    pagination.getPageStartIndex() + pagination.getItemsPerPage(), sort, metadataKey.getID(), wordListsMap);
 
             final long timeEnd_search = System.currentTimeMillis();
             long millis_search = timeEnd_search - timeStart_search;
@@ -176,6 +203,7 @@ public abstract class AbstractSearcher {
             result.setNumberOfDistinctValues(mtasSearchResult.getNumberOfDistinctValues());
             result.setTotalHits(mtasSearchResult.getHitsTotal());
             result.setTotalTranscripts(mtasSearchResult.getTranscriptsTotal());
+            result.setAdditionalSearchConstraints(additionalSearchConstraints);
 
             return result;
     }
@@ -190,7 +218,7 @@ public abstract class AbstractSearcher {
         final long timeStart_search = System.currentTimeMillis();
         
         MTASBasedSearchEngine se = new MTASBasedSearchEngine();
-        SearchEngineResponse sr = se.search(getIndexPaths(index), query.getReplacedQueryString(), null);
+        SearchEngineResponse sr = se.search(getIndexPaths(index), query.getReplacedQueryString(), null, wordListsMap);
         
         final long timeEnd_search = System.currentTimeMillis();
         long millis_search = timeEnd_search - timeStart_search;
@@ -204,6 +232,7 @@ public abstract class AbstractSearcher {
         result.setSearchMode(index.name());
         result.setTotalHits(sr.getHitsTotal());
         result.setTotalTranscripts(sr.getTranscriptsTotal());
+        result.setAdditionalSearchConstraints(additionalSearchConstraints);
 
         return result;
     }
@@ -226,7 +255,7 @@ public abstract class AbstractSearcher {
         MTASBasedSearchEngine se = new MTASBasedSearchEngine(); 
         SearchEngineResponseHitList mtasSearchResult = se.searchKWIC(getIndexPaths(index), 
                 query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), pagination.getPageStartIndex() + 1, 
-                pagination.getPageStartIndex() + pagination.getItemsPerPage(), count, metadataIDs);
+                pagination.getPageStartIndex() + pagination.getItemsPerPage(), count, metadataIDs, wordListsMap);
         
         final long timeEnd_search = System.currentTimeMillis();
         long millis_search = timeEnd_search - timeStart_search;
@@ -234,7 +263,7 @@ public abstract class AbstractSearcher {
 
         /* Construct search result */
         DGD2SearchResultPlus result = new DGD2SearchResultPlus();
-        
+
         result.setSearchTime(millis_search);
         result.setCutoff(count);
         result.setSearchQuery(query);
@@ -244,6 +273,7 @@ public abstract class AbstractSearcher {
         result.setHits(mtasSearchResult.getHits());
         result.setTotalHits(mtasSearchResult.getHitsTotal());
         result.setTotalTranscripts(mtasSearchResult.getTranscriptsTotal());
+        result.setAdditionalSearchConstraints(additionalSearchConstraints);
 
         return result;
     }
@@ -259,10 +289,10 @@ public abstract class AbstractSearcher {
         MTASBasedSearchEngine se = new MTASBasedSearchEngine();
         
         if (tokenAttribute.equals("id")){
-            SearchEngineResponse mtasSearchResult = se.search(getIndexPaths(index), query.getReplacedQueryString(), null);
+            SearchEngineResponse mtasSearchResult = se.search(getIndexPaths(index), query.getReplacedQueryString(), null, wordListsMap);
             SearchEngineResponseHitList mtasSearchResultPlus = se.searchKWIC(getIndexPaths(index), 
                     query.getReplacedQueryString(), null, 1, 
-                    mtasSearchResult.getHitsTotal(), true, null);
+                    mtasSearchResult.getHitsTotal(), true, null, wordListsMap);
 
             final long timeEnd_search = System.currentTimeMillis();
             long millis_search = timeEnd_search - timeStart_search;
@@ -277,9 +307,9 @@ public abstract class AbstractSearcher {
         }else{
         
             SearchEngineResponseStatistics mtasSearchResultPre = se.searchMetadataStatistics(getIndexPaths(index), 
-                        query.getReplacedQueryString(), null, 1, Constants.DEFAULT_PAGE_LENGTH, SortTypeEnum.ABS_DESC, tokenAttribute);
+                        query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), 1, Constants.DEFAULT_PAGE_LENGTH, SortTypeEnum.ABS_DESC, tokenAttribute, wordListsMap);
             SearchEngineResponseStatistics mtasSearchResult = se.searchMetadataStatistics(getIndexPaths(index), 
-                        query.getReplacedQueryString(), null, 1, mtasSearchResultPre.getNumberOfDistinctValues(), SortTypeEnum.ABS_DESC, tokenAttribute);
+                        query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), 1, mtasSearchResultPre.getNumberOfDistinctValues(), SortTypeEnum.ABS_DESC, tokenAttribute, wordListsMap);
 
             final long timeEnd_search = System.currentTimeMillis();
             long millis_search = timeEnd_search - timeStart_search;
@@ -315,10 +345,7 @@ public abstract class AbstractSearcher {
 
         // set index
         DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
-        
-        // create a list for additional search constraints
-         ArrayList<AdditionalSearchConstraint> additionalSearchConstraints = new ArrayList();
-        
+
         // create a list with repetition-objects
         ArrayList<Repetition> repetitions = new ArrayList();
         
@@ -367,7 +394,7 @@ public abstract class AbstractSearcher {
                throw new SearchServiceException ("Please check the xml format of synonyms!");
             }
         }
-
+        
         
         /* Search with MTAS using cqp query language */
         final long timeStart_search = System.currentTimeMillis();
@@ -375,7 +402,7 @@ public abstract class AbstractSearcher {
         MTASBasedSearchEngine se = new MTASBasedSearchEngine();
         SearchEngineResponseHitList mtasSearchResult = se.searchRepetitions(getIndexPaths(index), 
                 query.getReplacedQueryString(), metadataQuery.getAdditionalMetadata(), pagination.getPageStartIndex() + 1, 
-                pagination.getPageStartIndex() + pagination.getItemsPerPage(), count, metadataIDs, repetitions, synonymMap);
+                pagination.getPageStartIndex() + pagination.getItemsPerPage(), count, metadataIDs, repetitions, synonymMap, wordListsMap);
 
         final long timeEnd_search = System.currentTimeMillis();
         long millis_search = timeEnd_search - timeStart_search;

@@ -298,4 +298,6 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
     
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR="\\|";
+    
+    public static final String CUSTOM_WORDLISTS_KEY = "wordLists";
 }

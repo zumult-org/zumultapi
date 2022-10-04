@@ -6,6 +6,7 @@
 package org.zumult.backend.implementations;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
@@ -26,7 +27,6 @@ import org.zumult.query.SearchResult;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.Searcher;
-import org.zumult.query.implementations.DGD2Searcher;
 
 /**
  *
@@ -137,46 +137,50 @@ public abstract class AbstractBackend implements BackendInterface {
     
     @Override
     public IDList searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, 
-            String metadataQuery, String searchIndex, String transcriptID, String tokenAttribute) throws SearchServiceException, IOException{
+            String metadataQuery, String searchIndex, String transcriptID, String tokenAttribute, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException{
         Searcher searcher = getSearcher();
         searcher.setQuery("("+ queryString + ")"+ " within <"+ Constants.METADATA_KEY_TRANSCRIPT_DGD_ID +"=\"" + transcriptID + "\"/>", queryLanguage, queryLanguageVersion);
         // changed 07-07-2022, issue #45
         String eventID = getEvent4SpeechEvent(getSpeechEvent4Transcript(transcriptID));        
         //searcher.setCollection("corpusSigle=" + getCorpus4Event(getEvent4Transcript(transcriptID)), metadataQuery);
         searcher.setCollection("corpusSigle=" + getCorpus4Event(eventID), metadataQuery);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
         return searcher.searchTokensForTranscript(searchIndex, tokenAttribute);
 
     }
 
     @Override
-    public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String searchIndex) throws SearchServiceException, IOException {
+    public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String searchIndex, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
         Searcher searcher = getSearcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
         searcher.setCollection(corpusQuery, metadataQuery);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
         return searcher.search(searchIndex);
     }
     
     @Override
     public SearchResultPlus search(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
-            Boolean cutoff, String searchIndex, IDList metadataIDs) throws SearchServiceException, IOException {
+            Boolean cutoff, String searchIndex, IDList metadataIDs, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
                         
         Searcher searcher = getSearcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
         searcher.setCollection(corpusQuery, metadataQuery);
         searcher.setPagination(pageLength , pageIndex);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
         return searcher.search(searchIndex, cutoff, metadataIDs);
     }
     
     @Override
     public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
-            Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {
+            Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
                         
         Searcher searcher = getSearcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
         searcher.setCollection(corpusQuery, metadataQuery);
         searcher.setPagination(pageLength , pageIndex);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
         return searcher.searchRepetitions(searchIndex, cutoff, metadataIDs, repetitions, synonyms);
     }
     

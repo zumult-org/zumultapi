@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
@@ -424,12 +425,13 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         */
     @Override
     public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery,
-            String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode) throws SearchServiceException, IOException {
+            String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
         
         Searcher searcher = new DGD2Searcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
         searcher.setCollection(corpusQuery, metadataQuery);
         searcher.setPagination(pageLength , pageIndex);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
         if (metadataKeyID != null && !metadataKeyID.isEmpty()){
             MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
             if (mk==null){
