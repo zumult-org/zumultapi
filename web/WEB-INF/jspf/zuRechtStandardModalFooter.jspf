@@ -1,0 +1,4 @@
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btnCancel" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
+    <button type="button" class="btn btn-success btnOK">OK</button>
+</div>

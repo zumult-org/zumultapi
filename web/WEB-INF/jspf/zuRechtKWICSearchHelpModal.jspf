@@ -1,0 +1,5 @@
+<div class="modal fade" id="modal-queryHelp" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content"></div>
+    </div>
+</div>

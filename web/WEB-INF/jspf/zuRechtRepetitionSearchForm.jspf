@@ -1,0 +1,12 @@
+<form id="repetition-search-form" autocomplete="off">
+    <p><%=myResources.getString("SpecifyTheElementYouAreLookingFor")%></p>
+    <div class="row-div" style="display: flex;">
+        <%@include file="zuRechtFileUpload.jspf" %> 
+        <div class="input-group mb-1">                                   
+            <input type="text" id="repetitionQueryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("ForExample")%> [pos=&quot;NN&quot;]">
+            <%@include file="zuRechtContext.jspf" %>
+            <%@include file="zuRechtSearchButtonsGroup.jspf" %>
+        </div> 
+    </div>
+    <%@include file="zuRechtRepetitionProperties.jspf" %>                                
+</form>

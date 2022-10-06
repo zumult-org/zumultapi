@@ -1,0 +1,55 @@
+<form id="kwic-search-form" autocomplete="off">
+    <p><%=myResources.getString("EnterYourCQP")%></p>
+    <div class="input-group mb-3">
+        
+        <!-- input group prepend with search mode options -->
+        <div class="input-group-prepend searchTypeSelect">
+            <button type="button" class="btn btn-success border-success btn-sm dropdown-toggle" data-toggle="dropdown"> 
+                <span class="currentVal"><%=myResources.getString("SearchMode")%></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a class="dropdown-item" data-text="<%=myResources.getString("SearchByIndividualSpeakers")%>" data-value="<%=DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name()%>" href="#">
+                        <span><i class="fa fa-user"></i></span>
+                        <span><%=myResources.getString("SearchByIndividualSpeakers")%></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" data-text="<%=myResources.getString("SearchInTranscript")%>" data-value="<%=DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX.name()%>" href="#">
+                        <span><i class="fa fa-copy"></i></span>
+                        <span><%=myResources.getString("SearchInTranscript")%></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- cqp input field -->
+        <input type="text" id="queryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("SearchInputFieldPlaceholder")%> ">
+        
+        <!-- hidden search options -->
+        <%@include file="zuRechtContext.jspf" %> 
+        <input type="hidden" id="searchType" value="<%=DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX.name()%>">
+        <input type="hidden" name="simpleQuerySyntaxLevel" id="simpleQuerySyntaxLevel" value="norm"/>
+        <input type="hidden" name="customWordLists" class="customWordLists" value=""/>
+        
+        <!-- input group append with buttons for search, search options and search help -->
+        <%@include file="zuRechtSearchButtonsGroup.jspf" %>
+    </div>
+
+    
+    <span class='form-check float-left' style="margin-left: 10px;">
+        <!-- punctuation options -->
+        <input type="checkbox" class="form-check-input" checked name="punctCheck" id="punctCheck">
+        <label class="form-check-label" for="punctCheck"><%=myResources.getString("IgnorePunctuation")%></label>
+        
+        <!-- button for opening the modal window for custom variables and wordlists -->
+        <button type="button" id="open-my-vocabulary-lists-btn" class="btn btn-light btn-sm ml-2"><%=myResources.getString("MyWordLists")%></button>
+    </span>
+    
+    <!-- sample queries -->
+    <p class="collapsible" id="examples-collapsible" onclick="openContent(this)"><%=myResources.getString("Examples")%></p>
+    <div class="content" id="sampleQueries-content">
+        <select id="sampleQueries" class="form-control form-control-sm" size="7"></select>
+    </div>
+
+</form>

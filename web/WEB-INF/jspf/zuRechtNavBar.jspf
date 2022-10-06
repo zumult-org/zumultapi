@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-sm">
+    <h3 class="font-weight-bold mr-3">ZuRecht</h3><%=myResources.getString("ZuRechtSubtitle")%>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="http://zumult.ids-mannheim.de/ProtoZumult/"><%=myResources.getString("Home")%></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://zumult.org/"><%=myResources.getString("Project")%></a>
+            </li>
+        </ul>
+
+    <select id="selectLang" class="ml-3" style="width: 100px;">
+        <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
+        <option value="en"<%if (!currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
+    </select>
+        
+    <!--<a id="logout" class="btn navbar-btn btn-light btn-sm" href=""><span><i class="fa fa-sign-out"></i></span> <%=myResources.getString("Logout")%></a>-->
+</nav>

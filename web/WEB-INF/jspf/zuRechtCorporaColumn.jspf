@@ -1,0 +1,35 @@
+   
+                <div id="corpora-card" class="card checkbox-container-card mb-3" style="max-width: 20rem;">
+                    <!-- <div id="corpora-card" class="card mb-3 shadow p-3" style="max-width: 20rem;"> -->
+                    <div class="card-header"><%=myResources.getString("AvailableCorpora")%><button id="corpus-info-button" type="button" class="btn btn-sm float-right"><span class="icon"><i class='fa fa-info'></i></span></button></div>
+
+                    <div class="card-body" id="corpus-checkbox-container">
+
+                            <% IDList corpusIDsForIndexing = backend.getCorporaForSearch(null);
+                                for (String corpusId: corpusIDsForIndexing){
+                                    %> 
+                            <div class="corpora custom-control custom-checkbox">
+                            <input class="custom-control-input" name="corpus" type="checkbox" id="<%=corpusId.replaceAll("-","")%>" value="<%=corpusId%>"
+                                   <% 
+                                       if (userSpecifiedCorpora!=null){
+
+                                        if(userSpecifiedCorpora.contains(corpusId)){
+                                           %>
+                                            checked
+                                   <%   }
+                                    } else {
+                                        if (corpusId.equals(Constants.DEFAULT_CORPUS)){ %>
+                                            checked
+                                        <%}
+                                    }%>
+                                                   />
+                            <label class="custom-control-label" for="<%=corpusId.replaceAll("-","")%>">
+                             <%=corpusId.replaceAll("-","")%>
+                            </label>
+
+                            </div>
+
+                            <% }  %>
+
+                    </div>
+                </div>
