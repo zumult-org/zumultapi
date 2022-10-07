@@ -29,7 +29,6 @@
         <!-- hidden search options -->
         <%@include file="zuRechtContext.jspf" %> 
         <input type="hidden" id="searchType" value="<%=DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX.name()%>">
-        <input type="hidden" name="simpleQuerySyntaxLevel" id="simpleQuerySyntaxLevel" value="norm"/>
         <input type="hidden" name="customWordLists" class="customWordLists" value=""/>
         
         <!-- input group append with buttons for search, search options and search help -->

@@ -291,17 +291,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /************ click events for cancel buttons **********************************/
                 
                 $("#modal-repetitionsTabOptions").find('.btnCancel').on('click',function(){
-                    abortConfigPageLength('#modal-repetitionsTabOptions', '#repetition-search-form');
-                    abortConfigContext('#modal-repetitionsTabOptions', '#repetition-search-form');
+                    abortKWICSearchOptions(this, '#repetition-search-form');
                 });
                 
                 $("#modal-searchTabOptions").find('.btnCancel').on('click',function(){
-                    abortConfigPageLength("#modal-searchTabOptions", '#kwic-search-form');
-                    abortConfigContext("#modal-searchTabOptions", '#kwic-search-form');
-                    
-                    var selectedOption = $("#simpleQuerySyntaxLevel").val();
-                    $('#customSimpleQuerySyntaxLevel').val(selectedOption);
-                    
+                    abortKWICSearchOptions(this, '#kwic-search-form');               
                 });
                 
                 $("#modal-vocabularyTabOptions").find('.btnCancel').on('click',function(){
@@ -325,26 +319,18 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /************ click events for ok buttons **********************************/
                 
                 $("#modal-repetitionsTabOptions").find('.btnOK').on('click',function(){
-                    configurePageLength('#modal-repetitionsTabOptions', '#repetition-search-form');
-                    configureContext('#modal-repetitionsTabOptions', '#repetition-search-form');
-                    $('#modal-repetitionsTabOptions').modal('hide');
+                    setKWICSearchOptions(this, '#repetition-search-form');
+                });
+                
+                $("#modal-searchTabOptions").find('.btnOK').on('click',function(){
+                    setKWICSearchOptions(this, '#kwic-search-form');
                 });
 
                 $("#modal-myVocabularyLists").find('.btnOK').on('click',function(){
                     checkAndSaveCustomVariables("#modal-myVocabularyLists");
                 });
                 
-                $("#modal-searchTabOptions").find('.btnOK').on('click',function(){
-                    var modalWindow = $(this).closest('.modal');
-                    
-                    configurePageLength(modalWindow, '#kwic-search-form');
-                    configureContext(modalWindow, '#kwic-search-form');
-                    
-                    var selectedLevel = $('#customSimpleQuerySyntaxLevel option:selected').val();
-                    $("#simpleQuerySyntaxLevel").val(selectedLevel);
-                    
-                    $(modalWindow).modal('hide');
-                });
+
                 
                 $("#modal-audioPlayNotShowAnymore-btn").on('click', function(){
                     playMessage = false;
@@ -792,24 +778,30 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
    
                     },
                     error: function(xhr, status, error){
-                        $(selector).find(".wait-query-tab").css("display", "none");
-                        if (status === "timeout"){
-                            alert('Your request will take a long time.' +
-                                    ' Please constrain the search query, ' + 
-                                    'e.g. to a certain lemma: [lemma=\"wissen\"],'+
-                                    ' a certain part of speech: [pos=\"NN\"] or '+
-                                    'a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. '+
-                                    'You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>');
-                        } else if (status === "abort"){
-                            //ignore
-                        }else {
-                            if (xhr.responseText.startsWith("Please check the query syntax")){
-                                var errorMessage = xhr.responseText +  "\n\n<%=myResources.getString("QueryHelpMessage")%>";
-                                alert(errorMessage);
-                            }else{
-                                // show error message
-                                var errorMessage = xhr.status + ' (' + xhr.statusText + ") " + xhr.responseText;
-                                alert('Error: ' + errorMessage);
+                        if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
+                           ajaxRepetitionSearchRequest = ajaxCallToGetKWICForRepetitions(selector, url, completeSearchQuerySyntax(q, selector), corpusQueryStr,  pageLength, pageIndex, searchType, context, repetitions, synonyms, wordLists);                          
+                        }else{
+                        
+                            $(selector).find(".wait-query-tab").css("display", "none");
+                            if (status === "timeout"){
+                                alert('Your request will take a long time.' +
+                                        ' Please constrain the search query, ' + 
+                                        'e.g. to a certain lemma: [lemma=\"wissen\"],'+
+                                        ' a certain part of speech: [pos=\"NN\"] or '+
+                                        'a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. '+
+                                        'You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>');
+                            } else if (status === "abort"){
+                                //ignore
+                            }else {
+                                if (xhr.responseText.startsWith("Please check the query syntax")){
+                                    var errorMessage = xhr.responseText +  "\n\n<%=myResources.getString("QueryHelpMessage")%>";
+                                    alert(errorMessage);
+                                }else{
+                                    // show error message
+                                    var errorMessage = xhr.status + ' (' + xhr.statusText + ") " + xhr.responseText;
+                                    alert('Error: ' + errorMessage);
+                                }
+
                             }
                         }
                     }
@@ -817,7 +809,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            }
 
             function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context){                        
-                         
+            
                 ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
@@ -831,7 +823,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     },
                     error: function(xhr, status, error){
                         if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
-                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context);                          
+                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q, selector), corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context);                          
                         }else {
                             $(selector).find(".wait-query-tab").css("display", "none");
                             if (status === "abort"){
@@ -1453,6 +1445,21 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*             other help methods          */
             /**************************************************/
 
+            function setKWICSearchOptions(obj, formSelector){
+                var modalWindow = $(obj).closest('.modal');  
+                configurePageLength(modalWindow, formSelector);
+                configureContext(modalWindow, formSelector);
+                configureSimpleSearchOption(modalWindow, formSelector);
+                $(modalWindow).modal('hide');
+            }
+            
+            function abortKWICSearchOptions(obj, formSelector){
+                var modalWindow = $(obj).closest('.modal'); 
+                abortConfigPageLength(modalWindow, formSelector);
+                abortConfigContext(modalWindow, formSelector);
+                abortSimpleSearchOption(modalWindow, formSelector);
+            }
+
             function createXMLElement(name, content){
                 if(content!==''){
                     content = "<" + name 
@@ -1482,13 +1489,21 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                
 
-
+            function abortSimpleSearchOption(selectorModal, selectorForm){
+                var selectedOption = $(selectorForm).find('.simpleQuerySyntaxLevel').val();
+                    $(selectorModal).find('.customSimpleQuerySyntaxLevel').val(selectedOption);
+            }
 
             function abortConfigPageLength(selectorModal, selectorForm){
                 var selectedOption = $(selectorForm).find('.pageLength').val();
                 $(selectorModal).find('.customPageLength').val(selectedOption);
             }
 
+            function configureSimpleSearchOption(selectorModal, selectorForm){ 
+                var selectedLevel = $(selectorModal).find('.customSimpleQuerySyntaxLevel option:selected').val();
+                $(selectorForm).find('.simpleQuerySyntaxLevel').val(selectedLevel);
+            }
+            
             function configurePageLength(selectorModal, selectorForm){
                 var selectedOption = $(selectorModal).find('.customPageLength option:selected').text();
                 $(selectorForm).find('.pageLength').val(selectedOption);       
@@ -1528,21 +1543,26 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }       
             }
          
-            function completeSearchQuerySyntax(q){
-                var simpleQuerySyntaxLevel = $("#simpleQuerySyntaxLevel").val();
-                var split = q.split(" ");
-                q = "";
-                for (var i = 0; i < split.length; i++) {
-                    var w = split[i];
-                    if(!w.startsWith("\"")){
-                        w = "\""+w; 
-                    }
-                    if(!w.endsWith("\"")){
-                        w = w+"\""; 
-                    }
-                    q = q+"["+simpleQuerySyntaxLevel+"="+ w + "]";
-                    if (i<q.length-1){
-                        q=q+" "; 
+            function completeSearchQuerySyntax(queryStr, selector){
+                var simpleQuerySyntaxLevel = $(selector).parent().find("form:first").find('.simpleQuerySyntaxLevel').val();
+                var q = "";        
+                if(queryStr.startsWith('$')){
+                    q = "["+simpleQuerySyntaxLevel+"="+ queryStr + "]";
+                }else{
+                    var split = queryStr.split(" ");
+                    
+                    for (var i = 0; i < split.length; i++) {
+                        var w = split[i];
+                        if(!w.startsWith("\"")){
+                            w = "\""+w; 
+                        }
+                        if(!w.endsWith("\"")){
+                            w = w+"\""; 
+                        }
+                        q = q+"["+simpleQuerySyntaxLevel+"="+ w + "]";
+                        if (i<q.length-1){
+                            q=q+" "; 
+                        }
                     }
                 }
                 return q;
@@ -2086,7 +2106,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             async function writeCustomVarForQuery(selectorForm, query){
                 var result ="";
                     for (let [key, value] of customVarMap) {           
-                        if (query.includes(key + " ") || query.includes(key + "]") ){
+                        if (query.includes(key + " ") || query.includes(key + "]") || query===key ){
                             let text = await readWordListAsCommaSeparated(key, value);
                             result = result + key.substring(1) + ":" + text + ";";
                         }

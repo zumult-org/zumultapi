@@ -6,7 +6,8 @@
             </div>
             <div class="modal-body">
                 <%@include file="zuRechtPageLengthOptions.jspf" %>
-                <%@include file="zuRechtContextOptions.jspf" %> 
+                <%@include file="zuRechtContextOptions.jspf" %>
+                <%@include file="zuRechtSimpleSearchOptions.jspf" %>
             </div>
             <%@include file="zuRechtStandardModalFooter.jspf" %> 
         </div>

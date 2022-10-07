@@ -2,3 +2,4 @@
 <input type="hidden" name="pageLength" class="pageLength" value="20"/>
 <input type="hidden" name="leftContext" class="leftContext" value="3"/>
 <input type="hidden" name="rightContext" class="rightContext" value="3"/>
+<input type="hidden" name="simpleQuerySyntaxLevel" class="simpleQuerySyntaxLevel" value="norm"/>
