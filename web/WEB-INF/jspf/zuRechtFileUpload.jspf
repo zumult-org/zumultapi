@@ -9,5 +9,5 @@
                placeholder="<%=myResources.getString("ChooseYourFile")%>" />
         <i class="fa fa-trash-o ml-2 mt-1 trashIconBtn" aria-hidden="true" onClick="deleteFile(this)" ></i>
     </div>
-    <input type="file" class="customFile" hidden="true" onchange="on(this)"   />
+    <input type="file" class="customFile" hidden="true" onchange="displayFileName(this)"   />
 </div> 

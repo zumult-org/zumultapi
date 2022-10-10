@@ -44,14 +44,12 @@ button:disabled {cursor: not-allowed; pointer-events: all !important;}
 /*#kwic-search-form .btn { background-color: #f8991d; color: white; border-color: #4d7997;}*/
 #queryInputField {border-color: #4d7997;}
 #sampleQueries-content .form-control option:checked  {background-color: #89B4D9;}
-#btn-open-query-help{background-color: #d9edf7;}
 
 #open-my-vocabulary-lists-btn {border-color:#C7C8CA;}
 .trashIconBtn:hover {color: #337AB7;}
 .trashIconBtn {cursor: pointer;}
 
 /***************** repetition search form style ****************************************/
-#btn-open-repetitions-help {background-color: #d9edf7;}
 .firstInRow {width:350px; float:left;}
 .firstInRowPrepend {width:225px;}
 
@@ -62,7 +60,6 @@ button:disabled {cursor: not-allowed; pointer-events: all !important;}
 #vocabulary-lists-card .card-header {color: #337AB7; background-color: #f3f3f3; font-size: 18px; }
 /*#open-thematic-vocabulary-lists-btn {box-shadow: 0 0 0 2px #5cb85c, 0 0 0 0.2rem rgba(92, 184, 92, 0.25);}*/
 #open-thematic-vocabulary-lists-btn {/*border-color: #337AB7; background-color: #d9edf7; color: #337AB7; */ font-size : 15px; }
-#btn-open-vocabulary-help {background-color: #d9edf7;}
 .custom-file-label::after {left: 0; right: auto; border-left-width: 0; border-right: inherit;}
 .custom-file-label{ padding-left: 90px;}
 
@@ -146,3 +143,6 @@ th.numbering {text-align: left;}
 #autocompleteForQueryInputField .card-header {color: #337AB7; background-color: #f3f3f3; font-size: 14px; font-family:Lucida Sans Unicode;}
 #autocompleteForQueryInputField .card-header:hover{cursor: pointer;}
 #autocompleteForQueryInputField .card-body {padding-top: 0px; padding-right: 0px; padding-bottom: 0px;}
+
+/****************** help *************************/
+.btn-open-help{background-color: #d9edf7;}

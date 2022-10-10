@@ -1,0 +1,13 @@
+<div class="modal" id="modal-myVocabularyLists" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><%=myResources.getString("MyWordLists")%></h2>                             
+            </div>
+            <div class="modal-body">
+                <%@include file="zuRechtCustomVariables.jspf" %>
+            </div>
+            <%@include file="zuRechtStandardModalFooter.jspf" %>
+        </div>          
+    </div>
+</div>

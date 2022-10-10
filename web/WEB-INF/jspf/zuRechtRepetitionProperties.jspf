@@ -21,9 +21,9 @@
                     <option value=4 ><%=myResources.getString("SameTranscriptionDiffNorm")%></option>
                     <option value=5 ><%=myResources.getString("SameNormDiffTranscription")%></option>
                     <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>
-                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
+            <!--        <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
                     <option value=8 ><%=myResources.getString("ExtendedSearchWithOwnLemmaList")%></option>
-                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>
+                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>-->
                 </select>                          
             </div>
         </div>

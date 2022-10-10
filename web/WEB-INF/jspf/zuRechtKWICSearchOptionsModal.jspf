@@ -1,0 +1,15 @@
+<div class="modal" id="modal-searchTabOptions" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>                     
+            </div>
+            <div class="modal-body">    
+                <%@include file="zuRechtPageLengthOptions.jspf" %>
+                <%@include file="zuRechtContextOptions.jspf" %> 
+                <%@include file="zuRechtSimpleSearchOptions.jspf" %>
+            </div>
+            <%@include file="zuRechtStandardModalFooter.jspf" %>
+        </div>
+    </div>
+</div>

@@ -114,79 +114,22 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         <% String maxNumberForDownload =  String.valueOf(Constants.MAX_NUMBER_FOR_KWIC_DOWNLOAD); %>
       
         <!-- navigation  -->
-      
-        <nav class="navbar navbar-expand-sm">
- 
-        
-        <h3 class="font-weight-bold mr-3">ZuRecht</h3><%=myResources.getString("ZuRechtSubtitle")%>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="http://zumult.ids-mannheim.de/ProtoZumult/"><%=myResources.getString("Home")%></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" target="_blank" href="https://zumult.org/"><%=myResources.getString("Project")%></a>
-            </li>
-          </ul>
+        <%@include file="../WEB-INF/jspf/zuRechtNavBar.jspf" %>
 
-        <select id="selectLang" class="ml-3" style="width: 100px;">
-            <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
-            <option value="en"<%if (!currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
-        </select>
-        
-        <!--<a id="logout" class="btn navbar-btn btn-light btn-sm" href=""><span><i class="fa fa-sign-out"></i></span> <%=myResources.getString("Logout")%></a>-->
-        </nav>
         <br/>
-
         <div class="container-fluid">
             <div class="row">
-
-<!------------------------------------------- START: Corpora  ------------------------------------------>
-
-                <div class="col-md-2">    
-                <div id="corpora-card" class="card checkbox-container-card mb-3" style="max-width: 20rem;">
-                    <!-- <div id="corpora-card" class="card mb-3 shadow p-3" style="max-width: 20rem;"> -->
-                    <div class="card-header"><%=myResources.getString("AvailableCorpora")%><button id="corpus-info-button" type="button" class="btn btn-sm float-right"><span class="icon"><i class='fa fa-info'></i></span></button></div>
-
-                    <div class="card-body" id="corpus-checkbox-container">
-
-                            <% IDList corpusIDsForIndexing = backend.getCorporaForSearch(null);
-                                for (String corpusId: corpusIDsForIndexing){
-                                    %> 
-                            <div class="corpora custom-control custom-checkbox">
-                            <input class="custom-control-input" name="corpus" type="checkbox" id="<%=corpusId.replaceAll("-","")%>" value="<%=corpusId%>"
-                                   <% 
-                                       if (userSpecifiedCorpora!=null){
-
-                                        if(userSpecifiedCorpora.contains(corpusId)){
-                                           %>
-                                            checked
-                                   <%   }
-                                    } else {
-                                        if (corpusId.equals(Constants.DEFAULT_CORPUS)){ %>
-                                            checked
-                                        <%}
-                                    }%>
-                                                   />
-                            <label class="custom-control-label" for="<%=corpusId.replaceAll("-","")%>">
-                             <%=corpusId.replaceAll("-","")%>
-                            </label>
-
-                            </div>
-
-                            <% }  %>
-
-                    </div>
+                
+                <!-- corpora -->
+                <div class="col-md-2"> 
+                    <%@include file="../WEB-INF/jspf/zuRechtCorporaColumn.jspf" %>
                 </div>
-            </div>
 
-<!------------------------------------------- END: Corpora  ------------------------------------------>
                 <!-- workspace -->
-
                 <div class="col-md-10">
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs small" role="tablist">
-                    <!-- <ul class="nav nav-tabs small justify-content-end" id="myTab" role="tablist">-->
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" id="query-tab" href="#query-tab-content" role="tab"><%=myResources.getString("Query")%></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" id="vocabulary-tab" href="#vocabulary-tab-content" role="tab"><%=myResources.getString("Vocabulary")%></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" id="repetitions-tab" href="#repetitions-tab-content" role="tab"><%=myResources.getString("Repetitions")%></a></li>
@@ -195,228 +138,26 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     <!-- Tab panes -->
                     <div class="tab-content">
 
-<!------------------------------------------- START: Query tab ------------------------------------------>
+                        <!-- Query tab -->
                         <div class="tab-pane mt-3 active" id="query-tab-content">
                             <h2><%=myResources.getString("SearchByQuery")%></h2>
-
-                            <!-- search form -->
-
-                            <form id="kwic-search-form" autocomplete="off">
-                                <p><%=myResources.getString("EnterYourCQP")%></p>
-                                <div class="input-group mb-3">
-                                    <!-- <div class="input-group mb-3 shadow p-3 rounded"> -->
-
-                                    <div class="input-group-prepend searchTypeSelect">
-                                    <!--    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"> -->
-                                        <button type="button" class="btn btn-success border-success btn-sm dropdown-toggle" data-toggle="dropdown"> 
-                                           <span class="currentVal"><%=myResources.getString("SearchMode")%></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a class="dropdown-item" data-text="<%=myResources.getString("SearchByIndividualSpeakers")%>" data-value="<%=DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name()%>" href="#">
-                                                    <span><i class="fa fa-user"></i></span>
-                                                    <span><%=myResources.getString("SearchByIndividualSpeakers")%></span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" data-text="<%=myResources.getString("SearchInTranscript")%>" data-value="<%=DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX.name()%>" href="#">
-                                                    <span><i class="fa fa-copy"></i></span>
-                                                    <span><%=myResources.getString("SearchInTranscript")%></span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <input type="hidden" id="searchType" value="<%=DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX.name()%>">
-                                    <input type="text" id="queryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("SearchInputFieldPlaceholder")%> ">
-                                    <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>                                    
-                                    <input type="hidden" name="simpleQuerySyntaxLevel" id="simpleQuerySyntaxLevel" value="norm"/>
-                                    <input type="hidden" name="customWordLists" class="customWordLists" value=""/>
-
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
-                                        <!-- <button type="submit" class="btn btn-sm"> -->
-                                            <span><i class="fa fa-search"></i></span>
-                                        </button>
-                                        <button type="button" class="btn border-success btn-sm px-3" data-toggle="modal" data-target="#modal-searchTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                          <span><i class="fa fa-ellipsis-v"></i></span>
-                                        </button>              
-                                        <button type="button" class="btn border-success btn-sm px-3" id="btn-open-query-help" title="<%=myResources.getString("OpenHelp")%>">
-                                          <span><i class="fa fa-question"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <span class='form-check float-left' style="margin-left: 10px;">
-                                    <input type="checkbox" class="form-check-input" checked name="punctCheck" id="punctCheck">
-                                    <label class="form-check-label" for="punctCheck"><%=myResources.getString("IgnorePunctuation")%></label>
-                                    <button type="button" id="open-my-vocabulary-lists-btn" class="btn btn-light btn-sm ml-2" data-toggle="modal" 
-                                            data-target="#modal-myVocabularyLists"><%=myResources.getString("MyWordLists")%></button>
-                                </span>
-                                <p class="collapsible" id="examples-collapsible" onclick="openContent(this)"><%=myResources.getString("Examples")%></p>
-                                <div class="content" id="sampleQueries-content">
-                                    <select id="sampleQueries" class="form-control form-control-sm" size="7"></select>
-                                </div>
-
-                            </form>
-
-                            <!-- Modals -->
-                            <div class="modal fade" id="modal-queryHelp" role="dialog">
-                                <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                                  <div class="modal-content"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="modal" id="modal-myVocabularyLists" role="dialog">
-                                <div class="modal-dialog modal-lg"> 
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h2 class="modal-title"><%=myResources.getString("MyWordLists")%></h2>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <%@include file="../WEB-INF/jspf/zuRechtCustomVariables.jspf" %>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                            <button type="button" class="btn btn-success btnOK">OK</button>
-                                        </div>
-                                    </div>          
-                                </div>
-                            </div>
-                            
-                            <div class="modal" id="modal-kwicDownloadOptions" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title"><%=myResources.getString("DownloadOptions")%></h2>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                    </div>      
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="customNumberOfHitsForDownload"><%=myResources.getString("NumberOfHitsForDownload")%></label>
-                                            <input class="form-control" type="number" min=1 max='<%=Constants.MAX_NUMBER_FOR_KWIC_DOWNLOAD%>' value='<%= defaultNumberForDownload%>' id="customNumberOfHitsForDownload">
-                                        </div>
-                                        <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
-                                        <div class="form-group">                                       
-                                            <label for="customMetadataForDownload"><%=myResources.getString("Metadata")%> (<%=myResources.getString("HoldCTRLToSelectAndDeselectMoreThanOne")%>):</label>
-                                            <select multiple class="form-control" id="customMetadataForDownload" size="10"></select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div id="modal-kwicDownloadOptions-spinner" class="float-left" style="display:none;">
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                                <%=myResources.getString("PreparingDownload")%>, <%=myResources.getString("PleaseWait").toLowerCase()%>...
-                                        </div>
-                                        <button type="button" id="modal-kwicDownloadOptions-btnOK" class="btn btn-success">
-                                            <i class="fa fa-download"></i> <%=myResources.getString("Download")%>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>        
-
-                            <div class="modal" id="modal-searchTabOptions" role="dialog">
-                                <div class="modal-dialog modal-dialog-scrollable">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                    </div>
-                                    <div class="modal-body">    
-                                        <%@include file="../WEB-INF/jspf/zuRechtPageLengthOptions.jspf" %>
-                                        <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
-                                        <%@include file="../WEB-INF/jspf/zuRechtSimpleSearchOptions.jspf" %>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                        <button type="button" class="btn btn-success btnOK">OK</button>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="modal" id="modal-audioPlayNotShowAnymore" role="dialog">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-
-                                    <div class="modal-body">
-                                        Please double click on the selected region in the oscillogram to play the audio!
-                                    </div>
-                                    <div class="modal-footer">               
-                                        <button type="button" id="modal-audioPlayNotShowAnymore-btn" class="btn btn-light btn-sm">Not show anymore</button>
-                                        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">OK</button>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <!-- result presentation area -->
+                            <%@include file="../WEB-INF/jspf/zuRechtKWICSearchForm.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtKWICSearchHelpModal.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtCustomVocabularyLists.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtKWICDownloadOptions.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtKWICSearchOptionsModal.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtAudioPlayInfoModal.jspf" %>
                             <div id="kwic-search-result-area" class="searchResultArea"></div>
-
-
                         </div>
 
-<!--------------------------------------------------- END: Query tab ---------------------------------->
 
-<!------------------------------------------- START: Vocabulary tab ------------------------------------------>
-
-
+                        <!-- Vocabulary tab -->
                         <div class="tab-pane mt-3" id="vocabulary-tab-content">
                             <div class="row">
                                 <div class="col">
 
                                     <h2><%=myResources.getString("SearchVocabularyLists")%></h2>
-                                    <form id="vocabulary-search-form">
-                                        <p><%=myResources.getString("UploadYourVocabularyFile")%> 
-                                        <button type="button" id="open-thematic-vocabulary-lists-btn" 
-                                                        class="btn btn-success btn-sm ml-2" data-toggle="modal" 
-                                                        data-target="#modal-thematicVocabularyLists"><%=myResources.getString("PreselectedThematicVocabulary")%></button>
-                                        </p>
-
-                                        <div class="input-group mb-3">
-                                            <div class="custom-file input-group-prepend">
-
-                                              <input type="file" style="display: none;" class="custom-file-input form-control-sm" id="customFile" name="filename">
-                                              <label class="custom-file-label text-left border-success col-form-label-sm" for="customFile"><%=myResources.getString("ChooseYourFile")%></label>
-
-
-                                            </div>
-                                            <input type="hidden" name="numberOfDocs" id="numberOfDocs" value="10"/>
-                                            <input type="hidden" name="sortType" id="sortType" value="<%=SortTypeEnum.ABS_DESC.name() %>"/>
-
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-success border-success btn-sm mb-1" title="<%=myResources.getString("SearchBtn")%>">
-                                                  <span><i class="fa fa-search"></i></span>
-                                                </button>
-                                                <button type="button" class="btn border-success btn-sm px-3 mb-1" data-toggle="modal" data-target="#modal-vocabularyTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                                  <span><i class="fa fa-ellipsis-v"></i></span>
-                                                </button>
-                                                <button type="button" class="btn border-success btn-sm px-3 mb-1" id="btn-open-vocabulary-help" title="<%=myResources.getString("OpenHelp")%>">
-                                                  <span><i class="fa fa-question"></i></span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="col"> 
-                                                <div class="form-check-inline">
-                                                    <label class="form-check-label" for="radio-lemma">
-                                                      <input type="radio" class="form-check-input" id="radio-lemma" name="vocabulary-list-type" value="lemma" checked><%=myResources.getString("LemmaList")%>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check-inline">
-                                                    <label class="form-check-label" for="radio-query">
-                                                      <input type="radio" class="form-check-input" id="radio-query" name="vocabulary-list-type" value="query"><%=myResources.getString("QueryList")%>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </form>
-
+                                    <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchForm.jspf" %>
 
                                     <div id="wait-vocabulary-tab" style="display:none;"><%=myResources.getString("LoadingSearch")%> <img src='../images/loading.gif' width="64" height="64" alt="Loading indicator"/></div>
 
@@ -426,215 +167,22 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     </div>
                                     <div class="table-wrapper table-responsive" id="statistics-result"></div>
 
-
-                                    <!-- Modals -->
-
-
-                                    <div class="modal fade" id="modal-vocabulary-queryHelp" role="dialog">
-                                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                                        <!-- <div class="modal-dialog mw-100 w-75" modal-dialog-scrollable> -->
-                                            <div class="modal-content">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="modal" id="modal-vocabularyTabOptions" role="dialog">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="customNumberOfDocs"><%=myResources.getString("DocumentsPerPage")%></label>
-                                                    <select class="form-control" id="customNumberOfDocs">
-                                                        <option>10</option>
-                                                        <option>50</option>
-                                                        <option>100</option>   
-                                                        <option>250</option>
-                                                  </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div><%=myResources.getString("SortBy")%></div>
-                                                    <div class="form-check-inline mt-2">
-                                                        <label class="form-check-label" for="radio-absolute">
-                                                                <input type="radio" class="form-check-input" id="radio-absolute" name="sort-type" value="<%=SortTypeEnum.ABS_DESC.name() %>" checked><%=myResources.getString("AbsoluteNumberOfHits")%>
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check-inline">
-                                                        <label class="form-check-label" for="radio-relative">
-                                                            <input type="radio" class="form-check-input" id="radio-relative" name="sort-type" value="<%=SortTypeEnum.REL_DESC.name() %>"><%=myResources.getString("RelativeNumberOfHits")%>
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check-inline">
-                                                        <label class="form-check-label" for="radio-relative">
-                                                            <input type="radio" class="form-check-input" id="radio-relative" name="sort-type" value="<%=SortTypeEnum.TYPES.name() %>"><%=myResources.getString("Types")%>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                                <button type="button" class="btn btn-success btnOK">OK</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal" id="modal-thematicVocabularyLists" role="dialog">
-                                        <div class="modal-dialog modal-xl"> 
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                                <!--<h2 class="modal-title">Thematic Vocabulary Lists</h2>-->
-                                                <h2 class="modal-title"><%=myResources.getString("PreselectedThematicVocabulary")%> <%=myResources.getString("ForRelevantTopicsInGFLDidactics")%></h2>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                            </div>
-                                            <div class="modal-body">
-                                                <!--<p>Here some text</p>-->
-                                                <div class="accordion md-accordion" id="thematic-vocabulary-list-accordion" role="tablist" aria-multiselectable="true">
-                                                    <%
-                                                        File inputDir = new File(getServletContext().getRealPath(Constants.THEMATIC_WORDLISTS_PATH)); 
-
-                                                        File[] files = inputDir.listFiles();
-                                                        if (files.length > 0){
-
-                                                            final Pattern pattern = Pattern.compile(Constants.WORD_FIELD_PATTERN, Pattern.DOTALL);
-
-                                                            //int index = 0;
-                                                            for (File file : files) {
-                                                                String path = file.getPath();
-                                                                final Matcher matcher = pattern.matcher(path);
-                                                                if(matcher.find()){
-                                                                    //index = index+1;
-                                                                    String id = matcher.group(1);
-                                                                    String topic = id.replace("_"," ");
-
-                                                                    %>
-
-                                                                    <div class="card" id="vocabulary-lists-card">
-
-                                                                    <div class="card-header" role="tab" id="<%="vocabulary-list-topic-"+id%>">
-                                                                        <div class="form-check">
-
-                                                                            <input type="radio" class="form-check-input mt-2" id="<%="radio-"+id%>" name="vocabulary-list-name" value="<%=id%>" checked>
-
-                                                                            <label class="form-check-label" for="<%="radio-"+id%>">
-                                                                              <a data-toggle="collapse" href="<%="#vocabulary-list-content-"+id%>"
-                                                                                aria-expanded="false"><%=topic%>
-                                                                                <!--<span class="icon mr-3"><i class='fa fa-angle-down'></i></span>-->
-                                                                              </a>     
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div id="<%="vocabulary-list-content-"+id%>" class="collapse" role="tabpanel" aria-labelledby="<%="vocabulary-list-topic-"+id%>" data-parent="#thematic-vocabulary-list-accordion">
-                                                                        <div class="m-3 vocabulary-list-content" id='<%=id%>'>
-
-                                                                    <%
-                                                                        Scanner fileReader = new Scanner(file, "utf-8");
-                                                                        while (fileReader.hasNextLine()) {
-                                                                              String line = fileReader.nextLine();
-
-                                                                              %>  <%=line.replaceAll("<", "&lt;").replaceAll(">", "&gt;")%><br/> <%
-                                                                        }
-                                                                        fileReader.close();
-
-                                                                    %>
-                                                                        </div>
-                                                                </div>
-                                                            </div>
-                                                                <%
-                                                                }
-
-                                                            }
-                                                        }else{
-                                                            %>
-
-                                                                <div class="card">
-                                                                    <div class="card-header"><%=myResources.getString("NoVocabularyListsAvailable")%></div>
-                                                                </div>
-
-                                                            <%
-                                                        }
-
-
-                                                    %>
-
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer justify-content-between">
-                                                <button type="button" class="btn btn-success" id="modal-thematicVocabularyLists-btnQuery"><%=myResources.getString("SearchBtn")%>
-                                                </button>
-                                                <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
+                                    <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchHelpModal.jspf" %>
+                                    <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchOptionsModal.jspf" %>
+                                    <%@include file="../WEB-INF/jspf/zuRechtThematicVocabularyLists.jspf" %>
+                                              
                                 </div>
                             </div>
                         </div>
 
-<!------------------------------------------- END: Vocabulary tab ------------------------------------------>
-
-<!------------------------------------------- START: Repetitions tab ------------------------------------------>
+                        <!-- Repetitions tab -->
                         <div class="tab-pane mt-3" id="repetitions-tab-content">
                             <h2><%=myResources.getString("SearchForRepetitions")%></h2>
-                            <form id="repetition-search-form" autocomplete="off">
-                                <p><%=myResources.getString("SpecifyTheElementYouAreLookingFor")%></p>
-
-                                <div class="row-div" style="display: flex;">
-
-                                    <%@include file="../WEB-INF/jspf/zuRechtFileUpload.jspf" %> 
-                                      
-                                    <div class="input-group mb-1">                                   
-                                        <input type="text" id="repetitionQueryInputField" class="form-control form-control-sm border-success inputFieldWithAutocomplete" required="required" placeholder="<%=myResources.getString("ForExample")%> [pos=&quot;NN&quot;]">
-                                        <%@include file="../WEB-INF/jspf/zuRechtContext.jspf" %>
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-success border-success btn-sm" title="<%=myResources.getString("SearchBtn")%>">
-                                                <span><i class="fa fa-search"></i></span>
-                                            </button>
-                                            <button type="button" class="btn border-success btn-sm px-3" data-toggle="modal" data-target="#modal-repetitionsTabOptions" title="<%=myResources.getString("OpenPanelWithSearchOptions")%>">
-                                              <span><i class="fa fa-ellipsis-v"></i></span>
-                                            </button>              
-                                            <button type="button" class="btn border-success btn-sm px-3" id="btn-open-repetitions-help" title="<%=myResources.getString("OpenHelp")%>">
-                                              <span><i class="fa fa-question"></i></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                  
-                                </div>
-                                <%@include file="../WEB-INF/jspf/zuRechtRepetitionProperties.jspf" %>
-                                
-                            </form>
-                                          
-                            <!-- Modals -->
-                            
-                            <div class="modal" id="modal-repetitionsTabOptions" role="dialog">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h2 class="modal-title"><%=myResources.getString("SearchOptions")%></h2>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>     
-                                    </div>
-                                    <div class="modal-body">
-                                        <%@include file="../WEB-INF/jspf/zuRechtPageLengthOptions.jspf" %>
-                                        <%@include file="../WEB-INF/jspf/zuRechtContextOptions.jspf" %> 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-dismiss="modal"><%=myResources.getString("Cancel")%></button>
-                                        <button type="button" class="btn btn-success btnOK">OK</button>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            
-                            <!-- result presentation area -->
+                            <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchForm.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchOptionsModal.jspf" %>
                             <div id="repetition-search-result-area" class="searchResultArea"></div>
                         </div>
-<!------------------------------------------- END: Repetitions tab ------------------------------------------>
+
                     </div>
                 </div>
             </div>
@@ -702,90 +250,144 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     urlTest.searchParams.set('lang',value);
                     window.location = urlTest;
                 });
-                
-                //opens a modal window with query help information
-                $('#btn-open-query-help').on("click", function(){
-                    $('#modal-queryHelp').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
-                }); 
+                             
                 
                 
-                // set context options according to url parameters
-                    <%
+                /********** setting context and page options according to url parameters **************/
+                    <%    
+                    
+                    if(pageParam_count!=null){
+                        %>
+                        var countValue = '<%= pageParam_count%>';
+                        $('#modal-searchTabOptions').find('.customPageLength option').each(function(){
+                            if (this.value == countValue) {
+                                $('#kwic-search-form').find('.pageLength').val(countValue);
+                                $(this).parent().val(countValue);
+                                return false;
+                            }
+                        });
+                        <%
+                    }
+                    
                     
                     if(pageParam_leftContext!=null){
-                    %>
-                    var leftContextValue = '<%=pageParam_leftContext%>';
-                    $('#modal-searchTabOptions').find(":text.customLeftContextLength").val(leftContextValue);
-                    $('#kwic-search-form').find('.leftContext').val(leftContextValue);
-                    <%
-                }
+                        %>
+                        var leftContextValue = '<%=pageParam_leftContext%>';
+                        $('#modal-searchTabOptions').find(":text.customLeftContextLength").val(leftContextValue);
+                        $('#kwic-search-form').find('.leftContext').val(leftContextValue);
+                        <%
+                    }
 
                     if(pageParam_rightContext!=null){
                     %>
-                    var rightContextValue = '<%=pageParam_rightContext%>';
-                    $('#modal-searchTabOptions').find('.customRightContextLength').val(rightContextValue);
-                    $('#kwic-search-form').find('.rightContext').val(rightContextValue);
-                    <%
-                }
+                        var rightContextValue = '<%=pageParam_rightContext%>';
+                        $('#modal-searchTabOptions').find('.customRightContextLength').val(rightContextValue);
+                        $('#kwic-search-form').find('.rightContext').val(rightContextValue);
+                        <%
+                    }
                     %>
  
-                $("#modal-repetitionsTabOptions").find('.btnOK').on('click',function(){
-                    configurePageLength('#modal-repetitionsTabOptions', '#repetition-search-form');
-                    configureContext('#modal-repetitionsTabOptions', '#repetition-search-form');
-                    
-                    $('#modal-repetitionsTabOptions').modal('hide');
+ 
+                /************ click events for cancel buttons **********************************/
+                
+                $("#modal-repetitionsTabOptions").find('.btnCancel').on('click',function(){
+                    abortKWICSearchOptions(this, '#repetition-search-form');
                 });
-
-                $("#modal-myVocabularyLists").find('.btnOK').on('click',function(){
-                    var modalWindow = $(this).closest('.modal');
+                
+                $("#modal-searchTabOptions").find('.btnCancel').on('click',function(){
+                    abortKWICSearchOptions(this, '#kwic-search-form');               
+                });
+                
+                $("#modal-vocabularyTabOptions").find('.btnCancel').on('click',function(){
+                    var selectedOption = $('#numberOfDocs').val();
+                    $('#customNumberOfDocs').val(selectedOption);
                     
-                    // check if correct input
-                    var testVar = checkCustomVar(modalWindow);
-                    if(testVar[0]){
-                        if(testVar[1]){
-                            // read and save custom variables
-                            $.when(readCustomVar(modalWindow)).done(function(){
-                                $(modalWindow).modal('hide');
-                            });
+                    
+                    var radioValue = $("#sortType").val();
+                    
+                    $('input[name=customSortType]', '#modal-vocabularyTabOptions').each(function () {
+                        if($(this).val()===radioValue){
+                            $(this).prop('checked', true);
                         }else{
-                            // no custom wordlists
-                            $('#kwic-search-form').find('.customWordLists').val('');
-                            $(modalWindow).modal('hide');
+                            $(this).prop('checked', false);
                         }
-                    }
+                    });
+
+                });
+                
+
+                /************ click events for ok buttons **********************************/
+                
+                $("#modal-repetitionsTabOptions").find('.btnOK').on('click',function(){
+                    setKWICSearchOptions(this, '#repetition-search-form');
                 });
                 
                 $("#modal-searchTabOptions").find('.btnOK').on('click',function(){
-                    var modalWindow = $(this).closest('.modal');
-                    
-                    configurePageLength(modalWindow, '#kwic-search-form');
-                    configureContext(modalWindow, '#kwic-search-form');
-                    
-                    var selectedLevel = $('#customSimpleQuerySyntaxLevel option:selected').val();
-                    $("#simpleQuerySyntaxLevel").val(selectedLevel);
-                    
-                    $(modalWindow).modal('hide');
+                    setKWICSearchOptions(this, '#kwic-search-form');
                 });
+
+                $("#modal-myVocabularyLists").find('.btnOK').on('click',function(){
+                    checkAndSaveCustomVariables("#modal-myVocabularyLists");
+                });
+                
+
                 
                 $("#modal-audioPlayNotShowAnymore-btn").on('click', function(){
                     playMessage = false;
                     $('#modal-audioPlayNotShowAnymore').modal('hide');
                 });
-                
-                
+                                
                 $("#modal-vocabularyTabOptions").find('.btnOK').on('click',function(){
                     var selectedOption = $('#customNumberOfDocs option:selected').text();
                     $("#numberOfDocs").val(selectedOption);
                     
-                    var radioValue = $('input[name=sort-type]:checked', '#modal-vocabularyTabOptions').val();
+                    var radioValue = $('input[name=customSortType]:checked', '#modal-vocabularyTabOptions').val();
                     $("#sortType").val(radioValue);
                     
                     $('#modal-vocabularyTabOptions').modal('hide');
                 });
                 
-                $('#btn-open-vocabulary-help').on("click", function(){
-                    //e.preventDefault();
+                /********** click events for buttons with help infos **********************/
+                
+                $('#kwic-search-form').find('.btn-open-help').on("click", function(){
+                    $('#modal-queryHelp').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
+                }); 
+                
+                $('#vocabulary-search-form').find('.btn-open-help').on("click", function(){
                     $('#modal-vocabulary-queryHelp').modal('show').find('.modal-content').load(zuRechtVocabularyTabHelp);
+                });
+                
+                /********** click events for buttons with search options **********************/
+
+                $('#vocabulary-search-form').find('.btn-open-search-options').on("click", function(){
+                    $('#modal-vocabularyTabOptions').modal('show');
+                });
+                
+                $('#kwic-search-form').find('.btn-open-search-options').on("click", function(){
+                    $('#modal-searchTabOptions').modal('show');
+                });
+                
+                $('#repetition-search-form').find('.btn-open-search-options').on("click", function(){
+                    $('#modal-repetitionsTabOptions').modal('show');
+                });
+                                
+                /************* click events for vocabulary buttons ****************/
+                $("#open-my-vocabulary-lists-btn").on('click', function(){
+                    $("#modal-myVocabularyLists").find('.customVariableGroup').each(function(){
+                        $(this).find('.customVariable').val('');
+                        $(this).find('.customFileInput').val('');
+                        $(this).find('.customFile').val('');
+                       });
+                    
+                    var i=0;
+                    for (let [key, value] of customVarMap) {           
+                        $("#modal-myVocabularyLists").find('.customVariableGroup').eq(i).find('.customVariable').val(key);
+                        $("#modal-myVocabularyLists").find('.customVariableGroup').eq(i).find('.customFileInput').val(value.name);
+                        i=i+1;
+                    }
+                    
+                    $("#modal-myVocabularyLists").modal('show');
+
                 });
                 
                 $("#modal-thematicVocabularyLists-btnQuery").on('click', function(){
@@ -811,8 +413,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                 });
                 
-                
+                /************* sample queries ****************/
                 addSampleQueries();
+                
                 $('input[type=checkbox]').change(function () {
                     updateSampleQueries();
                 });
@@ -831,16 +434,18 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     });
                 })();
                 
-                <%if (pageParam_q!=null){
-                    %>
+                /********** setting query string and search mode according to url parameters **************/
+                 
+                <%
+                if (pageParam_q!=null){
+                %>
                       var qValue = '<%=pageParam_q%>';
                       $('#queryInputField').val(qValue);
-                    <%
+                <%
                 }
 
                 if(pageParam_mode!=null){
-
-                    %>
+                %>
                      var modeValue = '<%=pageParam_mode%>';
                      if(modeValue==="<%=DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name()%>"){
                         var searchTypeSelect = $('.searchTypeSelect');
@@ -849,27 +454,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         updateSearchButton(searchTypeSelect, val, text);
                     }
                     
-                    <%
+                <%
                 }
-                        
-                 if(pageParam_count!=null){
-                    %>
-                    var countValue = '<%= pageParam_count%>';
-                    $('#modal-searchTabOptions').find('.customPageLength option').each(function(){
-                    if (this.value == countValue) {
-                        $('#kwic-search-form').find('.pageLength').val(countValue);
-                        $(this).parent().val(countValue);
-                        return false;
-                        }
-                    });
-                    <%
-                }
-
-                
-
                 %>
                       
-                
                 //provides the ability to the search button to select between different modes
                 $(".searchTypeSelect .dropdown-menu li a").on('click', function(e){
                     e.preventDefault();
@@ -883,11 +471,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     
                 });
                 
+                //
                 $(".custom-file-input").on("change", function() {
                     var fileName = $(this).val();
                     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                 });
     
+                // 
                 $("#vocabulary-search-form").submit(function(){
                                         
                     var corpusQueryStr = getCorpusQueryStr();
@@ -935,19 +525,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 }
                                                 query += "]";
                                            
-                                                /*
-                                                 * 
-                                                 query += "[lemma=\"(";
-                                                var i;
-                                                for (i = 0; i < lines.length; i++) {
-                                                    query += lines[i];
-                                                    if(i!==lines.length-1){
-                                                       query +=  "|";
-                                                    }
-                                                }
-                                                query += ")\"]"; 
-                                                 */
-
 
                                             }else if (radioValue==="query"){                                       
                                                 query += "(";
@@ -991,9 +568,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     return false;
 
                 });
-                
-            
-                
+
                 // load html for displaying kwic results
                 $("#kwic-search-result-area").load(zuRechtKWICResultView, function() {
              
@@ -1054,9 +629,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
                 // set right context for repetition search
                 $('#modal-repetitionsTabOptions').find('.customRightContextLength').val(DEFAULT_KWIC_RIGHT_CONTEXT_FOR_REPETITIONS);
-                
                 $('#repetition-search-form').find('.rightContext').val(DEFAULT_KWIC_RIGHT_CONTEXT_FOR_REPETITIONS);
                 
+                // hide file upload for repetition form
                 $('#repetition-search-form').find('.customFileGroup').css({"display":"none", "width":"350px"}).addClass("mr-2");
                 
                 // load html for displaying kwic results for repetition search
@@ -1122,8 +697,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     });          
 
                 });
-                
-                
+                    
             });
             
 
@@ -1204,24 +778,30 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
    
                     },
                     error: function(xhr, status, error){
-                        $(selector).find(".wait-query-tab").css("display", "none");
-                        if (status === "timeout"){
-                            alert('Your request will take a long time.' +
-                                    ' Please constrain the search query, ' + 
-                                    'e.g. to a certain lemma: [lemma=\"wissen\"],'+
-                                    ' a certain part of speech: [pos=\"NN\"] or '+
-                                    'a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. '+
-                                    'You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>');
-                        } else if (status === "abort"){
-                            //ignore
-                        }else {
-                            if (xhr.responseText.startsWith("Please check the query syntax")){
-                                var errorMessage = xhr.responseText +  "\n\n<%=myResources.getString("QueryHelpMessage")%>";
-                                alert(errorMessage);
-                            }else{
-                                // show error message
-                                var errorMessage = xhr.status + ' (' + xhr.statusText + ") " + xhr.responseText;
-                                alert('Error: ' + errorMessage);
+                        if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
+                           ajaxRepetitionSearchRequest = ajaxCallToGetKWICForRepetitions(selector, url, completeSearchQuerySyntax(q, selector), corpusQueryStr,  pageLength, pageIndex, searchType, context, repetitions, synonyms, wordLists);                          
+                        }else{
+                        
+                            $(selector).find(".wait-query-tab").css("display", "none");
+                            if (status === "timeout"){
+                                alert('Your request will take a long time.' +
+                                        ' Please constrain the search query, ' + 
+                                        'e.g. to a certain lemma: [lemma=\"wissen\"],'+
+                                        ' a certain part of speech: [pos=\"NN\"] or '+
+                                        'a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. '+
+                                        'You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>');
+                            } else if (status === "abort"){
+                                //ignore
+                            }else {
+                                if (xhr.responseText.startsWith("Please check the query syntax")){
+                                    var errorMessage = xhr.responseText +  "\n\n<%=myResources.getString("QueryHelpMessage")%>";
+                                    alert(errorMessage);
+                                }else{
+                                    // show error message
+                                    var errorMessage = xhr.status + ' (' + xhr.statusText + ") " + xhr.responseText;
+                                    alert('Error: ' + errorMessage);
+                                }
+
                             }
                         }
                     }
@@ -1229,7 +809,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            }
 
             function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context){                        
-                         
+            
                 ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
@@ -1243,7 +823,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     },
                     error: function(xhr, status, error){
                         if(xhr.status === 400 && !q.startsWith("[") && !q.startsWith("(") && !q.startsWith("<")){
-                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q), corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context);                          
+                           ajaxSearchRequest = ajaxCallToGetKWIC(selector, url, completeSearchQuerySyntax(q, selector), corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context);                          
                         }else {
                             $(selector).find(".wait-query-tab").css("display", "none");
                             if (status === "abort"){
@@ -1865,6 +1445,29 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*             other help methods          */
             /**************************************************/
 
+            function setKWICSearchOptions(obj, formSelector){
+                var modalWindow = $(obj).closest('.modal');  
+                configurePageLength(modalWindow, formSelector);
+                configureContext(modalWindow, formSelector);
+                configureSimpleSearchOption(modalWindow, formSelector);
+                $(modalWindow).modal('hide');
+            }
+            
+            function abortKWICSearchOptions(obj, formSelector){
+                var modalWindow = $(obj).closest('.modal'); 
+                abortConfigPageLength(modalWindow, formSelector);
+                abortConfigContext(modalWindow, formSelector);
+                abortSimpleSearchOption(modalWindow, formSelector);
+            }
+
+            function createXMLElement(name, content){
+                if(content!==''){
+                    content = "<" + name 
+                        + ">" + content + "</" + name + ">";
+                }
+                return content;
+            }            
+
             function getCorporaFromCorpusQuery(corpusQueryStr){
                 var pattern = /corpusSigle=(.*)/;
                 var match = pattern.exec(corpusQueryStr);
@@ -1886,113 +1489,32 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                
 
-            function checkCustomVar(selectorModal){
-                var check = true;
-                var defWordLists = false;
-                let array = new Array();
-                $(selectorModal).find('.customVariableGroup').each(function(){
-                    var customVariable = $(this).find('.customVariable').val();
-                    var customFile = $(this).find('.customFile').val();
-                        
-                    if (customVariable!=='' & customFile!==''){
-                  
-                        if (!customVariable.match(/^\\$[A-Za-z0-9]+$/g)) {
-                            check = false;
-                            alert("Der Variablenname soll mit '$' beginnen" +
-                                   " und darf keine Leer- und Sonderzeichen enthalten, "+
-                                   "z.B. '$1', '$var1' oder '$words'.");
-                            return false;
-                        }else{
-                            if(array.includes(customVariable)){
-                                check = false;
-                                alert("Jede Variable darf nur einmal vorkommen.");
-                                return false;
-                            }else{
-                                array.push(customVariable);
-                                defWordLists = true;   
-                            }
-                        }
-                        
-                    }else{
-                        if (customVariable==='' & customFile!==''){
-                            check = false;
-                            alert("You habe loaded wordlists. Please define variables for them!");
-                            return false;
-                        }else if(customVariable!=='' & customFile===''){
-                            check = false;
-                            alert("You have defined some variables. Please load wordlists for them!");  
-                            return false;
-                        }
-                    }
-                
-                });
-                return [check, defWordLists];
+            function abortSimpleSearchOption(selectorModal, selectorForm){
+                var selectedOption = $(selectorForm).find('.simpleQuerySyntaxLevel').val();
+                    $(selectorModal).find('.customSimpleQuerySyntaxLevel').val(selectedOption);
             }
-            
-        
-            function readCustomVar(selectorModal){
-                
-                // Check for File API support.
-                if (window.File && window.FileReader && window.FileList && window.Blob) {
-                    
-                    customVarMap.clear();
-                    $(selectorModal).find('.customVariableGroup').each(function(){
-                        var customVariable = $(this).find('.customVariable').val();
-                        if (customVariable!==''){ 
-                            const file = $(this).find('.customFile')[0].files[0];
-                            if(file){
-                                customVarMap.set(customVariable, file);
-                            }else{
-                                alert("Can't read file " + file.name);
-                            }
-                        }
-                    });
-                
-                } else {
-                    alert('The File APIs are not fully supported in this browser.');
-                }
-            }
-            
-            async function writeCustomVarForQuery(selectorForm, query){
-                var result ="";
-                    for (let [key, value] of customVarMap) {           
-                        if (query.includes(key + " ") || query.includes(key + "]") ){
-                            let text = await readWordListAsCommaSeparated(value);
-                            result = result + key.substring(1) + ":" + text + ";";
-                        }
-                    }
-                    result = result.substring(0, result.length - 1);
-                    $(selectorForm).find('.customWordLists').val(result);
-            }
-            
-            function addCommas(text){
-                var lines = text.split(/\r?\n/);
-                var wordList = ''; 
-                var i;
-                for (i = 0; i < lines.length; i++) {
-                    wordList += lines[i].trim();
-                    if(i!==lines.length-1){
-                        wordList +=  ",";
-                    }
-                }
-                return wordList;
-            }
-                
-                    
-        async function readWordListAsCommaSeparated(file) {
-            let text = await new Promise((resolve) => {
-                let reader = new FileReader();
-                reader.onload = (evt) => resolve(addCommas(evt.target.result));
-                reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name);
-                reader.readAsText(file, "UTF-8");
-            });
 
-            return text;
-        }
+            function abortConfigPageLength(selectorModal, selectorForm){
+                var selectedOption = $(selectorForm).find('.pageLength').val();
+                $(selectorModal).find('.customPageLength').val(selectedOption);
+            }
 
+            function configureSimpleSearchOption(selectorModal, selectorForm){ 
+                var selectedLevel = $(selectorModal).find('.customSimpleQuerySyntaxLevel option:selected').val();
+                $(selectorForm).find('.simpleQuerySyntaxLevel').val(selectedLevel);
+            }
+            
             function configurePageLength(selectorModal, selectorForm){
                 var selectedOption = $(selectorModal).find('.customPageLength option:selected').text();
                 $(selectorForm).find('.pageLength').val(selectedOption);       
+            }
+            
+            function abortConfigContext(selectorModal, selectorForm){
+                var selectedOptionLeft = $(selectorForm).find(".leftContext").val(); 
+                $(selectorModal).find(".customLeftContextLength").val(selectedOptionLeft);
+                
+                var selectedOptionRight = $(selectorForm).find(".rightContext").val(); 
+                $(selectorModal).find(".customRightContextLength").val(selectedOptionRight);   
             }
             
             function configureContext(selectorModal, selectorForm){
@@ -2021,21 +1543,26 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }       
             }
          
-            function completeSearchQuerySyntax(q){
-                var simpleQuerySyntaxLevel = $("#simpleQuerySyntaxLevel").val();
-                var split = q.split(" ");
-                q = "";
-                for (var i = 0; i < split.length; i++) {
-                    var w = split[i];
-                    if(!w.startsWith("\"")){
-                        w = "\""+w; 
-                    }
-                    if(!w.endsWith("\"")){
-                        w = w+"\""; 
-                    }
-                    q = q+"["+simpleQuerySyntaxLevel+"="+ w + "]";
-                    if (i<q.length-1){
-                        q=q+" "; 
+            function completeSearchQuerySyntax(queryStr, selector){
+                var simpleQuerySyntaxLevel = $(selector).parent().find("form:first").find('.simpleQuerySyntaxLevel').val();
+                var q = "";        
+                if(queryStr.startsWith('$')){
+                    q = "["+simpleQuerySyntaxLevel+"="+ queryStr + "]";
+                }else{
+                    var split = queryStr.split(" ");
+                    
+                    for (var i = 0; i < split.length; i++) {
+                        var w = split[i];
+                        if(!w.startsWith("\"")){
+                            w = "\""+w; 
+                        }
+                        if(!w.endsWith("\"")){
+                            w = w+"\""; 
+                        }
+                        q = q+"["+simpleQuerySyntaxLevel+"="+ w + "]";
+                        if (i<q.length-1){
+                            q=q+" "; 
+                        }
                     }
                 }
                 return q;
@@ -2495,26 +2022,122 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).parents('.customFileGroup').find('.customFile').click();
             }
             
-            function on(obj){
-                var fileName = $(obj).val();
-                $(obj).parents('.customFileGroup').find('.customFileInput').val(fileName);
+            function displayFileName(obj){
+                const file = $(obj)[0].files[0];
+                $(obj).parents('.customFileGroup').find('.customFileInput').val(file.name);
             }
             
             function deleteFile(obj){
                 $(obj).prev().val('');
                 $(obj).parents('.customFileGroup').find('.customFile').val('');
-                
             }
             
-            function createXMLElement(name, content){
-                if(content!==''){
-                    content = "<" + name 
-                        + ">" + content + "</" + name + ">";
+            
+            /***************************************************************************/
+            /*             methods for using variables and custom wordlists            */
+            /***************************************************************************/
+            
+            function checkAndSaveCustomVariables(selectorModal){
+                var finished = true;
+                var map  = new Map();
+                $(selectorModal).find('.customVariableGroup').each(function(){
+                    var customVariable = $(this).find('.customVariable').val();
+                    var customFile = $(this).find('.customFile').val();
+                    
+                    if (customVariable===''){
+                        // check if file uploaded
+                        if(customFile!==''){
+                            finished = false;
+                            alert("You habe loaded wordlists. Please define variables for them!");
+                            return false;
+                        }else{
+                            var customFileInput = $(this).find('.customFileInput').val();
+                            if(customFileInput!==''){
+                                $(this).find('.customFileInput').val('');
+                            }
+                        }
+                        
+                    }else{
+                        // variable is not null -> parse
+                        if (!customVariable.match(/^\\$[A-Za-z0-9]+$/g)) {
+                            finished = false;
+                            alert("\""+customVariable + "\" is not a valid variable. Der Variablenname soll mit '$' beginnen" +
+                                   " und darf keine Leer- und Sonderzeichen enthalten, "+
+                                   "z.B. '$1', '$var1' oder '$words'.");
+                            return false;
+                        }else{
+                            if(map.has(customVariable)){
+                                finished = false;
+                                alert("Jede Variable darf nur einmal vorkommen.");
+                                return false;
+                            }
+                        }
+
+                        // check if file uploaded
+                        if(customFile!==''){
+                            const file = $(this).find('.customFile')[0].files[0];
+                            map.set(customVariable, file);
+                        }else{
+                            var customFileInput = $(this).find('.customFileInput').val();
+                            if(customFileInput!==''){
+                                // check in customVarMap
+                                if(!customVarMap.has(customVariable)){
+                                    finished = false;
+                                    alert("Can't read file " + customFileInput +". Please upload it again!");  
+                                    return false;
+                                }else{
+                                    const file = customVarMap.get(customVariable);
+                                    map.set(customVariable, file);
+                                } 
+                            }else{
+                                finished = false;
+                                alert("You have defined some variables. Please load wordlists for them!");  
+                                return false;
+                            }
+                        }
+                    }
+                });
+                if(finished){
+                    customVarMap = map;
+                    $(selectorModal).modal('hide');
                 }
-                return content;
+            }
+
+            async function writeCustomVarForQuery(selectorForm, query){
+                var result ="";
+                    for (let [key, value] of customVarMap) {           
+                        if (query.includes(key + " ") || query.includes(key + "]") || query===key ){
+                            let text = await readWordListAsCommaSeparated(key, value);
+                            result = result + key.substring(1) + ":" + text + ";";
+                        }
+                    }
+                    result = result.substring(0, result.length - 1);
+                    $(selectorForm).find('.customWordLists').val(result);
             }
             
-            
+            function addCommas(text){
+                var lines = text.split(/\r?\n/);
+                var wordList = ''; 
+                var i;
+                for (i = 0; i < lines.length; i++) {
+                    wordList += lines[i].trim();
+                    if(i!==lines.length-1){
+                        wordList +=  ",";
+                    }
+                }
+                return wordList;
+            }
+                       
+            async function readWordListAsCommaSeparated(variable, file) {
+                let text = await new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = (evt) => resolve(addCommas(evt.target.result));
+                    reader.onerror = (evt) => alert("An error ocurred reading the file \"" + file.name + "\" for variable \""+variable+"\"");
+                    reader.readAsText(file, "UTF-8");
+                });
+
+                return text;
+            }
  
             
         </script>

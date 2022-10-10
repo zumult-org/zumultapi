@@ -170,6 +170,21 @@ public class IOHelper {
         return writer.toString();
     }
 
+    public String applyInternalStylesheetToFile(String pathToStylesheet, String pathToXml, Object[][] parameters) throws TransformerException{
+        StreamSource stylesource = new StreamSource(getClass().getResourceAsStream(pathToStylesheet)); 
+
+        Transformer transformer = TransformerFactory.newInstance().newTransformer(stylesource); 
+        for (Object[] parameterPair : parameters){
+            transformer.setParameter((String) parameterPair[0], parameterPair[1]);
+            
+        }
+        
+        StreamSource source = new StreamSource(new File(pathToXml));
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        transformer.transform(source, result);
+        return writer.toString();
+    }
 
     public String applyInternalStylesheetToString(String pathToStylesheet, String xml, String[][] parameters) throws TransformerException{
         StreamSource stylesource = new StreamSource(getClass().getResourceAsStream(pathToStylesheet)); 
