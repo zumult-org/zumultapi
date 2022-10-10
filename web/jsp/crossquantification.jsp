@@ -41,7 +41,7 @@
     String QUANT_FILENAME = corpusID + "_QUANT.xml";
     
     String html = new IOHelper().applyInternalStylesheetToInternalFile("/org/zumult/io/Quantify2Dimensions.xsl", 
-            Configuration.getQuantificationPath() + "\\" + QUANT_FILENAME, PARAM);
+            Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
 %>
 <!DOCTYPE html>
 <html>
