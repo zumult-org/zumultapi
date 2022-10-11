@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEITranscriptConverter;
@@ -539,11 +540,9 @@ public class ZumultDataServlet extends HttpServlet {
             }
             
             // get the reference wordlist if applicable
-            String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
-                    .toURI().toString();
-            if (wordlistID.equals("NONE")){
-                pathToWordList = "";
-            }
+            /*String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
+                    .toURI().toString();*/
+            String pathToWordList = pathToWordList(wordlistID);
             
             // generate the wordlist for the transcript
             TokenList lemmaList4Transcript = transcript.getTokenList("lemma");
@@ -607,11 +606,9 @@ public class ZumultDataServlet extends HttpServlet {
             }
             
             // get the reference wordlist if applicable
-            String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
-                    .toURI().toString();
-            if (wordlistID.equals("NONE")){
-                pathToWordList = "";
-            }
+            /*String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
+                    .toURI().toString();*/
+            String pathToWordList = pathToWordList(wordlistID);
             
             // preparations done, now do the real job
 
@@ -826,11 +823,9 @@ public class ZumultDataServlet extends HttpServlet {
             String highlightIDs2 = request.getParameter("highlightIDs2");
             String highlightIDs3 = request.getParameter("highlightIDs3");
             
-            String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
-                    .toURI().toString();
-            if (wordlistID.equals("NONE")){
-                pathToWordList = "";
-            }
+           /* String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
+                    .toURI().toString();*/
+            String pathToWordList = pathToWordList(wordlistID);
             
             
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
@@ -1042,5 +1037,17 @@ public class ZumultDataServlet extends HttpServlet {
         out.close();
     }
 
-
+    private String pathToWordList(String wordlistID){
+        String pathToWordList;
+        if (wordlistID.equals("NONE")){
+            pathToWordList = "";
+        }else if(wordlistID.startsWith("GOETHE")){
+            pathToWordList = new File(Configuration.getWordlistPath() +  "/goethe/"+ wordlistID + ".xml").toURI().toString();
+        }else if(wordlistID.startsWith("HERDER")){
+            pathToWordList = new File(Configuration.getWordlistPath() +  "/herder/"+ wordlistID + ".xml").toURI().toString();
+        }else {
+            pathToWordList = new File(Configuration.getWordlistPath() +  "/thematic-vocabulary/lemmas/"+ wordlistID + ".xml").toURI().toString();
+        }
+        return pathToWordList;
+    }
 }

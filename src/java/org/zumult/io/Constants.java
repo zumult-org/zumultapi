@@ -5,6 +5,7 @@
 package org.zumult.io;
 
 import java.io.File;
+import org.zumult.backend.Configuration;
 
 /**
  *
@@ -87,7 +88,7 @@ public class Constants {
             "ESSEN", "HAUS_UND_WOHNUNG", "SCHULE_UND_AUSBILDUNG"
         };
     
-    public static final String THEMATIC_WORDLISTS_PATH = "/data";
+    public static final String WORD_FIELD_PATH = Configuration.getWordlistPath() + "/thematic-vocabulary/queries";
     public static final String WORD_FIELD_PATTERN = "WORTFELD_(.+?)\\.txt";
     public static final String CORPUS_DELIMITER = "|";
     public static final String SPEAKER_DELIMITER = " ";

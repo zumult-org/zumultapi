@@ -10,7 +10,7 @@
                 <!--<p>Here some text</p>-->
                 <div class="accordion md-accordion" id="thematic-vocabulary-list-accordion" role="tablist" aria-multiselectable="true">
                     <%
-                        File inputDir = new File(getServletContext().getRealPath(Constants.THEMATIC_WORDLISTS_PATH)); 
+                        File inputDir = new File(Constants.WORD_FIELD_PATH);
 
                         File[] files = inputDir.listFiles();
                             if (files.length > 0){
