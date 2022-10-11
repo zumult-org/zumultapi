@@ -24,6 +24,7 @@
         <media-distribution-path>/srv/video</media-distribution-path>
         <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
         <ffmpeg-path>ffmpeg</ffmpeg-path> 
+        <quantification-path>/home/zumult/DATA/data</quantification-path>
 
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
@@ -44,6 +45,7 @@
         <media-distribution-path>/srv/video</media-distribution-path>
         <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
         <ffmpeg-path>ffmpeg</ffmpeg-path> 
+        <quantification-path>/home/zumult/DATA/data</quantification-path>
 
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
@@ -127,6 +129,7 @@
         <rest-api-base-url>http://localhost:8080/DGDRESTTest/api</rest-api-base-url>
         <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url>
         <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
+        <quantification-path></quantification-path>
         
         
         
