@@ -1042,11 +1042,11 @@ public class ZumultDataServlet extends HttpServlet {
         if (wordlistID.equals("NONE")){
             pathToWordList = "";
         }else if(wordlistID.startsWith("GOETHE")){
-            pathToWordList = new File(Configuration.getWordlistPath() +  "/goethe/"+ wordlistID + ".xml").toURI().toString();
+            pathToWordList = new File(Constants.WORDLISTS_GOETHE_PATH + "/" + wordlistID + ".xml").toURI().toString();
         }else if(wordlistID.startsWith("HERDER")){
-            pathToWordList = new File(Configuration.getWordlistPath() +  "/herder/"+ wordlistID + ".xml").toURI().toString();
+            pathToWordList = new File(Constants.WORDLISTS_HERDER_PATH + "/"+ wordlistID + ".xml").toURI().toString();
         }else {
-            pathToWordList = new File(Configuration.getWordlistPath() +  "/thematic-vocabulary/lemmas/"+ wordlistID + ".xml").toURI().toString();
+            pathToWordList = new File(Constants.WORDLISTS_THEMATIC_VOCABULARY_PATH + "/"+ wordlistID + ".xml").toURI().toString();
         }
         return pathToWordList;
     }

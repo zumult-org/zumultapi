@@ -249,9 +249,10 @@ public class TestBackend {
         int origSize = tokenList.keySet().size();
         System.out.println((System.currentTimeMillis() - start) + "ms for token listing");
         
+      /* FOLK_LEMMALIST_1000.xml does exit any more  
         TokenList otherTokenList = XMLReader.readTokenListFromInternalResource("/data/FOLK_LEMMALIST_1000.xml");
         tokenList.intersect(otherTokenList);
-        System.out.println(tokenList.toXML());
+        System.out.println(tokenList.toXML());*/
         
         TokenList filterTokenList = XMLReader.readTokenListFromInternalResource("/data/MEASURE_1_POS_FILTER.xml");
         TokenFilter filter = new NegatedFilter(new TokenListTokenFilter("lemma", filterTokenList));

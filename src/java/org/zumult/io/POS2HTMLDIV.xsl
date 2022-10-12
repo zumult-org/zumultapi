@@ -56,7 +56,7 @@
                     </xsl:attribute>
                 </xsl:if>
                 <button type="button" class="btn btn-dark btn-sm" style="min-width:100px; font-size:9pt;">
-                    <xsl:attribute name="onclick">javascript:insertText('<xsl:text>POS=</xsl:text><xsl:value-of
+                    <xsl:attribute name="onclick">javascript:insertText('<xsl:text>pos=</xsl:text><xsl:value-of
                         select="tag/@name"/>', 'searchBox', this)</xsl:attribute>
                     <xsl:value-of select="tag/@name"/>
                 </button>                    
