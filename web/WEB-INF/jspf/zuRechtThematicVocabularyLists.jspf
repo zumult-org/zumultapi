@@ -10,12 +10,12 @@
                 <!--<p>Here some text</p>-->
                 <div class="accordion md-accordion" id="thematic-vocabulary-list-accordion" role="tablist" aria-multiselectable="true">
                     <%
-                        File inputDir = new File(getServletContext().getRealPath(Constants.THEMATIC_WORDLISTS_PATH)); 
+                        File inputDir = new File(Constants.WORDFIELD_PATH);
 
                         File[] files = inputDir.listFiles();
                             if (files.length > 0){
 
-                                final Pattern pattern = Pattern.compile(Constants.WORD_FIELD_PATTERN, Pattern.DOTALL);
+                                final Pattern pattern = Pattern.compile(Constants.WORDFIELD_PATTERN, Pattern.DOTALL);
 
                                     for (File file : files) {
                                         String path = file.getPath();

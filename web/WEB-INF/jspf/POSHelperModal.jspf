@@ -14,7 +14,7 @@
                 </div>
 
                     <%
-                    String STTS_XML = "/data/STTS_2_0.xml";
+                    String STTS_XML = Constants.DATA_POS_PATH + Constants.DEFAULT_POS_TAGSET +".xml";
                     String STTS_XSL = "/org/zumult/io/POS2HTMLDIV.xsl";
                     String htmlDiv = new IOHelper().applyInternalStylesheetToInternalFile(STTS_XSL, STTS_XML);
                 %>

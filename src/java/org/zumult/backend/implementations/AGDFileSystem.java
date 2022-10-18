@@ -337,7 +337,7 @@ public class AGDFileSystem extends AbstractIDSBackend {
     @Override
     public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException {
         try {
-            String path = "/data/"+annotationTagSetID+".xml";
+            String path = Constants.DATA_POS_PATH +annotationTagSetID+".xml";
             String xml = new Scanner(AGDFileSystem.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
             Document doc = IOHelper.DocumentFromText(xml);
             AnnotationTagSet annotationTagSet = new DGD2AnnotationTagSet(doc);

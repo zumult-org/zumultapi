@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.backend.Configuration;
 import org.zumult.indexing.AddMeasuresToSpeechEventIndex;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
@@ -66,7 +67,7 @@ public class AddMeasureToVirtualCollections implements Indexer {
         try {
             ArrayList<TokenList> tokenLists = new ArrayList<>();
             for (String WL : Constants.LEIPZIG_WORDLISTS){
-               tokenLists.add(XMLReader.readTokenListFromInternalResource("/data/" + WL + ".xml"));
+               tokenLists.add(XMLReader.readTokenListFromFile(new File(Configuration.getWordlistPath() + "/" + WL + ".xml")));
             }
         
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();

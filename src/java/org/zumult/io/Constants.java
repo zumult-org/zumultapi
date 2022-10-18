@@ -5,6 +5,7 @@
 package org.zumult.io;
 
 import java.io.File;
+import org.zumult.backend.Configuration;
 
 /**
  *
@@ -79,6 +80,10 @@ public class Constants {
     
     public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
     public static final String DATA_MEASURES_PATH = "/data/measures/";
+    public static final String DATA_POS_PATH = "/data/pos/";
+    public static final String WORDLISTS_GOETHE_PATH = Configuration.getWordlistPath() + "/goethe";
+    public static final String WORDLISTS_HERDER_PATH = Configuration.getWordlistPath() + "/herder";
+    public static final String WORDLISTS_THEMATIC_VOCABULARY_PATH = Configuration.getWordlistPath() + "/thematic-vocabulary/lemmas";
     
     public static String[] LEIPZIG_WORDLISTS =
         {
@@ -87,8 +92,8 @@ public class Constants {
             "ESSEN", "HAUS_UND_WOHNUNG", "SCHULE_UND_AUSBILDUNG"
         };
     
-    public static final String THEMATIC_WORDLISTS_PATH = "/data";
-    public static final String WORD_FIELD_PATTERN = "WORTFELD_(.+?)\\.txt";
+    public static final String WORDFIELD_PATH = Configuration.getWordlistPath() + "/thematic-vocabulary/queries";
+    public static final String WORDFIELD_PATTERN = "WORTFELD_(.+?)\\.txt";
     public static final String CORPUS_DELIMITER = "|";
     public static final String SPEAKER_DELIMITER = " ";
     public static final String TOKEN_DELIMITER = "|";
