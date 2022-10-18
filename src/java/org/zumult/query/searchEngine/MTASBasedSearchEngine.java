@@ -2977,15 +2977,16 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         */
         void checkForRepetitions(CodecInfo mtasCodecInfo, String segmentName, Spans spans, String transcriptID, 
                 LinkedBlockingQueue<String> linkedQueue) throws IOException {
-            
-            ThreadLocal threadLocal = new ThreadLocal();
-            threadLocal.set(false);  // will be true at the end if there is at least one repetition in this transcript
-            
+      
             List<Object[]> arrayList = new ArrayList();
             while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {              
                 arrayList.add( new Object[]{spans.docID(), spans.startPosition(), spans.endPosition()} );
             }
-            arrayList.forEach( obj -> {
+            
+            int hits=0;
+            boolean containsHits = false; // will be true at the end if there is at least one repetition in this transcript
+            
+            for (Object[] obj : arrayList){
                     int docID = (int) obj[0];
                     int start = (int) obj[1];
                     int end = (int) obj[2];
@@ -3017,8 +3018,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 
                                 if(found!=null){
                                                  
-                                    threadLocal.set(true);
-                                    hits_total++;
+                                    containsHits = true;
+                                    hits++;
                                     
                                     StringBuilder hitStr = new StringBuilder();
                                     hitStr.append(transcriptID);
@@ -3042,11 +3043,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     } catch (IOException | InterruptedException ex) {
                         Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
                     } 
-                });
-                 
+            }    
         
-            if(  (Boolean)  threadLocal.get()  )  {
+            if(  containsHits  )  {    
                 transcripts_total++;
+                hits_total = hits_total+hits;
             }
         }
 

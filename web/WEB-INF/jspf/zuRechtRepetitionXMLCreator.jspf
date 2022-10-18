@@ -99,7 +99,7 @@
             var positionToSpeakerChangeMax = 'null';
             if(positionToSpeakerChangeType!=='null'){
                 positionToSpeakerChangeMin = getDistance(this, '.positionToSpeakerChangeMin', 0, regexPositionToSpeakerChange);
-                positionToSpeakerChangeMax = getDistance(this, '.positionToSpeakerChangeMax', 0, regexPositionToSpeakerChange);
+                positionToSpeakerChangeMax = getDistance(this, '.positionToSpeakerChangeMax', 5, regexPositionToSpeakerChange);
             }
 
             var checkedPOSToBeIgnored = [];

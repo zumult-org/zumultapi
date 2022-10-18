@@ -279,7 +279,7 @@
     }
 
     function openTranscript(obj){
-        $(obj).parents('form').submit();    
+        $(obj).closest('form').submit();    
     }
 
     function displayKWICtable(cell, xml){

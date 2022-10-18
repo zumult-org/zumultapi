@@ -132,7 +132,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     <ul class="nav nav-tabs small" role="tablist">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" id="query-tab" href="#query-tab-content" role="tab"><%=myResources.getString("Query")%></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" id="vocabulary-tab" href="#vocabulary-tab-content" role="tab"><%=myResources.getString("Vocabulary")%></a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" id="repetitions-tab" href="#repetitions-tab-content" role="tab"><%=myResources.getString("Repetitions")%></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" id="repetitions-tab" href="#repetition-tab-content" role="tab"><%=myResources.getString("Repetitions")%></a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -142,7 +142,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <div class="tab-pane mt-3 active" id="query-tab-content">
                             <h2><%=myResources.getString("SearchByQuery")%></h2>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchForm.jspf" %>
-                            <%@include file="../WEB-INF/jspf/zuRechtKWICSearchHelpModal.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtCustomVocabularyLists.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICDownloadOptions.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchOptionsModal.jspf" %>
@@ -167,7 +167,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     </div>
                                     <div class="table-wrapper table-responsive" id="statistics-result"></div>
 
-                                    <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchHelpModal.jspf" %>
+                                    <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
                                     <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchOptionsModal.jspf" %>
                                     <%@include file="../WEB-INF/jspf/zuRechtThematicVocabularyLists.jspf" %>
                                               
@@ -176,9 +176,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         </div>
 
                         <!-- Repetitions tab -->
-                        <div class="tab-pane mt-3" id="repetitions-tab-content">
+                        <div class="tab-pane mt-3" id="repetition-tab-content">
                             <h2><%=myResources.getString("SearchForRepetitions")%></h2>
                             <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchForm.jspf" %>
+                            <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchOptionsModal.jspf" %>
                             <div id="repetition-search-result-area" class="searchResultArea"></div>
                         </div>
@@ -210,9 +211,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             var DEFAULT_KWIC_RIGHT_CONTEXT_FOR_REPETITIONS = 20;
             var zuRechtQueryTabHelp = "zuRechtQueryHelp.html";
             var zuRechtVocabularyTabHelp = "zuRechtVocabularyHelp.html";
+            var zuRechtRepetitionTabHelp = "zuRechtRepetitionHelp.html";
             var zuRechtKWICResultView = "zuRechtKWICResultView.html";
-            var printStyleForQueryHelp = "  <title>Query Help</title>\n\
-                                            <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>\n\
+            var printStyleForQueryHelp = "  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>\n\
                                             <style>\n\
                                                 .query-example {background-color: #f3f3f3; color: #337AB7;}\n\
                                                 .query-note span {background-color: #FFF7C8; display: table; padding: 10px; border-radius: 5px; border: 2px solid red;}\n\
@@ -350,12 +351,18 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /********** click events for buttons with help infos **********************/
                 
                 $('#kwic-search-form').find('.btn-open-help').on("click", function(){
-                    $('#modal-queryHelp').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
+                    $('#query-tab-content').find('.search-help-modal').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
                 }); 
                 
                 $('#vocabulary-search-form').find('.btn-open-help').on("click", function(){
-                    $('#modal-vocabulary-queryHelp').modal('show').find('.modal-content').load(zuRechtVocabularyTabHelp);
+                    $('#vocabulary-tab-content').find('.search-help-modal').modal('show').find('.modal-content').load(zuRechtVocabularyTabHelp);
                 });
+                
+                $('#repetition-search-form').find('.btn-open-help').on("click", function(){
+                    $('#repetition-tab-content').find('.search-help-modal').modal('show').find('.modal-content').load(zuRechtRepetitionTabHelp);
+                });
+                
+
                 
                 /********** click events for buttons with search options **********************/
 
@@ -463,7 +470,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     e.preventDefault();
 
                     var elem = $(this),
-                    searchTypeSelect = elem.parents('.searchTypeSelect'),
+                    searchTypeSelect = elem.closest('.searchTypeSelect'),
                     val = elem.data('value'),
                     text = elem.data('text');
                     
@@ -743,8 +750,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                     
             function abortSearch(obj){
-                $(obj).parents('.wait-query-tab').css("display", "none");
-                var parentId = $(obj).parents('.searchResultArea').attr('id');
+                $(obj).closest('.wait-query-tab').css("display", "none");
+                var parentId = $(obj).closest('.searchResultArea').attr('id');
                 if(parentId === "repetition-search-result-area"){
                     if(ajaxRepetitionSearchRequest){
                         ajaxRepetitionSearchRequest.abort();
@@ -1193,12 +1200,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                             
             function openMetadata(obj){
-                $(obj).parents('form').append("<input type='hidden' name='lang' value='"+ '<%=currentLocale.getLanguage()%>' +"' />");
-                $(obj).parents('form').submit();    
+                $(obj).closest('form').append("<input type='hidden' name='lang' value='"+ '<%=currentLocale.getLanguage()%>' +"' />");
+                $(obj).closest('form').submit();    
             }
                          
             function openTranscript(obj){
-                $(obj).parents('form').submit();    
+                $(obj).closest('form').submit();    
             }
             
             /**************************************************/
@@ -1306,7 +1313,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 addTypesOfHits(queryStr, corpusQueryStr);
                              
                 $('button.btn-open-lemma-table').on('click', function(){    
-                     var form = $(this).parents('form');
+                     var form = $(this).closest('form');
                      var transcriptID = this.getAttribute('data-value-source');
                      var newQueryStr = encodeSpecialUmlauts(queryStr) + " within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"&#47;>";
                      form.append("<input type='hidden' name='q' value='"+ newQueryStr +"' />");
@@ -1735,12 +1742,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $('#query-tab').tab('show');
                 
                 // close modal
-                $('#modal-queryHelp').modal('hide');
-                $('#modal-vocabulary-queryHelp').modal('hide');
+                $('#query-tab-content').find('.search-help-modal').modal('hide');
+                $('#vocabulary-tab-content').find('.search-help-modal').modal('hide');
             }
            
-            function printQueryHelp() {
-                var content = $('#modal-queryHelp .modal-content').clone();
+            function printQueryHelp(obj) {
+                var content = $(obj).closest('.search-help-modal').find('.modal-content').clone();
                 content.find('img').each(function () {
                     var src = $(this).attr("src");
                     var srcNew = '<%=webAppBaseURL%>' + src.substring(2, src.length); //http://zumult.ids-mannheim.de/ProtoZumult/images/query_help/kwic_003.png
@@ -1771,7 +1778,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             function displayMoreRepetitionProperties(obj){
-                var parent = $(obj).parents('.repetitionPropertiesForm');
+                var parent = $(obj).closest('.repetitionPropertiesForm');
                 var secondForm = $(parent).next();
                 var addRepetitionProperties = $(parent).find('.additionalRepetitionProperties');
                 if ($(addRepetitionProperties).css("display") === "none"){
@@ -1791,7 +1798,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             function displayOneMoreRepetitionPropertiesForm(obj){
-                var parent = $(obj).parents('.repetitionPropertiesForm');
+                var parent = $(obj).closest('.repetitionPropertiesForm');
                 $(parent).find(".addOneMoreRepetitionPropertiesForm").css("display", "none");
                 
                 var copy = $(parent).clone();
@@ -1810,7 +1817,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             function deleteCurrentRepetitionPropertiesForm(obj){
-                var parent = $(obj).parents('.repetitionPropertiesForm');
+                var parent = $(obj).closest('.repetitionPropertiesForm');
                 var repetitionForm = $(parent).prev();
                 $(parent).remove();
                 $(repetitionForm).find(".addOneMoreRepetitionPropertiesForm").css("display", "block");
@@ -1843,7 +1850,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                         
             function addDistanceToSpeakerChange(obj){
-                var parent = $(obj).parents('.repetitionPropertiesForm');
+                var parent = $(obj).closest('.repetitionPropertiesForm');
                 var min = $(parent).find('.positionToSpeakerChangeMin');
                 var max = $(parent).find('.positionToSpeakerChangeMax');
                 if($(obj).val()==='null'){
@@ -1860,7 +1867,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     $('#repetition-search-form').find('.customFileGroup').css("display", "block");               
                 }else{
                     // check the value of the other form
-                    var parent = $(obj).parents('.repetitionPropertiesForm');
+                    var parent = $(obj).closest('.repetitionPropertiesForm');
                     var index = $(parent).index();
                     var anotherValue;
                     if(index<=2){
@@ -1881,7 +1888,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             function enableSpeakerMetadata(obj){
-                var parent = $(obj).parents('.repetitionPropertiesForm');
+                var parent = $(obj).closest('.repetitionPropertiesForm');
                 var index = $(parent).index();
                 var speakerMetadataGroup = $(parent).find('.speakerMetadataGroup');
                 var speakerChangeSelectGroup = $(parent).find('.speakerChangeSelectGroup');
@@ -2019,17 +2026,17 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /**************************************************/
             
             function emulateClickOnInputFile(obj){
-                $(obj).parents('.customFileGroup').find('.customFile').click();
+                $(obj).closest('.customFileGroup').find('.customFile').click();
             }
             
             function displayFileName(obj){
                 const file = $(obj)[0].files[0];
-                $(obj).parents('.customFileGroup').find('.customFileInput').val(file.name);
+                $(obj).closest('.customFileGroup').find('.customFileInput').val(file.name);
             }
             
             function deleteFile(obj){
                 $(obj).prev().val('');
-                $(obj).parents('.customFileGroup').find('.customFile').val('');
+                $(obj).closest('.customFileGroup').find('.customFile').val('');
             }
             
             
