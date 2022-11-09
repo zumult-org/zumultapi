@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h2 class="modal-title">Query Help (in Preparation)</h2>
+    <h2 class="modal-title">Query Help</h2>
     <button type="button" class="close" data-dismiss="modal">&times;</button>       
 </div>
 <div class="modal-body">
@@ -55,9 +55,9 @@
                         <span style="font-size: small;">
                             <a href="#speech-rate-annotations">Speech rate annotations</a><br />
                             <a href="#selective-sequence-and-action-annotations">Selective sequence and action annotations (FOLK)</a><br />
-                            <a href="#code-switching">Code-switching (GWSS)</a><br />
                             <a href="#discourse-comments">Discourse comments (GWSS)</a><br />
                             <a href="#citations">Citations (GWSS)</a><br />
+                            <a href="#code-switching">Code-switching (GWSS)</a><br />
                             <a href="#prompt-reference-annotations">Prompt reference annotations (MEND)</a><br />
                         </span>
                     </p>
@@ -80,6 +80,7 @@
                 <a href="#7">7 Tips and Tricks</a><br />
                     <p style="padding-left: 30px;">
                         <span style="font-size: small;">
+                            <a href="#simple-search">Simple search</a><br />
                             <a href="#clitics">Clitics</a><br />
                             <a href="#collocations">Collocations</a><br />
                             <a href="#repetitions">Repetitions</a><br />  
@@ -2227,20 +2228,116 @@
             <br>
             
             <!-- title -->           
-            <div><span class="badge  badge-secondary" id="code-switching">Code-switching (GWSS)</span></div>
-            
-            <!-- blank line -->
-            <br>
-            
-            ...
-            
-            <!-- title -->           
             <div><span class="badge  badge-secondary" id="discourse-comments">Discourse comments (GWSS)</span></div>
             
             <!-- blank line -->
             <br>
+                        
+            <!-- text -->
+            <div>
+                <p>GeWiss (GWSS) is a comparable corpus of spoken academic language with 
+                    audio recordings and transcriptions 
+                    of L1 and L2 academic communications from German, English, Polish and Italian.
+                    It consists of oral exams and oral presentations by students and research experts 
+                    and contains manually crated pragmatic-functional annotations of discourse comments.
+                    These are meta-communicative statements in which speakers deviate from the actual thematic content 
+                    and comment on the structure of their presentation 
+                    (e.g. "ich darf anfangen ja ...", 
+                    "in meinem vortrag wird es um ... gehen", 
+                    "darauf werde ich jetzt im folgenden eingehen" etc.).
+                    <br><br>The attribute <i>DK</i> (German for 'Diskurskommentare') can be used to search for 
+                    discourse comments as exemplified by the following queries:
+                  </p>
+            </div> 
             
-            ...
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;DK/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    (matches: all discourse comments, i.e. all spans annotated at the 'DK' layer)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;DK/&gt; containing [word="einführung"]</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    (matches: all spans annotated at the 'DK' layer and containing 'einführung')</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[word="einführung"] within &lt;DK/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: 'einführung' within a span annotated at the 'DK' layer)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;DK="D2_Anfang"/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: all spans annotated with 'D2_Anfang' at the 'DK' layer)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;DK="D2_Diskussion"/&gt; [word="zunächst"]</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: all spans annotated with 'D2_Diskussion' and followed by 'zunächst')</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+                        
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;DK&gt; [norm="vielen"] [norm="Dank"]</div>
+                <span class="query-description">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: all discourse comments starting with 'vielen Dank')</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+
+            <!-- blank line -->
+            <br>
+         
+            <!-- text -->
+            <div>
+                <p>25 different types of discourse comments were annotated in the GeWiss corpus. 
+                    By typing the '<'-character into the query input field, 
+                    the Query Builder can be opened and used to display all possible values:
+                </p>
+            </div> 
+            
+            <div><img src="../images/query_help/query_builder_002.png" style="width: 60%;" alt="Query Builder" /></div>
+
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>A complete documentation of individual annotation tags 
+                    can be found <a href="https://gewiss.uni-leipzig.de/fileadmin/documents/Annotationsdokumentation_GeWiss.pdf" target="_blank">here</a>.
+                </p>
+            </div> 
             
             <!-- title -->           
             <div><span class="badge  badge-secondary" id="citations">Citations (GWSS)</span></div>
@@ -2248,7 +2345,133 @@
             <!-- blank line -->
             <br>
             
-            ...
+            <!-- text -->
+            <div>
+                <p>Another type of pragmatic annotations in the GeWiss corpus 
+                    are annotations of oral references and citations of scientific publications, studies and concepts.
+                The following search queries examplify how these annotations can be searched:</p>
+            </div> 
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;VZ/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: all types of references and citations)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;VZ="Z_woertl"/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: literal citations)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+                        
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;VZ/&gt; within &lt;e_se_art="Studentischer Vortrag"/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: all types of references and citations in student talks)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+                                    
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;VZ/&gt; containing [pos="NE"]</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: all references and citations that contain at least one proper name)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">[pos="VV.+"] within &lt;VZ/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: main verbs used in annotated references and citations)</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+           
+            <!-- blank line -->
+            <br>
+            
+            <!-- title -->           
+            <div><span class="badge  badge-secondary" id="code-switching">Code-switching (GWSS)</span></div>
+            
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>Manually created annotations of code switching can be found in the GeWiss corpus by using one of the following search queries:
+                </p>
+            </div>  
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;a/&gt;</div>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;a="Wechsel"/&gt;</div>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>All code-switching passages in the GeWiss corpus are translated into German. 
+                   Here are some examples of how you can use these translations in your search: 
+                </p>
+            </div>  
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;t="ich.*"/&gt;</div>
+                <span class="query-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: code-switching passage whose translation begins with "ich")</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- example -->
+            <div class="query-example clearfix" onclick="copyQuery(this)">
+                <div class="float-left">&lt;t=".*Frage.*"/&gt;</div>
+                <span class="query-description">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(matches: code-switching passage whose translation contains "Frage")</span>
+                <input type="hidden" class="mode" value=""/>
+                <div class="float-right">Corpus: GWSS</div>
+            </div>
+            
+            <!-- blank line -->
+            <br>
             
             <!-- title -->           
             <div><span class="badge  badge-secondary" id="prompt-reference-annotations">Prompt reference annotations (MEND)</span></div>
@@ -2824,6 +3047,40 @@
             <!-- blank line -->
             <br>
             
+            <!-- title -->           
+            <div><span class="badge  badge-secondary" id="simple-search">Simple search</span></div>
+            
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>In ZuRecht, you can use simple search alternatively to CQP-based query syntax. 
+                    Just type in a word (e.g. "genau") or a phrase (e.g. "ich weiß nicht") into the query input field and start the search.
+                </p> 
+            </div>
+            
+            <!-- image -->   
+            <div><img src="../images/query_help/kwic_018.png" alt="Simple search" /></div>
+        
+            <!-- blank line -->
+            <br>
+            
+            <!-- text -->
+            <div>
+                <p>Your input will be automatically translated into a CQP search query:
+                    <i>[norm="ich"][norm="weiß"][norm="nicht"]</i>.
+                    <br><br>
+                    By clicking on the button with the three vertical dots icon
+                    located next to the search button, you can open 
+                    the "Search options" modal and specify one of the three annotation levels 
+                    (Transcribed form, Normalized form, Lemma) as a default attribute for simple search.
+                    For example, selecting "Lemma" will automatically convert 
+                    the search query "Tag" into [lemma="Tag"] and search for <i>tag</i>, 
+                    <i>tage</i>, <i>tach</i>, <i>tagen</i>, <i>tages</i>, etc.
+                </p> 
+            </div>
+   
             <!-- title -->           
             <div><span class="badge  badge-secondary" id="clitics">Clitics</span></div>
             
