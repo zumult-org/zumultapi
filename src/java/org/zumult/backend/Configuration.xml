@@ -25,7 +25,7 @@
         <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
         <ffmpeg-path>ffmpeg</ffmpeg-path> 
         <quantification-path>/home/zumult/DATA/data</quantification-path>
-
+        <wordlist-path>/home/zumult/DATA/wordlists</wordlist-path>
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
         
@@ -46,7 +46,7 @@
         <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
         <ffmpeg-path>ffmpeg</ffmpeg-path> 
         <quantification-path>/home/zumult/DATA/data</quantification-path>
-
+        <wordlist-path>/home/zumult/DATA/wordlists</wordlist-path>
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
         
@@ -68,6 +68,8 @@
         <media-snippets-path>D:\ZuMult\MEDIA-SNIPPETS</media-snippets-path>
         <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
         <material-path></material-path> 
+        <quantification-path></quantification-path>
+        <wordlist-path></wordlist-path>
         
         
         <search-index-path>D:\ZuMult\INDICES\</search-index-path>-->
@@ -115,7 +117,7 @@
         <search-index-transcript-based>TB_HMAT</search-index-transcript-based>
         
         <corpus-ids-for-indexing>DH--;FOLK;GWSS;MEND;DNAM;BETV;HMAT</corpus-ids-for-indexing>
-        
+
         <!-- This is for a COMAFileSystem backend, we don't need other paths 
              here, because the COMA files will know themselves where to find everything -->
         <metadata-path>N:\Workspace\HZSK</metadata-path>
@@ -130,7 +132,8 @@
         <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url>
         <ffmpeg-path>C:\Program Files\ffmpeg-20191101-53c21c2-win64-static\bin\ffmpeg.exe</ffmpeg-path>
         <quantification-path></quantification-path>
-        
+        <wordlist-path></wordlist-path>
+
         
         
     </backend> 

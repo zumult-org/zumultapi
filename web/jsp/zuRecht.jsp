@@ -1699,12 +1699,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             function copyQuery(obj) {
 
                 // set corpora
-                var corporaText = $(obj).children(".float-right").text();
-                var myRegexp = /Corp(ora|us):\s(.*)/;
-                var match = myRegexp.exec(corporaText);
-                var mySplitResult = match[2].split(",");
-                
-                setCorpora(mySplitResult);
+                var corpora = getCorporaNames(obj);      
+                setCorpora(corpora);
                 
                 // set query
                 var str = $(obj).children(".float-left").text();
@@ -1744,6 +1740,30 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 // close modal
                 $('#query-tab-content').find('.search-help-modal').modal('hide');
                 $('#vocabulary-tab-content').find('.search-help-modal').modal('hide');
+            }
+            
+            function getCorporaNames(obj){
+                var corporaText = $(obj).children(".float-right").text();
+                var myRegexp = /Corp(ora|us):\s(.*)/;
+                var match = myRegexp.exec(corporaText);
+                var mySplitResult = match[2].split(",");
+                return mySplitResult;
+            }
+            
+            /* This function copies the search query string from the modal window and set it into the repetition query input field */
+            function copyRepetitionQuery(obj) {
+
+                // set corpora
+                var corpora = getCorporaNames(obj);   
+                setCorpora(corpora);
+                
+                // set query
+                var str = $(obj).children(".float-left").text();
+                var show = document.getElementById("repetitionQueryInputField");
+                show.value=str;
+                                
+                // close modal
+                $('#repetition-tab-content').find('.search-help-modal').modal('hide');
             }
            
             function printQueryHelp(obj) {
