@@ -125,6 +125,8 @@
 
                 }else if (inputRight.endsWith("=")){
                     createAutocompleteAfterEqualSign(selector, corpusQueryStr, inputRight, inputLeft, searchType);
+                }else if(inputRight.endsWith("=$")){
+                    createAutocompleteWithVars(selector, inputRight, inputLeft);
                 }
             }
         }
@@ -138,6 +140,13 @@
 
         if(match[1]==="pos"){
             createAutocompleteWithPOS(selector, inputRight, inputLeft);
+        }else if(match[1]==="lemma" || match[1]==="norm"){
+            createAutocompleteWithQuotes(selector, inputRight, inputLeft);
+            if(customVarMap.size>0){
+                createAutocompleteWithSpecials(selector, inputRight, inputLeft, "$");
+            }
+        }else if(match[1]==="word"){
+            createAutocompleteWithQuotes(selector, inputRight, inputLeft);
         }else{
             ajaxCallToGetValues(selector, match[1], corpusQueryStr, inputRight, inputLeft, searchType);
         }
@@ -148,7 +157,7 @@
         $(selector).prop('selectionStart', position);
         $(selector).prop('selectionEnd', position);
     }
-            
+                
     function createAutocompleteWithPOS(selector, inputRight, inputLeft){
         //var parser = new DOMParser();
         //var posTagSetXML = parser.parseFromString(posTagSet, "text/xml");
@@ -251,13 +260,7 @@
                         success: function(xml2) {
                             var annotationValues = $(xml2).find("annotationValues").children();
                             if ($(annotationValues).length === 0){
-                                var newValue = inputRight + "\"\"";
-                                var position = newValue.length - 1;
-                                if(inputLeft!==null){
-                                    newValue = newValue + inputLeft;
-                                }                                                      
-                                $(selector).val(newValue);
-                                focusPosition(selector, position);
+                                createAutocompleteWithQuotes(selector, inputRight, inputLeft);
                             } else{
                                 addSelect(selector, metadataKeyID, annotationValues, inputRight, inputLeft);
                             }
@@ -416,6 +419,10 @@
             inputRight = inputRight + special;
         }
         var position = inputRight.length;
+        completeInputAndSetPosition(selector, inputRight, inputLeft, position);
+    }
+    
+    function completeInputAndSetPosition(selector, inputRight, inputLeft, position){
         if (inputLeft!==null){
             inputRight = inputRight + inputLeft;
         }
@@ -459,7 +466,41 @@
             addValueFromAutoCompleteToQueryInputField(selector, inputRight, inputLeft, "/>");
         });
     }
-            
+    
+    function createAutocompleteWithQuotes(selector, inputRight, inputLeft){
+        var name = '<%=myResources.getString("AddQuotes")%>';
+        var span = createSimpleSpan("“ “", name);
+        var newValue = inputRight + "\"\"";
+        
+        $(span).on("click", function(){ 
+            $("#autocompleteForQueryInputField").empty();                  
+            var position = newValue.length - 1;
+            completeInputAndSetPosition(selector, newValue, inputLeft, position);
+            hideAutocompleteIfClickOutside(selector);
+            setPositionsForAutocomplete(selector, newValue);
+        });    
+    }
+    
+    function createSpanForAutocomplete(selector, inputRight, inputLeft, key, value){
+        var name = '<%=myResources.getString("Variable")%>' + " " + '<%=myResources.getString("For")%>' + " " + value.name;               
+        var span = createSimpleSpan(key, name);
+        var newValue = inputRight + key.substring(1, key.length);
+                
+        $(span).on("click", function(){ 
+            addValueFromAutoCompleteToQueryInputField(selector, newValue, inputLeft, null);
+            hideAutocompleteIfClickOutside(selector);
+            setPositionsForAutocomplete(selector, newValue);
+        }); 
+    }
+    
+    function createAutocompleteWithVars(selector, inputRight, inputLeft){
+        if(customVarMap.size>0){
+            for (let [key, value] of customVarMap) { 
+                createSpanForAutocomplete(selector, inputRight, inputLeft, key, value);
+            }
+        }
+    }
+    
     function createAutocompleteWithSpecials(selector, inputRight, inputLeft, specialCharacter){
         var myClass = $(selector).attr('class');
         var name = "";
@@ -485,6 +526,9 @@
               break;
             case "=":
               name = '<%=myResources.getString("AddValue")%>';
+              break;
+            case "$":
+              name = '<%=myResources.getString("AddVarChar")%>';
               break;
         }
         var span = createSimpleSpan(specialCharacter, name);

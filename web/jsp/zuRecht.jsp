@@ -261,7 +261,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         %>
                         var countValue = '<%= pageParam_count%>';
                         $('#modal-searchTabOptions').find('.customPageLength option').each(function(){
-                            if (this.value == countValue) {
+                            if (this.value === countValue) {
                                 $('#kwic-search-form').find('.pageLength').val(countValue);
                                 $(this).parent().val(countValue);
                                 return false;
@@ -1116,13 +1116,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     var format = 'xml';
                                     var from = '0';
                                     var to = '<%= defaultNumberForDownload%>';
-                                    var max = '<%= maxNumberForDownload%>'
+                                    var max = '<%= maxNumberForDownload%>';
 
                                     var customNumberOfHitsForDownload = parseInt($("#customNumberOfHitsForDownload").val());
                                     if(!isNaN(customNumberOfHitsForDownload)){
                                         if(customNumberOfHitsForDownload > max){
                                             $("#customNumberOfHitsForDownload").val(max);
-                                            alert("A maximum of " +'<%=Constants.MAX_NUMBER_FOR_KWIC_DOWNLOAD%>'+ " items can be downloaded!")
+                                            alert("A maximum of " +'<%=Constants.MAX_NUMBER_FOR_KWIC_DOWNLOAD%>'+ " items can be downloaded!");
                                         }else{
                                             if (customNumberOfHitsForDownload > 0){
                                                 to = customNumberOfHitsForDownload;
@@ -1137,7 +1137,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists);
                                                 
                                             }else{
-                                                alert("A minimum of 1 item can be downloaded!")
+                                                alert("A minimum of 1 item can be downloaded!");
                                                 $("#customNumberOfHitsForDownload").val(to);
                                             }
                                         }
@@ -2032,6 +2032,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                 || str.localeCompare("[")===0
                                 || str.localeCompare("=")===0 
                                 || str.localeCompare("&")===0
+                                || str.localeCompare("$")===0
                                 || str.localeCompare(" ")===0){
                             addAutocomplete(obj, str); 
                         }
