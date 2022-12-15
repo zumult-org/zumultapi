@@ -140,7 +140,7 @@
 
         if(match[1]==="pos"){
             createAutocompleteWithPOS(selector, inputRight, inputLeft);
-        }else if(match[1]==="lemma" || match[1]==="norm"){
+        }else if(match[1]==="lemma" || match[1]==="norm" || match[1]==="word"){
             createAutocompleteWithQuotes(selector, inputRight, inputLeft);
             if(customVarMap.size>0){
                 createAutocompleteWithSpecials(selector, inputRight, inputLeft, "$");

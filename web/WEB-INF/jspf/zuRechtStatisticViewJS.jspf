@@ -147,7 +147,7 @@
             var distinctItems=parseInt($xmlObject.find('distinctValues').text());
 
             if (distinctItems > offset + count){
-                $("body").append("<button id='btn-showMore' class='btn btn-success ml-3 mb-3'>Show more</button>");
+                $("body").append("<button id='btn-showMore' class='btn btn-success ml-3 mb-3'><%=myResources.getString("ShowMore")%></button>");
                 $("#btn-showMore").on('click', function(){
                     $(this).prepend("<i id='wait-icon' class='fa fa-spinner fa-spin mr-3'></i>");
                     $(this).prop('disabled', true);
@@ -185,7 +185,7 @@
                                 
                                 $("<td class='metadataValues' style='color: black; font-weight: bold; text-align: left;'>"+ newMetadataValue + "</td>").attr('data-value', metadataValue).appendTo(tr);
                                 $("<td class='numberOfHits' style='text-align: center;'>" + numberOfHits + "</td>").appendTo(tr);
-                                $("<td class='kwic-link'><button type='button' class='btn btn-link my-0 py-0 btn-sm btn-open-kwic' onclick='openKWIC(this)'>open KWIC</button></td>").appendTo(tr);
+                                $("<td class='kwic-link'><button type='button' class='btn btn-link my-0 py-0 btn-sm btn-open-kwic' onclick='openKWIC(this)'><%=myResources.getString("OpenKWIC")%></button></td>").appendTo(tr);
 
                                 $('.metadata-table-body').append(tr);
 
