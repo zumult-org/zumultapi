@@ -16,10 +16,10 @@
             Aufbereitung und Analyse von Sprechereignissen entwickelt. Aufgerufen werden kann das
             Interface von ZuViel über die anderen im ZuMult-Projekt entwickelten Werkzeuge <link
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuMal.jsp">ZuMal</link>
+                xlink:href="https://zumult.ids-mannheim.de/ProtoZumult/jsp/zuMal.jsp">ZuMal</link>
             (Zugang zu Merkmalsauswahl von Gesprächen) und <link
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="http://zumult.ids-mannheim.de/ProtoZumult/jsp/zuRecht.jsp?lang=de"
+                xlink:href="https://zumult.ids-mannheim.de/ProtoZumult/jsp/zuRecht.jsp?lang=de"
                 >ZuRecht</link> (Zugang zur Recherche in Transkripten). </para>
         <para>ZuViel ermöglicht es, im Sprechereignis zu navigieren sowie ausgewählte sprachliche
             Phänomene oder Sequenzen zu markieren und zu analysieren.</para>

@@ -1,4 +1,4 @@
 {
-    "DATA_SERVLET_URL": "http://zumult.ids-mannheim.de/ProtoZumult/getData",
-    "BASE_URL": "http://zumult.ids-mannheim.de"
+    "DATA_SERVLET_URL": "https://zumult.ids-mannheim.de/ProtoZumult/getData",
+    "BASE_URL": "https://zumult.ids-mannheim.de"
 }
