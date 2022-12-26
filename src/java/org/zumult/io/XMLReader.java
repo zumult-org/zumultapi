@@ -49,7 +49,7 @@ public class XMLReader {
         for (int i=0; i<childNodes.getLength(); i++){
             Element element = (Element)(childNodes.item(i));
             String form = element.getAttribute("form");
-            Integer frequency = new Integer(element.getAttribute("frequency"));
+            Integer frequency = Integer.parseInt(element.getAttribute("frequency"));
             result.put(form, frequency);
         }
         return result;        
