@@ -212,6 +212,10 @@ public class COMAFileSystem extends AbstractBackend {
             // or: we can iterate through all COMA files?
             // Shouldn't be that bad, so let's try
             String corpusID = findCorpusID(transcriptID);
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + transcriptID);
+            }
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
 

@@ -38,6 +38,7 @@ public class TestCOMABackend {
             System.out.println(":" + Configuration.getMetadataPath());
             BackendInterface bi = new COMAFileSystem();
             
+            
             Corpus corpus = bi.getCorpus("ESLO-DEMO");
             System.out.println(corpus.getDescription("de"));
             
