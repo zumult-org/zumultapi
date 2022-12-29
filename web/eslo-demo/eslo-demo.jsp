@@ -18,15 +18,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/query.css">
         
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>                
+        <script src="js/eslo.js"></script>
         <title>ZuMult - ESLO Demo</title>
         <style type="text/css">
         </style>
         
-        <link rel="stylesheet" href="css/overview.css"/>       
+        <!-- <link rel="stylesheet" href="css/overview.css"/> -->
         
     </head>
     
@@ -49,8 +51,8 @@
                 <div style="background-color:rgb(210,210,210); padding:30px; margin-top:20px; border-radius: 10px;">
                     <h4 style="margin-bottom:20px;">ZuViel: Visualisation de transcriptions</h4>
                     <div class="card-deck">
-                        <div class="card" style="width:200px; max-width: 250px;">
-                            <img class="card-img-top" src="img/ESLO_ENT_1001.jpg" alt="Card image" width="200px">
+                        <div class="card" style="width:250px; max-width: 300px;">
+                            <img class="card-img-top" src="img/ESLO_ENT_1001.jpg" alt="Card image" width="150px" style="max-width:150px; padding: 10px;">
                           <div class="card-body">
                             <h4 class="card-title">ESLO_ENT_1001</h4>
                             <p class="card-text">Discussion en face à face entre un chercheur et un locuteur témoin à partir d’une trame d’entretien. Enregistrée le 20/01/2010 par Olivier Baude. </p>
@@ -59,8 +61,8 @@
                         </div>
 
 
-                        <div class="card" style="width:200px; max-width: 250px;">
-                          <img class="card-img-top" src="img/ESLO_ENT_1005.jpg" alt="Card image">
+                        <div class="card" style="width:250px; max-width: 300px;">
+                          <img class="card-img-top" src="img/ESLO_ENT_1005.jpg" alt="Card image" width="150px" style="max-width:150px; padding: 10px;">
                           <div class="card-body">
                             <h4 class="card-title">ESLO_ENT_1005</h4>
                             <p class="card-text">Discussion en face à face entre un chercheur et une locutrice témoine à partir d’une trame d’entretien. Enregistrée le 01/03/2010 par Olivier Baude.</p>
@@ -69,8 +71,8 @@
                         </div>
 
 
-                        <div class="card" style="width:200px; max-width: 250px;">
-                          <img class="card-img-top" src="img/ESLO_ENT_1013.jpg" alt="Card image">
+                        <div class="card" style="width:250px; max-width: 300px;">
+                          <img class="card-img-top" src="img/ESLO_ENT_1013.jpg" alt="Card image" width="150px" style="max-width:150px; padding: 10px;">
                           <div class="card-body">
                             <h4 class="card-title">ESLO_ENT_1013</h4>
                             <p class="card-text">Discussion en face à face entre une chercheuse et un locuteur témoin à partir d’une trame d’entretien. Enregistrée le 01/03/2010 par Pauline Philardeau.</p>
@@ -91,7 +93,7 @@
                     <div class="card-deck">
                         <div class="card">
                             <div class="card-body">
-                                <form id="kwic-search-form" autocomplete="off">
+                                <form id="kwic-search-form" autocomplete="off" onsubmit="doQuery()">
                                     <p>Saisissez une expression de recherche CQP</p>
                                     <div class="input-group mb-3">
 
@@ -135,11 +137,12 @@
                                         </div>                            
                                     </div>
                                 </form>
-
-
-
                             </div>
                         </div>
+                    </div>
+                    
+                    <div id="kwic_display">
+                        <!-- KWIC result goes here -->
                     </div>
                 </div>
             </div>
