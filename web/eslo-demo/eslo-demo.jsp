@@ -63,7 +63,7 @@
                           <img class="card-img-top" src="img/ESLO_ENT_1005.jpg" alt="Card image">
                           <div class="card-body">
                             <h4 class="card-title">ESLO_ENT_1005</h4>
-                            <p class="card-text">Discussion en face à face entre un chercheur et un locuteur témoin à partir d’une trame d’entretien. Enregistrée le 01/03/2010 par Olivier Baude.</p>
+                            <p class="card-text">Discussion en face à face entre un chercheur et une locutrice témoine à partir d’une trame d’entretien. Enregistrée le 01/03/2010 par Olivier Baude.</p>
                             <a target="_blank" href="../jsp/zuViel.jsp?transcriptID=ESLO2_ENT_1005_C" class="btn btn-primary">Transcription</a>
                           </div>
                         </div>
