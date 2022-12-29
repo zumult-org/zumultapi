@@ -405,43 +405,6 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         return kwicView;
     }
     
-  /*  @Override
-    public KWIC exportKWIC(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
-            Boolean cutoff, String searchIndex, String context, String fileType, IDList metadataIDs) throws SearchServiceException, IOException {
-
-        final long timeStart_search = System.currentTimeMillis();
-        
-        SearchResultPlus result = search(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
-                pageLength, pageIndex, cutoff, searchIndex, metadataIDs);    
-        KWIC kwicView = new DGD2KWIC(result, context, Constants.SEARCH_TYPE_DOWNLOAD, fileType);       
-        
-        final long timeEnd_search = System.currentTimeMillis();
-        long millis_search = timeEnd_search - timeStart_search;
-        System.out.println("exportKWIC: " + TimeUtilities.format(millis_search));
-        
-        return kwicView;
-    }
-        */
-    @Override
-    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery,
-            String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
-        
-        Searcher searcher = new DGD2Searcher();
-        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
-        searcher.setCollection(corpusQuery, metadataQuery);
-        searcher.setPagination(pageLength , pageIndex);
-        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
-        if (metadataKeyID != null && !metadataKeyID.isEmpty()){
-            MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
-            if (mk==null){
-                mk = new DGD2MetadataKey(metadataKeyID, null, null);
-            }
-            return searcher.getStatistics(searchIndex, sortTypeCode, mk);
-        }else{
-            throw new SearchServiceException("You did not specify the metadataKey!");
-        }
-    }
      
     @Override
     public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{

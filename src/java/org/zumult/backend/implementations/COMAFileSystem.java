@@ -8,6 +8,7 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
+import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
@@ -50,6 +52,8 @@ import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.Searcher;
+import org.zumult.query.implementations.DGD2KWIC;
+import org.zumult.query.implementations.DGD2Searcher;
 
 /**
  *
@@ -634,34 +638,35 @@ public class COMAFileSystem extends AbstractBackend {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortType, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
-    public KWIC getKWIC(SearchResultPlus searchResult, String context) throws SearchServiceException, IOException, ParserConfigurationException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public KWIC getKWIC(SearchResultPlus searchResultPlus, String context) throws SearchServiceException, IOException {
+        KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_STANDARD);       
+        return kwicView;
+    }
+    
+    @Override
+    public KWIC exportKWIC(SearchResultPlus searchResultPlus, String context, String format) throws SearchServiceException, IOException {
+        KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_DOWNLOAD, format);       
+        return kwicView;
+    }
+    
+     
+    @Override
+    public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
+        Searcher searcher = new DGD2Searcher();
+        return searcher.getSampleQueries(corpusID, searchIndex);
     }
 
-    @Override
-    public KWIC exportKWIC(SearchResultPlus searchResult, String context, String fileFormat) throws SearchServiceException, IOException, ParserConfigurationException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public IDList getCorporaForSearch(String searchIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<SampleQuery> getSampleQueries(String corpusID, String searchIndex) throws SearchServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Override 
+    public IDList getCorporaForSearch(String searchIndex){
+        Searcher searcher = new DGD2Searcher();
+        return searcher.getCorporaForSearch(searchIndex);
     }
 
     @Override
     public Searcher getSearcher() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new DGD2Searcher();
     }
 
   

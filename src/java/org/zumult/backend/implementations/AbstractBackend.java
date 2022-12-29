@@ -36,10 +36,12 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.DGD2AnnotationTagSet;
+import org.zumult.objects.implementations.DGD2MetadataKey;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.query.SearchResult;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
+import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
 import org.zumult.query.implementations.DGD2Searcher;
 
@@ -361,6 +363,37 @@ public abstract class AbstractBackend implements BackendInterface {
             throw new NullPointerException(corpusID + "cound not be found!");
         }
         return annotationLayers;
+    }
+
+    /*  @Override
+    public KWIC exportKWIC(String queryString, String queryLanguage, String queryLanguageVersion,
+    String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex,
+    Boolean cutoff, String searchIndex, String context, String fileType, IDList metadataIDs) throws SearchServiceException, IOException {
+    final long timeStart_search = System.currentTimeMillis();
+    SearchResultPlus result = search(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
+    pageLength, pageIndex, cutoff, searchIndex, metadataIDs);
+    KWIC kwicView = new DGD2KWIC(result, context, Constants.SEARCH_TYPE_DOWNLOAD, fileType);
+    final long timeEnd_search = System.currentTimeMillis();
+    long millis_search = timeEnd_search - timeStart_search;
+    System.out.println("exportKWIC: " + TimeUtilities.format(millis_search));
+    return kwicView;
+    }
+     */
+    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
+        Searcher searcher = new DGD2Searcher();
+        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
+        searcher.setCollection(corpusQuery, metadataQuery);
+        searcher.setPagination(pageLength, pageIndex);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
+        if (metadataKeyID != null && !metadataKeyID.isEmpty()) {
+            MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
+            if (mk == null) {
+                mk = new DGD2MetadataKey(metadataKeyID, null, null);
+            }
+            return searcher.getStatistics(searchIndex, sortTypeCode, mk);
+        } else {
+            throw new SearchServiceException("You did not specify the metadataKey!");
+        }
     }
     
 }
