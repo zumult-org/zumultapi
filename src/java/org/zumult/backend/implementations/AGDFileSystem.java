@@ -313,40 +313,6 @@ public class AGDFileSystem extends AbstractIDSBackend {
         return getSpeechEvent(speechEventID).getProtocol();
     }
 
-    @Override
-    public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
-        IDList list = new IDList("AvailableValue");
-        try {
-            String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
-            String xml = new Scanner(AGDFileSystem.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            String xPathString = "//corpus[@corpus='" + corpusID + "']/key[@id='" + annotationLayerID + "']/value";
-            NodeList nodes = (NodeList)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
-            for (int i=0; i<nodes.getLength(); i++){            
-                Element element = ((Element)(nodes.item(i)));
-                list.add(element.getTextContent());
-            }
-        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-
-    }
     
-    @Override
-    public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException {
-        try {
-            String path = Constants.DATA_POS_PATH +annotationTagSetID+".xml";
-            String xml = new Scanner(AGDFileSystem.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);
-            AnnotationTagSet annotationTagSet = new DGD2AnnotationTagSet(doc);
-            return annotationTagSet;
-        } catch (NullPointerException ex){
-            throw new IOException("Tagset for " + annotationTagSetID + " does not exist!");
-        } catch(IOException | SAXException | ParserConfigurationException  ex){
-            throw new IOException("Tagset for " + annotationTagSetID + " could not be loaded!");
-        }
-    }
 
 }

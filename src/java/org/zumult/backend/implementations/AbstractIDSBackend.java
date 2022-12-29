@@ -540,84 +540,9 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
     }
     
        
-    @Override
-    public Set<MetadataKey> getMetadataKeysForGroupingHits(String corpusQuery, String searchIndex, String type) throws SearchServiceException, IOException{
-        // get all available metadata Keys
-        Set<MetadataKey> metadataKeys = new HashSet();
-        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
-        if (corporaIDs.size()>0){
-            for (String corpusID : corporaIDs){
-                metadataKeys.addAll(getMetadataKeysForCorpus(corpusID, type));
-            }
-        }
-        
-        // check if metadata can be used for grouping hits
-        Searcher searcher = new DGD2Searcher();
-        Set<MetadataKey> metadataKeysForSearch = searcher.filterMetadataKeysForGroupingHits(metadataKeys, searchIndex, type);
-        
-        return metadataKeysForSearch;
-
-    }
     
-    @Override
-    public Set<MetadataKey> getMetadataKeysForSearch(String corpusQuery, String searchIndex, String type) throws SearchServiceException, IOException{
-        // get all available metadata Keys
-        Set<MetadataKey> metadataKeys = new HashSet();
-        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
-        if (corporaIDs.size()>0){
-            for (String corpusID : corporaIDs){
-                metadataKeys.addAll(getMetadataKeysForCorpus(corpusID, type));
-            }
-        }
-        
-        // check if metadata can be searched
-        Searcher searcher = new DGD2Searcher();
-        Set<MetadataKey> metadataKeysForSearch = searcher.filterMetadataKeysForSearch(metadataKeys, searchIndex, type);
-        
-        return metadataKeysForSearch;
-
-    }
     
-    @Override
-    public Set<AnnotationLayer> getAnnotationLayersForGroupingHits(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
-        
-        // get all available annotation layers
-        Set<AnnotationLayer> annotationLayers = new HashSet();
-  
-        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
-        if (corporaIDs.size()>0){
-            for (String corpusID : corporaIDs){
-                annotationLayers.addAll(getAnnotationLayersForCorpus(corpusID, annotationLayerType));
-            }
-        }
-        
-        // check if annotation layers can be searched
-        Searcher searcher = new DGD2Searcher();
-        Set<AnnotationLayer> annotationLayersForSearch = searcher.filterAnnotationLayersForGroupingHits(annotationLayers, searchIndex, annotationLayerType);
-        
-        return annotationLayersForSearch;
-    }
     
-    @Override
-    public Set<AnnotationLayer> getAnnotationLayersForSearch(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
-        
-        // get all available annotation layers
-        Set<AnnotationLayer> annotationLayers = new HashSet();
-  
-        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
-        if (corporaIDs.size()>0){
-            for (String corpusID : corporaIDs){
-                annotationLayers.addAll(getAnnotationLayersForCorpus(corpusID, annotationLayerType));
-            }
-        }
-        
-        // check if annotation layers can be searched
-        Searcher searcher = new DGD2Searcher();
-        Set<AnnotationLayer> annotationLayersForSearch = searcher.filterAnnotationLayersForSearch(annotationLayers, searchIndex, annotationLayerType);
-        
-        return annotationLayersForSearch;
-        
-    }
     
     @Override 
     public IDList getCorporaForSearch(String searchIndex){
@@ -625,79 +550,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         return searcher.getCorporaForSearch(searchIndex);
     }
     
-    private Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationType) {
-        Set<AnnotationLayer> annotationLayers = new HashSet();
-        try {          
-            Corpus corpus = getCorpus(corpusID);
-            
-            if (annotationType!=null){
-                try{
-                    AnnotationTypeEnum annotationTypeEnum = AnnotationTypeEnum.valueOf(annotationType.toUpperCase());
-                    switch(annotationTypeEnum){
-                        case TOKEN:
-                            annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
-                            break;
-                        case SPAN:
-                            annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
-                            break;
-                        default:
-                            // will NOT execute
-                    }
-                }catch(NullPointerException ex){
-                    throw new NullPointerException(annotationType + "cound not be found!");    
-                }
-            }else{
-                annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
-            }
-                        
-        } catch (IOException ex) {
-            throw new NullPointerException(corpusID + "cound not be found!");
-        }
-        return annotationLayers;
-    }
         
-    private Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
-        Set<MetadataKey> metadataKeys = new HashSet();
-        ObjectTypesEnum objectTypesEnum = null;
-
-        try{
-            Corpus corpus = getCorpus(corpusID);
-            
-            // check if metadataKey type exists
-            if (type!=null){
-                objectTypesEnum = ObjectTypesEnum.valueOf(type.toUpperCase());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.EVENT)){
-                metadataKeys.addAll(corpus.getEventMetadataKeys());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEAKER)){
-                metadataKeys.addAll(corpus.getSpeakerMetadataKeys());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEECH_EVENT)){
-                metadataKeys.addAll(corpus.getSpeechEventMetadataKeys());
-            }
-            
-            if(objectTypesEnum==null || objectTypesEnum.equals(objectTypesEnum.SPEAKER_IN_SPEECH_EVENT)){
-                metadataKeys.addAll(corpus.getSpeakerInSpeechEventMetadataKeys());
-            }
-            
-            return metadataKeys;
-
-        }catch (NullPointerException ex){
-            StringBuilder sb = new StringBuilder();
-            sb.append(". There is no metadata for ").append(type).append(". Supported types are: ");
-                for (ObjectTypesEnum ob : ObjectTypesEnum.values()){
-                        sb.append(ob.name());
-                        sb.append(", ");
-                    }
-            throw new NullPointerException(sb.toString().trim().replaceFirst(",$",""));
-        } catch (IOException ex) {
-            throw new NullPointerException(corpusID + "cound not be found!");
-        }
-    }
 
     @Override
     public Searcher getSearcher() {

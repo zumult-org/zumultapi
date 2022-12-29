@@ -6,27 +6,42 @@
 package org.zumult.backend.implementations;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationBlock;
+import org.zumult.objects.AnnotationLayer;
+import org.zumult.objects.AnnotationTagSet;
+import org.zumult.objects.AnnotationTypeEnum;
+import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
+import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.implementations.DGD2AnnotationTagSet;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.query.SearchResult;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.Searcher;
+import org.zumult.query.implementations.DGD2Searcher;
 
 /**
  *
@@ -186,6 +201,166 @@ public abstract class AbstractBackend implements BackendInterface {
     
     
     
-    public abstract Searcher getSearcher();
+
+    @Override
+    public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException {
+        try {
+            String path = Constants.DATA_POS_PATH + annotationTagSetID + ".xml";
+            String xml = new Scanner(AbstractBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            Document doc = IOHelper.DocumentFromText(xml);
+            AnnotationTagSet annotationTagSet = new DGD2AnnotationTagSet(doc);
+            return annotationTagSet;
+        } catch (NullPointerException ex) {
+            throw new IOException("Tagset for " + annotationTagSetID + " does not exist!");
+        } catch (IOException | SAXException | ParserConfigurationException ex) {
+            throw new IOException("Tagset for " + annotationTagSetID + " could not be loaded!");
+        }
+    }
+
+    @Override
+    public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
+        IDList list = new IDList("AvailableValue");
+        try {
+            String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
+            String xml = new Scanner(AbstractBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            Document doc = IOHelper.DocumentFromText(xml);
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            String xPathString = "//corpus[@corpus='" + corpusID + "']/key[@id='" + annotationLayerID + "']/value";
+            NodeList nodes = (NodeList) xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Element element = (Element) (nodes.item(i));
+                list.add(element.getTextContent());
+            }
+        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
+            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    @Override
+    public Set<MetadataKey> getMetadataKeysForGroupingHits(String corpusQuery, String searchIndex, String type) throws SearchServiceException, IOException {
+        // get all available metadata Keys
+        Set<MetadataKey> metadataKeys = new HashSet(); 
+        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
+        if (!corporaIDs.isEmpty()) {
+            for (String corpusID : corporaIDs) {
+                metadataKeys.addAll(getMetadataKeysForCorpus(corpusID, type));
+            }
+        }
+        // check if metadata can be used for grouping hits
+        Searcher searcher = new DGD2Searcher();
+        Set<MetadataKey> metadataKeysForSearch = searcher.filterMetadataKeysForGroupingHits(metadataKeys, searchIndex, type);
+        return metadataKeysForSearch;
+    }
+
+    public Set<MetadataKey> getMetadataKeysForSearch(String corpusQuery, String searchIndex, String type) throws SearchServiceException, IOException {
+        // get all available metadata Keys
+        Set<MetadataKey> metadataKeys = new HashSet();
+        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
+        if (!corporaIDs.isEmpty()) {
+            for (String corpusID : corporaIDs) {
+                metadataKeys.addAll(getMetadataKeysForCorpus(corpusID, type));
+            }
+        }
+        // check if metadata can be searched
+        Searcher searcher = new DGD2Searcher();
+        Set<MetadataKey> metadataKeysForSearch = searcher.filterMetadataKeysForSearch(metadataKeys, searchIndex, type);
+        return metadataKeysForSearch;
+    }
+
+    protected Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
+        Set<MetadataKey> metadataKeys = new HashSet();
+        ObjectTypesEnum objectTypesEnum = null;
+        try {
+            Corpus corpus = getCorpus(corpusID);
+            // check if metadataKey type exists
+            if (type != null) {
+                objectTypesEnum = ObjectTypesEnum.valueOf(type.toUpperCase());
+            }
+            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.EVENT)) {
+                metadataKeys.addAll(corpus.getEventMetadataKeys());
+            }
+            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEAKER)) {
+                metadataKeys.addAll(corpus.getSpeakerMetadataKeys());
+            }
+            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEECH_EVENT)) {
+                metadataKeys.addAll(corpus.getSpeechEventMetadataKeys());
+            }
+            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEAKER_IN_SPEECH_EVENT)) {
+                metadataKeys.addAll(corpus.getSpeakerInSpeechEventMetadataKeys());
+            }
+            return metadataKeys;
+        } catch (NullPointerException ex) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(". There is no metadata for ").append(type).append(". Supported types are: ");
+            for (ObjectTypesEnum ob : ObjectTypesEnum.values()) {
+                sb.append(ob.name());
+                sb.append(", ");
+            }
+            throw new NullPointerException(sb.toString().trim().replaceFirst(",$", ""));
+        } catch (IOException ex) {
+            throw new NullPointerException(corpusID + "cound not be found!");
+        }
+    }
+
+    @Override
+    public Set<AnnotationLayer> getAnnotationLayersForSearch(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
+        // get all available annotation layers
+        Set<AnnotationLayer> annotationLayers = new HashSet();
+        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
+        if (!corporaIDs.isEmpty()) {
+            for (String corpusID : corporaIDs) {
+                annotationLayers.addAll(getAnnotationLayersForCorpus(corpusID, annotationLayerType));
+            }
+        }
+        // check if annotation layers can be searched
+        Searcher searcher = new DGD2Searcher();
+        Set<AnnotationLayer> annotationLayersForSearch = searcher.filterAnnotationLayersForSearch(annotationLayers, searchIndex, annotationLayerType);
+        return annotationLayersForSearch;
+    }
+
+    @Override
+    public Set<AnnotationLayer> getAnnotationLayersForGroupingHits(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
+        // get all available annotation layers
+        Set<AnnotationLayer> annotationLayers = new HashSet();
+        Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
+        if (!corporaIDs.isEmpty()) {
+            for (String corpusID : corporaIDs) {
+                annotationLayers.addAll(getAnnotationLayersForCorpus(corpusID, annotationLayerType));
+            }
+        }
+        // check if annotation layers can be searched
+        Searcher searcher = new DGD2Searcher();
+        Set<AnnotationLayer> annotationLayersForSearch = searcher.filterAnnotationLayersForGroupingHits(annotationLayers, searchIndex, annotationLayerType);
+        return annotationLayersForSearch;
+    }
+
+    protected Set<AnnotationLayer> getAnnotationLayersForCorpus(String corpusID, String annotationType) {
+        Set<AnnotationLayer> annotationLayers = new HashSet();
+        try {
+            Corpus corpus = getCorpus(corpusID);
+            if (annotationType != null) {
+                try {
+                    AnnotationTypeEnum annotationTypeEnum = AnnotationTypeEnum.valueOf(annotationType.toUpperCase());
+                    switch (annotationTypeEnum) {
+                        case TOKEN:
+                            annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+                            break;
+                        case SPAN:
+                            annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
+                            break;
+                        default:
+                    }
+                } catch (NullPointerException ex) {
+                    throw new NullPointerException(annotationType + "cound not be found!");
+                }
+            } else {
+                annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+            }
+        } catch (IOException ex) {
+            throw new NullPointerException(corpusID + "cound not be found!");
+        }
+        return annotationLayers;
+    }
     
 }
