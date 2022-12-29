@@ -28,7 +28,7 @@ public class SearchIndexer implements Indexer {
     private String MTAS_CONFIG_FILE_NAME = "mtas_config_SB.xml";
     private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
     private String INDEX_NAME = "SB_FOLK";
-    public static final String[] INPUT_DIRECTORIES = 
+    public String[] INPUT_DIRECTORIES = 
         {
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\FOLK", 
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\GWSS"
@@ -37,11 +37,12 @@ public class SearchIndexer implements Indexer {
 
     
     // New 29-12-2022: Make this configurable from the outside
-    public SearchIndexer(String mtasConfigFilePath, String mtasConfigFileName, String indexPath, String indexName) {
+    public SearchIndexer(String mtasConfigFilePath, String mtasConfigFileName, String indexPath, String indexName, String[] inputDirectories) {
         MTAS_CONFIG_FILE_PATH = mtasConfigFilePath;
         MTAS_CONFIG_FILE_NAME = mtasConfigFileName;
         INDEX_PATH = indexPath;
         INDEX_NAME = indexName;
+        INPUT_DIRECTORIES = inputDirectories;
     }
 
     public SearchIndexer() {
