@@ -12,7 +12,7 @@
     
     <xsl:template match="/">
         <xsl:if test = "//meta/total > 0"> 
-            <table class="table table-hover table-sm borderless">
+            <table class="table table-hover table-sm borderless" style="background:white;">
                 <!--<tr>
                     <th></th>
                     <th>Transcript</th>
