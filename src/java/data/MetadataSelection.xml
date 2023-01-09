@@ -681,6 +681,7 @@
         <example>Drei-Personen-Interaktion</example>
         <corpora>
             <corpus>FOLK</corpus>
+            <corpus>GWSS</corpus>
             <corpus>HMAT</corpus>    
             <corpus>HMOT</corpus>    
             <corpus>MIKO</corpus>                            

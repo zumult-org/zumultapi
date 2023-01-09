@@ -659,7 +659,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         }else{
                             var x = $(customFileGroup).find('.customFile').val();
                             if(x===""){
-                                alert("Please upload your lemma list!");
+                                alert("Please upload your synonym list!");
                             }else{
                                 var txt = x.substring(x.length-4);
                                 if (txt!=='.txt'){
@@ -2089,14 +2089,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         // variable is not null -> parse
                         if (!customVariable.match(/^\\$[A-Za-z0-9]+$/g)) {
                             finished = false;
-                            alert("\""+customVariable + "\" is not a valid variable. Der Variablenname soll mit '$' beginnen" +
-                                   " und darf keine Leer- und Sonderzeichen enthalten, "+
-                                   "z.B. '$1', '$var1' oder '$words'.");
+                            alert("\""+customVariable + "\" is not a valid variable. \n\
+            The variable name should start with '$' and must not contain any spaces or special characters, e.g. '$1', '$var1' or '$words'. ");
                             return false;
                         }else{
                             if(map.has(customVariable)){
                                 finished = false;
-                                alert("Jede Variable darf nur einmal vorkommen.");
+                                alert("Each variable may occur only once.");
                                 return false;
                             }
                         }
