@@ -20,7 +20,7 @@
 
 <html>
     <head>
-        <meta http-equiv="refresh" content="0; url=http://zumult.ids-mannheim.de/ProtoZumult/prototype/dist/zuMal.jsp" />
+        <meta http-equiv="refresh" content="0; url=https://zumult.ids-mannheim.de/ProtoZumult/prototype/dist/zuMal.jsp" />
     </head>
     <body>
         <!-- nothing -->

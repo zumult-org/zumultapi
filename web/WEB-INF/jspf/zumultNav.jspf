@@ -29,7 +29,7 @@
             <!-- ******************* -->
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                <a class="nav-link" href="http://zumult.ids-mannheim.de/ProtoZumult/"><%=myResources.getString("Home")%></a>
+                <a class="nav-link" href="https://zumult.ids-mannheim.de/ProtoZumult/"><%=myResources.getString("Home")%></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" target="_blank" href="https://zumult.org/"><%=myResources.getString("Project")%></a>
