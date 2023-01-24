@@ -93,7 +93,7 @@
                     <div class="card-deck">
                         <div class="card">
                             <div class="card-body">
-                                <form id="kwic-search-form" autocomplete="off" onsubmit="doQuery()">
+                                <form id="kwic-search-form" autocomplete="off" onsubmit="doQuery(); return false;">
                                     <p>Saisissez une expression de recherche CQP</p>
                                     <div class="input-group mb-3">
 
