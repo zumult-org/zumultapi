@@ -24,16 +24,32 @@ import org.zumult.query.searchEngine.SearchIndex;
  */
 public class SearchIndexer implements Indexer {
     
-    private static final String MTAS_CONFIG_FILE_PATH = "src\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
-    private static final String MTAS_CONFIG_FILE_NAME = "mtas_config_SB.xml";
-    private static final String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
-    private static final String INDEX_NAME = "SB_FOLK";
-    public static final String[] INPUT_DIRECTORIES = 
+    private String MTAS_CONFIG_FILE_PATH = "src\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
+    private String MTAS_CONFIG_FILE_NAME = "mtas_config_SB.xml";
+    private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
+    private String INDEX_NAME = "SB_FOLK";
+    public String[] INPUT_DIRECTORIES = 
         {
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\FOLK", 
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\GWSS"
             "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_14_07_2022" // 12.07.2022
         };
+
+    
+    // New 29-12-2022: Make this configurable from the outside
+    public SearchIndexer(String mtasConfigFilePath, String mtasConfigFileName, String indexPath, String indexName, String[] inputDirectories) {
+        MTAS_CONFIG_FILE_PATH = mtasConfigFilePath;
+        MTAS_CONFIG_FILE_NAME = mtasConfigFileName;
+        INDEX_PATH = indexPath;
+        INDEX_NAME = indexName;
+        INPUT_DIRECTORIES = inputDirectories;
+    }
+
+    public SearchIndexer() {
+    }
+
+
+    
     
     /**
      * @param args the command line arguments

@@ -29,6 +29,7 @@ import org.zumult.query.SearchStatistics;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
+import org.zumult.query.Searcher;
 
 /**
  *
@@ -433,6 +434,8 @@ public interface BackendInterface {
     
     //public IDList getSearchIndices();
     //pubic IDList getQueryLanguages();
+
+    public Searcher getSearcher();
 
     
     

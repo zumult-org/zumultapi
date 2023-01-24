@@ -6,10 +6,12 @@
 package org.zumult.backend.implementations;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -27,9 +29,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
+import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
-import org.zumult.objects.AnnotationLayer;
-import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
@@ -51,6 +52,8 @@ import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.Searcher;
+import org.zumult.query.implementations.DGD2KWIC;
+import org.zumult.query.implementations.DGD2Searcher;
 
 /**
  *
@@ -111,6 +114,7 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public Corpus getCorpus(String corpusID) throws IOException {
         //File topFolder = new File("N:\\Workspace\\HZSK");
+        System.out.println("Getting corpus: " + corpusID);
         File corpusFolder = new File(topFolder, corpusID);
         File comaFile = new File(corpusFolder, corpusID + ".coma");
         String comaXML = IOHelper.readUTF8(comaFile);
@@ -186,7 +190,7 @@ public class COMAFileSystem extends AbstractBackend {
             String xp = "//Media[@Id='" + mediaID + "']";
             Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
-            File corpusFolder = new File(topFolder, corpusID);
+            //File corpusFolder = new File(topFolder, corpusID);
             //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
             String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
             return new COMAMedia(mediaID, urlString);
@@ -208,6 +212,10 @@ public class COMAFileSystem extends AbstractBackend {
             // or: we can iterate through all COMA files?
             // Shouldn't be that bad, so let's try
             String corpusID = findCorpusID(transcriptID);
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + transcriptID);
+            }
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
 
@@ -235,8 +243,19 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public IDList getCorpora() throws IOException {
+        File[] listFiles = topFolder.listFiles(new FileFilter(){
+            @Override
+            public boolean accept(File pathname) {
+                if (!(pathname.isDirectory())) return false;
+                File findComa = new File(pathname, pathname.getName() + ".coma" );
+                return (findComa.exists());
+            }
+            
+        });
         IDList result = new IDList("Corpus");
-        result.add("hamatac");
+        for (File file : listFiles){
+            result.add(file.getName());
+        }
         return result;        
     }
 
@@ -319,7 +338,11 @@ public class COMAFileSystem extends AbstractBackend {
             
             */
             NodeList allAudios = (NodeList)
-                    xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.wav' or substring(Filename, string-length(Filename)-3)='.WAV']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
+                    xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.wav' "
+                            + "or substring(Filename, string-length(Filename)-3)='.WAV'"
+                            + "or substring(NSLink, string-length(NSLink)-3)='.WAV'"
+                            + "or substring(NSLink, string-length(NSLink)-3)='.wav'"
+                            + "]", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allAudios.getLength(); i++){
                 Element mediaElement = ((Element)(allAudios.item(i)));
                 result.add(mediaElement.getAttribute("Id"));
@@ -569,80 +592,6 @@ public class COMAFileSystem extends AbstractBackend {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
 
-    @Override
-    public ArrayList<SampleQuery> getSampleQueries(String corpusID, String mode) throws SearchServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Protocol getProtocol(String protocolID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getProtocol4SpeechEvent(String speechEventID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public SearchResultPlus search(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, Boolean cutoff, String indexType, IDList metadataIDs, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String indexType, String sortType, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public KWIC exportKWIC(SearchResultPlus searchResult, String context, String fileType) throws SearchServiceException, IOException, ParserConfigurationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public KWIC getKWIC(SearchResultPlus searchResult, String context) throws SearchServiceException, IOException, ParserConfigurationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Measure getMeasure4SpeechEvent(String speechEventID, String type,String reference) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IDList getMeasures4Corpus(String corpus) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<AnnotationLayer> getAnnotationLayersForSearch(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IDList getCorporaForSearch(String searchIndex) {
-        try {
-            return getCorpora();
-        } catch (IOException ex) {
-            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new IDList("corpus");
-    }
-
-    @Override
-    public Set<MetadataKey> getMetadataKeysForSearch(String corpusQuery, String searchIndex, String metadataKeyType) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /*@Override
     public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
@@ -674,24 +623,55 @@ public class COMAFileSystem extends AbstractBackend {
     }*/
 
     @Override
-    public Set<MetadataKey> getMetadataKeysForGroupingHits(String corpusQuery, String searchIndex, String metadataKeyType) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Protocol getProtocol(String protocolID) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Set<AnnotationLayer> getAnnotationLayersForGroupingHits(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getProtocol4SpeechEvent(String speechEventID) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Measure getMeasure4SpeechEvent(String speechEventID, String type, String reference) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public IDList getMeasures4Corpus(String corpusID) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
     @Override
-    public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public KWIC getKWIC(SearchResultPlus searchResultPlus, String context) throws SearchServiceException, IOException {
+        KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_STANDARD);       
+        return kwicView;
+    }
+    
+    @Override
+    public KWIC exportKWIC(SearchResultPlus searchResultPlus, String context, String format) throws SearchServiceException, IOException {
+        KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_DOWNLOAD, format);       
+        return kwicView;
+    }
+    
+     
+    @Override
+    public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
+        Searcher searcher = new DGD2Searcher();
+        return searcher.getSampleQueries(corpusID, searchIndex);
+    }
+
+    @Override 
+    public IDList getCorporaForSearch(String searchIndex){
+        Searcher searcher = new DGD2Searcher();
+        return searcher.getCorporaForSearch(searchIndex);
     }
 
     @Override
     public Searcher getSearcher() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new DGD2Searcher();
     }
+
   
 }

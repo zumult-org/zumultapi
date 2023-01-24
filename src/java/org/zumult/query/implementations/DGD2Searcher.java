@@ -234,10 +234,11 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
             
             //System.out.println(indexIDs);
 
-            if (indexIDs.size() > 0){
+            if (!indexIDs.isEmpty()){
                 ArrayList<String> indexPaths = new ArrayList();
 
                 for (String corpusID: corpora){
+                    System.out.println("Looking for " + corpusID);
                     String index_path = null;
                     for (String indexID: indexIDs){
                         if (indexID.substring(SEARCH_INDEX_PREXIF_LENGTH).startsWith(corpusID.replace("\"", "").trim()) && !indexID.endsWith(str)){

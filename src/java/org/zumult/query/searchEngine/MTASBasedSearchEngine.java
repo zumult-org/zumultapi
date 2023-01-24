@@ -1067,6 +1067,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 }
 
                 if (directory != null) {
+                    System.out.println("Directory: " + directory.toString());
                     try{   
                         indexReader = DirectoryReader.open(directory);
 

@@ -1,7 +1,8 @@
 <%-- any content can be specified here e.g.: --%>
 <%@page import="org.zumult.objects.IDList"%>
 <%@ page pageEncoding="UTF-8" %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav 
+        class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <!-- **************************** -->
         <!-- *          LOGO            * -->
         <!-- **************************** -->
@@ -9,6 +10,8 @@
             <% String imgSrc = "../images/folk1.png";
                if (eventID.startsWith("GWSS")){ 
                    imgSrc = "../images/gewiss-logo.png"; 
+               } else if (transcriptID.startsWith("ESLO")){ 
+                   imgSrc = "../eslo-demo/img/eslo_colloque.jpg"; 
                }
             %>
             <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/>
