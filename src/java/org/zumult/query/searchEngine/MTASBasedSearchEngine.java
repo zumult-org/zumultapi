@@ -512,7 +512,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         Collections.sort(array, new Comparator<CodecSearchTree.MtasTreeHit<String>>() {
             @Override
             public int compare(CodecSearchTree.MtasTreeHit<String> o1, CodecSearchTree.MtasTreeHit<String> o2) {
-                return new Integer(o1.startPosition).compareTo(new Integer(o2.startPosition));
+                return Integer.valueOf(o1.startPosition).compareTo(Integer.valueOf(o2.startPosition));
             }
         });
         
