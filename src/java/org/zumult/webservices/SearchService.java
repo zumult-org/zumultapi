@@ -631,9 +631,6 @@ public class SearchService {
     public Response getValuesForAnnotationLayerForSearch(@QueryParam("cq") String corpusQuery,
                              @QueryParam("mode") String searchIndex,
                              @QueryParam("metadataKeyID") String annotationLayerID) throws Exception {
-       /* if(annotationLayerID.equals(Constants.METADATA_KEY_MATCH_TYPE_WORD_TYPE)){
-            annotationLayerID = "type";
-        }*/
         Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
         Set<String> annotationValues = new HashSet();
         for(String corpusID: corporaIDs){

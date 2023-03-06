@@ -121,7 +121,7 @@
             <div class="ml-3 mt-2 firstInRow">
                 <div class="input-group input-group-sm" >
                     <div class="input-group-prepend" ">
-                        <span class="input-group-text firstInRowPrepend"><%=myResources.getString("PositionToSpeakerChange")%>
+                        <span class="input-group-text"><%=myResources.getString("PositionToSpeakerChange")%>
                         <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("PositionToSpeakerChangeInfo")%>" ></i></span>
                     </div>
                     <select class="form-control positionToSpeakerChangeType" onchange="addDistanceToSpeakerChange(this)">
@@ -148,7 +148,7 @@
             <!-- position to speaker overlaps --> 
             <div class="ml-3 mt-2 input-group input-group-sm firstInRow">
                 <div class="input-group-prepend">
-                    <span class="input-group-text "><%=myResources.getString("SpeakerOverlap")%>
+                    <span class="input-group-text"><%=myResources.getString("SpeakerOverlap")%>
                     <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("SpeakerOverlapInfo")%>" ></i></span>
                 </div>
                 <select class="form-control positionToOverlap">
@@ -178,23 +178,52 @@
                     
         <div class="row">
             
-           <!-- context -->
+           <!-- context left -->
            <div class="ml-3 mt-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="input-group-text firstInRowPrepend"><%=myResources.getString("RepetitionKontext")%>
-                            <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("RepetitionKontextInfo")%>" ></i>                        
+                        <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextLeft")%>
+                            <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoLeft")%>" 
+                               style="padding-left: 15px;"></i>                        
                         </span>
                     </div>
-                    <input type="text" class="form-control form-control-sm repetitionKontextField"
-                            placeholder="<%=myResources.getString("ForExample")%> [lemma=&quot;sein&quot;][]{0,1}" style="width: 500px;">
+                    <input type="text" class="form-control form-control-sm repetitionContextFieldLeft"
+                            placeholder="<%=myResources.getString("ForExample")%> <pause/>[ ]{0,3}" style="width: 350px;">
                     <div class="ml-2 form-check form-check-inline">
-                        <input class="form-check-input form-control-sm withinContributionCheckBox" type="checkbox">
+                        <input class="form-check-input form-control-sm withinContributionCheckBoxLeft" type="checkbox">
                         <label class="form-check-label"><%=myResources.getString("WithinContributionWithRepetition")%></label>
                     </div>
                 </div>  
             </div>  
-        </div> 
+                    
+        </div>
+                    
+        <div class="row">
+            
+           <!-- context right-->
+           <div class="ml-3 mt-2">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextRight")%>
+                            <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoRight")%>"
+                               style="padding-left: 5px;"></i>        
+                               
+                               
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm repetitionContextFieldRight"
+                           placeholder="<%=myResources.getString("ForExample")%> [ ]{0,2}[norm=&quot;denn&quot;]" 
+                            style="width: 350px;">
+                    <div class="ml-2 form-check form-check-inline">
+                        <input class="form-check-input form-control-sm withinContributionCheckBoxRight" type="checkbox">
+                        <label class="form-check-label"><%=myResources.getString("WithinContributionWithRepetition")%></label>
+                    </div>
+                </div>  
+            </div>  
+                    
+        </div>
+        
+
                                
         <!-- add and delete the second repetition form -->
         <div class="addOneMoreRepetitionPropertiesForm mt-2"> <span onclick='displayOneMoreRepetitionPropertiesForm(this)' 

@@ -42,8 +42,10 @@ public class Repetition {
         setPositionSpeakerChange(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE).item(0).getTextContent(), 
                 getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE).item(0).getTextContent()), 
                 getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE).item(0).getTextContent()));
-        setPrecededby(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY).item(0).getTextContent());
-        setOptionWithinSpeakerContribution(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION).item(0).getTextContent()));
+        setPrecededby(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT).item(0).getTextContent());
+        setFollowedby(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT).item(0).getTextContent());
+        setOptionWithinSpeakerContributionLeft(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT).item(0).getTextContent()));
+        setOptionWithinSpeakerContributionRight(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT).item(0).getTextContent()));
     }
     
 
@@ -52,7 +54,8 @@ public class Repetition {
             Boolean speakerChange, Set<String> ignoredCustomPOS, Boolean ignoreTokenOrder, String positionOverlap, 
             Integer minDistanceToSource, Integer maxDistanceToSource, String metadataQueryString,
             String positionSpeakerChangeType, Integer positionSpeakerChangeMin, 
-            Integer positionSpeakerChangeMax, String precededby, Boolean withinSpeakerContribution) throws SearchServiceException{
+            Integer positionSpeakerChangeMax, String precededby, String followedby, 
+            Boolean withinSpeakerContributionLeft, Boolean withinSpeakerContributionRight) throws SearchServiceException{
         
         setRepetitionType(type);
         setSimilarityType(similarity);
@@ -64,8 +67,10 @@ public class Repetition {
         setMinMaxDistance(minDistanceToSource, maxDistanceToSource);
         setPositionOverlap(positionOverlap);
         setPositionSpeakerChange(positionSpeakerChangeType, positionSpeakerChangeMin, positionSpeakerChangeMax);
-        setOptionWithinSpeakerContribution(withinSpeakerContribution);
+        setOptionWithinSpeakerContributionLeft(withinSpeakerContributionLeft);
+        setOptionWithinSpeakerContributionRight(withinSpeakerContributionRight);
         setPrecededby(precededby);
+        setFollowedby(followedby);
         
     }
     
@@ -113,8 +118,16 @@ public class Repetition {
         return this.context.precededby;
     }
     
-    public Boolean isWithinSpeakerContribution(){
-        return this.context.withinSpeakerContribution;
+    public String getFollowedby(){
+        return this.context.followedby;
+    }
+    
+    public Boolean isWithinSpeakerContributionLeft(){
+        return this.context.withinSpeakerContributionLeft;
+    }
+    
+    public Boolean isWithinSpeakerContributionRight(){
+        return this.context.withinSpeakerContributionRight;
     }
     
     public Integer getMaxDistance(){
@@ -158,6 +171,10 @@ public class Repetition {
     
     private void setPrecededby(String precededby){
         this.context.precededby = precededby.replace("&lt;", "<").replace("&gt;", ">");
+    }
+    
+    private void setFollowedby(String followedby){
+        this.context.followedby = followedby.replace("&lt;", "<").replace("&gt;", ">");
     }
     
     private void setSpeaker(Boolean speaker){
@@ -220,9 +237,15 @@ public class Repetition {
         this.distanceToPreviousElement.maxDistance = maxDistanceToSource;
     }
     
-    private void setOptionWithinSpeakerContribution(Boolean withinSpeakerContribution){
-        if(withinSpeakerContribution!=null){
-            this.context.withinSpeakerContribution = withinSpeakerContribution;
+    private void setOptionWithinSpeakerContributionLeft(Boolean withinSpeakerContributionLeft){
+        if(withinSpeakerContributionLeft!=null){
+            this.context.withinSpeakerContributionLeft = withinSpeakerContributionLeft;
+        }
+    }
+    
+    private void setOptionWithinSpeakerContributionRight(Boolean withinSpeakerContributionRight){
+        if(withinSpeakerContributionRight!=null){
+            this.context.withinSpeakerContributionRight = withinSpeakerContributionRight;
         }
     }
     
@@ -284,8 +307,11 @@ public class Repetition {
     }
     
     private class Context {
-        Boolean withinSpeakerContribution = false; 
         String precededby;
+        String followedby;
+        Boolean withinSpeakerContributionLeft = false;
+        Boolean withinSpeakerContributionRight = false;
+
     }
     
     private class Distance {        

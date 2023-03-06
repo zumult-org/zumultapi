@@ -6,9 +6,11 @@
 package org.zumult.query.searchEngine;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import org.zumult.objects.IDList;
 import org.zumult.query.SearchServiceException;
 
@@ -119,4 +121,11 @@ public interface SearchEngineInterface {
      */
     public SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString, String metadataQueryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> customWordLists) throws SearchServiceException, IOException;
+
+    
+    public SearchIndex createIndex(Set<Path> inputDirectories, String indexPath, Object... configuration) throws IOException;
 }
+
+
+
+
