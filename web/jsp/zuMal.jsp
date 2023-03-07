@@ -4,6 +4,7 @@
     Author     : thomas.schmidt
 --%>
 
+<%@page import="org.zumult.io.URLUtilities"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="org.zumult.backend.BackendInterface"%>
@@ -20,7 +21,7 @@
 
 <html>
     <head>
-        <meta http-equiv="refresh" content="0; url=https://zumult.ids-mannheim.de/ProtoZumult/prototype/dist/zuMal.jsp" />
+        <meta http-equiv="refresh" content="0; url=<%= URLUtilities.getWebApplicationURL(request)%>/prototype/dist/zuMal.jsp" />
     </head>
     <body>
         <!-- nothing -->
