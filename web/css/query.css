@@ -51,7 +51,7 @@ button:disabled {cursor: not-allowed; pointer-events: all !important;}
 
 /***************** repetition search form style ****************************************/
 .firstInRow {width:350px; float:left;}
-.firstInRowPrepend {width:225px;}
+.contextPrepend {width:135px;}
 
 /***************** vocabulary search form style ********************/
 

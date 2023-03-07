@@ -32,11 +32,13 @@ public class TestSearchEngine {
     
     private void doit() throws SearchServiceException, IOException{
         ArrayList<Repetition> twoRepetitions = new ArrayList();
-        twoRepetitions.add(new Repetition("WORD", "EQUAL", false, null, new HashSet<String>(), null, null, null, null, "s_geschlecht=\"Männlich\"&ses_rolle_s=\"Partner/in\"", "FOLLOWEDBY", 0, 5, null, null));
-        twoRepetitions.add(new Repetition("WORD", "EQUAL", true, null, new HashSet<String>(), null, null, null, null, null, null, null, null, null, null));
+        twoRepetitions.add(new Repetition("WORD", "EQUAL", false, null, new HashSet<String>(), 
+                null, null, null, null, "s_geschlecht=\"Männlich\"&ses_rolle_s=\"Partner/in\"", "FOLLOWEDBY", 0, 5, null, null, null, null));
+        twoRepetitions.add(new Repetition("WORD", "EQUAL", true, null, new HashSet<String>(), 
+                null, null, null, null, null, null, null, null, null, null, null, null));
         
         ArrayList<Repetition> repetition = new ArrayList();
-        repetition.add(new Repetition("WORD", "EQUAL", true, null, new HashSet<String>(), null, null, null, 10, null, null, null, null, null, null));
+        repetition.add(new Repetition("WORD", "EQUAL", true, null, new HashSet<String>(), null, null, null, 10, null, null, null, null, null, null, null, null));
                 
         MTASBasedSearchEngine se = new MTASBasedSearchEngine();
         SearchEngineResponseHitList result= se.searchRepetitions(

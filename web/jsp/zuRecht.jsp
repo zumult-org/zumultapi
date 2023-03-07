@@ -1823,6 +1823,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
                 var copy = $(parent).clone();
                 $(copy).find("i").remove();
+                $(copy).find(".repetitionContextFieldLeft").removeAttr('placeholder');
+                $(copy).find(".repetitionContextFieldLeft").val('');
+                $(copy).find(".repetitionContextFieldRight").removeAttr('placeholder');
+                $(copy).find(".repetitionContextFieldRight").val('');
                 $(copy).find(".showMore").remove();
                 $(copy).find('.deleteCurrentRetitionPropertiesForm').css('display', 'block');
                 $(copy).addClass("mt-5");

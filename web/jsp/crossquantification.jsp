@@ -4,18 +4,14 @@
     Author     : Thomas.Schmidt
 --%>
 
+<%@page import="org.zumult.backend.Configuration"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.ResourceBundle"%>
 <%@page import="org.zumult.backend.BackendInterfaceFactory"%>
 <%@page import="org.zumult.backend.BackendInterface"%>
 <%@page import="org.zumult.objects.Corpus"%>
 <%@page import="org.zumult.io.IOHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-      <%
-            RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/jsp/zuZweit.jsp");
-            dispatcher.forward(request, response);            
-      %>
-
 
 <%
     
@@ -40,30 +36,46 @@
     
     String QUANT_FILENAME = corpusID + "_QUANT.xml";
     
-    String html = new IOHelper().applyInternalStylesheetToInternalFile("/org/zumult/io/Quantify2Dimensions.xsl", 
+    String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl", 
             Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
 %>
 <!DOCTYPE html>
+<%@include file="../WEB-INF/jspf/locale.jspf" %>     
+
 <html>
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ZuMult: Metadata Cross Quantification</title>
+        <title>ZuZweit : <%=myResources.getString("ZuZweitTitle")%></title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>                
 
-        <script src="../js/crossquantification.js"></script>
+        <script src="../js/zuzweit.js"></script>
         
+        <script>
+            var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';   
+
+            $(document).ready(function(){
         
+                $("#selectLang").on("change", function(){
+                    var value = $(this).val();
+                    var urlTest = new URL(window.location.href);
+                    urlTest.searchParams.set('lang',value);
+                    window.location = urlTest;
+                });
+            });
+            
+        </script>
+        
+       
         <link rel="stylesheet" href="../css/overview.css"/>       
-
         <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
-
+        
     </head>
     <body>
         <% 
-            String pageTitle = "Metadata Cross Quantification"; 
+            String pageTitle = myResources.getString("ZuZweitTitle"); 
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
             Set<MetadataKey> eventMetadataKeys = corpus.getEventMetadataKeys();                
@@ -75,23 +87,14 @@
         <% String pageName = "ZuZweit"; %>
         <%@include file="../WEB-INF/jspf/zumultNav.jspf" %>                                                
         <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6">
-                <p class="lead">
-                    The matrix pairs values of two different metadata parameters for the selected corpus. For each value, quantities in the corpus
-                    are given in the selected unit. Note that for pairings of (speech) event with speakers parameters: (a) the speaker parameter needs to come second and 
-                    (b) quantities can only be calculated in tokens. 
-                </p>
-            </div>
-            <div class="col-sm-3"></div>
-            
-        </div>
-        <div class="row">
             <div class="col-sm-1"></div>
             <div class="col-sm-2">
-                <form action="./crossquantification.jsp">
+                <p style="font-size:smaller;">
+                    <%=myResources.getString("ZuZweitExplain")%>
+                </p>
+                <form action="./zuZweit.jsp">
                     <div class="form-group">
-                        <label for="corpusSelector">Corpus</label>
+                        <label for="corpusSelector"><%=myResources.getString("Corpus")%></label>
                         <select class="form-control" id="corpusSelector" name="corpusID" onchange="corpusSelectionChanged()">
                             <% for (String cID : backendInterface.getCorpora()){ %>
                             <option value="<%= cID %>" 
@@ -102,7 +105,7 @@
                     </div>                    
 
                     <div class="form-group">
-                        <label for="metaField2Selector">Parameter 1</label>
+                        <label for="metaField1Selector"><%=myResources.getString("Parameter")%> 1</label>
                         <select class="form-control" id="metaField1Selector" name="metaField1" onchange="meta1Changed()">
                             <% for (MetadataKey metadataKey : eventMetadataKeys){ %>
                             <option value="v_<%= metadataKey.getID()%>" 
@@ -129,7 +132,7 @@
                     </div>                    
                     
                     <div class="form-group">
-                        <label for="metaField1Selector">Parameter 2</label>
+                        <label for="metaField2Selector"><%=myResources.getString("Parameter")%> 2</label>
                         <select class="form-control" id="metaField2Selector" name="metaField2" onchange="meta2Changed()">
                             <% for (MetadataKey metadataKey : eventMetadataKeys){ %>
                             <option value="v_<%= metadataKey.getID()%>" 
@@ -156,7 +159,7 @@
                     </div>    
                         
                     <div class="form-group">
-                        <label for="unitSelector">Units</label>
+                        <label for="unitSelector"><%=myResources.getString("Unit")%></label>
                         <select class="form-control" id="unitSelector" name="units" onchange="unitChanged()">
                             <option value="TOKENS"
                                 <% if (units.equals("TOKENS")){%> selected="selected" <%} %>>                            
@@ -174,7 +177,7 @@
                     </div>                    
                         
                         
-                    <button type="submit" class="btn btn-primary mb-2">Quantifizierung berechnen</button>                        
+                    <button type="submit" class="btn btn-primary mb-2"><%=myResources.getString("CalculateQuantification")%></button>                        
 
 
                 </form>

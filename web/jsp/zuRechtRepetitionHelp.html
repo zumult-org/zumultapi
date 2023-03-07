@@ -783,15 +783,18 @@
     <div>
         <p>Sometimes when searching for repetitions you might want to find special constructions 
             like German "X - Was für X?" or "X - Was ist (denn ein) X?". 
-            In ZuRecht, it is possible by using the "Repetition context"-feature. It allows you to
-            apply CQP for specifying patterns of elements immediately preceding the repetition. 
-            For example, if you look for nouns and type <i>[norm="was"][norm="für"][ ]{0,1}</i> into the context input field
+            In ZuRecht, it is possible by using the "Context (left)" and "Context (right)" features. They allow you to
+            apply CQP for specifying patterns of elements immediately preceding or following the repetition. 
+            For example, if you look for nouns and type <i>[norm="was"][norm="für"][ ]{0,1}</i> into the context left input field
         </p>
     </div>
-    
+
     <!-- image -->   
     <div><img src="../images/query_help/repetition_007.png" style="width: 60%;" alt="Context" /></div>
-        
+             
+    <!-- blank line -->
+    <br> 
+    
     <!-- text -->
     <div>
         <p> you will get hits like the following transcript excerpts:
@@ -815,7 +818,7 @@
     <!-- note -->
     <div class="query-note">
         <span><b>NOTE:</b>
-           <br>The CQP pattern specified in the context input field matches the elements IMMEDIATELY preceding the repetition. 
+           <br>The CQP pattern specified in the context input field matches the elements IMMEDIATELY preceding or following the repetition. 
            If you want to allow some pauses or other verbal or non-verbal elements occurring in-between, you can use
            empty square brackets and specify how many such elements are allowed. 
            <br><br>

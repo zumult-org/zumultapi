@@ -8,8 +8,7 @@
 
 <html>
    <head>
-      <title>Page Redirection to ZuRecht</title>
-      <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
+      <title>Page Redirection to ZuRecht</title>              
    </head>
    
    <body>

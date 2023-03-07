@@ -19,8 +19,10 @@
     var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>';
     var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>';
     var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>';
-    var XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY %>';
-    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION %>';
+    var XML_ELEMENT_NAME_CONTEXT_LEFT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT %>';
+    var XML_ELEMENT_NAME_CONTEXT_RIGHT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT %>';
+    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>';
+    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>';
     var XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>';
     var XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER = '<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>';
     
@@ -109,9 +111,14 @@
             
             var ignoredCustomPOS = checkedPOSToBeIgnored.join('<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR %>');   
             
-            var contextPrecededBy = $(this).find('.repetitionKontextField').val();
-            var contextWithinSpeakerContribution = false;
-            if ($(this).find('.withinContributionCheckBox').is(':checked')) {contextWithinSpeakerContribution = true;}
+            var contextLeft = $(this).find('.repetitionContextFieldLeft').val();
+            var contextRight = $(this).find('.repetitionContextFieldRight').val();
+            
+            var contextWithinSpeakerContributionLeft = false;
+            if ($(this).find('.withinContributionCheckBoxLeft').is(':checked')) {contextWithinSpeakerContributionLeft = true;}
+            
+            var contextWithinSpeakerContributionRight = false;
+            if ($(this).find('.withinContributionCheckBoxRight').is(':checked')) {contextWithinSpeakerContributionRight = true;}
 
             repetitions.push(
                 "<",XML_ELEMENT_NAME_REPETITION,">",
@@ -154,12 +161,18 @@
                  "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
                 positionToSpeakerChangeMax,
                 "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
-                 "<",XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY,">",
-                contextPrecededBy.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                "</",XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY,">",
-                 "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
-                contextWithinSpeakerContribution,
-                "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION,">",
+                 "<",XML_ELEMENT_NAME_CONTEXT_LEFT,">",
+                contextLeft.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+                "</",XML_ELEMENT_NAME_CONTEXT_LEFT,">",
+                "<",XML_ELEMENT_NAME_CONTEXT_RIGHT,">",
+                contextRight.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+                "</",XML_ELEMENT_NAME_CONTEXT_RIGHT,">",
+                 "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT,">",
+                contextWithinSpeakerContributionLeft,
+                "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT,">",
+                "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT,">",
+                contextWithinSpeakerContributionRight,
+                "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT,">",
                 "<",XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER,">",
                 ignoreTokenOrder,
                 "</",XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER,">",

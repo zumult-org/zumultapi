@@ -298,8 +298,10 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE="positionToSpeakerChangeType";
     public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE="positionToSpeakerChangeMin";
     public static final String REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE="positionToSpeakerChangeMax";
-    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_PRECEDEDBY="precededby";
-    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION="withinSpeakerContribution"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT="precededby";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT="followedby";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT="withinSpeakerContributionLeft";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT="withinSpeakerContributionRight";
     public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
     
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR="\\|";
