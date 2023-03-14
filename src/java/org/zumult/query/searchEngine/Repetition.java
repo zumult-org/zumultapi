@@ -355,7 +355,14 @@ public class Repetition {
         DIFF_PRON, /* e.g. selektive klopfreglung -> selektive klopfregelung */
         DIFF_NORM, /* mit allen drei würfeln dieselbe augenzahl würfeln */
         
-        OWN_LEMMA_LIST;
+        OWN_LEMMA_LIST,
+        
+        GERMANET_PLUS,
+        GERMANET,
+        GERMANET_ORTH,
+        GERMANET_HYPERNYM,
+        GERMANET_HYPONYM,
+        GERMANET_COMPOUNDS;
     }
     
     public enum PositionToMatch{

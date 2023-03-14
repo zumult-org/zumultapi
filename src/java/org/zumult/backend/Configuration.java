@@ -40,6 +40,7 @@ public class Configuration {
     private static String ffmpegPath;
     private static String quantificationPath;
     private static String wordlistPath;
+    private static String germanetPath;
     
     private static String transcriptPath;
     private static String protocolPath;
@@ -71,6 +72,7 @@ public class Configuration {
             // this is for getting an attribute value, looks pretty clumsy...
             backendInterfaceClassPath = doc.getElementsByTagName("backend").item(0).getAttributes().getNamedItem("classPath").getTextContent();
             
+            germanetPath = doc.getElementsByTagName("germanet-path").item(0).getTextContent();
             wordlistPath = doc.getElementsByTagName("wordlist-path").item(0).getTextContent();
             quantificationPath = doc.getElementsByTagName("quantification-path").item(0).getTextContent();
             mediaPath = doc.getElementsByTagName("media-path").item(0).getTextContent();
@@ -142,6 +144,10 @@ public class Configuration {
     
     public static String getWordlistPath(){
         return wordlistPath;
+    }
+    
+    public static String getGermanetPath(){
+        return germanetPath;
     }
 
     public static String getProtocolPath(){
