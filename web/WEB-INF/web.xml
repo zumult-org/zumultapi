@@ -68,7 +68,7 @@
     <!-- ###CHANGE_FOR_RELEASE### -->
     <!-- SECURITY -->
     <!-- can/should be disabled for development / deployment on local host -->
-    <security-constraint>
+<!--    <security-constraint>
         <display-name>LoginFirstConstraint</display-name>
         <web-resource-collection>
             <web-resource-name>DGD2Web-Services</web-resource-name>
@@ -81,7 +81,7 @@
             <description/>
             <role-name>accepted</role-name>
         </auth-constraint>
-    </security-constraint>
+    </security-constraint>-->
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
