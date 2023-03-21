@@ -39,6 +39,7 @@ public class Constants {
     //public static final String TOMCAT_AUDIO_PATH = "http://localhost:8084/DGD2Web/audio/";    // local testing
     public static final String TOMCAT_AUDIO_PATH = DGD_URL + "/DGD2Web/audio/";          // test or release server
     
+    public static final String ZUMULT_PROJECT_ULR = "https://zumult.org";
     
     public static final String INVALID_SESSION_URL = DGD_URL + "/dgd/pragdb.dgd_extern.corpora?v_session_id=INVALID_SESSION_ID";
     

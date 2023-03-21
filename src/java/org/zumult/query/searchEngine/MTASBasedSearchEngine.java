@@ -7,6 +7,10 @@ package org.zumult.query.searchEngine;
 
 import com.fasterxml.sort.SortConfig;
 import com.fasterxml.sort.std.TextFileSorter;
+import de.tuebingen.uni.sfs.germanet.api.ConRel;
+import de.tuebingen.uni.sfs.germanet.api.GermaNet;
+import de.tuebingen.uni.sfs.germanet.api.LexUnit;
+import de.tuebingen.uni.sfs.germanet.api.Synset;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -94,8 +98,10 @@ import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
 import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.xml.stream.XMLStreamException;
 import org.apache.commons.text.similarity.FuzzyScore;
 import org.mvel2.MVEL;
+import org.zumult.backend.Configuration;
 
 /**
  * MTAS-based search engine for indexing and querying the contents of the XML-based ISO/TEI transcripts of spoken language. 
@@ -184,7 +190,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     };
     
     private static final String DONE = "DONE";
-    
+      
 
     /**
      * Creates a search index.
@@ -1831,6 +1837,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
         }
 
+        GermaNet germanet =  null;
+        
         // check search mode before searching   
         for (Repetition repetition: repetitions){
             String repetitionType = repetition.getType().name().toLowerCase();
@@ -1851,12 +1859,29 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     if(!repetitionType.equals(Constants.ATTRIBUTE_NAME_LEMMA)){
                         throw new SearchServiceException("Please specify 'LEMMA' as repetition type if you are searching by synonyms!");            
                     }
+                    break;
+                case GERMANET:
+                case GERMANET_HYPERNYM:
+                case GERMANET_HYPONYM:
+                case GERMANET_ORTH: 
+                case GERMANET_PLUS:
+                case GERMANET_COMPOUNDS:
+                    if(germanet==null){
+                        try {
+                            String data_path = Configuration.getGermanetPath();
+                            germanet = new GermaNet(data_path);
+                                                        
+                        } catch (XMLStreamException ex) {
+                            throw new SearchServiceException("GermaNet could not be loaded!"); 
+                        }
+                    }
+                    break;
                 default:
             }
         }
         
         try{
-           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions, synonyms, wordLists);
+           return searchRepetitions(indexPaths, queryString, from, to, cutoff, metadataIDs, repetitions, synonyms, wordLists, germanet);
         }catch(SeachRepetitionException ex){
             throw new SearchServiceException(ex.getCause().getMessage());                  
         }
@@ -1865,12 +1890,13 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
-            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> wordLists) throws IOException, SearchServiceException{
+            ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> wordLists,
+            GermaNet germanet) throws IOException, SearchServiceException{
         
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
         
-        RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions, synonyms);
+        RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions, synonyms, germanet);
         
         for (String indexPath: indexPaths){
             Directory directory;
@@ -1939,7 +1965,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             ArrayList<Repetition> repetitionSpecifications, 
             Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextLeft,
             Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextRight,
-            String segmentName, HashMap<String, HashSet> synonyms) throws SearchServiceException, IOException {
+            String segmentName, HashMap<String, HashSet> synonyms, GermaNet germanet) throws SearchServiceException, IOException {
 
         String currentRepetitionLayer = repetitionSpecifications.get(0).getType().name().toLowerCase();
         
@@ -2033,13 +2059,15 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     SortedMap<Integer, String> sortedMap = new TreeMap();
                     
                     
-                    switch(similarity){
+               /*     switch(similarity){
                         case EQUAL:
                         case FUZZY:
                         case FUZZY_PLUS:
                         case DIFF_PRON:
                         case DIFF_NORM:
                         case OWN_LEMMA_LIST:
+                        case GERMANET:
+                        case GERMANET_PLUS:*/
                             if(cursorPosition+sourceSize == positionsOfTheFollowingWordTokens.size()){ 
                                 for(int i=1; i<=sourceSize; i++){
                                     int startPos = positionsOfTheFollowingWordTokens.get(positionsOfTheFollowingWordTokens.size()-i);
@@ -2057,9 +2085,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 lastPositionOfTheCurrentMatch = lastPosition-1;
                             }
                                                 
-                            break;
-                        default:
-                    }
+              //              break;
+               //         default:
+             //       }
                   
                     // get string of the n-gram
                     String possibleRepetitionStr = String.join(" ", sortedMap.values());
@@ -2069,6 +2097,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     
                     //compare
                     boolean isRepetition = false;
+                    
                     switch(similarity){
                         case EQUAL:
                             if(possibleRepetitionStr.equals(sourceStr)){
@@ -2120,7 +2149,25 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                            }
                            break;
                         case OWN_LEMMA_LIST:
-                               isRepetition = checkSynonyms(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, synonyms, ignoreTokenOrder);
+                            isRepetition = checkSynonyms(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, synonyms, ignoreTokenOrder);
+                            break;
+                        case GERMANET_PLUS:
+                            if(possibleRepetitionStr.equals(sourceStr)){
+                               isRepetition=true;
+                            }else{
+                               isRepetition = checkGermaNet(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, germanet, ignoreTokenOrder, false, similarity);
+                            }
+                            break;
+                        case GERMANET: 
+                        case GERMANET_ORTH:
+                        case GERMANET_HYPERNYM:
+                        case GERMANET_HYPONYM:
+                        case GERMANET_COMPOUNDS:
+                            if(possibleRepetitionStr.equals(sourceStr)){
+                               isRepetition=false;
+                            }else{
+                               isRepetition = checkGermaNet(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, germanet, ignoreTokenOrder, true, similarity);
+                            }
                         default:
                     }
 
@@ -2266,6 +2313,48 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }else{
             return false;
         }*/
+        
+    }
+    
+    private Boolean checkGermaNet(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, 
+            GermaNet germanet, Boolean ignoreTokenOrder, Boolean justGermanet, SimilarityTypeEnum similarity){
+        boolean isRepetition=true;
+         
+        ArrayList<String> sourceArray = new ArrayList<String>(source.values());
+        if(ignoreTokenOrder){
+            Collections.sort(sourceArray);
+        }
+        Object[] sourceList = sourceArray.toArray();
+        
+        ArrayList<String> possibleRepetitionArray = new ArrayList<String>(possibleRepetitions.values());
+        if(ignoreTokenOrder){
+            Collections.sort(possibleRepetitionArray);
+        }
+        Object[] possibleRepetitionList = possibleRepetitionArray.toArray();
+        
+        if(possibleRepetitionList.equals(sourceList)){
+            if (justGermanet){
+                isRepetition=false;
+            }else{
+                isRepetition=true;
+            }
+            
+        }else{
+            for(int i=0; i<sourceList.length;i++){
+                String s1 = (String) sourceList[i];
+                String s2 = (String) possibleRepetitionList[i];
+                if(!s1.equals(s2)){
+                    // get synonyms for s1
+                    Set<String> synonyms = getSynonymsFromGermaNet(germanet, s1, similarity);
+                    if(!synonyms.contains(s2)){
+                        isRepetition = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return isRepetition;
+
         
     }
     
@@ -2959,9 +3048,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextLeft;
         Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextRight;
         HashMap<String, HashSet> synonyms;
+        GermaNet germanet;
         
         RepetitionSearcher(ArrayList<String> indexPaths, Integer from, Integer to, 
-                Boolean cutoff, ArrayList<Repetition> repetitionSpecifications, HashMap<String, HashSet> synonyms) throws SearchServiceException {
+                Boolean cutoff, ArrayList<Repetition> repetitionSpecifications, HashMap<String, HashSet> synonyms, GermaNet germanet) throws SearchServiceException {
             this.indexPaths = indexPaths;
             this.from = from;
             this.to = to;
@@ -2970,6 +3060,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             this.positionsWithContextLeft = getPositionsForContext(repetitionSpecifications, indexPaths, true);
             this.positionsWithContextRight = getPositionsForContext(repetitionSpecifications, indexPaths, false);
             this.synonyms = synonyms;
+            this.germanet = germanet;
         }
         /**
         *    Reads hits from sorted file
@@ -3060,7 +3151,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 try {                               
                                     found = getPositionsOfRepetitions(mtasCodecInfo,
                                             docID, start, end, speakerID, repetitionSpecifications, 
-                                            positionsWithContextLeft, positionsWithContextRight, segmentName, synonyms);
+                                            positionsWithContextLeft, positionsWithContextRight, segmentName, synonyms, germanet);
                                 }catch (SearchServiceException ex) {
                                     throw new SeachRepetitionException(ex);
                                 }                  
@@ -3269,5 +3360,102 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         return fs;
     }
     
+    private Set<String> getSynonymsFromGermaNet(GermaNet germanet, String str, SimilarityTypeEnum mode){
+        Set<String> result = new HashSet();
+        List <Synset> synsets = germanet.getSynsets(str);
+            
+        for (Synset synset : synsets){
+            //add orth forms, compounds info and synonyms
+            switch(mode){
+               case GERMANET:
+               case GERMANET_PLUS:
+                    result.addAll(getOrthFormsAndCompoundsForSynset(synset, str));
+                    
+                    for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hypernym)){
+                        result.addAll(getOrthFormsForSynset(otherSynset));    
+                    }
+                   
+                    for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hyponym)){
+                        result.addAll(getOrthFormsForSynset(otherSynset));    
+                    }
+
+                   break;
+               case GERMANET_ORTH:
+                   result.addAll(getOrthFormsForSynset(synset));
+                   break;
+               case GERMANET_COMPOUNDS:
+                    result.addAll(getCompoundsForSynset(synset, str));
+                    break;
+               case GERMANET_HYPERNYM:
+                   for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hypernym)){
+                        result.addAll(getOrthFormsForSynset(otherSynset));    
+                    }
+                   break;
+               case GERMANET_HYPONYM:
+                   for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hyponym)){
+                        result.addAll(getOrthFormsForSynset(otherSynset));    
+                    }
+                   break;
+               default:
+            }
+            
+            if (result.contains(str)){
+                result.remove(str);
+            }
+        }
+            
+        return result;
+    }
+    
+    private static Set<String> getOrthFormsForSynset(Synset synset){
+        Set<String> result = new HashSet();
+        List<LexUnit> lexical_units = synset.getLexUnits();
+
+        for (LexUnit lexUnit: lexical_units){
+            result.addAll(lexUnit.getOrthForms());
+        }
+        
+        return result;
+    }
+    
+    private static Set<String> getCompoundsForSynset(Synset synset, String word){
+        Set<String> result = new HashSet();
+        List<LexUnit> lexical_units = synset.getLexUnits();
+
+        for (LexUnit lexUnit: lexical_units){
+            List<String> orth_forms = lexUnit.getOrthForms();
+            
+            if(orth_forms.size()==1 && orth_forms.get(0).equals(word)){
+                // add head of compounds
+                if(lexUnit.getCompoundInfo()!=null){
+                    result.add(lexUnit.getCompoundInfo().getHead());
+                }
+            }
+        }
+        
+        return result;
+    }
+        
+    private static Set<String> getOrthFormsAndCompoundsForSynset(Synset synset, String word){
+        Set<String> result = new HashSet();
+        List<LexUnit> lexical_units = synset.getLexUnits();
+
+        for (LexUnit lexUnit: lexical_units){
+            List<String> orth_forms = lexUnit.getOrthForms();
+            
+            result.addAll(orth_forms);
+            
+            if(orth_forms.size()==1 && orth_forms.get(0).equals(word)){
+                // add head of compounds
+                if(lexUnit.getCompoundInfo()!=null){
+                    result.add(lexUnit.getCompoundInfo().getHead());
+                }
+            }
+        }
+        
+        return result;
+    }
+            
+           
 
 }
