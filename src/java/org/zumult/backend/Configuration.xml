@@ -28,7 +28,7 @@
         <wordlist-path>/home/zumult/DATA/wordlists</wordlist-path>
         <metadata-path>/home/zumult/DATA/metadata</metadata-path>
         <material-path></material-path> 
-        
+        <germanet-path>/home/zumult/DATA/GN_V170_XML</germanet-path>
         <search-index-path>/home/zumult/INDEX/</search-index-path>
         
         <!-- *******   END: for zumult.ids-mannheim.de   ***** -->
