@@ -381,7 +381,7 @@
                         Transcript partTranscript = transcript.getPart(startTime, endTime, true);
                         String partTranscriptXML = partTranscript.toXML();
                         String audioID = backendInterface.getAudios4Transcript(transcriptID).get(0);
-                        System.out.println(audioID);
+                        //System.out.println(audioID);
                         
                         String[][] xslParameters = {
                                 {"TOKEN_LIST_URL", pathToWordList},

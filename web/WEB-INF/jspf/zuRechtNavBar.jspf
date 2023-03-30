@@ -1,10 +1,10 @@
+<%@page import="org.zumult.backend.Configuration"%>
 <%@page import="org.zumult.io.Constants"%>
-<%@page import="org.zumult.io.URLUtilities"%>
 <nav class="navbar navbar-expand-sm">
     <h3 class="font-weight-bold mr-3">ZuRecht</h3><%=myResources.getString("ZuRechtSubtitle")%>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="<%= URLUtilities.getWebApplicationURL(request)%>"><%=myResources.getString("Home")%></a>
+                <a class="nav-link" href="<%= Configuration.getWebAppBaseURL()%>"><%=myResources.getString("Home")%></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" target="_blank" href="<%= Constants.ZUMULT_PROJECT_ULR%>"><%=myResources.getString("Project")%></a>

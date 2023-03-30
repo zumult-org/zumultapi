@@ -1,6 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
 <%@page import="org.zumult.io.Constants"%>
-<%@page import="org.zumult.io.URLUtilities"%>
 <%@page import="org.zumult.backend.Configuration"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Collections"%>
@@ -31,7 +30,7 @@
             <!-- ******************* -->
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                <a class="nav-link" href="<%= URLUtilities.getWebApplicationURL(request)%>"><%=myResources.getString("Home")%></a>
+                <a class="nav-link" href="<%= Configuration.getWebAppBaseURL()%>"><%=myResources.getString("Home")%></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" target="_blank" href="<%= Constants.ZUMULT_PROJECT_ULR%>"><%=myResources.getString("Project")%></a>

@@ -138,7 +138,7 @@
             const tokenAnnotations = new Array(<%
                 List<String> tokenAnnotationsIDs = new ArrayList();
                 tokenAnnotationsIDs.addAll(anntationLayersForTokenMap.keySet());
-                System.out.println(tokenAnnotationsIDs);
+                //System.out.println(tokenAnnotationsIDs);
 
                 int i = 0;
                 for(String str : tokenAnnotationsIDs) {

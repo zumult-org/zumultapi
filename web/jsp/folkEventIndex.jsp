@@ -4,7 +4,7 @@
     Author     : thomas.schmidt
 --%>
 
-<%@page import="org.zumult.io.URLUtilities"%>
+<%@page import="org.zumult.backend.Configuration"%>
 <%@page import="org.zumult.io.IOHelper"%>
 <%@page import="org.zumult.backend.BackendInterfaceFactory"%>
 <%@page import="org.zumult.backend.BackendInterface"%>
@@ -19,7 +19,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="refresh" content="0; url=<%= URLUtilities.getWebApplicationURL(request)%>/jsp/speecheventsOverview.jsp?corpusID=FOLK" />
+        <meta http-equiv="refresh" content="0; url=<%= Configuration.getWebAppBaseURL()%>/jsp/speecheventsOverview.jsp?corpusID=FOLK" />
         <title>FOLK: Forschungs- und Lehrkorpus Gesprochenes Deutsch</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
