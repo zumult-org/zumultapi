@@ -119,8 +119,9 @@ public abstract class ISOTEITransformer {
             System.out.println("Getting MetadataKeys for " + corpusId);
             Set<MetadataKey> metadataKeys = null;
             if(ADD_METADATA){
-                Corpus corpus = backendInterface.getCorpus(corpusId);
-                metadataKeys = corpus.getMetadataKeys();
+                /* Corpus corpus = backendInterface.getCorpus(corpusId);
+                metadataKeys = corpus.getMetadataKeys();*/
+                metadataKeys = backendInterface.getMetadataKeys4Corpus(corpusId);
             }
 
             // create new folders for the current corpus   

@@ -396,4 +396,34 @@ public abstract class AbstractBackend implements BackendInterface {
         }
     }
     
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException {
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getMetadataKeys();
+    }
+
+    @Override
+    public Set<MetadataKey> getEventMetadataKeys4Corpus(String corpusID) throws IOException {
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getEventMetadataKeys();
+    }
+
+    @Override
+    public Set<MetadataKey> getSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getSpeechEventMetadataKeys();
+    }
+
+    @Override
+    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getSpeakerInSpeechEventMetadataKeys();
+    }
+
+    @Override
+    public Set<MetadataKey> getSpeakerMetadataKeys4Corpus(String corpusID) throws IOException {
+       Corpus corpus = getCorpus(corpusID);
+       return corpus.getSpeakerMetadataKeys();
+    }
+    
 }

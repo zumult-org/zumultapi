@@ -8,6 +8,7 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,10 +21,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
+import org.zumult.io.AGDUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
+import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
@@ -310,6 +313,28 @@ public class AGDFileSystem extends AbstractIDSBackend {
         return getSpeechEvent(speechEventID).getProtocol();
     }
 
-    
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID());
+    }
 
+    @Override
+    public Set<MetadataKey> getEventMetadataKeys4Corpus(String corpusID) throws IOException {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "event-metadata"); 
+    }
+
+    @Override
+    public Set<MetadataKey> getSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speech-event-metadata");
+    }
+
+    @Override
+    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speech-event-speaker-metadata");
+    }
+
+    @Override
+    public Set<MetadataKey> getSpeakerMetadataKeys4Corpus(String corpusID) throws IOException {
+       return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speaker-metadata");
+    }
 }
