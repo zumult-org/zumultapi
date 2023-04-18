@@ -57,7 +57,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
 
     @Override
     public IDList getCorpora() throws IOException {
-        IDList list = new IDList("Corpus");
+        IDList list = new IDList("corpus");
         try {
             String path = "/data/AllCorpora.xml";
             String xml = new Scanner(AbstractIDSBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();

@@ -670,6 +670,5 @@ public class COMAFileSystem extends AbstractBackend {
     public Searcher getSearcher() {
         return new DGD2Searcher();
     }
-
   
 }

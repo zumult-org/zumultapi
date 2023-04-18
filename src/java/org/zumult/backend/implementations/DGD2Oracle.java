@@ -39,6 +39,7 @@ import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.Measure;
+import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.implementations.DGD2Event;
 import org.zumult.objects.implementations.DGD2Speaker;

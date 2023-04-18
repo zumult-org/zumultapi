@@ -31,6 +31,7 @@ import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
@@ -389,6 +390,14 @@ public abstract class AbstractBackend implements BackendInterface {
     public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException{
         Corpus corpus = getCorpus(corpusID);
         return corpus.getMetadataKeys();
+    }
+    
+    @Override
+    public CrossQuantification getCrossQuantification4Corpus(String corpusID, 
+            MetadataKey metadataKey1, MetadataKey metadataKey2,
+            String unit) throws IOException {
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getCrossQuantification(metadataKey1, metadataKey2, unit);
     }
     
 }

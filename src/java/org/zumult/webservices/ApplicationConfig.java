@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
         resources.add(org.zumult.webservices.HomeResource.class);
         resources.add(org.zumult.webservices.MediaResource.class);
         resources.add(org.zumult.webservices.MetadataResource.class);
+        resources.add(org.zumult.webservices.ResourceService.class);
         resources.add(org.zumult.webservices.SearchService.class);
         resources.add(org.zumult.webservices.TranscriptsResource.class);
     }

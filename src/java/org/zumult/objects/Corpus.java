@@ -5,6 +5,7 @@
  */
 package org.zumult.objects;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -29,7 +30,8 @@ public interface Corpus extends XMLSerializable, Identifiable, Metadatable {
     public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType);
 
     public Set<String> getSpeakerLocationTypes();
-   
     
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException ;
+   
     
 }

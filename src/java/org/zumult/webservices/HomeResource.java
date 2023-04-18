@@ -44,13 +44,15 @@ public class HomeResource {
         String mediaUri = UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path("media").build().toString();
         String additionalMaterialUri = UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path("additional-material").build().toString();
         String searchServiceUri = UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path("SearchService").build().toString();
-
+        String resourceServiceUri = UriBuilder.fromPath(zumultApiBaseURL).path(context.getPath()).path("ResourceService").build().toString();
+        
         response.addContent(new Element("corpora_url").addContent(corporaUri));
         response.addContent(new Element("metadata_url").addContent(metadataUri));
         response.addContent(new Element("transcripts_url").addContent(transcriptsUri));
         response.addContent(new Element("media_url").addContent(mediaUri));
         response.addContent(new Element("additional_material_url").addContent(additionalMaterialUri));
-        response.addContent(new Element("query_url").addContent(searchServiceUri));
+        response.addContent(new Element("search_service_url").addContent(searchServiceUri));
+        response.addContent(new Element("resource_service_url").addContent(resourceServiceUri));
 
         xmlString = IOUtilities.elementToString(response);
         return Response.ok(xmlString).build();

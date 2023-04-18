@@ -14,6 +14,7 @@ import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Measure;
@@ -119,6 +120,11 @@ public interface BackendInterface {
     public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID);   
     public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException;
     //public IDList getAvailableAnnotatationTagSets();
+    
+    //new 18.04.2023, Elena
+    public CrossQuantification getCrossQuantification4Corpus(String corpusID, 
+            MetadataKey metadataKey1, MetadataKey metadataKey2,
+            String unit) throws IOException;
     
     /**********************************************************************************/
     /*                            search methods                                      */ 

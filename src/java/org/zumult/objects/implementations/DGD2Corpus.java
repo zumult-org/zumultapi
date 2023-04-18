@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -20,6 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.zumult.backend.Configuration;
 import org.zumult.io.AGDUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
@@ -27,11 +29,8 @@ import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.MetadataKey;
 import org.zumult.io.Constants;
+import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.ObjectTypesEnum;
-import static org.zumult.objects.ObjectTypesEnum.ADDITIONAL_MATERIAL;
-import static org.zumult.objects.ObjectTypesEnum.HIT;
-import static org.zumult.objects.ObjectTypesEnum.MEDIA;
-import static org.zumult.objects.ObjectTypesEnum.TRANSCRIPT;
 
 /**
  *
@@ -179,7 +178,33 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    @Override
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException  {        
+        if (unit==null){
+            unit = "TOKENS";
+        }
+                    
+        String[][] PARAM = {
+        {"META_FIELD_1", "v_" + metadataKey1.getID()},
+        {"META_FIELD_2", "v_" + metadataKey2.getID()},
+        {"UNITS", unit}
+        };
+    
+        String QUANT_FILENAME = getID() + "_QUANT.xml";
 
+        
+        try {
+            String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl",
+                    Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
+            CrossQuantification crossQuantification = new DGD2CrossQuantification(html);
+            return crossQuantification;
+            
+        } catch (TransformerException ex) {
+            throw new IOException(ex); 
+        }
+     
+    }
 
     
 }

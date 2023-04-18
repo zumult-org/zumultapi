@@ -19,6 +19,7 @@ import org.w3c.dom.NodeList;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import static org.zumult.objects.ObjectTypesEnum.EVENT;
@@ -206,6 +207,9 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
-    
 }
