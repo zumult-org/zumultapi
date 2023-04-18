@@ -24,6 +24,7 @@ import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
@@ -55,8 +56,8 @@ public class SpeechEventIndex implements Indexer {
             try {
                 backend = BackendInterfaceFactory.newBackendInterface();
                 Corpus corpus = backend.getCorpus(corpusID);
-                Set<MetadataKey> eventMetadataKeys = corpus.getEventMetadataKeys();
-                Set<MetadataKey> speechEventMetadataKeys = corpus.getSpeechEventMetadataKeys();
+                Set<MetadataKey> eventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
+                Set<MetadataKey> speechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
 
                 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();

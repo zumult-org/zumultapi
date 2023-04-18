@@ -1,4 +1,5 @@
 <%-- any content can be specified here e.g.: --%>
+<%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -47,8 +48,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                        <% 
-                            Set<MetadataKey> allKeys = backend.getCorpus(corpusID).getSpeechEventMetadataKeys();
-                            allKeys.addAll(backend.getCorpus(corpusID).getEventMetadataKeys());
+                            Set<MetadataKey> allKeys = backend.getCorpus(corpusID).getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
+                            allKeys.addAll(backend.getCorpus(corpusID).getMetadataKeys(ObjectTypesEnum.EVENT));
                             for (MetadataKey key : allKeys){
                                 String keyID = key.getID();
                                 String keyName = key.getName("de");

@@ -17,9 +17,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.zumult.objects.AnnotationLayer;
+import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
+import static org.zumult.objects.ObjectTypesEnum.EVENT;
+import static org.zumult.objects.ObjectTypesEnum.SPEAKER;
+import static org.zumult.objects.ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT;
+import static org.zumult.objects.ObjectTypesEnum.SPEECH_EVENT;
 
 /**
  *
@@ -74,6 +79,22 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     }
 
     @Override
+    public Set<MetadataKey> getMetadataKeys(ObjectTypesEnum objectType) {
+        if (objectType!=null){
+            return switch (objectType) {
+                case EVENT -> getEventMetadataKeys();
+                case SPEECH_EVENT -> getSpeechEventMetadataKeys();
+                case SPEAKER -> getSpeakerMetadataKeys();
+                case SPEAKER_IN_SPEECH_EVENT -> getSpeakerInSpeechEventMetadataKeys();
+                default -> getMetadataKeys();
+            };
+        }else {
+            return getMetadataKeys();
+        }
+    }
+    
+    
+    @Override
     public Set<MetadataKey> getMetadataKeys() {
         Set<MetadataKey> result = new HashSet<>();
         result.addAll(getEventMetadataKeys());
@@ -83,16 +104,14 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         return result;
     }
 
-    @Override
-    public Set<MetadataKey> getEventMetadataKeys() {
+    private Set<MetadataKey> getEventMetadataKeys() {
         // we don't have event metadata in COMA
         // because we don't really have events
         // just return an empty set
         return new HashSet<>();
     }
 
-    @Override
-    public Set<MetadataKey> getSpeechEventMetadataKeys() {
+    private Set<MetadataKey> getSpeechEventMetadataKeys() {
         // use a stylesheet with group()?
         // not now - let's keep that simple
         Set<MetadataKey> result = new HashSet<>();
@@ -114,16 +133,14 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         return result;        
     }
 
-    @Override
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys() {
+    private Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys() {
         // we don't have speech event specific speaker metadata in COMA
         // because we don't really have speech events
         // just return an empty set
         return new HashSet<>();
     }
 
-    @Override
-    public Set<MetadataKey> getSpeakerMetadataKeys() {
+    private Set<MetadataKey> getSpeakerMetadataKeys() {
         // use a stylesheet with group()?
         // not now - let's keep that simple
         Set<MetadataKey> result = new HashSet<>();
@@ -180,18 +197,15 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     }
 
     @Override
-    public Set<AnnotationLayer> getTokenBasedAnnotationLayers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public Set<AnnotationLayer> getSpanBasedAnnotationLayers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public String getMetadataValue(MetadataKey key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
     
 }

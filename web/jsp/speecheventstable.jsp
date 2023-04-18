@@ -4,6 +4,7 @@
     Author     : Thomas_Schmidt
 --%>
 
+<%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="org.zumult.objects.SpeechEvent"%>
@@ -67,7 +68,7 @@
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
             String corpusName = corpus.getName("de");
-            Set<MetadataKey> metadataKeys = corpus.getSpeechEventMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
             IDList eventIDs = backendInterface.getEvents4Corpus(corpusID);           
             IDList speechEventIDs = new IDList("speechEvent");
             for (String eventID : eventIDs){

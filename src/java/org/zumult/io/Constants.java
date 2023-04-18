@@ -86,6 +86,8 @@ public class Constants {
     public static final String WORDLISTS_HERDER_PATH = Configuration.getWordlistPath() + "/herder";
     public static final String WORDLISTS_THEMATIC_VOCABULARY_PATH = Configuration.getWordlistPath() + "/thematic-vocabulary/lemmas";
     
+    public static final String METADATA_SELECTION_PATH = "/data/MetadataSelection.xml";
+    
     public static String[] LEIPZIG_WORDLISTS =
         {
             "GOETHE_A1", "GOETHE_A2", "GOETHE_B1",

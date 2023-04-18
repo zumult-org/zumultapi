@@ -19,6 +19,7 @@ import org.zumult.objects.IDList;
 import org.zumult.objects.Measure;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
@@ -68,12 +69,9 @@ public interface BackendInterface {
     public IDList getTranscripts4Video(String videoID) throws IOException;
     public IDList getAudios4Transcript(String transcriptID) throws IOException;
     public IDList getVideos4Transcript(String transcriptID) throws IOException;
-    
+   
     public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException;
-    public Set<MetadataKey> getEventMetadataKeys4Corpus(String corpusID) throws IOException;
-    public Set<MetadataKey> getSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException;
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException;
-    public Set<MetadataKey> getSpeakerMetadataKeys4Corpus(String corpusID) throws IOException;
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID, ObjectTypesEnum metadataLevel) throws IOException;
     
     public String getProtocol4SpeechEvent(String speechEventID) throws IOException;
     

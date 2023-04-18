@@ -21,6 +21,7 @@ import org.zumult.objects.IDList;
 import org.zumult.objects.Location;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenFilter;
@@ -157,7 +158,7 @@ public class TestBackend {
 
         System.exit(0);
         
-        Set<MetadataKey> speechEventMetadataKeys2 = bi.getCorpus("FOLK").getSpeechEventMetadataKeys();
+        Set<MetadataKey> speechEventMetadataKeys2 = bi.getCorpus("FOLK").getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
         for (MetadataKey key : speechEventMetadataKeys2){
             String keyID = key.getID();
             String keyName = key.getName("de");
@@ -229,7 +230,7 @@ public class TestBackend {
         System.out.println(pfTranscript.toXML());
         System.out.println(pfTranscript.getPart(0, 30, true).toXML());
         
-        Set<MetadataKey> speechEventMetadataKeys = bi.getCorpus("FOLK").getSpeechEventMetadataKeys();
+        Set<MetadataKey> speechEventMetadataKeys = bi.getCorpus("FOLK").getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
         for (MetadataKey metadataKey : speechEventMetadataKeys){
             System.out.println("\n--------------------");
             System.out.println(metadataKey.getID());
@@ -283,7 +284,7 @@ public class TestBackend {
             //System.out.println(corpusID);
             Corpus corpus = bi.getCorpus(corpusID);
             System.out.println("============ Corpus: " + corpusID);
-            Set<MetadataKey> eventMeta = corpus.getEventMetadataKeys();
+            Set<MetadataKey> eventMeta = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
             for (MetadataKey em : eventMeta){
                 System.out.println(em.getID() + " / " + em.getName("de"));
             }

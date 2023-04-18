@@ -104,7 +104,7 @@ public class TestCOMABackend {
             IDList events = bi.getEvents4Corpus("hamatac");
             for (String id : events) {
                 System.out.println(id);
-                for (MetadataKey mk : corpus.getSpeechEventMetadataKeys()){
+                for (MetadataKey mk : corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT)){
                     String v = bi.getEvent(id).getMetadataValue(mk);
                     //System.out.println(bi.getEvent(id).getLocation().getCountry());
                     System.out.println(mk.getID() + " / " + mk.getName("de") + " : " + v);
@@ -115,7 +115,7 @@ public class TestCOMABackend {
             IDList speakers = bi.getSpeakers4Corpus("hamatac");
             for (String id : speakers) {
                 System.out.println(id);
-                for (MetadataKey mk : corpus.getSpeakerMetadataKeys()){
+                for (MetadataKey mk : corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER)){
                     String v = bi.getSpeaker(id).getMetadataValue(mk);
                     //System.out.println(bi.getSpeaker(id).getLocations("Residence").get(0).getCountry());
                     System.out.println(mk.getName("de") + " : " + v);

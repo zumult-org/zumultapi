@@ -4,6 +4,7 @@
     Author     : Thomas.Schmidt
 --%>
 
+<%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="org.zumult.backend.Configuration"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
@@ -78,10 +79,10 @@
             String pageTitle = myResources.getString("ZuZweitTitle"); 
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
-            Set<MetadataKey> eventMetadataKeys = corpus.getEventMetadataKeys();                
-            Set<MetadataKey> speechEventMetadataKeys = corpus.getSpeechEventMetadataKeys();
-            Set<MetadataKey> speakerMetadataKeys = corpus.getSpeakerMetadataKeys();
-            Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getSpeakerInSpeechEventMetadataKeys();
+            Set<MetadataKey> eventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);                
+            Set<MetadataKey> speechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
+            Set<MetadataKey> speakerMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
+            Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT);
         %>
             
         <% String pageName = "ZuZweit"; %>

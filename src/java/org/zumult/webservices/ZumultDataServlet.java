@@ -38,6 +38,7 @@ import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
@@ -981,10 +982,10 @@ public class ZumultDataServlet extends HttpServlet {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String corpusID = request.getParameter("corpusID");
             Corpus corpus = backend.getCorpus(corpusID);
-            Set<MetadataKey> eventMetadataKeys = corpus.getEventMetadataKeys();
-            Set<MetadataKey> speechEventMetadataKeys = corpus.getSpeechEventMetadataKeys();
-            Set<MetadataKey> speakerMetadataKeys = corpus.getSpeakerMetadataKeys();
-            Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getSpeakerInSpeechEventMetadataKeys();
+            Set<MetadataKey> eventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
+            Set<MetadataKey> speechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
+            Set<MetadataKey> speakerMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
+            Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT);
             
             StringBuilder result = new StringBuilder();
             for (MetadataKey mk : eventMetadataKeys){

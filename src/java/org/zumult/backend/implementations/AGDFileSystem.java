@@ -27,6 +27,7 @@ import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
@@ -314,27 +315,12 @@ public class AGDFileSystem extends AbstractIDSBackend {
     }
 
     @Override
-    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID());
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID, ObjectTypesEnum objectType) {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(corpusID, objectType); 
     }
-
+    
     @Override
-    public Set<MetadataKey> getEventMetadataKeys4Corpus(String corpusID) throws IOException {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "event-metadata"); 
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speech-event-metadata");
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speech-event-speaker-metadata");
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerMetadataKeys4Corpus(String corpusID) throws IOException {
-       return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speaker-metadata");
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(corpusID, null); 
     }
 }

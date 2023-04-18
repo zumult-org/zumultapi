@@ -279,18 +279,7 @@ public abstract class AbstractBackend implements BackendInterface {
             if (type != null) {
                 objectTypesEnum = ObjectTypesEnum.valueOf(type.toUpperCase());
             }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.EVENT)) {
-                metadataKeys.addAll(corpus.getEventMetadataKeys());
-            }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEAKER)) {
-                metadataKeys.addAll(corpus.getSpeakerMetadataKeys());
-            }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEECH_EVENT)) {
-                metadataKeys.addAll(corpus.getSpeechEventMetadataKeys());
-            }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEAKER_IN_SPEECH_EVENT)) {
-                metadataKeys.addAll(corpus.getSpeakerInSpeechEventMetadataKeys());
-            }
+            metadataKeys.addAll(corpus.getMetadataKeys(objectTypesEnum));
             return metadataKeys;
         } catch (NullPointerException ex) {
             StringBuilder sb = new StringBuilder();
@@ -344,20 +333,12 @@ public abstract class AbstractBackend implements BackendInterface {
             if (annotationType != null) {
                 try {
                     AnnotationTypeEnum annotationTypeEnum = AnnotationTypeEnum.valueOf(annotationType.toUpperCase());
-                    switch (annotationTypeEnum) {
-                        case TOKEN:
-                            annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
-                            break;
-                        case SPAN:
-                            annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
-                            break;
-                        default:
-                    }
+                    annotationLayers.addAll(corpus.getAnnotationLayers(annotationTypeEnum));
                 } catch (NullPointerException ex) {
                     throw new NullPointerException(annotationType + "cound not be found!");
                 }
             } else {
-                annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+                annotationLayers.addAll(corpus.getAnnotationLayers(AnnotationTypeEnum.TOKEN));
             }
         } catch (IOException ex) {
             throw new NullPointerException(corpusID + "cound not be found!");
@@ -365,7 +346,7 @@ public abstract class AbstractBackend implements BackendInterface {
         return annotationLayers;
     }
 
-    /*  @Override
+    /*   @Override
     public KWIC exportKWIC(String queryString, String queryLanguage, String queryLanguageVersion,
     String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex,
     Boolean cutoff, String searchIndex, String context, String fileType, IDList metadataIDs) throws SearchServiceException, IOException {
@@ -379,6 +360,8 @@ public abstract class AbstractBackend implements BackendInterface {
     return kwicView;
     }
      */
+    
+    @Override
     public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
         Searcher searcher = new DGD2Searcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
@@ -397,33 +380,15 @@ public abstract class AbstractBackend implements BackendInterface {
     }
     
     @Override
-    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException {
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID, ObjectTypesEnum metadataLevel) throws IOException{
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getMetadataKeys(metadataLevel);
+    }
+    
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException{
         Corpus corpus = getCorpus(corpusID);
         return corpus.getMetadataKeys();
-    }
-
-    @Override
-    public Set<MetadataKey> getEventMetadataKeys4Corpus(String corpusID) throws IOException {
-        Corpus corpus = getCorpus(corpusID);
-        return corpus.getEventMetadataKeys();
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
-        Corpus corpus = getCorpus(corpusID);
-        return corpus.getSpeechEventMetadataKeys();
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys4Corpus(String corpusID) throws IOException {
-        Corpus corpus = getCorpus(corpusID);
-        return corpus.getSpeakerInSpeechEventMetadataKeys();
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerMetadataKeys4Corpus(String corpusID) throws IOException {
-       Corpus corpus = getCorpus(corpusID);
-       return corpus.getSpeakerMetadataKeys();
     }
     
 }

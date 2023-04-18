@@ -27,6 +27,11 @@ import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.MetadataKey;
 import org.zumult.io.Constants;
+import org.zumult.objects.ObjectTypesEnum;
+import static org.zumult.objects.ObjectTypesEnum.ADDITIONAL_MATERIAL;
+import static org.zumult.objects.ObjectTypesEnum.HIT;
+import static org.zumult.objects.ObjectTypesEnum.MEDIA;
+import static org.zumult.objects.ObjectTypesEnum.TRANSCRIPT;
 
 /**
  *
@@ -97,53 +102,23 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
         return "Error retrieving corpus description";
     }
     
-
+    @Override
+    public Set<MetadataKey> getMetadataKeys(ObjectTypesEnum objectType) {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), objectType); 
+    }
+    
     @Override
     public Set<MetadataKey> getMetadataKeys() {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID());
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), null); 
     }
 
-    @Override
-    public Set<MetadataKey> getEventMetadataKeys() {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "event-metadata"); 
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeechEventMetadataKeys() {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speech-event-metadata");
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys() {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speech-event-speaker-metadata");
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerMetadataKeys() {
-        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), "speaker-metadata");
-    }
-    
     @Override
     public Set<AnnotationLayer> getAnnotationLayers() {
-        return getAnnotationLayersForType(null);
-        
+        return getAnnotationLayers(null);       
     }
     
-    @Override
-    public Set<AnnotationLayer> getTokenBasedAnnotationLayers(){
-        Set<AnnotationLayer> result = new HashSet();
-        result.addAll(getAnnotationLayersForType(AnnotationTypeEnum.TOKEN));
-        return result;
-    }
     
-    @Override
-    public Set<AnnotationLayer> getSpanBasedAnnotationLayers(){
-        Set<AnnotationLayer> result = new HashSet();
-        result.addAll(getAnnotationLayersForType(AnnotationTypeEnum.SPAN));
-        return result;
-    }
-    
-    private Set<AnnotationLayer> getAnnotationLayersForType(AnnotationTypeEnum type){
+    public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType){
         Set<AnnotationLayer> result = new HashSet<>();
         try {
             
@@ -154,10 +129,11 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
             XPath xPath = XPathFactory.newInstance().newXPath();
             StringBuilder xPathString = new StringBuilder();
             xPathString.append("//key[");
-            if(type!=null){
-                xPathString.append("@type='"+type.name().toLowerCase() +"' and ");
+            if(annotationType!=null){
+                xPathString.append("@type='"+annotationType.name().toLowerCase() +"' and ");
             }
-                xPathString.append("descendant::corpus='" + getID() + "']");
+            
+            xPathString.append("descendant::corpus='" + getID() + "']");
 
             NodeList nodes = (NodeList)xPath.evaluate(xPathString.toString(), doc.getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<nodes.getLength(); i++){

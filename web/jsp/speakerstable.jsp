@@ -4,6 +4,7 @@
     Author     : Thomas_Schmidt
 --%>
 
+<%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="java.util.List"%>
@@ -54,7 +55,7 @@
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
             String corpusName = corpus.getName("de");            
-            Set<MetadataKey> metadataKeys = corpus.getSpeakerMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
             Set<String> locationTypes = corpus.getSpeakerLocationTypes();
             IDList speakerIDs = backendInterface.getSpeakers4Corpus(corpusID);           
         %>

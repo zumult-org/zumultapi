@@ -355,7 +355,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
         }
         
         try {
-            String path = "/data/MetadataSelection.xml";
+            String path = Constants.METADATA_SELECTION_PATH;
             String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
             Document doc = IOHelper.DocumentFromText(xml);
             
