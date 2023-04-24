@@ -14,7 +14,6 @@ import org.zumult.backend.BackendInterfaceFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -62,8 +61,8 @@ public class ResourceService {
             "/corpora",
             "/GWSS/metadataKeys",
             "/FOLK/metadataKeys?type=EVENT",
-            "/FOLK/crossQuantification?metaField1=v_e_se_mediale_realisierung&metaField2=v_s_geschlecht",
-            "/FOLK/crossQuantification?metaField1=v_e_se_interaktionsdomaene&metaField2=v_s_geschlecht&units=TOKENS&format=html"
+            "/FOLK/crossQuantification?metaField1=e_se_mediale_realisierung&metaField2=s_geschlecht",
+            "/FOLK/crossQuantification?metaField1=e_se_interaktionsdomaene&metaField2=s_geschlecht&units=TOKENS&format=html"
         };
     
         Element response = new Element("response");

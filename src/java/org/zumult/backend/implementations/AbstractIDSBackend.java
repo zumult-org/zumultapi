@@ -354,6 +354,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             return key;
         }
         
+               
         try {
             String path = Constants.METADATA_SELECTION_PATH;
             String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
@@ -361,7 +362,14 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             
             // Query for the right element via XPath
             XPath xPath = XPathFactory.newInstance().newXPath();
+            
             String xPathString = "//metadata-item[dgd-parameter-name='" + id + "']";
+            
+            //Elena: 19.04.2023: if metadata ID was extracted automatically, then it starts without "v_"
+            if (!id.startsWith("v_")){
+                xPathString = "//metadata-item[dgd-parameter-name='" + "v_"+ id + "']";
+            }
+            
             Node node = (Node)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODE);
             if (node==null) return null;
             Element keyElement = (Element)node;
