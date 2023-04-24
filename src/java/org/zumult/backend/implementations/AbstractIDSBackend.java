@@ -8,10 +8,7 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -31,9 +28,6 @@ import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
-import org.zumult.objects.AnnotationLayer;
-import org.zumult.objects.AnnotationTypeEnum;
-import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Measure;
 import org.zumult.objects.Media;
@@ -50,7 +44,6 @@ import org.zumult.objects.implementations.DGD2SpeechEvent;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.implementations.DGD2Searcher;
 import org.zumult.query.implementations.DGD2KWIC;
-import org.zumult.query.SearchStatistics;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
@@ -64,7 +57,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
 
     @Override
     public IDList getCorpora() throws IOException {
-        IDList list = new IDList("Corpus");
+        IDList list = new IDList("corpus");
         try {
             String path = "/data/AllCorpora.xml";
             String xml = new Scanner(AbstractIDSBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
@@ -361,14 +354,22 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             return key;
         }
         
+               
         try {
-            String path = "/data/MetadataSelection.xml";
+            String path = Constants.METADATA_SELECTION_PATH;
             String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
             Document doc = IOHelper.DocumentFromText(xml);
             
             // Query for the right element via XPath
             XPath xPath = XPathFactory.newInstance().newXPath();
+            
             String xPathString = "//metadata-item[dgd-parameter-name='" + id + "']";
+            
+            //Elena: 19.04.2023: if metadata ID was extracted automatically, then it starts without "v_"
+            if (!id.startsWith("v_")){
+                xPathString = "//metadata-item[dgd-parameter-name='" + "v_"+ id + "']";
+            }
+            
             Node node = (Node)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODE);
             if (node==null) return null;
             Element keyElement = (Element)node;

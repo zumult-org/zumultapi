@@ -31,6 +31,7 @@ import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
@@ -279,18 +280,7 @@ public abstract class AbstractBackend implements BackendInterface {
             if (type != null) {
                 objectTypesEnum = ObjectTypesEnum.valueOf(type.toUpperCase());
             }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.EVENT)) {
-                metadataKeys.addAll(corpus.getEventMetadataKeys());
-            }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEAKER)) {
-                metadataKeys.addAll(corpus.getSpeakerMetadataKeys());
-            }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEECH_EVENT)) {
-                metadataKeys.addAll(corpus.getSpeechEventMetadataKeys());
-            }
-            if (objectTypesEnum == null || objectTypesEnum.equals(objectTypesEnum.SPEAKER_IN_SPEECH_EVENT)) {
-                metadataKeys.addAll(corpus.getSpeakerInSpeechEventMetadataKeys());
-            }
+            metadataKeys.addAll(corpus.getMetadataKeys(objectTypesEnum));
             return metadataKeys;
         } catch (NullPointerException ex) {
             StringBuilder sb = new StringBuilder();
@@ -344,20 +334,12 @@ public abstract class AbstractBackend implements BackendInterface {
             if (annotationType != null) {
                 try {
                     AnnotationTypeEnum annotationTypeEnum = AnnotationTypeEnum.valueOf(annotationType.toUpperCase());
-                    switch (annotationTypeEnum) {
-                        case TOKEN:
-                            annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
-                            break;
-                        case SPAN:
-                            annotationLayers.addAll(corpus.getSpanBasedAnnotationLayers());
-                            break;
-                        default:
-                    }
+                    annotationLayers.addAll(corpus.getAnnotationLayers(annotationTypeEnum));
                 } catch (NullPointerException ex) {
                     throw new NullPointerException(annotationType + "cound not be found!");
                 }
             } else {
-                annotationLayers.addAll(corpus.getTokenBasedAnnotationLayers());
+                annotationLayers.addAll(corpus.getAnnotationLayers(AnnotationTypeEnum.TOKEN));
             }
         } catch (IOException ex) {
             throw new NullPointerException(corpusID + "cound not be found!");
@@ -365,7 +347,7 @@ public abstract class AbstractBackend implements BackendInterface {
         return annotationLayers;
     }
 
-    /*  @Override
+    /*   @Override
     public KWIC exportKWIC(String queryString, String queryLanguage, String queryLanguageVersion,
     String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex,
     Boolean cutoff, String searchIndex, String context, String fileType, IDList metadataIDs) throws SearchServiceException, IOException {
@@ -379,6 +361,8 @@ public abstract class AbstractBackend implements BackendInterface {
     return kwicView;
     }
      */
+    
+    @Override
     public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
         Searcher searcher = new DGD2Searcher();
         searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
@@ -394,6 +378,26 @@ public abstract class AbstractBackend implements BackendInterface {
         } else {
             throw new SearchServiceException("You did not specify the metadataKey!");
         }
+    }
+    
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID, ObjectTypesEnum metadataLevel) throws IOException{
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getMetadataKeys(metadataLevel);
+    }
+    
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) throws IOException{
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getMetadataKeys();
+    }
+    
+    @Override
+    public CrossQuantification getCrossQuantification4Corpus(String corpusID, 
+            MetadataKey metadataKey1, MetadataKey metadataKey2,
+            String unit) throws IOException {
+        Corpus corpus = getCorpus(corpusID);
+        return corpus.getCrossQuantification(metadataKey1, metadataKey2, unit);
     }
     
 }

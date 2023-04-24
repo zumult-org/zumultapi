@@ -4,6 +4,7 @@
     Author     : Thomas_Schmidt
 --%>
 
+<%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="org.zumult.objects.MetadataKey"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -35,7 +36,7 @@
             Set<MetadataKey> metadataForAllCorpora = new HashSet<>();
             for (String corpusID : corpora){
                 Corpus corpus = backendInterface.getCorpus(corpusID);
-                Set<MetadataKey> metadataForThisCorpus = corpus.getSpeakerMetadataKeys();
+                Set<MetadataKey> metadataForThisCorpus = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
                 metadataForAllCorpora.addAll(metadataForThisCorpus);
             }
             List<MetadataKey> metadataList = new ArrayList<>();
@@ -56,7 +57,7 @@
             <%
             for (String corpusID : corpora){
                 Corpus corpus = backendInterface.getCorpus(corpusID);
-                Set<MetadataKey> metadataForThisCorpus = corpus.getSpeakerMetadataKeys();                
+                Set<MetadataKey> metadataForThisCorpus = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);                
             %>
             <tr>
                 <th><%=corpusID%></th>

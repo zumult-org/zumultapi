@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -20,12 +21,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.zumult.backend.Configuration;
+import org.zumult.io.AGDUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.MetadataKey;
 import org.zumult.io.Constants;
+import org.zumult.objects.CrossQuantification;
+import org.zumult.objects.ObjectTypesEnum;
 
 /**
  *
@@ -96,149 +101,23 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
         return "Error retrieving corpus description";
     }
     
-
+    @Override
+    public Set<MetadataKey> getMetadataKeys(ObjectTypesEnum objectType) {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), objectType); 
+    }
+    
     @Override
     public Set<MetadataKey> getMetadataKeys() {
-        Set<MetadataKey> result = new HashSet<>();
-        result.addAll(getEventMetadataKeys());
-        result.addAll(getSpeechEventMetadataKeys());
-        result.addAll(getSpeakerInSpeechEventMetadataKeys());
-        result.addAll(getSpeakerMetadataKeys());
-        return result;
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(getID(), null); 
     }
 
-
-    @Override
-    public Set<MetadataKey> getEventMetadataKeys() {
-        Set<MetadataKey> result = new HashSet<>();
-        try {
-            // currently, for an AGD corpus, this information is represented outside the Oracle DB
-            // in a file MetadataSelection.xml (as part of the DGD Tomcat Webapp)
-            String path = "/data/MetadataSelection.xml";
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);
-            
-            // Query for the right element via XPath
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            //String xPathString = "//metadata-item[level='event-metadata' and descendant::corpus='" + getID() + "']/dgd-parameter-name";
-//            String xPathString = "//metadata-item[not(label='DGD-Kennung') and not(starts-with(xpath,'Basisdaten/Ort')) and level='event-metadata' and descendant::corpus='" + getID() + "']";
-            String xPathString = "//metadata-item[not(label='DGD-Kennung') and level='event-metadata' and descendant::corpus='" + getID() + "']";
-            NodeList nodes = (NodeList)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
-            for (int i=0; i<nodes.getLength(); i++){
-                //Element parameterNameElement = ((Element)(nodes.item(i)));
-                //result.add(parameterNameElement.getTextContent().substring(2));                
-                Element keyElement = ((Element)(nodes.item(i)));
-                DGD2MetadataKey key = new DGD2MetadataKey(keyElement);
-                result.add(key);
-            }
-        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(DGD2Corpus.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeechEventMetadataKeys() {
-        // see above
-        Set<MetadataKey> result = new HashSet<>();
-        try {
-            // currently, for an AGD corpus, this information is represented outside the Oracle DB
-            // in a file MetadataSelection.xml (as part of the DGD Tomcat Webapp)
-            String path = "/data/MetadataSelection.xml";
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);
-            
-            // Query for the right element via XPath
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            String xPathString = "//metadata-item[level='speech-event-metadata' and descendant::corpus='" + getID() + "']";
-            NodeList nodes = (NodeList)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
-            for (int i=0; i<nodes.getLength(); i++){
-                Element keyElement = ((Element)(nodes.item(i)));
-                DGD2MetadataKey key = new DGD2MetadataKey(keyElement);
-                result.add(key);
-                
-            }
-        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(DGD2Corpus.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys() {
-        // see above
-        // see above
-        Set<MetadataKey> result = new HashSet<>();
-        try {
-            // currently, for an AGD corpus, this information is represented outside the Oracle DB
-            // in a file MetadataSelection.xml (as part of the DGD Tomcat Webapp)
-            String path = "/data/MetadataSelection.xml";
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);
-            
-            // Query for the right element via XPath
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            String xPathString = "//metadata-item[level='speech-event-speaker-metadata' and descendant::corpus='" + getID() + "']";
-            NodeList nodes = (NodeList)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
-            for (int i=0; i<nodes.getLength(); i++){
-                Element keyElement = ((Element)(nodes.item(i)));
-                DGD2MetadataKey key = new DGD2MetadataKey(keyElement);
-                result.add(key);                
-            }
-        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(DGD2Corpus.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
-
-    @Override
-    public Set<MetadataKey> getSpeakerMetadataKeys() {
-        // see above
-        Set<MetadataKey> result = new HashSet<>();
-        try {
-            // currently, for an AGD corpus, this information is represented outside the Oracle DB
-            // in a file MetadataSelection.xml (as part of the DGD Tomcat Webapp)
-            String path = "/data/MetadataSelection.xml";
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);
-            
-            // Query for the right element via XPath
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            //String xPathString = "//metadata-item[not(label='DGD-Kennung') and level='speaker-metadata' and not(starts-with(xpath,'Ortsdaten')) and descendant::corpus='" + getID() + "']";
-            String xPathString = "//metadata-item[not(label='DGD-Kennung') and level='speaker-metadata' and descendant::corpus='" + getID() + "']";
-            NodeList nodes = (NodeList)xPath.evaluate(xPathString, doc.getDocumentElement(), XPathConstants.NODESET);
-            for (int i=0; i<nodes.getLength(); i++){
-                Element keyElement = ((Element)(nodes.item(i)));
-                DGD2MetadataKey key = new DGD2MetadataKey(keyElement);
-                result.add(key);                
-            }
-        } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(DGD2Corpus.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
-    
     @Override
     public Set<AnnotationLayer> getAnnotationLayers() {
-        return getAnnotationLayersForType(null);
-        
+        return getAnnotationLayers(null);       
     }
     
-    @Override
-    public Set<AnnotationLayer> getTokenBasedAnnotationLayers(){
-        Set<AnnotationLayer> result = new HashSet();
-        result.addAll(getAnnotationLayersForType(AnnotationTypeEnum.TOKEN));
-        return result;
-    }
     
-    @Override
-    public Set<AnnotationLayer> getSpanBasedAnnotationLayers(){
-        Set<AnnotationLayer> result = new HashSet();
-        result.addAll(getAnnotationLayersForType(AnnotationTypeEnum.SPAN));
-        return result;
-    }
-    
-    private Set<AnnotationLayer> getAnnotationLayersForType(AnnotationTypeEnum type){
+    public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType){
         Set<AnnotationLayer> result = new HashSet<>();
         try {
             
@@ -249,10 +128,11 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
             XPath xPath = XPathFactory.newInstance().newXPath();
             StringBuilder xPathString = new StringBuilder();
             xPathString.append("//key[");
-            if(type!=null){
-                xPathString.append("@type='"+type.name().toLowerCase() +"' and ");
+            if(annotationType!=null){
+                xPathString.append("@type='"+annotationType.name().toLowerCase() +"' and ");
             }
-                xPathString.append("descendant::corpus='" + getID() + "']");
+            
+            xPathString.append("descendant::corpus='" + getID() + "']");
 
             NodeList nodes = (NodeList)xPath.evaluate(xPathString.toString(), doc.getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<nodes.getLength(); i++){
@@ -298,7 +178,33 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    @Override
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException  {        
+        if (unit==null){
+            unit = "TOKENS";
+        }
+                    
+        String[][] PARAM = {
+        {"META_FIELD_1", "v_" + metadataKey1.getID()},
+        {"META_FIELD_2", "v_" + metadataKey2.getID()},
+        {"UNITS", unit}
+        };
+    
+        String QUANT_FILENAME = getID() + "_QUANT.xml";
 
+        
+        try {
+            String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl",
+                    Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
+            CrossQuantification crossQuantification = new DGD2CrossQuantification(html);
+            return crossQuantification;
+            
+        } catch (TransformerException ex) {
+            throw new IOException(ex); 
+        }
+     
+    }
 
     
 }

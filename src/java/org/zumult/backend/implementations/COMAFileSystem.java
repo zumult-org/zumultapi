@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -47,7 +46,6 @@ import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
 import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SearchServiceException;
-import org.zumult.query.SearchStatistics;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
@@ -672,6 +670,5 @@ public class COMAFileSystem extends AbstractBackend {
     public Searcher getSearcher() {
         return new DGD2Searcher();
     }
-
   
 }

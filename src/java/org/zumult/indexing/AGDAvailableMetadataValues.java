@@ -24,6 +24,7 @@ import org.zumult.io.IOUtilities;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 
 /**
  *
@@ -42,7 +43,6 @@ public class AGDAvailableMetadataValues implements Indexer {
         }
     }
 
-    //String METADATA_SELECTION = "/data/MetadataSelection.xml";
     String FILE_NAME = "AGDAvailableMetadataValues.xml";  
     String OUTPUT = System.getProperty("user.dir") + "/src/java/data/" + FILE_NAME;
 
@@ -69,7 +69,7 @@ public class AGDAvailableMetadataValues implements Indexer {
                 Corpus corpus = backend.getCorpus(corpusID);
 
                 IDList eventIDs = backend.getEvents4Corpus(corpusID);
-                Set<MetadataKey> eventMetadataKeys = corpus.getEventMetadataKeys();
+                Set<MetadataKey> eventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
                 for (MetadataKey eventMetadataKey : eventMetadataKeys){
                     System.out.println("   Key: " + eventMetadataKey.getName("de"));
                     Map<String, Integer> mapForThisKey = new HashMap<>();
@@ -87,7 +87,7 @@ public class AGDAvailableMetadataValues implements Indexer {
                     corpusE.appendChild(keyE);
                 }
                 
-                Set<MetadataKey> speechEventMetadataKeys = corpus.getSpeechEventMetadataKeys();
+                Set<MetadataKey> speechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
                 for (MetadataKey speechEventMetdataKey : speechEventMetadataKeys){
                     System.out.println("   Key: " + speechEventMetdataKey.getName("de"));
                     Map<String, Integer> mapForThisKey = new HashMap<>();
@@ -109,7 +109,7 @@ public class AGDAvailableMetadataValues implements Indexer {
                 }
 
 
-                Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getSpeakerInSpeechEventMetadataKeys();
+                Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT);
                 for (MetadataKey speakerInSpeechEventMetdataKey : speakerInSpeechEventMetadataKeys){
                     System.out.println("   Key: " + speakerInSpeechEventMetdataKey.getName("de"));
                     Map<String, Integer> mapForThisKey = new HashMap<>();
@@ -135,7 +135,7 @@ public class AGDAvailableMetadataValues implements Indexer {
 
 
                 IDList speakerIDs = backend.getSpeakers4Corpus(corpusID);
-                Set<MetadataKey> speakerMetadataKeys = corpus.getSpeakerMetadataKeys();
+                Set<MetadataKey> speakerMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
                 for (MetadataKey speakerMetadataKey : speakerMetadataKeys){
                     System.out.println("   Key: " + speakerMetadataKey.getName("de"));
                     Map<String, Integer> mapForThisKey = new HashMap<>();

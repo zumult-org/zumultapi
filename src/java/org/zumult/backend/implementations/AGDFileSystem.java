@@ -8,6 +8,7 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,16 +21,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
-import org.zumult.io.Constants;
+import org.zumult.io.AGDUtilities;
 import org.zumult.io.IOHelper;
-import org.zumult.objects.AnnotationTagSet;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
+import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.DGD2AnnotationTagSet;
 import org.zumult.objects.implementations.DGD2Corpus;
 import org.zumult.objects.implementations.DGD2Event;
 import org.zumult.objects.implementations.DGD2Protocol;
@@ -313,6 +314,13 @@ public class AGDFileSystem extends AbstractIDSBackend {
         return getSpeechEvent(speechEventID).getProtocol();
     }
 
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID, ObjectTypesEnum objectType) {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(corpusID, objectType); 
+    }
     
-
+    @Override
+    public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) {
+        return AGDUtilities.getMetadataKeysFromMetadataSelection(corpusID, null); 
+    }
 }

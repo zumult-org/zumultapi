@@ -27,6 +27,7 @@ import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
 
@@ -125,7 +126,7 @@ public class CorporaResource {
             IDList speakersList = backendInterface.getSpeakers4Corpus(corpusID);
             Corpus corpus = backendInterface.getCorpus(corpusID);
             
-            Set<MetadataKey> metadataKeys = corpus.getSpeakerMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
 
             if (!corpora.contains(corpusID) || !speakersList.contains(speakerID)) {
                 buildResponse = Response.status(Response.Status.BAD_REQUEST).build();
@@ -215,7 +216,7 @@ public class CorporaResource {
         if (!corpora.contains(corpusID) || !eventsList.contains(eventID)) {
             buildResponse = Response.status(Response.Status.BAD_REQUEST).build();
         } else {
-            Set<MetadataKey> metadataKeys = corpus.getEventMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
             if (metadatum == null) {                     
 //              IN DGD2Corpus THE FUNCTION getEventMetadataKeys FILTERS OUT GEO DATA: not(starts-with(xpath,'Basisdaten/Ort'))                
                 Element metadataElement = new Element("metadata");
@@ -309,7 +310,7 @@ public class CorporaResource {
             || !speechEventsList.contains(speechEventID)) {
             buildResponse = Response.status(Response.Status.BAD_REQUEST).build();
         } else {
-            Set<MetadataKey> metadataKeys = corpus.getSpeechEventMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
 
             if (metadatum == null) {
                 Element metadataElement = new Element("metadata");
@@ -520,7 +521,7 @@ public class CorporaResource {
             || !speakers.contains(speakerID)) {
             buildResponse = Response.status(Response.Status.BAD_REQUEST).build();
         } else {
-            Set<MetadataKey> metadataKeys = corpus.getSpeakerInSpeechEventMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT);
 
             if (metadatum == null) {
                 Element metadataElement = new Element("metadata");

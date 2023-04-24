@@ -5,6 +5,7 @@
  */
 package org.zumult.objects;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -13,29 +14,24 @@ import java.util.Set;
  */
 public interface Corpus extends XMLSerializable, Identifiable, Metadatable {
     
-    
     public String getAcronym();
     public String getName(String language);
     public String getDescription(String language);
     
     public Set<MetadataKey> getMetadataKeys();
-    public Set<MetadataKey> getEventMetadataKeys();
-    public Set<MetadataKey> getSpeechEventMetadataKeys();
-    public Set<MetadataKey> getSpeakerInSpeechEventMetadataKeys();
-    public Set<MetadataKey> getSpeakerMetadataKeys();
+    public Set<MetadataKey> getMetadataKeys(ObjectTypesEnum objectType);
     
     /*public <Set>String getValuesForEventMetadataKey(String key);
     public <Set>String getValuesForSpeechEventMetadataKey(String key);
     public <Set>String getValuesForSpeakerInSpeechEventMetadataKey(String key);
     public <Set>String getValuesForSpeakerMetadataKey(String key);*/
     
-    //public Set<String> getAnnotationTypes();
     public Set<AnnotationLayer> getAnnotationLayers();
-    public Set<AnnotationLayer> getTokenBasedAnnotationLayers();
-    public Set<AnnotationLayer> getSpanBasedAnnotationLayers();
+    public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType);
 
     public Set<String> getSpeakerLocationTypes();
-   
     
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException ;
+   
     
 }

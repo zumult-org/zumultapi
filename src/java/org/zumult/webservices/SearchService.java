@@ -23,7 +23,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
@@ -160,13 +159,8 @@ public class SearchService {
     public Response getQueriesForCorpus(@PathParam("corpusID") String corpusID) {
         Element response = new Element("response");
         response.setAttribute("type", "queries");
-        
-        Element corpusQueryElement = new Element("corpusQuery");
-        corpusQueryElement.setText(Constants.CORPUS_SIGLE + "=\"" + corpusID + "\"");
-        response.addContent(corpusQueryElement);
-        
-        Element queriesElement = new Element("queries");
-        
+        response.setAttribute("subtype", "examples");
+                
         try{           
             List<SampleQuery> queries = backendInterface.getSampleQueries(corpusID, null);            
             String linkUrl = UriBuilder.fromPath(zumultApiBaseURL).build().toString();
@@ -199,10 +193,10 @@ public class SearchService {
                 query.setAttribute("number", String.valueOf(counter));
                 query.addContent(string);
                 query.addContent(description);
-                queriesElement.addContent(query);
+                response.addContent(query);
             }
 
-            response.addContent(queriesElement);
+
             buildResponse = Response.ok(IOUtilities.elementToString(response)).build();
             
         }catch (SearchServiceException ex){
@@ -508,20 +502,7 @@ public class SearchService {
         corpusQueryElement.setText(corpusQuery);
         response.addContent(corpusQueryElement);
         
-        Element metadata = new Element("metadata");
-        
-        List<MetadataKey> metadataKeysList = metadataKeys.stream().sorted((o1, o2) -> 
-        o1.getID().compareTo(o2.getID())).collect(Collectors.toList());
-        
-        for (MetadataKey key : metadataKeysList) {
-            Element listElement = new Element("metadata-key");
-            listElement.setAttribute("id", key.getID());
-            listElement.setAttribute("name", key.getName(locale.getLanguage()));
-            listElement.setAttribute("type", key.getLevel().name());
-            metadata.addContent(listElement);
-        }    
-        
-        response.addContent(metadata);
+        response.addContent(XMLSerialization.createElementForMetadataKeys(metadataKeys, locale));
         
         buildResponse =  Response.ok(IOUtilities.elementToString(response), MediaType.APPLICATION_XML).build();
         return buildResponse;

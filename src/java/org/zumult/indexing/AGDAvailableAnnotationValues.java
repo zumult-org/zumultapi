@@ -31,6 +31,7 @@ import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationLayer;
+import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.TokenList;
@@ -82,12 +83,12 @@ public class AGDAvailableAnnotationValues implements Indexer {
                 Corpus corpus = backend.getCorpus(corpusID);
                 
                 if(search){
-                    appendChilds(document, corpusID, corpus.getTokenBasedAnnotationLayers(), corpusE, null);
-                    appendChilds(document, corpusID, corpus.getSpanBasedAnnotationLayers(), corpusE, null);
+                    appendChilds(document, corpusID, corpus.getAnnotationLayers(AnnotationTypeEnum.TOKEN), corpusE, null);
+                    appendChilds(document, corpusID, corpus.getAnnotationLayers(AnnotationTypeEnum.SPAN), corpusE, null);
                 }else{
                     IDList transcripts = backend.getTranscripts4Corpus(corpusID);
-                    appendChilds(document, corpusID, corpus.getTokenBasedAnnotationLayers(), corpusE, transcripts);
-                    appendChilds(document, corpusID, corpus.getSpanBasedAnnotationLayers(), corpusE, transcripts);
+                    appendChilds(document, corpusID, corpus.getAnnotationLayers(AnnotationTypeEnum.TOKEN), corpusE, transcripts);
+                    appendChilds(document, corpusID, corpus.getAnnotationLayers(AnnotationTypeEnum.SPAN), corpusE, transcripts);
                 }
                 
                 root.appendChild(corpusE);

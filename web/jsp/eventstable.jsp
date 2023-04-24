@@ -4,6 +4,7 @@
     Author     : Thomas_Schmidt
 --%>
 
+<%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="org.zumult.objects.MetadataKey"%>
@@ -55,7 +56,7 @@
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
             String corpusName = corpus.getName("de");
-            Set<MetadataKey> metadataKeys = corpus.getEventMetadataKeys();
+            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
             IDList eventIDs = backendInterface.getEvents4Corpus(corpusID);           
         %>
         <% String pageName = "ZuMult"; %>
