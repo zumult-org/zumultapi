@@ -46,7 +46,7 @@ public class Measure_14 {  // measure "oralPhenomena"
             getParentFile().getParentFile(), "downloads");  // \ids-sample\build\web\downloads*/
     
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String OUTPUT_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
+    String OUTPUT_PATH = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_MEASURES_PATH;
     
     public static void main(String[] args) {
         try {

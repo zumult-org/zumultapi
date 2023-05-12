@@ -30,8 +30,8 @@
 </template>
 
 <script>
-// import germanyRegionsJson from '@/../../../src/java/data/prototypeJson/germany-regions.json' // ==> fetch data from server in actions 
-import rede from '@/../../../src/java/data/prototypeJson/rede_data_export.json' // real sprachregion data
+// import germanyRegionsJson from '@/../../../src/main/java/data/prototypeJson/germany-regions.json' // ==> fetch data from server in actions 
+import rede from '@/../../../src/main/java/data/prototypeJson/rede_data_export.json' // real sprachregion data
 import * as d3 from 'd3'
 import * as topojson from "topojson-client"
 

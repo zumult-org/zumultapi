@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
@@ -48,7 +49,7 @@ public class SpeechEventIndex implements Indexer {
     //String[] corpusIDs = {"FOLK", "GWSS", "DNAM", "ZW--", "DH--"};
     //String[] corpusIDs = {"DH--"};
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String OUT = System.getProperty("user.dir") + "/src/java/data/";
+    String OUT = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_PATH;
 
     @Override
     public void index() throws IOException {

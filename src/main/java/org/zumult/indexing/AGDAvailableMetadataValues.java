@@ -20,6 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.backend.BackendInterface;
+import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
@@ -44,7 +45,7 @@ public class AGDAvailableMetadataValues implements Indexer {
     }
 
     String FILE_NAME = "AGDAvailableMetadataValues.xml";  
-    String OUTPUT = System.getProperty("user.dir") + "/src/java/data/" + FILE_NAME;
+    String OUTPUT = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_PATH + FILE_NAME;
 
     @Override
     public void index() throws IOException {        

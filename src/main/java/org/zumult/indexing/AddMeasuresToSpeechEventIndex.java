@@ -42,7 +42,7 @@ public class AddMeasuresToSpeechEventIndex implements Indexer {
     
     //String corpusID = "FOLK";
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String MEASURE_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
+    String MEASURE_PATH = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_MEASURES_PATH;
 
     @Override
     public void index() throws IOException {

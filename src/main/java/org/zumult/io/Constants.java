@@ -79,6 +79,7 @@ public class Constants {
     public static String WITHOUT_PUNCTUTION_EXT ="without_Punct";
     public static String WITH_PUNCTUTION_EXT ="with_Punct";
     
+    public static final String DATA_PATH = "/data/";
     public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
     public static final String DATA_MEASURES_PATH = "/data/measures/";
     public static final String DATA_POS_PATH = "/data/pos/";
@@ -88,6 +89,8 @@ public class Constants {
     
     public static final String METADATA_SELECTION_PATH = "/data/MetadataSelection.xml";
     
+    public static final String JAVA_FOLDER_PATH = "/src/main/java";
+            
     public static String[] LEIPZIG_WORDLISTS =
         {
             "GOETHE_A1", "GOETHE_A2", "GOETHE_B1",

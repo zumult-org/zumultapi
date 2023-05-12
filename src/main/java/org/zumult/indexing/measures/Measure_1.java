@@ -55,7 +55,7 @@ public class Measure_1 {
 
 
     String[] corpusIDs = {"FOLK", "GWSS"};   
-    String OUTPUT_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
+    String OUTPUT_PATH = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_MEASURES_PATH;
 
     
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException, TransformerException {

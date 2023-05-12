@@ -43,7 +43,7 @@ public class Measure_12 implements Indexer {
 
     XPath xPath = XPathFactory.newInstance().newXPath();
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String OUTPUT_PATH = System.getProperty("user.dir") + "/src/java" + Constants.DATA_MEASURES_PATH;
+    String OUTPUT_PATH = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_MEASURES_PATH;
     
 
     @Override

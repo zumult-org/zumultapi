@@ -41,11 +41,10 @@ public class AGDUtilities {
                 case SPEECH_EVENT -> "speech-event-metadata";
                 case SPEAKER -> "speaker-metadata";
                 case SPEAKER_IN_SPEECH_EVENT -> "speech-event-speaker-metadata";
-                default -> null;
+                default -> "XXX";
             };
-            if(metadataLevel!=null && !metadataLevel.isEmpty()){
-                xPathString = "//metadata-item[not(label='DGD-Kennung') and level='" + metadataLevel + "' and descendant::corpus='" + corpusID + "']";
-            }
+            
+            xPathString = "//metadata-item[not(label='DGD-Kennung') and level='" + metadataLevel + "' and descendant::corpus='" + corpusID + "']";
         }
         
         Set<MetadataKey> result = new HashSet<>();

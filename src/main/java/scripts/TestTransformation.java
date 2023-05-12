@@ -46,7 +46,7 @@ public class TestTransformation {
         Transcript partTranscript = transcript.getPart(startTime, startTime+60.0, true);
         String partTranscriptXML = partTranscript.toXML();
                     String[][] xslParameters = {
-                        {"TOKEN_LIST_URL", "file:/F:/WebApplication3/src/java/data/HERDER_1000.xml"}
+                        {"TOKEN_LIST_URL", "file:/F:/WebApplication3/src/main/java/data/HERDER_1000.xml"}
                     };
                     
 

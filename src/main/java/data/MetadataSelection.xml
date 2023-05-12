@@ -5,7 +5,7 @@
     <!-- ********************* -->
         <metadata-item quantify="false">        
         <label>DGD-Kennung</label> <!-- Bezeichnung, die in der DGD erscheint -->        
-        <xpath>/*/@Kennung</xpath> <!-- XPath auf diese Beschreibung im XML-Dokument -->        
+        <xpath>/*/@Kennung</xpath> <!-- XPath auf diese Beschreibung im XML-Dokument, wird für Quantifizierung verwendet -->
         <level>event-metadata</level> <!-- Ebene (Ereignis, Sprechereignis, Sprecher bzw. Sprecher in Sprechereignis) -->        
         <dgd-parameter-name>v_e_id</dgd-parameter-name> <!-- Parametername (für HTTP-Methoden in der DGD) -->        
         <example>ZW--E_00008</example> <!-- Beispiel (erscheint im Tooltip, als Placeholder etc.) -->
@@ -49,6 +49,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -95,6 +96,7 @@
             <corpus>SA--</corpus>
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>SW--</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
@@ -114,6 +116,27 @@
             <corpus>HL--</corpus>
         </corpora>
     </metadata-item>   
+
+    <!--***********************************-->
+    <metadata-item quantify="true">
+        <label>Video vorhanden</label>
+        <xpath>count(descendant::SE-Aufnahme[contains(@Kennung,'_V_')])>0</xpath>
+        <!-- <xpath>concat(
+            substring('ja',   1, number(count(descendant::SE-Aufnahme[contains(@Kennung,'_V_')])>0)*2   ),
+            substring('nein', 1, number(count(descendant::SE-Aufnahme[contains(@Kennung,'_V_')])=0)*4   )
+            )</xpath>
+                -->
+        <level>event-metadata</level>
+        <dgd-parameter-name>v_e_mit_video</dgd-parameter-name>
+        <example>ja</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>GWSS</corpus>
+        </corpora>
+    </metadata-item>   
+
+
+
     <!--***********************************-->
     <metadata-item quantify="true">
         <label>In DGD seit Version</label>
@@ -160,6 +183,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -210,6 +234,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -274,6 +299,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -300,6 +326,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -343,6 +370,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>            
             <corpus>ZW--</corpus>
         </corpora>
@@ -391,6 +419,7 @@
         <corpora>
             <corpus>DH--</corpus>
             <corpus>ZW--</corpus>
+	       <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>
     <!--***********************************-->          
@@ -403,6 +432,7 @@
         <corpora>
             <corpus>DH--</corpus>
             <corpus>ZW--</corpus>
+	       <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>
     
@@ -451,6 +481,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+	       <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -494,6 +525,7 @@
             <corpus>PF--</corpus>          
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -558,6 +590,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -649,6 +682,7 @@
             <corpus>FGOP</corpus>
             <corpus>FOLK</corpus>
             <corpus>FR--</corpus>
+            <!-- Das Format bei GWSS ist anders, z.B.: 	"1 Vortragender, 1 Moderator, ca. 25 Zuhörer". DONE in 2.19b -->
             <corpus>GWSS</corpus>
             <corpus>HL--</corpus>
             <corpus>HMAT</corpus>
@@ -667,6 +701,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -681,10 +716,10 @@
         <example>Drei-Personen-Interaktion</example>
         <corpora>
             <corpus>FOLK</corpus>
-            <corpus>GWSS</corpus>
             <corpus>HMAT</corpus>    
             <corpus>HMOT</corpus>    
-            <corpus>MIKO</corpus>                            
+            <corpus>MIKO</corpus>  
+            <corpus>GWSS</corpus>                      
         </corpora>
     </metadata-item>
     <!--***********************************-->    
@@ -723,6 +758,7 @@
         <example>Nicht beteiligt</example>
         <corpora>
             <corpus>FOLK</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>    
     <!--***********************************-->    
@@ -735,6 +771,7 @@
         <example>Nicht elizitiert</example>
         <corpora>
             <corpus>FOLK</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>    
     <!--***********************************-->    
@@ -747,8 +784,25 @@
         <example>Telefon</example>
         <corpora>
             <corpus>FOLK</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>    
+    
+    
+        <!--***********************************-->
+
+    <metadata-item quantify="true">
+        <label>Medientyp</label>
+        <xpath>SE-Aufnahme/Basisdaten/Typ</xpath>
+        <level>speech-event-metadata</level>
+        <dgd-parameter-name>v_e_se_typ</dgd-parameter-name>
+        <example>Video</example>
+        <corpora>
+            <corpus>FOLK</corpus>
+            <corpus>GWSS</corpus>
+        </corpora>
+    </metadata-item>   
+    
     <!--***********************************-->    
     <!-- new 09-01-2018 -->    
     <metadata-item quantify="true">
@@ -813,6 +867,7 @@
         <corpora>
             <corpus>FOLK</corpus>
             <corpus>GWSS</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>
     
@@ -863,6 +918,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -918,6 +974,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1030,6 +1087,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1067,7 +1125,8 @@
             <corpus>ISW-</corpus>
             <corpus>ISZ-</corpus>
             <corpus>RUDI</corpus>
-            <corpus>SA--</corpus>                      
+            <corpus>SA--</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>
     <!--***********************************-->
@@ -1144,6 +1203,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1191,6 +1251,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1421,6 +1482,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1454,6 +1516,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1482,6 +1545,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1519,6 +1583,7 @@
             <corpus>SR--</corpus>
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1567,6 +1632,7 @@
         <corpora>
             <corpus>DH--</corpus>
             <corpus>ZW--</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>
     <!--***********************************-->
@@ -1579,6 +1645,7 @@
         <corpora>
             <corpus>DH--</corpus>
             <corpus>ZW--</corpus>
+            <corpus>UNSD</corpus>
         </corpora>
     </metadata-item>
     <!--***********************************-->   
@@ -1604,7 +1671,8 @@
             <corpus>OS--</corpus>    
             <corpus>PF--</corpus>     
             <corpus>SV--</corpus>
-            <corpus>SW--</corpus>    
+            <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>         
         </corpora>     
@@ -1632,6 +1700,7 @@
             <corpus>PF--</corpus>               
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1680,6 +1749,7 @@
             <corpus>PF--</corpus>              
             <corpus>SV--</corpus>
             <corpus>SW--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>WISC</corpus>
             <corpus>ZW--</corpus>
         </corpora>
@@ -1728,6 +1798,7 @@
         <example>49.5647</example>        
         <corpora>
             <corpus>DH--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>ZW--</corpus>
         </corpora>
     </metadata-item>
@@ -1740,6 +1811,7 @@
         <example>9.3456</example>        
         <corpora>
             <corpus>DH--</corpus>
+            <corpus>UNSD</corpus>
             <corpus>ZW--</corpus>
         </corpora>
     </metadata-item>
