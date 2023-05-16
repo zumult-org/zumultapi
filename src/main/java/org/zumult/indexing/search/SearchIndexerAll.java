@@ -27,7 +27,7 @@ import org.zumult.query.searchEngine.SearchIndex;
  * @author Elena
  */
 public class SearchIndexerAll implements Indexer {
-    private static final String MTAS_CONFIG_FILE_PATH = "src\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
+    private static final String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
     private static final String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
     private static final String INPUT_DIR_SPEAKER_BASED = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB";
     private static final String INPUT_DIR_TRANSCRIPT_BASED = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_TB";   

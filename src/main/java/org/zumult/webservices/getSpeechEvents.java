@@ -30,7 +30,7 @@ import org.zumult.objects.Transcript;
  */
 public class getSpeechEvents extends HttpServlet {
     BackendInterface backendInterface;
-    String DATA_PATH = "src/java/data/";
+    String DATA_PATH = "src/main/java/data/";
     String IDLISTS_PATH = DATA_PATH + "IDLists/";
     
     public getSpeechEvents() throws IllegalAccessException, InstantiationException, ClassNotFoundException {

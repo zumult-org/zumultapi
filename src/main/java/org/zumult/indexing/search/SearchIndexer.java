@@ -24,7 +24,7 @@ import org.zumult.query.searchEngine.SearchIndex;
  */
 public class SearchIndexer implements Indexer {
     
-    private String MTAS_CONFIG_FILE_PATH = "src\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
+    private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
     private String MTAS_CONFIG_FILE_NAME = "mtas_config_SB.xml";
     private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
     private String INDEX_NAME = "SB_FOLK";

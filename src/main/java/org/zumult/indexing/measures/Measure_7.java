@@ -51,7 +51,7 @@ public class Measure_7 {
     }
     
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String data_path = "src\\java\\data\\measures\\";
+    String data_path = "src\\main\\java\\data\\measures\\";
 
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException {
         BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();

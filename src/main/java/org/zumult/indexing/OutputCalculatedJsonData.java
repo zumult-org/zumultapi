@@ -29,7 +29,7 @@ import org.json.simple.parser.ParseException;
 public class OutputCalculatedJsonData {
     String corpusID = "FOLK";
     //String corpusID = "GWSS";
-    String DATA_PATH = "src\\java\\data\\";
+    String DATA_PATH = "src\\main\\java\\data\\";
 //    String IDLISTS_PATH = DATA_PATH + "IDLists\\";
     String corpusJsonPath = DATA_PATH + "prototypeJson/" + corpusID + ".json";
 //    XPath xPath = XPathFactory.newInstance().newXPath();

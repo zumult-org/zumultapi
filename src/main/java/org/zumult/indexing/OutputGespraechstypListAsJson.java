@@ -37,7 +37,7 @@ public class OutputGespraechstypListAsJson implements Indexer {
     String[] CORPORA = {"FOLK", "GWSS"};
 //    String CORPUS_ID = "FOLK";
 //    String CORPUS_ID = "GWSS";
-    String DATA_PATH = "src\\java\\data\\";
+    String DATA_PATH = "src\\main\\java\\data\\";
 //    String IDLISTS_PATH = DATA_PATH + "IDLists\\";
 //    XPath xPath = XPathFactory.newInstance().newXPath();
     ObjectMapper mapper = new ObjectMapper();

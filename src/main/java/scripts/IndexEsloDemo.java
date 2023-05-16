@@ -23,7 +23,7 @@ public class IndexEsloDemo {
     private void doit() throws IOException {
         String[] inputDirectories = new String[] {"C:\\Users\\bernd\\Dropbox\\work\\ZUMULT-COMA\\ESLO-DEMO\\iso-transcripts"};
         SearchIndexer searchIndexer = new SearchIndexer(
-                "C:\\zumult\\zumultapi\\src\\java\\org\\zumult\\query\\searchEngine\\parser\\config", 
+                "C:\\zumult\\zumultapi\\src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config", 
                 "eslo_mtas_config_SB.xml", 
                 "C:\\Users\\bernd\\Dropbox\\work\\ZUMULT-COMA\\ESLO-DEMO\\MTAS_INDEX_SB",
                 "SB_ESLO-DEMO",

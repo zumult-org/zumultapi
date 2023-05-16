@@ -41,7 +41,7 @@ import org.zumult.objects.Transcript;
 public class MENDPromptIndex implements Indexer {
 
     
-    String OUT = "D:\\WebApplication3\\src\\java\\data\\MENDPromptIndex.xml";
+    String OUT = "D:\\WebApplication3\\src\\main\\java\\data\\MENDPromptIndex.xml";
     
     /**
      * @param args the command line arguments

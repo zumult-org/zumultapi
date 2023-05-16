@@ -17,40 +17,47 @@
         <!-- ************************** -->
     <!--    <rest-api-base-url>https://zumult.ids-mannheim.de/ProtoZumult/api</rest-api-base-url>
         <web-app-base-url>https://zumult.ids-mannheim.de/ProtoZumult</web-app-base-url>
-        <transcript-path>/home/zumult/DATA/iso-transcripts</transcript-path>
-        <protocol-path>/home/zumult/DATA/protocols</protocol-path>
         <media-path>https://zumult.ids-mannheim.de/video</media-path>
+                
+        <transcript-path>/home/zumult/DATA_15_05_23/iso-transcripts</transcript-path>
+        <protocol-path>/home/zumult/DATA_15_05_23/protocols</protocol-path>
+        <metadata-path>/home/zumult/DATA_15_05_23/metadata</metadata-path>
+        <quantification-path>/home/zumult/DATA_15_05_23/data</quantification-path>
+        <wordlist-path>/home/zumult/DATA_15_05_23/wordlists</wordlist-path>     
+        
+        <germanet-path>/home/zumult/GN_V170_XML</germanet-path>
+        <search-index-path>/home/zumult/INDEX_MVN/</search-index-path>
+          
         <media-archive-path>/srv/archiv</media-archive-path>
         <media-distribution-path>/srv/video</media-distribution-path>
         <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
         <ffmpeg-path>ffmpeg</ffmpeg-path> 
-        <quantification-path>/home/zumult/DATA/data</quantification-path>
-        <wordlist-path>/home/zumult/DATA/wordlists</wordlist-path>
-        <metadata-path>/home/zumult/DATA/metadata</metadata-path>
-        <material-path></material-path> 
-        <germanet-path>/home/zumult/DATA/GN_V170_XML</germanet-path>
-        <search-index-path>/home/zumult/INDEX/</search-index-path>-->
+        <material-path></material-path>-->
         
         <!-- *******   END: for zumult.ids-mannheim.de   ***** -->
         
         <!-- ************************** -->
-        <!-- for zumult test server (https://10.0.10.103) -->
+        <!-- for zumult test server -->
         <!-- ************************** -->
     <!--    <rest-api-base-url>https://zumult-test.ids-mannheim.de/ProtoZumult/api</rest-api-base-url>
         <web-app-base-url>https://zumult-test.ids-mannheim.de/ProtoZumult</web-app-base-url>
-        <transcript-path>/home/zumult/DATA/iso-transcripts</transcript-path>
-        <protocol-path>/home/zumult/DATA/protocols</protocol-path>
         <media-path>https://zumult-test.ids-mannheim.de/video</media-path>
+        
+        <transcript-path>/home/zumult/DATA_15_05_23/iso-transcripts</transcript-path>
+        <protocol-path>/home/zumult/DATA_15_05_23/protocols</protocol-path>
+        <metadata-path>/home/zumult/DATA_15_05_23/metadata</metadata-path>
+        <quantification-path>/home/zumult/DATA_15_05_23/data</quantification-path>
+        <wordlist-path>/home/zumult/DATA_15_05_23/wordlists</wordlist-path>     
+        
+        <germanet-path>/home/zumult/GN_V170_XML</germanet-path>
+        <search-index-path>/home/zumult/INDEX_MVN/</search-index-path>
+          
         <media-archive-path>/srv/archiv</media-archive-path>
         <media-distribution-path>/srv/video</media-distribution-path>
         <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
         <ffmpeg-path>ffmpeg</ffmpeg-path> 
-        <quantification-path>/home/zumult/DATA/data</quantification-path>
-        <wordlist-path>/home/zumult/DATA/wordlists</wordlist-path>
-        <metadata-path>/home/zumult/DATA/metadata</metadata-path>
-        <material-path></material-path> 
-        <germanet-path>/home/zumult/DATA/GN_V170_XML</germanet-path>
-        <search-index-path>/home/zumult/INDEX/</search-index-path>-->
+        <material-path></material-path> -->
+        
         <!-- *******   END: for zumult test server   ***** -->
 
 
@@ -71,11 +78,34 @@
         <quantification-path></quantification-path>
         <wordlist-path></wordlist-path>
         <germanet-path></germanet-path>
-        
-        
         <search-index-path>D:\ZuMult\INDICES\</search-index-path>-->
+        
         <!-- *******   END: for Thomas   ***** -->
         
+        <!-- ************************************ -->
+        <!-- for Elenas local (Windows) machines -->
+        <!-- ************************************ -->
+        <rest-api-base-url>http://localhost:8080/DGDRESTTest/api</rest-api-base-url>
+        <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url>
+
+        <transcript-path>C:\Users\Frick\IDS\GitLab\dgd-data\iso-transcripts</transcript-path>
+        <metadata-path>C:\Users\Frick\IDS\GitLab\dgd-data\metadata</metadata-path>
+        <protocol-path>C:\Users\Frick\IDS\GitLab\dgd-data\protocols</protocol-path>
+        <wordlist-path>C:\Users\Frick\IDS\GitLab\dgd-data\wordlists</wordlist-path>
+        <quantification-path>C:\Users\Frick\IDS\GitLab\dgd-code\src\java\dgd2web\data</quantification-path>
+        
+        <media-archive-path>V://ARCHIV</media-archive-path>
+        <media-distribution-path>V://DISTRIBUTION</media-distribution-path>
+        <media-path>V://DISTRIBUTION</media-path>
+        <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
+        <ffmpeg-path>C:\Program Files (x86)\ffmpeg-4.3.1-win64-static\bin\ffmpeg.exe</ffmpeg-path>
+        <material-path></material-path>
+
+        <search-index-path>C:\Users\Frick\IDS\ZuMult\lucene_9_daten_neue_indizes\</search-index-path>
+        
+        <germanet-path>C:\Users\Frick\IDS\GN_V170\GN_V170\GN_V170_XML</germanet-path>
+        
+        <!-- *******   END: for Elena   ***** -->
         
         <!-- ************************************************************** -->
         <!-- ***** WHAT FOLLOWS IS NOT SPECIFIC TO SERVER OR LOCAL MACHINES -->
@@ -122,26 +152,6 @@
         <search-index-transcript-based>TB_HMAT</search-index-transcript-based>
         
         <corpus-ids-for-indexing>AD--;DH--;FOLK;GWSS;MEND;DNAM;BETV;HMAT</corpus-ids-for-indexing>
-        
-        <rest-api-base-url>http://localhost:8080/DGDRESTTest/api</rest-api-base-url>
-        <web-app-base-url>http://localhost:8080/DGDRESTTest</web-app-base-url>
-
-        <transcript-path>C:\Users\Frick\IDS\GitLab\dgd-data\iso-transcripts</transcript-path>
-        <metadata-path>C:\Users\Frick\IDS\GitLab\dgd-data\metadata</metadata-path>
-        <protocol-path>C:\Users\Frick\IDS\GitLab\dgd-data\protocols</protocol-path>
-        <wordlist-path>C:\Users\Frick\IDS\GitLab\dgd-data\wordlists</wordlist-path>
-        <quantification-path>C:\Users\Frick\IDS\GitLab\DGD2Web\src\java\dgd2web\data</quantification-path>
-        
-        <media-archive-path>V://ARCHIV</media-archive-path>
-        <media-distribution-path>V://DISTRIBUTION</media-distribution-path>
-        <media-path>V://DISTRIBUTION</media-path>
-        <media-snippets-path>/var/lib/tomcat/webapps/ProtoZumult/downloads</media-snippets-path>
-        <ffmpeg-path>C:\Program Files (x86)\ffmpeg-4.3.1-win64-static\bin\ffmpeg.exe</ffmpeg-path>
-        <material-path></material-path>
-
-        <search-index-path>C:\Users\Frick\IDS\ZuMult\lucene_9_daten_neue_indizes\</search-index-path>
-        
-        <germanet-path>C:\Users\Frick\IDS\GN_V170\GN_V170\GN_V170_XML</germanet-path>
         
     </backend> 
 </configuration>

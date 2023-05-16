@@ -22,7 +22,7 @@ public class DeReWo2TokenList {
 
     //String DEREWO_PATH = "/org/exmaralda/orthonormal/lexicon/derewo_wordlist.txt";
     String DEREWO_PATH = "/data/derewo_wordlist.txt";
-    String OUT = "F:\\WebApplication3\\src\\java\\data\\DEREWO_100000.xml";
+    String OUT = "F:\\WebApplication3\\src\\main\\java\\data\\DEREWO_100000.xml";
 
     /**
      * @param args the command line arguments

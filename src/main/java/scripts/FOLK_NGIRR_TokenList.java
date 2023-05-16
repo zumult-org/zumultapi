@@ -28,7 +28,7 @@ import org.zumult.objects.implementations.TokenListTokenFilter;
  */
 public class FOLK_NGIRR_TokenList {
     
-    String OUT = "F:\\WebApplication3\\src\\java\\data\\FOLK_NGIRR.xml";
+    String OUT = "F:\\WebApplication3\\src\\main\\java\\data\\FOLK_NGIRR.xml";
     
 
     /**

@@ -25,7 +25,7 @@ import org.zumult.objects.IDList;
  */
 public class OutputIDLists implements Indexer {
     
-    String base_path = "src/java/data/IDLists/";
+    String base_path = "src/main/java/data/IDLists/";
 
     /**
      * @param args the command line arguments

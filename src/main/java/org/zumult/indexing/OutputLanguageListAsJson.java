@@ -29,7 +29,7 @@ import org.json.simple.parser.ParseException;
 public class OutputLanguageListAsJson implements Indexer {
     
     String[] CORPORA = {"GWSS"};
-    String DATA_PATH = "src\\java\\data\\";
+    String DATA_PATH = "src\\main\\java\\data\\";
     ObjectMapper mapper = new ObjectMapper();
     
 

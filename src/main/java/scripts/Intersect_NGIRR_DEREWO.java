@@ -20,7 +20,7 @@ import org.zumult.objects.TokenList;
  */
 public class Intersect_NGIRR_DEREWO {
 
-    String OUT = "F:\\WebApplication3\\src\\java\\data\\FOLK_NGIRR_OHNE_DEREWO.xml";
+    String OUT = "F:\\WebApplication3\\src\\main\\java\\data\\FOLK_NGIRR_OHNE_DEREWO.xml";
 
     /**
      * @param args the command line arguments

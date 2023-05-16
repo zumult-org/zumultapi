@@ -26,7 +26,7 @@ import org.json.simple.parser.ParseException;
  */
 public class OutputArtListAsJson implements Indexer {
     String[] CORPORA = {"FOLK", "GWSS"};
-    String DATA_PATH = "src\\java\\data\\";
+    String DATA_PATH = "src\\main\\java\\data\\";
     ObjectMapper mapper = new ObjectMapper();
     
     /**
