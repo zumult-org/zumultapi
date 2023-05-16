@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package org.zumult.indexing.zumal;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.Corpus;
@@ -45,9 +46,6 @@ public class SpeechEventIndex implements Indexer {
     }
 
     BackendInterface backend;
-    //String corpusID = "FOLK";
-    //String[] corpusIDs = {"FOLK", "GWSS", "DNAM", "ZW--", "DH--"};
-    //String[] corpusIDs = {"DH--"};
     String[] corpusIDs = {"FOLK", "GWSS"};
     String OUT = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_PATH;
 
@@ -168,8 +166,6 @@ public class SpeechEventIndex implements Indexer {
 
                 }
                 String xmlString = IOUtilities.documentToString(document);
-                //System.out.println(xmlString);
-                //String OUT = "D:\\WebApplication3\\src\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
                 String OUTPUT = OUT  + corpusID + "_SpeechEventIndex.xml";
                 Files.write(new File(OUTPUT).toPath(), xmlString.getBytes("UTF-8"));
 

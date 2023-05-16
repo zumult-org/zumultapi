@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package org.zumult.indexing.zumal;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
+import org.zumult.indexing.Indexer;
 import org.zumult.io.IOHelper;
 
 /**

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package org.zumult.indexing.metadata;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.backend.BackendInterface;
+import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.Corpus;

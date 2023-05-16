@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package org.zumult.indexing.zumal;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -11,6 +11,15 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
+import org.zumult.indexing.AddMeasuresToSpeechEventIndex;
+import org.zumult.indexing.Indexer;
+import org.zumult.indexing.OutputArtListAsJson;
+import org.zumult.indexing.OutputGespraechstypListAsJson;
+import org.zumult.indexing.OutputLanguageListAsJson;
+import org.zumult.indexing.OutputSprachregionListJson;
+import org.zumult.indexing.OutputThemenListAsJson;
+import org.zumult.indexing.SpeechEventIndex;
+import org.zumult.indexing.SpeechEventIndex2Json;
 import org.zumult.indexing.measures.Measure_1;
 import org.zumult.indexing.measures.Measure_12;
 import org.zumult.indexing.measures.Measure_13;

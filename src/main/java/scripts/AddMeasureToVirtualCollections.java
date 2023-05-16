@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
-import org.zumult.indexing.AddMeasuresToSpeechEventIndex;
+import org.zumult.indexing.zumal.AddMeasuresToSpeechEventIndex;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;

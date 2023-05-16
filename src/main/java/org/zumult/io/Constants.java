@@ -82,6 +82,7 @@ public class Constants {
     public static final String DATA_PATH = "/data/";
     public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
     public static final String DATA_MEASURES_PATH = "/data/measures/";
+    public static final String DATA_ZUMAL_PATH = "/data/zumal/";
     public static final String DATA_POS_PATH = "/data/pos/";
     public static final String WORDLISTS_GOETHE_PATH = Configuration.getWordlistPath() + "/goethe";
     public static final String WORDLISTS_HERDER_PATH = Configuration.getWordlistPath() + "/herder";

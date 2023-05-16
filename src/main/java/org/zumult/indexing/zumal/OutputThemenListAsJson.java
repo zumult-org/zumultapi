@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package org.zumult.indexing.zumal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,12 +25,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.zumult.indexing.Indexer;
 
 /**
  *
  * @author josip.batinic
  */
-public class OutputArtListAsJson implements Indexer {
+public class OutputThemenListAsJson implements Indexer {
     String[] CORPORA = {"FOLK", "GWSS"};
     String DATA_PATH = "src\\main\\java\\data\\";
     ObjectMapper mapper = new ObjectMapper();
@@ -34,12 +41,13 @@ public class OutputArtListAsJson implements Indexer {
      */
     public static void main(String[] args) {
         try {
-            new OutputArtListAsJson().index();
+            new OutputThemenListAsJson().index();
         } catch (IOException ex) {
-            Logger.getLogger(OutputArtListAsJson.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OutputThemenListAsJson.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    @Override
     public void index() throws IOException {
         try {
             long start = System.currentTimeMillis();
@@ -50,34 +58,41 @@ public class OutputArtListAsJson implements Indexer {
                 JSONArray jsonArray = new JSONArray();
 
                 JSONParser jsonParser = new JSONParser();
-                FileReader reader = new FileReader(corpusJsonPath);
-                JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(reader);
+               // FileReader reader = new FileReader(corpusJsonPath);
+                
+                FileInputStream fis = new FileInputStream(corpusJsonPath);
+                InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(isr);
 
                 // iterate per speechevent
                 corpusJsonObject.forEach(speechEvent -> {
                     JSONObject speechEventObject = (JSONObject) speechEvent;
                     System.out.println(speechEventObject.get("id") + " *******************************");
-                    //String art = (String) speechEventObject.get("type_of_conversation");
-                    String art = (String) speechEventObject.get("art");
+                    JSONArray themes = (JSONArray) speechEventObject.get("themen");
                     
-//                    for (Object themeObj : themes) {
-//                        String theme = ((String) themeObj).trim();
-//                        System.out.println("theme: " + theme);
-                        JSONObject newArtObj = new JSONObject();
-                        newArtObj.put("id", art);
-                        newArtObj.put("label", art);
-                        if (!jsonArray.contains(newArtObj)) {
-                            jsonArray.add(newArtObj);
+                    for (Object themeObj : themes) {
+                        String theme = ((String) themeObj).trim();
+                        System.out.println("theme: " + theme);
+                        JSONObject newThemeObj = new JSONObject();
+                        newThemeObj.put("id", theme);
+                        newThemeObj.put("label", theme);
+                        if (!jsonArray.contains(newThemeObj)) {
+                            jsonArray.add(newThemeObj);
                         }
-//                    }                    
+                    }                    
                 });
                 // nice print
                 System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonArray));
 
 //              write to json
-                FileWriter file = new FileWriter(DATA_PATH + "prototypeJson/art" + corpusID + ".json");
+               /* FileWriter file = new FileWriter(DATA_PATH + "prototypeJson/themen" + corpusID + ".json");
                 file.write(jsonArray.toString());
-                file.flush();
+                file.flush();*/
+                    FileOutputStream fos = new FileOutputStream(DATA_PATH + "prototypeJson/themen" + corpusID + ".json");
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                    BufferedWriter bw = new BufferedWriter(osw);
+                    bw.append(jsonArray.toString());
+                    bw.flush();
             }
 
             long end = System.currentTimeMillis();
@@ -85,9 +100,9 @@ public class OutputArtListAsJson implements Indexer {
             Date timeNeeded = new Date(end - start);
             System.out.println("time needed: " + dateFormat.format(timeNeeded));
         } catch (ParseException ex) {
-            Logger.getLogger(OutputArtListAsJson.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OutputThemenListAsJson.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(OutputArtListAsJson.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OutputThemenListAsJson.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
