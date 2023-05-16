@@ -18,7 +18,6 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
-import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.XMLReader;
 import org.zumult.objects.Event;
@@ -56,7 +55,7 @@ public class Measure_1 {
 
     String[] corpusIDs = {"FOLK", "GWSS"};   
     String OUTPUT_PATH = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_MEASURES_PATH;
-
+    String LEMMA = "lemma";
     
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException, TransformerException {
         // Connect to DGD
@@ -81,14 +80,14 @@ public class Measure_1 {
 
 
             // read the list with POS for filtering...
-            TokenList posFilterTokenList = XMLReader.readTokenListFromInternalResource("/data/MEASURE_1_POS_FILTER.xml");
+            TokenList posFilterTokenList = XMLReader.readTokenListFromInternalResource(Constants.DATA_PATH + "MEASURE_1_POS_FILTER.xml");
             // ... make a filter from it and negate it (since we want these POS to be excluded, not included)
-            TokenFilter posFilter = new NegatedFilter(new TokenListTokenFilter("lemma", posFilterTokenList));
+            TokenFilter posFilter = new NegatedFilter(new TokenListTokenFilter(LEMMA, posFilterTokenList));
 
             // read the list with NGIRR tokens for filtering...
-            TokenList ngirrFilterTokenList = XMLReader.readTokenListFromInternalResource("/data/FOLK_NGIRR_OHNE_DEREWO.xml");
+            TokenList ngirrFilterTokenList = XMLReader.readTokenListFromInternalResource(Constants.DATA_PATH +"FOLK_NGIRR_OHNE_DEREWO.xml");
             // ... make a filter from it and negate it (since we want these forms to be excluded, not included)
-            TokenFilter ngirrFilter = new NegatedFilter(new TokenListTokenFilter("lemma", ngirrFilterTokenList));
+            TokenFilter ngirrFilter = new NegatedFilter(new TokenListTokenFilter(LEMMA, ngirrFilterTokenList));
 
             // combine the two filters into one
             TokenFilter filter = new AndFilter(posFilter, ngirrFilter);
@@ -111,12 +110,12 @@ public class Measure_1 {
                     // get IDs for all transcripts belonging to the current speech event
                     IDList transcriptIDs = backendInterface.getTranscripts4SpeechEvent(speechEventID);
                     // make a new lemma list for this speech event
-                    TokenList lemmaList4SpeechEvent = new DefaultTokenList("lemma");
+                    TokenList lemmaList4SpeechEvent = new DefaultTokenList(LEMMA);
                     for (String transcriptID : transcriptIDs){
                         // get the transcript...
                         Transcript transcript = backendInterface.getTranscript(transcriptID);
                         // ... and get its lemma list, applying the filter defined above
-                        TokenList lemmaList4Transcript = transcript.getTokenList("lemma", filter);
+                        TokenList lemmaList4Transcript = transcript.getTokenList(LEMMA, filter);
                         // merge this transcript's lemma list with the lemmalist for the entire speech event
                         lemmaList4SpeechEvent = lemmaList4SpeechEvent.merge(lemmaList4Transcript);
                     }

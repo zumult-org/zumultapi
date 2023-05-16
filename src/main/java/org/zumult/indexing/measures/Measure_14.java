@@ -154,7 +154,7 @@ public class Measure_14 {  // measure "oralPhenomena"
 
                     for FOLK:
 
-                    165
+                    165 (FOLK Release 16.05.23 -> 162)
                     [ADJA|NN, ADJD|ART, ADJD|PPER, ADV|ADJD, ADV|ADV, ADV|APPR, ADV|ART, ADV|KON, ADV|PIS, ADV|PPER, ADV|PTKIFG, ADV|PTKMA, ADV|PTKMWL, 
                     ADV|PTKVZ, ADV|VAFIN, ADV|VMFIN, ADV|VVFIN, ADV|VVINF, APPR|ADV, APPR|ART, APPR|PDS, APPR|PPER, APPR|PPOSAT, ART|ADJA, ART|ART, 
                     ART|NN, ART|PIDAT, ART|PIDS, KOKOM|ART, KOKOM|PPER, KON|ADV, KON|APPR, KON|ART, KON|KOUS, KON|NN, KON|PDS, KON|PIS, KON|PPER, 

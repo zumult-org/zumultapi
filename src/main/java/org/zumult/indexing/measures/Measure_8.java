@@ -29,6 +29,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.io.Constants;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Transcript;
 
@@ -50,7 +51,9 @@ public class Measure_8 {
     }
     
     String[] corpusIDs = {"FOLK", "GWSS"};
-    String data_path = "src\\main\\java\\data\\measures\\";
+    String OUTPUT_PATH = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_MEASURES_PATH;
+    
+
 
     public void doit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, SAXException, ParserConfigurationException {
         // Connect to DGD
@@ -309,7 +312,7 @@ public class Measure_8 {
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 DOMSource domSource = new DOMSource(doc);
-                Result xmlResult = new StreamResult(new File(data_path + "Measure_8_" + corpusID + ".xml"));
+                Result xmlResult = new StreamResult(new File(OUTPUT_PATH + "Measure_8_" + corpusID + ".xml"));
 
                 transformer.transform(domSource, xmlResult);
 
