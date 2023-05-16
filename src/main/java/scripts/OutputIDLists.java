@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package scripts;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,13 +17,19 @@ import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.implementations.AGDFileSystem;
+import org.zumult.indexing.Indexer;
 import org.zumult.objects.IDList;
 
 /**
  *
  * @author josip.batinic
  */
+
+ /******* this script is no longer needed *******/
+
 public class OutputIDLists implements Indexer {
+    
+   
     
     String base_path = "src/main/java/data/IDLists/";
 

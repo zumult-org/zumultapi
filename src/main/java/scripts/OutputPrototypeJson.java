@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.indexing;
+package scripts;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -37,6 +37,7 @@ import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
+import org.zumult.indexing.Indexer;
 import org.zumult.io.IOUtilities;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
@@ -45,6 +46,9 @@ import org.zumult.objects.Media;
  *
  * @author josip.batinic
  */
+
+ /****** this script is no longer needed ******/
+
 public class OutputPrototypeJson implements Indexer {
 
 //    String corpusID = "FOLK";
