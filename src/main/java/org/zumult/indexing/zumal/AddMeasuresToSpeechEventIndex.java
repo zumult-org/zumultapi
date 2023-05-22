@@ -49,7 +49,8 @@ public class AddMeasuresToSpeechEventIndex implements Indexer {
     public void index() throws IOException {
         for (String corpusID : corpusIDs){
 
-            String SPEECH_EVENT_INDEX_IN = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\main\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
+            String SPEECH_EVENT_INDEX_IN = System.getProperty("user.dir") + Constants.JAVA_FOLDER_PATH + Constants.DATA_PATH + corpusID + "_SpeechEventIndex.xml";
+            //String SPEECH_EVENT_INDEX_IN = "C:\\Users\\Frick\\Documents\\NetBeansProjects\\zumultapi\\src\\main\\java\\data\\" + corpusID + "_SpeechEventIndex.xml";
             String MEASURE_1_DOCUMENT = MEASURE_PATH + "Measure_1_" + corpusID + ".xml";
             String MEASURE_7_DOCUMENT = MEASURE_PATH + "Measure_7_" + corpusID + ".xml";
             String MEASURE_8_DOCUMENT = MEASURE_PATH + "Measure_8_" + corpusID + ".xml";

@@ -1,4 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?><available-values>
+    <corpus corpus="AD--">
+        <key id="norm" type="token"><name lang="en">Normalized Form</name><name lang="de">Normalisierte Form</name></key>
+        <key id="lemma" type="token"><name lang="en">Lemma</name><name lang="de">Lemma</name></key>
+        <key id="pos" type="token"><name lang="en">Part-of-Speech</name><name lang="de">Wortart</name></key>
+        <key id="incident" type="token"><name lang="en">Non-verbal event</name><name lang="de">Nonverbale Kommunikationselemente</name></key>
+        <key id="pc" type="token"><name lang="en">Punctuation</name><name lang="de">Interpunktion</name>
+            <value freq="5">((</value>
+            <value freq="1">,.</value>
+            <value freq="2">,/</value>
+            <value freq="3">….?</value>
+            <value freq="1">………….</value>
+            <value freq="1">……….</value>
+            <value freq="8">…….</value>
+            <value freq="2">–</value>
+            <value freq="1">,?</value>
+            <value freq="278">‘</value>
+            <value freq="5">-…</value>
+            <value freq="1">…………</value>
+            <value freq="1">)"</value>
+            <value freq="2">………</value>
+            <value freq="5">)…</value>
+            <value freq="1">(?)?</value>
+            <value freq="127">-,</value>
+            <value freq="2">!!</value>
+            <value freq="222">!</value>
+            <value freq="40">(+++)</value>
+            <value freq="6">!"</value>
+            <value freq="3">-.</value>
+            <value freq="436">-/</value>
+            <value freq="376">"</value>
+            <value freq="3">?),</value>
+            <value freq="17">),</value>
+            <value freq="1">)-</value>
+            <value freq="9">).</value>
+            <value freq="6">!…</value>
+            <value freq="1">!……</value>
+            <value freq="1494">…</value>
+            <value freq="3">)/</value>
+            <value freq="2">&amp;</value>
+            <value freq="952">(</value>
+            <value freq="877">)</value>
+            <value freq="10">+++)</value>
+            <value freq="28353">,</value>
+            <value freq="1">!-</value>
+            <value freq="1657">-</value>
+            <value freq="3">!.</value>
+            <value freq="14965">.</value>
+            <value freq="1552">/</value>
+            <value freq="1">-….</value>
+            <value freq="1">(+++</value>
+            <value freq="35">-?</value>
+            <value freq="3">(++)</value>
+            <value freq="2">:-</value>
+            <value freq="1">…(+++)</value>
+            <value freq="39">."</value>
+            <value freq="8">´</value>
+            <value freq="2">)?</value>
+            <value freq="20">.…</value>
+            <value freq="83">:</value>
+            <value freq="1">.(</value>
+            <value freq="47">;</value>
+            <value freq="4">?……</value>
+            <value freq="3">.)</value>
+            <value freq="4">.,</value>
+            <value freq="3">!?</value>
+            <value freq="10284">?</value>
+            <value freq="1">…(</value>
+            <value freq="2">?!</value>
+            <value freq="33">?"</value>
+            <value freq="3">?….</value>
+            <value freq="83">……</value>
+            <value freq="1">…,</value>
+            <value freq="25">?…</value>
+            <value freq="3">?",</value>
+            <value freq="46">",</value>
+            <value freq="28">?)</value>
+            <value freq="152">….</value>
+            <value freq="128">+++</value>
+            <value freq="29">".</value>
+            <value freq="6">(++++++)</value>
+            <value freq="3">?,</value>
+            <value freq="4">?.</value>
+            <value freq="1">?/</value>
+            <value freq="3">.?</value>
+            <value freq="1">?…….</value>
+            <value freq="9">…?</value>
+            <value freq="20">"?</value>
+            <value freq="8">`</value>
+            <value freq="2">(?))</value>
+            <value freq="4">(?),</value>
+            <value freq="1">.………</value>
+            <value freq="3">.……</value>
+            <value freq="1">?.……</value>
+            <value freq="1">"….</value>
+            <value freq="60">(?)</value>
+            <value freq="14">.….</value>
+            <value freq="5">++++++</value>
+            <value freq="8">,"</value>
+            <value freq="2">,…</value>
+            <value freq="1">.?.</value>
+        </key>
+    </corpus>
     <corpus corpus="BETV">
         <key id="norm" type="token"><name lang="en">Normalized Form</name><name lang="de">Normalisierte Form</name></key>
         <key id="lemma" type="token"><name lang="en">Lemma</name><name lang="de">Lemma</name></key>
@@ -14,7 +116,7 @@
         <key id="norm" type="token"><name lang="en">Normalized Form</name><name lang="de">Normalisierte Form</name></key>
         <key id="lemma" type="token"><name lang="en">Lemma</name><name lang="de">Lemma</name></key>
         <key id="pos" type="token"><name lang="en">Part-of-Speech</name><name lang="de">Wortart</name></key>
-        <key id="word.type" type="token"><name lang="en"/><name lang="de"/>
+        <key id="word.type" type="token"><name lang="en">Additional Token Annotations</name><name lang="de">Zusätzliche Tokenannotationen</name>
             <value freq="13121">uncertain</value>
         </key>
         <key id="pc" type="token"><name lang="en">Punctuation</name><name lang="de">Interpunktion</name>
@@ -37,8 +139,10 @@
         <key id="norm" type="token"><name lang="en">Normalized Form</name><name lang="de">Normalisierte Form</name></key>
         <key id="lemma" type="token"><name lang="en">Lemma</name><name lang="de">Lemma</name></key>
         <key id="pos" type="token"><name lang="en">Part-of-Speech</name><name lang="de">Wortart</name></key>
-        <key id="word.type" type="token"><name lang="en"/><name lang="de"/>
-            <value freq="1187">assimilated</value>
+        <key freg="46838" id="word.type" values="3"><name lang="en">Additional Token Annotations</name><name lang="de">Zusätzliche Tokenannotationen</name>       
+            <value freq="45651">diffNorm</value>
+            <value freq="953">assimilated</value>
+            <value freq="234">assimilated diffNorm</value>
         </key>
         <key id="pc" type="token"><name lang="en">Punctuation</name><name lang="de">Interpunktion</name>
             <value freq="2219">(</value>
@@ -132,29 +236,29 @@
         <key id="pos" type="token"><name lang="en">Part-of-Speech</name><name lang="de">Wortart</name></key>
         <key id="phon" type="token"><name lang="en">Phonetic Form</name><name lang="de">Phonetische Form</name></key>
         <key id="word.type" type="token"><name lang="en">Additional Token Annotations</name><name lang="de">Zusätzliche Tokenannotationen</name>
-            <value freq="227">assimilated uncertain ol-in diffNorm</value>
-            <value freq="95120">ol-in diffNorm</value>
-            <value freq="4321">assimilated</value>
-            <value freq="38422">assimilated diffNorm</value>
-            <value freq="11352">uncertain ol-in</value>
-            <value freq="38">assimilated uncertain</value>
-            <value freq="5557">uncertain diffNorm</value>
-            <value freq="18229">uncertain</value>
-            <value freq="3177">uncertain ol-in diffNorm</value>
-            <value freq="422716">diffNorm</value>
+            <value freq="226">assimilated uncertain ol-in diffNorm</value>
+            <value freq="94276">ol-in diffNorm</value>
+            <value freq="3799">assimilated</value>
+            <value freq="35658">assimilated diffNorm</value>
+            <value freq="11757">uncertain ol-in</value>
+            <value freq="26">assimilated uncertain</value>
+            <value freq="5920">uncertain diffNorm</value>
+            <value freq="19609">uncertain</value>
+            <value freq="3233">uncertain ol-in diffNorm</value>
+            <value freq="433933">diffNorm</value>
             <value freq="368">assimilated uncertain diffNorm</value>
-            <value freq="18">assimilated uncertain ol-in</value>
-            <value freq="419495">ol-in</value>
-            <value freq="10502">assimilated ol-in diffNorm</value>
-            <value freq="864">assimilated ol-in</value>
+            <value freq="14">assimilated uncertain ol-in</value>
+            <value freq="435463">ol-in</value>
+            <value freq="7608">assimilated ol-in diffNorm</value>
+            <value freq="726">assimilated ol-in</value>
         </key>
         <key id="vocal" type="token"><name lang="en">Breathing</name><name lang="de">Ein-/Ausatmen</name>
-            <value freq="108416">short breathe in</value>
-            <value freq="29661">medium breathe in</value>
-            <value freq="16892">short breathe out</value>
-            <value freq="3998">medium breathe out</value>
-            <value freq="1076">long breathe out</value>
-            <value freq="5747">long breathe in</value>
+            <value freq="112283">short breathe in</value>
+            <value freq="30401">medium breathe in</value>
+            <value freq="17660">short breathe out</value>
+            <value freq="4056">medium breathe out</value>
+            <value freq="1085">long breathe out</value>
+            <value freq="5828">long breathe in</value>
         </key>
         <key id="incident" type="token"><name lang="en">Non-verbal event</name><name lang="de">Nonverbale Kommunikationselemente</name></key>
     </corpus>
@@ -519,9 +623,13 @@
         <key id="lemma" type="token"><name lang="en">Lemma</name><name lang="de">Lemma</name></key>
         <key id="pos" type="token"><name lang="en">Part-of-Speech</name><name lang="de">Wortart</name></key>
         <key id="word.type" type="token"><name lang="en">Additional Token Annotations</name><name lang="de">Zusätzliche Tokenannotationen</name>
-            <value freq="1086">repair</value>
-            <value freq="170">uncertain</value>
-            <value freq="43">uncertain repair</value>
+            <value freq="843">repair</value>
+            <value freq="17">uncertain repair diffNorm</value>
+            <value freq="1194">diffNorm</value>
+            <value freq="243">repair diffNorm</value>
+            <value freq="26">uncertain repair</value>
+            <value freq="10">uncertain diffNorm</value>
+            <value freq="160">uncertain</value>
         </key>
         <key id="pc" type="token"><name lang="en">Punctuation</name><name lang="de">Interpunktion</name>
             <value freq="6">,</value>

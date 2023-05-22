@@ -73,6 +73,7 @@ public class Constants {
     public static String MEASURE2HTML_STYLESHEET = "/org/zumult/io/measures2html.xsl";
     public static String STATISTICVIEW2HTML_STYLESHEET = "/org/zumult/io/statisticView2html.xsl";
     public static String PROTOCOL2HTML_STYLESHEET = "/org/zumult/io/protocol2html.xsl";
+    public static String SPEECHEVENTXML2JSON = "/org/zumult/indexing/zumal/SpeechEventXML2Json.xsl";
     
     public static String SAMPLE_QUERIES_FOR_TRASCRIPT_BASED_SEARCH = "org/zumult/query/examples/sample_queries_12.xml";
     public static String SAMPLE_QUERIES_FOR_SPEAKER_BASED_SEARCH = "org/zumult/query/examples/sample_queries_11.xml";
