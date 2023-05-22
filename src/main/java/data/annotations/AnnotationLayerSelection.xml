@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<annotations>
+    <!-- ************************** -->
+    <!-- 1. TOKEN-BASED ANNOTATIONS -->
+    <!-- ************************** -->
+        <key id="norm" type="token">
+            <name lang="en">Normalized Form</name>
+            <name lang="de">Normalisierte Form</name>
+            <corpora>
+                <corpus>AD--</corpus>
+                <corpus>BETV</corpus>
+                <corpus>DH--</corpus>
+                <corpus>DNAM</corpus>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+                <corpus>HMAT</corpus>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+        <key id="lemma" type="token">
+            <name lang="en">Lemma</name>
+            <name lang="de">Lemma</name>
+            <corpora>
+                <corpus>AD--</corpus>
+                <corpus>BETV</corpus>
+                <corpus>DH--</corpus>
+                <corpus>DNAM</corpus>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+                <corpus>HMAT</corpus>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+        <key id="pos" type="token">
+            <name lang="en">Part-of-Speech</name>
+            <name lang="de">Wortart</name>
+            <corpora>
+                <corpus>AD--</corpus>
+                <corpus>BETV</corpus>
+                <corpus>DH--</corpus>
+                <corpus>DNAM</corpus>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+                <corpus>HMAT</corpus>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+        <key id="phon" type="token">
+            <name lang="en">Phonetic Form</name>
+            <name lang="de">Phonetische Form</name>
+            <corpora>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        <key id="pc" type="token">
+            <name lang="en">Punctuation</name>
+            <name lang="de">Interpunktion</name>
+            <corpora>
+                <corpus>AD--</corpus>
+                <corpus>BETV</corpus>
+                <corpus>DH--</corpus>
+                <corpus>DNAM</corpus>
+                <corpus>HMAT</corpus>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+        <key id="incident" type="token">
+            <name lang="en">Non-verbal event</name>
+            <name lang="de">Nonverbale Kommunikationselemente</name>
+            <corpora>
+                <corpus>AD--</corpus>
+                <corpus>DH--</corpus>
+                <corpus>DNAM</corpus>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+                <corpus>HMAT</corpus>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+        <key id="word.type" type="token">
+            <name lang="en">Additional Token Annotations</name>
+            <name lang="de">Zusätzliche Tokenannotationen</name>
+            <corpora>
+                <corpus>DH--</corpus>
+                <corpus>DNAM</corpus>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+                <corpus>HMAT</corpus>
+            </corpora>
+        </key>
+        <key id="vocal" type="token">
+            <name lang="en">Breathing</name>
+            <name lang="de">Ein-/Ausatmen</name>
+            <corpora>
+                <corpus>DNAM</corpus>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        
+        
+        <!-- ************************* -->
+        <!-- 2. SPAN-BASED ANNOTATIONS -->
+        <!-- ************************* -->
+        
+        <key id="as" type="span">
+            <name lang="en">Action Sequences</name>
+            <name lang="de">Handlungssequenzen</name>
+            <corpora>
+                <corpus>FOLK</corpus>
+            </corpora>
+        </key>
+        <key id="af" type="span">
+            <name lang="en">Action Formats</name>
+            <name lang="de">Handlungen und Modalverb-Formate</name>
+            <corpora>
+                <corpus>FOLK</corpus>
+            </corpora>
+        </key>
+        <key id="ar" type="span">
+            <name lang="en">Action Reactions</name>
+            <name lang="de">Reaktionen auf Handlungen</name>
+            <corpora>
+                <corpus>FOLK</corpus>
+            </corpora>
+        </key>
+        <key id="speech-rate" type="span">
+            <name lang="en">Speech-rate</name>
+            <name lang="de">Sprechgeschwindigkeit</name>
+            <corpora>
+                <corpus>FOLK</corpus>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        <key id="DK" type="span">
+            <name lang="en">Discourse Comments</name>
+            <name lang="de">Diskurskommentare</name>
+            <corpora>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        <key id="VZ" type="span">
+            <name lang="en">References and Citations</name>
+            <name lang="de">Referenzen und Zitate</name>
+            <corpora>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        <key id="t" type="span">
+            <name lang="en">Translation</name>
+            <name lang="de">Übersetzung</name>
+            <corpora>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        <key id="a" type="span">
+            <name lang="en">Code-Switching</name>
+            <name lang="de">Code-Switching</name>
+            <corpora>
+                <corpus>GWSS</corpus>
+            </corpora>
+        </key>
+        <key id="disfluency" type="span">
+            <name lang="en">disfluency</name>
+            <name lang="de">disfluency</name>
+            <corpora>
+                <corpus>HMAT</corpus>
+            </corpora>
+        </key>
+        <key id="pos-sup" type="span">
+            <name lang="en">pos-sup</name>
+            <name lang="de">pos-sup</name>
+            <corpora>
+                <corpus>HMAT</corpus>
+            </corpora>
+        </key>
+        <key id="pho" type="span">
+            <name lang="en">pho</name>
+            <name lang="de">pho</name>
+            <corpora>
+                <corpus>HMAT</corpus>
+            </corpora>
+        </key>
+        <key id="prompt-reference" type="span">
+            <name lang="en">prompt-reference</name>
+            <name lang="de">prompt-reference</name>
+            <corpora>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+        <key id="prompt-reference.target" type="span">
+            <name lang="en">prompt-reference.target</name>
+            <name lang="de">prompt-reference.target</name>
+            <corpora>
+                <corpus>MEND</corpus>
+            </corpora>
+        </key>
+</annotations>

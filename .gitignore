@@ -1,8 +1,8 @@
 /dist/
 /nbproject/private/
-/lib/
 /ojdbc7.jar
 /web/prototype/node_modules/
 /ProtoZumult.war
 /ojdbc6.jar
 /build/
+/target/
