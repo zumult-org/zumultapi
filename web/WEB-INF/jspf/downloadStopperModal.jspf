@@ -12,8 +12,7 @@
       <div class="modal-body">
         <p>
            <%=myResources.getString("DownloadStopperText1")%>
-           <a target="_blank" href="https://dgd.ids-mannheim.de/dgd/pragdb.dgd_extern.sys_use"><%=myResources.getString("DGDConditionsOfUse")%></a>
-           <%=myResources.getString("DownloadStopperText2")%>
+           <a target="_blank" href="https://dgd.ids-mannheim.de/dgd/pragdb.dgd_extern.sys_use"><%=myResources.getString("DGDConditionsOfUse")%></a>. <%=myResources.getString("DownloadStopperText2")%>
         </p>
         <p>
            <%=myResources.getString("ThankYou")%>

@@ -119,19 +119,21 @@
 
     <!--***********************************-->
     <metadata-item quantify="true">
-        <label>Video vorhanden</label>
+        <label>Aufnahmetyp (technisch)</label> <!-- Was: 'Video vorhanden' -->
         <xpath>count(descendant::SE-Aufnahme[contains(@Kennung,'_V_')])>0</xpath>
         <!-- <xpath>concat(
             substring('ja',   1, number(count(descendant::SE-Aufnahme[contains(@Kennung,'_V_')])>0)*2   ),
             substring('nein', 1, number(count(descendant::SE-Aufnahme[contains(@Kennung,'_V_')])=0)*4   )
             )</xpath>
                 -->
+        <!-- Boolean returned by above xpath will be recast to true -> 'Video', false 'nur Audio' in java code during
+        quantification -->
         <level>event-metadata</level>
         <dgd-parameter-name>v_e_mit_video</dgd-parameter-name>
-        <example>ja</example>
+        <example>Video</example> <!-- Was: ja, could be either 'Video' or 'nur Audio' -->
         <corpora>
             <corpus>FOLK</corpus>
-            <corpus>GWSS</corpus>
+            <!-- <corpus>GWSS</corpus> -->
         </corpora>
     </metadata-item>   
 
@@ -790,7 +792,7 @@
     
     
         <!--***********************************-->
-
+<!--
     <metadata-item quantify="true">
         <label>Medientyp</label>
         <xpath>SE-Aufnahme/Basisdaten/Typ</xpath>
@@ -802,7 +804,7 @@
             <corpus>GWSS</corpus>
         </corpora>
     </metadata-item>   
-    
+-->     
     <!--***********************************-->    
     <!-- new 09-01-2018 -->    
     <metadata-item quantify="true">

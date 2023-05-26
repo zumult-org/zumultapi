@@ -1335,9 +1335,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     // set query                       
                     $('#queryInputField').val(queryStr.replace(/&#xD;/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">") +" within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"/>");
                     
-                    // set corpora
-                    
-                    var mySplitResult = corpora.split("|");
+                    // set corpora                   
+                    var mySplitResult = corpora.replace(/-/g, "").split("|");
                     setCorpora(mySplitResult);
                     
                     // set search mode

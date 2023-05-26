@@ -126,7 +126,7 @@
                         </div>
                     </div>            
                 </div>
-                
+                <!--
                 <div class="card-deck">
                     <div class="card mb-3">
                       <img class="card-img-top" src="./images/Rest-API.png" style="width: 400px;" alt="Card image cap">
@@ -136,7 +136,7 @@
                         <a href="api" class="btn btn-primary" target="_blank">Rest API</a>
                       </div>
                     </div>                                
-                </div>
+                </div>-->
                 
             </div>
             <div class="col-sm-2">
