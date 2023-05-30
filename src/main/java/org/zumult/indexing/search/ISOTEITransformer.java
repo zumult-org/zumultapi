@@ -29,9 +29,11 @@ import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.io.Constants;
+import org.zumult.io.FileIO;
 import org.zumult.io.IOHelper;
 import org.zumult.io.TimeUtilities;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Transcript;
@@ -57,6 +59,7 @@ public abstract class ISOTEITransformer {
     static boolean ADD_TOKEN_START_AND_END = true;
     static boolean ADD_DIFF_NORM = true;
     static boolean ADD_OCCURRENCE = false;
+    static boolean ADD_VIDEOS_NUMBER = true;
     
     static Set<String> corpusIDsForIndexing;
     static String DIR_IN;
@@ -504,5 +507,29 @@ public abstract class ISOTEITransformer {
             }
         }
     }
+    
+    
+    String getSpontaneity(Event event, String speechEventID){
+        String spontaneity = null;
+        try{
+            org.jdom.Document eventDoc = FileIO.readDocumentFromString(event.toXML());
+            List sprechEvents = eventDoc.getRootElement().getChildren("Sprechereignis");
+            for (Object oSprechEvent : sprechEvents){
+                org.jdom.Element sprechEventElement = (org.jdom.Element) oSprechEvent;
+                if(speechEventID.equals(sprechEventElement.getAttributeValue("Kennung"))){
+                    String notes = sprechEventElement.getChild("Basisdaten").getChildText("Anmerkungen");
+                    String[] notesList = notes.split(" ; ");
+                    spontaneity = notesList[0];
+                }
+            }
+        }catch (JDOMException ex){
+            Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (Exception ex){
+            Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return spontaneity;
+    }
+    
     
 }

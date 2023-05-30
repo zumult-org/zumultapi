@@ -76,7 +76,11 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
             metadataKeys.add(metadataKeyEventID);
             
             MetadataKey metadataKeyEventDurationSec = new DGD2MetadataKey(Constants.METADATA_KEY_EVENT_DAUER_SEC, myResourcesGER.getString("DurationSec"), ObjectTypesEnum.EVENT);
-            metadataKeys.add(metadataKeyEventDurationSec);        
+            metadataKeys.add(metadataKeyEventDurationSec); 
+                                 
+            MetadataKey metadataKeyEventVideosNumber = new DGD2MetadataKey(Constants.METADATA_KEY_EVENT_NUMBER_VIDEOS, myResourcesGER.getString("VideoNumber"), ObjectTypesEnum.EVENT);
+            metadataKeys.add(metadataKeyEventVideosNumber); 
+            
         }
         
         if(type==null || type.isEmpty() || type.toUpperCase().equals(ObjectTypesEnum.SPEAKER.name())){

@@ -24,6 +24,7 @@ import org.jdom.JDOMException;
 import org.zumult.io.Constants;
 import org.zumult.io.FileIO;
 import org.zumult.objects.Event;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
@@ -69,12 +70,17 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
             SpeechEvent speechEvent = null;
             String eventID = null;
             Event event = null;
+            IDList videos = null;
             
             if(ADD_METADATA){
                 speechEventID = backendInterface.getSpeechEvent4Transcript(transcriptID);
                 speechEvent = backendInterface.getSpeechEvent(speechEventID);
                 eventID = backendInterface.getEvent4SpeechEvent(speechEventID);
                 event = backendInterface.getEvent(eventID);
+            }
+            
+            if(ADD_VIDEOS_NUMBER){
+                videos = backendInterface.getVideos4Transcript(transcriptID);  
             }
             
             // find out the start and end time
@@ -193,8 +199,9 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                     
                     if(ADD_METADATA){
                         addMetadata(metadataKeys, event, speechEvent, newBodyForSpeakerBasedView, personElement,
-                                transcriptStartVar, transcriptEndVar, eventID, speechEventID, transcriptID);
+                                transcriptStartVar, transcriptEndVar, eventID, speechEventID, transcriptID, videos);
                     }
+                                
                     
                     /***************Step 6: add repetitions  ************/
                     
@@ -635,7 +642,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
     
     void addMetadata(Set<MetadataKey> metadataKeys, 
             Event event, SpeechEvent speechEvent, Element newBodyForSpeakerBasedView, Element personElement,
-            String transcriptStartVar, String transcriptEndVar, String eventID, String speechEventID, String transcriptID) throws IOException{
+            String transcriptStartVar, String transcriptEndVar, String eventID, String speechEventID, String transcriptID, IDList videos) throws IOException{
         
         System.out.println("Adding metadata...");
                             
@@ -649,31 +656,17 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
         addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_TRANSCRIPT_DGD_ID, transcriptStartVar, transcriptEndVar, transcriptID);
         if(speechEvent!=null){
             addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID, transcriptStartVar, transcriptEndVar, speechEventID);
-            addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID_temp, transcriptStartVar, transcriptEndVar, speechEventID);
+        }
+        
+        // add number of videos
+        if(videos!=null){
+            addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_EVENT_NUMBER_VIDEOS, transcriptStartVar, transcriptEndVar, String.valueOf(videos.size()));
         }
         
         // add "Grad der Mündlichkeit" für GWSS
         if (eventID.startsWith("GWSS_")){
-            String spontaneity = null;
-            try{
-                org.jdom.Document eventDoc = FileIO.readDocumentFromString(event.toXML());
-                List sprechEvents = eventDoc.getRootElement().getChildren("Sprechereignis");
-                for (Object oSprechEvent : sprechEvents){
-                    org.jdom.Element sprechEventElement = (org.jdom.Element) oSprechEvent;
-                    if(speechEventID.equals(sprechEventElement.getAttributeValue("Kennung"))){
-                        String notes = sprechEventElement.getChild("Basisdaten").getChildText("Anmerkungen");
-                        String[] notesList = notes.split(" ; ");
-                        spontaneity = notesList[0];
-                    }
-                }
-            }catch (JDOMException ex){
-                Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (Exception ex){
-                Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            String spontaneity = getSpontaneity(event, speechEventID);    
             addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEECH_EVENT_SPEECH_NOTES, transcriptStartVar, transcriptEndVar, spontaneity);
-
         }
                                 
         if (personElement.getChild(Constants.ELEMENT_NAME_IDNO,ns) != null){

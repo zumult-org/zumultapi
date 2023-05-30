@@ -125,14 +125,15 @@ public class Constants {
     public static final String METADATA_KEY_EVENT_DGD_ID = "e_dgd_kennung";
     public static final String METADATA_KEY_SPEAKER_DGD_ID = "s_dgd_kennung";
     public static final String METADATA_KEY_TRANSCRIPT_DGD_ID = "t_dgd_kennung";
-    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID = "se_dgd_kennung";
+    //public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID = "se_dgd_kennung";
     public static final String METADATA_KEY_SPEECH_EVENT_SPEECH_NOTES = "e_se_grad_der_muendlichkeit";
-    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID_temp = "e_se_dgd_kennung";
+    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID = "e_se_dgd_kennung";
     public static final String METADATA_KEY_SPEAKER_YEAR_OF_BIRTH = "s_geb";
     public static final String METADATA_KEY_EVENT_DAUER_SEC =  "e_dauer_sec";
-    public static final String METADATA_KEY_EVENT_DURATION= "e_dauer";
+    public static final String METADATA_KEY_EVENT_DURATION = "e_dauer";
     public static final String METADATA_KEY_SPEAKER_BIRTH_DATE = "s_geb_jahr";
     public static final String METADATA_KEY_SPEAKER_BIRTH_AGE = "ses_alter_s";
+    public static final String METADATA_KEY_EVENT_NUMBER_VIDEOS = "e_video_number";
 
     
     // not indexed speaker metadata (in TB mode)

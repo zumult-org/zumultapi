@@ -1978,7 +1978,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             docID, currentPrefixListRepetitionLayer, start,
             (end - 1));
         
-        if (termsFromCurrentRepetitiionLayer.size() > 0){
+        if (!termsFromCurrentRepetitiionLayer.isEmpty()){
 
             // create source object
             RepetitionSource rs = new RepetitionSource();
@@ -2529,7 +2529,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             
             String contextStringRight = repetitionSpecification.getFollowedby();
             if(contextStringRight!=null && !contextStringRight.isEmpty()){
-                contextCheckRight = checkContext(positionsWithContextRight, contextStringRight, segmentName, docID, sortedMap.firstKey());
+                contextCheckRight = checkContext(positionsWithContextRight, contextStringRight, segmentName, docID, sortedMap.lastKey());
             }else{
                 contextCheckRight=true;
             }
