@@ -74,8 +74,8 @@ public class IndexAll implements Indexer {
             
         } catch (IOException ex) {
             throw new IOException(ex);
-       // } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SAXException | ParserConfigurationException | TransformerException ex) {
-       //     Logger.getLogger(IndexAll.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SAXException | ParserConfigurationException | TransformerException ex) {
+            Logger.getLogger(IndexAll.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
