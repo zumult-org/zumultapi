@@ -82,7 +82,11 @@ public class DGD2MetadataKey implements MetadataKey {
 
     @Override
     public String getName(String language) {
-        return names.get(language);
+        if (names.get(language)!=null){
+            return names.get(language);
+        }else{
+            return names.get("de");
+        }
     }
 
     @Override
