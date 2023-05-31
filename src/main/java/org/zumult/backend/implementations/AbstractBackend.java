@@ -372,7 +372,7 @@ public abstract class AbstractBackend implements BackendInterface {
         if (metadataKeyID != null && !metadataKeyID.isEmpty()) {
             MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
             if (mk == null) {
-                mk = new DGD2MetadataKey(metadataKeyID, null, null);
+                mk = new DGD2MetadataKey(metadataKeyID, "", null);
             }
             return searcher.getStatistics(searchIndex, sortTypeCode, mk);
         } else {

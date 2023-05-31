@@ -37,8 +37,8 @@ import org.zumult.query.Searcher;
  * @author Elena Frick
  */
 public class DGD2Searcher extends AbstractSearcher implements Searcher {
-    ResourceBundle myResourcesEN = ResourceBundle.getBundle("resources.MessageBundle", Locale.ENGLISH);
-    ResourceBundle myResourcesGER = ResourceBundle.getBundle("resources.MessageBundle", Locale.GERMAN);
+    ResourceBundle myResourcesEN = ResourceBundle.getBundle("resources.MessageBundle", new Locale.Builder().setLanguage("en").setRegion("US").build());
+    ResourceBundle myResourcesGER = ResourceBundle.getBundle("resources.MessageBundle", new Locale.Builder().setLanguage("de").setRegion("DE").build());
     
     private static final int SEARCH_INDEX_PREXIF_LENGTH = 3;
     
@@ -48,9 +48,11 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
         
         // add sorting by the number of tokens in the hit (key id "tokenSize")
         if(type==null || type.isEmpty() || type.toUpperCase().equals(ObjectTypesEnum.HIT.name())){
-            MetadataKey metadataKeySizeInTokens = new DGD2MetadataKey(MTASBasedSearchEngine.METADATA_KEY_HIT_LENGTH, myResourcesGER.getString("SizeInTokens"), ObjectTypesEnum.HIT);
+
+            MetadataKey metadataKeySizeInTokens = new DGD2MetadataKey(MTASBasedSearchEngine.METADATA_KEY_HIT_LENGTH, createLangMap("SizeInTokens"), ObjectTypesEnum.HIT);
             metadataKeys.add(metadataKeySizeInTokens);
-            MetadataKey metadataKeySizeInWordTokens = new DGD2MetadataKey(MTASBasedSearchEngine.METADATA_KEY_HIT_LENGTH_IN_WORD_TOKENS, myResourcesGER.getString("SizeInWordTokens"), ObjectTypesEnum.HIT);
+            
+            MetadataKey metadataKeySizeInWordTokens = new DGD2MetadataKey(MTASBasedSearchEngine.METADATA_KEY_HIT_LENGTH_IN_WORD_TOKENS, createLangMap("SizeInWordTokens"), ObjectTypesEnum.HIT);
             metadataKeys.add(metadataKeySizeInWordTokens);
         }
         return metadataKeys;
@@ -125,7 +127,7 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
     
     @Override
     public Set<AnnotationLayer> filterAnnotationLayersForSearch(Set<AnnotationLayer> annotationLayers, String searchIndex, String annotationLayerType) throws SearchServiceException{
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        //DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
         // TODO: implement the dependency on the search index
 
         // replace some annotation ids
@@ -145,11 +147,7 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
             Map<String, String> proxiTokens = Arrays.stream(Constants.PROXI_TOKEN_ANNOTATION_LAYERS)
             .collect(Collectors.toMap(entity -> entity[0], entity -> entity[1]));
             for(String str: proxiTokens.keySet()){
-                                
-                Map<String, String> map = new HashMap();
-                map.put(Locale.GERMAN.getLanguage(), myResourcesGER.getString(proxiTokens.get(str)));
-                map.put(Locale.ENGLISH.getLanguage(),myResourcesEN.getString(proxiTokens.get(str)));
-                AnnotationLayer annotationLayer = new DGD2AnnotationLayer(str, map, AnnotationTypeEnum.TOKEN);
+                AnnotationLayer annotationLayer = new DGD2AnnotationLayer(str, createLangMap(proxiTokens.get(str)), AnnotationTypeEnum.TOKEN);
                 annotationLayers.add(annotationLayer);
             }  
         }
@@ -158,10 +156,7 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
             Map<String, String> proxiTokens = Arrays.stream(Constants.PROXI_SPAN_ANNOTATION_LAYERS)
             .collect(Collectors.toMap(entity -> entity[0], entity -> entity[1]));
             for(String str: proxiTokens.keySet()){               
-                Map<String, String> map = new HashMap();
-                map.put(Locale.GERMAN.getLanguage(), myResourcesGER.getString(proxiTokens.get(str)));
-                map.put(Locale.ENGLISH.getLanguage(),myResourcesEN.getString(proxiTokens.get(str)));
-                AnnotationLayer annotationLayer = new DGD2AnnotationLayer(str, map, AnnotationTypeEnum.SPAN);
+                AnnotationLayer annotationLayer = new DGD2AnnotationLayer(str, createLangMap(proxiTokens.get(str)), AnnotationTypeEnum.SPAN);
                 annotationLayers.add(annotationLayer);
             }  
         }         
@@ -291,5 +286,10 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
         }
     }
   
-   
+    private Map<String, String> createLangMap(String str){
+        Map<String, String> map = new HashMap();
+        map.put(Locale.GERMAN.getLanguage(), myResourcesGER.getString(str));
+        map.put(Locale.ENGLISH.getLanguage(),myResourcesEN.getString(str));
+        return map;
+    }
 }

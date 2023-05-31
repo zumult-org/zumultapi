@@ -5,32 +5,45 @@
  */
 package org.zumult.objects.implementations;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.w3c.dom.Element;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 
 /**
  *
- * @author Thomas_Schmidt
+ * @author Thomas_Schmidt, Elena Frick
  */
 public class DGD2MetadataKey implements MetadataKey {
 
     String id;
-    String name;
+    Map<String, String> names; //e.g. {"en": "Year of birth", "de": "Geburtsjahr"}
     String xpath;
     ObjectTypesEnum level;
     Class dataType;
     
-    
     public DGD2MetadataKey(String id, String name, ObjectTypesEnum level){
+        this.names = new HashMap<>();
+        if(name!=null){
+            names.put("de", name);
+        }
         this.id = id;
-        this.name = name;
+        this.level = level;
+        this.dataType = String.class;
+        this.xpath = "";
+    }
+    
+    public DGD2MetadataKey(String id, Map<String, String> names, ObjectTypesEnum level){
+        this.id = id;
+        this.names = names;
         this.level = level;
         this.dataType = String.class;
         this.xpath = "";
     }
     
     public DGD2MetadataKey(Element keyElement) {
+        
         /*
         <metadata-item quantify="false" data-type="String">              
         <label>DGD-Kennung</label> 
@@ -39,34 +52,24 @@ public class DGD2MetadataKey implements MetadataKey {
         <dgd-parameter-name>v_e_id</dgd-parameter-name> 
         <example>ZW--E_00008</example>         
         */
+        
         id = keyElement.getElementsByTagName("dgd-parameter-name").item(0).getTextContent().substring(2);
-        name = keyElement.getElementsByTagName("label").item(0).getTextContent();
+        this.names = new HashMap<>();
+        names.put("de", keyElement.getElementsByTagName("label").item(0).getTextContent());
         xpath = keyElement.getElementsByTagName("xpath").item(0).getTextContent();
         String levelString = keyElement.getElementsByTagName("level").item(0).getTextContent();
         level = ObjectTypesEnum.EVENT;
         switch (levelString){
-            case "event-metadata" : 
-                level = ObjectTypesEnum.EVENT;
-                break;
-            case "speaker-metadata" : 
-                level = ObjectTypesEnum.SPEAKER;
-                break;
-            case "speech-event-metadata" : 
-                level = ObjectTypesEnum.SPEECH_EVENT;
-                break;
-            case "speech-event-speaker-metadata" :
-                level = ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT;
-                break;
+            case "event-metadata" -> level = ObjectTypesEnum.EVENT;
+            case "speaker-metadata" -> level = ObjectTypesEnum.SPEAKER;
+            case "speech-event-metadata" -> level = ObjectTypesEnum.SPEECH_EVENT;
+            case "speech-event-speaker-metadata" -> level = ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT;
         }
         String dataTypeString = keyElement.getAttribute("data-type");
         dataType = String.class;
         switch (dataTypeString){
-            case "String[]" :
-                dataType = String[].class;
-                break;
-            case "Date" :
-                dataType = java.util.Date.class;
-                break;
+            case "String[]" -> dataType = String[].class;
+            case "Date" -> dataType = java.util.Date.class;
         }
     }
 
@@ -79,7 +82,7 @@ public class DGD2MetadataKey implements MetadataKey {
 
     @Override
     public String getName(String language) {
-        return name;
+        return names.get(language);
     }
 
     @Override
