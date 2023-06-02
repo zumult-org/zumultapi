@@ -83,6 +83,7 @@ public class Constants {
     public static final String DATA_PATH = "/data/";
     public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
     public static final String DATA_MEASURES_PATH = "/data/measures/";
+    public static final String DATA_QUANTIFICATIONS_PATH = "/data/quantifications/";
     public static final String DATA_ZUMAL_PATH = "/data/zumal/";
     public static final String DATA_POS_PATH = "/data/pos/";
     public static final String WORDLISTS_GOETHE_PATH = Configuration.getWordlistPath() + "/goethe";
@@ -90,6 +91,7 @@ public class Constants {
     public static final String WORDLISTS_THEMATIC_VOCABULARY_PATH = Configuration.getWordlistPath() + "/thematic-vocabulary/lemmas";
     
     public static final String METADATA_SELECTION_PATH = "/data/MetadataSelection.xml";
+    public static final String ALL_CORPORA_PATH = "/data/AllCorpora.xml";
     
     public static final String JAVA_FOLDER_PATH = "/src/main/java";
             

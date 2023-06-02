@@ -982,10 +982,11 @@ public class ZumultDataServlet extends HttpServlet {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String corpusID = request.getParameter("corpusID");
             Corpus corpus = backend.getCorpus(corpusID);
-            Set<MetadataKey> eventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);
-            Set<MetadataKey> speechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
-            Set<MetadataKey> speakerMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
-            Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT);
+
+            List<MetadataKey> eventMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.EVENT), "de");                
+            List<MetadataKey> speechEventMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT), "de");
+            List<MetadataKey> speakerMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER), "de");
+            List<MetadataKey> speakerInSpeechEventMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT), "de");          
             
             StringBuilder result = new StringBuilder();
             for (MetadataKey mk : eventMetadataKeys){

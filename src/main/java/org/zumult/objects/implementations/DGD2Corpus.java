@@ -195,8 +195,10 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
 
         
         try {
-            String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl",
-                    Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
+
+            String html = new IOHelper().applyInternalStylesheetToInternalFile("/org/zumult/io/Quantify2Dimensions.xsl", 
+            Constants.DATA_QUANTIFICATIONS_PATH + "/" + QUANT_FILENAME, PARAM);
+                
             CrossQuantification crossQuantification = new DGD2CrossQuantification(html);
             return crossQuantification;
             

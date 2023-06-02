@@ -10,7 +10,6 @@
 
 package org.zumult.io;
 
-import java.net.MalformedURLException;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Content;
@@ -21,7 +20,6 @@ import org.jdom.xpath.XPath;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
-import java.net.URL;
 import java.util.*;
 /**
  *
