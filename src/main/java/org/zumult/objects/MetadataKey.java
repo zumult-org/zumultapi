@@ -17,4 +17,6 @@ public interface MetadataKey extends Identifiable {
     
     Class getValueClass();
     
+    boolean isQuantified();
+    
 }

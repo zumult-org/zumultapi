@@ -22,8 +22,9 @@ public class DGD2MetadataKey implements MetadataKey {
     String xpath;
     ObjectTypesEnum level;
     Class dataType;
+    boolean quantified;
     
-    public DGD2MetadataKey(String id, String name, ObjectTypesEnum level){
+    public DGD2MetadataKey(String id, String name, ObjectTypesEnum level, boolean quantified){
         this.names = new HashMap<>();
         if(name!=null){
             names.put("de", name);
@@ -32,14 +33,24 @@ public class DGD2MetadataKey implements MetadataKey {
         this.level = level;
         this.dataType = String.class;
         this.xpath = "";
+        this.quantified = quantified;
     }
     
-    public DGD2MetadataKey(String id, Map<String, String> names, ObjectTypesEnum level){
+    public DGD2MetadataKey(String id, String name, ObjectTypesEnum level){
+        this(id, name, level, true);
+    }
+    
+    public DGD2MetadataKey(String id, Map<String, String> names, ObjectTypesEnum level, boolean quantified){
         this.id = id;
         this.names = names;
         this.level = level;
         this.dataType = String.class;
         this.xpath = "";
+        this.quantified = quantified;
+    }
+    
+    public DGD2MetadataKey(String id, Map<String, String> names, ObjectTypesEnum level){
+        this(id, names, level, true);
     }
     
     public DGD2MetadataKey(Element keyElement) {
@@ -54,6 +65,7 @@ public class DGD2MetadataKey implements MetadataKey {
         */
         
         id = keyElement.getElementsByTagName("dgd-parameter-name").item(0).getTextContent().substring(2);
+        this.quantified = Boolean.parseBoolean(keyElement.getAttribute("quantify"));
         this.names = new HashMap<>();
         names.put("de", keyElement.getElementsByTagName("label").item(0).getTextContent());
         xpath = keyElement.getElementsByTagName("xpath").item(0).getTextContent();
@@ -109,7 +121,10 @@ public class DGD2MetadataKey implements MetadataKey {
     public Class getValueClass() {
         return dataType;
     }
-    
-    
-    
+
+    @Override
+    public boolean isQuantified() {
+        return quantified;
+    }
+
 }
