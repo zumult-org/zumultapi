@@ -5,7 +5,6 @@
  */
 package org.zumult.indexing.search;
 
-import org.zumult.io.IOUtilities;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,6 +20,7 @@ import org.jdom.JDOMException;
 import org.jdom.filter.ElementFilter;
 import org.jdom.xpath.XPath;
 import org.zumult.io.Constants;
+import org.zumult.io.FileIO;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
@@ -38,9 +38,9 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
     public static void main(String[] args) {        
         try {
             
-            corpusIDsForIndexing = new HashSet<>(Arrays.asList("FOLK"));
+            corpusIDsForIndexing = new HashSet<>(Arrays.asList("GWSS"));
             DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input"; //iso-tei transcripts
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_TB_FOLK_14_07_2022";
+            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_GWSS_31_05_2023";
             
             new ISOTEI2TranscriptBasedFormat().doit();
             
@@ -55,7 +55,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
             File newFileTranscriptBased) throws IOException, JDOMException{
         
         try {
-            Document transcriptDoc = IOUtilities.readDocumentFromString(t.toXML());
+            Document transcriptDoc = FileIO.readDocumentFromString(t.toXML());
             
             String fileName = transcriptDoc.getRootElement().getChild(Constants.ELEMENT_NAME_IDNO, ns).getText() + ".xml";
             if(f!=null){
@@ -231,7 +231,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
             text.addContent(newBodyForTranscriptBasedView);
             
             File outFile = new File(newFileTranscriptBased, fileName);
-            IOUtilities.writeDocumentToLocalFile(outFile.getPath(), newTranscriptDoc);
+            FileIO.writeDocumentToLocalFile(outFile.getPath(), newTranscriptDoc);
             System.out.println(outFile.getAbsolutePath() + " written");
         } catch (Exception ex) {
             Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);

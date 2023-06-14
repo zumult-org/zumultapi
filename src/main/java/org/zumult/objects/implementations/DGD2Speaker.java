@@ -16,8 +16,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.zumult.objects.IDList;
 import org.zumult.objects.Location;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Speaker;
@@ -56,7 +58,25 @@ public class DGD2Speaker extends AbstractXMLObject implements Speaker {
         }
         return null;
     }
-
+ 
+    @Override
+    public IDList getSpeechEvents(){
+        IDList allSpeechEvents = new IDList("speech-event");
+        try {
+            String xPathString = "/Sprecher/In_Sprechereignis/SE-Kennung";
+            //System.out.println(xPathString);
+            NodeList speechEvents = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<speechEvents.getLength(); i++){
+                Element speechEvent = (Element) speechEvents.item(i);
+                String id = speechEvent.getTextContent();
+                allSpeechEvents.add(id);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(DGD2Speaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allSpeechEvents;
+    }
+    
     @Override
     public List<Location> getLocations(String locationType) {
         List<Location> result = new ArrayList<>();

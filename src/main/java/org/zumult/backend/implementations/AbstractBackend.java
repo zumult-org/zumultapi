@@ -35,6 +35,9 @@ import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
+import org.zumult.objects.ResourceServiceException;
+import org.zumult.objects.Speaker;
+import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.DGD2AnnotationTagSet;
 import org.zumult.objects.implementations.DGD2MetadataKey;
@@ -104,6 +107,12 @@ public abstract class AbstractBackend implements BackendInterface {
             allSpeechEvents.addAll(speechEvents);
         }
         return allSpeechEvents;
+    }
+    
+    @Override
+    public IDList getSpeechEvents4Speaker(String speakerID) throws IOException {   
+        Speaker speaker = getSpeaker(speakerID);
+        return speaker.getSpeechEvents();
     }
 
     @Override
@@ -395,7 +404,7 @@ public abstract class AbstractBackend implements BackendInterface {
     @Override
     public CrossQuantification getCrossQuantification4Corpus(String corpusID, 
             MetadataKey metadataKey1, MetadataKey metadataKey2,
-            String unit) throws IOException {
+            String unit) throws ResourceServiceException, IOException {
         Corpus corpus = getCorpus(corpusID);
         return corpus.getCrossQuantification(metadataKey1, metadataKey2, unit);
     }

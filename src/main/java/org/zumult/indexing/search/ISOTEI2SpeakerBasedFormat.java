@@ -5,7 +5,6 @@
  */
 package org.zumult.indexing.search;
 
-import org.zumult.io.IOUtilities;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,7 +41,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
             
             corpusIDsForIndexing = new HashSet<>(Arrays.asList("FOLK"));
             DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input";  //iso-tei transcripts
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_14_07_2022";
+            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_SB_FOLK_31_05_2023";
             
             new ISOTEI2SpeakerBasedFormat().doit();
             
@@ -53,11 +52,12 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
         }
     }
     
+    @Override
     void transformAndSaveTranscript(File f, Transcript t, Set<MetadataKey> metadataKeys, 
             File newFileSpeakerBased) throws IOException, JDOMException{
         
         try {
-            Document transcriptDoc = IOUtilities.readDocumentFromString(t.toXML());
+            Document transcriptDoc = FileIO.readDocumentFromString(t.toXML());
             String fileName = transcriptDoc.getRootElement().getChild(Constants.ELEMENT_NAME_IDNO, ns).getText() + ".xml";
             if(f!=null){
                 fileName = f.getName();
@@ -217,7 +217,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                     text.addContent(newBodyForSpeakerBasedView);
                     
                     File outFile = new File(newFileSpeakerBased, person+"_"+fileName);
-                    IOUtilities.writeDocumentToLocalFile(outFile.getPath(), newTranscriptDoc);
+                    FileIO.writeDocumentToLocalFile(outFile.getPath(), newTranscriptDoc);
                     System.out.println(outFile.getAbsolutePath() + " written");
                     
                 }else{

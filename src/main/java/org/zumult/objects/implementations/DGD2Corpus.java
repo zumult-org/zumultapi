@@ -21,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.zumult.backend.Configuration;
 import org.zumult.io.AGDUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
@@ -31,6 +30,7 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.io.Constants;
 import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.ObjectTypesEnum;
+import org.zumult.objects.ResourceServiceException;
 
 /**
  *
@@ -180,7 +180,15 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
 
     
     @Override
-    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException  {        
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws ResourceServiceException, IOException  {        
+        if(!metadataKey1.isQuantified()){
+            throw new ResourceServiceException("Parameter " + metadataKey1 +" is not quantifiable!");
+        }
+        
+        if(!metadataKey2.isQuantified()){
+            throw new ResourceServiceException("Parameter " + metadataKey2 +" is not quantifiable!");
+        }
+        
         if (unit==null){
             unit = "TOKENS";
         }

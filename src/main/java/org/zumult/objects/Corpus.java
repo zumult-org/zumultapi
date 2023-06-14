@@ -31,7 +31,7 @@ public interface Corpus extends XMLSerializable, Identifiable, Metadatable {
 
     public Set<String> getSpeakerLocationTypes();
     
-    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException ;
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException, ResourceServiceException ;
    
     
 }

@@ -22,6 +22,7 @@ import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
+import org.zumult.objects.ResourceServiceException;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
@@ -63,6 +64,7 @@ public interface BackendInterface {
     public IDList getSpeechEvents4Corpus(String corpusID) throws IOException;    
     public IDList getSpeakers4Corpus(String corpusID) throws IOException;    
     public IDList getSpeechEvents4Event(String eventID) throws IOException;
+    public IDList getSpeechEvents4Speaker(String speakerID) throws IOException;
     public IDList getTranscripts4SpeechEvent(String speechEventID) throws IOException;
     public IDList getAudios4SpeechEvent(String speechEventID) throws IOException;
     public IDList getVideos4SpeechEvent(String speechEventID) throws IOException;
@@ -124,7 +126,7 @@ public interface BackendInterface {
     //new 18.04.2023, Elena
     public CrossQuantification getCrossQuantification4Corpus(String corpusID, 
             MetadataKey metadataKey1, MetadataKey metadataKey2,
-            String unit) throws IOException;
+            String unit) throws ResourceServiceException, IOException;
     
     /**********************************************************************************/
     /*                            search methods                                      */ 

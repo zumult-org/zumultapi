@@ -106,7 +106,7 @@ public class AGDFileSystem extends AbstractIDSBackend {
     public IDList getSpeechEvents4Event(String eventID) throws IOException {        
         return getEvent(eventID).getSpeechEvents();
     }
-
+    
     @Override
     public Corpus getCorpus(String corpusID) throws IOException {
         File corpusFile = new File(corpusMetadataRootFolder, corpusID + "_extern.xml");
@@ -322,5 +322,5 @@ public class AGDFileSystem extends AbstractIDSBackend {
     @Override
     public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID) {
         return AGDUtilities.getMetadataKeysFromMetadataSelection(corpusID, null); 
-    }
+    }   
 }
