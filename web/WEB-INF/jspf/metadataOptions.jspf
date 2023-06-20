@@ -1,0 +1,33 @@
+<%-- 
+    Document   : metadataOptions.jspf
+    Created on : 15.06.2023, 08:42:38
+    Author     : Elena Frick
+    Description: These file contains code for setting metadata options in zuZweit.jsp
+--%>
+<% for (MetadataKey metadataKey : eventMetadataKeys){ 
+    if (metadataKey.isQuantified()){%>
+        <option value="v_<%= metadataKey.getID()%>" 
+            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            E: <%=metadataKey.getName("de") %></option>
+    <% }} %>
+        
+<% for (MetadataKey metadataKey : speechEventMetadataKeys){
+    if (metadataKey.isQuantified()){%>
+        <option value="v_<%= metadataKey.getID()%>"
+            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            SE: <%=metadataKey.getName("de") %></option>
+    <% }}%>
+        
+<% for (MetadataKey metadataKey : speakerMetadataKeys){
+    if (metadataKey.isQuantified()){ %>
+        <option value="v_<%= metadataKey.getID()%>"
+            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            S: <%=metadataKey.getName("de") %></option>
+    <% }} %>
+        
+<% for (MetadataKey metadataKey : speakerInSpeechEventMetadataKeys){
+    if (metadataKey.isQuantified()){%>
+        <option value="v_<%= metadataKey.getID()%>"
+            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            SES: <%=metadataKey.getName("de") %></option>
+    <% }} %>

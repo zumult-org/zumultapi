@@ -32,7 +32,9 @@
         <%
             String corpusID = request.getParameter("corpusID");
             String pathToInternalResource = "/data/Measure_1_" + corpusID + ".xml";
-            String measureXML = new Scanner(DGD2Oracle.class.getResourceAsStream(pathToInternalResource), "UTF-8").useDelimiter("\\A").next();
+            Scanner scanner = new Scanner(DGD2Oracle.class.getResourceAsStream(pathToInternalResource), "UTF-8");
+            String measureXML = scanner.useDelimiter("\\A").next();
+            scanner.close();
             String html = new IOHelper().applyInternalStylesheetToString(
                                         Constants.MEASURE2HTML_STYLESHEET, 
                                         measureXML);

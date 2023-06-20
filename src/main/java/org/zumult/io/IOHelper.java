@@ -87,8 +87,18 @@ public class IOHelper {
         return doc;
     }
 
+    public static String readUTF8(InputStream inputStream) throws FileNotFoundException {
+        Scanner scanner = new Scanner(inputStream, "UTF-8");
+        String xml = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        return xml;    
+    }
+    
     public static String readUTF8(File file) throws FileNotFoundException {
-        return new Scanner(new FileInputStream(file), "UTF-8").useDelimiter("\\A").next();    
+        Scanner scanner = new Scanner(file, "UTF-8");
+        String xml = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        return xml;    
     }
     
     public static void writeUTF8(File file, String text) throws FileNotFoundException, IOException{

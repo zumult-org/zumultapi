@@ -217,8 +217,7 @@ public class HTTPMethodHelper {
                 result.append(inputLine);
             }
             reader.close();
-            writer.close();
-            reader.close();        
+            writer.close();      
 
             return result.toString();
 

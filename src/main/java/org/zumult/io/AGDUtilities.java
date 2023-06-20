@@ -48,9 +48,9 @@ public class AGDUtilities {
         }
         
         Set<MetadataKey> result = new HashSet<>();
+
         try {
-            
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(Constants.METADATA_SELECTION_PATH), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AGDUtilities.class.getResourceAsStream(Constants.METADATA_SELECTION_PATH));
             Document doc = IOHelper.DocumentFromText(xml);
             XPath xPath = XPathFactory.newInstance().newXPath();
 

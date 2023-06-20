@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
-import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEITranscriptConverter;
@@ -990,21 +988,29 @@ public class ZumultDataServlet extends HttpServlet {
             
             StringBuilder result = new StringBuilder();
             for (MetadataKey mk : eventMetadataKeys){
+                if(mk.isQuantified()){
                 // <option value="v_e_in_dgd_seit">E: In DGD seit Version</option>
                 result.append("<option value=\"v_")
-                        .append(mk.getID()).append("\">").append("E: ").append(mk.getName("de")).append("</option>");                                        
+                        .append(mk.getID()).append("\">").append("E: ").append(mk.getName("de")).append("</option>");                                           
+                }
             }
             for (MetadataKey mk : speechEventMetadataKeys){
+                if(mk.isQuantified()){
                 result.append("<option value=\"v_").append(mk.getID()).append("\">")
                         .append("SE: ").append(mk.getName("de")).append("</option>");                                        
+                }
             }
             for (MetadataKey mk : speakerMetadataKeys){
+                if(mk.isQuantified()){
                 result.append("<option value=\"v_").append(mk.getID()).append("\">")
                         .append("S: ").append(mk.getName("de")).append("</option>");                                        
+                }
             }
             for (MetadataKey mk : speakerInSpeechEventMetadataKeys){
+                if(mk.isQuantified()){
                 result.append("<option value=\"v_").append(mk.getID()).append("\">")
                         .append("SES: ").append(mk.getName("de")).append("</option>");                                        
+                }
             }
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");

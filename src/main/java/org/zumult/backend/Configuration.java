@@ -5,23 +5,15 @@
  */
 package org.zumult.backend;
 
-import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-import org.zumult.io.IOHelper;
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-// For Elena's part of the code
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.w3c.dom.NodeList;
 import org.zumult.objects.IDList;
 
 
@@ -30,7 +22,8 @@ import org.zumult.objects.IDList;
  * @author Thomas_Schmidt, Elena Frick
  */
 public class Configuration {
-    
+    static String PATH = "/org/zumult/backend/Configuration.xml";
+        
     private static String backendInterfaceClassPath;
     
     private static String mediaPath;
@@ -47,59 +40,18 @@ public class Configuration {
     private static String materialPath;    
     private static String restAPIBaseURL;
     private static String webAppBaseURL;
+    private static String searchIndexPath;
 
-    static String PATH = "/org/zumult/backend/Configuration.xml";
 
-
-    // Elena's part of the configuration    
-    static String searchIndexPath;
-    
     // new 25-11-2020, for issue #22
-    static final Set<String> FREE_DATA = new HashSet<String>();
+    static Set<String> FREE_DATA = new HashSet<>();  // for issue #22
 
     static IDList corpusIDs = new IDList("corpus"); //ids of corpora to be indexed
     static IDList speakerBasedIndexIDs = new IDList("speakerBasedIndexIDs"); //names of indexes for speaker based search
     static IDList transcriptBasedIndexIDs = new IDList("transcriptBasedIndexIDs"); //names of indexes for transcript based search
         
     static {
-        try {
-            //backendInterfaceClassPath = "org.zumult.backend.implementations.DGD2Oracle";
-            //mediaPath = "/srv/video";
-            // read the configuration
-            String xml = new Scanner(Configuration.class.getResourceAsStream(PATH), "UTF-8").useDelimiter("\\A").next();
-            Document doc = IOHelper.DocumentFromText(xml);                      
-            // this is for getting an attribute value, looks pretty clumsy...
-            backendInterfaceClassPath = doc.getElementsByTagName("backend").item(0).getAttributes().getNamedItem("classPath").getTextContent();
-            
-            germanetPath = doc.getElementsByTagName("germanet-path").item(0).getTextContent();
-            wordlistPath = doc.getElementsByTagName("wordlist-path").item(0).getTextContent();
-            mediaPath = doc.getElementsByTagName("media-path").item(0).getTextContent();
-            mediaArchivePath = doc.getElementsByTagName("media-archive-path").item(0).getTextContent();
-            mediaDistributionPath = doc.getElementsByTagName("media-distribution-path").item(0).getTextContent();
-            mediaSnippetsPath = doc.getElementsByTagName("media-snippets-path").item(0).getTextContent();
-            ffmpegPath = doc.getElementsByTagName("ffmpeg-path").item(0).getTextContent();
-            
-            metadataPath = doc.getElementsByTagName("metadata-path").item(0).getTextContent();
-            materialPath = doc.getElementsByTagName("material-path").item(0).getTextContent();            
-            restAPIBaseURL = doc.getElementsByTagName("rest-api-base-url").item(0).getTextContent();
-            webAppBaseURL = doc.getElementsByTagName("web-app-base-url").item(0).getTextContent();
-            transcriptPath = doc.getElementsByTagName("transcript-path").item(0).getTextContent();
-            protocolPath = doc.getElementsByTagName("protocol-path").item(0).getTextContent();
-            
-            // new 25-11-2020, for issue #22
-            NodeList freePaths = doc.getElementsByTagName("free-path");
-            for (int i=0; i<freePaths.getLength(); i++){
-                FREE_DATA.add(freePaths.item(i).getTextContent());
-            }
-            
-        } catch (IOException | SAXException | ParserConfigurationException ex) {
-            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        // Elena's additional read
         read();
-        // read the configuration
-        //backendInterfaceClassPath = "org.zumult.backend.implementations.DGD2Oracle";
     }
     
     // new 25-11-2020
@@ -186,12 +138,28 @@ public class Configuration {
             File f = new File(Configuration.class.getResource(PATH).getFile());
             XMLConfiguration config = configs.xml(f.getAbsolutePath());
 
+            backendInterfaceClassPath = config.getString("backend[@classPath]");
+            System.out.println("backendInterfaceClassPath: " + backendInterfaceClassPath );
+            
+            germanetPath = config.getString("backend.germanet-path");
+            wordlistPath = config.getString("backend.wordlist-path");
+            mediaPath = config.getString("backend.media-path");
+            mediaArchivePath = config.getString("backend.media-archive-path");
+            mediaDistributionPath = config.getString("backend.media-distribution-path");
+            mediaSnippetsPath = config.getString("backend.media-snippets-path");
+            ffmpegPath = config.getString("backend.ffmpeg-path");
+            
+            metadataPath = config.getString("backend.metadata-path");
+            materialPath = config.getString("backend.material-path");            
+            restAPIBaseURL = config.getString("backend.rest-api-base-url");
+            webAppBaseURL = config.getString("backend.web-app-base-url");
+            transcriptPath = config.getString("backend.transcript-path");
+            protocolPath = config.getString("backend.protocol-path");
+            
             searchIndexPath = config.getString("backend.search-index-path");
             
             String[] corpora = config.getString("backend.corpus-ids-for-indexing").split(";");
-            for (String corpus : corpora) {
-                corpusIDs.add(corpus);
-            }
+            corpusIDs.addAll(Arrays.asList(corpora));
             
             config.getList("backend.search-index-speaker-based").forEach((o) -> {
                 speakerBasedIndexIDs.add(o.toString());
@@ -199,6 +167,10 @@ public class Configuration {
              
             config.getList("backend.search-index-transcript-based").forEach((o) -> {
                 transcriptBasedIndexIDs.add(o.toString());
+            });
+            
+            config.getList("backend.free-data.free-path").forEach((o) -> {
+                FREE_DATA.add(o.toString());
             });
    
         } catch (ConfigurationException ex){

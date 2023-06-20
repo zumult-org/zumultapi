@@ -26,6 +26,7 @@ import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
+import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Protocol;
@@ -61,17 +62,6 @@ public class AGDFileSystem extends AbstractIDSBackend {
 
     @Override
     public IDList getEvents4Corpus(String corpusID) throws IOException {
-        // Alternative: get from Josip's index
-        /*try {
-            String path = "/IDLists/" + corpusID + "/" + corpusID + "_events.xml";
-            String xml = new Scanner(DGD2Oracle.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            IDList result = new IDList("Event");
-            result.readXML(xml);
-            return result;
-        } catch (SAXException | ParserConfigurationException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        }*/
         IDList result = new IDList("Event");
         File eventMetadataFolder = new File(eventMetadataRootFolder, corpusID.replaceAll("(\\-)+", ""));
         System.out.println(eventMetadataFolder.getAbsolutePath());
@@ -149,7 +139,12 @@ public class AGDFileSystem extends AbstractIDSBackend {
 
     @Override
     public IDList getTranscripts4SpeechEvent(String speechEventID) throws IOException {
-        return getSpeechEvent(speechEventID).getTranscripts();
+        SpeechEvent speechEvent = getSpeechEvent(speechEventID);
+        if (speechEvent!=null){
+            return speechEvent.getTranscripts();
+        }else {
+            return null;
+        }
     }
 
     @Override
@@ -250,9 +245,10 @@ public class AGDFileSystem extends AbstractIDSBackend {
     @Override
     public IDList getAvailableValues(String corpusID, String metadataKeyID) {
         IDList list = new IDList("AvailableValue");
+        String path = "/data/AGDAvailableMetadataValues.xml";
+        
         try {
-            String path = "/data/AGDAvailableMetadataValues.xml";
-            String xml = new Scanner(AGDFileSystem.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AGDFileSystem.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
 
             // Query for the right elements via XPath

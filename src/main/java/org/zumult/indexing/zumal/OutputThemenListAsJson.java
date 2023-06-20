@@ -63,7 +63,7 @@ public class OutputThemenListAsJson implements Indexer {
                 FileInputStream fis = new FileInputStream(corpusJsonPath);
                 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
                 JSONArray corpusJsonObject = (JSONArray) jsonParser.parse(isr);
-
+                
                 // iterate per speechevent
                 corpusJsonObject.forEach(speechEvent -> {
                     JSONObject speechEventObject = (JSONObject) speechEvent;
@@ -81,6 +81,8 @@ public class OutputThemenListAsJson implements Indexer {
                         }
                     }                    
                 });
+                
+                isr.close();
                 // nice print
                 System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonArray));
 

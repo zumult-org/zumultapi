@@ -216,9 +216,10 @@ public abstract class AbstractBackend implements BackendInterface {
 
     @Override
     public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException {
+        String path = Constants.DATA_POS_PATH + annotationTagSetID + ".xml";
+
         try {
-            String path = Constants.DATA_POS_PATH + annotationTagSetID + ".xml";
-            String xml = new Scanner(AbstractBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AbstractBackend.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
             AnnotationTagSet annotationTagSet = new DGD2AnnotationTagSet(doc);
             return annotationTagSet;
@@ -232,9 +233,10 @@ public abstract class AbstractBackend implements BackendInterface {
     @Override
     public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
         IDList list = new IDList("AvailableValue");
+        String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
+
         try {
-            String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
-            String xml = new Scanner(AbstractBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AbstractBackend.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
             XPath xPath = XPathFactory.newInstance().newXPath();
             String xPathString = "//corpus[@corpus='" + corpusID + "']/key[@id='" + annotationLayerID + "']/value";

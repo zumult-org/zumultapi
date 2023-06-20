@@ -119,10 +119,9 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
     
     public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType){
         Set<AnnotationLayer> result = new HashSet<>();
-        try {
-            
-            String path = Constants.DATA_ANNOTATIONS_PATH + "AnnotationLayerSelection.xml";
-            String xml = new Scanner(IOHelper.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+        String path = Constants.DATA_ANNOTATIONS_PATH + "AnnotationLayerSelection.xml";
+        try {  
+            String xml = IOHelper.readUTF8(DGD2Corpus.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml); 
             
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -151,11 +150,12 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
     @Override
     public Set<String> getSpeakerLocationTypes() {
         Set<String> result = new HashSet<>();
+        String path = "/data/LocationTypes.xml";
         try {
             // currently, for an AGD corpus, this information is represented outside the Oracle DB
             // in a file MetadataSelection.xml (as part of the DGD Tomcat Webapp)
-            String path = "/data/LocationTypes.xml";
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+           
+            String xml = IOHelper.readUTF8(DGD2Corpus.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
             
             // Query for the right element via XPath

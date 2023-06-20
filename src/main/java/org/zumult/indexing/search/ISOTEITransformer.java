@@ -167,6 +167,8 @@ public abstract class ISOTEITransformer {
             System.out.println("Not valid input!");
             System.exit(0); 
         } 
+        
+        scannerVariableDelete.close();
     }
     
     void doit() throws IOException, JDOMException, Exception {
@@ -202,6 +204,8 @@ public abstract class ISOTEITransformer {
                 System.out.println("Not valid input!");
                 System.exit(0); 
             } 
+            
+            scannerVariable.close();
               
         }catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ISOTEI2SpeakerBasedFormat.class.getName()).log(Level.SEVERE, null, ex);

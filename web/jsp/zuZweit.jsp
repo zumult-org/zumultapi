@@ -109,54 +109,14 @@
                     <div class="form-group">
                         <label for="metaField1Selector"><%=myResources.getString("Parameter")%> 1</label>
                         <select class="form-control" id="metaField1Selector" name="metaField1" onchange="meta1Changed()">
-                            <% for (MetadataKey metadataKey : eventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>" 
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                E: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SE: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                S: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerInSpeechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SES: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            
+                            <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>      
                         </select>
                     </div>                    
                     
                     <div class="form-group">
                         <label for="metaField2Selector"><%=myResources.getString("Parameter")%> 2</label>
                         <select class="form-control" id="metaField2Selector" name="metaField2" onchange="meta2Changed()">
-                            <% for (MetadataKey metadataKey : eventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>" 
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                E: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SE: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                S: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerInSpeechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SES: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            
+                            <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>
                         </select>
                     </div>    
                         

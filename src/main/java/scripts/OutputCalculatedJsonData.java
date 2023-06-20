@@ -178,6 +178,9 @@ public class OutputCalculatedJsonData {
                     }
                 }
             });
+            
+            reader.close();
+            
             // nice print
             System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonArray));
 

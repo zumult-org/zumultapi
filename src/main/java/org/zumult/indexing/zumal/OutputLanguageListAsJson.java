@@ -77,6 +77,8 @@ public class OutputLanguageListAsJson implements Indexer {
          
                 });
                 
+                reader.close();
+                
                 System.out.println(langMap);
                 
                 for (String langObj : langMap.keySet()){
