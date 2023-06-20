@@ -21,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.zumult.backend.Configuration;
 import org.zumult.io.AGDUtilities;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
@@ -31,6 +30,7 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.io.Constants;
 import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.ObjectTypesEnum;
+import org.zumult.objects.ResourceServiceException;
 
 /**
  *
@@ -119,10 +119,9 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
     
     public Set<AnnotationLayer> getAnnotationLayers(AnnotationTypeEnum annotationType){
         Set<AnnotationLayer> result = new HashSet<>();
-        try {
-            
-            String path = Constants.DATA_ANNOTATIONS_PATH + "AnnotationLayerSelection.xml";
-            String xml = new Scanner(IOHelper.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+        String path = Constants.DATA_ANNOTATIONS_PATH + "AnnotationLayerSelection.xml";
+        try {  
+            String xml = IOHelper.readUTF8(DGD2Corpus.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml); 
             
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -151,11 +150,12 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
     @Override
     public Set<String> getSpeakerLocationTypes() {
         Set<String> result = new HashSet<>();
+        String path = "/data/LocationTypes.xml";
         try {
             // currently, for an AGD corpus, this information is represented outside the Oracle DB
             // in a file MetadataSelection.xml (as part of the DGD Tomcat Webapp)
-            String path = "/data/LocationTypes.xml";
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+           
+            String xml = IOHelper.readUTF8(DGD2Corpus.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
             
             // Query for the right element via XPath
@@ -180,7 +180,15 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
 
     
     @Override
-    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException  {        
+    public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws ResourceServiceException, IOException  {        
+        if(!metadataKey1.isQuantified()){
+            throw new ResourceServiceException("Parameter " + metadataKey1 +" is not quantifiable!");
+        }
+        
+        if(!metadataKey2.isQuantified()){
+            throw new ResourceServiceException("Parameter " + metadataKey2 +" is not quantifiable!");
+        }
+        
         if (unit==null){
             unit = "TOKENS";
         }
@@ -195,8 +203,10 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
 
         
         try {
-            String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl",
-                    Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
+
+            String html = new IOHelper().applyInternalStylesheetToInternalFile("/org/zumult/io/Quantify2Dimensions.xsl", 
+            Constants.DATA_QUANTIFICATIONS_PATH + "/" + QUANT_FILENAME, PARAM);
+                
             CrossQuantification crossQuantification = new DGD2CrossQuantification(html);
             return crossQuantification;
             

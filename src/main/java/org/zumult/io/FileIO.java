@@ -10,7 +10,6 @@
 
 package org.zumult.io;
 
-import java.net.MalformedURLException;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Content;
@@ -21,7 +20,6 @@ import org.jdom.xpath.XPath;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
-import java.net.URL;
 import java.util.*;
 /**
  *
@@ -44,8 +42,6 @@ public class FileIO {
         Document document =  builder.build(file);
         return document;
     }
-    
-
 
     public static Document readDocumentFromURL(String url) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
@@ -60,6 +56,12 @@ public class FileIO {
         return doc;        
     }
     
+    public Document readDocumentFromResource(String pathToResource) throws JDOMException, IOException{
+        SAXBuilder saxBuilder = new SAXBuilder();
+        java.io.InputStream is = getClass().getResourceAsStream(pathToResource);
+        Document doc = saxBuilder.build(is);
+        return doc;
+    }
     
     public static String getDocumentAsString(Document document) throws IOException {
         return getDocumentAsString(document,false);
@@ -268,7 +270,7 @@ public class FileIO {
         xmlOutputter.output(document,fos);
         fos.close();    
     }
-
+    
     public static String getPlainTextFromLocalFile(String pathToDocument) throws JDOMException, IOException {
         Document doc = readDocumentFromLocalFile(pathToDocument);
         Element body = doc.getRootElement().getChild("text");

@@ -37,8 +37,8 @@
     
     String QUANT_FILENAME = corpusID + "_QUANT.xml";
     
-    String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl", 
-            Configuration.getQuantificationPath() + "/" + QUANT_FILENAME, PARAM);
+    String html = new IOHelper().applyInternalStylesheetToInternalFile("/org/zumult/io/Quantify2Dimensions.xsl", 
+            Constants.DATA_QUANTIFICATIONS_PATH + "/" + QUANT_FILENAME, PARAM);
 %>
 <!DOCTYPE html>
 <%@include file="../WEB-INF/jspf/locale.jspf" %>     
@@ -79,10 +79,11 @@
             String pageTitle = myResources.getString("ZuZweitTitle"); 
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
-            Set<MetadataKey> eventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.EVENT);                
-            Set<MetadataKey> speechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
-            Set<MetadataKey> speakerMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
-            Set<MetadataKey> speakerInSpeechEventMetadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT);
+            List<MetadataKey> eventMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.EVENT), "de");                
+            List<MetadataKey> speechEventMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT), "de");
+            List<MetadataKey> speakerMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER), "de");
+            List<MetadataKey> speakerInSpeechEventMetadataKeys = IOHelper.sortMetadataKeysByName(corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT), "de");
+            
         %>
             
         <% String pageName = "ZuZweit"; %>
@@ -97,7 +98,7 @@
                     <div class="form-group">
                         <label for="corpusSelector"><%=myResources.getString("Corpus")%></label>
                         <select class="form-control" id="corpusSelector" name="corpusID" onchange="corpusSelectionChanged()">
-                            <% for (String cID : backendInterface.getCorpora()){ %>
+                            <% for (String cID : backendInterface.getCorporaForSearch(null)){ %>
                             <option value="<%= cID %>" 
                                 <% if (cID.equals(corpusID)){%> selected="selected" <%} %>>
                                 <%= cID %></option>
@@ -108,54 +109,14 @@
                     <div class="form-group">
                         <label for="metaField1Selector"><%=myResources.getString("Parameter")%> 1</label>
                         <select class="form-control" id="metaField1Selector" name="metaField1" onchange="meta1Changed()">
-                            <% for (MetadataKey metadataKey : eventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>" 
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                E: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SE: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                S: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerInSpeechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SES: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            
+                            <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>      
                         </select>
                     </div>                    
                     
                     <div class="form-group">
                         <label for="metaField2Selector"><%=myResources.getString("Parameter")%> 2</label>
                         <select class="form-control" id="metaField2Selector" name="metaField2" onchange="meta2Changed()">
-                            <% for (MetadataKey metadataKey : eventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>" 
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                E: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SE: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                S: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            <% for (MetadataKey metadataKey : speakerInSpeechEventMetadataKeys){ %>
-                            <option value="v_<%= metadataKey.getID()%>"
-                                <% if (metaField2.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
-                                SES: <%=metadataKey.getName("de") %></option>
-                            <% } %>
-                            
+                            <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>
                         </select>
                     </div>    
                         
@@ -166,14 +127,14 @@
                                 <% if (units.equals("TOKENS")){%> selected="selected" <%} %>>                            
                                 Tokens
                             </option>
-                            <option value="OBJECTS"
+                         <!--   <option value="OBJECTS"
                                 <% if (units.equals("OBJECTS")){%> selected="selected" <%} %>>                            
                                 Speech Events / Speakers
                             </option>
                             <option value="TIME"
                                 <% if (units.equals("TIME")){%> selected="selected" <%} %>>                            
                                 Duration
-                            </option>
+                            </option>-->
                         </select>
                     </div>                    
                         

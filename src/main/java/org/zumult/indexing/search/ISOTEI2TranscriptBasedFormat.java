@@ -5,8 +5,6 @@
  */
 package org.zumult.indexing.search;
 
-import org.zumult.io.IOUtilities;
-import org.zumult.io.FileIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,7 +20,9 @@ import org.jdom.JDOMException;
 import org.jdom.filter.ElementFilter;
 import org.jdom.xpath.XPath;
 import org.zumult.io.Constants;
+import org.zumult.io.FileIO;
 import org.zumult.objects.Event;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
@@ -38,9 +38,9 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
     public static void main(String[] args) {        
         try {
             
-            corpusIDsForIndexing = new HashSet<>(Arrays.asList("FOLK"));
+            corpusIDsForIndexing = new HashSet<>(Arrays.asList("GWSS"));
             DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input"; //iso-tei transcripts
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_TB_FOLK_14_07_2022";
+            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_GWSS_31_05_2023";
             
             new ISOTEI2TranscriptBasedFormat().doit();
             
@@ -55,7 +55,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
             File newFileTranscriptBased) throws IOException, JDOMException{
         
         try {
-            Document transcriptDoc = IOUtilities.readDocumentFromString(t.toXML());
+            Document transcriptDoc = FileIO.readDocumentFromString(t.toXML());
             
             String fileName = transcriptDoc.getRootElement().getChild(Constants.ELEMENT_NAME_IDNO, ns).getText() + ".xml";
             if(f!=null){
@@ -68,6 +68,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
             SpeechEvent speechEvent = null;
             String eventID = null;
             Event event = null;
+            IDList videos = null;
             
             if(ADD_METADATA){
                 transcriptID = t.getID();
@@ -75,6 +76,10 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
                 speechEvent = backendInterface.getSpeechEvent(speechEventID);
                 eventID = backendInterface.getEvent4SpeechEvent(speechEventID);
                 event = backendInterface.getEvent(eventID);
+            }
+            
+            if(ADD_VIDEOS_NUMBER){
+                videos = backendInterface.getVideos4Transcript(transcriptID);  
             }
             
             // get body element
@@ -210,9 +215,9 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
             
             if(ADD_METADATA){
                 addMetadata(transcriptDoc, metadataKeys, event, speechEvent, newBodyForTranscriptBasedView,
-                        firstTimeVariable, lastTimeVariable, eventID, speechEventID, transcriptID);
+                        firstTimeVariable, lastTimeVariable, eventID, speechEventID, transcriptID, videos);
             }
-            
+                       
             // add repetitions
             if(ADD_REPETITIONS){
                 addRepetitions(newBodyForTranscriptBasedView);
@@ -226,7 +231,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
             text.addContent(newBodyForTranscriptBasedView);
             
             File outFile = new File(newFileTranscriptBased, fileName);
-            IOUtilities.writeDocumentToLocalFile(outFile.getPath(), newTranscriptDoc);
+            FileIO.writeDocumentToLocalFile(outFile.getPath(), newTranscriptDoc);
             System.out.println(outFile.getAbsolutePath() + " written");
         } catch (Exception ex) {
             Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,11 +271,11 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
         }
     }
     
-    
+            
     private void addMetadata(Document transcriptDoc, Set<MetadataKey> metadataKeys, 
             Event event, SpeechEvent speechEvent, Element newBodyForTranscriptBasedView,
             String firstTimeVariable, String lastTimeVariable, 
-            String eventID, String speechEventID, String transcriptID) throws IOException{
+            String eventID, String speechEventID, String transcriptID, IDList videos) throws IOException{
         
         System.out.println("Adding metadata...");
         
@@ -371,29 +376,16 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
         addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_TRANSCRIPT_DGD_ID, firstTimeVariable, lastTimeVariable, transcriptID);
         if(speechEvent!=null){
             addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID, firstTimeVariable, lastTimeVariable, speechEventID);
-            addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID_temp, firstTimeVariable, lastTimeVariable, speechEventID);
+        }
+        
+        // add number of videos
+        if(videos!=null){
+            addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_EVENT_NUMBER_VIDEOS, firstTimeVariable, lastTimeVariable, String.valueOf(videos.size()));
         }
         
         // add "Grad der Mündlichkeit" für GWSS
         if (eventID.startsWith("GWSS_")){
-            String spontaneity = null;
-            try{
-                org.jdom.Document eventDoc = FileIO.readDocumentFromString(event.toXML());
-                List sprechEvents = eventDoc.getRootElement().getChildren("Sprechereignis");
-                for (Object oSprechEvent : sprechEvents){
-                    org.jdom.Element sprechEventElement = (org.jdom.Element) oSprechEvent;
-                    if(speechEventID.equals(sprechEventElement.getAttributeValue("Kennung"))){
-                        String notes = sprechEventElement.getChild("Basisdaten").getChildText("Anmerkungen");
-                        String[] notesList = notes.split(" ; ");
-                        spontaneity = notesList[0];
-                    }
-                }
-            }catch (JDOMException ex){
-                Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (Exception ex){
-                Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            String spontaneity = getSpontaneity(event, speechEventID);            
             addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEECH_EVENT_SPEECH_NOTES, firstTimeVariable, lastTimeVariable, spontaneity);
 
         }

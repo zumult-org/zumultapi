@@ -7,7 +7,6 @@ package org.zumult.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,12 +32,12 @@ import javax.xml.transform.stream.StreamSource;
 public class XMLReader {
     
     public static TokenList readTokenListFromInternalResource(String pathToInternalResource) throws IOException, SAXException, ParserConfigurationException{
-        String xml = new Scanner(XMLReader.class.getResourceAsStream(pathToInternalResource), "UTF-8").useDelimiter("\\A").next();
+        String xml = IOHelper.readUTF8(XMLReader.class.getResourceAsStream(pathToInternalResource));
         return xmlString2TokenList(xml);
     }
     
     public static TokenList readTokenListFromFile(File file) throws IOException, SAXException, ParserConfigurationException{
-        String xml = new Scanner(file, "UTF-8").useDelimiter("\\A").next();
+        String xml = IOHelper.readUTF8(file);
         return xmlString2TokenList(xml);
     }
     

@@ -37,9 +37,9 @@ public class DGDMetadataFilter implements MetadataFilter {
     @Override
     public IDList filterSpeechEvents(String corpusID, String metadataKeyID, String regex) throws IOException {
         IDList result = new IDList("speech-event");
+        String indexName = "/data/" + corpusID + "_SpeechEventIndex.xml";
         try {
-            String indexName = "/data/" + corpusID + "_SpeechEventIndex.xml";
-            String xml = new Scanner(DGDMetadataFilter.class.getResourceAsStream(indexName), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(DGDMetadataFilter.class.getResourceAsStream(indexName));
             Document document = IOHelper.DocumentFromText(xml);
             
             String xPathString = "//speech-event[matches(key[@id='" + metadataKeyID + "'], '" + regex + "')]";            
@@ -62,9 +62,9 @@ public class DGDMetadataFilter implements MetadataFilter {
     @Override
     public IDList filterSpeechEvents(String corpusID, String metadataKeyID, double minValue, double maxValue) throws IOException {
         IDList result = new IDList("speech-event");
+        String indexName = "/data/" + corpusID + "_SpeechEventIndex.xml";
         try {
-            String indexName = "/data/" + corpusID + "_SpeechEventIndex.xml";
-            String xml = new Scanner(DGDMetadataFilter.class.getResourceAsStream(indexName), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(DGDMetadataFilter.class.getResourceAsStream(indexName));
             Document document = IOHelper.DocumentFromText(xml);
             
             String xPathString = "//speech-event["

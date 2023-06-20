@@ -84,10 +84,10 @@
             </thead>
             <tbody>
             <%
-                Long time = System.currentTimeMillis();
+               // Long time = System.currentTimeMillis();
                 for (String eventID : eventIDs){
-                    Long dur = System.currentTimeMillis() - time;
-                    time = System.currentTimeMillis();
+                    //Long dur = System.currentTimeMillis() - time;
+                    //time = System.currentTimeMillis();
                     Event event = backendInterface.getEvent(eventID);
             %>
                     <tr>
@@ -101,7 +101,7 @@
                             String locationString = event.getLocation().getPlacename() + " / " + event.getLocation().getCountry();
                         %>  
                         <td><%=locationString%></td>
-                        <!-- <td><%=dur%>ms</td> -->
+                      <!-- <td><%//=dur%>ms</td> -->
                     </tr>
             <%
                 }

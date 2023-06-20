@@ -26,8 +26,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
@@ -40,24 +38,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.zumult.objects.AnnotationLayer;
-import org.zumult.objects.implementations.DGD2AnnotationLayer;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.implementations.DGD2SampleQuery;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.MetadataKey;
 import org.zumult.query.SearchServiceException;
 
@@ -96,8 +87,18 @@ public class IOHelper {
         return doc;
     }
 
+    public static String readUTF8(InputStream inputStream) throws FileNotFoundException {
+        Scanner scanner = new Scanner(inputStream, "UTF-8");
+        String xml = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        return xml;    
+    }
+    
     public static String readUTF8(File file) throws FileNotFoundException {
-        return new Scanner(new FileInputStream(file), "UTF-8").useDelimiter("\\A").next();    
+        Scanner scanner = new Scanner(file, "UTF-8");
+        String xml = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        return xml;    
     }
     
     public static void writeUTF8(File file, String text) throws FileNotFoundException, IOException{
@@ -421,5 +422,8 @@ public class IOHelper {
         return metadataMap;
     }
     
+    public static List<MetadataKey> sortMetadataKeysByName(Set<MetadataKey> metadata, String lang){             
+        return metadata.stream().sorted((MetadataKey o1, MetadataKey o2) -> o1.getName(lang).compareTo(o2.getName(lang))).collect(Collectors.toList()); 
+    }
     
 }

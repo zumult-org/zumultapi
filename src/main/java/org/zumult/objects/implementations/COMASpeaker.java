@@ -18,6 +18,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.zumult.objects.IDList;
 import org.zumult.objects.Location;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Speaker;
@@ -75,6 +76,11 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
     @Override
     public String getID() {
         return getDocument().getDocumentElement().getAttribute("Id");
+    }
+
+    @Override
+    public IDList getSpeechEvents() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

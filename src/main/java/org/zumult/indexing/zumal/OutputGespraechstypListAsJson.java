@@ -7,12 +7,9 @@ package org.zumult.indexing.zumal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -202,6 +199,9 @@ public class OutputGespraechstypListAsJson implements Indexer {
                     }
 
                 });
+                
+                isr.close();
+                
                 // nice print
                 System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonArray));
 

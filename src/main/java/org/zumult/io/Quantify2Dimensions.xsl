@@ -54,6 +54,9 @@
                 <xsl:when test="contains($META_FIELD_1, '_e_') and contains($META_FIELD_2, '_ses_')">
                     <xsl:call-template name="EVENT_SPEAKER"/>
                 </xsl:when>
+                <xsl:when test="contains($META_FIELD_1, '_s_') and contains($META_FIELD_2, '_ses_')">
+                    <p>Diese Funktion wird demnächst verfügbar sein!</p>
+                </xsl:when>
                 <xsl:otherwise>
                     <p>Bitte Parameterreihenfolge umkehren!</p>
                 </xsl:otherwise>

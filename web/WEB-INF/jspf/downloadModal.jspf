@@ -52,7 +52,7 @@
                                   </div>
                                 </div>
                             </div>
-                            <% if (!(videos.size()>2)){ %>
+                            <% if (videos.size()>1){ %>
                             <div class="input-group-sm mb-3 form-check form-check-inline">
                                 <div class="input-group-prepend">
                                   <div class="input-group-text">

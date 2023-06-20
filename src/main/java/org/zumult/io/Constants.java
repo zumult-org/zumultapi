@@ -83,6 +83,7 @@ public class Constants {
     public static final String DATA_PATH = "/data/";
     public static final String DATA_ANNOTATIONS_PATH = "/data/annotations/";
     public static final String DATA_MEASURES_PATH = "/data/measures/";
+    public static final String DATA_QUANTIFICATIONS_PATH = "/data/quantifications/";
     public static final String DATA_ZUMAL_PATH = "/data/zumal/";
     public static final String DATA_POS_PATH = "/data/pos/";
     public static final String WORDLISTS_GOETHE_PATH = Configuration.getWordlistPath() + "/goethe";
@@ -90,6 +91,7 @@ public class Constants {
     public static final String WORDLISTS_THEMATIC_VOCABULARY_PATH = Configuration.getWordlistPath() + "/thematic-vocabulary/lemmas";
     
     public static final String METADATA_SELECTION_PATH = "/data/MetadataSelection.xml";
+    public static final String ALL_CORPORA_PATH = "/data/AllCorpora.xml";
     
     public static final String JAVA_FOLDER_PATH = "/src/main/java";
             
@@ -125,14 +127,14 @@ public class Constants {
     public static final String METADATA_KEY_EVENT_DGD_ID = "e_dgd_kennung";
     public static final String METADATA_KEY_SPEAKER_DGD_ID = "s_dgd_kennung";
     public static final String METADATA_KEY_TRANSCRIPT_DGD_ID = "t_dgd_kennung";
-    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID = "se_dgd_kennung";
     public static final String METADATA_KEY_SPEECH_EVENT_SPEECH_NOTES = "e_se_grad_der_muendlichkeit";
-    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID_temp = "e_se_dgd_kennung";
+    public static final String METADATA_KEY_SPEECH_EVENT_DGD_ID = "e_se_dgd_kennung";
     public static final String METADATA_KEY_SPEAKER_YEAR_OF_BIRTH = "s_geb";
-    public static final String METADATA_KEY_EVENT_DAUER_SEC =  "e_dauer_sec";
-    public static final String METADATA_KEY_EVENT_DURATION= "e_dauer";
+    public static final String METADATA_KEY_EVENT_DAUER_SEC =  "e_dauer_sek";
+    public static final String METADATA_KEY_EVENT_DURATION = "e_dauer";
     public static final String METADATA_KEY_SPEAKER_BIRTH_DATE = "s_geb_jahr";
     public static final String METADATA_KEY_SPEAKER_BIRTH_AGE = "ses_alter_s";
+    public static final String METADATA_KEY_EVENT_NUMBER_VIDEOS = "e_video_anzahl";
 
     
     // not indexed speaker metadata (in TB mode)

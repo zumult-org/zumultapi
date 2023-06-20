@@ -101,10 +101,10 @@
             </thead>
             <tbody>
             <%
-                Long time = System.currentTimeMillis();
+                //Long time = System.currentTimeMillis();
                 for (String speechEventID : speechEventIDs){
-                    Long dur = System.currentTimeMillis() - time;
-                    time = System.currentTimeMillis();
+                  //  Long dur = System.currentTimeMillis() - time;
+                  //  time = System.currentTimeMillis();
                     SpeechEvent speechEvent = backendInterface.getSpeechEvent(speechEventID);
             %>
                     <tr>

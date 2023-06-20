@@ -35,6 +35,9 @@ import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
+import org.zumult.objects.ResourceServiceException;
+import org.zumult.objects.Speaker;
+import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.DGD2AnnotationTagSet;
 import org.zumult.objects.implementations.DGD2MetadataKey;
@@ -104,6 +107,12 @@ public abstract class AbstractBackend implements BackendInterface {
             allSpeechEvents.addAll(speechEvents);
         }
         return allSpeechEvents;
+    }
+    
+    @Override
+    public IDList getSpeechEvents4Speaker(String speakerID) throws IOException {   
+        Speaker speaker = getSpeaker(speakerID);
+        return speaker.getSpeechEvents();
     }
 
     @Override
@@ -207,9 +216,10 @@ public abstract class AbstractBackend implements BackendInterface {
 
     @Override
     public AnnotationTagSet getAnnotationTagSet(String annotationTagSetID) throws IOException {
+        String path = Constants.DATA_POS_PATH + annotationTagSetID + ".xml";
+
         try {
-            String path = Constants.DATA_POS_PATH + annotationTagSetID + ".xml";
-            String xml = new Scanner(AbstractBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AbstractBackend.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
             AnnotationTagSet annotationTagSet = new DGD2AnnotationTagSet(doc);
             return annotationTagSet;
@@ -223,9 +233,10 @@ public abstract class AbstractBackend implements BackendInterface {
     @Override
     public IDList getAvailableValuesForAnnotationLayer(String corpusID, String annotationLayerID) {
         IDList list = new IDList("AvailableValue");
+        String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
+
         try {
-            String path = Constants.DATA_ANNOTATIONS_PATH + "AvailableAnnotationValues.xml";
-            String xml = new Scanner(AbstractBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AbstractBackend.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
             XPath xPath = XPathFactory.newInstance().newXPath();
             String xPathString = "//corpus[@corpus='" + corpusID + "']/key[@id='" + annotationLayerID + "']/value";
@@ -372,7 +383,7 @@ public abstract class AbstractBackend implements BackendInterface {
         if (metadataKeyID != null && !metadataKeyID.isEmpty()) {
             MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
             if (mk == null) {
-                mk = new DGD2MetadataKey(metadataKeyID, null, null);
+                mk = new DGD2MetadataKey(metadataKeyID, "", null);
             }
             return searcher.getStatistics(searchIndex, sortTypeCode, mk);
         } else {
@@ -395,7 +406,7 @@ public abstract class AbstractBackend implements BackendInterface {
     @Override
     public CrossQuantification getCrossQuantification4Corpus(String corpusID, 
             MetadataKey metadataKey1, MetadataKey metadataKey2,
-            String unit) throws IOException {
+            String unit) throws ResourceServiceException, IOException {
         Corpus corpus = getCorpus(corpusID);
         return corpus.getCrossQuantification(metadataKey1, metadataKey2, unit);
     }

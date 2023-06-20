@@ -58,10 +58,9 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
     @Override
     public IDList getCorpora() throws IOException {
         IDList list = new IDList("corpus");
+
         try {
-            String path = "/data/AllCorpora.xml";
-            String xml = new Scanner(AbstractIDSBackend.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
-            //System.out.println(xml);
+            String xml = IOHelper.readUTF8(AbstractIDSBackend.class.getResourceAsStream(Constants.ALL_CORPORA_PATH));
             Document doc = IOHelper.DocumentFromText(xml);
             NodeList childNodes = doc.getElementsByTagName("corpus");
             for (int i = 0; i < childNodes.getLength(); i++) {
@@ -353,11 +352,9 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             MetadataKey key = new DGD2MetadataKey(id, name, ObjectTypesEnum.SPEECH_EVENT);
             return key;
         }
-        
-               
+
         try {
-            String path = Constants.METADATA_SELECTION_PATH;
-            String xml = new Scanner(DGD2Corpus.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
+            String xml = IOHelper.readUTF8(AbstractIDSBackend.class.getResourceAsStream(Constants.METADATA_SELECTION_PATH));
             Document doc = IOHelper.DocumentFromText(xml);
             
             // Query for the right element via XPath

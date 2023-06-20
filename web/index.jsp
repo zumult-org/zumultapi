@@ -116,15 +116,15 @@
                         <p class="card-text"><%=myResources.getString("ZuZweitShort")%></p>
                         <a href="./jsp/zuZweit.jsp?metaField1=v_e_se_interaktionsdomaene&metaField2=v_s_geschlecht"" class="btn btn-primary" target="_blank">ZuZweit</a>
                       </div>
-                    </div>            
-                    <div class="card mb-3">
+                    </div>    
+                   <div class="card mb-3">
                       <img class="card-img-top" src="./images/corpusoverview.png" alt="Card image cap">
                       <div class="card-body">
                         <h5 class="card-title"><%=myResources.getString("CorpusOverview")%></h5>
                         <p class="card-text"><%=myResources.getString("CorpusOverviewShort")%></p>
                         <a href="./jsp/corpusoverview.jsp" class="btn btn-primary" target="_blank"><%=myResources.getString("CorpusOverview")%></a>
                         </div>
-                    </div>            
+                    </div>         
                 </div>
                 <!--
                 <div class="card-deck">

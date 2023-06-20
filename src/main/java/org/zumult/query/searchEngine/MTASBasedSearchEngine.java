@@ -395,16 +395,18 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }
     }
         
-    private MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException {
+    private MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException, IOException {
         try{
             log.log(Level.INFO, ": {0}", queryString);
             Reader reader = new BufferedReader(new StringReader(queryString));
             MtasCQLParser p = new MtasCQLParser(reader);
-            return p.parse(field, null, variables, ignore, maximumIgnoreLength);
+            MtasSpanQuery msq = p.parse(field, null, variables, ignore, maximumIgnoreLength);
+            reader.close();
+            return msq;
         }catch (TokenMgrError | ParseException | IllegalArgumentException ex) {
             Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-            throw new SearchServiceException("Please check the query syntax: " + ex.getMessage());
-        }        
+            throw new SearchServiceException("Please check the query syntax: " + ex.getMessage()); 
+        }
     }
 
     private void sortByAbsoluteValue( ArrayList<Map.Entry<SearchEngineStatisticEntry, Double>> array){
@@ -1528,6 +1530,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     }
                 }
 
+                //close streams
+                input1.close();
+                input2.close();
             }
             
 
@@ -1978,7 +1983,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             docID, currentPrefixListRepetitionLayer, start,
             (end - 1));
         
-        if (termsFromCurrentRepetitiionLayer.size() > 0){
+        if (!termsFromCurrentRepetitiionLayer.isEmpty()){
 
             // create source object
             RepetitionSource rs = new RepetitionSource();
@@ -2529,7 +2534,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             
             String contextStringRight = repetitionSpecification.getFollowedby();
             if(contextStringRight!=null && !contextStringRight.isEmpty()){
-                contextCheckRight = checkContext(positionsWithContextRight, contextStringRight, segmentName, docID, sortedMap.firstKey());
+                contextCheckRight = checkContext(positionsWithContextRight, contextStringRight, segmentName, docID, sortedMap.lastKey());
             }else{
                 contextCheckRight=true;
             }
@@ -3335,9 +3340,10 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         try {
             tmpFile = File.createTempFile("tmp", ".txt");
             tmpFile.deleteOnExit();
-            InputStream input1 = new FileInputStream(f.getAbsolutePath());
-            sorter.sort(input1, new FileOutputStream(tmpFile.getAbsolutePath()));
-            f.delete();
+            try (InputStream input1 = new FileInputStream(f.getAbsolutePath())) {
+                sorter.sort(input1, new FileOutputStream(tmpFile.getAbsolutePath()));
+                f.delete();
+            }
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);    

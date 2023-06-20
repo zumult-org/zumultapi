@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.jdom.Element;
-import org.zumult.io.IOUtilities;
 import org.zumult.objects.MetadataKey;
 
 /**
@@ -29,6 +28,7 @@ public class XMLSerialization {
             listElement.setAttribute("id", key.getID());
             listElement.setAttribute("name", key.getName(locale.getLanguage()));
             listElement.setAttribute("type", key.getLevel().name());
+            listElement.setAttribute("quantify", String.valueOf(key.isQuantified()));
             metadata.addContent(listElement);
         }
         return metadata;
