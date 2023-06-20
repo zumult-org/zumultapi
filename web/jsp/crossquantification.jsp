@@ -109,6 +109,7 @@
                     <div class="form-group">
                         <label for="metaField1Selector"><%=myResources.getString("Parameter")%> 1</label>
                         <select class="form-control" id="metaField1Selector" name="metaField1" onchange="meta1Changed()">
+                            <% String metaField = metaField1; %>
                             <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>      
                         </select>
                     </div>                    
@@ -116,6 +117,7 @@
                     <div class="form-group">
                         <label for="metaField2Selector"><%=myResources.getString("Parameter")%> 2</label>
                         <select class="form-control" id="metaField2Selector" name="metaField2" onchange="meta2Changed()">
+                           <% metaField = metaField2; %>
                            <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>        
                         </select>
                     </div>    
