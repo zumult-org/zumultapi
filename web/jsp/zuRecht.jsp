@@ -122,7 +122,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
                 <!-- corpora -->
                 <div class="col-md-2"> 
-                    <%@include file="../WEB-INF/jspf/zuRechtCorporaColumn.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtCorpora.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtCustomWordLists.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtCustomWordListsModal.jspf" %>
                 </div>
 
                 <!-- workspace -->
@@ -143,7 +145,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             <h2><%=myResources.getString("SearchByQuery")%></h2>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchForm.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
-                            <%@include file="../WEB-INF/jspf/zuRechtCustomVocabularyLists.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICDownloadOptions.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchOptionsModal.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtAudioPlayInfoModal.jspf" %>
@@ -379,7 +380,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
                                 
                 /************* click events for vocabulary buttons ****************/
-                $("#open-my-vocabulary-lists-btn").on('click', function(){
+                $("#edit-my-vocabulary-lists-btn").on('click', function(){
                     $("#modal-myVocabularyLists").find('.customVariableGroup').each(function(){
                         $(this).find('.customVariable').val('');
                         $(this).find('.customFileInput').val('');
@@ -2129,10 +2130,30 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
                 if(finished){
                     customVarMap = map;
+                    updateCustomWordLists();
                     $(selectorModal).modal('hide');
                 }
             }
 
+            function updateCustomWordLists(){
+                $("#customWordlists-list").empty();
+                    for (let [key, value] of customVarMap) {  
+                        const file = customVarMap.get(key);
+                        $("#customWordlists-list").append("<li class='list-group-item border-0' \n\
+            value='"+key+"' style='height: 30px; padding: 0px 0px 0px 0px;'>\n\
+<i class='fa fa-trash-o ml-2 mt-1 trashIconBtn pl-0 mr-3' aria-hidden='true' onClick='deleteVar(this)'></i>"+file.name+" ("+key+")</li>");
+                }
+            }
+            
+            function deleteVar(obj){
+                var value = $(obj).parent().text();
+                var key = $(obj).parent().attr("value");
+                alert(key);
+                alert(value);
+                customVarMap.delete(key);
+                updateCustomWordLists();
+            }
+            
             async function writeCustomVarForQuery(selectorForm, query){
                 var result ="";
                     for (let [key, value] of customVarMap) {           

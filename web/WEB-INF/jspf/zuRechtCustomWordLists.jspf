@@ -1,0 +1,12 @@
+<%@page import="org.zumult.objects.IDList"%>
+<div id="customWordlists-card" class="card checkbox-container-card mb-3" style="max-width: 20rem;">
+                   
+    <div class="card-header"><%=myResources.getString("MyWordLists")%>
+        <button id="edit-my-vocabulary-lists-btn" type="button" class="btn btn-sm float-right"><span class="icon"><i class='fa fa-edit'></i></span></button>
+    </div>
+
+    <div class="card-body">
+        <ul id="customWordlists-list" class="list-group">
+        </ul>
+    </div>
+</div>
