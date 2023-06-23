@@ -2,11 +2,11 @@
 <div id="customWordlists-card" class="card checkbox-container-card mb-3" style="max-width: 20rem;">
                    
     <div class="card-header"><%=myResources.getString("MyWordLists")%>
-        <button id="edit-my-vocabulary-lists-btn" type="button" class="btn btn-sm float-right"><span class="icon"><i class='fa fa-edit'></i></span></button>
+        <button id="edit-my-vocabulary-lists-btn" type="button" class="btn btn-sm float-right" title="<%=myResources.getString("AddCustomWordListsBtn")%>">
+            <span class="icon"><i class='fa fa-upload'></i></span></button>
     </div>
 
-    <div class="card-body">
-        <ul id="customWordlists-list" class="list-group">
-        </ul>
+    <div class="card-body" id="customWordlists-list" data-placeholder="<%=myResources.getString("MyWordListsHelp")%> <span class='link' onclick='openHelpForVar(this)'><%=myResources.getString("LearnMore")%></span>">
+
     </div>
 </div>
