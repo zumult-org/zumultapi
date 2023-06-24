@@ -56,17 +56,25 @@ public abstract class AbstractSearcher {
         if (constraints!=null){
             String wordLists = constraints.get(Constants.CUSTOM_WORDLISTS_KEY);
             if(wordLists!=null && !wordLists.isEmpty() && !wordLists.equals("null")){
+
+                /* '&' and '|' occur in AGD lemmas and should be preceded by backslash. 
+                For user-friendly reasons, the correct entry is added here 
+                if the user has not done so */
+                
+                wordLists = wordLists.replaceAll("(?<!\\\\)&", "\\\\&").replaceAll("(?<!\\\\)\\|", "\\\\|");
+                
+                // handling special characters in XML
+                wordLists = wordLists.replaceAll("&(?!amp)", "&amp;");
+
                 try {
                     Document doc = (Document) IOHelper.DocumentFromText(wordLists);
                     NodeList nodes = doc.getElementsByTagName(Constants.CUSTOM_WORDLISTS_KEY);
                     Element element = ((Element)(nodes.item(0)));
                     HashMap<String, String[]> variables = (HashMap<String, String[]>) Arrays.stream(element.getTextContent().split(";"))
-                                .map(s -> s.split(":")).collect(Collectors.toMap(s -> s[0], s-> s[1].split(",")));
+                                .map(s -> s.split(":")).collect(Collectors.toMap(s -> s[0], s-> s[1].replace("&amp;", "&").split(",")));
                     wordListsMap = variables;
                     additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(wordLists));
-                }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException e){
-                    throw new SearchServiceException("Please check the syntax of your wordlists!");
-                }catch (IOException e){
+                }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException | IOException e){
                     throw new SearchServiceException("Please check the syntax of your wordlists!");
                 }
             }

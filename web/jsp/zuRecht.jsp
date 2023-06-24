@@ -775,7 +775,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /**********************************************************/
             
             function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms, wordLists){                        
-                            
+                
                 ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
@@ -820,7 +820,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            }
 
             function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context){                        
-            
+                
                 ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
@@ -931,7 +931,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
               
             function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, wordLists){
-                 ajaxSearchRequest= $.ajax({
+                ajaxSearchRequest= $.ajax({
                         type: "POST",
                         url: url,
                         data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, customWordLists: wordLists},                      
@@ -2071,7 +2071,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*             methods for using variables and custom wordlists            */
             /***************************************************************************/
             
-            function checkAndSaveCustomVariables(selectorModal){
+            async function checkAndSaveCustomVariables(selectorModal){
                 var finished = true;
                 var map  = new Map();
                 $(selectorModal).find('.customVariableGroup').each(function(){
@@ -2109,7 +2109,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         // check if file uploaded
                         if(customFile!==''){
                             const file = $(this).find('.customFile')[0].files[0];
-                            map.set(customVariable, file);
+                            map.set(customVariable, file);  
                         }else{
                             if(customFileInput!==''){
                                 // check in customVarMap
@@ -2118,7 +2118,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     alert("Can't read file " + customFileInput +". Please upload it again!");  
                                     return false;
                                 }else{
-                                    const file = customVarMap.get(customVariable);
+                                    const file = customVarMap.get(customVariable);                                 
                                     map.set(customVariable, file);
                                 }
                             }else{
@@ -2130,6 +2130,16 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     }
                 });
                 if(finished){
+                    var i=0;
+                    for (let [key, value] of map) {     
+                        let test = await checkMyWorslist(value);
+                        if(test){
+                            alert(test + value.name);  
+                            return false;
+                        }
+                        i=i+1;
+                    }
+                    
                     var i=0;
                     for (let [key, value] of map) {           
                         customVarMap.set(key, value);
@@ -2216,8 +2226,31 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                 return text;
             }
- 
             
+            async function checkMyWorslist(file) {
+                let test = await new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = (evt) => resolve(parseMyWorslist(evt.target.result));
+                    reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name);
+                    reader.readAsText(file, "UTF-8");
+                });
+
+                return test;
+            }
+
+            function parseMyWorslist(text){
+                var lines = text.split(/\r?\n/);
+                var i;
+                for (i = 0; i < lines.length; i++) {
+                    if(lines[i].includes("\"") || lines[i].includes("\'")){
+                        return "Text files are not allowed to contain quotations! Please check ";
+                    }
+                }
+                return "";
+            }
+
+            
+
         </script>
     </body>
 </html>

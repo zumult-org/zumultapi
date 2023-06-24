@@ -1,7 +1,6 @@
 <div class="form-group">
-    <div style="line-height:80%"><small><i><%=myResources.getString("CustomWordListsInfo1")%></i></small></div>
-    <div style="line-height:80%" class="mt-2"><small><i><%=myResources.getString("CustomWordListsInfo2")%></i></small></div>
- 
+    <div style="line-height:80%" class="mb-3"><small><i><%=myResources.getString("CustomWordListsInfo2")%></i></small></div>
+
     <% for(int i=1; i<5; i++){ %>
     <div class="row mt-2 customVariableGroup">
         <div class="col-3">
