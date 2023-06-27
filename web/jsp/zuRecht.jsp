@@ -1039,6 +1039,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            
                 $(selector).find('.KWICSearch-result').empty();
                 
+                // handling special characters in XML
+                wordLists = wordLists.replace(/'/g, "&apos;");
+
                 //display summary
                 if(selector==='#repetition-search-result-area'){
                     $(selector).find('.KWICSearch-result').append("<h4><%=myResources.getString("Results")%></h4><div class='clearfix'>\n\
@@ -1138,7 +1141,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 $("#modal-kwicDownloadOptions-spinner").css("display", "block");
 
                                                 // send request
-                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists);
+                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists.replace(/&apos;/g, "'"));
                                                 
                                             }else{
                                                 alert("A minimum of 1 item can be downloaded!");
@@ -2130,14 +2133,34 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     }
                 });
                 if(finished){
+                    var files = [];
                     var i=0;
+                    var n = 0;
                     for (let [key, value] of map) {     
-                        let test = await checkMyWorslist(value);
+                        let test = await parseMyWordlist(value);
                         if(test){
-                            alert(test + value.name);  
-                            return false;
+                            files[n] = value.name;
+                            n=n+1;
                         }
                         i=i+1;
+                    }
+                    
+                    if(files.length > 0){
+                        var str = '';
+                        for (var j = 0; j < files.length; j++){
+                            str += files[j];
+                            str +=  '\n';
+                        }
+                        if(files.length > 1){
+                            str += '\ncontain ';
+                        }else{
+                            str += '\ncontains '; 
+                        }
+                        
+                        alert(str +"some of the reserved regular expression characters: .*+?|()[]{}$ ."+
+                                " Please escape these characters with a backslash, if you want to override their special meaning."
+                                 + "\n\nFor example," + "\n\n'Klump|Klumpen' looks for lemmas 'Klump' and 'Klumpen'"+
+"\n'Klump\\|Klumpen' looks for lemma 'Klump|Klumpen'");
                     }
                     
                     var i=0;
@@ -2196,22 +2219,27 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     for (let [key, value] of customVarMap) {           
                         if (query.includes(key + " ") || query.includes(key + "]") || query===key ){
                             let text = await readWordListAsCommaSeparated(key, value);
-                            result = result + key.substring(1) + ":" + text + ";";
+                            result = result + key.substring(1) + '<%=Constants.CUSTOM_WORDLISTS_VARIABLE_TOKEN_DELIMITER %>' + text + '<%=Constants.CUSTOM_WORDLISTS_VARIABLE_DELIMITER %>';
                         }
                     }
-                    result = result.substring(0, result.length - 1);
+                    result = result.substring(0, result.length - '<%=Constants.CUSTOM_WORDLISTS_VARIABLE_DELIMITER %>'.length);
                     $(selectorForm).find('.customWordLists').val(result);
             }
             
             function addCommas(text){
                 var lines = text.split(/\r?\n/);
                 var wordList = ''; 
-                var i;
+                var added=false;
                 for (i = 0; i < lines.length; i++) {
-                    wordList += lines[i].trim();
-                    if(i!==lines.length-1){
-                        wordList +=  ",";
+                    var line = lines[i].trim();
+                    if(line){
+                        if(added){
+                            wordList +=  '<%= Constants.CUSTOM_WORDLISTS_TOKEN_DELIMITER%>';
+                        }
+                        wordList += line;
+                        added=true;
                     }
+                    
                 }
                 return wordList;
             }
@@ -2227,10 +2255,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 return text;
             }
             
-            async function checkMyWorslist(file) {
+            async function parseMyWordlist(file) {
                 let test = await new Promise((resolve) => {
                     let reader = new FileReader();
-                    reader.onload = (evt) => resolve(parseMyWorslist(evt.target.result));
+                    reader.onload = (evt) => resolve(checkForRegEx(evt.target.result));
                     reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name);
                     reader.readAsText(file, "UTF-8");
                 });
@@ -2238,15 +2266,15 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 return test;
             }
 
-            function parseMyWorslist(text){
+            function checkForRegEx(text){
                 var lines = text.split(/\r?\n/);
                 var i;
                 for (i = 0; i < lines.length; i++) {
-                    if(lines[i].includes("\"") || lines[i].includes("\'")){
-                        return "Text files are not allowed to contain quotations! Please check ";
+                    if(lines[i].match(/([^\\\\]|^)[\.\*\+\|\?\)\(\[\]\}\{\$]/)){
+                        return true;
                     }
                 }
-                return "";
+                return false;
             }
 
             

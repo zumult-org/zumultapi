@@ -317,4 +317,8 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR="\\|";
     
     public static final String CUSTOM_WORDLISTS_KEY = "wordLists";
+    
+    public static final String CUSTOM_WORDLISTS_TOKEN_DELIMITER = "COMMA";
+    public static final String CUSTOM_WORDLISTS_VARIABLE_TOKEN_DELIMITER = "DOPPELPUNKT";
+    public static final String CUSTOM_WORDLISTS_VARIABLE_DELIMITER = "STRICHPUNKT";
 }
