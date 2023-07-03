@@ -409,7 +409,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }catch (IllegalArgumentException ex) {
             Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
             if(ex.getMessage().contains("expected ')'") || ex.getMessage().contains("end-of-string")){
-                throw new SearchServiceException("Please check the query syntax: Sie haben anscheinend eine nicht geschlossene runde Klammer!"); 
+                throw new SearchServiceException("Please check the query syntax, for example, if all round brackets are closed!"); 
             }else{
                 throw new SearchServiceException("Please check the query syntax: " + ex.getMessage()); 
             }

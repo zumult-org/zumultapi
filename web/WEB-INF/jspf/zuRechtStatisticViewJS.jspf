@@ -15,7 +15,7 @@
     var query = '<%= query.replace("\\", "\\\\") %>';
     var corpusQueryStr = '<%= corpusQuery %>';          
     var mode = '<%=mode %>';
-    var wordLists = "<%=wordLists %>"; // please use here double quotes because values can contain single quotes
+    var wordLists = "<%=wordLists.replace("\\", "\\\\") %>"; // please use here double quotes because values can contain single quotes
     var count = 100;
     var offset = 0;
     var sortType = '<%= SortTypeEnum.ABS_DESC.name() %>';

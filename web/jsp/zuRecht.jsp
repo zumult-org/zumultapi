@@ -2137,8 +2137,11 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     var i=0;
                     var n = 0;
                     for (let [key, value] of map) {     
-                        let test = await parseMyWordlist(value);
-                        if(test){
+                        let text = await parseMyWordlist(value);
+                        var test = checkForRegEx(text, value);
+                        if(test===1){ 
+                            return false;
+                        }else if(test===2){
                             files[n] = value.name;
                             n=n+1;
                         }
@@ -2157,7 +2160,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             str += '\ncontains '; 
                         }
                         
-                        alert(str +"some of the reserved regular expression characters: .*+?|()[]{}$ ."+
+                        alert(str +"some of the reserved regular expression characters: . , + , * , ? , ( , ) , [ , ] , { , } , | , \ ."+
                                 " Please escape these characters with a backslash, if you want to override their special meaning."
                                  + "\n\nFor example," + "\n\n'Klump|Klumpen' looks for lemmas 'Klump' and 'Klumpen'"+
 "\n'Klump\\|Klumpen' looks for lemma 'Klump|Klumpen'");
@@ -2256,25 +2259,38 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             async function parseMyWordlist(file) {
-                let test = await new Promise((resolve) => {
+                let text = await new Promise((resolve) => {
                     let reader = new FileReader();
-                    reader.onload = (evt) => resolve(checkForRegEx(evt.target.result));
+                    reader.onload = (evt) => resolve(evt.target.result);
                     reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name);
                     reader.readAsText(file, "UTF-8");
                 });
 
-                return test;
+                return text;
             }
 
-            function checkForRegEx(text){
+            function checkForRegEx(text, file){
                 var lines = text.split(/\r?\n/);
+                
+                // check if the line can be a regex. If not, the text file will be not accepted
                 var i;
                 for (i = 0; i < lines.length; i++) {
-                    if(lines[i].match(/([^\\\\]|^)[\.\*\+\|\?\)\(\[\]\}\{\$]/)){
-                        return true;
+                    try {
+                        var grep = new RegExp(lines[i]);
+                    }catch(e) {
+                        alert(e + " in " + file.name);
+                        return 1;
                     }
                 }
-                return false;
+                
+                // check for unescaped regex characters to create a note for the user
+                var j;
+                for (j = 0; j < lines.length; j++) {             
+                    if(lines[j].match(/([^\\\\]|^)[\.\*\+\|\?\)\(\[\]\}\{]/)){
+                        return 2;
+                    }
+                }
+                return 0;
             }
 
             
