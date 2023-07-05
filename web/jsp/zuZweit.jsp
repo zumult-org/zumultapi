@@ -147,7 +147,7 @@
                 </form>
             </div>
             <div class="col-sm-8">
-                <p style="font-size:smaller;color:red;" class="border border-danger rounded text-center py-1 px-1">
+                <p style="font-size:smaller;color:#DC4C64;" class="border border-danger rounded text-center py-1 px-1">
                     <%=myResources.getString("ZuZweitWarning")%>
                 </p>
                 <%= html %>
