@@ -1053,7 +1053,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <div class='float-right clearfix'>\n\
                         <div class='float-left'>\n\
                         <form target='_blank' action='../jsp/zuRechtHitStatisticView.jsp' method='post'>\n\
-                        <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
+                        <input type='hidden' name='q' value='"+ queryStr +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
                         <input type='hidden' name='wordLists' value='"+ wordLists +"' />\n\
@@ -1067,7 +1067,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         </div>\n\
                         <div class='float-right'>\n\
                         <form class='ml-3' target='_blank' action='../jsp/zuRechtMetadataStatisticView.jsp' method='post'>\n\
-                        <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
+                        <input type='hidden' name='q' value='"+ queryStr +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
                         <input type='hidden' name='wordLists' value='"+ wordLists +"' />\n\
@@ -1322,7 +1322,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $('button.btn-open-lemma-table').on('click', function(){    
                      var form = $(this).closest('form');
                      var transcriptID = this.getAttribute('data-value-source');
-                     var newQueryStr = encodeSpecialUmlauts(queryStr) + " within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"&#47;>";
+                     var newQueryStr = queryStr + " within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"&#47;>";
                      form.append("<input type='hidden' name='q' value='"+ newQueryStr +"' />");
                      form.append("<input type='hidden' name='cq' value='"+ corpusQueryStr+"' />");
                      form.append("<input type='hidden' name='metadataKeyID' value='<%= Constants.ATTRIBUTE_NAME_LEMMA %>' />");
@@ -1784,14 +1784,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(w.document.head).append(printStyleForQueryHelp);
                 $(w.document.body).html(content);
             }
-            
-            function encodeSpecialUmlauts(queryStr){
-                var queryString = queryStr
-                    .replace(/Ö/g, "%C3%96")
-                    .replace(/ß/g, "%C3%9F");
-                return queryString;
-            }
-           
+
             function processError(xhr, status){
                 if (status === "abort"){
                     //ignore
@@ -2098,8 +2091,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         // variable is not null -> parse
                         if (!customVariable.match(/^\\$[A-Za-z0-9]+$/g)) {
                             finished = false;
-                            alert("\""+customVariable + "\" is not a valid variable. \n\
-            The variable name should start with '$' and must not contain any spaces or special characters, e.g. '$1', '$var1' or '$words'. ");
+                            alert("\""+customVariable + "\" is not a valid variable."+
+                                    " The variable name should start with '$' and must not contain any spaces or special characters, e.g. '$1', '$var1' or '$words'. ");
                             return false;
                         }else{
                             if(customVarMap.has(customVariable) || map.has(customVariable)){
@@ -2160,10 +2153,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             str += '\ncontains '; 
                         }
                         
-                        alert(str +"some of the reserved regular expression characters: . , + , * , ? , ( , ) , [ , ] , { , } , | , \ ."+
-                                " Please escape these characters with a backslash, if you want to override their special meaning."
-                                 + "\n\nFor example," + "\n\n'Klump|Klumpen' looks for lemmas 'Klump' and 'Klumpen'"+
-"\n'Klump\\|Klumpen' looks for lemma 'Klump|Klumpen'");
+                        alert(str +"some of the reserved regular expression characters: . , + , * , ? , ( , ) , [ , ] , { , } , | , \\ ."+
+                                " Please remember to escape these characters with a backslash to override their special meaning." +
+                                " Otherwise they will be interpreted as regular expressions." + 
+                                "\n\nFor example," + "\n\n'Klump|Klumpen' looks for lemmas 'Klump' and 'Klumpen'"+
+                                "\n'Klump\\|Klumpen' looks for lemma 'Klump|Klumpen'\n\n'W.' looks for lemma 'WG', 'WC' etc.\n'W\\.'"+
+                                " looks for lemma 'W.' (=abbreviated first name) ");
                     }
                     
                     var i=0;
@@ -2180,7 +2175,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         function createListValue(id, name){
         return "<div class='py-0 my-0'>\n\
 <i class='fa fa-trash-o py-0 my-0 ml-0 trashIconBtn mr-2'aria-hidden='true' onClick='deleteVar(this)'></i><strong class='py-0 my-0'>" + id + '</strong></div>'
-               + "<div class='py-0 my-0' style='white-space: nowrap;overflow: hidden;text-overflow: ellipsis;' ><small style='vertical-align: super;'>" + name + '</small></div>';
+               + "<div class='py-0 my-0 customWordlists-item-fileName' style='white-space: nowrap;overflow: hidden;text-overflow: ellipsis;' ><small style='vertical-align: super;'>" + name + '</small></div>';
     }
 
             function updateCustomWordLists(){
@@ -2193,6 +2188,15 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             .addClass('py-0 my-0')
                             .html(createListValue(key, file.name))
                             .appendTo($("#customWordlists-list"));
+                    
+                    $(".customWordlists-item-fileName").on({
+                        mouseenter: function () {
+                            $(this).css("overflow", "visible");
+                        },
+                        mouseleave: function () {
+                            $(this).css("overflow", "hidden");
+                        }
+                    });
                     }
                 }else{
                     addItalicPlaceholder("#customWordlists-list");
@@ -2262,7 +2266,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 let text = await new Promise((resolve) => {
                     let reader = new FileReader();
                     reader.onload = (evt) => resolve(evt.target.result);
-                    reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name);
+                    reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name + ". Please upload it again!");
                     reader.readAsText(file, "UTF-8");
                 });
 
@@ -2278,7 +2282,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     try {
                         var grep = new RegExp(lines[i]);
                     }catch(e) {
-                        alert(e + " in " + file.name);
+                        alert(e + ". Please check " + file.name);
                         return 1;
                     }
                 }
