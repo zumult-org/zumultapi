@@ -7,7 +7,6 @@ package org.zumult.io;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -355,19 +354,6 @@ public class IOHelper {
         
     }
     
-    public static String decodeUmlauts(String s){
-         String result = s.replace("Ã„", "Ä")
-                 .replace("Ã–", "Ö")
-                 .replace("Ãœ", "Ü")
-                 .replace("Ã¤", "ä")
-                 .replace("Ã¶", "ö")
-                 .replace("Ã¼", "ü")
-                 .replace("ÃŸ", "ß")
-                 .replace("Â€", "€")
-                 .replace("%C3%9F", "ß")
-                 .replace("%C3%96", "Ö");
-         return result;
-     }    
     
     public static Map<String, String> sortMapByValue(Map<String, String> map){
         List<Map.Entry<String, String>> list = new ArrayList(map.entrySet());

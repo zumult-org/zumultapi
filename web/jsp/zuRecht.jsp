@@ -122,7 +122,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
                 <!-- corpora -->
                 <div class="col-md-2"> 
-                    <%@include file="../WEB-INF/jspf/zuRechtCorporaColumn.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtCorpora.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtCustomWordLists.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtCustomWordListsModal.jspf" %>
+                    <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
                 </div>
 
                 <!-- workspace -->
@@ -142,8 +145,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <div class="tab-pane mt-3 active" id="query-tab-content">
                             <h2><%=myResources.getString("SearchByQuery")%></h2>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchForm.jspf" %>
-                            <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
-                            <%@include file="../WEB-INF/jspf/zuRechtCustomVocabularyLists.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICDownloadOptions.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchOptionsModal.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtAudioPlayInfoModal.jspf" %>
@@ -167,7 +168,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     </div>
                                     <div class="table-wrapper table-responsive" id="statistics-result"></div>
 
-                                    <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
                                     <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchOptionsModal.jspf" %>
                                     <%@include file="../WEB-INF/jspf/zuRechtThematicVocabularyLists.jspf" %>
                                               
@@ -179,7 +179,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <div class="tab-pane mt-3" id="repetition-tab-content">
                             <h2><%=myResources.getString("SearchForRepetitions")%></h2>
                             <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchForm.jspf" %>
-                            <%@include file="../WEB-INF/jspf/zuRechtSearchHelpModal.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchOptionsModal.jspf" %>
                             <div id="repetition-search-result-area" class="searchResultArea"></div>
                         </div>
@@ -213,6 +212,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             var zuRechtVocabularyTabHelp = "zuRechtVocabularyHelp.html";
             var zuRechtRepetitionTabHelp = "zuRechtRepetitionHelp.html";
             var zuRechtKWICResultView = "zuRechtKWICResultView.html";
+            var zuRechtMyWordlistsHelp = "zuRechtMyWordlistsHelp.html";
             var printStyleForQueryHelp = "  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>\n\
                                             <style>\n\
                                                 .query-example {background-color: #f3f3f3; color: #337AB7;}\n\
@@ -239,6 +239,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 
                 
                 addPOSToBeIgnoredWhenSearchingRepetitions('.ignorePOSforDistance');
+                addItalicPlaceholder("#customWordlists-list");    
 
                 $('#corpus-info-button').on("click", function(){
                     var url = '<%=webAppBaseURL%>' + "/jsp/corpusoverview.jsp#FOLK";
@@ -351,18 +352,18 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /********** click events for buttons with help infos **********************/
                 
                 $('#kwic-search-form').find('.btn-open-help').on("click", function(){
-                    $('#query-tab-content').find('.search-help-modal').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
+                    $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
                 }); 
                 
                 $('#vocabulary-search-form').find('.btn-open-help').on("click", function(){
-                    $('#vocabulary-tab-content').find('.search-help-modal').modal('show').find('.modal-content').load(zuRechtVocabularyTabHelp);
+                    $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtVocabularyTabHelp);
                 });
                 
                 $('#repetition-search-form').find('.btn-open-help').on("click", function(){
-                    $('#repetition-tab-content').find('.search-help-modal').modal('show').find('.modal-content').load(zuRechtRepetitionTabHelp);
-                });
-                
+                    $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtRepetitionTabHelp);
+                });                               
 
+                
                 
                 /********** click events for buttons with search options **********************/
 
@@ -379,20 +380,20 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 });
                                 
                 /************* click events for vocabulary buttons ****************/
-                $("#open-my-vocabulary-lists-btn").on('click', function(){
+                $("#edit-my-vocabulary-lists-btn").on('click', function(){
                     $("#modal-myVocabularyLists").find('.customVariableGroup').each(function(){
                         $(this).find('.customVariable').val('');
                         $(this).find('.customFileInput').val('');
                         $(this).find('.customFile').val('');
                        });
                     
-                    var i=0;
+                 /*   var i=0;
                     for (let [key, value] of customVarMap) {           
                         $("#modal-myVocabularyLists").find('.customVariableGroup').eq(i).find('.customVariable').val(key);
                         $("#modal-myVocabularyLists").find('.customVariableGroup').eq(i).find('.customFileInput').val(value.name);
                         i=i+1;
                     }
-                    
+                    */
                     $("#modal-myVocabularyLists").modal('show');
 
                 });
@@ -704,6 +705,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     });          
 
                 });
+                
+             /*   var style = $("#queryInputField, input::-webkit-input-placeholder").css("font-size");
+                alert("Style: " + style);*/
                     
             });
             
@@ -771,7 +775,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /**********************************************************/
             
             function ajaxCallToGetKWICForRepetitions(selector, url, q, corpusQueryStr, pageLength, pageIndex, searchType, context, repetitions, synonyms, wordLists){                        
-                            
+                
                 ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
@@ -816,7 +820,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            }
 
             function ajaxCallToGetKWIC(selector, url, q, corpusQueryStr,  wordLists, pageLength, pageIndex, searchType, context){                        
-            
+                
                 ajaxSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
@@ -927,7 +931,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
               
             function ajaxCallToGetMoreKWIC(selector, url, queryString, corpusQueryStr, itemsPerPage, pageIndex, searchType, context, wordLists){
-                 ajaxSearchRequest= $.ajax({
+                ajaxSearchRequest= $.ajax({
                         type: "POST",
                         url: url,
                         data: { q: queryString, cq :corpusQueryStr, count : itemsPerPage, offset : pageIndex, mode : searchType, context : context, customWordLists: wordLists},                      
@@ -1035,6 +1039,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
            
                 $(selector).find('.KWICSearch-result').empty();
                 
+                // handling special characters in XML
+                wordLists = wordLists.replace(/'/g, "&apos;");
+
                 //display summary
                 if(selector==='#repetition-search-result-area'){
                     $(selector).find('.KWICSearch-result').append("<h4><%=myResources.getString("Results")%></h4><div class='clearfix'>\n\
@@ -1046,7 +1053,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         <div class='float-right clearfix'>\n\
                         <div class='float-left'>\n\
                         <form target='_blank' action='../jsp/zuRechtHitStatisticView.jsp' method='post'>\n\
-                        <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
+                        <input type='hidden' name='q' value='"+ queryStr +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
                         <input type='hidden' name='wordLists' value='"+ wordLists +"' />\n\
@@ -1060,7 +1067,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         </div>\n\
                         <div class='float-right'>\n\
                         <form class='ml-3' target='_blank' action='../jsp/zuRechtMetadataStatisticView.jsp' method='post'>\n\
-                        <input type='hidden' name='q' value='"+ encodeSpecialUmlauts(queryStr) +"' />\n\
+                        <input type='hidden' name='q' value='"+ queryStr +"' />\n\
                         <input type='hidden' name='cq' value='"+ corpusQueryStr+"' />\n\
                         <input type='hidden' name='mode' value='"+ searchType +"' />\n\
                         <input type='hidden' name='wordLists' value='"+ wordLists +"' />\n\
@@ -1134,7 +1141,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                                 $("#modal-kwicDownloadOptions-spinner").css("display", "block");
 
                                                 // send request
-                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists);
+                                                ajaxCallForKWICDownload(queryStr, corpusQueryStr, to, from, searchType, context, format, customMetadataForDownload, wordLists.replace(/&apos;/g, "'"));
                                                 
                                             }else{
                                                 alert("A minimum of 1 item can be downloaded!");
@@ -1315,7 +1322,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $('button.btn-open-lemma-table').on('click', function(){    
                      var form = $(this).closest('form');
                      var transcriptID = this.getAttribute('data-value-source');
-                     var newQueryStr = encodeSpecialUmlauts(queryStr) + " within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"&#47;>";
+                     var newQueryStr = queryStr + " within <<%= Constants.METADATA_KEY_TRANSCRIPT_DGD_ID %>=\"" + transcriptID + "\"&#47;>";
                      form.append("<input type='hidden' name='q' value='"+ newQueryStr +"' />");
                      form.append("<input type='hidden' name='cq' value='"+ corpusQueryStr+"' />");
                      form.append("<input type='hidden' name='metadataKeyID' value='<%= Constants.ATTRIBUTE_NAME_LEMMA %>' />");
@@ -1737,8 +1744,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $('#query-tab').tab('show');
                 
                 // close modal
-                $('#query-tab-content').find('.search-help-modal').modal('hide');
-                $('#vocabulary-tab-content').find('.search-help-modal').modal('hide');
+                $('.search-help-modal').modal('hide');
             }
             
             function getCorporaNames(obj){
@@ -1762,7 +1768,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 show.value=str;
                                 
                 // close modal
-                $('#repetition-tab-content').find('.search-help-modal').modal('hide');
+                $('.search-help-modal').modal('hide');
             }
            
             function printQueryHelp(obj) {
@@ -1778,14 +1784,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(w.document.head).append(printStyleForQueryHelp);
                 $(w.document.body).html(content);
             }
-            
-            function encodeSpecialUmlauts(queryStr){
-                var queryString = queryStr
-                    .replace(/Ö/g, "%C3%96")
-                    .replace(/ß/g, "%C3%9F");
-                return queryString;
-            }
-           
+
             function processError(xhr, status){
                 if (status === "abort"){
                     //ignore
@@ -2068,12 +2067,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             /*             methods for using variables and custom wordlists            */
             /***************************************************************************/
             
-            function checkAndSaveCustomVariables(selectorModal){
+            async function checkAndSaveCustomVariables(selectorModal){
                 var finished = true;
                 var map  = new Map();
                 $(selectorModal).find('.customVariableGroup').each(function(){
                     var customVariable = $(this).find('.customVariable').val();
                     var customFile = $(this).find('.customFile').val();
+                    var customFileInput = $(this).find('.customFileInput').val();
                     
                     if (customVariable===''){
                         // check if file uploaded
@@ -2082,7 +2082,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             alert("You habe loaded wordlists. Please define variables for them!");
                             return false;
                         }else{
-                            var customFileInput = $(this).find('.customFileInput').val();
                             if(customFileInput!==''){
                                 $(this).find('.customFileInput').val('');
                             }
@@ -2092,13 +2091,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         // variable is not null -> parse
                         if (!customVariable.match(/^\\$[A-Za-z0-9]+$/g)) {
                             finished = false;
-                            alert("\""+customVariable + "\" is not a valid variable. \n\
-            The variable name should start with '$' and must not contain any spaces or special characters, e.g. '$1', '$var1' or '$words'. ");
+                            alert("\""+customVariable + "\" is not a valid variable."+
+                                    " The variable name should start with '$' and must not contain any spaces or special characters, e.g. '$1', '$var1' or '$words'. ");
                             return false;
                         }else{
-                            if(map.has(customVariable)){
+                            if(customVarMap.has(customVariable) || map.has(customVariable)){
                                 finished = false;
-                                alert("Each variable may occur only once.");
+                                alert(customVariable + " exists already. Each variable may occur only once.");
                                 return false;
                             }
                         }
@@ -2106,9 +2105,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         // check if file uploaded
                         if(customFile!==''){
                             const file = $(this).find('.customFile')[0].files[0];
-                            map.set(customVariable, file);
+                            map.set(customVariable, file);  
                         }else{
-                            var customFileInput = $(this).find('.customFileInput').val();
                             if(customFileInput!==''){
                                 // check in customVarMap
                                 if(!customVarMap.has(customVariable)){
@@ -2116,9 +2114,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     alert("Can't read file " + customFileInput +". Please upload it again!");  
                                     return false;
                                 }else{
-                                    const file = customVarMap.get(customVariable);
+                                    const file = customVarMap.get(customVariable);                                 
                                     map.set(customVariable, file);
-                                } 
+                                }
                             }else{
                                 finished = false;
                                 alert("You have defined some variables. Please load wordlists for them!");  
@@ -2128,32 +2126,127 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     }
                 });
                 if(finished){
-                    customVarMap = map;
+                    var files = [];
+                    var i=0;
+                    var n = 0;
+                    for (let [key, value] of map) {     
+                        let text = await parseMyWordlist(value);
+                        var test = checkForRegEx(text, value);
+                        if(test===1){ 
+                            return false;
+                        }else if(test===2){
+                            files[n] = value.name;
+                            n=n+1;
+                        }
+                        i=i+1;
+                    }
+                    
+                    if(files.length > 0){
+                        var str = '';
+                        for (var j = 0; j < files.length; j++){
+                            str += files[j];
+                            str +=  '\n';
+                        }
+                        if(files.length > 1){
+                            str += '\ncontain ';
+                        }else{
+                            str += '\ncontains '; 
+                        }
+                        
+                        alert(str +"some of the reserved regular expression characters: . , + , * , ? , ( , ) , [ , ] , { , } , | , \\ ."+
+                                " Please remember to escape these characters with a backslash to override their special meaning." +
+                                " Otherwise they will be interpreted as regular expressions." + 
+                                "\n\nFor example," + "\n\n'Klump|Klumpen' looks for lemmas 'Klump' and 'Klumpen'"+
+                                "\n'Klump\\|Klumpen' looks for lemma 'Klump|Klumpen'\n\n'W.' looks for lemma 'WG', 'WC' etc.\n'W\\.'"+
+                                " looks for lemma 'W.' (=abbreviated first name) ");
+                    }
+                    
+                    var i=0;
+                    for (let [key, value] of map) {           
+                        customVarMap.set(key, value);
+                        i=i+1;
+                    }
+                    updateCustomWordLists();
                     $(selectorModal).modal('hide');
                 }
             }
 
+
+        function createListValue(id, name){
+        return "<div class='py-0 my-0'>\n\
+<i class='fa fa-trash-o py-0 my-0 ml-0 trashIconBtn mr-2'aria-hidden='true' onClick='deleteVar(this)'></i><strong class='py-0 my-0'>" + id + '</strong></div>'
+               + "<div class='py-0 my-0 customWordlists-item-fileName' style='white-space: nowrap;overflow: hidden;text-overflow: ellipsis;' ><small style='vertical-align: super;'>" + name + '</small></div>';
+    }
+
+            function updateCustomWordLists(){
+                customVarMap = new Map([...customVarMap.entries()].sort());
+                $("#customWordlists-list").empty();
+                if(customVarMap.size > 0){
+                    for (let [key, value] of customVarMap) {  
+                        const file = customVarMap.get(key);
+                        var span = $('<div/>')
+                            .addClass('py-0 my-0')
+                            .html(createListValue(key, file.name))
+                            .appendTo($("#customWordlists-list"));
+                    
+                    $(".customWordlists-item-fileName").on({
+                        mouseenter: function () {
+                            $(this).css("overflow", "visible");
+                        },
+                        mouseleave: function () {
+                            $(this).css("overflow", "hidden");
+                        }
+                    });
+                    }
+                }else{
+                    addItalicPlaceholder("#customWordlists-list");
+                }
+            }
+            
+            function addItalicPlaceholder(selector, text){
+                var placeholder = $(selector).attr("data-placeholder");
+                var em = $('<em/>')
+                            .html(placeholder)
+                            .css("color", "gray")
+                            .appendTo($(selector));
+            }
+            
+            function openHelpForVar(obj){
+                $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtMyWordlistsHelp);
+            }
+            
+            function deleteVar(obj){
+                var key = $(obj).parent().text();
+                customVarMap.delete(key.trim());
+                updateCustomWordLists();
+            }
+            
             async function writeCustomVarForQuery(selectorForm, query){
                 var result ="";
                     for (let [key, value] of customVarMap) {           
                         if (query.includes(key + " ") || query.includes(key + "]") || query===key ){
                             let text = await readWordListAsCommaSeparated(key, value);
-                            result = result + key.substring(1) + ":" + text + ";";
+                            result = result + key.substring(1) + '<%=Constants.CUSTOM_WORDLISTS_VARIABLE_TOKEN_DELIMITER %>' + text + '<%=Constants.CUSTOM_WORDLISTS_VARIABLE_DELIMITER %>';
                         }
                     }
-                    result = result.substring(0, result.length - 1);
+                    result = result.substring(0, result.length - '<%=Constants.CUSTOM_WORDLISTS_VARIABLE_DELIMITER %>'.length);
                     $(selectorForm).find('.customWordLists').val(result);
             }
             
             function addCommas(text){
                 var lines = text.split(/\r?\n/);
                 var wordList = ''; 
-                var i;
+                var added=false;
                 for (i = 0; i < lines.length; i++) {
-                    wordList += lines[i].trim();
-                    if(i!==lines.length-1){
-                        wordList +=  ",";
+                    var line = lines[i].trim();
+                    if(line){
+                        if(added){
+                            wordList +=  '<%= Constants.CUSTOM_WORDLISTS_TOKEN_DELIMITER%>';
+                        }
+                        wordList += line;
+                        added=true;
                     }
+                    
                 }
                 return wordList;
             }
@@ -2168,8 +2261,44 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                 return text;
             }
- 
             
+            async function parseMyWordlist(file) {
+                let text = await new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = (evt) => resolve(evt.target.result);
+                    reader.onerror = (evt) => alert("An error ocurred reading the file " + file.name + ". Please upload it again!");
+                    reader.readAsText(file, "UTF-8");
+                });
+
+                return text;
+            }
+
+            function checkForRegEx(text, file){
+                var lines = text.split(/\r?\n/);
+                
+                // check if the line can be a regex. If not, the text file will be not accepted
+                var i;
+                for (i = 0; i < lines.length; i++) {
+                    try {
+                        var grep = new RegExp(lines[i]);
+                    }catch(e) {
+                        alert(e + ". Please check " + file.name);
+                        return 1;
+                    }
+                }
+                
+                // check for unescaped regex characters to create a note for the user
+                var j;
+                for (j = 0; j < lines.length; j++) {             
+                    if(lines[j].match(/([^\\\\]|^)[\.\*\+\|\?\)\(\[\]\}\{]/)){
+                        return 2;
+                    }
+                }
+                return 0;
+            }
+
+            
+
         </script>
     </body>
 </html>

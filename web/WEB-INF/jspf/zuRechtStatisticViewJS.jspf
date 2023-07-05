@@ -4,7 +4,7 @@
     Author     : Elena Frick
     Description: These file contains java script code used in zuRechtMetadataStatisticView.jsp and zuRechtHitStatisticView.jsp
 --%>
-
+   
 <%@ page pageEncoding="UTF-8" %>             
 
 <script type="text/javascript">
@@ -12,10 +12,10 @@
     var sortedByLabel='<%=myResources.getString("SortedBy")%>'+ " ("+'<%=myResources.getString("SelectOne")%>'+"):";
 
     var ajaxSearchRequest = null;
-    var query = '<%= query.replace("\\", "\\\\") %>';
+    var query = '<%= query %>';
     var corpusQueryStr = '<%= corpusQuery %>';          
     var mode = '<%=mode %>';
-    var wordLists = '<%=wordLists %>';
+    var wordLists = "<%=wordLists %>"; // please use here double quotes because values can contain single quotes
     var count = 100;
     var offset = 0;
     var sortType = '<%= SortTypeEnum.ABS_DESC.name() %>';

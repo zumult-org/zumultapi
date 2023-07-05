@@ -1,5 +1,5 @@
-   
-                <div id="corpora-card" class="card checkbox-container-card mb-3" style="max-width: 20rem;">
+<%@page import="org.zumult.objects.IDList"%>
+<div id="corpora-card" class="card checkbox-container-card mb-3" style="max-width: 20rem;">
                     <!-- <div id="corpora-card" class="card mb-3 shadow p-3" style="max-width: 20rem;"> -->
                     <div class="card-header"><%=myResources.getString("AvailableCorpora")%><button id="corpus-info-button" type="button" class="btn btn-sm float-right"><span class="icon"><i class='fa fa-info'></i></span></button></div>
 

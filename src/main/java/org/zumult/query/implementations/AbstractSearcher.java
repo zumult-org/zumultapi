@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -56,17 +58,37 @@ public abstract class AbstractSearcher {
         if (constraints!=null){
             String wordLists = constraints.get(Constants.CUSTOM_WORDLISTS_KEY);
             if(wordLists!=null && !wordLists.isEmpty() && !wordLists.equals("null")){
+                
+                /* '&' and '|' occur in AGD lemmas and should be preceded by backslash. 
+                For user-friendly reasons, the correct entry is added here 
+                if the user has not done so */
+                wordLists = wordLists.replaceAll("(?<!\\\\)&", "\\\\&")
+                        //.replaceAll("(?<!\\\\)\\|", "\\\\|")
+                        .replaceAll("(?<!\\\\)\"", "\\\\\"")
+                        .replaceAll("(?<!\\\\)\\@", "\\\\@")
+                        .replaceAll("(?<!\\\\)#", "\\\\#");
+                
+                // handling special characters in XML
+                wordLists = wordLists.replaceAll("&(?!amp)", "&amp;");
+                
                 try {
                     Document doc = (Document) IOHelper.DocumentFromText(wordLists);
                     NodeList nodes = doc.getElementsByTagName(Constants.CUSTOM_WORDLISTS_KEY);
                     Element element = ((Element)(nodes.item(0)));
-                    HashMap<String, String[]> variables = (HashMap<String, String[]>) Arrays.stream(element.getTextContent().split(";"))
-                                .map(s -> s.split(":")).collect(Collectors.toMap(s -> s[0], s-> s[1].split(",")));
+                    HashMap<String, String[]> variables = (HashMap<String, String[]>) Arrays.stream(
+                            element.getTextContent().replace("&amp;", "&").split(Constants.CUSTOM_WORDLISTS_VARIABLE_DELIMITER))
+                                .map(s -> s.split(Constants.CUSTOM_WORDLISTS_VARIABLE_TOKEN_DELIMITER)).collect(Collectors.toMap(s -> s[0], s-> s[1].split(Constants.CUSTOM_WORDLISTS_TOKEN_DELIMITER)));
                     wordListsMap = variables;
+                /*    for (String str: wordListsMap.keySet()){
+                        String[] strObj = wordListsMap.get(str);
+                        for (String strObj1 : strObj) {
+                            System.out.println(strObj1);
+                        }
+                    }*/
+                    
                     additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(wordLists));
-                }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException e){
-                    throw new SearchServiceException("Please check the syntax of your wordlists!");
-                }catch (IOException e){
+                }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException | IOException e){
+                    Logger.getLogger(AbstractSearcher.class.getName()).log(Level.SEVERE, null, e);
                     throw new SearchServiceException("Please check the syntax of your wordlists!");
                 }
             }

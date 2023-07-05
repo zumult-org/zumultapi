@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg"> 
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title"><%=myResources.getString("MyWordLists")%></h2>                             
+                <h2 class="modal-title"><%=myResources.getString("AddCustomWordLists")%></h2>                             
             </div>
             <div class="modal-body">
                 <%@include file="zuRechtCustomVariables.jspf" %>

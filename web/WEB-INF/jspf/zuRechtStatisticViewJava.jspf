@@ -23,13 +23,19 @@
         
         // get parameters
         request.setCharacterEncoding("UTF-8");
-        //String query = request.getParameter("q");
-        String query = IOHelper.decodeUmlauts(request.getParameter("q"));
+        
+        String query = new String(request.getParameter("q").getBytes("ISO-8859-1"), "UTF-8").replace("\\", "\\\\");
         String corpusQuery = request.getParameter("cq");
         String metadataKeyID = request.getParameter("metadataKeyID");
         String metadataKeyName="";
-        String mode = request.getParameter("mode");
+        String mode = request.getParameter("mode");        
+
         String wordLists = request.getParameter("wordLists");
+        if (wordLists!=null){
+            wordLists = new String(wordLists.getBytes("ISO-8859-1"), "UTF-8").replace("\\", "\\\\");
+        }else{
+            wordLists="";
+        }
         
         int DEFAULT_QUERY_LENGTH = 1000;
                

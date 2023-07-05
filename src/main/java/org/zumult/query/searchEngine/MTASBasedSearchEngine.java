@@ -403,9 +403,16 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             MtasSpanQuery msq = p.parse(field, null, variables, ignore, maximumIgnoreLength);
             reader.close();
             return msq;
-        }catch (TokenMgrError | ParseException | IllegalArgumentException ex) {
+        }catch (TokenMgrError | ParseException ex) {
             Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
             throw new SearchServiceException("Please check the query syntax: " + ex.getMessage()); 
+        }catch (IllegalArgumentException ex) {
+            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+            if(ex.getMessage().contains("expected ')'") || ex.getMessage().contains("end-of-string")){
+                throw new SearchServiceException("Please check the query syntax, for example, if all round brackets are closed!"); 
+            }else{
+                throw new SearchServiceException("Please check the query syntax: " + ex.getMessage()); 
+            }
         }
     }
 
