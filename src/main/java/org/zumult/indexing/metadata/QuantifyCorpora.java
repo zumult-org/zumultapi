@@ -242,11 +242,13 @@ public class QuantifyCorpora implements Indexer {
 
                             // Special treatment for e_mit_video:
                             if (parameterName.equalsIgnoreCase("v_e_mit_video")){
-                                if (value.equalsIgnoreCase("ja")){
+                                System.out.println("VALUE: " + value);
+                                if (value.equalsIgnoreCase("ja") || value.equalsIgnoreCase("true")){
                                     value="Video";
                                 }else{
                                     value="nur Audio";
                                 }
+                                System.out.println("VALUE: " + value);
                             }
 
                             Element e = resultDocument.createElement("property");

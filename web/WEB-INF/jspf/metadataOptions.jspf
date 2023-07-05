@@ -7,27 +7,27 @@
 <% for (MetadataKey metadataKey : eventMetadataKeys){ 
     if (metadataKey.isQuantified()){%>
         <option value="v_<%= metadataKey.getID()%>" 
-            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            <% if (metaField.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
             E: <%=metadataKey.getName("de") %></option>
     <% }} %>
         
 <% for (MetadataKey metadataKey : speechEventMetadataKeys){
     if (metadataKey.isQuantified()){%>
         <option value="v_<%= metadataKey.getID()%>"
-            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            <% if (metaField.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
             SE: <%=metadataKey.getName("de") %></option>
     <% }}%>
         
 <% for (MetadataKey metadataKey : speakerMetadataKeys){
     if (metadataKey.isQuantified()){ %>
         <option value="v_<%= metadataKey.getID()%>"
-            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            <% if (metaField.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
             S: <%=metadataKey.getName("de") %></option>
     <% }} %>
         
 <% for (MetadataKey metadataKey : speakerInSpeechEventMetadataKeys){
     if (metadataKey.isQuantified()){%>
         <option value="v_<%= metadataKey.getID()%>"
-            <% if (metaField1.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
+            <% if (metaField.endsWith(metadataKey.getID())){%> selected="selected" <%} %>>
             SES: <%=metadataKey.getName("de") %></option>
     <% }} %>

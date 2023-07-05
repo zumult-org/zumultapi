@@ -109,6 +109,7 @@
                     <div class="form-group">
                         <label for="metaField1Selector"><%=myResources.getString("Parameter")%> 1</label>
                         <select class="form-control" id="metaField1Selector" name="metaField1" onchange="meta1Changed()">
+                            <% String metaField = metaField1; %>
                             <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>      
                         </select>
                     </div>                    
@@ -116,6 +117,7 @@
                     <div class="form-group">
                         <label for="metaField2Selector"><%=myResources.getString("Parameter")%> 2</label>
                         <select class="form-control" id="metaField2Selector" name="metaField2" onchange="meta2Changed()">
+                            <% metaField = metaField2; %>
                             <%@include file="../WEB-INF/jspf/metadataOptions.jspf" %>
                         </select>
                     </div>    
@@ -145,6 +147,9 @@
                 </form>
             </div>
             <div class="col-sm-8">
+                <p style="font-size:smaller;color:#DC4C64;" class="border border-danger rounded text-center py-1 px-1">
+                    <%=myResources.getString("ZuZweitWarning")%>
+                </p>
                 <%= html %>
             </div>
             <div class="col-sm-1">
