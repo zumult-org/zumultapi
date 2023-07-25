@@ -252,9 +252,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     urlTest.searchParams.set('lang',value);
                     window.location = urlTest;
                 });
-                             
                 
-                
+
+  
                 /********** setting context and page options according to url parameters **************/
                     <%    
                     
@@ -1852,6 +1852,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).find('.speakerChangeSelectGroup').css('display', 'none');
 
                 $(obj).find('.withinContributionCheckBox').prop( "checked", false);
+                $(obj).find('.outsideContributionCheckBox').prop( "checked", false);
                 
                 $(obj).find("input[name='posToBeIgnored']").each(function () {
                     $(this).prop( "checked", false);;
@@ -1859,6 +1860,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                 setDefaulValue($(obj).find('.minDistance'));
                 setDefaulValue($(obj).find('.maxDistance'));
+                
+                setDefaulValue($(obj).find('.minDistanceLeft'));
+                setDefaulValue($(obj).find('.maxDistanceLeft'));
+                
+                setDefaulValue($(obj).find('.minDistanceRight'));
+                setDefaulValue($(obj).find('.maxDistanceRight'));
                 
                 setDefaulValue($(obj).find('.positionToSpeakerChangeMin'));
                 setDefaulValue($(obj).find('.positionToSpeakerChangeMax'));
@@ -1881,6 +1888,16 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }else{
                     $(min).prop('disabled', false);
                     $(max).prop('disabled', false);
+                }
+            }
+            
+            function deselectOtherOptions(obj){
+                if ($(obj).is(':checked')) {
+                    if ( $(obj).hasClass( "withinContributionCheckBox" ) ){
+                        $(obj).parent().parent().find('.outsideContributionCheckBox').prop("checked", false);
+                    }else{
+                        $(obj).parent().parent().find('.withinContributionCheckBox').prop("checked", false);
+                    }
                 }
             }
             

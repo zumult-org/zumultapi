@@ -313,6 +313,10 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT="withinSpeakerContributionLeft";
     public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT="withinSpeakerContributionRight";
     public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE="minDistanceToContextLeft";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE="maxDistanceToContextLeft";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE="minDistanceToContextRight";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE="maxDistanceToContextRight";
     
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR="\\|";
     

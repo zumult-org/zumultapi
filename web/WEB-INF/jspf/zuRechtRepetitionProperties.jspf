@@ -191,48 +191,100 @@
         <div class="row">
             
            <!-- context left -->
-           <div class="ml-3 mt-2">
+  
+            <div class="ml-3 mt-2 input-group input-group-sm firstInRow">
+                <div class="input-group-prepend">
+                    <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextLeft")%>
+                        <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoLeft")%>" 
+                            style="padding-left: 15px;"></i>                        
+                    </span>
+                </div>
+                <input type="text" class="form-control form-control-sm repetitionContextFieldLeft"
+                            placeholder="<%=myResources.getString("ForExample")%> <pause/>[ ]{0,3}" >
+            </div>
+                
+            <div class="ml-3 mt-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextLeft")%>
-                            <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoLeft")%>" 
-                               style="padding-left: 15px;"></i>                        
+                        <span class="input-group-text"><%=myResources.getString("DistanceBetweenContextAndRepetition")%>
+                                <i class="ml-2 fa fa-info-circle" title="???" ></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control form-control-sm repetitionContextFieldLeft"
-                            placeholder="<%=myResources.getString("ForExample")%> <pause/>[ ]{0,3}" style="width: 350px;">
+                    <div class="form-check form-check-inline ml-2" >
+                        <label class="form-check-label mr-2" >min.</label>
+                        <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm minDistanceLeft" maxlength="1" value="0">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label mr-2">max.</label>
+                        <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistanceLeft" maxlength="1" value="0">
+                        <label class="form-check-label mr-3 ml-2"><%=myResources.getString("WordTokens")%></label>
+                    </div>
+                   
+                </div>
+            </div>
+                
+            <div class="ml-3 mt-2">
+                <div class="input-group input-group-sm">
                     <div class="ml-2 form-check form-check-inline">
-                        <input class="form-check-input form-control-sm withinContributionCheckBoxLeft" type="checkbox">
-                        <label class="form-check-label"><%=myResources.getString("WithinContributionWithRepetition")%></label>
+                        <input class="form-check-input form-control-sm withinContributionCheckBox withinContributionCheckBoxLeft" type="checkbox" onchange='deselectOtherOptions(this)'>
+                        <label class="form-check-label"><em><%=myResources.getString("WithinContributionWithRepetition")%></em></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-control-sm outsideContributionCheckBox outsideContributionCheckBoxLeft" type="checkbox" onchange='deselectOtherOptions(this)'>
+                        <label class="form-check-label"><em><%=myResources.getString("OutsideContributionWithRepetition")%></em></label>
                     </div>
                 </div>  
-            </div>  
+            </div> 
                     
         </div>
                     
         <div class="row">
             
            <!-- context right-->
-           <div class="ml-3 mt-2">
+           
+            <div class="ml-3 mt-2 input-group input-group-sm firstInRow">
+                <div class="input-group-prepend">
+                    <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextRight")%>
+                        <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoRight")%>" 
+                            style="padding-left: 15px;"></i>                        
+                    </span>
+                </div>
+                <input type="text" class="form-control form-control-sm repetitionContextFieldRight"
+                            placeholder="<%=myResources.getString("ForExample")%> <pause/>[ ]{0,3}" >
+            </div>
+            <div class="ml-3 mt-2">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextRight")%>
-                            <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoRight")%>"
-                               style="padding-left: 5px;"></i>        
-                               
-                               
+                        <span class="input-group-text"><%=myResources.getString("DistanceBetweenContextAndRepetition")%>
+                                <i class="ml-2 fa fa-info-circle" title="???" ></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control form-control-sm repetitionContextFieldRight"
-                           placeholder="<%=myResources.getString("ForExample")%> [ ]{0,2}[norm=&quot;denn&quot;]" 
-                            style="width: 350px;">
+                    <div class="form-check form-check-inline ml-2" >
+                        <label class="form-check-label mr-2" >min.</label>
+                        <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm minDistanceRight" maxlength="1" value="0">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label mr-2">max.</label>
+                        <input type="text" style="height:25px;width:35px;" class="form-control form-control-sm maxDistanceRight" maxlength="1" value="0">
+                        <label class="form-check-label mr-3 ml-2"><%=myResources.getString("WordTokens")%></label>
+                    </div>
+                   
+                </div>
+            </div>
+                    
+            <div class="ml-3 mt-2">
+                <div class="input-group input-group-sm">
                     <div class="ml-2 form-check form-check-inline">
-                        <input class="form-check-input form-control-sm withinContributionCheckBoxRight" type="checkbox">
-                        <label class="form-check-label"><%=myResources.getString("WithinContributionWithRepetition")%></label>
+                        <input class="form-check-input form-control-sm withinContributionCheckBox withinContributionCheckBoxRight" type="checkbox" onchange='deselectOtherOptions(this)'>
+                        <label class="form-check-label"><em><%=myResources.getString("WithinContributionWithRepetition")%></em></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-control-sm outsideContributionCheckBox outsideContributionCheckBoxRight" type="checkbox" onchange='deselectOtherOptions(this)'>
+                        <label class="form-check-label"><em><%=myResources.getString("OutsideContributionWithRepetition")%></em></label>
                     </div>
                 </div>  
-            </div>  
-                    
+            </div> 
+         
         </div>
         
 

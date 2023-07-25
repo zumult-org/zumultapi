@@ -34,7 +34,7 @@ public class Repetition {
         setSpeaker(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER).item(0).getTextContent()));   
         setSpeakerMetadata(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA).item(0).getTextContent());
         setSpeakerChange(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE).item(0).getTextContent()));
-        setIgnoredCustomPOS(new HashSet<String>(Arrays.asList(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS).item(0).getTextContent().split(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR))));    
+        setIgnoredCustomPOS(new HashSet<>(Arrays.asList(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS).item(0).getTextContent().split(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR))));    
         setOptionIgnoreTokenOrder(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER).item(0).getTextContent()));
         setMinMaxDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE).item(0).getTextContent()), 
                 getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE).item(0).getTextContent()));
@@ -238,15 +238,11 @@ public class Repetition {
     }
     
     private void setOptionWithinSpeakerContributionLeft(Boolean withinSpeakerContributionLeft){
-        if(withinSpeakerContributionLeft!=null){
-            this.context.withinSpeakerContributionLeft = withinSpeakerContributionLeft;
-        }
+        this.context.withinSpeakerContributionLeft = withinSpeakerContributionLeft;
     }
     
     private void setOptionWithinSpeakerContributionRight(Boolean withinSpeakerContributionRight){
-        if(withinSpeakerContributionRight!=null){
-            this.context.withinSpeakerContributionRight = withinSpeakerContributionRight;
-        }
+        this.context.withinSpeakerContributionRight = withinSpeakerContributionRight;
     }
     
     private void setIgnoredCustomPOS(Set<String> ignoredCustomPOS) throws SearchServiceException{
@@ -309,8 +305,8 @@ public class Repetition {
     private class Context {
         String precededby;
         String followedby;
-        Boolean withinSpeakerContributionLeft = false;
-        Boolean withinSpeakerContributionRight = false;
+        Boolean withinSpeakerContributionLeft = null;
+        Boolean withinSpeakerContributionRight = null;
 
     }
     
