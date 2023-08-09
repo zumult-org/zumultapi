@@ -431,39 +431,53 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
         Element speakerOverlapSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
         speakerOverlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_SPEAKER_OVERLAP);
         speakerOverlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_SUBTYPE, Constants.SPANGRP_SUBTYPE_TIME_BASED);
+        
+        Element overlapSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
+        overlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_OVERLAP);
+        overlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_SUBTYPE, Constants.SPANGRP_SUBTYPE_TIME_BASED);
                     
         String person = annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_WHO);
         Iterator annotationBlocksInterator = body.getChildren().iterator();
         while (annotationBlocksInterator.hasNext()){
             Element child = (Element) annotationBlocksInterator.next();
             if((child.getName().equals(Constants.ELEMENT_NAME_ANNOTATION_BLOCK) && !child.getAttributeValue(Constants.ATTRIBUTE_NAME_WHO).equals(person)) 
-                || child.getName().equals(Constants.ELEMENT_NAME_VOCAL) || child.getName().equals(Constants.ELEMENT_NAME_INCIDENT)){
+                                || child.getName().equals(Constants.ELEMENT_NAME_VOCAL) || child.getName().equals(Constants.ELEMENT_NAME_INCIDENT)){
                 
-                
+
                 double from = getInterval(child.getAttributeValue(Constants.ATTRIBUTE_NAME_START), timeline);
                 double to = getInterval(child.getAttributeValue(Constants.ATTRIBUTE_NAME_END), timeline);
 
                 // check for overlap
                 if (from <ownEnd && to>ownStart){
                     // this is an overlap
-
+                    
                     // add <annotationBlock> span to speaker-overlap group
                     Element spanElement = new Element (Constants.ELEMENT_NAME_SPAN, ns);
                     
                     spanElement.setAttribute(Constants.ATTRIBUTE_NAME_FROM, ((from > ownStart)? child.getAttributeValue(Constants.ATTRIBUTE_NAME_START) : annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_START)));
                     spanElement.setAttribute(Constants.ATTRIBUTE_NAME_TO, ((to<ownEnd) ? child.getAttributeValue(Constants.ATTRIBUTE_NAME_END) : annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_END)));
-                    speakerOverlapSpanGrp.addContent(spanElement);
                     
                     if(child.getName().equals(Constants.ELEMENT_NAME_ANNOTATION_BLOCK)){
+                        Iterator allWords = child.getDescendants(new ElementFilter(Constants.ELEMENT_NAME_WORD_TOKEN));
+                        if(allWords.hasNext()){
+                            speakerOverlapSpanGrp.addContent(spanElement);
+                        }else{
+                            overlapSpanGrp.addContent(spanElement);
+                        }
                         spanElement.setText(child.getAttributeValue(Constants.ATTRIBUTE_NAME_WHO));
+                    }else{
+                        overlapSpanGrp.addContent(spanElement);
                     }
                 }  
                 
             }
             
         }
-        if (speakerOverlapSpanGrp.getChildren().size()>0){
+        if (!speakerOverlapSpanGrp.getChildren().isEmpty()){
             annotationBlock.addContent(speakerOverlapSpanGrp);
+        }
+        if (!overlapSpanGrp.getChildren().isEmpty()){
+            annotationBlock.addContent(overlapSpanGrp);
         }
         
     }

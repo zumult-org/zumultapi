@@ -22,4 +22,9 @@ public class BackendInterfaceFactory {
         return (BackendInterface) Class.forName(Configuration.getBackendInterfaceClassPath()).newInstance();
     }
     
+    public static BackendInterface newBackendInterface(String backendInterfaceClassPath) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+        System.out.println("Backend: " + backendInterfaceClassPath);
+        return (BackendInterface) Class.forName(backendInterfaceClassPath).newInstance();
+    }
+    
 }

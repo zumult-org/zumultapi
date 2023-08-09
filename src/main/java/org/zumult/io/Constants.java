@@ -134,7 +134,7 @@ public class Constants {
     public static final String METADATA_KEY_EVENT_DURATION = "e_dauer";
     public static final String METADATA_KEY_SPEAKER_BIRTH_DATE = "s_geb_jahr";
     public static final String METADATA_KEY_SPEAKER_BIRTH_AGE = "ses_alter_s";
-    public static final String METADATA_KEY_EVENT_NUMBER_VIDEOS = "e_video_anzahl";
+    public static final String METADATA_KEY_EVENT_NUMBER_VIDEOS = "t_video_anzahl";
 
     
     // not indexed speaker metadata (in TB mode)
@@ -144,6 +144,7 @@ public class Constants {
     
     public static final String SPANGRP_SUBTYPE_TIME_BASED = "time-based";
     public static final String SPANGRP_TYPE_SPEAKER_OVERLAP = "speaker-overlap";
+    public static final String SPANGRP_TYPE_OVERLAP = "overlap";
     public static final String SPANGRP_TYPE_META = "meta";
     public static final String SPANGRP_TYPE_OVERLAP_WITH_COMMON_EVENTS = "overlap-with-common-events";
     public static final String SPANGRP_TYPE_TOKEN_OVERLAP = "token-overlap";

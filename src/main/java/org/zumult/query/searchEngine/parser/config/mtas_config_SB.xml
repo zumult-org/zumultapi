@@ -678,6 +678,7 @@
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="speaker-overlap"/>
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="alternative"/>
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="overlap-with-common-events"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="overlaps"/>
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="another-speaker"/>
 		</condition>
             </mapping>
@@ -699,6 +700,20 @@
 		</condition>
             </mapping>
             
+            <mapping type="groupAnnotation" name="span" start="from" end="to">                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="overlap" />
+                    </pre>
+                </token>
+                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="overlap-with-common-events"/>
+		</condition>
+            </mapping>
+            
             <mapping type="groupAnnotation" name="span" start="from" end="to">
                 <token type="string" offset="false" realoffset="false" parent="false">
                     <pre>
@@ -713,6 +728,34 @@
                     <item type="attribute" name="to" />
                     <item type="text"/>
                     <item type="ancestorAttribute" distance="0" name="type" not="false" condition="speaker-overlap"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="overlap" />
+                    </pre>
+                </token>
+                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="speaker-overlap"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="overlap" />
+                    </pre>
+                </token>
+                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="overlap"/>
 		</condition>
             </mapping>
             

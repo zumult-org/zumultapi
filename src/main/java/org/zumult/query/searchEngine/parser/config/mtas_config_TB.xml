@@ -870,6 +870,7 @@
                     <item type="attribute" name="to" />
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="as"/>  <!-- NOTE: condition, not value-->
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="speaker-overlap"/>
+                    <item type="ancestorAttribute" distance="0" name="type" not="true" condition="overlap"/>
                     <item type="ancestorAttribute" distance="0" name="type" not="true" condition="alternative"/>
 		</condition>
             </mapping>
@@ -908,6 +909,20 @@
                     <item type="attribute" name="from" />
                     <item type="attribute" name="to" />
                     <item type="ancestorAttribute" distance="0" name="type" not="false" condition="speaker-overlap"/>
+		</condition>
+            </mapping>
+            
+            <mapping type="groupAnnotation" name="span" start="from" end="to">                
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+                        <item type="string" value="overlap" />
+                    </pre>
+                </token>
+                
+                <condition>
+                    <item type="attribute" name="from" />
+                    <item type="attribute" name="to" />
+                    <item type="ancestorAttribute" distance="0" name="type" not="false" condition="overlap"/>
 		</condition>
             </mapping>
             

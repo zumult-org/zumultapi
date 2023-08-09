@@ -34,6 +34,7 @@ public class Configuration {
     private static String wordlistPath;
     private static String germanetPath;
     
+    private static String quantificationPath;
     private static String transcriptPath;
     private static String protocolPath;
     private static String metadataPath;
@@ -86,6 +87,10 @@ public class Configuration {
     
     public static String getTranscriptPath(){
         return transcriptPath;
+    }
+    
+    public static String getQuantificationPath(){
+        return quantificationPath;
     }
     
     public static String getWordlistPath(){
@@ -154,6 +159,7 @@ public class Configuration {
             restAPIBaseURL = config.getString("backend.rest-api-base-url");
             webAppBaseURL = config.getString("backend.web-app-base-url");
             transcriptPath = config.getString("backend.transcript-path");
+            quantificationPath = config.getString("backend.quantification-path");
             protocolPath = config.getString("backend.protocol-path");
             
             searchIndexPath = config.getString("backend.search-index-path");

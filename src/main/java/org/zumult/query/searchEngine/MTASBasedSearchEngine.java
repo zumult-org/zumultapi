@@ -2971,7 +2971,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForRightContext(ArrayList<Repetition> repetitions, 
             ArrayList<String> indexPaths) throws SearchServiceException{
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap();
+        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap(); /*{context string: {segment name: {docID: {positions}}}}*/
         for(Repetition repetition: repetitions){
             String  context = repetition.getFollowedby();
             
@@ -2998,7 +2998,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForLeftContext(ArrayList<Repetition> repetitions, 
             ArrayList<String> indexPaths) throws SearchServiceException{
         
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap();
+        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap(); /*{context string: {segment name: {docID: {positions}}}}*/
         for(Repetition repetition: repetitions){
             String  context = repetition.getPrecededby();
 
