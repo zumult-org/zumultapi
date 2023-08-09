@@ -18,7 +18,14 @@
 <%
     
     String metaField1 = request.getParameter("metaField1");
+    if (metaField1==null){
+        metaField1 = "v_e_se_interaktionsdomaene";
+    }
+    
     String metaField2 = request.getParameter("metaField2");
+    if (metaField2==null){
+        metaField2 = "v_s_geschlecht";
+    }
     
     String units = request.getParameter("units");
     if (units==null){
@@ -35,7 +42,6 @@
         corpusID = "FOLK";
     }
    
-System.out.println("Berechnung für: " + backendParam + " " + corpusID + " " + metaField1 + " " + metaField2);
 %>
 <!DOCTYPE html>
 <%@include file="../WEB-INF/jspf/locale.jspf" %>     
