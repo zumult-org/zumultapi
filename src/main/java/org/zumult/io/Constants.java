@@ -134,7 +134,7 @@ public class Constants {
     public static final String METADATA_KEY_EVENT_DURATION = "e_dauer";
     public static final String METADATA_KEY_SPEAKER_BIRTH_DATE = "s_geb_jahr";
     public static final String METADATA_KEY_SPEAKER_BIRTH_AGE = "ses_alter_s";
-    public static final String METADATA_KEY_EVENT_NUMBER_VIDEOS = "e_video_anzahl";
+    public static final String METADATA_KEY_EVENT_NUMBER_VIDEOS = "t_video_anzahl";
 
     
     // not indexed speaker metadata (in TB mode)
@@ -144,6 +144,7 @@ public class Constants {
     
     public static final String SPANGRP_SUBTYPE_TIME_BASED = "time-based";
     public static final String SPANGRP_TYPE_SPEAKER_OVERLAP = "speaker-overlap";
+    public static final String SPANGRP_TYPE_OVERLAP = "overlap";
     public static final String SPANGRP_TYPE_META = "meta";
     public static final String SPANGRP_TYPE_OVERLAP_WITH_COMMON_EVENTS = "overlap-with-common-events";
     public static final String SPANGRP_TYPE_TOKEN_OVERLAP = "token-overlap";
@@ -313,6 +314,10 @@ public class Constants {
     public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT="withinSpeakerContributionLeft";
     public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT="withinSpeakerContributionRight";
     public static final String REPETITION_XML_ELEMENT_NAME_SYNONYMS="synonyms"; 
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE="minDistanceToContextLeft";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE="maxDistanceToContextLeft";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE="minDistanceToContextRight";
+    public static final String REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE="maxDistanceToContextRight";
     
     public static final String REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR="\\|";
     

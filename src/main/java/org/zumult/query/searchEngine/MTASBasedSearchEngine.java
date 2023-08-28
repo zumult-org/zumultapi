@@ -2534,14 +2534,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             // check context
             String contextStringLeft = repetitionSpecification.getPrecededby();
             if(contextStringLeft!=null && !contextStringLeft.isEmpty()){
-                contextCheckLeft = checkContext(positionsWithContextLeft, contextStringLeft, segmentName, docID, sortedMap.firstKey());
+                contextCheckLeft = checkContext(positionsWithContextLeft, addDistanceToLeftContext(repetitionSpecification, contextStringLeft), segmentName, docID, sortedMap.firstKey());
             }else{
                 contextCheckLeft=true;
             }
             
             String contextStringRight = repetitionSpecification.getFollowedby();
             if(contextStringRight!=null && !contextStringRight.isEmpty()){
-                contextCheckRight = checkContext(positionsWithContextRight, contextStringRight, segmentName, docID, sortedMap.lastKey());
+                contextCheckRight = checkContext(positionsWithContextRight, addDistanceToRightContext(repetitionSpecification, contextStringRight), segmentName, docID, sortedMap.lastKey());
             }else{
                 contextCheckRight=true;
             }
@@ -2609,104 +2609,6 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }
         return check;
     }
-       
-    private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForContext(ArrayList<Repetition> repetitions, 
-            ArrayList<String> indexPaths, boolean precededBy) throws SearchServiceException{
-        
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap();
-
-        for(Repetition repetition: repetitions){
-            String queryString = null;
-            String context = null;
-        
-            if(precededBy){
-                context = repetition.getPrecededby();
-                if(context!=null && !context.isEmpty()){
-                    queryString = "<word/> precededby " + context;
-                    Boolean within = repetition.isWithinSpeakerContributionLeft();
-                    if(within){
-                        //queryString = "(" + queryString + ") within <annotationBlock/>";
-                        queryString = "(" + context + "<word/>) within <annotationBlock/>";               
-                    }
-                }
-            }else{
-                context = repetition.getFollowedby();
-                if(context!=null && !context.isEmpty()){
-                    queryString = "<word/> followedby " + context;
-                    Boolean within = repetition.isWithinSpeakerContributionRight();
-                    if(within){
-                        //queryString = "(" + queryString + ") within <annotationBlock/>";
-                        queryString = "(<word/>" + context + ") within <annotationBlock/>";
-                    }
-                }
-            }        
-            
-            if(queryString!=null){
-                
-                for (String indexPath: indexPaths){
-                    Directory directory;
-                    try {
-                        directory = FSDirectory.open(Paths.get(indexPath));
-                        if (directory != null) {
-                            try (IndexReader indexReader = DirectoryReader.open(directory)) {
-                                IndexSearcher searcher = new IndexSearcher(indexReader);
-                                MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
-                                SpanWeight spanweight = ((MtasSpanQuery) q.rewrite(indexReader)).createWeight(searcher, ScoreMode.COMPLETE, 0);
-                                ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
-
-                                while (iterator.hasNext()) {
-                                    LeafReaderContext lrc = iterator.next();
-                                    Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
-                                    SegmentReader r = (SegmentReader) lrc.reader(); 
-                                    if (spans != null) {
-                                        while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
-                                            if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
-                                                while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
-                                                    int docID = spans.docID();    
-                                                    String segmentName = r.getSegmentName();
-                                                    int position = 0;
-                                                    if(precededBy){
-                                                        position = spans.endPosition()-1;
-                                                    }else{
-                                                        position = spans.startPosition();
-                                                    }
-
-                                                    Set<Integer> set = new HashSet();
-                                                    Map<Integer, Set<Integer>> map = new HashMap();
-                                                    Map<String, Map<Integer, Set<Integer>>> mainMap = new HashMap();
-
-                                                    if(result.containsKey(context)){
-                                                        mainMap = result.get(context);
-                                                        if(mainMap.containsKey(segmentName)){
-                                                            map = mainMap.get(segmentName);
-                                                            if(map.containsKey(docID)){
-                                                                set = map.get(docID);
-                                                            }
-                                                        }
-                                                    }
-                                                    set.add(position);
-                                                    map.put(docID, set);
-                                                    mainMap.put(segmentName, map);
-                                                    result.put(context, mainMap);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }               
-
-                            }catch (IOException ex) {
-                                Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-                            } 
-                        }
-                    } catch (IOException ex) {
-                        Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-
-       return result;
-    }
     
     private boolean checkSpeakerChange(CodecInfo mtasCodecInfo, int docID, int firstPosition, int endPosition,
             List<String> prefixListSpeaker, String speakerOfSource,
@@ -2731,6 +2633,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         return (isSpeakerChangedDesired && speakerChanged) || (!isSpeakerChangedDesired && !speakerChanged);
     }
     
+    /* this method is based on <speaker-overlap> */
     private boolean checkPositionToOverlap(
             CodecInfo mtasCodecInfo, int docID, SortedMap<Integer, String> sortedMap,
             PositionOverlapEnum positionOverlap) throws IOException, SearchServiceException{
@@ -2805,7 +2708,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         return overlapCheck;
     }
     
-    
+    /* this method is based on word.type */
     private boolean checkPositionToOverlap2(
             CodecInfo mtasCodecInfo, int docID, SortedMap<Integer, String> sortedMap,
             PositionOverlapEnum positionOverlap) throws IOException, SearchServiceException{
@@ -3044,6 +2947,209 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         return wordTokenMap;
     }
     
+    private String addDistanceToLeftContext(Repetition repetition, String context){
+        int min = repetition.getMinDistanceToLeftContext();
+        int max = repetition.getMaxDistanceToLeftContext();
+
+        if(max>0){
+            return context + "[]{" + min + "," + max + "}";
+        } else{
+            return context;
+        }
+    }
+    
+    private String addDistanceToRightContext(Repetition repetition, String context){
+        int min = repetition.getMinDistanceToRightContext();
+        int max = repetition.getMaxDistanceToRightContext();
+
+        if(max>0){
+            return "[]{" + min + "," + max + "}" + context;
+        } else{
+            return context;
+        }
+    }
+    
+    private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForRightContext(ArrayList<Repetition> repetitions, 
+            ArrayList<String> indexPaths) throws SearchServiceException{
+        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap(); /*{context string: {segment name: {docID: {positions}}}}*/
+        for(Repetition repetition: repetitions){
+            String  context = repetition.getFollowedby();
+            
+            if(context!=null && !context.isEmpty()){
+                context = addDistanceToRightContext(repetition, context);
+                String queryString = "<word/>" + context;
+                String queryStringWithin = "(" + queryString + ") within <annotationBlock/>";
+                Boolean within = repetition.isWithinSpeakerContributionRight();
+                if(within!=null){
+                    if(within){
+                        result = addPositions(context, queryStringWithin, indexPaths, result, false);
+                    }else {
+                        result = addPositions(context, queryString, indexPaths, result, false);
+                        result = deletePositions(context, queryStringWithin, indexPaths, result, false);
+                    }
+                }else {
+                    result = addPositions(context, queryString, indexPaths, result, false);
+                }
+            }
+        }
+        return result;
+     }
+        
+    private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForLeftContext(ArrayList<Repetition> repetitions, 
+            ArrayList<String> indexPaths) throws SearchServiceException{
+        
+        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap(); /*{context string: {segment name: {docID: {positions}}}}*/
+        for(Repetition repetition: repetitions){
+            String  context = repetition.getPrecededby();
+
+            if(context!=null && !context.isEmpty()){
+                context = addDistanceToLeftContext(repetition, context);
+                String queryString = context+ "<word/>";
+                String queryStringWithin = "(" + queryString + ") within <annotationBlock/>";
+                
+                Boolean within = repetition.isWithinSpeakerContributionLeft();
+                if(within!=null){
+                    if(within){
+                        result = addPositions(context, queryStringWithin, indexPaths, result, true);
+                    }else {
+                        result = addPositions(context, queryString, indexPaths, result, true);
+                        result = deletePositions(context, queryStringWithin, indexPaths, result, true);
+                    }
+                }else{
+                    result = addPositions(context, queryString, indexPaths, result, true);
+                }
+            }       
+        }
+        return result;
+     }
+     
+     /* this method is just called if the left or right context of the repetition is specified */
+    private Map<String, Map<String, Map<Integer, Set<Integer>>>> addPositions(String context, String queryString, ArrayList<String> indexPaths, 
+            Map<String, Map<String, Map<Integer, Set<Integer>>>> result, boolean precededBy)throws SearchServiceException{
+        for (String indexPath: indexPaths){
+                    Directory directory;
+                    try {
+                        directory = FSDirectory.open(Paths.get(indexPath));
+                        if (directory != null) {
+                            try (IndexReader indexReader = DirectoryReader.open(directory)) {
+                                IndexSearcher searcher = new IndexSearcher(indexReader);
+                                MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
+                                SpanWeight spanweight = ((MtasSpanQuery) q.rewrite(indexReader)).createWeight(searcher, ScoreMode.COMPLETE, 0);
+                                ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
+
+                                while (iterator.hasNext()) {
+                                    LeafReaderContext lrc = iterator.next();
+                                    Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
+                                    SegmentReader r = (SegmentReader) lrc.reader(); 
+                                    if (spans != null) {
+                                        while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                                            if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
+                                                while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
+                                                    int docID = spans.docID();    
+                                                    String segmentName = r.getSegmentName();
+                                                    int position = 0;
+                                                    if(precededBy){
+                                                        position = spans.endPosition()-1;
+                                                    }else{
+                                                        position = spans.startPosition();
+                                                    }
+
+                                                    Set<Integer> set = new HashSet();
+                                                    Map<Integer, Set<Integer>> map = new HashMap();
+                                                    Map<String, Map<Integer, Set<Integer>>> mainMap = new HashMap();
+
+                                                    if(result.containsKey(context)){
+                                                        mainMap = result.get(context);
+                                                        if(mainMap.containsKey(segmentName)){
+                                                            map = mainMap.get(segmentName);
+                                                            if(map.containsKey(docID)){
+                                                                set = map.get(docID);
+                                                            }
+                                                        }
+                                                    }
+                                                    set.add(position);
+                                                    map.put(docID, set);
+                                                    mainMap.put(segmentName, map);
+                                                    result.put(context, mainMap);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }               
+
+                            }catch (IOException ex) {
+                                Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+                            } 
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+        return result;
+    }
+    
+     /* this method is just called if the left or right context of the repetition should not be within the same contribution */
+    private Map<String, Map<String, Map<Integer, Set<Integer>>>> deletePositions(String context, String queryString, ArrayList<String> indexPaths, 
+            Map<String, Map<String, Map<Integer, Set<Integer>>>> result, boolean precededBy)throws SearchServiceException{
+        for (String indexPath: indexPaths){
+                    Directory directory;
+                    try {
+                        directory = FSDirectory.open(Paths.get(indexPath));
+                        if (directory != null) {
+                            try (IndexReader indexReader = DirectoryReader.open(directory)) {
+                                IndexSearcher searcher = new IndexSearcher(indexReader);
+                                MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, null, null, null);
+                                SpanWeight spanweight = ((MtasSpanQuery) q.rewrite(indexReader)).createWeight(searcher, ScoreMode.COMPLETE, 0);
+                                ListIterator<LeafReaderContext> iterator = indexReader.leaves().listIterator();
+
+                                while (iterator.hasNext()) {
+                                    LeafReaderContext lrc = iterator.next();
+                                    Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
+                                    SegmentReader r = (SegmentReader) lrc.reader(); 
+                                    if (spans != null) {
+                                        while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                                            if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
+                                                while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
+                                                    int docID = spans.docID();    
+                                                    String segmentName = r.getSegmentName();
+                                                    int position = 0;
+                                                    if(precededBy){
+                                                        position = spans.endPosition()-1;
+                                                    }else{
+                                                        position = spans.startPosition();
+                                                    }
+
+                                                    if(result.containsKey(context)){
+                                                        Map<String, Map<Integer, Set<Integer>>> mainMap = result.get(context);
+                                                        if(mainMap.containsKey(segmentName)){
+                                                            Map<Integer, Set<Integer>> map = mainMap.get(segmentName);
+                                                            if(map.containsKey(docID)){
+                                                                Set<Integer> set = map.get(docID);
+                                                                set.remove(position);
+                                                                map.put(docID, set);
+                                                                mainMap.put(segmentName, map);
+                                                                result.put(context, mainMap);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }               
+
+                            }catch (IOException ex) {
+                                Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+                            } 
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+        return result;
+    }
+    
+    
     private class RepetitionSearcher implements HitReader {
         
         SearchEngineResponseHitList result = new SearchEngineResponseHitList();
@@ -3069,8 +3175,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             this.to = to;
             this.cutoff = cutoff;
             this.repetitionSpecifications = repetitionSpecifications;
-            this.positionsWithContextLeft = getPositionsForContext(repetitionSpecifications, indexPaths, true);
-            this.positionsWithContextRight = getPositionsForContext(repetitionSpecifications, indexPaths, false);
+            this.positionsWithContextLeft = getPositionsForLeftContext(repetitionSpecifications, indexPaths);
+            this.positionsWithContextRight = getPositionsForRightContext(repetitionSpecifications, indexPaths);
             this.synonyms = synonyms;
             this.germanet = germanet;
         }

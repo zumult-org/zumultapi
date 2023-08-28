@@ -80,6 +80,7 @@ public class QuantifyCorpora implements Indexer {
             int     totalCorpusTokensAll=0;
             
             for (String corpus : CORPORA_FOR_QUANTIFICATION){
+                System.out.println("------ " + corpus + " -------");
                 int totalCorpusTokens = 0;
                 double totalCorpusDuration = 0;
                 
@@ -163,7 +164,8 @@ public class QuantifyCorpora implements Indexer {
                                 totalCorpusTokensAll+=words.getLength();
                                 types.addAll(getTypes(words));
 
-                                String sID = isoTeiTranscriptionDoc.getSpeakerIDBySpeakerInitials(annotationBlock.getAttribute("who"));
+                                String sID = getSpeakerIdForWhoAttribute(annotationBlock.getAttribute(Constants.ATTRIBUTE_NAME_WHO), isoTeiTranscriptionDoc);
+
                                 if (!(sID==null) || ("???").equals(sID)){
                                     if (!speakerTokenCounts.containsKey(sID)){
                                         speakerTokenCounts.put(sID, 0);
@@ -286,7 +288,7 @@ public class QuantifyCorpora implements Indexer {
                             for (String transcriptID : transcriptsForSpeaker){   
 
                                 ISOTEITranscript isoTeiTranscriptionDoc = (ISOTEITranscript) backend.getTranscript(transcriptID);
-                                NodeList words = (NodeList)myXPath.evaluate("//tei:w[ancestor::tei:annotationBlock[@who='" + isoTeiTranscriptionDoc.getSpeakerInitialsBySpeakerID(speakerID) + "']]", isoTeiTranscriptionDoc.getDocument().getDocumentElement(), XPathConstants.NODESET);
+                                NodeList words = (NodeList)myXPath.evaluate("//tei:w[ancestor::tei:annotationBlock[@who='" + getWhoAttributeForSpeakerId(speakerID, isoTeiTranscriptionDoc) + "']]", isoTeiTranscriptionDoc.getDocument().getDocumentElement(), XPathConstants.NODESET);
 
                                 totalTokenCount+=words.getLength();
                                 speakerTypes.addAll(getTypes(words));
@@ -365,4 +367,22 @@ public class QuantifyCorpora implements Indexer {
         }
         return result;
     }
+    
+        private String getSpeakerIdForWhoAttribute(String who, ISOTEITranscript isoTeiTranscriptionDoc) throws XPathExpressionException{
+            Element idnoElement = ((Element)myXPath.evaluate("//tei:person[@xml:id='" + who + "']/tei:idno", isoTeiTranscriptionDoc.getDocument().getDocumentElement(), XPathConstants.NODE)); 
+            if (idnoElement!=null){
+                return idnoElement.getTextContent();
+            }else{
+                return null;
+            }                    
+        }
+        
+        private String getWhoAttributeForSpeakerId(String speakerID, ISOTEITranscript isoTeiTranscriptionDoc) throws XPathExpressionException{
+            Element idnoElement = ((Element)myXPath.evaluate("//tei:person/tei:idno[text()='"+speakerID+"']", isoTeiTranscriptionDoc.getDocument().getDocumentElement(), XPathConstants.NODE));                   
+            if (idnoElement!=null){
+                return idnoElement.getParentNode().getAttributes().getNamedItem("xml:id").getNodeValue();
+            }else {
+                return null;
+            }
+        }
 }

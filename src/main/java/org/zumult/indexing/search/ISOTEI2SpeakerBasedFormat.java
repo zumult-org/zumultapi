@@ -20,6 +20,7 @@ import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.filter.ElementFilter;
 import org.zumult.io.Constants;
 import org.zumult.io.FileIO;
 import org.zumult.objects.Event;
@@ -238,6 +239,10 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
         Element speakerOverlapSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
         speakerOverlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_SPEAKER_OVERLAP);
         speakerOverlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_SUBTYPE, Constants.SPANGRP_SUBTYPE_TIME_BASED);
+        
+        Element overlapSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
+        overlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_OVERLAP);
+        overlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_SUBTYPE, Constants.SPANGRP_SUBTYPE_TIME_BASED);
 
         Element tokenOverlapSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
         tokenOverlapSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_TOKEN_OVERLAP);
@@ -276,7 +281,13 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                         spanElement.setText(personSigle);
                         spanElement.setAttribute(Constants.ATTRIBUTE_NAME_FROM, ((from > ownStart)? child.getAttributeValue(Constants.ATTRIBUTE_NAME_START) : annoBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_START)));
                         spanElement.setAttribute(Constants.ATTRIBUTE_NAME_TO, ((to<ownEnd) ? child.getAttributeValue(Constants.ATTRIBUTE_NAME_END) : annoBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_END)));
-                        speakerOverlapSpanGrp.addContent(spanElement);
+                        
+                        Iterator allWords = child.getDescendants(new ElementFilter(Constants.ELEMENT_NAME_WORD_TOKEN));
+                        if(allWords.hasNext()){
+                            speakerOverlapSpanGrp.addContent(spanElement);
+                        }else{
+                            overlapSpanGrp.addContent(spanElement);
+                        }
                     }  
 
                 }
@@ -431,15 +442,19 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                             
         // add all created span groups to the new body 
         
-        if (speakerOverlapSpanGrp.getChildren().size() > 0){
+        if (!speakerOverlapSpanGrp.getChildren().isEmpty()){
             newBodyForSpeakerBasedView.addContent(speakerOverlapSpanGrp);
         }
         
-        if (tokenOverlapSpanGrp.getChildren().size() > 0){
+        if (!overlapSpanGrp.getChildren().isEmpty()){
+            newBodyForSpeakerBasedView.addContent(overlapSpanGrp);
+        }
+        
+        if (!tokenOverlapSpanGrp.getChildren().isEmpty()){
             newBodyForSpeakerBasedView.addContent(tokenOverlapSpanGrp);
         }
         
-        if (otherSpeakersGrp.getChildren().size() > 0){
+        if (!otherSpeakersGrp.getChildren().isEmpty()){
             newBodyForSpeakerBasedView.addContent(otherSpeakersGrp);
         }
         

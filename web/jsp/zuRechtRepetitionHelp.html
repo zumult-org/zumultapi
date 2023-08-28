@@ -784,13 +784,13 @@
         <p>Sometimes when searching for repetitions you might want to find special constructions 
             like German "X - Was für X?" or "X - Was ist (denn ein) X?". 
             In ZuRecht, it is possible by using the "Context (left)" and "Context (right)" features. They allow you to
-            apply CQP for specifying patterns of elements immediately preceding or following the repetition. 
+            apply CQP for specifying patterns of elements preceding or following the repetition. 
             For example, if you look for nouns and type <i>[norm="was"][norm="für"][ ]{0,1}</i> into the context left input field
         </p>
     </div>
 
     <!-- image -->   
-    <div><img src="../images/query_help/repetition_007.png" style="width: 60%;" alt="Context" /></div>
+    <div><img src="../images/query_help/repetition_026.png" style="width: 90%;" alt="Context" /></div>
              
     <!-- blank line -->
     <br> 
@@ -818,13 +818,15 @@
     <!-- note -->
     <div class="query-note">
         <span><b>NOTE:</b>
-           <br>The CQP pattern specified in the context input field matches the elements IMMEDIATELY preceding or following the repetition. 
+         <!--  <br>The CQP pattern specified in the context input field matches the elements IMMEDIATELY preceding or following the repetition. 
            If you want to allow some pauses or other verbal or non-verbal elements occurring in-between, you can use
            empty square brackets and specify how many such elements are allowed. 
-           <br><br>
+           <br>--><br>
            In the example above, we applied <i>[ ]{0,1}</i> to allow zero or one token 
            between the specified context 'was für' and the repetition itself. 
            That is why <i>wat für n ding</i> that contains an undefinite article <i>n</i> was matched.
+           <br><br>Alternatively you can use the distance input fields, but in this case only word tokens will be taken into account for the distance calculation:
+           <br><br><img src="../images/query_help/repetition_027.png" style="width: 90%;" alt="Context" />
         </span>
     </div>
         
@@ -833,20 +835,9 @@
         
     <!-- text -->
     <div>
-        <p>Additionally, you can check the checkbox
-        </p>
-    </div>
-    
-    <!-- image -->   
-    <div><img src="../images/query_help/repetition_010.png" style="width: 20%;" alt="Within the same contribution option" /></div>
-        
-    <!-- blank line -->
-    <br>
-    
-    <!-- text -->
-    <div>
-        <p>to limit the results only to those where the wanted context and the repetition itself are from the same 
-            contribution. This can be useful when the distance between the context and the repetition is set too generous.
+        <p>Additionally, you can use the checkboxes "within" and "outside the same contribution"
+        to limit the results only to those where the wanted context and the repetition itself are from the same or vice versa from different
+            contributions. This can be useful when the distance between the context and the repetition is set too generous.
         </p>
     </div>
     
@@ -856,11 +847,12 @@
     <!-- note -->
     <div class="query-note">
         <span><b>NOTE:</b>
-           <br>The function allowing to specify the right context of repetitions
+           <br>The function allowing to specify the left context of repetitions
            can also be used to find repetitions directly or 
            at a certain distance from pauses or other paraverbal events. 
-           The distance can be specified with [ ]{n,m} in the context input field, e.g. 
-           <i>&lt;pause/&gt;[ ]{0,3}</i>. This will find all repetition elements
+           The distance can be specified with [ ]{n,m} in the context input field or by using the distance input fields.
+           <br><br>
+           For example, <i>&lt;pause/&gt;[ ]{0,3}</i> will find all repetition elements
            following a pause with a distance of a minimum of 0 and a maximum of 3 tokens. 
            Example: <i>&quot;basisseite vom <b style="color:red;">transischtor</b> 
                (0.27 ) welschen <b style="color:red;">transistor</b> bitte&quot;</i> (FOLK_E_00001_SE_01_T_01).
@@ -874,7 +866,7 @@
     <div class="query-note">
         <span><b>NOTE:</b>
             <br>
-            Please consider the difference between the following pairs of <u>repetition context patterns</u>:
+            Please consider the difference between the following pairs of <u>repetition context patterns</u> working when both (min. and max.) distance input fields are set to 0:
             <br>
             <br><b>[pos="ART"]</b> matches repetitions immediately preceded by an article.
             <br><b>[!pos="ART"]</b> matches repetitions not immediately preceded by an article.

@@ -168,7 +168,7 @@ public abstract class ISOTEITransformer {
             System.exit(0); 
         } 
         
-        scannerVariableDelete.close();
+        //scannerVariableDelete.close();
     }
     
     void doit() throws IOException, JDOMException, Exception {
@@ -188,24 +188,24 @@ public abstract class ISOTEITransformer {
             
             System.out.println("Print (L) to get data from the local folder specified in DIR_IN "
                 + "under <transcript-converting-input>, (B) to get data from backend:");
-            Scanner scannerVariable = new Scanner(System.in);    
-        
             // transform transcripts
-            switch(scannerVariable.next().charAt(0)){
-            case 'L':
-                System.out.println("Getting data from " + DIR_IN);
-                readTranscriptsLocal();
-                break;
-            case 'B':
-                System.out.println("Getting data from Backend...");
-                getTransriptsFromBackend();
-                break;
-            default:
-                System.out.println("Not valid input!");
-                System.exit(0); 
-            } 
-            
-            scannerVariable.close();
+            try (Scanner scannerVariable = new Scanner(System.in)) {
+                // transform transcripts
+                switch(scannerVariable.next().charAt(0)){
+                    case 'L' -> {
+                        System.out.println("Getting data from " + DIR_IN);
+                        readTranscriptsLocal();
+                    }
+                    case 'B' -> {
+                        System.out.println("Getting data from Backend...");
+                        getTransriptsFromBackend();
+                    }
+                    default -> {
+                        System.out.println("Not valid input!");
+                        System.exit(0);
+                    }
+                }
+            }
               
         }catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ISOTEI2SpeakerBasedFormat.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,35 +5,13 @@
 
 <script type="text/javascript">    
 
-    var XML_ELEMENT_NAME_REPETITIONS='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS %>';
-    var XML_ELEMENT_NAME_REPETITION='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITION %>';
-    var XML_ELEMENT_NAME_SPEAKER='<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER %>';
-    var XML_ELEMENT_NAME_SPEAKER_METADATA='<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA %>';
-    var XML_ELEMENT_NAME_REPETITON_TYPE='<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>';
-    var XML_ELEMENT_NAME_MIN_DISTANCE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>';
-    var XML_ELEMENT_NAME_MAX_DISTANCE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>';
-    var XML_ELEMENT_NAME_IGNORED_CUSTOM_POS='<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS %>';
-    var XML_ELEMENT_NAME_SPEAKER_CHANGE='<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>';
-    var XML_ELEMENT_NAME_POSITION_TO_MATCH='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>';
-    var XML_ELEMENT_NAME_POSITION_TO_OVERLAP='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>';
-    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>';
-    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>';
-    var XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE='<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>';
-    var XML_ELEMENT_NAME_CONTEXT_LEFT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT %>';
-    var XML_ELEMENT_NAME_CONTEXT_RIGHT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT %>';
-    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>';
-    var XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT='<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>';
-    var XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE = '<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>';
-    var XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER = '<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>';
-    
-    
     var regexDistance = /^(0?\d|1\d|20)$/;
     var regexPositionToSpeakerChange =/^(0?[0-5])$/;
 
     function getXMLForRepetitions(){
         var repetitions = [];
         repetitions.push(
-            "<",XML_ELEMENT_NAME_REPETITIONS,">"
+            "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS %>',">"
         );
         
         $('#repetition-search-form').find('.repetitionPropertiesForm').each(function(){
@@ -138,78 +116,102 @@
             var contextLeft = $(this).find('.repetitionContextFieldLeft').val();
             var contextRight = $(this).find('.repetitionContextFieldRight').val();
             
-            var contextWithinSpeakerContributionLeft = false;
-            if ($(this).find('.withinContributionCheckBoxLeft').is(':checked')) {contextWithinSpeakerContributionLeft = true;}
+            var minDistanceLeft = getDistance(this, '.minDistanceLeft', 0, regexPositionToSpeakerChange);
+            var maxDistanceLeft = getDistance(this, '.maxDistanceLeft', 0, regexPositionToSpeakerChange);
             
-            var contextWithinSpeakerContributionRight = false;
+            var minDistanceRight= getDistance(this, '.minDistanceRight', 0, regexPositionToSpeakerChange);
+            var maxDistanceRight= getDistance(this, '.maxDistanceRight', 0, regexPositionToSpeakerChange);
+            
+            var contextWithinSpeakerContributionLeft = 'null';
+            if ($(this).find('.withinContributionCheckBoxLeft').is(':checked')) {contextWithinSpeakerContributionLeft = true;}
+            else{
+                if ($(this).find('.outsideContributionCheckBoxLeft').is(':checked')) {contextWithinSpeakerContributionLeft = false;}
+            }
+            
+            var contextWithinSpeakerContributionRight = 'null';
             if ($(this).find('.withinContributionCheckBoxRight').is(':checked')) {contextWithinSpeakerContributionRight = true;}
+            else{
+                if ($(this).find('.outsideContributionCheckBoxRight').is(':checked')) {contextWithinSpeakerContributionRight = false;}
+            }
 
             repetitions.push(
-                "<",XML_ELEMENT_NAME_REPETITION,">",
-                "<",XML_ELEMENT_NAME_REPETITON_TYPE,">",
+                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITION %>',">",
+                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>',">",
                 annotationLayer,
-                "</",XML_ELEMENT_NAME_REPETITON_TYPE,">",
-                "<",XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE,">",
+                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>',">",
                 similarityType,
-                "</",XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE,">",
-                "<",XML_ELEMENT_NAME_SPEAKER,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>',">",
+                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER %>',">",
                 speaker,
-                "</",XML_ELEMENT_NAME_SPEAKER,">",
-                "<",XML_ELEMENT_NAME_SPEAKER_METADATA,">",
+                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER %>',">",
+                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA %>',">",
                 speakerMetadata,
-                "</",XML_ELEMENT_NAME_SPEAKER_METADATA,">",
-                "<",XML_ELEMENT_NAME_MIN_DISTANCE,">",
+                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>',">",
                 minDistance,
-                "</",XML_ELEMENT_NAME_MIN_DISTANCE,">",
-                "<",XML_ELEMENT_NAME_MAX_DISTANCE,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>',">",
                 maxDistance,
-                "</",XML_ELEMENT_NAME_MAX_DISTANCE,">",
-                "<",XML_ELEMENT_NAME_IGNORED_CUSTOM_POS,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS %>',">",
                 ignoredCustomPOS,
-                "</",XML_ELEMENT_NAME_IGNORED_CUSTOM_POS,">",
-                "<",XML_ELEMENT_NAME_SPEAKER_CHANGE,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>',">",
                 speakerChange,
-                "</",XML_ELEMENT_NAME_SPEAKER_CHANGE,">",
-                "<",XML_ELEMENT_NAME_POSITION_TO_MATCH,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>',">",
                 positionToMatch,
-                "</",XML_ELEMENT_NAME_POSITION_TO_MATCH,">",
-                "<",XML_ELEMENT_NAME_POSITION_TO_OVERLAP,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>',">",
                 positionToOverlap,
-                "</",XML_ELEMENT_NAME_POSITION_TO_OVERLAP,">",
-                 "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>',">",
+                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>',">",
                 positionToSpeakerChangeType,
-                "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE,">",
-                 "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>',">",
+                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>',">",
                 positionToSpeakerChangeMin,
-                "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE,">",
-                 "<",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>',">",
+                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>',">",
                 positionToSpeakerChangeMax,
-                "</",XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,">",
-                 "<",XML_ELEMENT_NAME_CONTEXT_LEFT,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>',">",
+                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT %>',">",
                 contextLeft.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                "</",XML_ELEMENT_NAME_CONTEXT_LEFT,">",
-                "<",XML_ELEMENT_NAME_CONTEXT_RIGHT,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT %>',">",
                 contextRight.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                "</",XML_ELEMENT_NAME_CONTEXT_RIGHT,">",
-                 "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT %>',">",
+                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>',">",
                 contextWithinSpeakerContributionLeft,
-                "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT,">",
-                "<",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>',">",
                 contextWithinSpeakerContributionRight,
-                "</",XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT,">",
-                "<",XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER,">",
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE %>',">",
+                minDistanceLeft,
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE %>',">",
+                maxDistanceLeft,
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE %>',">",
+                minDistanceRight,
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE %>',">",
+                maxDistanceRight,
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>',">",
                 ignoreTokenOrder,
-                "</",XML_ELEMENT_NAME_REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER,">",
-                "</",XML_ELEMENT_NAME_REPETITION,">"
+                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>',">",
+                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITION %>',">"
             );
                         
         });
         
         repetitions.push(
-            "</",XML_ELEMENT_NAME_REPETITIONS,">"
+            "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS %>',">"
         );
                         
-       // alert(repetitions.join(""));
+        //alert(repetitions.join(""));
         return repetitions.join("");
     }
     

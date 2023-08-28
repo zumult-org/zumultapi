@@ -1,0 +1,84 @@
+<%-- 
+    Document   : zuzweit.jspf
+    Created on : 09.08.2023, 11:42:38
+    Author     : Elena Frick
+    Description: These file contains java script code used in zuZweit.jsp
+--%>
+   
+<%@ page pageEncoding="UTF-8" %>
+
+<script type="text/javascript">
+    function backendSelectionChanged(){
+        var corpusDropdown = document.getElementById('backendSelector');
+        var backendID = corpusDropdown.options[corpusDropdown.selectedIndex].value;
+        var selectedCorpus = $('#corpusSelector').val();
+
+        $('#corpusSelector').empty();
+        
+        if(backendID==="DGD"){
+
+            <% for (String cID1 : corporaDGD){ %>
+                $('#corpusSelector').append($('<option>', {
+                    value: "<%= cID1 %>",
+                    text: "<%= cID1 %>" 
+                }));
+            <% } %> 
+                     
+        }else{
+
+            <% for (String cID2 : corporaZumult){ %>
+                $('#corpusSelector').append($('<option>', {
+                    value: "<%= cID2 %>",
+                    text: "<%= cID2 %>"  
+            }));
+            <% } %> 
+        }
+        
+        if ( $("#corpusSelector option[value='"+selectedCorpus+"']").length > 0 ){
+            $('#corpusSelector').val(selectedCorpus).prop('selected', true);
+        }
+
+        corpusSelectionChanged();
+                                
+        }
+            
+    function corpusSelectionChanged(){
+        var corpusDropdown = document.getElementById('corpusSelector');
+        var corpusID = corpusDropdown.options[corpusDropdown.selectedIndex].value;
+        var metaField1 = $('#metaField1Selector').val();
+        var metaField2 = $('#metaField2Selector').val();
+
+        $.post(
+            BASE_URL + "/ZumultDataServlet",
+            { 
+                command: 'getMetadataKeys',
+                corpusID: corpusID
+            },
+            function( data ) {
+                $('#metaField1Selector').html(data);
+                $('#metaField2Selector').html(data);
+                if ( $("#metaField1Selector option[value='"+metaField1+"']").length > 0 ){
+                    $('#metaField1Selector').val(metaField1).prop('selected', true);
+                }
+                if ( $("#metaField2Selector option[value='"+metaField2+"']").length > 0 ){
+                    $('#metaField2Selector').val(metaField2).prop('selected', true);
+                }
+            }
+        );                
+    }
+
+    function meta1Changed(){
+
+    }
+
+    function meta2Changed(){
+
+    }
+
+    function unitChanged(){
+
+    }
+
+
+</script>
+

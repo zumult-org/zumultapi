@@ -119,6 +119,7 @@
                             ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("Event")%>' +")"),
                             ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEECH_EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("SpeechEvent")%>' +")"),
                             ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "SPEAKER_IN_SPEECH_EVENT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("SpeakerInSpeechEvent")%>' +")"),
+                            ajaxCallToGetMetadata(selector, corpusQueryStr, inputRight, inputLeft, searchType, "TRANSCRIPT", '<%=myResources.getString("Metadata")%>' +" ("+ '<%=myResources.getString("Transcript")%>' +")"),
                             ajaxCallToGetAnnotationTiers(selector, corpusQueryStr, inputRight, inputLeft, searchType, "span", '<%=myResources.getString("SpanBasedAnnotations")%>')).done(function(){
                         $("#autocompleteForQueryInputField-wait").remove(); 
                     });

@@ -34,10 +34,17 @@ public class Repetition {
         setSpeaker(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER).item(0).getTextContent()));   
         setSpeakerMetadata(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA).item(0).getTextContent());
         setSpeakerChange(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE).item(0).getTextContent()));
-        setIgnoredCustomPOS(new HashSet<String>(Arrays.asList(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS).item(0).getTextContent().split(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR))));    
+        setIgnoredCustomPOS(new HashSet<>(Arrays.asList(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS).item(0).getTextContent().split(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR))));    
         setOptionIgnoreTokenOrder(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER).item(0).getTextContent()));
         setMinMaxDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE).item(0).getTextContent()), 
                 getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE).item(0).getTextContent()));
+            
+        setContextLeftDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE).item(0).getTextContent()), 
+                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE).item(0).getTextContent()));
+        
+        setContextRightDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE).item(0).getTextContent()), 
+                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE).item(0).getTextContent()));
+        
         setPositionOverlap(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP).item(0).getTextContent());
         setPositionSpeakerChange(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE).item(0).getTextContent(), 
                 getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE).item(0).getTextContent()), 
@@ -55,7 +62,9 @@ public class Repetition {
             Integer minDistanceToSource, Integer maxDistanceToSource, String metadataQueryString,
             String positionSpeakerChangeType, Integer positionSpeakerChangeMin, 
             Integer positionSpeakerChangeMax, String precededby, String followedby, 
-            Boolean withinSpeakerContributionLeft, Boolean withinSpeakerContributionRight) throws SearchServiceException{
+            Boolean withinSpeakerContributionLeft, Boolean withinSpeakerContributionRight,
+            Integer minDistanceToLeftContext, Integer maxDistanceToLeftContext,
+            Integer minDistanceToRightContext, Integer maxDistanceToRightContext) throws SearchServiceException{
         
         setRepetitionType(type);
         setSimilarityType(similarity);
@@ -65,6 +74,8 @@ public class Repetition {
         setIgnoredCustomPOS(ignoredCustomPOS);
         setOptionIgnoreTokenOrder(ignoreTokenOrder);
         setMinMaxDistance(minDistanceToSource, maxDistanceToSource);
+        setContextLeftDistance(minDistanceToLeftContext, maxDistanceToLeftContext);
+        setContextRightDistance(minDistanceToRightContext, maxDistanceToRightContext);
         setPositionOverlap(positionOverlap);
         setPositionSpeakerChange(positionSpeakerChangeType, positionSpeakerChangeMin, positionSpeakerChangeMax);
         setOptionWithinSpeakerContributionLeft(withinSpeakerContributionLeft);
@@ -114,6 +125,14 @@ public class Repetition {
         return this.distanceToPreviousElement.minDistance;
     }
     
+    public Integer getMinDistanceToLeftContext(){
+        return this.context.distanceLeft.minDistance;
+    }
+    
+    public Integer getMinDistanceToRightContext(){
+        return this.context.distanceRight.minDistance;
+    }
+    
     public String getPrecededby(){
         return this.context.precededby;
     }
@@ -132,6 +151,14 @@ public class Repetition {
     
     public Integer getMaxDistance(){
         return this.distanceToPreviousElement.maxDistance;
+    }
+    
+    public Integer getMaxDistanceToLeftContext(){
+        return this.context.distanceLeft.maxDistance;
+    }
+    
+    public Integer getMaxDistanceToRightContext(){
+        return this.context.distanceRight.maxDistance;
     }
     
     public RepetitionTypeEnum getType(){
@@ -170,11 +197,11 @@ public class Repetition {
     }
     
     private void setPrecededby(String precededby){
-        this.context.precededby = precededby.replace("&lt;", "<").replace("&gt;", ">");
+        this.context.precededby = precededby.trim().replace("&lt;", "<").replace("&gt;", ">");
     }
     
     private void setFollowedby(String followedby){
-        this.context.followedby = followedby.replace("&lt;", "<").replace("&gt;", ">");
+        this.context.followedby = followedby.trim().replace("&lt;", "<").replace("&gt;", ">");
     }
     
     private void setSpeaker(Boolean speaker){
@@ -237,16 +264,30 @@ public class Repetition {
         this.distanceToPreviousElement.maxDistance = maxDistanceToSource;
     }
     
-    private void setOptionWithinSpeakerContributionLeft(Boolean withinSpeakerContributionLeft){
-        if(withinSpeakerContributionLeft!=null){
-            this.context.withinSpeakerContributionLeft = withinSpeakerContributionLeft;
+    private void setContextLeftDistance(Integer min, Integer max) throws SearchServiceException{
+        if(min>max){
+            throw new SearchServiceException("Please check the minDistance to the left context. It can not be greater than maxDistance");
         }
+        
+        this.context.distanceLeft.minDistance = min;
+        this.context.distanceLeft.maxDistance = max;
+    }
+    
+    private void setContextRightDistance(Integer min, Integer max) throws SearchServiceException{
+        if(min>max){
+            throw new SearchServiceException("Please check the minDistance to the right context. It can not be greater than maxDistance");
+        }
+        
+        this.context.distanceRight.minDistance = min;
+        this.context.distanceRight.maxDistance = max;
+    }
+    
+    private void setOptionWithinSpeakerContributionLeft(Boolean withinSpeakerContributionLeft){
+        this.context.withinSpeakerContributionLeft = withinSpeakerContributionLeft;
     }
     
     private void setOptionWithinSpeakerContributionRight(Boolean withinSpeakerContributionRight){
-        if(withinSpeakerContributionRight!=null){
-            this.context.withinSpeakerContributionRight = withinSpeakerContributionRight;
-        }
+        this.context.withinSpeakerContributionRight = withinSpeakerContributionRight;
     }
     
     private void setIgnoredCustomPOS(Set<String> ignoredCustomPOS) throws SearchServiceException{
@@ -309,8 +350,10 @@ public class Repetition {
     private class Context {
         String precededby;
         String followedby;
-        Boolean withinSpeakerContributionLeft = false;
-        Boolean withinSpeakerContributionRight = false;
+        Boolean withinSpeakerContributionLeft = null;
+        Boolean withinSpeakerContributionRight = null;
+        Distance distanceLeft = new Distance();
+        Distance distanceRight = new Distance();
 
     }
     
