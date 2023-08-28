@@ -6,6 +6,7 @@
 package org.zumult.backend.implementations;
 
 
+import java.io.File;
 import java.io.IOException;
 import javax.xml.transform.TransformerException;
 import org.zumult.backend.Configuration;
@@ -28,10 +29,10 @@ import org.zumult.objects.implementations.DGD2CrossQuantification;
  */
 public class DGD2 extends AbstractIDSBackend {
     
-    String quantificationPath = null;
+    File quantificationPath = null;
 
     public DGD2() {
-        quantificationPath = Configuration.getQuantificationPath();
+        quantificationPath = new File(Configuration.getQuantificationPath());
     }
 
     @Override
@@ -62,7 +63,7 @@ public class DGD2 extends AbstractIDSBackend {
         
         try {
             String html = new IOHelper().applyInternalStylesheetToFile("/org/zumult/io/Quantify2Dimensions.xsl", 
-                quantificationPath + "\\" + QUANT_FILENAME, PARAM);
+                new File(quantificationPath, QUANT_FILENAME).getAbsolutePath(), PARAM);
                 
             CrossQuantification crossQuantification = new DGD2CrossQuantification(html);
             return crossQuantification;

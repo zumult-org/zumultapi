@@ -12,11 +12,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00004" tokens="0">
+         <speaker id="HMAT_S_00004" tokens="476">
             <property dgd-parameter="v_ses_alter_s" label="Alter">39</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00024" tokens="0">
+         <speaker id="HMAT_S_00024" tokens="84">
             <property dgd-parameter="v_ses_alter_s" label="Alter">19</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -37,11 +37,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00005" tokens="0">
+         <speaker id="HMAT_S_00005" tokens="353">
             <property dgd-parameter="v_ses_alter_s" label="Alter">24</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00019" tokens="0">
+         <speaker id="HMAT_S_00019" tokens="43">
             <property dgd-parameter="v_ses_alter_s" label="Alter">30</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -62,15 +62,15 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00017" tokens="0">
+         <speaker id="HMAT_S_00017" tokens="419">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00018" tokens="0">
+         <speaker id="HMAT_S_00018" tokens="102">
             <property dgd-parameter="v_ses_alter_s" label="Alter">21</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00009" tokens="0">
+         <speaker id="HMAT_S_00009" tokens="6">
             <property dgd-parameter="v_ses_alter_s" label="Alter">27</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -91,11 +91,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00023" tokens="0">
+         <speaker id="HMAT_S_00023" tokens="180">
             <property dgd-parameter="v_ses_alter_s" label="Alter">25</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00010" tokens="0">
+         <speaker id="HMAT_S_00010" tokens="468">
             <property dgd-parameter="v_ses_alter_s" label="Alter">21</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -116,11 +116,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00014" tokens="0">
+         <speaker id="HMAT_S_00014" tokens="306">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00020" tokens="0">
+         <speaker id="HMAT_S_00020" tokens="490">
             <property dgd-parameter="v_ses_alter_s" label="Alter">37</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -141,15 +141,15 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00012" tokens="0">
+         <speaker id="HMAT_S_00012" tokens="32">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00016" tokens="0">
+         <speaker id="HMAT_S_00016" tokens="1389">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00011" tokens="0">
+         <speaker id="HMAT_S_00011" tokens="1049">
             <property dgd-parameter="v_ses_alter_s" label="Alter">17</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -170,11 +170,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00014" tokens="0">
+         <speaker id="HMAT_S_00014" tokens="594">
             <property dgd-parameter="v_ses_alter_s" label="Alter">32</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00020" tokens="0">
+         <speaker id="HMAT_S_00020" tokens="79">
             <property dgd-parameter="v_ses_alter_s" label="Alter">38</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -195,11 +195,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00013" tokens="0">
+         <speaker id="HMAT_S_00013" tokens="267">
             <property dgd-parameter="v_ses_alter_s" label="Alter">26</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00022" tokens="0">
+         <speaker id="HMAT_S_00022" tokens="552">
             <property dgd-parameter="v_ses_alter_s" label="Alter">25</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -220,15 +220,15 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00012" tokens="0">
+         <speaker id="HMAT_S_00012" tokens="22">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00010" tokens="0">
+         <speaker id="HMAT_S_00010" tokens="225">
             <property dgd-parameter="v_ses_alter_s" label="Alter">21</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00023" tokens="0">
+         <speaker id="HMAT_S_00023" tokens="896">
             <property dgd-parameter="v_ses_alter_s" label="Alter">25</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -249,11 +249,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00015" tokens="0">
+         <speaker id="HMAT_S_00015" tokens="50">
             <property dgd-parameter="v_ses_alter_s" label="Alter">30</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00007" tokens="0">
+         <speaker id="HMAT_S_00007" tokens="385">
             <property dgd-parameter="v_ses_alter_s" label="Alter">29</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -274,15 +274,15 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00012" tokens="0">
+         <speaker id="HMAT_S_00012" tokens="1">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00003" tokens="0">
+         <speaker id="HMAT_S_00003" tokens="296">
             <property dgd-parameter="v_ses_alter_s" label="Alter">35</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00006" tokens="0">
+         <speaker id="HMAT_S_00006" tokens="871">
             <property dgd-parameter="v_ses_alter_s" label="Alter">32</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -303,11 +303,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00017" tokens="0">
+         <speaker id="HMAT_S_00017" tokens="10">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00018" tokens="0">
+         <speaker id="HMAT_S_00018" tokens="274">
             <property dgd-parameter="v_ses_alter_s" label="Alter">21</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -332,11 +332,11 @@
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00002" tokens="0">
+         <speaker id="HMAT_S_00002" tokens="545">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00021" tokens="0">
+         <speaker id="HMAT_S_00021" tokens="170">
             <property dgd-parameter="v_ses_alter_s" label="Alter">32</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -357,11 +357,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00001" tokens="0">
+         <speaker id="HMAT_S_00001" tokens="75">
             <property dgd-parameter="v_ses_alter_s" label="Alter">62</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00008" tokens="0">
+         <speaker id="HMAT_S_00008" tokens="736">
             <property dgd-parameter="v_ses_alter_s" label="Alter">38</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -382,11 +382,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00003" tokens="0">
+         <speaker id="HMAT_S_00003" tokens="351">
             <property dgd-parameter="v_ses_alter_s" label="Alter">35</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00006" tokens="0">
+         <speaker id="HMAT_S_00006" tokens="174">
             <property dgd-parameter="v_ses_alter_s" label="Alter">32</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -407,11 +407,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00001" tokens="0">
+         <speaker id="HMAT_S_00001" tokens="529">
             <property dgd-parameter="v_ses_alter_s" label="Alter">62</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00008" tokens="0">
+         <speaker id="HMAT_S_00008" tokens="311">
             <property dgd-parameter="v_ses_alter_s" label="Alter">38</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -432,11 +432,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00015" tokens="0">
+         <speaker id="HMAT_S_00015" tokens="361">
             <property dgd-parameter="v_ses_alter_s" label="Alter">30</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00007" tokens="0">
+         <speaker id="HMAT_S_00007" tokens="84">
             <property dgd-parameter="v_ses_alter_s" label="Alter">29</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -457,15 +457,15 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00012" tokens="0">
+         <speaker id="HMAT_S_00012" tokens="69">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00016" tokens="0">
+         <speaker id="HMAT_S_00016" tokens="790">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00011" tokens="0">
+         <speaker id="HMAT_S_00011" tokens="718">
             <property dgd-parameter="v_ses_alter_s" label="Alter">17</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -486,15 +486,15 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00012" tokens="0">
+         <speaker id="HMAT_S_00012" tokens="49">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00002" tokens="0">
+         <speaker id="HMAT_S_00002" tokens="183">
             <property dgd-parameter="v_ses_alter_s" label="Alter">31</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00021" tokens="0">
+         <speaker id="HMAT_S_00021" tokens="858">
             <property dgd-parameter="v_ses_alter_s" label="Alter">32</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -515,11 +515,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00013" tokens="0">
+         <speaker id="HMAT_S_00013" tokens="685">
             <property dgd-parameter="v_ses_alter_s" label="Alter">26</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00022" tokens="0">
+         <speaker id="HMAT_S_00022" tokens="107">
             <property dgd-parameter="v_ses_alter_s" label="Alter">25</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -540,11 +540,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00005" tokens="0">
+         <speaker id="HMAT_S_00005" tokens="88">
             <property dgd-parameter="v_ses_alter_s" label="Alter">24</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00019" tokens="0">
+         <speaker id="HMAT_S_00019" tokens="401">
             <property dgd-parameter="v_ses_alter_s" label="Alter">30</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -565,11 +565,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00024" tokens="0">
+         <speaker id="HMAT_S_00024" tokens="488">
             <property dgd-parameter="v_ses_alter_s" label="Alter">19</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00004" tokens="0">
+         <speaker id="HMAT_S_00004" tokens="62">
             <property dgd-parameter="v_ses_alter_s" label="Alter">39</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -590,11 +590,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00026" tokens="0">
+         <speaker id="HMAT_S_00026" tokens="335">
             <property dgd-parameter="v_ses_alter_s" label="Alter">25</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00025" tokens="0">
+         <speaker id="HMAT_S_00025" tokens="1621">
             <property dgd-parameter="v_ses_alter_s" label="Alter">37</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -615,11 +615,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00026" tokens="0">
+         <speaker id="HMAT_S_00026" tokens="687">
             <property dgd-parameter="v_ses_alter_s" label="Alter">25</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00025" tokens="0">
+         <speaker id="HMAT_S_00025" tokens="1023">
             <property dgd-parameter="v_ses_alter_s" label="Alter">37</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -640,11 +640,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00028" tokens="0">
+         <speaker id="HMAT_S_00028" tokens="221">
             <property dgd-parameter="v_ses_alter_s" label="Alter">43</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
-         <speaker id="HMAT_S_00027" tokens="0">
+         <speaker id="HMAT_S_00027" tokens="448">
             <property dgd-parameter="v_ses_alter_s" label="Alter">43</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
@@ -665,11 +665,11 @@
          <property dgd-parameter="v_e_se_aktivitaet" label="Aktivität">Kommunikationsspiel Maptask</property>
          <property dgd-parameter="v_e_se_vertrautheit" label="Vertrautheit der Sprecher">bekannt</property>
          <property dgd-parameter="v_e_se_art" label="Art">Maptask</property>
-         <speaker id="HMAT_S_00028" tokens="0">
+         <speaker id="HMAT_S_00028" tokens="517">
             <property dgd-parameter="v_ses_alter_s" label="Alter">43</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegbeschreiber/in</property>
          </speaker>
-         <speaker id="HMAT_S_00027" tokens="0">
+         <speaker id="HMAT_S_00027" tokens="279">
             <property dgd-parameter="v_ses_alter_s" label="Alter">43</property>
             <property dgd-parameter="v_ses_rolle_s" label="Rolle">Wegzeichner/in</property>
          </speaker>
@@ -680,142 +680,142 @@
       <property dgd-parameter="v_e_datum" label="Datum">2013-06-19</property>
       <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Hamburg</property>
    </event>
-   <speaker id="HMAT_S_00001" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00001" speechEvents="2" tokens="604" types="170">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1948</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00002" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00002" speechEvents="2" tokens="728" types="156">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1978</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00003" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00003" speechEvents="2" tokens="647" types="199">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1974</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Englisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00004" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00004" speechEvents="2" tokens="538" types="154">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1971</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00005" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00005" speechEvents="2" tokens="441" types="123">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1985</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Russisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00006" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00006" speechEvents="2" tokens="1045" types="244">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1977</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00007" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00007" speechEvents="2" tokens="469" types="182">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1980</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00008" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00008" speechEvents="2" tokens="1047" types="238">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1972</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00009" speechEvents="1" tokens="0" types="0">
+   <speaker id="HMAT_S_00009" speechEvents="1" tokens="6" types="6">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1983</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00010" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00010" speechEvents="2" tokens="693" types="181">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1988</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00011" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00011" speechEvents="2" tokens="1767" types="286">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1992</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00012" speechEvents="6" tokens="0" types="0">
+   <speaker id="HMAT_S_00012" speechEvents="6" tokens="173" types="97">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1978</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Türkisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00013" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00013" speechEvents="2" tokens="952" types="238">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1984</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00014" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00014" speechEvents="2" tokens="900" types="219">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1978</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00015" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00015" speechEvents="2" tokens="411" types="129">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1979</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Polnisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00016" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00016" speechEvents="2" tokens="2179" types="340">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1978</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00017" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00017" speechEvents="2" tokens="429" types="115">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1979</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Italienisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00018" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00018" speechEvents="2" tokens="376" types="113">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1989</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00019" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00019" speechEvents="2" tokens="444" types="126">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1979</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00020" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00020" speechEvents="2" tokens="569" types="154">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1972</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00021" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00021" speechEvents="2" tokens="1028" types="213">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1977</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Spanisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00022" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00022" speechEvents="2" tokens="659" types="170">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1985</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00023" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00023" speechEvents="2" tokens="1076" types="220">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1984</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Englisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
    </speaker>
-   <speaker id="HMAT_S_00024" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00024" speechEvents="2" tokens="572" types="170">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1991</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Englisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00025" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00025" speechEvents="2" tokens="2644" types="368">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1973</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Polnisch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00026" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00026" speechEvents="2" tokens="1022" types="183">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1985</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">Deutsch</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00027" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00027" speechEvents="2" tokens="727" types="201">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1970</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">to do</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
    </speaker>
-   <speaker id="HMAT_S_00028" speechEvents="2" tokens="0" types="0">
+   <speaker id="HMAT_S_00028" speechEvents="2" tokens="738" types="187">
       <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1970</property>
       <property dgd-parameter="v_s_sprachname" label="Sprachen">to do</property>
       <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>

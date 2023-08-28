@@ -196,7 +196,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextLeft")%>
                         <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoLeft")%>" 
-                            style="padding-left: 15px;"></i>                        
+                            style="padding-left: 20px;"></i>                        
                     </span>
                 </div>
                 <input type="text" class="form-control form-control-sm repetitionContextFieldLeft"
@@ -207,7 +207,7 @@
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><%=myResources.getString("DistanceBetweenContextAndRepetition")%>
-                                <i class="ml-2 fa fa-info-circle" title="???" ></i>
+                                <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("DistanceInfoLeft")%>" ></i>
                         </span>
                     </div>
                     <div class="form-check form-check-inline ml-2" >
@@ -246,7 +246,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text contextPrepend"><%=myResources.getString("RepetitionContextRight")%>
                         <i class="fa fa-info-circle" title="<%=myResources.getString("RepetitionContextInfoRight")%>" 
-                            style="padding-left: 15px;"></i>                        
+                            style="padding-left: 10px;"></i>                        
                     </span>
                 </div>
                 <input type="text" class="form-control form-control-sm repetitionContextFieldRight"
@@ -256,7 +256,7 @@
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><%=myResources.getString("DistanceBetweenContextAndRepetition")%>
-                                <i class="ml-2 fa fa-info-circle" title="???" ></i>
+                                <i class="ml-2 fa fa-info-circle" title="<%=myResources.getString("DistanceInfoRight")%>" ></i>
                         </span>
                     </div>
                     <div class="form-check form-check-inline ml-2" >
