@@ -779,7 +779,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 ajaxRepetitionSearchRequest = $.ajax({
                     type: "POST",
                     url: url,
-                    timeout: 300000,
                     data: { q: q, cq :corpusQueryStr, count : pageLength, offset : pageIndex, mode : searchType, context : context, repetitions: repetitions, synonyms: synonyms, customWordLists: wordLists},
                     dataType: "text",
 
@@ -794,14 +793,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         }else{
                         
                             $(selector).find(".wait-query-tab").css("display", "none");
-                            if (status === "timeout"){
-                                alert('Your request will take a long time.' +
-                                        ' Please constrain the search query, ' + 
-                                        'e.g. to a certain lemma: [lemma=\"wissen\"],'+
-                                        ' a certain part of speech: [pos=\"NN\"] or '+
-                                        'a certain grammatical structure: [pos=\"ART\"][pos=\"ADJA\"][pos=\"NN\"]. '+
-                                        'You can also constrain the search query by metadata, e.g. <word/> within <e_se_aktivitaet=\"Fahrstunde\"/>');
-                            } else if (status === "abort"){
+                            if (status === "abort"){
                                 //ignore
                             }else {
                                 if (xhr.responseText.startsWith("Please check the query syntax")){

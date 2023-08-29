@@ -117,6 +117,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private IndexWriter writer = null;
     private IndexWriterConfig config;
     
+    private static final int TIMEOUT = 4 * 60 * 1000;
     private static final String FIELD_TRANSCRIPT_ID_FROM_FILE_NAME = "fileName";
     private static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = Constants.METADATA_KEY_TRANSCRIPT_DGD_ID; //t_dgd_kennung
     private static final String FIELD_TRANSCRIPT_CONTENT = "content";
@@ -397,7 +398,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
     private MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException, IOException {
         try{
-            log.log(Level.INFO, ": {0}", queryString);
+            log.log(Level.INFO, "Searching {0}", queryString);
             Reader reader = new BufferedReader(new StringReader(queryString));
             MtasCQLParser p = new MtasCQLParser(reader);
             MtasSpanQuery msq = p.parse(field, null, variables, ignore, maximumIgnoreLength);
@@ -521,7 +522,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private interface FunktionsWrapper2{
-        public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitsBefore) throws IOException;
+        public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitsBefore) throws SearchServiceException, IOException;
     }
     
     private interface FunktionsWrapper3{
@@ -631,12 +632,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         System.out.println("metadataQueryString: " + metadataQueryString);
         System.out.println("PARAMETER (FROM): " + from);
         System.out.println("PARAMETER (TO): " + to);*/
+        long start = System.currentTimeMillis(); 
+        long end = start + TIMEOUT;
         
         MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, wordLists, null, null);
         
         if (metadataQueryString == null || metadataQueryString.isEmpty()){
             // search hits without metadata        
-            return searchKWICStandard(indexPaths, q, from, to, cutoff, metadataIDs);
+            return searchKWICStandard(indexPaths, q, from, to, cutoff, metadataIDs, end);
             
         }else { 
             // parse metadataQuery
@@ -677,14 +680,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     
                     if (metaDataKey.equals(METADATA_KEY_HIT_LENGTH)){
                         // search hits by the number of tokens  
-                        return searchKWICByLength(indexPaths, q, from, to, cutoff, TOKEN_IDS, size);
+                        return searchKWICByLength(indexPaths, q, from, to, cutoff, TOKEN_IDS, size, end);
                     }else {
                         // search hits by the number of word tokens  
-                        return searchKWICByLength(indexPaths, q, from, to, cutoff, getMetadataPrefixList(Constants.METADATA_KEY_MATCH_TYPE_WORD + ".id"), size);
+                        return searchKWICByLength(indexPaths, q, from, to, cutoff, getMetadataPrefixList(Constants.METADATA_KEY_MATCH_TYPE_WORD + ".id"), size, end);
                     }
                 }else {
                     // search hits by metadata
-                    return searchKWICByMetadata(indexPaths, q, from, to, cutoff, metaDataKey, matadataValue);
+                    return searchKWICByMetadata(indexPaths, q, from, to, cutoff, metaDataKey, matadataValue, end);
   
                 }
             }
@@ -693,13 +696,13 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     
     private SearchEngineResponseHitList searchKWICStandard(ArrayList<String> indexPaths, MtasSpanQuery queryString, Integer from, Integer to, 
-            Boolean cutoff, IDList metadataIDs) throws SearchServiceException, IOException {
+            Boolean cutoff, IDList metadataIDs, long endtime) throws SearchServiceException, IOException {
         
         System.out.println("-- METHOD: searchKWICStandard --");
         SearchEngineResponseHitList result =  searchKWIC(indexPaths, queryString, new FunktionsWrapper2 (){
             @Override
-            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws IOException{
-                return searchHits(metadataIDs, spanweight, iterator, hitNumber, from, to, cutoff, new FunktionsWrapper3(){
+            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws SearchServiceException, IOException{
+                return searchHits(metadataIDs, spanweight, iterator, hitNumber, from, to, cutoff, endtime, new FunktionsWrapper3(){
                     @Override
                     public void addHitToObject(Hit hit) throws IOException {
                        arrayOfHits.add(hit); 
@@ -713,14 +716,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private HashMap searchHits(IDList metadata, SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, 
-            int hitNumber, Integer from, Integer to, Boolean cutoff, FunktionsWrapper3 function) throws IOException{
+            int hitNumber, Integer from, Integer to, Boolean cutoff, long endtime, FunktionsWrapper3 function) throws IOException, SearchServiceException{
         //System.out.println("-- METHOD: searchHits --");
                 int hits_total = 0;
                 int transcripts_total = 0;
                 
                 segment_loop:
                 while (iterator.hasNext()) {
-
+                    checkTimeout(endtime); 
                     LeafReaderContext lrc = iterator.next();  
                     //System.out.println("INDEX SEGMENT NUMBER: " + lrc.docBase);
 
@@ -750,6 +753,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                     if (spans != null) {
                         while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                            checkTimeout(endtime); 
                             if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
 
                                     ////System.out.println("SpansToString: " + spans.toString());
@@ -849,7 +853,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private SearchEngineResponseHitList searchKWICByMetadata(ArrayList<String> indexPaths, MtasSpanQuery queryString, Integer from, Integer to, 
-            Boolean cutoff, String metaDataKey, String matadataValue) throws SearchServiceException, IOException {
+            Boolean cutoff, String metaDataKey, String matadataValue, long endtime) throws SearchServiceException, IOException {
         
       /*  System.out.println("-- METHOD: searchKWICByMetadata --");
         System.out.println("metaDataKey: " + metaDataKey);
@@ -857,13 +861,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
        */
         return searchKWIC(indexPaths, queryString, new FunktionsWrapper2 (){
             @Override
-            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws IOException{
+            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws SearchServiceException, IOException{
                 
                 int transcripts_total = 0;
                 int hits_total = 0;
                 
                 segment_loop:
                 while (iterator.hasNext()) {
+                    checkTimeout(endtime); 
 
                     LeafReaderContext lrc = iterator.next();  
                     Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
@@ -875,6 +880,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                     if (spans != null) {
                         while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                            
+                            checkTimeout(endtime); 
+
                             if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                 transcripts_total = transcripts_total + 1;
                                 int hits = 0;
@@ -984,17 +992,18 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
              
     private SearchEngineResponseHitList searchKWICByLength(ArrayList<String> indexPaths, MtasSpanQuery queryString, Integer from, Integer to, 
-            Boolean cutoff, List<String> prefixList, Integer size) throws SearchServiceException, IOException {
+            Boolean cutoff, List<String> prefixList, Integer size, long endtime) throws SearchServiceException, IOException {
 
         //System.out.println("-- METHOD: searchKWICByLength");
         return searchKWIC(indexPaths, queryString, new FunktionsWrapper2 (){
             @Override
-            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws IOException{
+            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws SearchServiceException, IOException{
                 int transcripts_total = 0;
                 int hits_total = 0;
                 segment_loop:
                 while (iterator.hasNext()) {
-
+                        checkTimeout(endtime); 
+                                                    
                         LeafReaderContext lrc = iterator.next();  
                         Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
                         SegmentReader r = (SegmentReader) lrc.reader();
@@ -1005,6 +1014,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                         if (spans != null) {
                             while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                                checkTimeout(endtime); 
                                 if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                         transcripts_total = transcripts_total + 1;
                                         int hits = 0;
@@ -1077,8 +1087,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         SearchEngineResponseHitList result = new SearchEngineResponseHitList();
         
         ArrayList<Hit> arrayOfHits = new ArrayList();
-             
-            for (String indexPath: indexPaths){
+        
+        for (String indexPath: indexPaths){
                 
                 Directory directory = null;
                 try{
@@ -1903,8 +1913,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
             ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> wordLists,
-            GermaNet germanet) throws IOException, SearchServiceException{
+            GermaNet germanet) throws SearchServiceException, IOException {
         
+        long start = System.currentTimeMillis(); 
+        long end = start + TIMEOUT;
+           
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
         
@@ -1939,11 +1952,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 CodecInfo mtasCodecInfo = CodecInfo.getCodecInfoFromTerms(t);
                                 
                                 if (spans != null) {
-                                    while (spans.nextDoc() != Spans.NO_MORE_DOCS) {                               
+                                    while (spans.nextDoc() != Spans.NO_MORE_DOCS) {      
                                         if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                             String transcriptID = r.document(spans.docID()).get(FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG);
                                             try{
-                                                repetitionSearcher.checkForRepetitions(mtasCodecInfo, r.getSegmentName(), spans, transcriptID, linkedQueue);  
+                                                repetitionSearcher.checkForRepetitions(mtasCodecInfo, r.getSegmentName(), spans, transcriptID, linkedQueue, end);  
                                             }catch (SeachRepetitionException ex){
                                                thread.interrupt();
                                                throw ex;                                               
@@ -3233,10 +3246,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         * 
         */
         void checkForRepetitions(CodecInfo mtasCodecInfo, String segmentName, Spans spans, String transcriptID, 
-                LinkedBlockingQueue<String> linkedQueue) throws IOException {
+                LinkedBlockingQueue<String> linkedQueue, long endtime) throws IOException {
       
             List<Object[]> arrayList = new ArrayList();
-            while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {              
+            while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) { 
+                if(System.currentTimeMillis() > endtime){
+                    log.log(Level.INFO, ": {0}", "Server timeout: search thread was stopped");
+                    throw new SeachRepetitionException(new Exception("Server timeout: the search process was stopped"));
+                }
                 arrayList.add( new Object[]{spans.docID(), spans.startPosition(), spans.endPosition()} );
             }
             
@@ -3574,7 +3591,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
         return result;
     }
+    
+    private void checkTimeout(long endtime) throws SearchServiceException {
+        if(System.currentTimeMillis() > endtime){
+            String str = "Server timeout: the search process was stopped";
+            log.log(Level.INFO, ": {0}", str);
+            throw new SearchServiceException(str);
+        }
+    }
             
            
-
 }
