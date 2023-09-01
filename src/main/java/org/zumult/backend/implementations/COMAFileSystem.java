@@ -89,17 +89,17 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public String getID() {
-        return "TO DO";
+        return "exmaralda.org.coma";
     }
 
     @Override
     public String getName() {
-        return "TO DO";
+        return "COMA Backend";
     }
 
     @Override
     public String getAcronym() {
-        return "TO DO";
+        return "CoMa";
     }
 
     @Override
@@ -227,10 +227,11 @@ public class COMAFileSystem extends AbstractBackend {
             File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
             
             String xmlString = IOHelper.readUTF8(resolvedPath);
+            String metadataString = IOHelper.ElementToString(transcriptionElement);
             
-            return new ISOTEITranscript(xmlString);
+            return new ISOTEITranscript(xmlString, metadataString);
 
-        } catch (XPathExpressionException ex) {
+        } catch (XPathExpressionException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         

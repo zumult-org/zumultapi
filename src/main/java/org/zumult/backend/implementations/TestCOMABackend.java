@@ -37,31 +37,47 @@ public class TestCOMABackend {
         try {
             System.out.println(":" + Configuration.getMetadataPath());
             BackendInterface bi = new COMAFileSystem();
+            System.out.println("There.");
+            
+            System.out.println(Configuration.getSearchIndexPath());
             
             
-            Corpus corpus = bi.getCorpus("ESLO-DEMO");
+            
+            
+            Corpus corpus = bi.getCorpus("TGDP");
+            System.out.println("Here.");
+            System.out.println(corpus.getName("de"));
             System.out.println(corpus.getDescription("de"));
-            
-            Transcript tr = bi.getTranscript("ESLO2_ENT_1001_C");
+
+            Transcript tr = bi.getTranscript("60-414-1-3-a");
+            Set<MetadataKey> metadataKeys1 = corpus.getMetadataKeys(ObjectTypesEnum.TRANSCRIPT);
+            for (MetadataKey key : metadataKeys1){
+                System.out.println(key.getID() + " / " + key.getName("en") +  " : " + tr.getMetadataValue(key));
+            }
+            MetadataKey key1 = bi.findMetadataKeyByID("Transcript_Section Title");
+            System.out.println(key1.getName("en"));
+            System.out.println(tr.getMetadataValue(key1));
+            System.exit(0);
+
             
 
-            IDList audios4Transcript = bi.getAudios4Transcript("ESLO2_ENT_1001_C");
+            IDList audios4Transcript = bi.getAudios4Transcript("CIDID41FDE89A-D33B-85F1-5238-EDFBA81A85A8");
             for (String a : audios4Transcript) {
                 System.out.println("Audio " + a);
             }
-            System.exit(0);
             
-            IDList transcripts4Audio = bi.getTranscripts4Audio("MID7D516D45-D94A-24EF-8D21-4B0A4DC891CA");
+            
+            IDList transcripts4Audio = bi.getTranscripts4Audio("MID89259CCE-7F0B-6F0F-46AB-B80563FFDBC9");
             for (String t : transcripts4Audio) System.out.println(t);
             
             
             
-            SpeechEvent se = bi.getSpeechEvent("CID06C693EF-494A-913E-EBF1-6C9618CDCC46");
-            //System.out.println(se.toXML());
+            SpeechEvent se = bi.getSpeechEvent("CID28DDACF8-8095-E84D-C97A-35BFB9DCED23");
+            System.out.println(se.toXML());
             
             
             
-            IDList audios = bi.getAudios4SpeechEvent("CID06C693EF-494A-913E-EBF1-6C9618CDCC46");
+            IDList audios = bi.getAudios4SpeechEvent("CID28DDACF8-8095-E84D-C97A-35BFB9DCED23");
             for (String audio : audios){
                 System.out.println(audio);
                 Media m = bi.getMedia(audio);
@@ -69,11 +85,13 @@ public class TestCOMABackend {
             }
             
             
-            Speaker s = bi.getSpeaker("IDCFE47938-ECCF-C666-4B4C-167C67319AB1");
+            Speaker s = bi.getSpeaker("SIDC5846757-FA4D-82E5-FAAE-0187717CC022");
             System.out.println(s.toXML());
             
-            Transcript t = bi.getTranscript("CIDID93045167-C4FF-8EF6-36B8-F08AC9F9E331");
+            Transcript t = bi.getTranscript("CIDIDB8994C55-16A2-5698-F070-DE0102C8EC3E");
             System.out.println(t.toXML());
+            
+            System.exit(0);
             
             Media m = bi.getMedia("MID7D516D45-D94A-24EF-8D21-4B0A4DC891CA");
             System.out.println(m.getURL());

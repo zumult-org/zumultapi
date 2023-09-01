@@ -35,6 +35,7 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
 
     XPath xPath = XPathFactory.newInstance().newXPath();
     
+    XMLMetadata metadata;
     
     /* construct a new transcript from an XML document */
     public ISOTEITranscript(Document transcriptDocument) {
@@ -47,6 +48,21 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
         super(transcriptXML);
         xPath.setNamespaceContext(new ISOTEINamespaceContext());            
     }
+
+    // new for issue #148: initialise with Metadata
+    public ISOTEITranscript(String transcriptXML, String metadataXML) {
+        super(transcriptXML);
+        metadata = new XMLMetadata(metadataXML);
+        xPath.setNamespaceContext(new ISOTEINamespaceContext());            
+    }
+
+    // also new for #148
+    public ISOTEITranscript(Document transcriptDocument, Document metadataDocument) {
+        super(transcriptDocument);
+        metadata = new XMLMetadata(metadataDocument);
+        xPath.setNamespaceContext(new ISOTEINamespaceContext());            
+    }
+
 
     @Override
     public int getNumberOfTokens() {
@@ -196,7 +212,7 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
             
             
 
-            return new ISOTEITranscript(copyDocument);
+            return new ISOTEITranscript(copyDocument, metadata.getDocument());
             
         } catch (TransformerException | IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
@@ -665,7 +681,33 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
 
     @Override
     public String getMetadataValue(MetadataKey key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // for issue #146
+        // this is tricky because we can only assume that the Metadata is some XML fragment
+        // the exact implementation of MetadataKey can help to determine
+        // how to do this, though
+        // for the moment, will only provide a value for COMA
+        if (key instanceof COMAMetadataKey comaKey){
+            /*
+            <Description>
+                <Key Name="transcription-name">60-414-1-3-a</Key>
+                <Key Name="Section ID">60-414-1-3-a</Key>
+                <Key Name="Section Title">Spoke German with husband, How they met</Key>
+                <Key Name="Section Type">Open-ended</Key>
+              </Description>            
+            */
+            XPath theXPath = XPathFactory.newInstance().newXPath();
+            try {
+                Element keyElement = 
+                        ((Element)theXPath.evaluate("//Key[@Name='" + comaKey.getName("en") + "']", metadata.getDocument().getDocumentElement(), XPathConstants.NODE));
+                if (keyElement==null) return null;
+                return keyElement.getTextContent();
+            } catch (XPathExpressionException ex) {
+                Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+        } else if (key instanceof DGD2MetadataKey dgd2Key){
+            // this remains to do, in case we need it (says TS, 01-09-2023)
+        }
+        return null;
     }
     
 }

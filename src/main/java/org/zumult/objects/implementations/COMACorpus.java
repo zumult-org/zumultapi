@@ -87,6 +87,7 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
                 case SPEECH_EVENT -> getSpeechEventMetadataKeys();
                 case SPEAKER -> getSpeakerMetadataKeys();
                 case SPEAKER_IN_SPEECH_EVENT -> getSpeakerInSpeechEventMetadataKeys();
+                case TRANSCRIPT -> getTranscriptMetadataKeys();                    
                 default -> getMetadataKeys();
             };
         }else {
@@ -102,6 +103,8 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         result.addAll(getSpeechEventMetadataKeys());
         result.addAll(getSpeakerInSpeechEventMetadataKeys());
         result.addAll(getSpeakerMetadataKeys());
+        // added for #148
+        result.addAll(getTranscriptMetadataKeys());
         return result;
     }
 
@@ -125,7 +128,7 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
                 keySet.add(keyElement.getAttribute("Name"));
             }      
             for (String key: keySet){
-                COMAMetadataKey comaMetadataKey = new COMAMetadataKey("SpeechEvent_" + key, key, ObjectTypesEnum.EVENT);
+                COMAMetadataKey comaMetadataKey = new COMAMetadataKey("SpeechEvent_" + key, key, ObjectTypesEnum.SPEECH_EVENT);
                 result.add(comaMetadataKey);
             }
         } catch (XPathExpressionException ex) {
@@ -164,6 +167,29 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     }
 
 
+    public Set<MetadataKey> getTranscriptMetadataKeys() {
+        // use a stylesheet with group()?
+        // not now - let's keep that simple
+        Set<MetadataKey> result = new HashSet<>();
+        try {
+            String xPathString = "//Transcription/Description/Key";
+            NodeList allKeys = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            HashSet<String> keySet = new HashSet<>();
+            for (int i=0; i<allKeys.getLength(); i++){
+                Element keyElement = ((Element)(allKeys.item(i)));
+                keySet.add(keyElement.getAttribute("Name"));
+            }      
+            for (String key: keySet){
+                COMAMetadataKey comaMetadataKey = new COMAMetadataKey("Transcript_" + key, key, ObjectTypesEnum.TRANSCRIPT);
+                result.add(comaMetadataKey);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;        
+    }
+    
+    
     @Override
     public Set<String> getSpeakerLocationTypes() {
         // use a stylesheet with group()?

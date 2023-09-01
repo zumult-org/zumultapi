@@ -42,7 +42,9 @@ public abstract class AbstractXMLObject implements XMLSerializable {
     @Override
     public String toXML() throws TransformerConfigurationException, TransformerException {
         if (xmlString==null){
+            System.out.print("Getting xml string from document...");
             xmlString = IOHelper.DocumentToString(xmlDocument);
+            System.out.println(" Done.");
         }
         return xmlString;
     }
@@ -51,7 +53,9 @@ public abstract class AbstractXMLObject implements XMLSerializable {
     public Document getDocument() {
         if (xmlDocument==null){
             try {
+                System.out.print("Turning xml string into document...");
                 xmlDocument = IOHelper.DocumentFromText(xmlString);
+                System.out.println(" Done.");
             } catch (IOException | SAXException | ParserConfigurationException ex) {
                 Logger.getLogger(AbstractXMLObject.class.getName()).log(Level.SEVERE, null, ex);
             }

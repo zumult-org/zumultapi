@@ -7,7 +7,6 @@ package org.zumult.objects.implementations;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -215,6 +214,5 @@ public class DGD2Corpus extends AbstractXMLObject implements Corpus {
         }
      
     }
-
     
 }

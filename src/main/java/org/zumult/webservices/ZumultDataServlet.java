@@ -215,10 +215,7 @@ public class ZumultDataServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");                            
             response.getWriter().write(html);             
             response.getWriter().close();            
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        } catch (Exception ex) {
+        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
             Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
         } 
