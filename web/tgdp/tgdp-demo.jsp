@@ -56,7 +56,7 @@
                           <div class="card-body">
                             <h4 class="card-title">Fredericksburg</h4>
                             <p class="card-text">Describe something here </p>
-                            <a target="_blank" href="../jsp/zuViel.jsp?transcriptID=1-7-1-1-a" class="btn btn-primary">Transcription</a>
+                            <a target="_blank" href="./tooMuch.jsp?transcriptID=1-7-1-1-a" class="btn btn-primary">Transcription</a>
                           </div>
                         </div>
 
@@ -66,7 +66,7 @@
                           <div class="card-body">
                             <h4 class="card-title">New Braunfels</h4>
                             <p class="card-text">Describe something different here.</p>
-                            <a target="_blank" href="../jsp/zuViel.jsp?transcriptID=ESLO2_ENT_1005_C" class="btn btn-primary">Transcription</a>
+                            <a target="_blank" href="./tooMuch.jsp?transcriptID=ESLO2_ENT_1005_C" class="btn btn-primary">Transcription</a>
                           </div>
                         </div>
 
@@ -76,7 +76,7 @@
                           <div class="card-body">
                             <h4 class="card-title">Austin</h4>
                             <p class="card-text">Good place for a description.</p>
-                            <a target="_blank" href="../jsp/zuViel.jsp?transcriptID=ESLO2_ENT_1013_C" class="btn btn-primary">Transcription</a>
+                            <a target="_blank" href="./tooMuch.jsp?transcriptID=ESLO2_ENT_1013_C" class="btn btn-primary">Transcription</a>
                           </div>
                         </div>
                     </div>
