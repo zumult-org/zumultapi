@@ -23,6 +23,7 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -324,7 +325,15 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     private int parseDirectory (File inputDir, FileFilter filter) throws IOException {
         int counter = 0;
-        File[] files = inputDir.listFiles();
+        //File[] files = inputDir.listFiles();
+        // 04-09-2023 changed for issue #149
+        File[] files = inputDir.listFiles(new FilenameFilter(){
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".xml");
+            }
+            
+        });
         if (files != null){
             for (File file : files) {
                 if (file.isDirectory()){
