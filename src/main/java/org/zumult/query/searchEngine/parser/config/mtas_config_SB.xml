@@ -90,6 +90,20 @@
                 </condition>           
             </mapping>
               
+            <mapping type="word" name="w" start="#" end="#">
+                <token type="string" offset="false" realoffset="false" parent="false">
+                    <pre>
+			<item type="string" value="xml:lang" />
+                    </pre>
+                    <post>
+                        <item type="attribute" name="lang" />
+                    </post>
+                </token>
+                <condition>
+                    <item type="attribute" name="lang" />
+                </condition>            
+            </mapping>
+            
             <mapping type="word" name="w" start="#" end="#">    
                            
                 <!-- Lemmas. Search example : [lemma="jetzt"] -->

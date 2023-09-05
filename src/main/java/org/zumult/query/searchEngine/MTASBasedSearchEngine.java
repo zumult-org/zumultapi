@@ -157,7 +157,6 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         Constants.ATTRIBUTE_NAME_PHON
     };
     
-    private static final int MAX_REPETITION_CONTEXT = 30;
     
     private static final String[] NOT_COUNT =
         {     
@@ -2062,7 +2061,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 
                 
                 // set maxDistance
-                int maxDistance = MAX_REPETITION_CONTEXT;
+                int maxDistance = Constants.MAX_DISTANCE_BETWEEN_REPETITIONS;
                 if (repetitionSpecification.getMaxDistance()!=null && repetitionSpecification.getMaxDistance()< maxDistance){
                     maxDistance = repetitionSpecification.getMaxDistance();
                 }
@@ -2945,7 +2944,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
                 .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                 docID, annotationLayerPrefix, (startPosition+1),
-                (startPosition+1+MAX_REPETITION_CONTEXT));
+                (startPosition+1+Constants.MAX_DISTANCE_BETWEEN_REPETITIONS));
         
         // sort
         terms.forEach(term -> {

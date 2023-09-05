@@ -165,6 +165,8 @@ public class Constants {
     public static final int KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX = 50;
     public static final int KWIC_TOKEN_CONTEXT_LENGTH_AFTER_FIRST_MATCH_MAX = 150;
     
+    public static final int MAX_DISTANCE_BETWEEN_REPETITIONS = 50; /* for user interface see maxDistanceBetweenRepetitions in zuRechtRepetitionXMLCreator.jps */
+    
     // result page configuration
     public static final boolean DEFAULT_CUTOFF = true;
     public static final int DEFAULT_PAGE_LENGTH = 10; 
