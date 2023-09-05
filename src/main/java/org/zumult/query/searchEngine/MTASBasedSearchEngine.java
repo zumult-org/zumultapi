@@ -119,7 +119,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private IndexWriter writer = null;
     private IndexWriterConfig config;
     
-    private static final int TIMEOUT = 4 * 60 * 1000;
+    private static final int TIMEOUT = 10 * 60 * 1000;
     private static final String FIELD_TRANSCRIPT_ID_FROM_FILE_NAME = "fileName";
     private static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = Constants.METADATA_KEY_TRANSCRIPT_DGD_ID; //t_dgd_kennung
     private static final String FIELD_TRANSCRIPT_CONTENT = "content";
@@ -1924,6 +1924,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         IndexSearcher searcher = null;
         
         RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions, synonyms, germanet);
+        LinkedBlockingQueue<String> linkedQueue = new LinkedBlockingQueue<>();
+        Consumer consumer = new Consumer(linkedQueue, repetitionSearcher);
         
         for (String indexPath: indexPaths){
             Directory directory;
@@ -1939,9 +1941,6 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
              
                     List<LeafReaderContext> leaves = indexReader.leaves();
 
-                    LinkedBlockingQueue<String> linkedQueue = new LinkedBlockingQueue<>();
-
-                    Consumer consumer = new Consumer(linkedQueue, repetitionSearcher);
                     Thread thread = new Thread(consumer);
                     thread.start();
                     
@@ -1972,17 +1971,19 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         
                     });
                     
-                    linkedQueue.put(DONE);
+                    
                     indexReader.close();
 
                 }catch (IndexNotFoundException ex) {
                     throw new IOException ("Search index could not be found! Please check " + indexPath, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } 
             }
         }
-        
+        try {
+            linkedQueue.put(DONE);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return repetitionSearcher.getResult();
     }
         

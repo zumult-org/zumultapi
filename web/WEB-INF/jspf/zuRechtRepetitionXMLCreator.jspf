@@ -5,7 +5,8 @@
 
 <script type="text/javascript">    
 
-    var regexDistance = /^(0?\d|1\d|20)$/;
+    var maxDistanceBetweenRepetitions = 50;
+    var regexDistance = /^(0?\d|[1-4]\d|50)$/; /* distance between repetitions */
     var regexPositionToSpeakerChange =/^(0?[0-5])$/;
 
     function getXMLForRepetitions(){
@@ -93,7 +94,7 @@
                 
             }
             var minDistance = getDistance(this, '.minDistance', 0, regexDistance);
-            var maxDistance = getDistance(this, '.maxDistance', 20, regexDistance);
+            var maxDistance = getDistance(this, '.maxDistance', maxDistanceBetweenRepetitions, regexDistance);
             var speakerChange = $(this).find('.speakerChangeSelect').val();
             var positionToMatch = $(this).find('.positionToMatch').val();
             var positionToOverlap = $(this).find('.positionToOverlap').val();
