@@ -17,6 +17,7 @@ and open the template in the editor.
     }
     td.speaker {
         font-weight: bold;
+        white-space: nowrap;
     }
     
     td.tablerow_cursor {
@@ -60,6 +61,10 @@ and open the template in the editor.
         flex : 1;
     }
     
+    td.translation {
+        font-size: 9pt;
+    }
+    
     td.td-dropdown {
         /*max-height: 10px;*/
     }
@@ -69,6 +74,13 @@ and open the template in the editor.
         text-decoration-style: dotted;
     }
     
+    span.eng {
+        font-style: italic;
+    }
+    
+    span.amb {
+        font-weight: bold;
+    }
     
     .wordlist-entry {
         cursor: pointer;

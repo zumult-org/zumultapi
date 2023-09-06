@@ -4,6 +4,7 @@
     Author     : thomas.schmidt
 --%>
 
+<%@page import="org.zumult.objects.Speaker"%>
 <%@page import="org.zumult.objects.MetadataKey"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
@@ -224,6 +225,8 @@
     IDList videos = backend.getVideos4Transcript(transcriptID);   
     IDList audios = backend.getAudios4Transcript(transcriptID);
     
+    String audioID = transcript.getMetadataValue(backend.findMetadataKeyByID("Transcript_Recording ID"));
+    
     String speechEventName = backend.getSpeechEvent(speechEventID).getName();
     
     Transcript partTranscript = transcript;
@@ -364,19 +367,90 @@
             <!-- *********************** -->
             <div class="col-sm-2" id="columnLeft" style="overflow-y: auto;padding-left: 40px;">
 
-                <div style="position: fixed;">                    
+                <div>                    
                     <div class="metadata">
-                            <dl class="row">
-                              <dt class="col-sm-3">Place</dt>
-                              <dd class="col-sm-9"><%= backend.getSpeechEvent(speechEventID).getMetadataValue(backend.findMetadataKeyByID("SpeechEvent_Recording Place"))%></dd>
+                        <dl class="row">
+                          <dt class="col-sm-3">Place</dt>
+                          <dd class="col-sm-9"><%= backend.getSpeechEvent(speechEventID).getMetadataValue(backend.findMetadataKeyByID("SpeechEvent_Recording Place"))%></dd>
 
-                              <dt class="col-sm-3">Date</dt>
-                              <dd class="col-sm-9"><%= backend.getSpeechEvent(speechEventID).getMetadataValue(backend.findMetadataKeyByID("SpeechEvent_Recording Date")) %></dd>
+                          <dt class="col-sm-3">Date</dt>
+                          <dd class="col-sm-9"><%= backend.getSpeechEvent(speechEventID).getMetadataValue(backend.findMetadataKeyByID("SpeechEvent_Recording Date")) %></dd>
 
-                              <dt class="col-sm-3">Title</dt>
-                              <dd class="col-sm-9"><%= transcript.getMetadataValue(backend.findMetadataKeyByID("Transcript_Section Title")) %></dd>
-                            </dl>                    
+                          <dt class="col-sm-3">Title</dt>
+                          <dd class="col-sm-9"><%= transcript.getMetadataValue(backend.findMetadataKeyByID("Transcript_Section Title")) %></dd>
+                        </dl>                    
                     </div>
+                        <%
+                            IDList speakerIDs = backend.getSpeakers4SpeechEvent(speechEventID);
+                            for (String speakerID : speakerIDs){
+                                Speaker speaker = backend.getSpeaker(speakerID); 
+                                String abb = speaker.getMetadataValue(backend.findMetadataKeyByID("Speaker_@abbreviation")); %>
+                                <div class="metadata" style="font-size:9pt;">
+                                    <% if (abb.startsWith("Interviewer")){ %> <img src="img/microphone-stand-duotone.png" style="margin-right:10px"/>
+                                    <% } else { %> <img src="img/user-duotone.png" style="margin-right:10px"/> <% } %>
+                                    <b><%= abb %></b><br/>
+                                    <dl class="row">
+                                    
+                                    <% if (abb.startsWith("Speaker")){ %>
+                                      <dt class="col-sm-3">Birth</dt>
+                                      <dd class="col-sm-9"><%= speaker.getMetadataValue(backend.findMetadataKeyByID("Speaker_Date of Birth"))%></dd>
+
+                                      <dt class="col-sm-3">Residence</dt>
+                                      <dd class="col-sm-9"><%= speaker.getMetadataValue(backend.findMetadataKeyByID("Speaker_Current Residence"))%></dd>
+
+                                      <dt class="col-sm-3">Childhood</dt>
+                                      <dd class="col-sm-9"><%= speaker.getMetadataValue(backend.findMetadataKeyByID("Speaker_Childhood Residence"))%></dd>
+                                    
+                                    <% } else { %>
+                                    <% } %>
+                                    </dl>                    
+                                </div> 
+                        <%        
+                            }
+                        %>
+                        <div>
+
+                            <!-- **************************** -->
+                            <!-- ***** WORDLIST SELECTION   * -->
+                            <!-- **************************** -->
+                            <div class="input-group mb-3 input-group-sm" style="padding-left:20px; padding-right:10px; visibility: hidden;">
+                                <div class="input-group-prepend" style="width:90px;">
+                                    <span class="input-group-text" id="subtitletypelabel" title="<%=myResources.getString("ReferenceWordlist")%>"><%=myResources.getString("RefWordlist")%></span>
+                                </div>
+                                <select class="form-control" id="refwordlist" 
+                                        <% if (!isGerman){ %>
+                                            disabled="disabled"
+                                        <% } %>
+                                        onchange="changeRefWordlist()">
+                                  <option value="NONE">None</option>
+
+                                  <% String[] wordlistIDs = Constants.LEIPZIG_WORDLISTS;
+                                        for (String id : wordlistIDs){%>
+                                        <option value="<%= id %>"
+                                            <% if (isGerman && wordlistID.equals(id)) {%>
+                                                selected="selected"
+                                            <% } %>
+                                        >
+                                        <%= id %>
+                                        </option>
+                                  <% } %>
+                                </select>                          
+                            </div>
+
+
+                            <!-- **************************** -->
+                            <!-- ***** WORDLIST             * -->
+                            <!-- **************************** -->
+                            <div class="wordlist">                    
+                                <div id="wordlist-container">
+                                    <%//= wordListHTML %>
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p style="color:gray"><%=myResources.getString("WaitWordlistLoading")%></p>                            
+                                </div>
+                            </div>
+
+                            
+                        </div>
                 </div>
             </div>
                 
@@ -444,69 +518,11 @@
                     
                     <div id="players">
                         <audio id="masterMediaPlayer" width="480" controls="controls" style="width:480px;">
-                            <source src="<%=backend.getMedia(audios.get(0)).getURL()%>" type="audio/mp3">
+                            <source src="<%=backend.getMedia(audioID).getURL()%>" type="audio/wav">
                         </audio>                                             
                     </div>
                     
                     <div style="position:fixed">
-
-                        <!-- **************************** -->
-                        <!-- ***** WORDLIST SELECTION   * -->
-                        <!-- **************************** -->
-                        <div class="input-group mb-3 input-group-sm" style="padding-left:20px; padding-right:10px;">
-                            <div class="input-group-prepend" style="width:90px;">
-                                <span class="input-group-text" id="subtitletypelabel" title="<%=myResources.getString("ReferenceWordlist")%>"><%=myResources.getString("RefWordlist")%></span>
-                            </div>
-                            <select class="form-control" id="refwordlist" 
-                                    <% if (!isGerman){ %>
-                                        disabled="disabled"
-                                    <% } %>
-                                    onchange="changeRefWordlist()">
-                              <option value="NONE">None</option>
-
-                              <% String[] wordlistIDs = Constants.LEIPZIG_WORDLISTS;
-                                    for (String id : wordlistIDs){%>
-                                    <option value="<%= id %>"
-                                        <% if (isGerman && wordlistID.equals(id)) {%>
-                                            selected="selected"
-                                        <% } %>
-                                    >
-                                    <%= id %>
-                                    </option>
-                              <% } %>
-                            </select>                          
-                        </div>
-
-
-                        <!-- **************************** -->
-                        <!-- ***** WORDLIST             * -->
-                        <!-- **************************** -->
-                        <div class="wordlist">                    
-                            <div id="wordlist-container">
-                                <%//= wordListHTML %>
-                                <i class="fas fa-spinner fa-spin"></i>
-                                <p style="color:gray"><%=myResources.getString("WaitWordlistLoading")%></p>                            
-                            </div>
-                        </div>
-
-                        <!-- ******************************** -->
-                        <!-- ***** DOWNLOAD /PRINT WORDLIST * -->
-                        <!-- ******************************** -->
-                        <!-- issue #55 -->
-                        <div class="container" style="margin-top: 20px;">
-                          <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-secondary btn-lg" title="<%=myResources.getString("PrintDownloadOptions")%>"
-                                     data-toggle="modal" data-target="#printDownloadWordlistModal">
-                                    <i class="fas fa-download"></i>
-                                    <i class="fas fa-print"></i>                     
-                                </button>
-                            </div>
-                          </div>
-                        </div>                    
-
-
-
                     </div>
                     
                         
