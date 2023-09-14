@@ -7,6 +7,7 @@ which has been running largely stable for a larger user-base for some years now.
 
 ## Basic setup
 
+* Server: Virtual Machine (__Processors? RAM?__)
 * Operating System: Cent OS (Virtual Machine) -- __version__?
 * Tomcat Version: 9
 * Java version: 11 (__OpenJDK?__)
