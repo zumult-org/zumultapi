@@ -7,10 +7,10 @@ which has been running largely stable for a larger user-base for some years now.
 
 ## Basic setup
 
-* Server: Virtual Machine (__Processors? RAM?__)
+* Server: Virtual Machine (4 vCPU, 8 GB RAM, 75 GB HDD)
 * Operating System: Cent OS (Virtual Machine) -- __version__?
 * Tomcat Version: 9
-* Java version: 11 (__OpenJDK?__)
+* Java version: 17.0.7 2023-04-18 LTS (currently an Oracle JDK, but could as well be OpenJDK)
 * __Do we need to specify Apache version? Or is that included in Tomcat? I never know...__
 
 As far as we know, using newer Tomcat or Java versions would not break anything. 
@@ -56,9 +56,14 @@ Cutting audio is achieved with pure Java, so there is no need to install FFMpeg 
 
 When the application delivers downloadable data, it puts them in a designated folder. The application needs writing permissions on that folder, 
 and the contents of the folder have to be accessible via http. To avoid unnecessary disk space usage, we have a cron job running on the server which 
-looks into that folder in regular intervals (__20 minutes?__) and deletes all files with a timestamp before the last run (i.e. files older than __20 minutes__).
+looks into that folder in regular intervals (30 minutes) and deletes all files with a timestamp before the last run (i.e. files older than 30 minutes).
 
-
+```
+# delete all files in download folder older than 30 minutes
+find /var/lib/my/path/downloads/ -type f -mmin +30
+-delete
+find /var/cache/tomcat/temp/ -type f -mmin +15 -delete
+```
 
 
 
