@@ -5,7 +5,6 @@
  */
 package scripts;
 
-import org.zumult.io.*;
 import de.tuebingen.uni.sfs.germanet.api.ConRel;
 import de.tuebingen.uni.sfs.germanet.api.GermaNet;
 import de.tuebingen.uni.sfs.germanet.api.LexUnit;
@@ -24,121 +23,194 @@ import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
  *
  * @author Frick
  */
-public class TestGermaNet {
-    private static final String DATA_PATH = Configuration.getGermanetPath();
-    private static final String TOKEN = "Baum";
-    
-    public static void main(String[] args) {
-        new TestGermaNet().doit();
-    }
-    
-    private void doit() {
-        try {
-            GermaNet germanet = new GermaNet(DATA_PATH);
-            Set<String> synonyms = getSynonymsFromGermaNet(germanet, TOKEN, SimilarityTypeEnum.GERMANET);
-            System.out.println("Synonyme für " + TOKEN + ": " + synonyms.toString());
-        } catch (XMLStreamException |IOException ex) {
-            ex.printStackTrace();
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    }
-    
-    
-    private Set<String> getSynonymsFromGermaNet(GermaNet germanet, String str, SimilarityTypeEnum mode){
-        Set<String> result = new HashSet();
-        List <Synset> synsets = germanet.getSynsets(str);
-            
-        for (Synset synset : synsets){
-            //add orth forms, compounds info and synonyms
-            switch(mode){
-               case GERMANET:
-               case GERMANET_PLUS:
-                    result.addAll(getOrthFormsAndCompoundsForSynset(synset, str));
-                    
-                    for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hypernym)){
-                        result.addAll(getOrthFormsForSynset(otherSynset));    
-                    }
-                   
-                    for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hyponym)){
-                        result.addAll(getOrthFormsForSynset(otherSynset));    
-                    }
+public final class TestGermaNet {
 
-                   break;
-               case GERMANET_ORTH:
-                   result.addAll(getOrthFormsForSynset(synset));
-                   break;
-               case GERMANET_COMPOUNDS:
-                    result.addAll(getCompoundsForSynset(synset, str));
-                    break;
-               case GERMANET_HYPERNYM:
-                   for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hypernym)){
-                        result.addAll(getOrthFormsForSynset(otherSynset));    
-                    }
-                   break;
-               case GERMANET_HYPONYM:
-                   for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hyponym)){
-                        result.addAll(getOrthFormsForSynset(otherSynset));    
-                    }
-                   break;
-               default:
+    /** GermaNet location, e.g. /home/zumult/GN_V170_XML */
+    private static final String DATA_PATH = Configuration.getGermanetPath();
+
+    /**
+     * Main method.
+     * Calls doit() to retrieve and print synonyms
+     *
+     * @param args The command line arguments
+     */
+    public static void main(final String[] args) {
+        doit("Baum");
+        doit("parken");
+    }
+
+    private TestGermaNet() {
+      //not called
+    }
+
+    /**
+    * Prints synonyms for the specified word token.
+    *
+    * @param str word token for which synonyms should be printed
+    */
+    private static void doit(final String str) {
+        try {
+            // initialize GermaNet
+            GermaNet germanet = new GermaNet(DATA_PATH);
+
+            // get synonyms
+            Set<String> synonyms =
+                    getSynonymsFromGermaNet(germanet,
+                            str,
+                            SimilarityTypeEnum.GERMANET);
+
+            // print synonyms
+            System.out.println("Synonyme für "  + str + ": "
+                    + synonyms.toString());
+
+        // if GermaNet can't be read
+        } catch (IOException | XMLStreamException ex) {
+            Logger.getLogger(TestGermaNet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+    * Retrieves synonyms from GermaNet for the specified word token.
+    *
+    * @param germanet
+    * @param str word token for which synonyms should be printed
+    * @param mode
+    *
+    * @return a set of synonyms
+    */
+    private static Set<String> getSynonymsFromGermaNet(final GermaNet germanet,
+                                                final String str,
+                                                final SimilarityTypeEnum mode) {
+        Set<String> result = new HashSet();
+        List<Synset> synsets = germanet.getSynsets(str);
+
+        for (Synset synset : synsets) {
+            List<LexUnit> lexicalUnits = synset.getLexUnits();
+            List<Synset> hypernyms =
+                            synset.getRelatedSynsets(ConRel.has_hypernym);
+            List<Synset> hyponyms =
+                            synset.getRelatedSynsets(ConRel.has_hyponym);
+
+            //add orth forms, compounds info and synonyms
+            switch (mode) {
+               case GERMANET, GERMANET_PLUS -> {
+                   result.addAll(getOrthFormsAndCompounds(lexicalUnits,
+                           str));
+
+                   for (Synset otherSynset: hypernyms) {
+                       List<LexUnit> lexUnits = otherSynset.getLexUnits();
+                       result.addAll(getOrthForms(lexUnits));
+                   }
+
+                   for (Synset otherSynset: hyponyms) {
+                       List<LexUnit> lexUnits = otherSynset.getLexUnits();
+                       result.addAll(getOrthForms(lexUnits));
+                   }
+                }
+               case GERMANET_ORTH -> {
+                   result.addAll(getOrthForms(lexicalUnits));
+               }
+               case GERMANET_COMPOUNDS -> {
+                   result.addAll(getCompounds(lexicalUnits, str));
+               }
+               case GERMANET_HYPERNYM -> {
+                   for (Synset otherSynset: hypernyms) {
+                       List<LexUnit> lexUnits = otherSynset.getLexUnits();
+                       result.addAll(getOrthForms(lexUnits));
+                   }
+                }
+               case GERMANET_HYPONYM -> {
+                   for (Synset otherSynset: hyponyms) {
+                       List<LexUnit> lexUnits = otherSynset.getLexUnits();
+                       result.addAll(getOrthForms(lexUnits));
+                   }
+                }
+               default -> {
+                   throw new IllegalStateException("Unexpected value: " + mode);
+                }
             }
-            
-            if (result.contains(str)){
+
+            if (result.contains(str)) {
                 result.remove(str);
             }
         }
-            
+
         return result;
     }
-    
-    private static Set<String> getOrthFormsForSynset(Synset synset){
-        Set<String> result = new HashSet();
-        List<LexUnit> lexical_units = synset.getLexUnits();
 
-        for (LexUnit lexUnit: lexical_units){
+    /**
+     * Returns a set of orthographic forms for all lexical units.
+     *
+     * @param lexUnits
+     * @return a set of strings
+     */
+    private static Set<String> getOrthForms(final List<LexUnit> lexUnits) {
+        Set<String> result = new HashSet();
+
+        for (LexUnit lexUnit: lexUnits) {
             result.addAll(lexUnit.getOrthForms());
         }
-        
+
         return result;
     }
-    
-    private static Set<String> getCompoundsForSynset(Synset synset, String word){
-        Set<String> result = new HashSet();
-        List<LexUnit> lexical_units = synset.getLexUnits();
 
-        for (LexUnit lexUnit: lexical_units){
-            List<String> orth_forms = lexUnit.getOrthForms();
-            
-            if(orth_forms.size()==1 && orth_forms.get(0).equals(word)){
+    /**
+     * Returns a set of compounds for the specified word.
+     *
+     * @param lexUnits
+     * @param word
+     * @return a set of strings
+     */
+    private static Set<String> getCompounds(final List<LexUnit> lexUnits,
+                                            final String word) {
+
+        Set<String> result = new HashSet();
+
+        for (LexUnit lexUnit: lexUnits) {
+            List<String> orthForms = lexUnit.getOrthForms();
+
+            if (orthForms.size() == 1
+                && orthForms.get(0).equals(word)) {
+
                 // add head of compounds
-                if(lexUnit.getCompoundInfo()!=null){
+                if (lexUnit.getCompoundInfo() != null) {
                     result.add(lexUnit.getCompoundInfo().getHead());
                 }
             }
         }
-        
+
         return result;
     }
-        
-    private static Set<String> getOrthFormsAndCompoundsForSynset(Synset synset, String word){
-        Set<String> result = new HashSet();
-        List<LexUnit> lexical_units = synset.getLexUnits();
 
-        for (LexUnit lexUnit: lexical_units){
-            List<String> orth_forms = lexUnit.getOrthForms();
-            
-            result.addAll(orth_forms);
-            
-            if(orth_forms.size()==1 && orth_forms.get(0).equals(word)){
+    /**
+     * Returns a set of orthographic forms for all lexical units
+     * and a set of compounds for the specified word.
+     *
+     * @param lexUnits
+     * @param word
+     * @return a set of strings
+     */
+    private static Set<String> getOrthFormsAndCompounds(
+                                            final List<LexUnit> lexUnits,
+                                            final String word) {
+        Set<String> result = new HashSet();
+
+        for (LexUnit lexUnit: lexUnits) {
+            List<String> orthForms = lexUnit.getOrthForms();
+            result.addAll(orthForms);
+
+            if (orthForms.size() == 1
+                && orthForms.get(0).equals(word)) {
+
                 // add head of compounds
-                if(lexUnit.getCompoundInfo()!=null){
+                if (lexUnit.getCompoundInfo() != null) {
                     result.add(lexUnit.getCompoundInfo().getHead());
                 }
             }
         }
-        
+
         return result;
     }
-    
 
 }
