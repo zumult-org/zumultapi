@@ -22,7 +22,7 @@ import org.zumult.io.IOHelper;
  * @author Frick
  */
 public final class FindEmptyXMLElements {
-    /** corpus folder location with iso tei xml transcripts */
+    /** Corpus folder location of the iso transcripts. */
     private static final String DATA_PATH = Configuration.getTranscriptPath();
 
     private FindEmptyXMLElements() {
