@@ -678,8 +678,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
 
                                             reader.onload = function (evt) {
                                                 var text = evt.target.result;
-                                                var synonyms = "<" + '<%= Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS%>' 
-                                                        + ">" + text + "</" + '<%= Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS%>' + ">";
+                                                var synonyms = "<" + '<%= Constants.REPETITION_SYNONYMS%>' 
+                                                        + ">" + text + "</" + '<%= Constants.REPETITION_SYNONYMS%>' + ">";
                                                 searchRepetitions(synonyms);
                                             };
 
@@ -977,8 +977,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 var corpora = getCorporaFromCorpusQuery(corpusQueryStr);
                 var searchType = $xmlObject.find('code').text();    
                 var itemsPerPage = $xmlObject.find('itemsPerPage').text();
-                var repetitions = createXMLElement('<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS%>', $xmlObject.find('repetitions').html());
-                var synonyms = createXMLElement('<%= Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS%>', $xmlObject.find('synonyms').text());
+                var repetitions = createXMLElement('<%= Constants.REPETITIONS%>', $xmlObject.find('repetitions').html());
+                var synonyms = createXMLElement('<%= Constants.REPETITION_SYNONYMS%>', $xmlObject.find('synonyms').text());
                 var wordLists = createXMLElement('<%= Constants.CUSTOM_WORDLISTS_KEY%>', $xmlObject.find('wordLists').text());
 
                 //display summary + button for opening metadata view (GET)

@@ -373,7 +373,7 @@ public abstract class AbstractSearcher {
         
         try {
             Document doc = (Document) IOHelper.DocumentFromText(repetitionsStr);
-            NodeList nodes = doc.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_REPETITION);
+            NodeList nodes = doc.getElementsByTagName(Constants.REPETITION);
             for (int i=0; i<nodes.getLength(); i++){
                 Element element = ((Element)(nodes.item(i)));
                 Repetition r = new Repetition(element);
@@ -394,7 +394,7 @@ public abstract class AbstractSearcher {
         
             try {
                 Document doc = (Document) IOHelper.DocumentFromText(synonyms);
-                NodeList nodes = doc.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SYNONYMS);
+                NodeList nodes = doc.getElementsByTagName(Constants.REPETITION_SYNONYMS);
 
                 Element element = ((Element)(nodes.item(0)));
                 String[] wordSets = element.getTextContent().split(";");

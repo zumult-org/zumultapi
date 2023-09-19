@@ -12,7 +12,7 @@
     function getXMLForRepetitions(){
         var repetitions = [];
         repetitions.push(
-            "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS %>',">"
+            "<",'<%=Constants.REPETITIONS %>',">"
         );
         
         $('#repetition-search-form').find('.repetitionPropertiesForm').each(function(){
@@ -112,7 +112,7 @@
                 checkedPOSToBeIgnored.push($(this).val());
             });
             
-            var ignoredCustomPOS = checkedPOSToBeIgnored.join('<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR %>');   
+            var ignoredCustomPOS = checkedPOSToBeIgnored.join('<%= Constants.REPETITION_IGNORED_POS_SEPARATOR %>');   
             
             var contextLeft = $(this).find('.repetitionContextFieldLeft').val();
             var contextRight = $(this).find('.repetitionContextFieldRight').val();
@@ -136,80 +136,80 @@
             }
 
             repetitions.push(
-                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITION %>',">",
-                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>',">",
+                "<",'<%=Constants.REPETITION %>',">",
+                "<",'<%=Constants.REPETITION_TYPE %>',">",
                 annotationLayer,
-                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>',">",
+                "</",'<%=Constants.REPETITION_TYPE %>',">",
+                "<",'<%= Constants.REPETITION_SIMILARITY_TYPE%>',">",
                 similarityType,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE%>',">",
-                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER %>',">",
+                "</",'<%= Constants.REPETITION_SIMILARITY_TYPE%>',">",
+                "<",'<%=Constants.REPETITION_SPEAKER %>',">",
                 speaker,
-                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER %>',">",
-                "<",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA %>',">",
+                "</",'<%=Constants.REPETITION_SPEAKER %>',">",
+                "<",'<%=Constants.REPETITION_SPEAKER_METADATA %>',">",
                 speakerMetadata,
-                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>',">",
+                "</",'<%=Constants.REPETITION_SPEAKER_METADATA %>',">",
+                "<",'<%= Constants.REPETITION_MIN_DISTANCE %>',">",
                 minDistance,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_MIN_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_MAX_DISTANCE %>',">",
                 maxDistance,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS %>',">",
+                "</",'<%= Constants.REPETITION_MAX_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_IGNORED_POS %>',">",
                 ignoredCustomPOS,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>',">",
+                "</",'<%= Constants.REPETITION_IGNORED_POS %>',">",
+                "<",'<%= Constants.REPETITION_SPEAKER_CHANGE %>',">",
                 speakerChange,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>',">",
+                "</",'<%= Constants.REPETITION_SPEAKER_CHANGE %>',">",
+                "<",'<%= Constants.REPETITION_POSITION_TO_MATCH %>',">",
                 positionToMatch,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_MATCH %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>',">",
+                "</",'<%= Constants.REPETITION_POSITION_TO_MATCH %>',">",
+                "<",'<%= Constants.REPETITION_POSITION_TO_OVERLAP %>',">",
                 positionToOverlap,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP %>',">",
-                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>',">",
+                "</",'<%= Constants.REPETITION_POSITION_TO_OVERLAP %>',">",
+                 "<",'<%= Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_TYPE %>',">",
                 positionToSpeakerChangeType,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE %>',">",
-                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_TYPE %>',">",
+                 "<",'<%= Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>',">",
                 positionToSpeakerChangeMin,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>',">",
-                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE %>',">",
+                 "<",'<%= Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>',">",
                 positionToSpeakerChangeMax,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>',">",
-                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT %>',">",
+                "</",'<%= Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE %>',">",
+                 "<",'<%= Constants.REPETITION_CONTEXT_LEFT %>',">",
                 contextLeft.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_LEFT %>',">",
+                "<",'<%= Constants.REPETITION_CONTEXT_RIGHT %>',">",
                 contextRight.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT %>',">",
-                 "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_RIGHT %>',">",
+                 "<",'<%= Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>',">",
                 contextWithinSpeakerContributionLeft,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT %>',">",
+                "<",'<%= Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>',">",
                 contextWithinSpeakerContributionRight,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT %>',">",
+                "<",'<%= Constants.REPETITION_CONTEXT_LEFT_MIN_DISTANCE %>',">",
                 minDistanceLeft,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_LEFT_MIN_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_CONTEXT_LEFT_MAX_DISTANCE %>',">",
                 maxDistanceLeft,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_LEFT_MAX_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_CONTEXT_RIGHT_MIN_DISTANCE %>',">",
                 minDistanceRight,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE %>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_RIGHT_MIN_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_CONTEXT_RIGHT_MAX_DISTANCE %>',">",
                 maxDistanceRight,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE %>',">",
-                "<",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>',">",
+                "</",'<%= Constants.REPETITION_CONTEXT_RIGHT_MAX_DISTANCE %>',">",
+                "<",'<%= Constants.REPETITION_IGNORE_TOKEN_ORDER%>',">",
                 ignoreTokenOrder,
-                "</",'<%= Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER%>',">",
-                "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITION %>',">"
+                "</",'<%= Constants.REPETITION_IGNORE_TOKEN_ORDER%>',">",
+                "</",'<%=Constants.REPETITION %>',">"
             );
                         
         });
         
         repetitions.push(
-            "</",'<%=Constants.REPETITION_XML_ELEMENT_NAME_REPETITIONS %>',">"
+            "</",'<%=Constants.REPETITIONS %>',">"
         );
                         
         //alert(repetitions.join(""));
