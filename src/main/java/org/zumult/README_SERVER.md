@@ -15,6 +15,13 @@ which has been running largely stable for a larger user-base for some years now.
 
 As far as we know, using newer Tomcat or Java versions would not break anything. 
 
+## Deployment
+
+The ZuMult application is deployed through the TomCat Manager application, i.e. through a browser. Data update is done:
+
+* through SFTP (FileZilla) for the Lucene indices
+* through an update of SVN (command line on the server) for the transcripts and metadata 
+
 ## User database
 
 The user database sits on a different machine. It is a single table in an Oracle RDB containing usernames and their passwords. There is no distinction between different roles. 
@@ -36,7 +43,8 @@ and there is a JDBC driver for it.
 
 Audio, video, transcripts and metadata are not packaged with the application. 
 The audio and video files sit in different folders on an external drive which is mounted on the application server.
-The metadata and transcript files are under a specific folder on the same machine as the application.
+The metadata and transcript files are under a specific folder on the same machine as the application. They are under version control (currently an SVN
+repository, but it is planned to use a git repository in the future). 
 Required storage space is roughly 1GB per hour of audio, 5GB per hour of video and 1.5MB per hour of transcript (including all annotations).
 The directories containing audio/video files are made available by the web server (Apache?) for streaming via http, but direct download of these files is not permitted. 
 (__What setting in what configuration is this?__) 
