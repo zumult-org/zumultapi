@@ -49,6 +49,13 @@ public class TestCOMABackend {
             System.out.println(corpus.getName("de"));
             System.out.println(corpus.getDescription("de"));
 
+            Speaker sp = bi.getSpeaker("SID24CCC057-D042-D264-F7BD-7019F78F9421");
+            
+            Set<MetadataKey> metadataKeys2 = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
+            for (MetadataKey key : metadataKeys2){
+                System.out.println(key.getID() + " / " + key.getName("en") +  " : " + sp.getMetadataValue(key));
+            }
+
             Transcript tr = bi.getTranscript("60-414-1-3-a");
             Set<MetadataKey> metadataKeys1 = corpus.getMetadataKeys(ObjectTypesEnum.TRANSCRIPT);
             for (MetadataKey key : metadataKeys1){
@@ -57,15 +64,17 @@ public class TestCOMABackend {
             MetadataKey key1 = bi.findMetadataKeyByID("Transcript_Section Title");
             System.out.println(key1.getName("en"));
             System.out.println(tr.getMetadataValue(key1));
-            System.exit(0);
 
             
 
-            IDList audios4Transcript = bi.getAudios4Transcript("CIDID41FDE89A-D33B-85F1-5238-EDFBA81A85A8");
+            IDList audios4Transcript = bi.getAudios4Transcript(tr.getID());
             for (String a : audios4Transcript) {
                 System.out.println("Audio " + a);
+                Media m = bi.getMedia(a, Media.MEDIA_FORMAT.MP3);
+                System.out.println(m.getURL());
             }
             
+            System.exit(0);
             
             IDList transcripts4Audio = bi.getTranscripts4Audio("MID89259CCE-7F0B-6F0F-46AB-B80563FFDBC9");
             for (String t : transcripts4Audio) System.out.println(t);

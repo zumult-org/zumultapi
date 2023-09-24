@@ -17,7 +17,9 @@ As far as we know, using newer Tomcat or Java versions would not break anything.
 
 ## Deployment
 
-The ZuMult application is deployed through the TomCat Manager application, i.e. through a browser. Data update is done:
+The ZuMult application is deployed through the TomCat Manager application, i.e. through a browser. 
+
+Data update is done:
 
 * through SFTP (FileZilla) for the Lucene indices
 * through an update of SVN (command line on the server) for the transcripts and metadata 

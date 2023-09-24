@@ -72,6 +72,8 @@ public class COMAFileSystem extends AbstractBackend {
     static final Map<String, String> id2Corpus = new HashMap<>();
     static final Map<String, String> id2parentID = new HashMap<>();
     
+    static final Map<String, Corpus> corpusID2Corpus = new HashMap<>();
+    
     static {
         try {
             // Make a map with IDs
@@ -110,12 +112,17 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public Corpus getCorpus(String corpusID) throws IOException {
         //File topFolder = new File("N:\\Workspace\\HZSK");
+        // this is way too slow, the corpus is read over and over again
+        if (corpusID2Corpus.containsKey(corpusID)){
+            return corpusID2Corpus.get(corpusID);
+        }
         System.out.println("Getting corpus: " + corpusID);
         File corpusFolder = new File(topFolder, corpusID);
         File comaFile = new File(corpusFolder, corpusID + ".coma");
         System.out.println("Coma file: " + comaFile.getAbsolutePath());
         String comaXML = IOHelper.readUTF8(comaFile);
         Corpus corpus = new COMACorpus(comaXML);
+        corpusID2Corpus.put(corpusID, corpus);
         return corpus;
     }
 
@@ -337,9 +344,13 @@ public class COMAFileSystem extends AbstractBackend {
             */
             NodeList allAudios = (NodeList)
                     xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.wav' "
-                            + "or substring(Filename, string-length(Filename)-3)='.WAV'"
-                            + "or substring(NSLink, string-length(NSLink)-3)='.WAV'"
-                            + "or substring(NSLink, string-length(NSLink)-3)='.wav'"
+                            + "or substring(Filename, string-length(Filename)-3)='.WAV' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.WAV' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.wav' "
+                            + "or substring(Filename, string-length(Filename)-3)='.MP3' "
+                            + "or substring(Filename, string-length(Filename)-3)='.mp3' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.MP3' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.mp3' "
                             + "]", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allAudios.getLength(); i++){
                 Element mediaElement = ((Element)(allAudios.item(i)));
@@ -400,6 +411,9 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public IDList getAudios4Transcript(String transcriptID) throws IOException {
         // This may be difficult because there is no mapping for this
+        // oh yes, it is difficult
+        // for the time being, let us look if the audio for the speech event 
+        // contains a file with the same name as the transcript?
         return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
     }
 
