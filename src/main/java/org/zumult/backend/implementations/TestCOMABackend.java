@@ -49,14 +49,14 @@ public class TestCOMABackend {
             System.out.println(corpus.getName("de"));
             System.out.println(corpus.getDescription("de"));
 
-            Speaker sp = bi.getSpeaker("SID24CCC057-D042-D264-F7BD-7019F78F9421");
+            Speaker sp = bi.getSpeaker("Speaker_0001");
             
             Set<MetadataKey> metadataKeys2 = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);
             for (MetadataKey key : metadataKeys2){
                 System.out.println(key.getID() + " / " + key.getName("en") +  " : " + sp.getMetadataValue(key));
             }
 
-            Transcript tr = bi.getTranscript("60-414-1-3-a");
+            Transcript tr = bi.getTranscript("1-1-1-3-a");
             Set<MetadataKey> metadataKeys1 = corpus.getMetadataKeys(ObjectTypesEnum.TRANSCRIPT);
             for (MetadataKey key : metadataKeys1){
                 System.out.println(key.getID() + " / " + key.getName("en") +  " : " + tr.getMetadataValue(key));

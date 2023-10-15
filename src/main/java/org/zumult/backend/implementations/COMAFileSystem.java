@@ -116,10 +116,10 @@ public class COMAFileSystem extends AbstractBackend {
         if (corpusID2Corpus.containsKey(corpusID)){
             return corpusID2Corpus.get(corpusID);
         }
-        System.out.println("Getting corpus: " + corpusID);
+        //System.out.println("Getting corpus: " + corpusID);
         File corpusFolder = new File(topFolder, corpusID);
         File comaFile = new File(corpusFolder, corpusID + ".coma");
-        System.out.println("Coma file: " + comaFile.getAbsolutePath());
+        //System.out.println("Coma file: " + comaFile.getAbsolutePath());
         String comaXML = IOHelper.readUTF8(comaFile);
         Corpus corpus = new COMACorpus(comaXML);
         corpusID2Corpus.put(corpusID, corpus);
@@ -414,6 +414,7 @@ public class COMAFileSystem extends AbstractBackend {
         // oh yes, it is difficult
         // for the time being, let us look if the audio for the speech event 
         // contains a file with the same name as the transcript?
+        //System.out.println("Getting audios 4 speech event: " + transcriptID);
         return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
     }
 
@@ -526,6 +527,7 @@ public class COMAFileSystem extends AbstractBackend {
     }
 
     private String findCorpusID(String someID) throws IOException {
+        //System.out.println("Trying to find corpus ID for " + someID);
         return id2Corpus.get(someID);
         /*for (String corpusID : getCorpora()){            
             try {
