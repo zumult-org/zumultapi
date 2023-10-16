@@ -894,8 +894,16 @@ abstract class MtasXMLParser extends MtasBasicParser {
           otherMap = new HashMap<>();
           currentObject.objectOtherAttributes.put(attributeNamespaceURI, otherMap);
         } else {
-          otherMap = currentObject.objectOtherAttributes.get(attributeNamespaceURI);
-        }
+                // this is for issue #151
+                // a dirty fix which will take care of attributes "lang"
+                // regardless of their namespace
+                // see e-mail from EF on 05-09-2023
+                if(streamReader.getAttributeLocalName(i).equals("lang")){
+                    currentObject.objectAttributes.put("lang",
+                        streamReader.getAttributeValue(namespaceURI_id, "lang"));
+                }          
+                otherMap = currentObject.objectOtherAttributes.get(attributeNamespaceURI);
+        }        
         otherMap.put(streamReader.getAttributeLocalName(i), streamReader.getAttributeValue(i));
       }
     }

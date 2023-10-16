@@ -8,6 +8,11 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,6 +23,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -26,6 +32,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.VirtualCollectionStore;
 import org.zumult.io.Constants;
@@ -65,43 +72,36 @@ public class COMAFileSystem extends AbstractBackend {
     static final Map<String, String> id2Corpus = new HashMap<>();
     static final Map<String, String> id2parentID = new HashMap<>();
     
+    static final Map<String, Corpus> corpusID2Corpus = new HashMap<>();
+    
     static {
         try {
             // Make a map with IDs
             COMAFileSystem comaFileSystem = new COMAFileSystem();
             IDList corpora = comaFileSystem.getCorpora();
             for (String corpusID : corpora){
-                Corpus corpus = comaFileSystem.getCorpus(corpusID);
-                String xp = "//*[@Id]";
-                XPath xPath2 = XPathFactory.newInstance().newXPath();
-                NodeList allIDElements = (NodeList) xPath2.evaluate(xp, corpus.getDocument().getDocumentElement(), XPathConstants.NODESET);
-                for (int i=0; i<allIDElements.getLength(); i++){
-                    Element idElement = ((Element)(allIDElements.item(i)));
-                    id2Corpus.put(idElement.getAttribute("Id"), corpusID);
-                    Element parentElement = (Element) (Node) xPath2.evaluate("ancestor::*[@Id][1]", idElement, XPathConstants.NODE);
-                    if (parentElement!=null){
-                        id2parentID.put(idElement.getAttribute("Id"), parentElement.getAttribute("Id"));
-                    }
-                }
+                System.out.println("Indexing " + corpusID + " started. ");
+                //Corpus corpus = comaFileSystem.getCorpus(corpusID);               
+                comaFileSystem.indexIDs(corpusID, id2Corpus, id2parentID);                
             }
-        } catch (IOException | XPathExpressionException ex) {
+        } catch (IOException | XPathExpressionException | SAXException | ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public String getID() {
-        return "TO DO";
+        return "exmaralda.org.coma";
     }
 
     @Override
     public String getName() {
-        return "TO DO";
+        return "COMA Backend";
     }
 
     @Override
     public String getAcronym() {
-        return "TO DO";
+        return "CoMa";
     }
 
     @Override
@@ -112,11 +112,17 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public Corpus getCorpus(String corpusID) throws IOException {
         //File topFolder = new File("N:\\Workspace\\HZSK");
-        System.out.println("Getting corpus: " + corpusID);
+        // this is way too slow, the corpus is read over and over again
+        if (corpusID2Corpus.containsKey(corpusID)){
+            return corpusID2Corpus.get(corpusID);
+        }
+        //System.out.println("Getting corpus: " + corpusID);
         File corpusFolder = new File(topFolder, corpusID);
         File comaFile = new File(corpusFolder, corpusID + ".coma");
+        //System.out.println("Coma file: " + comaFile.getAbsolutePath());
         String comaXML = IOHelper.readUTF8(comaFile);
         Corpus corpus = new COMACorpus(comaXML);
+        corpusID2Corpus.put(corpusID, corpus);
         return corpus;
     }
 
@@ -228,10 +234,11 @@ public class COMAFileSystem extends AbstractBackend {
             File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
             
             String xmlString = IOHelper.readUTF8(resolvedPath);
+            String metadataString = IOHelper.ElementToString(transcriptionElement);
             
-            return new ISOTEITranscript(xmlString);
+            return new ISOTEITranscript(xmlString, metadataString);
 
-        } catch (XPathExpressionException ex) {
+        } catch (XPathExpressionException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -337,9 +344,13 @@ public class COMAFileSystem extends AbstractBackend {
             */
             NodeList allAudios = (NodeList)
                     xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.wav' "
-                            + "or substring(Filename, string-length(Filename)-3)='.WAV'"
-                            + "or substring(NSLink, string-length(NSLink)-3)='.WAV'"
-                            + "or substring(NSLink, string-length(NSLink)-3)='.wav'"
+                            + "or substring(Filename, string-length(Filename)-3)='.WAV' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.WAV' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.wav' "
+                            + "or substring(Filename, string-length(Filename)-3)='.MP3' "
+                            + "or substring(Filename, string-length(Filename)-3)='.mp3' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.MP3' "
+                            + "or substring(NSLink, string-length(NSLink)-3)='.mp3' "
                             + "]", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allAudios.getLength(); i++){
                 Element mediaElement = ((Element)(allAudios.item(i)));
@@ -400,6 +411,10 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public IDList getAudios4Transcript(String transcriptID) throws IOException {
         // This may be difficult because there is no mapping for this
+        // oh yes, it is difficult
+        // for the time being, let us look if the audio for the speech event 
+        // contains a file with the same name as the transcript?
+        //System.out.println("Getting audios 4 speech event: " + transcriptID);
         return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
     }
 
@@ -512,6 +527,7 @@ public class COMAFileSystem extends AbstractBackend {
     }
 
     private String findCorpusID(String someID) throws IOException {
+        //System.out.println("Trying to find corpus ID for " + someID);
         return id2Corpus.get(someID);
         /*for (String corpusID : getCorpora()){            
             try {
@@ -669,6 +685,82 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public Searcher getSearcher() {
         return new DGD2Searcher();
+    }
+
+    private void indexIDs(String corpusID, Map<String, String> id2Corpus, Map<String, String> id2parentID) throws XPathExpressionException, IOException, SAXException, ParserConfigurationException, TransformerException {
+        File corpusFolder = new File(topFolder, corpusID);
+        File comaFile = new File(corpusFolder, corpusID + ".coma");
+        File comaIndexFile = new File(corpusFolder, corpusID + ".comaindex");
+        boolean comaModifiedAfterIndex = false;
+        if (comaIndexFile.exists()){
+            Path fileComa = Paths.get(comaFile.getAbsolutePath());
+            BasicFileAttributes attrComa = Files.readAttributes(fileComa, BasicFileAttributes.class);
+            FileTime lastModifiedTimeComa = attrComa.lastModifiedTime();
+
+
+            Path fileIndex = Paths.get(comaIndexFile.getAbsolutePath());
+            BasicFileAttributes attrIndex = Files.readAttributes(fileIndex, BasicFileAttributes.class);
+            FileTime lastModifiedTimeIndex = attrIndex.lastModifiedTime();
+            
+            comaModifiedAfterIndex = (lastModifiedTimeComa.compareTo(lastModifiedTimeIndex)>0);
+            if (comaModifiedAfterIndex) {
+                System.out.println("Coma was modified after index. ");
+            } else {
+                System.out.println("Index exists and is up-to-date.");
+            }
+        } else {
+            System.out.println("There is no index yet. ");
+        }
+        if (!(comaIndexFile.exists()) || comaModifiedAfterIndex){
+            System.out.println("Calculating index. ");
+            String xp = "//*[@Id]";
+            XPath xPath2 = XPathFactory.newInstance().newXPath();
+            Element root = IOHelper.readDocument(comaFile).getDocumentElement();
+            NodeList allIDElements = (NodeList) xPath2.evaluate(xp, root, XPathConstants.NODESET);
+            System.out.println("Processing " + allIDElements.getLength() + " elements with ID. ");
+            StringBuilder sb = new StringBuilder();
+            sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<coma-index>");
+            for (int i=0; i<allIDElements.getLength(); i++){
+                Element idElement = ((Element)(allIDElements.item(i)));
+                String thisID = idElement.getAttribute("Id");
+                id2Corpus.put(thisID, corpusID);
+                sb.append("<index id=\"").append(thisID).append("\" corpus=\"").append(corpusID).append("\"");
+                Element parentElement = (Element) (Node) xPath2.evaluate("ancestor::*[@Id][1]", idElement, XPathConstants.NODE);
+                if (parentElement!=null){
+                    String parentID = parentElement.getAttribute("Id");
+                    id2parentID.put(thisID, parentID);
+                    sb.append(" parent=\"").append(parentID).append("\"");
+                }
+                sb.append("/>");
+                if (i%1000==0){
+                    System.out.println("[" + i + "/" + allIDElements.getLength() + "]");
+                }
+            }
+            sb.append("</coma-index>");
+            
+            // write index
+            Document indexDocument = IOHelper.DocumentFromText(sb.toString());
+            IOHelper.writeDocument(indexDocument, comaIndexFile);
+            System.out.println("Index written to " + comaIndexFile.getAbsolutePath());
+        } else {
+            // read index
+            System.out.println("Reading index from " + comaIndexFile.getAbsolutePath());
+            Document indexDocument = IOHelper.readDocument(comaIndexFile);
+            NodeList childNodes = indexDocument.getDocumentElement().getChildNodes();
+            for (int i=0; i<childNodes.getLength(); i++){
+                Element item = (Element)childNodes.item(i);
+                /*
+                    <index corpus="TGDP" id="CIDIDCA77E918-392E-DC22-A0A2-5A25F6084C37"
+                        parent="CIDE2EAFD16-32BD-43BF-6161-D4E1774950BC"/>                
+                */
+                String id = item.getAttribute("id");
+                String corpus = item.getAttribute("corpus");
+                String parent = item.getAttribute("parent");
+                id2Corpus.put(id, corpus);
+                id2parentID.put(id, parent);
+                
+            }
+        }
     }
   
 }

@@ -5,6 +5,8 @@
  */
 package org.zumult.indexing.search;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,14 +27,18 @@ import org.zumult.query.searchEngine.SearchIndex;
 public class SearchIndexer implements Indexer {
     
     private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
-    private String MTAS_CONFIG_FILE_NAME = "mtas_config_SB.xml";
-    private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
-    private String INDEX_NAME = "SB_FOLK";
-    public String[] INPUT_DIRECTORIES = 
+    private String MTAS_CONFIG_FILE_NAME = "tgdp_mtas_config_SB.xml";
+    //private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\indicesTest";
+    private String INDEX_PATH = "E:\\ZUMULT\\INDICES";
+    
+    private String INDEX_NAME = "SB_TGDP";
+    
+    private String[] INPUT_DIRECTORIES =
         {
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\FOLK", 
             //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\input\\GWSS"
-            "C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_14_07_2022" // 12.07.2022
+            //"C:\\Users\\Frick\\IDS\\ZuMult\\data\\output_SB_FOLK_14_07_2022" // 12.07.2022
+            //"C:\\Users\\bernd\\Dropbox\\work\\2021_MARGO_TEXAS_GERMAN\\ZUMULT\\TGDP\\1-20-1"
         };
 
     
@@ -42,7 +48,7 @@ public class SearchIndexer implements Indexer {
         MTAS_CONFIG_FILE_NAME = mtasConfigFileName;
         INDEX_PATH = indexPath;
         INDEX_NAME = indexName;
-        INPUT_DIRECTORIES = inputDirectories;
+        INPUT_DIRECTORIES = inputDirectories;        
     }
 
     public SearchIndexer() {
@@ -56,7 +62,21 @@ public class SearchIndexer implements Indexer {
      */
     public static void main(String[] args) {
         try {
-            new SearchIndexer().index();
+            File[] INPUT_DIRECTORY_FILES = new File("E:\\2023_10_11_TDGP_CLEANUP_ISOTEI").listFiles(new FileFilter(){
+                @Override
+                public boolean accept(File pathname) {
+                    System.out.println(pathname.getAbsolutePath());
+                    return pathname.isDirectory();
+                }
+                
+            });    
+            String[] MY_INPUT_DIRECTORIES = new String[INPUT_DIRECTORY_FILES.length];
+            for (int i=0; i<MY_INPUT_DIRECTORIES.length; i++){
+                MY_INPUT_DIRECTORIES[i] = INPUT_DIRECTORY_FILES[i].getAbsolutePath();
+            }
+            SearchIndexer searchIndexer = new SearchIndexer();
+            searchIndexer.INPUT_DIRECTORIES = MY_INPUT_DIRECTORIES; 
+            searchIndexer.index();
         } catch (IOException ex) {
             Logger.getLogger(SearchIndexer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,6 +92,7 @@ public class SearchIndexer implements Indexer {
         });
         
         MTASBasedSearchEngine index = new MTASBasedSearchEngine();
+        // TS: this is a windows specific way of creating the path, or isn't it?
         SearchIndex searchIndex = index.createIndex(inputDirectories, INDEX_PATH + "\\"+ INDEX_NAME, MTAS_CONFIG_FILE_PATH + "\\" +MTAS_CONFIG_FILE_NAME);
 
         System.out.println("Done!");
