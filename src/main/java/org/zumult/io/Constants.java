@@ -307,7 +307,6 @@ public class Constants {
     public static final String REPETITION_IGNORED_POS="ignoredCustomPOS";
     public static final String REPETITION_IGNORE_TOKEN_ORDER="ignoreTokenOrder";
     public static final String REPETITION_SPEAKER_CHANGE="speakerChange";
-    public static final String REPETITION_POSITION_TO_MATCH="positionToMatch";
     public static final String REPETITION_POSITION_TO_OVERLAP="positionToOverlap";
     public static final String REPETITION_POSITION_TO_SPEAKER_CHANGE_TYPE="positionToSpeakerChangeType";
     public static final String REPETITION_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE="positionToSpeakerChangeMin";

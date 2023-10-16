@@ -96,7 +96,6 @@
             var minDistance = getDistance(this, '.minDistance', 0, regexDistance);
             var maxDistance = getDistance(this, '.maxDistance', maxDistanceBetweenRepetitions, regexDistance);
             var speakerChange = $(this).find('.speakerChangeSelect').val();
-            var positionToMatch = $(this).find('.positionToMatch').val();
             var positionToOverlap = $(this).find('.positionToOverlap').val();
             var ignoreTokenOrder = $(this).find('.ignoreTokenOrder').val();
             var positionToSpeakerChangeType = $(this).find('.positionToSpeakerChangeType').val();
@@ -161,9 +160,6 @@
                 "<",'<%= Constants.REPETITION_SPEAKER_CHANGE %>',">",
                 speakerChange,
                 "</",'<%= Constants.REPETITION_SPEAKER_CHANGE %>',">",
-                "<",'<%= Constants.REPETITION_POSITION_TO_MATCH %>',">",
-                positionToMatch,
-                "</",'<%= Constants.REPETITION_POSITION_TO_MATCH %>',">",
                 "<",'<%= Constants.REPETITION_POSITION_TO_OVERLAP %>',">",
                 positionToOverlap,
                 "</",'<%= Constants.REPETITION_POSITION_TO_OVERLAP %>',">",

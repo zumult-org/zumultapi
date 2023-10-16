@@ -1,5 +1,5 @@
 <%@page import="org.zumult.query.searchEngine.Repetition.PositionOverlapEnum"%>
-<%@page import="org.zumult.query.searchEngine.Repetition.PositionToMatch"%>
+<%@page import="org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum"%>
 <%@page import="org.zumult.query.searchEngine.Repetition.RepetitionTypeEnum"%>
 
 <div class="repetitionPropertiesForm">
@@ -138,8 +138,8 @@
                     </div>
                     <select class="form-control positionToSpeakerChangeType" onchange="addDistanceToSpeakerChange(this)">
                         <option value=null selected="selected"><%=myResources.getString("Undefined")%></option>
-                        <option value="<%=PositionToMatch.PRECEDEDBY%>"><%=myResources.getString("PrecededBy")%></option>
-                        <option value="<%=PositionToMatch.FOLLOWEDBY%>"><%=myResources.getString("FollowedBy")%></option>
+                        <option value="<%=PositionSpeakerChangeEnum.PRECEDEDBY%>"><%=myResources.getString("PrecededBy")%></option>
+                        <option value="<%=PositionSpeakerChangeEnum.FOLLOWEDBY%>"><%=myResources.getString("FollowedBy")%></option>
                     </select>                          
                 </div>
             </div>
