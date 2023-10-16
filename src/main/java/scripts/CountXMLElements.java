@@ -19,6 +19,10 @@ import org.zumult.io.IOHelper;
 /**
  *
  * @author Frick
+ * 
+ * This script is used to count word token elements in iso and .fln transcripts
+ * to check the consistency of the token nummer in both transcript types.
+ * 
  */
 public final class CountXMLElements {
     /** Corpus folder location of the iso transcripts. */

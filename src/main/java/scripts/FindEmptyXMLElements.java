@@ -20,6 +20,13 @@ import org.zumult.io.IOHelper;
 /**
  *
  * @author Frick
+ * 
+ * This script is used for finding empty word token elements in iso transcripts.
+ * 
+ * Empty word token elements that still have lemma and pos annotations cause
+ * inconsistencies in the search index because they are not indexed
+ * while its lemma and pos form are indexed and can be searched.
+ * 
  */
 public final class FindEmptyXMLElements {
     /** Corpus folder location of the iso transcripts. */
