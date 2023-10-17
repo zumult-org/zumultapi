@@ -25,10 +25,15 @@ import org.zumult.io.IOHelper;
  * 
  * Empty word token elements that still have lemma and pos annotations cause
  * inconsistencies in the search index because they are not indexed
- * while its lemma and pos form are indexed and can be searched.
+ * while their lemma and pos form are indexed and can be searched.
+ * 
+ * To use this script, please specify the corpus folder name.
  * 
  */
 public final class FindEmptyXMLElements {
+    /** Corpus folder name. */
+    private static final String CORPUS = "FOLK";
+    
     /** Corpus folder location of the iso transcripts. */
     private static final String DATA_PATH = Configuration.getTranscriptPath();
 
@@ -43,7 +48,7 @@ public final class FindEmptyXMLElements {
      * @param args The command line arguments
      */
     public static void main(final String[] args) {
-        doit("w", "FOLK");
+        doit("w", CORPUS);
     }
 
     /**

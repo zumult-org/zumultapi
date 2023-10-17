@@ -57,38 +57,56 @@ public class CompareXMLElements {
     public static void doit(final String corpusID) {
        BackendInterface backendInterface; 
        try {
-           backendInterface = BackendInterfaceFactory.newBackendInterface();
+            backendInterface = BackendInterfaceFactory.newBackendInterface();
 
             File folder = new File(ISO, corpusID);
             File[] listOfFiles = folder.listFiles();
 
             for (File file : listOfFiles) {
                 if (file.isFile()) {
-                    try {
-                        System.out.println("************** "+ file.getName() +" ************************");
-                        Document doc = IOHelper.readDocument(file);
-                        NodeList elements = doc.getElementsByTagName(XML_EL);
-                        int n = elements.getLength();
+                    
+                    System.out.println("******* "+ file.getName() +" ********");
+                    Document doc = IOHelper.readDocument(file);
+                    NodeList elements = doc.getElementsByTagName(XML_EL);
+                    int n = elements.getLength();
 
-                        String query = "<word/> within <"+ Constants.METADATA_KEY_TRANSCRIPT_DGD_ID +"=\""+file.getName().substring(0,23)+"\"/>";                
-                        System.out.println(query);
-                        SearchResultPlus searchResult = backendInterface.search(query, null,null, "corpusSigle=\"FOLK\"", null, 0,0, null, "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", null, null);
-                        int m = searchResult.getTotalHits();
+                    String query = "<word/> within <"
+                            + Constants.METADATA_KEY_TRANSCRIPT_DGD_ID 
+                            +"=\""+file.getName().substring(0,23)
+                            +"\"/>";                
+                    SearchResultPlus searchResult = backendInterface
+                        .search(query, 
+                                null,
+                                null,
+                                "corpusSigle=\"FOLK\"", 
+                                null, 
+                                0,
+                                0, 
+                                null, 
+                                "TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT", 
+                                null, 
+                                null);
+                    int m = searchResult.getTotalHits();
 
-                        System.out.println("n: " + n);
-                        System.out.println("m: " + m);
-                        if(n!=m){
-                            System.out.println ("HERE!!!");
-                            return;
-                        }
-
-                   } catch (IOException | SAXException | ParserConfigurationException | SearchServiceException ex) {
-                        Logger.getLogger(CompareXMLElements.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(n + " (trascript document)");
+                    System.out.println(m + " (search index)");
+                    
+                    if(n!=m){
+                        System.out.println ("A discrepancy was discovered in"
+                                + " transcript" + file.getName());
+                        return;
                     }
                 }
             }
-       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-           Logger.getLogger(CompareXMLElements.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (ClassNotFoundException 
+               | InstantiationException 
+               | IllegalAccessException 
+               | IOException 
+               | SAXException 
+               | ParserConfigurationException 
+               | SearchServiceException ex) {
+           Logger.getLogger(CompareXMLElements.class.getName())
+                   .log(Level.SEVERE, null, ex);
        }
    } 
 }

@@ -20,13 +20,23 @@ import org.zumult.io.IOHelper;
  *
  * @author Frick
  * 
- * This script is used to count word token elements in iso and .fln transcripts
- * to check the consistency of the token nummer in both transcript types.
+ * This script is used to count xml elements in xml transcripts. Please specify
+ * the desired xml element and the corpud folder name. 
+ * 
+ * To switch between iso- and .fln-transcripts, please adapt the location path.
  * 
  */
 public final class CountXMLElements {
-    /** Corpus folder location of the iso transcripts. */
-    private static final String ISO = Configuration.getTranscriptPath();
+    /** XML element to be count. */
+    private static final String XML_ELEMENT = "w";
+    
+    /** Corpus folder name. */
+    private static final String CORPUS = "DH";
+    
+    /** Corpus folder location of transcripts. */
+    private static final String PATH = Configuration.getTranscriptPath();
+    /* private static final String TRANSCRIPT_PATH = 
+    "C:\\Users\\Frick\\IDS\\GitLab\\dgd-data\\transcripts" ;*/
 
     private CountXMLElements() {
       //not called
@@ -39,11 +49,7 @@ public final class CountXMLElements {
     * @param args The command line arguments
     */
     public static void main(final String[] args) {
-        doit("w", "DH", ISO);
-
-        doit("w",
-            "DH",
-            "C:\\Users\\Frick\\IDS\\GitLab\\dgd-data\\transcripts");
+        doit(XML_ELEMENT, CORPUS, PATH);
     }
 
     /**

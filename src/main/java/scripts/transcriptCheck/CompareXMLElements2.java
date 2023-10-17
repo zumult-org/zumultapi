@@ -20,6 +20,7 @@ import org.zumult.io.IOHelper;
  * @author Frick
  * 
  * This script counts w-elements in each iso/tei- and in each fln-transcript and compare the numbers
+ * to check the consistency of the token nummer in both transcript types.
  * 
  */
 public class CompareXMLElements2 {
