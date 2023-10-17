@@ -5,6 +5,7 @@
  */
 package org.zumult.query.implementations;
 
+import java.io.File;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -237,18 +238,17 @@ public class DGD2Searcher extends AbstractSearcher implements Searcher {
 
                 for (String corpusID: corpora){
                     System.out.println("Looking for " + corpusID);
-                    String index_path = null;
+                    File file = null;
                     for (String indexID: indexIDs){
                         if (indexID.substring(SEARCH_INDEX_PREXIF_LENGTH).startsWith(corpusID.replace("\"", "").trim()) && !indexID.endsWith(str)){
-                            index_path = new StringBuilder(Configuration.getSearchIndexPath()) + indexID;
+                            file = new File(Configuration.getSearchIndexPath(), indexID);
                             break;
                         }
-
                     }
-                    if (index_path==null){
+                    if (file==null){
                         throw new IOException("Search index for " + corpusID + " does not exist. Please check the configuration file.");
                     }else{
-                        indexPaths.add(index_path);
+                        indexPaths.add(file.getAbsolutePath());
                     }
                 }
                 
