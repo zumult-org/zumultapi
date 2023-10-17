@@ -220,7 +220,7 @@ public class SearchService {
     .../SearchService/kwic?q=[w="die"]&cutoff=false&count=20&offset=10&cq=corpusSigle="FOLK"
     .../SearchService/kwic?q=[w="die"]&cutoff=false&count=20&cq=corpusSigle="FOLK|GWSS"
     */
-    public Response getKWICviaULR( @QueryParam("q") String queryString,
+    public Response getKWICviaURL( @QueryParam("q") String queryString,
                              @QueryParam("ql") String queryLanguage,
                              @QueryParam("v") String queryLanguageVersion,
                              @QueryParam("cq") String corpusQuery,
