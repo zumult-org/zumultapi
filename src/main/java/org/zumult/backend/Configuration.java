@@ -165,6 +165,7 @@ public class Configuration {
             searchIndexPath = config.getString("backend.search-index-path");
             
             String[] corpora = config.getString("backend.corpus-ids-for-indexing").split(";");
+            Arrays.sort(corpora);
             corpusIDs.addAll(Arrays.asList(corpora));
             
             config.getList("backend.search-index-speaker-based").forEach((o) -> {
