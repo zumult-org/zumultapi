@@ -296,11 +296,13 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
                 String speakerId = personElement.getChild(Constants.ELEMENT_NAME_IDNO,ns).getText();
                 String speakerIdType = personElement.getChild(Constants.ELEMENT_NAME_IDNO,ns).getAttributeValue(Constants.ATTRIBUTE_NAME_TYPE);
             if(!speakerIdType.equals(Constants.RANDOM_ID)){    
+                System.out.println("Getting speaker: " +speakerId);
                 Speaker speaker = backendInterface.getSpeaker(speakerId);
-                            
+                             
                 Speaker speakerInSpeechEvent = null;
                             
                 if (speechEvent!= null){  // Transcripts without speech event metadata will be indexed without speech event metadata
+                    System.out.println("Getting speakerInSpeechEvent in " +speechEventID);
                     speakerInSpeechEvent = backendInterface.getSpeakerInSpeechEvent(speechEvent.getID(), speakerId);
                 } 
                 

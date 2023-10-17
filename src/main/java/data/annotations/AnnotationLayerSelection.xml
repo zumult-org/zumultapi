@@ -15,6 +15,7 @@
                 <corpus>GWSS</corpus>
                 <corpus>HMAT</corpus>
                 <corpus>MEND</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         <key id="lemma" type="token">
@@ -29,6 +30,7 @@
                 <corpus>GWSS</corpus>
                 <corpus>HMAT</corpus>
                 <corpus>MEND</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         <key id="pos" type="token">
@@ -43,6 +45,7 @@
                 <corpus>GWSS</corpus>
                 <corpus>HMAT</corpus>
                 <corpus>MEND</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         <key id="phon" type="token">
@@ -51,6 +54,7 @@
             <corpora>
                 <corpus>FOLK</corpus>
                 <corpus>GWSS</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         <key id="pc" type="token">
@@ -60,8 +64,8 @@
                 <corpus>AD--</corpus>
                 <corpus>BETV</corpus>
                 <corpus>DH--</corpus>
-                <corpus>DNAM</corpus>
-                <corpus>HMAT</corpus>
+                <corpus>DNAM</corpus> <!-- nur ( ) -->
+                <corpus>HMAT</corpus> <!-- nur 6 , -->
                 <corpus>MEND</corpus>
             </corpora>
         </key>
@@ -76,6 +80,7 @@
                 <corpus>GWSS</corpus>
                 <corpus>HMAT</corpus>
                 <corpus>MEND</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         <key id="word.type" type="token">
@@ -87,6 +92,7 @@
                 <corpus>FOLK</corpus>
                 <corpus>GWSS</corpus>
                 <corpus>HMAT</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         <key id="vocal" type="token">
@@ -96,6 +102,7 @@
                 <corpus>DNAM</corpus>
                 <corpus>FOLK</corpus>
                 <corpus>GWSS</corpus>
+                <corpus>UNSD</corpus>
             </corpora>
         </key>
         

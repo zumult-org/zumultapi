@@ -18,402 +18,1067 @@ import org.zumult.query.SearchServiceException;
  * @author Frick
  */
 public class Repetition {
-    
+
+    /**
+     * Object of the {@link Distance} class. It specifies the minimum and
+     * maximum of the distance between repetitions,
+     * POS values that should be ignored when measuring distance
+     * and if speaker change should occur in between or not.
+     */
     private final Distance distanceToPreviousElement = new Distance();
+
+    /**
+     * Object of the {@link Position} class. It specifies positions
+     * of the repetition relative to speaker overlap and speaker change.
+     */
     private final Position position = new Position();
+
+    /**
+     * Object of the {@link Speaker} class. It specifies the speaker
+     * producing repetition and his metadata.
+     */
     private final Speaker speaker = new Speaker();
-    private RepetitionTypeEnum type = RepetitionTypeEnum.WORD;
-    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
+
+    /**
+     * Object of the {@link Context} class. It specifies the left and right
+     * context of the repetion, the distance to it and if the context should
+     * occur in the same speaker contribution as the repetition itself.
+     */
     private final Context context = new Context();
+
+    /**
+     * The default value for the annotation level
+     * where repetitions should be searched.
+     */
+    private RepetitionTypeEnum type = RepetitionTypeEnum.WORD;
+
+    /**
+     * The default value for the search mode.
+     */
+    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
+
+    /**
+     * The default value for searching multi word repetitions
+     * specify that the token order may vary and should not exaclty match
+     * that in the source element.
+     */
     private boolean ignoreTokenOrder = true;
 
-    public Repetition(Element el) throws SearchServiceException {
- 
-        setRepetitionType(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_TYPE).item(0).getTextContent());
-        setSimilarityType(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_REPETITON_SIMILARITY_TYPE).item(0).getTextContent());
-        setSpeaker(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER).item(0).getTextContent()));   
-        setSpeakerMetadata(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_METADATA).item(0).getTextContent());
-        setSpeakerChange(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_SPEAKER_CHANGE).item(0).getTextContent()));
-        setIgnoredCustomPOS(new HashSet<>(Arrays.asList(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS).item(0).getTextContent().split(Constants.REPETITION_XML_ELEMENT_NAME_IGNORED_CUSTOM_POS_SEPARATOR))));    
-        setOptionIgnoreTokenOrder(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_IGNORE_TOKEN_ORDER).item(0).getTextContent()));
-        setMinMaxDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MIN_DISTANCE).item(0).getTextContent()), 
-                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_MAX_DISTANCE).item(0).getTextContent()));
-            
-        setContextLeftDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MIN_DISTANCE).item(0).getTextContent()), 
-                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT_MAX_DISTANCE).item(0).getTextContent()));
-        
-        setContextRightDistance(getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MIN_DISTANCE).item(0).getTextContent()), 
-                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT_MAX_DISTANCE).item(0).getTextContent()));
-        
-        setPositionOverlap(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_OVERLAP).item(0).getTextContent());
-        setPositionSpeakerChange(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_TYPE).item(0).getTextContent(), 
-                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE).item(0).getTextContent()), 
-                getIntegerFromString(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE).item(0).getTextContent()));
-        setPrecededby(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_LEFT).item(0).getTextContent());
-        setFollowedby(el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_RIGHT).item(0).getTextContent());
-        setOptionWithinSpeakerContributionLeft(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT).item(0).getTextContent()));
-        setOptionWithinSpeakerContributionRight(getBooleanFromString(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT, el.getElementsByTagName(Constants.REPETITION_XML_ELEMENT_NAME_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT).item(0).getTextContent()));
+    /**
+    * Class constructor.
+    *
+    * @param el repetition xml element, e.g.
+    *
+    * @throws org.zumult.query.SearchServiceException if method parameters
+    *         are illegal or not supported
+    */
+    public Repetition(final Element el) throws SearchServiceException {
+        setRepetitionType(el);
+        setSimilarityType(el);
+        setSpeakerOptions(el);
+        setSpeakerChange(el);
+        setIgnoredCustomPOS(el);
+        setOptionIgnoreTokenOrder(el);
+        setDistance(el); // set min and max distance between repetitions
+        setRepetitionContext(el); // set left and right context
+        setPositionOverlap(el);
+        setPositionSpeakerChange(el);
     }
-    
 
-    
-    public Repetition(String type, String similarity, Boolean sameSpeakerAsSource, 
-            Boolean speakerChange, Set<String> ignoredCustomPOS, Boolean ignoreTokenOrder, String positionOverlap, 
-            Integer minDistanceToSource, Integer maxDistanceToSource, String metadataQueryString,
-            String positionSpeakerChangeType, Integer positionSpeakerChangeMin, 
-            Integer positionSpeakerChangeMax, String precededby, String followedby, 
-            Boolean withinSpeakerContributionLeft, Boolean withinSpeakerContributionRight,
-            Integer minDistanceToLeftContext, Integer maxDistanceToLeftContext,
-            Integer minDistanceToRightContext, Integer maxDistanceToRightContext) throws SearchServiceException{
-        
-        setRepetitionType(type);
-        setSimilarityType(similarity);
-        setSpeaker(sameSpeakerAsSource); 
-        setSpeakerMetadata(metadataQueryString);
-        setSpeakerChange(speakerChange);
-        setIgnoredCustomPOS(ignoredCustomPOS);
-        setOptionIgnoreTokenOrder(ignoreTokenOrder);
-        setMinMaxDistance(minDistanceToSource, maxDistanceToSource);
-        setContextLeftDistance(minDistanceToLeftContext, maxDistanceToLeftContext);
-        setContextRightDistance(minDistanceToRightContext, maxDistanceToRightContext);
-        setPositionOverlap(positionOverlap);
-        setPositionSpeakerChange(positionSpeakerChangeType, positionSpeakerChangeMin, positionSpeakerChangeMax);
-        setOptionWithinSpeakerContributionLeft(withinSpeakerContributionLeft);
-        setOptionWithinSpeakerContributionRight(withinSpeakerContributionRight);
-        setPrecededby(precededby);
-        setFollowedby(followedby);
-        
-    }
-    
-    public Boolean isSameSpeaker(){
+    /**
+     * Returns the value of the speaker option when searching repetitions.
+     *
+     * Returns <i>true</i> if the element we are looking for
+     * should be repeated by the same speaker.
+     *
+     * Returns <i>false</i> if the element we are looking for
+     * should be repeated by another speaker.
+     *
+     * Returns <i>null</i> if the speaker producing the repetition
+     * is not important.
+     *
+     * @return the Boolean object
+     */
+    public Boolean isSameSpeaker() {
         return this.speaker.sameSpeakerAsSource;
     }
-    
-    public String getSpeakerMetadata(){
+
+    /**
+     * Returns the speaker metadata query string, for example
+     * &lt;s_geschlecht=&quot;Männlich&quot;/&gt; {@literal &}
+     *  (&lt;ses_rolle_s=&quot;Tutor/in&quot;/&gt; |
+     *  &lt;ses_rolle_s=&quot;Lehrer/in&quot;/&gt;).
+     *
+     * @return the String object
+     */
+    public String getSpeakerMetadata() {
         return this.speaker.speakerMetadata;
     }
-    
-    public Boolean isSpeakerChangedDesired(){
+
+    /**
+     * Returns the value of the speaker change option
+     * when searching repetitions.
+     *
+     * Returns <i>true</i> if speaker change between repetitions is required.
+     *
+     * Returns <i>false</i> if speaker change between repetitions
+     * is not allowed.
+     *
+     * Returns <i>null</i> if speaker change between repetitions may occur,
+     * but is not required.
+     *
+     * @return the Boolean object
+     */
+    public Boolean isSpeakerChangedDesired() {
         return this.distanceToPreviousElement.speakerChange;
     }
-    
-    public Set<String> getIgnoredCustomPOS(){
+
+    /**
+     * Returns the set of POS values that should be irgnored
+     * when measuring distance between repetitions.
+     *
+     * @return the set of strings
+     */
+    public Set<String> getIgnoredCustomPOS() {
         return this.distanceToPreviousElement.ignoredCustomPOS;
     }
-    
-    public Boolean ignoreTokenOrder(){
+
+    /**
+     * Returns the token order of multi word repetitions.
+     *
+     * Returns <i>true</i> if the token order of the multi word repetition
+     * may vary.
+     *
+     * Returns <i>false</i> if the token order of the multi word repetition
+     * should be the same as in the source element.
+     *
+     * @return the Boolean object
+     */
+    public Boolean ignoreTokenOrder() {
         return this.ignoreTokenOrder;
     }
-    
-    public PositionOverlapEnum getPositionOverlap(){
+
+    /**
+     *
+     * @return the {@code PositionOverlapEnum} object
+     */
+    public PositionOverlapEnum getPositionOverlap() {
         return this.position.positionOverlap;
     }
-    
-    public PositionSpeakerChangeEnum getPositionSpeakerChangeType(){
-        return this.position.positionSpeakerChange.type;       
+
+    /**
+     *
+     * @return the {@code PositionSpeakerChangeEnum} object
+     */
+    public PositionSpeakerChangeEnum getPositionSpeakerChangeType() {
+        return this.position.positionSpeakerChange.type;
     }
-    
-    public Integer getMinPositionSpeakerChange(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMinPositionSpeakerChange() {
         return this.position.positionSpeakerChange.minWordToken;
     }
-    
-    public Integer getMaxPositionSpeakerChange(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMaxPositionSpeakerChange() {
         return this.position.positionSpeakerChange.maxWordToken;
     }
-    
-    public Integer getMinDistance(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMinDistance() {
         return this.distanceToPreviousElement.minDistance;
     }
-    
-    public Integer getMinDistanceToLeftContext(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMinDistanceToLeftContext() {
         return this.context.distanceLeft.minDistance;
     }
-    
-    public Integer getMinDistanceToRightContext(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMinDistanceToRightContext() {
         return this.context.distanceRight.minDistance;
     }
-    
-    public String getPrecededby(){
+
+    /**
+     *
+     * @return the String object
+     */
+    public String getPrecededby() {
         return this.context.precededby;
     }
-    
-    public String getFollowedby(){
+
+    /**
+     *
+     * @return the String object
+     */
+    public String getFollowedby() {
         return this.context.followedby;
     }
-    
-    public Boolean isWithinSpeakerContributionLeft(){
+
+    /**
+     *
+     * @return the Boolean object
+     */
+    public Boolean isWithinSpeakerContributionLeft() {
         return this.context.withinSpeakerContributionLeft;
     }
-    
-    public Boolean isWithinSpeakerContributionRight(){
+
+    /**
+     *
+     * @return the Boolean object
+     */
+    public Boolean isWithinSpeakerContributionRight() {
         return this.context.withinSpeakerContributionRight;
     }
-    
-    public Integer getMaxDistance(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMaxDistance() {
         return this.distanceToPreviousElement.maxDistance;
     }
-    
-    public Integer getMaxDistanceToLeftContext(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMaxDistanceToLeftContext() {
         return this.context.distanceLeft.maxDistance;
     }
-    
-    public Integer getMaxDistanceToRightContext(){
+
+    /**
+     *
+     * @return the Integer object
+     */
+    public Integer getMaxDistanceToRightContext() {
         return this.context.distanceRight.maxDistance;
     }
-    
-    public RepetitionTypeEnum getType(){
+
+    /**
+     *
+     * @return the {@code RepetitionTypeEnum} object
+     */
+    public RepetitionTypeEnum getType() {
         return this.type;
     }
-    
-    public SimilarityTypeEnum getSimilarityType(){
+
+    /**
+     *
+     * @return the {@code SimilarityTypeEnum} object
+     */
+    public SimilarityTypeEnum getSimilarityType() {
         return this.similarity;
     }
 
-    private Boolean getBooleanFromString(String key, String value) throws SearchServiceException{
+    /**
+     * Sets if speaker change is required or not when searching repetitions.
+     * (true - requiered, false - not allowed, null - may occur,
+     * but should not)
+     *
+     * @param el repetition as xml object
+     *
+     * @throws org.zumult.query.SearchServiceException if the
+     *           speaker change parameter is illegal or not supported
+     */
+    private void setSpeakerChange(final Element el)
+            throws SearchServiceException {
 
-        switch(value){
-            case "false":
-                return false;
-            case "true":
-                return true;
-            case "null":
-                return null;
-            default:
-                throw new SearchServiceException ("Please check the value of "+ key + "! It can be true, false or null");
+        String speakerChangeValue = el
+                .getElementsByTagName(Constants.REPETITION_SPEAKER_CHANGE)
+                .item(0)
+                .getTextContent();
+
+        Boolean speakerChangeBooleanValue = getBooleanFromString(
+                Constants.REPETITION_SPEAKER_CHANGE,
+                speakerChangeValue);
+
+        this.distanceToPreviousElement.speakerChange =
+                speakerChangeBooleanValue;
+    }
+
+    /**
+     * Sets the mode for repetition search (SimilarityTypeEnum).
+     *
+     * @param el repetition as xml object
+     *
+     * @throws org.zumult.query.SearchServiceException if the
+     *           search mode parameter is illegal or not supported
+     */
+    private void setSimilarityType(final Element el)
+            throws SearchServiceException {
+
+        String similarityType = el
+                .getElementsByTagName(Constants.REPETITION_SIMILARITY_TYPE)
+                .item(0)
+                .getTextContent();
+
+        if (similarityType != null && !similarityType.isEmpty()) {
+            try {
+                this.similarity = SimilarityTypeEnum.valueOf(similarityType);
+            } catch (IllegalArgumentException ex) {
+                throw new SearchServiceException(getErrorMessage4());
+            }
+        } else {
+            throw new SearchServiceException("You have not specified "
+                    + "the type of repetition similarity!");
         }
     }
-    
-    private Integer getIntegerFromString(String key, String value) throws SearchServiceException{
-        if(value.equals("null")){
-            return null;
-        }else{
-            try{
-                Integer i = Integer.parseInt(value);
-                return i;
-            }catch(NumberFormatException ex){
-                throw new SearchServiceException(value + " is not valid for " + key + "!");
+
+    /**
+    * Sets the annotation level where repetition should be searched,
+    * namely by comparing transcribed, normalized or lemmatized forms.
+    *
+    * Possible values are defined in RepetitionTypeEnum.
+    *
+    * @param el repetition as xml object
+    *
+    * @throws org.zumult.query.SearchServiceException if the
+    *           repetition type parameter is illegal or not supported
+    */
+    private void setRepetitionType(final Element el)
+                                   throws SearchServiceException {
+
+        String repetitionType = el
+                .getElementsByTagName(Constants.REPETITION_TYPE)
+                .item(0)
+                .getTextContent();
+
+        if (repetitionType != null && !repetitionType.isEmpty()) {
+            try {
+                this.type = RepetitionTypeEnum.valueOf(repetitionType);
+            } catch (IllegalArgumentException ex) {
+                throw new SearchServiceException(getErrorMessage3());
+            }
+        } else {
+            throw new SearchServiceException("You have not specified "
+                    + "the type of repetition desired!");
+        }
+    }
+
+    private void setIgnoredCustomPOS(final Element el)
+            throws SearchServiceException {
+
+        String posToBeIgnored = el
+                .getElementsByTagName(Constants.REPETITION_IGNORED_POS)
+                .item(0)
+                .getTextContent();
+
+        if (posToBeIgnored != null && !posToBeIgnored.isEmpty()) {
+
+            String[] posToBeIgnoredArray = posToBeIgnored.split(
+                Constants.REPETITION_IGNORED_POS_SEPARATOR);
+
+            Set posToBeIgnoredSet =
+                new HashSet<>(Arrays.asList(posToBeIgnoredArray));
+
+            this.distanceToPreviousElement.ignoredCustomPOS =
+                    posToBeIgnoredSet;
+        }
+    }
+
+    private void setOptionIgnoreTokenOrder(final Element el)
+            throws SearchServiceException {
+
+        String tokenOrderValue = el
+              .getElementsByTagName(Constants.REPETITION_IGNORE_TOKEN_ORDER)
+              .item(0)
+              .getTextContent();
+
+        Boolean tokenOrderBooleanValue = getBooleanFromString(
+                Constants.REPETITION_IGNORE_TOKEN_ORDER,
+              tokenOrderValue);
+
+        if (tokenOrderBooleanValue != null) {
+            this.ignoreTokenOrder = tokenOrderBooleanValue;
+        }
+    }
+
+    /**
+    *  Sets the option if repetition should occur
+    *     within or outside of speaker overlap.
+    *
+    * @param el repetition as xml object
+    *
+    * @throws org.zumult.query.SearchServiceException if the
+    *           position overlap type parameter is illegal or not supported
+    */
+    private void setPositionOverlap(final Element el)
+            throws SearchServiceException {
+
+        String positionOverlap = el
+            .getElementsByTagName(Constants.REPETITION_POSITION_TO_OVERLAP)
+            .item(0)
+            .getTextContent();
+
+        if (positionOverlap != null
+                            && !positionOverlap.isEmpty()
+                            && !positionOverlap.equals("null")) {
+            try {
+                this.position.positionOverlap =
+                    PositionOverlapEnum.valueOf(positionOverlap);
+            } catch (IllegalArgumentException ex) {
+               throw new SearchServiceException(getErrorMessage2());
             }
         }
     }
-    
-    private void setPrecededby(String precededby){
-        this.context.precededby = precededby.trim().replace("&lt;", "<").replace("&gt;", ">");
-    }
-    
-    private void setFollowedby(String followedby){
-        this.context.followedby = followedby.trim().replace("&lt;", "<").replace("&gt;", ">");
-    }
-    
-    private void setSpeaker(Boolean speaker){
-        this.speaker.sameSpeakerAsSource = speaker;
-    }
-    
-    private void setSpeakerMetadata(String metadataQueryString){
-        this.speaker.speakerMetadata = metadataQueryString.replace("&amp;", "&")
-                .replace("&lt;", "<").replace("&gt;", ">")
-                .replace("&", "&&").replace("|", "||");
-    }
-    
-    private void setSpeakerChange(Boolean speakerChange){
-        this.distanceToPreviousElement.speakerChange = speakerChange;
-    }
-    
-    private void setSimilarityType(String similarity) throws SearchServiceException{
-                if(similarity!=null && !similarity.isEmpty()){
-            try{
-                this.similarity = SimilarityTypeEnum.valueOf(similarity);
-            }catch (IllegalArgumentException ex){
-                StringBuilder sb = new StringBuilder();
-                sb.append(". Similarity type ").append(similarity).append(" is not supported. Supported similarity types are: ");
-                for (RepetitionTypeEnum ob : RepetitionTypeEnum.values()){
-                    sb.append(ob.name());
-                    sb.append(", ");
-                }
-                throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
-            }
-        }else {
-            throw new SearchServiceException("You have not specified the type of repetition similarity!");
-        }
-    }
-    
-    private void setRepetitionType(String type) throws SearchServiceException{
-        if(type!=null && !type.isEmpty()){
-            try{
-                this.type = RepetitionTypeEnum.valueOf(type);
-            }catch (IllegalArgumentException ex){
-                StringBuilder sb = new StringBuilder();
-                sb.append(". Repetition type ").append(type).append(" is not supported. Supported repetition types are: ");
-                for (RepetitionTypeEnum ob : RepetitionTypeEnum.values()){
-                    sb.append(ob.name());
-                    sb.append(", ");
-                }
-                throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
-            }
-        }else {
-            throw new SearchServiceException("You have not specified the type of repetition desired!");
-        }
-                
-    }
-    
-    private void setMinMaxDistance(Integer minDistanceToSource, Integer maxDistanceToSource) throws SearchServiceException{
-        if(minDistanceToSource>maxDistanceToSource){
-            throw new SearchServiceException("Please check the minDistance. It can not be greater than maxDistance");
-        }
-        
-        this.distanceToPreviousElement.minDistance = minDistanceToSource;
-        this.distanceToPreviousElement.maxDistance = maxDistanceToSource;
-    }
-    
-    private void setContextLeftDistance(Integer min, Integer max) throws SearchServiceException{
-        if(min>max){
-            throw new SearchServiceException("Please check the minDistance to the left context. It can not be greater than maxDistance");
-        }
-        
-        this.context.distanceLeft.minDistance = min;
-        this.context.distanceLeft.maxDistance = max;
-    }
-    
-    private void setContextRightDistance(Integer min, Integer max) throws SearchServiceException{
-        if(min>max){
-            throw new SearchServiceException("Please check the minDistance to the right context. It can not be greater than maxDistance");
-        }
-        
-        this.context.distanceRight.minDistance = min;
-        this.context.distanceRight.maxDistance = max;
-    }
-    
-    private void setOptionWithinSpeakerContributionLeft(Boolean withinSpeakerContributionLeft){
-        this.context.withinSpeakerContributionLeft = withinSpeakerContributionLeft;
-    }
-    
-    private void setOptionWithinSpeakerContributionRight(Boolean withinSpeakerContributionRight){
-        this.context.withinSpeakerContributionRight = withinSpeakerContributionRight;
-    }
-    
-    private void setIgnoredCustomPOS(Set<String> ignoredCustomPOS) throws SearchServiceException{
-        if(ignoredCustomPOS!=null){
-            this.distanceToPreviousElement.ignoredCustomPOS = ignoredCustomPOS;
-        }
-    }
-    
-    private void setOptionIgnoreTokenOrder(Boolean ignoreTokenOrder) throws SearchServiceException{
-        if(ignoreTokenOrder!=null){
-            this.ignoreTokenOrder = ignoreTokenOrder;
-        }
-    }
-        
-    private void setPositionOverlap(String positionOverlap) throws SearchServiceException{
-            if(positionOverlap!=null && !positionOverlap.isEmpty() && !positionOverlap.equals("null")){
-            try{
-                this.position.positionOverlap = PositionOverlapEnum.valueOf(positionOverlap);
-            }catch (IllegalArgumentException ex){
-                StringBuilder sb = new StringBuilder();
-                sb.append(". Plase check the specified position to speaker overlap.").append(" Supported positions are: ");
-                for (PositionOverlapEnum ob : PositionOverlapEnum.values()){
-                    sb.append(ob.name());
-                    sb.append(", ");
-                }
-                throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
-            }
-        }
-    }
-    
-    private void setPositionSpeakerChange(String positionSpeakerChangeType, Integer positionSpeakerChangeMin, Integer positionSpeakerChangeMax) throws SearchServiceException{
-        if(positionSpeakerChangeType!=null && !positionSpeakerChangeType.isEmpty() && !positionSpeakerChangeType.equals("null")){
-            try{
-                this.position.positionSpeakerChange.type = PositionSpeakerChangeEnum.valueOf(positionSpeakerChangeType);
-                this.position.positionSpeakerChange.maxWordToken = positionSpeakerChangeMax;
-                this.position.positionSpeakerChange.minWordToken = positionSpeakerChangeMin;
-            }catch (IllegalArgumentException ex){
-                StringBuilder sb = new StringBuilder();
-                sb.append(". Plase check the specified position to speaker change.").append(" Supported positions are: ");
-                for (PositionSpeakerChangeEnum ob : PositionSpeakerChangeEnum.values()){
-                    sb.append(ob.name());
-                    sb.append(", ");
-                }
-                throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
+
+    /**
+    * Sets the reptition position according to the speaker change.
+    *
+    * The repetition can occur before or after speaker change
+    * (PositionSpeakerChangeEnum) and have a certain distance
+    * to the speaker change (min, max).
+    *
+    * @param el repetition as xml object
+    *
+    * @throws org.zumult.query.SearchServiceException if the
+    *           speaker change parameters are illegal or not supported
+    */
+    private void setPositionSpeakerChange(final Element el)
+                    throws SearchServiceException {
+
+        String positionSpeakerChangeType = el
+            .getElementsByTagName(
+                    Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_TYPE)
+            .item(0)
+            .getTextContent();
+
+        String minDistance = el
+            .getElementsByTagName(
+              Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE)
+            .item(0)
+            .getTextContent();
+
+        Integer minDistanceInt = toInteger(
+          Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MIN_DISTANCE,
+          minDistance);
+
+        String maxDistance = el
+                .getElementsByTagName(
+               Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE)
+                .item(0)
+                .getTextContent();
+
+        Integer maxDistanceInt = toInteger(
+            Constants.REPETITION_POSITION_TO_SPEAKER_CHANGE_MAX_DISTANCE,
+          maxDistance);
+
+        if (positionSpeakerChangeType != null
+            && !positionSpeakerChangeType.isEmpty()
+            && !positionSpeakerChangeType.equals("null")) {
+            try {
+
+                this.position.positionSpeakerChange.type =
+                            PositionSpeakerChangeEnum
+                            .valueOf(positionSpeakerChangeType);
+
+                this.position.positionSpeakerChange.maxWordToken =
+                        maxDistanceInt;
+
+                this.position.positionSpeakerChange.minWordToken =
+                        minDistanceInt;
+
+            } catch (IllegalArgumentException ex) {
+                throw new SearchServiceException(getErrorMessage1());
             }
         }
    }
-    
-    private class Speaker{
-        Boolean sameSpeakerAsSource; //if null, then irrelevant
-        String speakerMetadata;
+
+    /**
+     * Sets speaker options (same or another speaker + speaker metadata).
+     *
+     * @param el repetition as xml object
+     *
+     * @throws org.zumult.query.SearchServiceException if the
+     *           speaker option parameters are illegal or not supported
+     */
+    private void setSpeakerOptions(final Element el)
+            throws SearchServiceException {
+
+        // set speaker value (true, false, null)
+        String speakerValue = el
+                .getElementsByTagName(Constants.REPETITION_SPEAKER)
+                .item(0)
+                .getTextContent();
+
+        Boolean speakerBooleanValue = getBooleanFromString(
+                Constants.REPETITION_SPEAKER,
+                speakerValue);
+
+        this.speaker.sameSpeakerAsSource = speakerBooleanValue;
+
+        // set speaker metadata
+        String metadataQueryString = el
+                .getElementsByTagName(Constants.REPETITION_SPEAKER_METADATA)
+                .item(0)
+                .getTextContent();
+
+        this.speaker.speakerMetadata = metadataQueryString
+                .replace("&amp;", "&")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&", "&&")
+                .replace("|", "||");
     }
-        
+
+     /**
+     * Sets the left and right repetition context, the distance to it and
+     * specifies if the context should occur within the same speaker
+     * contribution as the repetition itself or not.
+     *
+     * @param el repetition as xml object
+     *
+     * @throws org.zumult.query.SearchServiceException if the
+     *           context parameters are illegal or not supported
+     */
+    private void setRepetitionContext(final Element el)
+            throws SearchServiceException {
+
+        // set the left repetition context
+        String precededby = el
+                .getElementsByTagName(Constants.REPETITION_CONTEXT_LEFT)
+                .item(0).getTextContent();
+
+        this.context.precededby = precededby.trim()
+                .replace("&lt;", "<")
+                .replace("&gt;", ">");
+
+        // set the right repetition context
+        String followedby = el
+                .getElementsByTagName(Constants.REPETITION_CONTEXT_RIGHT)
+                .item(0).getTextContent();
+
+        this.context.followedby = followedby.trim()
+                .replace("&lt;", "<")
+                .replace("&gt;", ">");
+
+        // set left repetition context distance
+        String leftMinDist = el
+                .getElementsByTagName(
+                        Constants.REPETITION_CONTEXT_LEFT_MIN_DISTANCE)
+                .item(0)
+                .getTextContent();
+
+        Integer leftMinDistInt = toInteger(
+                Constants.REPETITION_CONTEXT_LEFT_MIN_DISTANCE,
+                leftMinDist);
+
+        String leftMaxDist = el
+                .getElementsByTagName(
+                        Constants.REPETITION_CONTEXT_LEFT_MAX_DISTANCE)
+                .item(0)
+                .getTextContent();
+
+        Integer leftMaxDistInt = toInteger(
+                Constants.REPETITION_CONTEXT_LEFT_MAX_DISTANCE,
+                   leftMaxDist);
+
+        if (leftMinDistInt > leftMaxDistInt) {
+            throw new SearchServiceException("Please check "
+                    + "the minDistance to the left context. "
+                    + "It can not be greater than maxDistance");
+        }
+
+        this.context.distanceLeft.minDistance = leftMinDistInt;
+        this.context.distanceLeft.maxDistance = leftMaxDistInt;
+
+        // set right repetition context distance
+        String rightMinDist = el
+            .getElementsByTagName(
+                    Constants.REPETITION_CONTEXT_RIGHT_MIN_DISTANCE)
+            .item(0)
+            .getTextContent();
+
+        Integer rightMinDistInt = toInteger(
+                Constants.REPETITION_CONTEXT_RIGHT_MIN_DISTANCE,
+               rightMinDist);
+
+        String rightMaxDist = el
+            .getElementsByTagName(
+                    Constants.REPETITION_CONTEXT_RIGHT_MAX_DISTANCE)
+            .item(0)
+            .getTextContent();
+
+        Integer rightMaxDistInt = toInteger(
+                Constants.REPETITION_CONTEXT_RIGHT_MAX_DISTANCE,
+              rightMaxDist);
+
+        if (rightMinDistInt > rightMaxDistInt) {
+            throw new SearchServiceException("Please check "
+                    + "the minDistance to the right context. "
+                    + "It can not be greater than maxDistance");
+        }
+
+        this.context.distanceRight.minDistance = rightMinDistInt;
+        this.context.distanceRight.maxDistance = rightMaxDistInt;
+
+        // should the left context occur within the same contribution?
+        String withinLeft = el
+            .getElementsByTagName(
+              Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT)
+            .item(0)
+            .getTextContent();
+
+        Boolean withinLeftBooleanValue = getBooleanFromString(
+                Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_LEFT,
+                withinLeft);
+
+        this.context.withinSpeakerContributionLeft = withinLeftBooleanValue;
+
+        // should the right context occur within the same contribution?
+        String withinRight = el
+                .getElementsByTagName(
+             Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT)
+                .item(0)
+                .getTextContent();
+
+        Boolean withinRightBooleanValue = getBooleanFromString(
+             Constants.REPETITION_CONTEXT_WITHIN_SPEAKER_CONTRIBUTION_RIGHT,
+             withinRight);
+
+        this.context.withinSpeakerContributionRight = withinRightBooleanValue;
+    }
+
+    /**
+     * Sets the min and max distance between repetitions.
+     *
+     * @param el repetition as xml object
+     *
+     * @throws org.zumult.query.SearchServiceException if the
+     *           min and max distance parameters are illegal
+     */
+    private void setDistance(final Element el) throws SearchServiceException {
+                String min = el
+                .getElementsByTagName(Constants.REPETITION_MIN_DISTANCE)
+                .item(0)
+                .getTextContent();
+
+        Integer minInteger = toInteger(
+                Constants.REPETITION_MIN_DISTANCE,
+                min);
+
+        String max = el
+                .getElementsByTagName(Constants.REPETITION_MAX_DISTANCE)
+                .item(0)
+                .getTextContent();
+
+        Integer maxInteger = toInteger(
+                Constants.REPETITION_MAX_DISTANCE,
+                max);
+
+        if (minInteger > maxInteger) {
+            throw new SearchServiceException("Please check "
+                    + "the minDistance. "
+                    + "It can not be greater than maxDistance");
+        }
+
+        this.distanceToPreviousElement.minDistance = minInteger;
+        this.distanceToPreviousElement.maxDistance = maxInteger;
+    }
+
+    /**
+     * Converts the string value to Boolean taking zero value
+     * into account and generates an option-sensitive error message.
+     *
+     * @param key option name
+     * @param value string to be converted to integer
+     * @return Boolean
+     */
+    private Boolean getBooleanFromString(final String key, final String value)
+            throws SearchServiceException {
+
+        if (value == null || value.isEmpty()) {
+            return null;
+        } else {
+            switch (value) {
+                case "false" -> {
+                    return false;
+                }
+                case "true" -> {
+                    return true;
+                }
+                case "null" -> {
+                    return null;
+                }
+                default -> throw new SearchServiceException(
+                                        "Please check the value of "
+                                        + key
+                                        + "! It can be true, false or null");
+            }
+        }
+    }
+
+    /**
+     * Converts the string value to integer taking zero value
+     * into account and generates a option-sensitive error message.
+     *
+     * @param key option name
+     * @param value string to be converted to integer
+     * @return Integer
+     */
+    private Integer toInteger(final String key, final String value)
+            throws SearchServiceException {
+
+        if (value == null || value.isEmpty()) {
+            return null;
+        } else {
+            if (value.equals("null")) {
+                return null;
+            } else {
+                try {
+                    return Integer.valueOf(value);
+                } catch (NumberFormatException ex) {
+                    throw new SearchServiceException(value
+                            + " is not valid for " + key + "!");
+                }
+            }
+        }
+    }
+
+    private class Speaker {
+        /**
+         * Value of the speaker option when searching repetitions.
+         * Possible values are:
+         * <p>
+         * <i>true</i> if the element we are looking for should
+         * be repeated by the same speaker.
+         * <p>
+         * <i>false</i> if the element we are looking for
+         * should be repeated by another speaker.
+         * <p>
+         * <i>null</i> if the speaker producing the repetition is not important.
+         */
+        private Boolean sameSpeakerAsSource;
+
+        /**
+         * Metadata query string, for example
+         * &lt;s_geschlecht=&quot;Männlich&quot;/&gt; {@literal &}
+         *  (&lt;ses_rolle_s=&quot;Tutor/in&quot;/&gt; |
+         *  &lt;ses_rolle_s=&quot;Lehrer/in&quot;/&gt;).
+         */
+        private String speakerMetadata;
+    }
+
     private class Position {
-        PositionOverlapEnum positionOverlap;
-        PositionSpeakerChange positionSpeakerChange = new PositionSpeakerChange();
-        PositionToMatch positionToMatch;
+        /**
+        * Object of the {@link PositionOverlapEnum} class. It specifies
+        * the repetition position relative to speaker overlap.
+        */
+        private PositionOverlapEnum positionOverlap;
+        /**
+        * Object of the {@link PositionSpeakerChange} class. It specifies
+        * the repetition position relative to speaker change.
+        */
+        private PositionSpeakerChange positionSpeakerChange =
+                new PositionSpeakerChange();
     }
-    
+
     private class Context {
-        String precededby;
-        String followedby;
-        Boolean withinSpeakerContributionLeft = null;
-        Boolean withinSpeakerContributionRight = null;
-        Distance distanceLeft = new Distance();
-        Distance distanceRight = new Distance();
+        /**
+         * Query string matching the left context.
+         */
+        private String precededby;
+
+        /**
+         * Query string matching the right context.
+         */
+        private String followedby;
+
+        /**
+         * Specifies if the left context should be within the same
+         * speaker contribution as the repetition.
+         */
+        private Boolean withinSpeakerContributionLeft = null;
+
+        /**
+         * Specifies if the right context should be within the same
+         * speaker contribution as the repetition.
+         */
+        private Boolean withinSpeakerContributionRight = null;
+
+        /**
+         * Object of the {@link Distance} class. Specifies the left distance.
+         */
+        private Distance distanceLeft = new Distance();
+
+        /**
+         * Object of the {@link Distance} class. Specifies the right distance.
+         */
+        private Distance distanceRight = new Distance();
 
     }
-    
-    private class Distance {        
-        Integer minDistance; //if null, then irrelevant
-        Integer maxDistance; //if null, then irrelevant
-        //Boolean ignoreFunctionalWords = false;
-        Set<String> ignoredCustomPOS = new HashSet();
-        Boolean speakerChange;   /* true - speaker change is required, 
-                                false - speaker change is not allowed,
-                                null - speaker change is irrelevant */
-        
+
+    private class Distance {
+
+        /**
+         * The minimum number of word tokens.
+         */
+        private Integer minDistance; //if null, then irrelevant
+
+        /**
+         * The maximum number of word tokens.
+         */
+        private Integer maxDistance; //if null, then irrelevant
+
+        /**
+         * Set of custom defined POS values to be ignored
+         * when measuring distance.
+         */
+        private Set<String> ignoredCustomPOS = new HashSet();
+
+        /**
+         * Specifies if speaker change is reqiured.
+         * <p>
+         * <i>true</i> - speaker change is required
+         * <p>
+         * <i>false</i> - speaker change is not allowed
+         * <p>
+         * <i>null</i> - speaker change is irrelevant
+         *
+         */
+        private Boolean speakerChange;
     }
-    
+
     private class PositionSpeakerChange {
-        PositionSpeakerChangeEnum type;
-        int maxWordToken;
-        int minWordToken;
+        /**
+        * Object of the {@link PositionSpeakerChangeEnum} class. It specifies
+        * if the repetition should occur before or after a speaker overlap.
+        */
+        private PositionSpeakerChangeEnum type;
+
+        /**
+         * The maximum number of word tokens up to speaker change.
+         */
+        private int maxWordToken;
+
+        /**
+         * The minimum number of word tokens up to speaker change.
+         */
+        private int minWordToken;
     }
-    
+
+    /**
+     * Specifies the position of the repetition relative to the speaker overlap.
+     */
     public enum PositionOverlapEnum {
-        WITHIN, NOT_WITHIN, INTERSECTING, FOLLOWEDBY, PRECEDEDBY
+        /**
+         * The repetition should be located within speaker overlaps.
+         */
+        WITHIN,
+        /**
+         * The repetition should be located outside
+         * of speaker overlaps.
+         */
+        NOT_WITHIN,
+        /**
+         * The repetition should intersect a speaker overlap.
+         */
+        INTERSECTING,
+        /**
+         * The repetition should be preceed a speaker overlap.
+         */
+        FOLLOWEDBY,
+        /**
+         * The repetition should follow a speaker overlap.
+         *
+         */
+        PRECEDEDBY
     }
-    
+
+    /**
+     * Specifies the position of the repetition relative to the speaker change.
+     */
     public enum PositionSpeakerChangeEnum {
-        FOLLOWEDBY, PRECEDEDBY
+        /**
+         * The position of the repetition is located before the speaker change.
+         */
+        FOLLOWEDBY,
+        /**
+         * The position of the repetition is located after the speaker change.
+         */
+        PRECEDEDBY
     }
-    
+
+    /**
+    *  Specifies the annotation level for searching repetitions.
+    *
+    *  Repetition types that can be used
+    *  {@link #LEMMA}
+    *  {@link #WORD}
+    *  {@link #NORM}
+    */
     public enum RepetitionTypeEnum {
-        LEMMA, WORD, NORM
+        /**
+        * Repetitions will be searched by comparing lemmas.
+        */
+        LEMMA,
+        /**
+        * Repetitions will be searched by comparing transcripbed forms.
+        */
+        WORD,
+        /**
+        * Repetitions will be searched by comparing normalized forms.
+        */
+        NORM
     }
-    
+
+    /**
+    *  Repetition search mode.
+    *
+    * There are different possibilities to identify repetitions,
+    * for example by comparing
+    *
+    *  Sililarity types that can be used
+    *  {@link #EQUAL}
+    *  {@link #FUZZY}
+    *  {@link #FUZZY_PLUS}
+    *  {@link #DIFF_PRON}
+    *  {@link #DIFF_NORM}
+    *  {@link #OWN_LEMMA_LIST}
+    *  {@link #GERMANET}
+    *  {@link #GERMANET_PLUS}
+    *  {@link #GERMANET_ORTH}
+    *  {@link #GERMANET_ORTH}
+    *  {@link #GERMANET_HYPERNYM}
+    *  {@link #GERMANET_HYPONYM}
+    *  {@link #GERMANET_COMPOUNDS}
+    */
     public enum SimilarityTypeEnum {
-        EQUAL, 
-        
-        FUZZY, /* */
-        FUZZY_PLUS, 
-        
-        /* In the case of a word sequence, 
-        it is sufficient if the entire string differs, 
-        not every single word */
-        DIFF_PRON, /* e.g. selektive klopfreglung -> selektive klopfregelung */
-        DIFF_NORM, /* mit allen drei würfeln dieselbe augenzahl würfeln */
-        
+        /**
+         * The word token sequence is recognized as a repetition
+         * when all token forms exactly match those in the source element.
+         */
+        EQUAL,
+        /**
+         * Similarity measure are used to identify repetitions and
+         * repetitions are not allowed to match exactly the source element.
+         */
+        FUZZY,
+        /**
+         * Similarity measure are used to identify repetitions.
+         */
+        FUZZY_PLUS,
+        /**
+         * The word token sequence is recognized as a repetition
+         * when all token forms exactly match those in the source element,
+         * but have different transcribed forms.
+         */
+        DIFF_PRON,
+        /**
+         * The word token sequence is recognized as a repetition
+         * when all token forms exactly match those in the source element,
+         * but have different normalized forms.
+         */
+        DIFF_NORM,
+        /**
+         * The word token sequence is recognized as a repetition
+         * when all token forms exactly match those in the source element.
+         * Additionally, the custom list of synonyms will be used.
+         */
         OWN_LEMMA_LIST,
-        
+        /**
+         * The word token sequence is recognized as a repetition
+         * when all token forms exactly match those in the source element.
+         * Additionally, GermaNet will be used.
+         */
         GERMANET_PLUS,
+        /**
+         * GermaNet is used to identify repetitions.
+         */
         GERMANET,
+        /**
+         * Only GermaNet synonyms are used to identify repetitions.
+         */
         GERMANET_ORTH,
+        /**
+         * Only GermaNet hypernyms are used to identify repetitions.
+         */
         GERMANET_HYPERNYM,
+        /**
+         * Only GermaNet hyponyms are used to identify repetitions.
+         */
         GERMANET_HYPONYM,
+        /**
+         * Only GermaNet compounds are used to identify repetitions.
+         */
         GERMANET_COMPOUNDS;
     }
-    
-    public enum PositionToMatch{
-        FOLLOWEDBY, PRECEDEDBY
-    }
-    
-    public class Synonyms extends ArrayList<ArrayList<String>>{
-        
+
+    public class Synonyms extends ArrayList<ArrayList<String>> {
     }
 
+    private String getErrorMessage1() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(". Please check")
+          .append(" the specified position to speaker change.")
+          .append(" Supported positions are: ");
+
+        for (PositionSpeakerChangeEnum ob: PositionSpeakerChangeEnum.values()) {
+            sb.append(ob.name());
+            sb.append(", ");
+        }
+
+        return deleteLastComma(sb.toString().trim());
+    }
+
+    private String getErrorMessage2() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(". Please check the position to speaker overlap.")
+          .append(" Supported positions are: ");
+
+        for (PositionOverlapEnum ob: PositionOverlapEnum.values()) {
+            sb.append(ob.name());
+            sb.append(", ");
+        }
+
+        return deleteLastComma(sb.toString().trim());
+    }
+
+    private String getErrorMessage3() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(". Please the specified repetition type.")
+          .append(" Supported repetition types are: ");
+
+        for (RepetitionTypeEnum ob: RepetitionTypeEnum.values()) {
+            sb.append(ob.name());
+            sb.append(", ");
+        }
+
+        return deleteLastComma(sb.toString().trim());
+    }
+
+    private String getErrorMessage4() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(". Please the specified the similarity type.")
+          .append(" Supported similarity types are: ");
+
+        for (RepetitionTypeEnum ob: RepetitionTypeEnum.values()) {
+            sb.append(ob.name());
+            sb.append(", ");
+        }
+        return deleteLastComma(sb.toString().trim());
+    }
+
+    private String deleteLastComma(final String str) {
+        return str.replaceFirst(",$", "");
+    }
 }

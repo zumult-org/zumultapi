@@ -143,6 +143,9 @@ public class AGDAvailableMetadataValues implements Indexer {
                     Map<String, Integer> mapForThisKey = new HashMap<>();
                     for (String speakerID : speakerIDs){
                         String value = backend.getSpeaker(speakerID).getMetadataValue(speakerMetadataKey);
+                        if(value==null || value.isEmpty()){
+                            System.out.println("   Key: " + speakerMetadataKey.getName("de") + " for " + speakerID + " is empty!!!");
+                        }
                         if (speakerMetadataKey.getValueClass()==String[].class){
                             for (String singleValue : (value + " ; ").split(" ; ")){
                                 increaseFreq(mapForThisKey, singleValue);

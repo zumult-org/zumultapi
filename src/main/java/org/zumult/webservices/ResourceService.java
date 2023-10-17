@@ -60,9 +60,8 @@ public class ResourceService {
         {
             "/corpora",
             "/GWSS/metadataKeys",
+            "/AD--/metadataKeys",
             "/FOLK/metadataKeys?type=EVENT",
-            "/FOLK/crossQuantification?metaField1=e_se_mediale_realisierung&metaField2=s_geschlecht",
-            "/FOLK/crossQuantification?metaField1=e_se_interaktionsdomaene&metaField2=s_geschlecht&units=TOKENS&format=html"
         };
     
         Element response = new Element("response");
@@ -91,7 +90,6 @@ public class ResourceService {
     public Response getCorpora() {
         try {
             IDList corpora = backendInterface.getCorpora();
-            System.out.println(corpora.toXML());
             buildResponse =  Response.ok(corpora.toXML()).build();
         } catch (IOException ex) {
             buildResponse = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
@@ -134,41 +132,6 @@ public class ResourceService {
             buildResponse =  Response.ok(IOUtilities.elementToString(response), MediaType.APPLICATION_XML).build();
             
         } catch (IOException ex) {
-            buildResponse = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
-        }
-        
-        return buildResponse;
-    }
-    
-    
-    /*************************************************************************/
-    /*                         Service 3 'CrossQuantification'               */
-    /*************************************************************************/
-    
-    @GET
-    @Path("/{corpusID}/crossQuantification")
-    @Produces({ MediaType.APPLICATION_XML, MediaType.TEXT_HTML })
-    public Response getCrossQuantification4Corpus(@PathParam("corpusID") String corpusID,
-                             @QueryParam("metaField1") String metaField1,
-                             @QueryParam("metaField2") String metaField2,
-                             @QueryParam("units") String units,
-                             @DefaultValue("xml") @QueryParam("format") String responseFormat){
-        
-        try {
-            MetadataKey metadataKey1 = backendInterface.findMetadataKeyByID(metaField1);
-            MetadataKey metadataKey2 = backendInterface.findMetadataKeyByID(metaField2);
-            
-            CrossQuantification crossQuantification = backendInterface.getCrossQuantification4Corpus(corpusID, metadataKey1, metadataKey2, units);
-
-            //buildResponse = Response.ok(crossQuantification.toXML(), MediaType.APPLICATION_XML).build();
-            
-            buildResponse = switch (responseFormat) {
-                case "html" -> Response.ok(crossQuantification.toXML(), MediaType.TEXT_HTML).build();
-                case "xml" -> Response.ok(crossQuantification.toXML(), MediaType.APPLICATION_XML).build();
-                default -> Response.status(Response.Status.UNSUPPORTED_MEDIA_TYPE).build();
-            };               
-            
-        } catch (Exception ex) {
             buildResponse = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
         

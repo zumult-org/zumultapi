@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,6 +46,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -118,6 +120,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private IndexWriter writer = null;
     private IndexWriterConfig config;
     
+    private static final int TIMEOUT = 10 * 60 * 1000;
     private static final String FIELD_TRANSCRIPT_ID_FROM_FILE_NAME = "fileName";
     private static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = Constants.METADATA_KEY_TRANSCRIPT_DGD_ID; //t_dgd_kennung
     private static final String FIELD_TRANSCRIPT_CONTENT = "content";
@@ -155,7 +158,6 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         Constants.ATTRIBUTE_NAME_PHON
     };
     
-    private static final int MAX_REPETITION_CONTEXT = 30;
     
     private static final String[] NOT_COUNT =
         {     
@@ -406,7 +408,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
     private MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException, IOException {
         try{
-            log.log(Level.INFO, ": {0}", queryString);
+            log.log(Level.INFO, "Searching {0}", queryString);
             Reader reader = new BufferedReader(new StringReader(queryString));
             MtasCQLParser p = new MtasCQLParser(reader);
             MtasSpanQuery msq = p.parse(field, null, variables, ignore, maximumIgnoreLength);
@@ -530,7 +532,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private interface FunktionsWrapper2{
-        public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitsBefore) throws IOException;
+        public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitsBefore) throws SearchServiceException, IOException;
     }
     
     private interface FunktionsWrapper3{
@@ -640,12 +642,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         System.out.println("metadataQueryString: " + metadataQueryString);
         System.out.println("PARAMETER (FROM): " + from);
         System.out.println("PARAMETER (TO): " + to);*/
+        long start = System.currentTimeMillis(); 
+        long end = start + TIMEOUT;
         
         MtasSpanQuery q = createQuery(FIELD_TRANSCRIPT_CONTENT, queryString, wordLists, null, null);
         
         if (metadataQueryString == null || metadataQueryString.isEmpty()){
             // search hits without metadata        
-            return searchKWICStandard(indexPaths, q, from, to, cutoff, metadataIDs);
+            return searchKWICStandard(indexPaths, q, from, to, cutoff, metadataIDs, end);
             
         }else { 
             // parse metadataQuery
@@ -686,14 +690,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                     
                     if (metaDataKey.equals(METADATA_KEY_HIT_LENGTH)){
                         // search hits by the number of tokens  
-                        return searchKWICByLength(indexPaths, q, from, to, cutoff, TOKEN_IDS, size);
+                        return searchKWICByLength(indexPaths, q, from, to, cutoff, TOKEN_IDS, size, end);
                     }else {
                         // search hits by the number of word tokens  
-                        return searchKWICByLength(indexPaths, q, from, to, cutoff, getMetadataPrefixList(Constants.METADATA_KEY_MATCH_TYPE_WORD + ".id"), size);
+                        return searchKWICByLength(indexPaths, q, from, to, cutoff, getMetadataPrefixList(Constants.METADATA_KEY_MATCH_TYPE_WORD + ".id"), size, end);
                     }
                 }else {
                     // search hits by metadata
-                    return searchKWICByMetadata(indexPaths, q, from, to, cutoff, metaDataKey, matadataValue);
+                    return searchKWICByMetadata(indexPaths, q, from, to, cutoff, metaDataKey, matadataValue, end);
   
                 }
             }
@@ -702,13 +706,13 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     
     
     private SearchEngineResponseHitList searchKWICStandard(ArrayList<String> indexPaths, MtasSpanQuery queryString, Integer from, Integer to, 
-            Boolean cutoff, IDList metadataIDs) throws SearchServiceException, IOException {
+            Boolean cutoff, IDList metadataIDs, long endtime) throws SearchServiceException, IOException {
         
         System.out.println("-- METHOD: searchKWICStandard --");
         SearchEngineResponseHitList result =  searchKWIC(indexPaths, queryString, new FunktionsWrapper2 (){
             @Override
-            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws IOException{
-                return searchHits(metadataIDs, spanweight, iterator, hitNumber, from, to, cutoff, new FunktionsWrapper3(){
+            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws SearchServiceException, IOException{
+                return searchHits(metadataIDs, spanweight, iterator, hitNumber, from, to, cutoff, endtime, new FunktionsWrapper3(){
                     @Override
                     public void addHitToObject(Hit hit) throws IOException {
                        arrayOfHits.add(hit); 
@@ -722,14 +726,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private HashMap searchHits(IDList metadata, SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, 
-            int hitNumber, Integer from, Integer to, Boolean cutoff, FunktionsWrapper3 function) throws IOException{
+            int hitNumber, Integer from, Integer to, Boolean cutoff, long endtime, FunktionsWrapper3 function) throws IOException, SearchServiceException{
         //System.out.println("-- METHOD: searchHits --");
                 int hits_total = 0;
                 int transcripts_total = 0;
                 
                 segment_loop:
                 while (iterator.hasNext()) {
-
+                    checkTimeout(endtime); 
                     LeafReaderContext lrc = iterator.next();  
                     //System.out.println("INDEX SEGMENT NUMBER: " + lrc.docBase);
 
@@ -759,6 +763,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                     if (spans != null) {
                         while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                            checkTimeout(endtime); 
                             if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
 
                                     ////System.out.println("SpansToString: " + spans.toString());
@@ -858,7 +863,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private SearchEngineResponseHitList searchKWICByMetadata(ArrayList<String> indexPaths, MtasSpanQuery queryString, Integer from, Integer to, 
-            Boolean cutoff, String metaDataKey, String matadataValue) throws SearchServiceException, IOException {
+            Boolean cutoff, String metaDataKey, String matadataValue, long endtime) throws SearchServiceException, IOException {
         
       /*  System.out.println("-- METHOD: searchKWICByMetadata --");
         System.out.println("metaDataKey: " + metaDataKey);
@@ -866,13 +871,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
        */
         return searchKWIC(indexPaths, queryString, new FunktionsWrapper2 (){
             @Override
-            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws IOException{
+            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws SearchServiceException, IOException{
                 
                 int transcripts_total = 0;
                 int hits_total = 0;
                 
                 segment_loop:
                 while (iterator.hasNext()) {
+                    checkTimeout(endtime); 
 
                     LeafReaderContext lrc = iterator.next();  
                     Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
@@ -884,6 +890,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                     if (spans != null) {
                         while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                            
+                            checkTimeout(endtime); 
+
                             if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                 transcripts_total = transcripts_total + 1;
                                 int hits = 0;
@@ -993,17 +1002,18 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
              
     private SearchEngineResponseHitList searchKWICByLength(ArrayList<String> indexPaths, MtasSpanQuery queryString, Integer from, Integer to, 
-            Boolean cutoff, List<String> prefixList, Integer size) throws SearchServiceException, IOException {
+            Boolean cutoff, List<String> prefixList, Integer size, long endtime) throws SearchServiceException, IOException {
 
         //System.out.println("-- METHOD: searchKWICByLength");
         return searchKWIC(indexPaths, queryString, new FunktionsWrapper2 (){
             @Override
-            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws IOException{
+            public HashMap<Integer, Integer> addHitsToArray(SpanWeight spanweight, ListIterator<LeafReaderContext> iterator, ArrayList<Hit> arrayOfHits, int hitNumber) throws SearchServiceException, IOException{
                 int transcripts_total = 0;
                 int hits_total = 0;
                 segment_loop:
                 while (iterator.hasNext()) {
-
+                        checkTimeout(endtime); 
+                                                    
                         LeafReaderContext lrc = iterator.next();  
                         Spans spans = spanweight.getSpans(lrc, SpanWeight.Postings.POSITIONS);
                         SegmentReader r = (SegmentReader) lrc.reader();
@@ -1014,6 +1024,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
 
                         if (spans != null) {
                             while (spans.nextDoc() != Spans.NO_MORE_DOCS) {
+                                checkTimeout(endtime); 
                                 if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                         transcripts_total = transcripts_total + 1;
                                         int hits = 0;
@@ -1086,8 +1097,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         SearchEngineResponseHitList result = new SearchEngineResponseHitList();
         
         ArrayList<Hit> arrayOfHits = new ArrayList();
-             
-            for (String indexPath: indexPaths){
+        
+        for (String indexPath: indexPaths){
                 
                 Directory directory = null;
                 try{
@@ -1912,12 +1923,17 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPaths, String queryString,
             Integer from, Integer to, Boolean cutoff, IDList metadataIDs, 
             ArrayList<Repetition> repetitions, HashMap<String, HashSet> synonyms, HashMap<String, String[]> wordLists,
-            GermaNet germanet) throws IOException, SearchServiceException{
+            GermaNet germanet) throws SearchServiceException, IOException {
         
+        long start = System.currentTimeMillis(); 
+        long end = start + TIMEOUT;
+           
         IndexReader indexReader = null;
         IndexSearcher searcher = null;
         
         RepetitionSearcher repetitionSearcher = new RepetitionSearcher(indexPaths, from, to, cutoff, repetitions, synonyms, germanet);
+        LinkedBlockingQueue<String> linkedQueue = new LinkedBlockingQueue<>();
+        Consumer consumer = new Consumer(linkedQueue, repetitionSearcher);
         
         for (String indexPath: indexPaths){
             Directory directory;
@@ -1933,9 +1949,6 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
              
                     List<LeafReaderContext> leaves = indexReader.leaves();
 
-                    LinkedBlockingQueue<String> linkedQueue = new LinkedBlockingQueue<>();
-
-                    Consumer consumer = new Consumer(linkedQueue, repetitionSearcher);
                     Thread thread = new Thread(consumer);
                     thread.start();
                     
@@ -1948,11 +1961,11 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                 CodecInfo mtasCodecInfo = CodecInfo.getCodecInfoFromTerms(t);
                                 
                                 if (spans != null) {
-                                    while (spans.nextDoc() != Spans.NO_MORE_DOCS) {                               
+                                    while (spans.nextDoc() != Spans.NO_MORE_DOCS) {      
                                         if (r.numDocs() == r.maxDoc() || r.getLiveDocs().get(spans.docID())) {
                                             String transcriptID = r.document(spans.docID()).get(FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG);
                                             try{
-                                                repetitionSearcher.checkForRepetitions(mtasCodecInfo, r.getSegmentName(), spans, transcriptID, linkedQueue);  
+                                                repetitionSearcher.checkForRepetitions(mtasCodecInfo, r.getSegmentName(), spans, transcriptID, linkedQueue, end);  
                                             }catch (SeachRepetitionException ex){
                                                thread.interrupt();
                                                throw ex;                                               
@@ -1966,17 +1979,19 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                         
                     });
                     
-                    linkedQueue.put(DONE);
+                    
                     indexReader.close();
 
                 }catch (IndexNotFoundException ex) {
                     throw new IOException ("Search index could not be found! Please check " + indexPath, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } 
             }
         }
-        
+        try {
+            linkedQueue.put(DONE);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return repetitionSearcher.getResult();
     }
         
@@ -1984,8 +1999,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     private ArrayList<String> getPositionsOfRepetitions(CodecInfo mtasCodecInfo,
             int docID, int start, int end, String speakerID, 
             ArrayList<Repetition> repetitionSpecifications, 
-            Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextLeft,
-            Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextRight,
+            Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContextLeft,
+            Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContextRight,
             String segmentName, HashMap<String, HashSet> synonyms, GermaNet germanet) throws SearchServiceException, IOException {
 
         String currentRepetitionLayer = repetitionSpecifications.get(0).getType().name().toLowerCase();
@@ -2055,7 +2070,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 
                 
                 // set maxDistance
-                int maxDistance = MAX_REPETITION_CONTEXT;
+                int maxDistance = Constants.MAX_DISTANCE_BETWEEN_REPETITIONS;
                 if (repetitionSpecification.getMaxDistance()!=null && repetitionSpecification.getMaxDistance()< maxDistance){
                     maxDistance = repetitionSpecification.getMaxDistance();
                 }
@@ -2460,8 +2475,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
     private Boolean checkConditions(SortedMap<Integer, String> sortedMap, String speakerID, 
-            String segmentName, Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextLeft, 
-            Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextRight,
+            String segmentName, Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContextLeft, 
+            Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContextRight,
             Integer firstPosition, CodecInfo mtasCodecInfo, int docID, int end, Repetition repetitionSpecification) throws IOException, SearchServiceException{
         Pattern pattern = Pattern.compile("<[^>]+>");
         
@@ -2543,14 +2558,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
             // check context
             String contextStringLeft = repetitionSpecification.getPrecededby();
             if(contextStringLeft!=null && !contextStringLeft.isEmpty()){
-                contextCheckLeft = checkContext(positionsWithContextLeft, addDistanceToLeftContext(repetitionSpecification, contextStringLeft), segmentName, docID, sortedMap.firstKey());
+                contextCheckLeft = checkContext(positionsWithContextLeft, addDistanceToLeftContext(repetitionSpecification, contextStringLeft), segmentName, docID, sortedMap.firstKey(), true);
             }else{
                 contextCheckLeft=true;
             }
             
             String contextStringRight = repetitionSpecification.getFollowedby();
             if(contextStringRight!=null && !contextStringRight.isEmpty()){
-                contextCheckRight = checkContext(positionsWithContextRight, addDistanceToRightContext(repetitionSpecification, contextStringRight), segmentName, docID, sortedMap.lastKey());
+                contextCheckRight = checkContext(positionsWithContextRight, addDistanceToRightContext(repetitionSpecification, contextStringRight), segmentName, docID, sortedMap.lastKey(), false);
             }else{
                 contextCheckRight=true;
             }
@@ -2601,17 +2616,25 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                     
     }
     
-    private Boolean checkContext(Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContext, 
-            String context, String segmentName, int docID, int position){
+    private Boolean checkContext(Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContext, 
+            String context, String segmentName, int docID, int position, boolean precededBy){
         Boolean check = false;
         if(positionsWithContext.containsKey(context)){
-            Map<String, Map<Integer, Set<Integer>>> segmentNames = positionsWithContext.get(context);
+            Map<String, Map<Integer, Set<Entry<Integer, Integer>>>> segmentNames = positionsWithContext.get(context);
             if(segmentNames.containsKey(segmentName)){
-                Map<Integer, Set<Integer>> docIDs = segmentNames.get(segmentName);
+                Map<Integer, Set<Entry<Integer, Integer>>> docIDs = segmentNames.get(segmentName);
                 if(docIDs.containsKey(docID)){
-                    Set<Integer> positions = docIDs.get(docID);
-                    if(positions.contains(position)){
-                        check = true;
+                    Set<Entry<Integer, Integer>> positions = docIDs.get(docID);
+                    for(Entry<Integer, Integer> entry: positions){
+                        if (precededBy && entry.getValue()==position){
+                            check = true;
+                            break;
+                        }
+                        
+                        if (!precededBy && entry.getKey()==position){
+                            check = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -2930,7 +2953,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         List<CodecSearchTree.MtasTreeHit<String>> terms = mtasCodecInfo
                 .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                 docID, annotationLayerPrefix, (startPosition+1),
-                (startPosition+1+MAX_REPETITION_CONTEXT));
+                (startPosition+1+Constants.MAX_DISTANCE_BETWEEN_REPETITIONS));
         
         // sort
         terms.forEach(term -> {
@@ -2978,63 +3001,59 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         }
     }
     
-    private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForRightContext(ArrayList<Repetition> repetitions, 
+    private Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> getPositionsForContext(
+            Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> result, 
+            ArrayList<String> indexPaths, 
+            Boolean within, String context, String queryString) throws SearchServiceException{
+        String queryStringWithin = "(" + queryString + ") within <annotationBlock/>";
+        
+                if(within!=null){
+                    if(within){
+                        result = addPositions(context, queryStringWithin, indexPaths, result);
+                    }else {
+                        result = addPositions(context, queryString, indexPaths, result);
+                        result = deletePositions(context, queryStringWithin, indexPaths, result);
+                    }
+                }else {
+                    result = addPositions(context, queryString, indexPaths, result);
+                }
+               return result;
+    }
+    
+    private Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> getPositionsForRightContext(ArrayList<Repetition> repetitions, 
             ArrayList<String> indexPaths) throws SearchServiceException{
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap(); /*{context string: {segment name: {docID: {positions}}}}*/
+        Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> result = new HashMap(); /*{context string: {segment name: {docID: {start and end positions}}}}*/
         for(Repetition repetition: repetitions){
             String  context = repetition.getFollowedby();
             
             if(context!=null && !context.isEmpty()){
                 context = addDistanceToRightContext(repetition, context);
                 String queryString = "<word/>" + context;
-                String queryStringWithin = "(" + queryString + ") within <annotationBlock/>";
-                Boolean within = repetition.isWithinSpeakerContributionRight();
-                if(within!=null){
-                    if(within){
-                        result = addPositions(context, queryStringWithin, indexPaths, result, false);
-                    }else {
-                        result = addPositions(context, queryString, indexPaths, result, false);
-                        result = deletePositions(context, queryStringWithin, indexPaths, result, false);
-                    }
-                }else {
-                    result = addPositions(context, queryString, indexPaths, result, false);
-                }
+                result = getPositionsForContext(result, indexPaths, repetition.isWithinSpeakerContributionRight(), context, queryString);
             }
         }
         return result;
      }
         
-    private Map<String, Map<String, Map<Integer, Set<Integer>>>> getPositionsForLeftContext(ArrayList<Repetition> repetitions, 
+    private Map<String, Map<String, Map<Integer, Set<Entry<Integer,Integer>>>>> getPositionsForLeftContext(ArrayList<Repetition> repetitions, 
             ArrayList<String> indexPaths) throws SearchServiceException{
         
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> result = new HashMap(); /*{context string: {segment name: {docID: {positions}}}}*/
+        Map<String, Map<String, Map<Integer, Set<Entry<Integer,Integer>>>>> result = new HashMap(); /*{context string: {segment name: {docID: {start and end positions}}}}*/
         for(Repetition repetition: repetitions){
             String  context = repetition.getPrecededby();
 
             if(context!=null && !context.isEmpty()){
                 context = addDistanceToLeftContext(repetition, context);
                 String queryString = context+ "<word/>";
-                String queryStringWithin = "(" + queryString + ") within <annotationBlock/>";
-                
-                Boolean within = repetition.isWithinSpeakerContributionLeft();
-                if(within!=null){
-                    if(within){
-                        result = addPositions(context, queryStringWithin, indexPaths, result, true);
-                    }else {
-                        result = addPositions(context, queryString, indexPaths, result, true);
-                        result = deletePositions(context, queryStringWithin, indexPaths, result, true);
-                    }
-                }else{
-                    result = addPositions(context, queryString, indexPaths, result, true);
-                }
+                result = getPositionsForContext(result, indexPaths, repetition.isWithinSpeakerContributionLeft(), context, queryString);
             }       
         }
         return result;
      }
      
      /* this method is just called if the left or right context of the repetition is specified */
-    private Map<String, Map<String, Map<Integer, Set<Integer>>>> addPositions(String context, String queryString, ArrayList<String> indexPaths, 
-            Map<String, Map<String, Map<Integer, Set<Integer>>>> result, boolean precededBy)throws SearchServiceException{
+    private Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> addPositions(String context, String queryString, ArrayList<String> indexPaths, 
+            Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> result)throws SearchServiceException{
         for (String indexPath: indexPaths){
                     Directory directory;
                     try {
@@ -3056,16 +3075,13 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                                 while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
                                                     int docID = spans.docID();    
                                                     String segmentName = r.getSegmentName();
-                                                    int position = 0;
-                                                    if(precededBy){
-                                                        position = spans.endPosition()-1;
-                                                    }else{
-                                                        position = spans.startPosition();
-                                                    }
 
-                                                    Set<Integer> set = new HashSet();
-                                                    Map<Integer, Set<Integer>> map = new HashMap();
-                                                    Map<String, Map<Integer, Set<Integer>>> mainMap = new HashMap();
+                                                    int startPosition = spans.startPosition();
+                                                    int endPosition = spans.endPosition()-1;
+
+                                                    Set<Entry<Integer, Integer>> set = new HashSet();
+                                                    Map<Integer, Set<Entry<Integer, Integer>>> map = new HashMap();
+                                                    Map<String, Map<Integer, Set<Entry<Integer, Integer>>>> mainMap = new HashMap();
 
                                                     if(result.containsKey(context)){
                                                         mainMap = result.get(context);
@@ -3076,7 +3092,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                                             }
                                                         }
                                                     }
-                                                    set.add(position);
+                                                    set.add(new SimpleEntry<>(startPosition,endPosition));
                                                     map.put(docID, set);
                                                     mainMap.put(segmentName, map);
                                                     result.put(context, mainMap);
@@ -3098,8 +3114,9 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
     }
     
      /* this method is just called if the left or right context of the repetition should not be within the same contribution */
-    private Map<String, Map<String, Map<Integer, Set<Integer>>>> deletePositions(String context, String queryString, ArrayList<String> indexPaths, 
-            Map<String, Map<String, Map<Integer, Set<Integer>>>> result, boolean precededBy)throws SearchServiceException{
+    private Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> deletePositions(String context, String queryString, ArrayList<String> indexPaths, 
+            Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> result)throws SearchServiceException{
+        
         for (String indexPath: indexPaths){
                     Directory directory;
                     try {
@@ -3121,20 +3138,23 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                                                 while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {
                                                     int docID = spans.docID();    
                                                     String segmentName = r.getSegmentName();
-                                                    int position = 0;
-                                                    if(precededBy){
-                                                        position = spans.endPosition()-1;
-                                                    }else{
-                                                        position = spans.startPosition();
-                                                    }
+                                                    
+                                                    int startPosition =spans.startPosition();
+                                                    int endPosition = spans.endPosition()-1;
 
                                                     if(result.containsKey(context)){
-                                                        Map<String, Map<Integer, Set<Integer>>> mainMap = result.get(context);
+                                                        Map<String, Map<Integer, Set<Entry<Integer, Integer>>>> mainMap = result.get(context);
                                                         if(mainMap.containsKey(segmentName)){
-                                                            Map<Integer, Set<Integer>> map = mainMap.get(segmentName);
+                                                            Map<Integer, Set<Entry<Integer, Integer>>> map = mainMap.get(segmentName);
                                                             if(map.containsKey(docID)){
-                                                                Set<Integer> set = map.get(docID);
-                                                                set.remove(position);
+                                                                Set<Entry<Integer, Integer>> set = map.get(docID);
+                                                                for (Entry<Integer, Integer> entry : set){
+                                                                    if(entry.getKey()== startPosition && entry.getValue()==endPosition){
+                                                                        set.remove(entry);
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                //set.remove(position);
                                                                 map.put(docID, set);
                                                                 mainMap.put(segmentName, map);
                                                                 result.put(context, mainMap);
@@ -3172,8 +3192,8 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         boolean finished = false;        
         int hitNumber = 0;
         ArrayList<Repetition> repetitionSpecifications;
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextLeft;
-        Map<String, Map<String, Map<Integer, Set<Integer>>>> positionsWithContextRight;
+        Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContextLeft;
+        Map<String, Map<String, Map<Integer, Set<Entry<Integer, Integer>>>>> positionsWithContextRight;
         HashMap<String, HashSet> synonyms;
         GermaNet germanet;
         
@@ -3242,10 +3262,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         * 
         */
         void checkForRepetitions(CodecInfo mtasCodecInfo, String segmentName, Spans spans, String transcriptID, 
-                LinkedBlockingQueue<String> linkedQueue) throws IOException {
+                LinkedBlockingQueue<String> linkedQueue, long endtime) throws IOException {
       
             List<Object[]> arrayList = new ArrayList();
-            while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) {              
+            while (spans.nextStartPosition() != Spans.NO_MORE_POSITIONS) { 
+                if(System.currentTimeMillis() > endtime){
+                    log.log(Level.INFO, ": {0}", "Server timeout: search thread was stopped");
+                    throw new SeachRepetitionException(new Exception("Server timeout: the search process was stopped"));
+                }
                 arrayList.add( new Object[]{spans.docID(), spans.startPosition(), spans.endPosition()} );
             }
             
@@ -3583,7 +3607,14 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
         
         return result;
     }
+    
+    private void checkTimeout(long endtime) throws SearchServiceException {
+        if(System.currentTimeMillis() > endtime){
+            String str = "Server timeout: the search process was stopped";
+            log.log(Level.INFO, ": {0}", str);
+            throw new SearchServiceException(str);
+        }
+    }
             
            
-
 }
