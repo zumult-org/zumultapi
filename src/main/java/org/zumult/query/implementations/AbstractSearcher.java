@@ -39,12 +39,13 @@ import org.zumult.query.searchEngine.SearchEngineResponseHitList;
 import org.zumult.query.searchEngine.SearchEngineResponseStatistics;
 import org.zumult.query.searchEngine.SortTypeEnum;
 import org.zumult.query.AdditionalSearchConstraint;
+import org.zumult.query.Searcher;
 
 /**
  *
  * @author Frick
  */
-public abstract class AbstractSearcher {
+public abstract class AbstractSearcher implements Searcher {
     
     protected DGD2Pagination pagination = new DGD2Pagination();
     protected DGD2SearchQuery query = new DGD2SearchQuery();
@@ -53,6 +54,7 @@ public abstract class AbstractSearcher {
     protected HashMap<String, HashSet> synonymsMap = null;
     ArrayList<AdditionalSearchConstraint> additionalSearchConstraints = new ArrayList();
     
+    @Override
     public void setAdditionalSearchConstraints(Map<String, String> constraints) throws SearchServiceException {
                         
         if (constraints!=null){
@@ -95,6 +97,7 @@ public abstract class AbstractSearcher {
         }
     }
     
+    @Override
     public void setPagination(Integer pageLength , Integer pageStartIndex){
         
          // set itemsPerPage and pageStartIndex      
@@ -108,6 +111,7 @@ public abstract class AbstractSearcher {
         pagination.setPageStartIndex((pageStartIndex == null || pageStartIndex < 0) ? Constants.DEFAULT_PAGE_INDEX : pageStartIndex); // starts with 0
     }
     
+    @Override
     public void setCollection(String corpusQueryStr, String metadataQueryStr) throws SearchServiceException{
         if (corpusQueryStr == null || corpusQueryStr.isEmpty()) {
             throw new SearchServiceException("You did not specify a corpus!");
@@ -139,6 +143,7 @@ public abstract class AbstractSearcher {
         }        
     }
     
+    @Override
     public void setQuery(String queryString, String queryLanguage, String queryLanguageVersion) throws SearchServiceException{
 
         if (queryString == null || queryString.isEmpty()) {
@@ -178,6 +183,7 @@ public abstract class AbstractSearcher {
 
     }
 
+    @Override
     public SearchStatistics getStatistics(String searchIndex, String sortType, MetadataKey metadataKey) throws SearchServiceException, IOException{
             
             // set index
@@ -230,6 +236,7 @@ public abstract class AbstractSearcher {
             return result;
     }
     
+    @Override
     public SearchResult search(String searchIndex) throws SearchServiceException, IOException{
                 
         // set index
@@ -259,6 +266,7 @@ public abstract class AbstractSearcher {
         return result;
     }
        
+    @Override
     public SearchResultPlus search(String searchIndex, Boolean cutoff, IDList metadataIDs) throws IOException, SearchServiceException {
         
         // set cutoff
@@ -300,6 +308,7 @@ public abstract class AbstractSearcher {
         return result;
     }
    
+    @Override
     public IDList searchTokensForTranscript(String searchIndex, String tokenAttribute) throws IOException, SearchServiceException {
         
         // set index
@@ -354,9 +363,8 @@ public abstract class AbstractSearcher {
     abstract DGD2SearchIndexTypeEnum getSearchIndex(String searchIndex) throws SearchServiceException;
       
     abstract ArrayList<String> getIndexPaths(DGD2SearchIndexTypeEnum searchMode) throws IOException, SearchServiceException;
-
     
-    
+    @Override
     public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitionsStr, String synonymStr) throws IOException, SearchServiceException {
         
         // set cutoff
@@ -447,6 +455,7 @@ public abstract class AbstractSearcher {
         return result;
     }
 
+    @Override
     public IDList getCorporaForSearch(String searchIndex){
         IDList corpora = Configuration.getCorpusIDs(); // corpora available for search
         return corpora;

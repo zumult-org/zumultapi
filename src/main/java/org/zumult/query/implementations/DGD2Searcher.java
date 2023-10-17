@@ -31,13 +31,12 @@ import org.zumult.objects.implementations.DGD2AnnotationLayer;
 import org.zumult.objects.implementations.DGD2MetadataKey;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
-import org.zumult.query.Searcher;
 
 /**
  *
  * @author Elena Frick
  */
-public class DGD2Searcher extends AbstractSearcher implements Searcher {
+public class DGD2Searcher extends AbstractSearcher {
     ResourceBundle myResourcesEN = ResourceBundle.getBundle("resources.MessageBundle", new Locale.Builder().setLanguage("en").setRegion("US").build());
     ResourceBundle myResourcesGER = ResourceBundle.getBundle("resources.MessageBundle", new Locale.Builder().setLanguage("de").setRegion("DE").build());
     
