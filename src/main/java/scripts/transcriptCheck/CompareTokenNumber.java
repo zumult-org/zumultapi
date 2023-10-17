@@ -26,10 +26,10 @@ import org.zumult.query.SearchServiceException;
  * 
  * This script counts w-elements in each xml-transcript and compare
  * the number with the query result searching for word-elements
- * in the same transcript
+ * in the same transcript. The script stops when a discrepancy is found. 
  * 
  */
-public class CompareXMLElements {
+public class CompareTokenNumber {
 
     /** Corpus folder location of the iso transcripts. */
     private static final String ISO = Configuration.getTranscriptPath();
@@ -52,7 +52,7 @@ public class CompareXMLElements {
      * the number with the search results for
      * &lt;word&gt; in the same transcript.
      * 
-     * @param corpusID corpus ID
+     * @param corpusID corpus id
      */
     public static void doit(final String corpusID) {
        BackendInterface backendInterface; 
@@ -88,7 +88,7 @@ public class CompareXMLElements {
                                 null);
                     int m = searchResult.getTotalHits();
 
-                    System.out.println(n + " (trascript document)");
+                    System.out.println(n + " (transcript document)");
                     System.out.println(m + " (search index)");
                     
                     if(n!=m){
@@ -105,7 +105,7 @@ public class CompareXMLElements {
                | SAXException 
                | ParserConfigurationException 
                | SearchServiceException ex) {
-           Logger.getLogger(CompareXMLElements.class.getName())
+           Logger.getLogger(CompareTokenNumber.class.getName())
                    .log(Level.SEVERE, null, ex);
        }
    } 
