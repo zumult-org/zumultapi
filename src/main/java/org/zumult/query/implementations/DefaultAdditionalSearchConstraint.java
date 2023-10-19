@@ -13,13 +13,13 @@ import org.zumult.query.AdditionalSearchConstraint;
  *
  * @author Frick
  */
-public class DafaultAdditionalSearchConstraint extends AbstractXMLObject implements AdditionalSearchConstraint {
+public class DefaultAdditionalSearchConstraint extends AbstractXMLObject implements AdditionalSearchConstraint {
     
-    public DafaultAdditionalSearchConstraint(Document xmlDocument) {
+    public DefaultAdditionalSearchConstraint(Document xmlDocument) {
         super(xmlDocument);
     }
 
-    DafaultAdditionalSearchConstraint(String repetitionsStr) {
+    DefaultAdditionalSearchConstraint(String repetitionsStr) {
         super(repetitionsStr);
     }
 }

@@ -88,7 +88,7 @@ public abstract class AbstractSearcher implements Searcher {
                         }
                     }*/
                     
-                    additionalSearchConstraints.add(new DafaultAdditionalSearchConstraint(wordLists));
+                    additionalSearchConstraints.add(new DefaultAdditionalSearchConstraint(wordLists));
                 }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException | IOException e){
                     Logger.getLogger(AbstractSearcher.class.getName()).log(Level.SEVERE, null, e);
                     throw new SearchServiceException("Please check the syntax of your wordlists!");
@@ -387,7 +387,7 @@ public abstract class AbstractSearcher implements Searcher {
                 Repetition r = new Repetition(element);
                 repetitions.add(r);
             }
-            additionalSearchConstraints.add(new DafaultAdditionalSearchConstraint(repetitionsStr));
+            additionalSearchConstraints.add(new DefaultAdditionalSearchConstraint(repetitionsStr));
 
         } catch (SAXException | ParserConfigurationException ex) {
            throw new SearchServiceException ("Please check the xml format of repetition-parameter!");
@@ -419,7 +419,7 @@ public abstract class AbstractSearcher implements Searcher {
                     }
                 }
 
-                additionalSearchConstraints.add(new DafaultAdditionalSearchConstraint(synonyms));
+                additionalSearchConstraints.add(new DefaultAdditionalSearchConstraint(synonyms));
             } catch (SAXException | ParserConfigurationException ex) {
                throw new SearchServiceException ("Please check the xml format of synonyms!");
             }

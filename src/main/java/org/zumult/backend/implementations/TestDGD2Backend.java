@@ -34,18 +34,18 @@ import org.zumult.objects.implementations.TokenListTokenFilter;
  *
  * @author Thomas_Schmidt
  */
-public class TestBackend {
+public class TestDGD2Backend {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            new TestBackend().doit();
+            new TestDGD2Backend().doit();
         } catch (IOException ex) {
-            Logger.getLogger(TestBackend.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDGD2Backend.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(TestBackend.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDGD2Backend.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
