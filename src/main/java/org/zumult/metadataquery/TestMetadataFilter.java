@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.query.implementations;
+package org.zumult.metadataquery;
 
+import org.zumult.metadataquery.DGDMetadataFilter;
 import java.io.IOException;
 import org.zumult.objects.IDList;
 import org.zumult.query.MetadataFilter;

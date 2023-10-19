@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
 import org.zumult.io.TimeUtilities;
-import org.zumult.query.implementations.DGD2SearchIndexTypeEnum;
+import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
 import org.zumult.query.searchEngine.SearchIndex;
 

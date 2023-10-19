@@ -31,6 +31,8 @@ import org.zumult.objects.implementations.DGD2AnnotationLayer;
 import org.zumult.objects.implementations.DGD2MetadataKey;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
+import org.zumult.query.SearchIndexType;
+import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
 
 /**
  *
@@ -61,51 +63,77 @@ public class DGD2Searcher extends AbstractSearcher {
     @Override
     public Set<MetadataKey> filterMetadataKeysForSearch(Set<MetadataKey> metadataKeys, String searchIndex, String type) throws SearchServiceException{
         // TODO: implement localization
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndex(searchIndex);
         
         // remove some metadata
         metadataKeys = removeFromMetadata(metadataKeys, Constants.METADATA_KEY_SPEAKER_BIRTH_DATE);
         
-        if(index.equals(DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX)){
+        if(index.getValue().equals(DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX.name())){
             metadataKeys = removeFromMetadata(metadataKeys, Constants.METADATA_KEY_SPEAKER_NAME);
             metadataKeys = removeFromMetadata(metadataKeys, Constants.METADATA_KEY_SPEAKER_OTHER_NAMES);
             metadataKeys = removeFromMetadata(metadataKeys, Constants.METADATA_KEY_SPEAKER_PSEUDONYM);
         }
         
         // add some metadata
-        if(type==null || type.isEmpty() || type.toUpperCase().equals(ObjectTypesEnum.EVENT.name())){
-            MetadataKey metadataKeyEventID = new DGD2MetadataKey(Constants.METADATA_KEY_EVENT_DGD_ID, myResourcesGER.getString("Event") + " ID", ObjectTypesEnum.EVENT);
+        if(type==null || type.isEmpty() || type.toUpperCase()
+                .equals(ObjectTypesEnum.EVENT.name())){
+            MetadataKey metadataKeyEventID = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_EVENT_DGD_ID, 
+                    myResourcesGER.getString("Event") 
+                            + " ID", ObjectTypesEnum.EVENT);
             metadataKeys.add(metadataKeyEventID);
             
-            MetadataKey metadataKeyEventDurationSec = new DGD2MetadataKey(Constants.METADATA_KEY_EVENT_DAUER_SEC, myResourcesGER.getString("DurationSec"), ObjectTypesEnum.EVENT);
+            MetadataKey metadataKeyEventDurationSec = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_EVENT_DAUER_SEC, 
+                    myResourcesGER.getString("DurationSec"),
+                    ObjectTypesEnum.EVENT);
             metadataKeys.add(metadataKeyEventDurationSec); 
         }
         
-        if(type==null || type.isEmpty() || type.toUpperCase().equals(ObjectTypesEnum.SPEAKER.name())){
-            MetadataKey metadataKeySpeakerID = new DGD2MetadataKey(Constants.METADATA_KEY_SPEAKER_DGD_ID, myResourcesGER.getString("Speaker") + " ID", ObjectTypesEnum.SPEAKER);
+        if(type==null || type.isEmpty() || type.toUpperCase()
+                .equals(ObjectTypesEnum.SPEAKER.name())){
+            MetadataKey metadataKeySpeakerID = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_SPEAKER_DGD_ID, 
+                    myResourcesGER.getString("Speaker") 
+                            + " ID", ObjectTypesEnum.SPEAKER);
             metadataKeys.add(metadataKeySpeakerID);
             
-            MetadataKey metadataKeySpeakerYearOfBirth = new DGD2MetadataKey(Constants.METADATA_KEY_SPEAKER_YEAR_OF_BIRTH, myResourcesGER.getString("YearOfBirth"), ObjectTypesEnum.SPEAKER);
+            MetadataKey metadataKeySpeakerYearOfBirth = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_SPEAKER_YEAR_OF_BIRTH, 
+                    myResourcesGER.getString("YearOfBirth"), 
+                    ObjectTypesEnum.SPEAKER);
             metadataKeys.add(metadataKeySpeakerYearOfBirth);    
         }
         
-        if(type==null || type.isEmpty() || type.toUpperCase().equals(ObjectTypesEnum.SPEECH_EVENT.name())){
-            MetadataKey metadataKeySpeechEventID = new DGD2MetadataKey(Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID, myResourcesGER.getString("SpeechEvent") + " ID", ObjectTypesEnum.SPEECH_EVENT);
+        if(type==null || type.isEmpty() || type.toUpperCase()
+                .equals(ObjectTypesEnum.SPEECH_EVENT.name())){
+            MetadataKey metadataKeySpeechEventID = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_SPEECH_EVENT_DGD_ID, 
+                    myResourcesGER.getString("SpeechEvent") 
+                            + " ID", ObjectTypesEnum.SPEECH_EVENT);
             metadataKeys.add(metadataKeySpeechEventID);
         }
         
-        if(type==null || type.isEmpty() || type.toUpperCase().equals(ObjectTypesEnum.TRANSCRIPT.name())){
-            MetadataKey metadataKeyTranscriptID = new DGD2MetadataKey(Constants.METADATA_KEY_TRANSCRIPT_DGD_ID, myResourcesGER.getString("Transcript") + " ID", ObjectTypesEnum.TRANSCRIPT);
+        if(type==null || type.isEmpty() || type.toUpperCase()
+                .equals(ObjectTypesEnum.TRANSCRIPT.name())){
+            MetadataKey metadataKeyTranscriptID = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_TRANSCRIPT_DGD_ID,
+                    myResourcesGER.getString("Transcript") 
+                            + " ID", ObjectTypesEnum.TRANSCRIPT);
             metadataKeys.add(metadataKeyTranscriptID);
             
-            MetadataKey metadataKeyEventVideosNumber = new DGD2MetadataKey(Constants.METADATA_KEY_EVENT_NUMBER_VIDEOS, myResourcesGER.getString("VideoNumber"), ObjectTypesEnum.TRANSCRIPT);
+            MetadataKey metadataKeyEventVideosNumber = new DGD2MetadataKey(
+                    Constants.METADATA_KEY_EVENT_NUMBER_VIDEOS, 
+                    myResourcesGER.getString("VideoNumber"), 
+                    ObjectTypesEnum.TRANSCRIPT);
             metadataKeys.add(metadataKeyEventVideosNumber); 
         }
                 
         return metadataKeys;
     }
     
-    private Set<MetadataKey> removeFromMetadata(Set<MetadataKey> metadataKeys, String id){
+    private Set<MetadataKey> removeFromMetadata(Set<MetadataKey> metadataKeys, 
+                                                String id){
         for (MetadataKey metadataKey: metadataKeys){
             if(metadataKey.getID().equals(id)){
                 metadataKeys.remove(metadataKey);
@@ -116,8 +144,15 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    public Set<AnnotationLayer> filterAnnotationLayersForGroupingHits(Set<AnnotationLayer> annotationLayers, String searchIndex, String annotationLayerType) throws SearchServiceException{
-        annotationLayers = filterAnnotationLayersForSearch(annotationLayers, searchIndex, annotationLayerType);
+    public Set<AnnotationLayer> filterAnnotationLayersForGroupingHits(
+                                Set<AnnotationLayer> annotationLayers, 
+                                String searchIndex, 
+                                String annotationLayerType) 
+                                throws SearchServiceException{
+        annotationLayers = filterAnnotationLayersForSearch(
+                                                        annotationLayers, 
+                                                        searchIndex, 
+                                                        annotationLayerType);
         
         // TODO: add sorting by the transcribed form inclusive pause, incident, vocal and pc
         
@@ -125,7 +160,11 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    public Set<AnnotationLayer> filterAnnotationLayersForSearch(Set<AnnotationLayer> annotationLayers, String searchIndex, String annotationLayerType) throws SearchServiceException{
+    public Set<AnnotationLayer> filterAnnotationLayersForSearch(
+            Set<AnnotationLayer> annotationLayers, 
+            String searchIndex, 
+            String annotationLayerType) 
+            throws SearchServiceException{
         //DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
         // TODO: implement the dependency on the search index
 
@@ -142,7 +181,10 @@ public class DGD2Searcher extends AbstractSearcher {
         }*/
         
         // add some anotations
-        if (annotationLayerType==null || annotationLayerType.isEmpty() || annotationLayerType.toUpperCase().equals(AnnotationTypeEnum.TOKEN.name())){
+        if (annotationLayerType==null 
+                || annotationLayerType.isEmpty() 
+                || annotationLayerType.toUpperCase()
+                        .equals(AnnotationTypeEnum.TOKEN.name())){
             Map<String, String> proxiTokens = Arrays.stream(Constants.PROXI_TOKEN_ANNOTATION_LAYERS)
             .collect(Collectors.toMap(entity -> entity[0], entity -> entity[1]));
             for(String str: proxiTokens.keySet()){
@@ -151,7 +193,10 @@ public class DGD2Searcher extends AbstractSearcher {
             }  
         }
         
-        if (annotationLayerType==null || annotationLayerType.isEmpty() || annotationLayerType.toUpperCase().equals(AnnotationTypeEnum.SPAN.name())){
+        if (annotationLayerType==null 
+                || annotationLayerType.isEmpty() 
+                || annotationLayerType.toUpperCase()
+                        .equals(AnnotationTypeEnum.SPAN.name())){
             Map<String, String> proxiTokens = Arrays.stream(Constants.PROXI_SPAN_ANNOTATION_LAYERS)
             .collect(Collectors.toMap(entity -> entity[0], entity -> entity[1]));
             for(String str: proxiTokens.keySet()){               
@@ -166,9 +211,9 @@ public class DGD2Searcher extends AbstractSearcher {
     public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
         ArrayList<SampleQuery> queries = new ArrayList();
         
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndex(searchIndex);
         String path=null;
-        switch(index){
+        switch(DGD2SearchIndexTypeEnum.valueOf(index.getValue())){
             case TRANSCRIPT_BASED_INDEX, TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT 
                 -> path = Constants.SAMPLE_QUERIES_FOR_TRASCRIPT_BASED_SEARCH;
             case SPEAKER_BASED_INDEX, SPEAKER_BASED_INDEX_WITHOUT_PUNCT 
@@ -197,7 +242,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }   
     
     @Override
-    protected ArrayList<String> getIndexPaths(DGD2SearchIndexTypeEnum searchMode) throws IOException, SearchServiceException{
+    protected ArrayList<String> getIndexPaths(SearchIndexType searchMode) throws IOException, SearchServiceException{
 
         //System.out.println("PARAMETER (SEARCH MODE): " + index);
         Pattern r = Pattern.compile(Constants.CORPUS_SIGLE_PATTERN);
@@ -207,7 +252,7 @@ public class DGD2Searcher extends AbstractSearcher {
    
             ArrayList<String> indexIDs = new ArrayList();
             String str = Constants.WITH_PUNCTUTION_EXT;
-            switch(searchMode){
+            switch(DGD2SearchIndexTypeEnum.valueOf(searchMode.getValue())){
                 case TRANSCRIPT_BASED_INDEX:
                     indexIDs = Configuration.getTranscriptBasedIndexIDs();
                     str = Constants.WITHOUT_PUNCTUTION_EXT;
@@ -262,25 +307,10 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    protected DGD2SearchIndexTypeEnum getSearchIndex(String searchIndex) throws SearchServiceException {
-        if(searchIndex==null || searchIndex.isEmpty() || searchIndex.equals("null")){
-            return DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX;
-        }else {
-            try{
-                DGD2SearchIndexTypeEnum index = DGD2SearchIndexTypeEnum.valueOf(searchIndex);
-                return index;
-            }catch (NullPointerException ex){
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(". Search index ").append(searchIndex).append(" is not supported. Supported search indexes are: ");
-                    for (DGD2SearchIndexTypeEnum ob : DGD2SearchIndexTypeEnum.values()){
-                        sb.append(ob.name());
-                        sb.append(", ");
-                    }
-                    throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
-            }
-        }
+    protected SearchIndexType getSearchIndex(String searchIndex) throws SearchServiceException {
+        return new DGDSearchIndexType(searchIndex);
     }
-  
+    
     private Map<String, String> createLangMap(String str){
         Map<String, String> map = new HashMap();
         map.put(Locale.GERMAN.getLanguage(), myResourcesGER.getString(str));

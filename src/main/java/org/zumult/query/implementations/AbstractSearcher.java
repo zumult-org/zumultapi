@@ -40,6 +40,7 @@ import org.zumult.query.searchEngine.SearchEngineResponseStatistics;
 import org.zumult.query.searchEngine.SortTypeEnum;
 import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.Searcher;
+import org.zumult.query.SearchIndexType;
 
 /**
  *
@@ -187,7 +188,7 @@ public abstract class AbstractSearcher implements Searcher {
     public SearchStatistics getStatistics(String searchIndex, String sortType, MetadataKey metadataKey) throws SearchServiceException, IOException{
             
             // set index
-            DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+            SearchIndexType index = getSearchIndex(searchIndex);
         
             // set sort type
             SortTypeEnum sort = SortTypeEnum.ABS_DESC;
@@ -225,7 +226,7 @@ public abstract class AbstractSearcher implements Searcher {
             result.setSortType(sort.name());
             result.setSearchQuery(query);
             result.setMetadataQuery(metadataQuery);
-            result.setSearchMode(index.name());
+            result.setSearchMode(index.getValue());
             result.setPagination(pagination);
             result.setStatistics(mtasSearchResult.getStatistics());
             result.setNumberOfDistinctValues(mtasSearchResult.getNumberOfDistinctValues());
@@ -240,7 +241,7 @@ public abstract class AbstractSearcher implements Searcher {
     public SearchResult search(String searchIndex) throws SearchServiceException, IOException{
                 
         // set index
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndex(searchIndex);
         
         /* Search with MTAS using cqp query language */
         
@@ -258,7 +259,7 @@ public abstract class AbstractSearcher implements Searcher {
         result.setSearchTime(millis_search);
         result.setSearchQuery(query);
         result.setMetadataQuery(metadataQuery);
-        result.setSearchMode(index.name());
+        result.setSearchMode(index.getValue());
         result.setTotalHits(sr.getHitsTotal());
         result.setTotalTranscripts(sr.getTranscriptsTotal());
         result.setAdditionalSearchConstraints(additionalSearchConstraints);
@@ -276,7 +277,7 @@ public abstract class AbstractSearcher implements Searcher {
         }
 
         // set index
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndex(searchIndex);
         
         /* Search with MTAS using cqp query language */
         
@@ -298,7 +299,7 @@ public abstract class AbstractSearcher implements Searcher {
         result.setCutoff(count);
         result.setSearchQuery(query);
         result.setMetadataQuery(metadataQuery);
-        result.setSearchMode(index.name());
+        result.setSearchMode(index.getValue());
         result.setPagination(pagination);
         result.setHits(mtasSearchResult.getHits());
         result.setTotalHits(mtasSearchResult.getHitsTotal());
@@ -312,7 +313,7 @@ public abstract class AbstractSearcher implements Searcher {
     public IDList searchTokensForTranscript(String searchIndex, String tokenAttribute) throws IOException, SearchServiceException {
         
         // set index
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndex(searchIndex);
         
         final long timeStart_search = System.currentTimeMillis();
         
@@ -360,9 +361,9 @@ public abstract class AbstractSearcher implements Searcher {
         return list;
     }
     
-    abstract DGD2SearchIndexTypeEnum getSearchIndex(String searchIndex) throws SearchServiceException;
-      
-    abstract ArrayList<String> getIndexPaths(DGD2SearchIndexTypeEnum searchMode) throws IOException, SearchServiceException;
+    abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) throws IOException, SearchServiceException;
+    
+    abstract SearchIndexType getSearchIndex(String searchIndex) throws SearchServiceException;
     
     @Override
     public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitionsStr, String synonymStr) throws IOException, SearchServiceException {
@@ -374,7 +375,7 @@ public abstract class AbstractSearcher implements Searcher {
         }
 
         // set index
-        DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndex(searchIndex);
 
         // create a list with repetition-objects
         ArrayList<Repetition> repetitions = new ArrayList();
@@ -445,7 +446,7 @@ public abstract class AbstractSearcher implements Searcher {
         result.setCutoff(count);
         result.setSearchQuery(query);
         result.setMetadataQuery(metadataQuery);
-        result.setSearchMode(index.name());
+        result.setSearchMode(index.getValue());
         result.setPagination(pagination);
         result.setHits(mtasSearchResult.getHits());
         result.setTotalHits(mtasSearchResult.getHitsTotal());
