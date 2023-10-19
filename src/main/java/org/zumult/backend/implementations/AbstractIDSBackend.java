@@ -8,6 +8,7 @@ package org.zumult.backend.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -45,6 +46,7 @@ import org.zumult.query.implementations.DGD2KWIC;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
+import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
 
 /**
@@ -399,15 +401,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
     public KWIC exportKWIC(SearchResultPlus searchResultPlus, String context, String format) throws SearchServiceException, IOException {
         KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_DOWNLOAD, format);       
         return kwicView;
-    }
-    
-     
-    @Override
-    public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
-        Searcher searcher = new DGD2Searcher();
-        return searcher.getSampleQueries(corpusID, searchIndex);
-    }
-    
+    }  
 
     @Override
     public Measure getMeasure4SpeechEvent(String speechEventID, String type, String reference) {
@@ -497,25 +491,28 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
     public IDList getMeasures4Corpus(String corpus) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-       
-    
-    
-    
-    
-    @Override 
-    public IDList getCorporaForSearch(String searchIndex){
-        Searcher searcher = new DGD2Searcher();
-        return searcher.getCorporaForSearch(searchIndex);
-    }
-    
-        
 
     @Override
     public Searcher getSearcher() {
         return new DGD2Searcher();
     }
 
-    
+    @Override
+    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
+        Searcher searcher = new DGD2Searcher();
+        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
+        searcher.setCollection(corpusQuery, metadataQuery);
+        searcher.setPagination(pageLength, pageIndex);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
+        if (metadataKeyID != null && !metadataKeyID.isEmpty()) {
+            MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
+            if (mk == null) {
+                mk = new DGD2MetadataKey(metadataKeyID, "", null);
+            }
+            return searcher.getStatistics(searchIndex, sortTypeCode, mk);
+        } else {
+            throw new SearchServiceException("You did not specify the metadataKey!");
+        }
+    }
     
 }

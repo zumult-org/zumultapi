@@ -169,17 +169,14 @@ public class DGD2Searcher extends AbstractSearcher {
         DGD2SearchIndexTypeEnum index = getSearchIndex(searchIndex);
         String path=null;
         switch(index){
-                case TRANSCRIPT_BASED_INDEX:
-                case TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT:     
-                    path = Constants.SAMPLE_QUERIES_FOR_TRASCRIPT_BASED_SEARCH;
-                    break;
-                case SPEAKER_BASED_INDEX:
-                case SPEAKER_BASED_INDEX_WITHOUT_PUNCT:
-                    path = Constants.SAMPLE_QUERIES_FOR_SPEAKER_BASED_SEARCH;
-                    break;   
-                default: // do nothing;
-                    break;
+            case TRANSCRIPT_BASED_INDEX, TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT 
+                -> path = Constants.SAMPLE_QUERIES_FOR_TRASCRIPT_BASED_SEARCH;
+            case SPEAKER_BASED_INDEX, SPEAKER_BASED_INDEX_WITHOUT_PUNCT 
+                -> path = Constants.SAMPLE_QUERIES_FOR_SPEAKER_BASED_SEARCH;
+            default -> {         // do nothing;
+            }
         }
+
         try{
             ArrayList<SampleQuery> allQueries = IOHelper.getQueriesFromFile(path);
 

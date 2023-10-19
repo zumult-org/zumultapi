@@ -6,6 +6,7 @@
 package org.zumult.backend.implementations;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -37,15 +38,13 @@ import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.ResourceServiceException;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.DGD2AnnotationTagSet;
-import org.zumult.objects.implementations.DGD2MetadataKey;
+import org.zumult.objects.implementations.DefaultAnnotationTagSet;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
+import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchResult;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
-import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
-import org.zumult.query.implementations.DGD2Searcher;
 
 /**
  *
@@ -219,7 +218,7 @@ public abstract class AbstractBackend implements BackendInterface {
         try {
             String xml = IOHelper.readUTF8(AbstractBackend.class.getResourceAsStream(path));
             Document doc = IOHelper.DocumentFromText(xml);
-            AnnotationTagSet annotationTagSet = new DGD2AnnotationTagSet(doc);
+            AnnotationTagSet annotationTagSet = new DefaultAnnotationTagSet(doc);
             return annotationTagSet;
         } catch (NullPointerException ex) {
             throw new IOException("Tagset for " + annotationTagSetID + " does not exist!");
@@ -260,11 +259,12 @@ public abstract class AbstractBackend implements BackendInterface {
             }
         }
         // check if metadata can be used for grouping hits
-        Searcher searcher = new DGD2Searcher();
+        Searcher searcher = getSearcher();
         Set<MetadataKey> metadataKeysForSearch = searcher.filterMetadataKeysForGroupingHits(metadataKeys, searchIndex, type);
         return metadataKeysForSearch;
     }
 
+    @Override
     public Set<MetadataKey> getMetadataKeysForSearch(String corpusQuery, String searchIndex, String type) throws SearchServiceException, IOException {
         // get all available metadata Keys
         Set<MetadataKey> metadataKeys = new HashSet();
@@ -275,7 +275,7 @@ public abstract class AbstractBackend implements BackendInterface {
             }
         }
         // check if metadata can be searched
-        Searcher searcher = new DGD2Searcher();
+        Searcher searcher = getSearcher();
         Set<MetadataKey> metadataKeysForSearch = searcher.filterMetadataKeysForSearch(metadataKeys, searchIndex, type);
         return metadataKeysForSearch;
     }
@@ -315,7 +315,7 @@ public abstract class AbstractBackend implements BackendInterface {
             }
         }
         // check if annotation layers can be searched
-        Searcher searcher = new DGD2Searcher();
+        Searcher searcher = getSearcher();
         Set<AnnotationLayer> annotationLayersForSearch = searcher.filterAnnotationLayersForSearch(annotationLayers, searchIndex, annotationLayerType);
         return annotationLayersForSearch;
     }
@@ -331,7 +331,7 @@ public abstract class AbstractBackend implements BackendInterface {
             }
         }
         // check if annotation layers can be searched
-        Searcher searcher = new DGD2Searcher();
+        Searcher searcher = getSearcher();
         Set<AnnotationLayer> annotationLayersForSearch = searcher.filterAnnotationLayersForGroupingHits(annotationLayers, searchIndex, annotationLayerType);
         return annotationLayersForSearch;
     }
@@ -355,40 +355,7 @@ public abstract class AbstractBackend implements BackendInterface {
         }
         return annotationLayers;
     }
-
-    /*   @Override
-    public KWIC exportKWIC(String queryString, String queryLanguage, String queryLanguageVersion,
-    String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex,
-    Boolean cutoff, String searchIndex, String context, String fileType, IDList metadataIDs) throws SearchServiceException, IOException {
-    final long timeStart_search = System.currentTimeMillis();
-    SearchResultPlus result = search(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
-    pageLength, pageIndex, cutoff, searchIndex, metadataIDs);
-    KWIC kwicView = new DGD2KWIC(result, context, Constants.SEARCH_TYPE_DOWNLOAD, fileType);
-    final long timeEnd_search = System.currentTimeMillis();
-    long millis_search = timeEnd_search - timeStart_search;
-    System.out.println("exportKWIC: " + TimeUtilities.format(millis_search));
-    return kwicView;
-    }
-     */
-    
-    @Override
-    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortTypeCode, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
-        Searcher searcher = new DGD2Searcher();
-        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
-        searcher.setCollection(corpusQuery, metadataQuery);
-        searcher.setPagination(pageLength, pageIndex);
-        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
-        if (metadataKeyID != null && !metadataKeyID.isEmpty()) {
-            MetadataKey mk = this.findMetadataKeyByID("v_" + metadataKeyID);
-            if (mk == null) {
-                mk = new DGD2MetadataKey(metadataKeyID, "", null);
-            }
-            return searcher.getStatistics(searchIndex, sortTypeCode, mk);
-        } else {
-            throw new SearchServiceException("You did not specify the metadataKey!");
-        }
-    }
-    
+       
     @Override
     public Set<MetadataKey> getMetadataKeys4Corpus(String corpusID, ObjectTypesEnum metadataLevel) throws IOException{
         Corpus corpus = getCorpus(corpusID);
@@ -407,6 +374,19 @@ public abstract class AbstractBackend implements BackendInterface {
             String unit) throws ResourceServiceException, IOException {
         Corpus corpus = getCorpus(corpusID);
         return corpus.getCrossQuantification(metadataKey1, metadataKey2, unit);
+    }
+    
+    @Override
+    public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
+        Searcher searcher = getSearcher();
+        return searcher.getSampleQueries(corpusID, searchIndex);
+    }
+    
+    
+    @Override 
+    public IDList getCorporaForSearch(String searchIndex){
+        Searcher searcher = getSearcher();
+        return searcher.getCorporaForSearch(searchIndex);
     }
     
 }

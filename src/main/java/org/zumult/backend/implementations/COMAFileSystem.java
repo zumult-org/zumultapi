@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -55,8 +54,9 @@ import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
-import org.zumult.query.SampleQuery;
+import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
+import org.zumult.query.implementations.COMASearcher;
 import org.zumult.query.implementations.DGD2KWIC;
 import org.zumult.query.implementations.DGD2Searcher;
 
@@ -668,19 +668,6 @@ public class COMAFileSystem extends AbstractBackend {
         KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_DOWNLOAD, format);       
         return kwicView;
     }
-    
-     
-    @Override
-    public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
-        Searcher searcher = new DGD2Searcher();
-        return searcher.getSampleQueries(corpusID, searchIndex);
-    }
-
-    @Override 
-    public IDList getCorporaForSearch(String searchIndex){
-        Searcher searcher = new DGD2Searcher();
-        return searcher.getCorporaForSearch(searchIndex);
-    }
 
     @Override
     public Searcher getSearcher() {
@@ -761,6 +748,11 @@ public class COMAFileSystem extends AbstractBackend {
                 
             }
         }
+    }
+
+    @Override
+    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortType, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
   
 }
