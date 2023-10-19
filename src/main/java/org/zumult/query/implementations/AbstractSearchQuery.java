@@ -9,7 +9,7 @@ package org.zumult.query.implementations;
  *
  * @author Elena
  */
-public abstract class DGD2AbstractSearchQuery extends DGD2AbstractQuery{
+public abstract class AbstractSearchQuery extends AbstractQuery{
     private String queryLanguage;
         private String queryLanguageVersion;
 

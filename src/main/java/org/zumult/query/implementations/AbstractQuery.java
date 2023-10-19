@@ -9,7 +9,7 @@ package org.zumult.query.implementations;
  *
  * @author Elena
  */
-public abstract class DGD2AbstractQuery {
+public abstract class AbstractQuery {
 
     String queryString;
 

@@ -46,7 +46,7 @@ import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
-import org.zumult.query.implementations.DGD2KWICSnippetCreator;
+import org.zumult.query.implementations.ISOTEIKWICSnippetCreator;
 import org.zumult.query.implementations.DGD2SearchIndexTypeEnum;
 
 /**
@@ -357,7 +357,7 @@ public class SearchResultSerializer {
     public File createKWICDownloadFile(KWIC ke, String fileType) throws IOException {
 
         File file = createTmpFile(fileType);
-        DGD2KWICSnippetCreator creator = new DGD2KWICSnippetCreator();
+        ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
         OutputStreamWriter bw = null;
         
         KWICContext leftContext = ke.getLeftContext();
@@ -411,7 +411,7 @@ public class SearchResultSerializer {
     public File createKWICDownloadFileWithThreads(KWIC ke, String fileType) throws IOException {
 
         File file = createTmpFile(fileType);
-        DGD2KWICSnippetCreator creator = new DGD2KWICSnippetCreator();
+        ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
         OutputStreamWriter bw = null;
         
         KWICContext leftContext = ke.getLeftContext();
@@ -501,7 +501,7 @@ public class SearchResultSerializer {
     }
     
     private String getKWICLine(String docID, 
-            ArrayList<Hit.Match> matchArray, String firstMatchID, String lastMatchID, Document transcriptDoc, DGD2KWICSnippetCreator creator,
+            ArrayList<Hit.Match> matchArray, String firstMatchID, String lastMatchID, Document transcriptDoc, ISOTEIKWICSnippetCreator creator,
             KWICContext leftContext, KWICContext rightContext, HashMap<String, String> metadata) throws IOException{
         
         StringBuilder sb = new StringBuilder();

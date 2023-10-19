@@ -6,7 +6,6 @@
 package org.zumult.query.implementations;
 
 import java.io.IOException;
-import net.sf.saxon.lib.NamespaceConstant;
 import org.zumult.objects.IDList;
 import org.zumult.query.MetadataFilter;
 

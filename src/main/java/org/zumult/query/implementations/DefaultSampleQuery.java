@@ -11,7 +11,7 @@ import org.zumult.query.SampleQuery;
  *
  * @author Elena
  */
-public class DGD2SampleQuery extends DGD2AbstractSearchQuery implements SampleQuery {
+public class DefaultSampleQuery extends AbstractSearchQuery implements SampleQuery {
         private String corpus;
         private String description;
 

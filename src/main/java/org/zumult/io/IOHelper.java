@@ -43,7 +43,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.query.SampleQuery;
-import org.zumult.query.implementations.DGD2SampleQuery;
+import org.zumult.query.implementations.DefaultSampleQuery;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -266,7 +266,7 @@ public class IOHelper {
             for (int i = 0; i < nList.getLength(); i++) {
                 Node nNode = nList.item(i);
                 Element elem = (Element) nNode;
-                DGD2SampleQuery query = new DGD2SampleQuery();
+                DefaultSampleQuery query = new DefaultSampleQuery();
                 String str = elem.getElementsByTagName("string").item(0).getTextContent();
                 String description = elem.getElementsByTagName("description").item(0).getTextContent();
                 String corpus = elem.getElementsByTagName("corpus").item(0).getTextContent();
@@ -296,40 +296,6 @@ public class IOHelper {
         }else{
             throw new IOException("Project file could not be found!");
         }
-    }
-    
-    public static String IPA2HTML(String s){
-        String result = s.replace("ɔ", "&#596;")
-                .replace("ɛ", "&#603;")
-                .replace("ʔ", "&#660;")
-                .replace("ɪ", "&#618;")
-                .replace("ʃ", "&#643;")
-                .replace("ʊ", "&#650;")
-                .replace("ə", "&#601;")
-                .replace("ɐ", "&#592;")
-                .replace("ː", "&#058;")
-                .replace("ʏ", "&#655;")
-                .replace("ŋ", "&#331;")
-                .replace("ɡ", "&#609;");
-                //.replace("ç", "&#231;");
-        return result;
-    }
-    
-    public static String HTML2IPA(String s){
-        String result = s.replace("&#596;", "ɔ")
-                .replace("&#603;", "ɛ")
-                .replace("&#660;", "ʔ")
-                .replace("&#618;", "ɪ")
-                .replace("&#643;", "ʃ")
-                .replace("&#650;", "ʊ")
-                .replace("&#601;","ə")
-                .replace("&#592;", "ɐ")
-                .replace("&#058;", "ː")
-                .replace("&#655;", "ʏ")
-                .replace("&#331;", "ŋ")
-                .replace("&#609;", "ɡ");
-                //.replace("&#231;", "ç");
-        return result;
     }
     
     public static Set<String> getCorporaIDsFromCorpusQuery(String corpusQuery){

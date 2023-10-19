@@ -11,7 +11,7 @@ import org.zumult.query.Pagination;
  *
  * @author Elena
  */
-public abstract class DGD2SearchResultView extends DGD2SearchResult {
+public abstract class AbstractSearchResultPlus extends DefaultSearchResult {
     
     private Pagination pagination;
 

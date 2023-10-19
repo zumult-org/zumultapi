@@ -18,7 +18,7 @@ import org.zumult.query.KWICSnippet;
  *
  * @author Elena
  */
- public class DGD2KWICSnippet implements KWICSnippet {
+ public class DefaultKWICSnippet implements KWICSnippet {
     
     private boolean startMore = false;
     private boolean endMore = false;
@@ -63,13 +63,13 @@ import org.zumult.query.KWICSnippet;
 
   
         
-    public static class DGD2KWICSnippetToken implements KWICSnippetToken{
+    public static class DefaultKWICSnippetToken implements KWICSnippetToken{
             
             private boolean match = false;
             private final Element element;
             private String parentId;
 
-            public DGD2KWICSnippetToken(Element w){
+            public DefaultKWICSnippetToken(Element w){
                 this.element = w;
             }
 

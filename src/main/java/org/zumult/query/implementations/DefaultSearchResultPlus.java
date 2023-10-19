@@ -14,7 +14,7 @@ import org.zumult.query.SearchResultPlus;
  *
  * @author Elena
  */
-public class DGD2SearchResultPlus extends DGD2SearchResultView implements SearchResultPlus {
+public class DefaultSearchResultPlus extends AbstractSearchResultPlus implements SearchResultPlus {
 
     private ArrayList<Hit> hits;
     private Boolean cutoff;
