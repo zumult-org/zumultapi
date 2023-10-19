@@ -105,6 +105,7 @@ import javax.xml.stream.XMLStreamException;
 import org.apache.commons.text.similarity.FuzzyScore;
 import org.mvel2.MVEL;
 import org.zumult.backend.Configuration;
+import org.zumult.query.searchEngine.util.SearchEngineUtilities;
 
 /**
  * MTAS-based search engine for indexing and querying the contents of the XML-based ISO/TEI transcripts of spoken language. 
@@ -658,7 +659,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 metadata = Arrays.stream(metadataQueryString.split(METADATA_QUERY_DELIMITER))
                         .map(s -> s.split("=")).collect(Collectors.toMap(s -> s[0], s-> s[1]));
             }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                metadata = Arrays.stream(IOHelper.HTML2IPA(metadataQueryString).split(METADATA_QUERY_DELIMITER))
+                metadata = Arrays.stream(SearchEngineUtilities.HTML2IPA(metadataQueryString).split(METADATA_QUERY_DELIMITER))
                         .map(s -> s.split("=")).collect(Collectors.toMap(s -> s[0], s-> s[1]));
             }
          
@@ -677,7 +678,7 @@ public class MTASBasedSearchEngine implements SearchEngineInterface {
                 }
                 
                 if (metaDataKey.equals(METADATA_KEY_MATCH_TYPE_PHON_HTML)){
-                    matadataValue = IOHelper.IPA2HTML(entry.getValue());
+                    matadataValue = SearchEngineUtilities.IPA2HTML(entry.getValue());
                 }
                 
                 if (metaDataKey.equals(METADATA_KEY_HIT_LENGTH) || metaDataKey.equals(METADATA_KEY_HIT_LENGTH_IN_WORD_TOKENS)){

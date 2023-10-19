@@ -11,7 +11,7 @@ import org.zumult.query.Pagination;
  *
  * @author Elena
  */
-public class DGD2Pagination implements Pagination {
+public class DefaultPagination implements Pagination {
     private int pageStartIndex;
     private int itemsPerPage;
 

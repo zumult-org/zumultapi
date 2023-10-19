@@ -44,7 +44,7 @@ import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.util.BytesRef;
-import org.zumult.io.IOHelper;
+import org.zumult.query.searchEngine.util.SearchEngineUtilities;
 
 /**
  *
@@ -1140,7 +1140,7 @@ final public class ZuMultParser extends MtasTEIParser {
       String[] filters = filter.split(",");
       for (String item : filters) {
         if (item.trim().equals(MAPPING_FILTER_HTML)) {
-            localValue = IOHelper.IPA2HTML(localValue);
+            localValue = SearchEngineUtilities.IPA2HTML(localValue);
         } else if (item.trim().equals(MAPPING_FILTER_CEIL)) {
             if (localValue!=null){
                 Pattern pattern = Pattern.compile("\\d+\\.?\\d*"); // only for doubles

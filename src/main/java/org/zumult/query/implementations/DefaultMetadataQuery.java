@@ -11,7 +11,7 @@ import org.zumult.query.MetadataQuery;
  *
  * @author Elena
  */
-public class DGD2MetadataQuery extends DGD2AbstractQuery implements MetadataQuery {
+public class DefaultMetadataQuery extends AbstractQuery implements MetadataQuery {
     String corpusQuery;
     String additionalMetadata;
 

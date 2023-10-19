@@ -11,7 +11,7 @@ import org.zumult.query.KWICContext;
  *
  * @author Elena
  */
-public class DGD2KWICContext implements KWICContext {
+public class DefaultKWICContext implements KWICContext {
     private String type;
     private int length;
 

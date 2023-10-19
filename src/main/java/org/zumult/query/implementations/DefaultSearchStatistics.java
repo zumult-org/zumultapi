@@ -15,7 +15,7 @@ import org.zumult.query.serialization.SearchResultSerializer;
  *
  * @author Elena
  */
-public class DGD2SearchStatistics extends DGD2SearchResultView implements SearchStatistics {
+public class DefaultSearchStatistics extends AbstractSearchResultPlus implements SearchStatistics {
     
     private ArrayList<StatisticEntry> statistics;
     private MetadataKey metadataKey;

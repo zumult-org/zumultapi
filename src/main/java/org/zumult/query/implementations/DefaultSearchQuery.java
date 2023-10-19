@@ -11,7 +11,7 @@ import org.zumult.query.SearchQuery;
  *
  * @author Elena
  */
-public class DGD2SearchQuery extends DGD2AbstractSearchQuery implements SearchQuery {
+public class DefaultSearchQuery extends AbstractSearchQuery implements SearchQuery {
         private String replacedQueryString;
 
         public String getReplacedQueryString() {

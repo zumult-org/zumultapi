@@ -32,38 +32,38 @@ import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.query.Hit;
 import org.zumult.query.KWICContext;
-import org.zumult.query.implementations.DGD2KWICSnippet.DGD2KWICSnippetToken;
+import org.zumult.query.implementations.DefaultKWICSnippet.DefaultKWICSnippetToken;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
 
 /**
  *
  * @author Elena
  */
-public class DGD2KWICSnippetCreator {
+public class ISOTEIKWICSnippetCreator {
     BackendInterface backendInterface;
     XPath xPath =  XPathFactory.newInstance().newXPath();
     
-    public DGD2KWICSnippetCreator(){
+    public ISOTEIKWICSnippetCreator(){
         try {
             backendInterface = BackendInterfaceFactory.newBackendInterface();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(DGD2KWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ISOTEIKWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public DGD2KWICSnippet apply(String transcriptID, String leftMatchId, ArrayList<Hit.Match> matches, KWICContext leftContext, KWICContext rightContext) throws IOException {
+    public DefaultKWICSnippet apply(String transcriptID, String leftMatchId, ArrayList<Hit.Match> matches, KWICContext leftContext, KWICContext rightContext) throws IOException {
         Transcript transcript = backendInterface.getTranscript(transcriptID);
         Document transcriptDoc = transcript.getDocument();
         return apply(transcriptDoc, leftMatchId, matches, leftContext, rightContext);
             
     }
     
-    public DGD2KWICSnippet apply(Document transcriptDoc, String leftMatchId, ArrayList<Hit.Match> matches, KWICContext leftContext, KWICContext rightContext) throws IOException {
+    public DefaultKWICSnippet apply(Document transcriptDoc, String leftMatchId, ArrayList<Hit.Match> matches, KWICContext leftContext, KWICContext rightContext) throws IOException {
         
         int leftContextLength = leftContext.getLength();
         int rightContextAfterFirstMatch = getRightContextAfterFirstMatch(getHitLengthInTokens(matches) + rightContext.getLength());
             
-        DGD2KWICSnippet matchSnippet = new DGD2KWICSnippet();
+        DefaultKWICSnippet matchSnippet = new DefaultKWICSnippet();
         ArrayList<KWICSnippetToken> content = new ArrayList();
         Set<String> speakers = new HashSet<>();
         xPath.setNamespaceContext(new ISOTEINamespaceContext());
@@ -81,7 +81,7 @@ public class DGD2KWICSnippetCreator {
                 setLeftContextForBodyChild(matches, firstMatch, matchSnippet, content, leftContextLength, speakers, 0, transcriptDoc);
                    
                 // set first match
-                DGD2KWICSnippetToken special = new DGD2KWICSnippetToken(firstElem);
+                DefaultKWICSnippetToken special = new DefaultKWICSnippetToken(firstElem);
                 special.markAsMatch();
                 content.add(special);
                     
@@ -107,7 +107,7 @@ public class DGD2KWICSnippetCreator {
                         if (index < leftContextLength) {   
 
                             Element leftElem = (Element) nNode;
-                            DGD2KWICSnippetToken token = new DGD2KWICSnippetToken(leftElem);
+                            DefaultKWICSnippetToken token = new DefaultKWICSnippetToken(leftElem);
                             token.setParentId(getParentId(leftElem));
                             content.add(0, token);
 
@@ -128,7 +128,7 @@ public class DGD2KWICSnippetCreator {
                 }
 
                 // set first match
-                DGD2KWICSnippetToken first = new DGD2KWICSnippetToken(firstElem);
+                DefaultKWICSnippetToken first = new DefaultKWICSnippetToken(firstElem);
                 first.setParentId(getParentId(firstElem));
                 first.markAsMatch();
                 content.add(first);
@@ -148,7 +148,7 @@ public class DGD2KWICSnippetCreator {
                     if (Arrays.asList(Constants.TOKENS).contains (nNode.getLocalName())){
                         if (index < rightContextAfterFirstMatch) {  
                             Element rightElem = (Element) nNode;
-                            DGD2KWICSnippetToken token = new DGD2KWICSnippetToken(rightElem);
+                            DefaultKWICSnippetToken token = new DefaultKWICSnippetToken(rightElem);
                             token.setParentId(getParentId(rightElem));
 
                             for (Hit.Match match: matches){
@@ -197,7 +197,7 @@ public class DGD2KWICSnippetCreator {
         try {
             personNode = (Node) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
         } catch (XPathExpressionException ex) {
-            Logger.getLogger(DGD2KWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ISOTEIKWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (personNode!=null){
             Element personElement = (Element) personNode;
@@ -243,7 +243,7 @@ public class DGD2KWICSnippetCreator {
     }
     
     private void setLeftContextForBodyChild(ArrayList<Hit.Match> matches, Node nNode, 
-            DGD2KWICSnippet matchSnippet, ArrayList<KWICSnippetToken> content, 
+            DefaultKWICSnippet matchSnippet, ArrayList<KWICSnippetToken> content, 
         int leftContextLength, Set<String> speakers, Integer index, Document transcriptDoc) throws TransformerException, XPathExpressionException{
         Node sibling;   
         loop:
@@ -268,7 +268,7 @@ public class DGD2KWICSnippetCreator {
                             if (Arrays.asList(Constants.TOKENS).contains (node.getLocalName())){
                                 if (index < leftContextLength) {  
                                     Element rightElem = (Element) node;
-                                    DGD2KWICSnippetToken token = new DGD2KWICSnippetToken(rightElem);
+                                    DefaultKWICSnippetToken token = new DefaultKWICSnippetToken(rightElem);
                                     token.setParentId(getParentId(rightElem));
 
                                     for (Hit.Match match: matches){
@@ -298,7 +298,7 @@ public class DGD2KWICSnippetCreator {
                         }
                     }else{
                                                                
-                        DGD2KWICSnippetToken specialSibling = new DGD2KWICSnippetToken(siblingElem);
+                        DefaultKWICSnippetToken specialSibling = new DefaultKWICSnippetToken(siblingElem);
                                 
                         for (Hit.Match match: matches){
                             if(match.getID().equals(siblingElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){
@@ -322,7 +322,7 @@ public class DGD2KWICSnippetCreator {
         
         
     private void setRightContextForBodyChild(ArrayList<Hit.Match> matches, Node nNode, 
-           DGD2KWICSnippet matchSnippet, ArrayList<KWICSnippetToken> content, 
+           DefaultKWICSnippet matchSnippet, ArrayList<KWICSnippetToken> content, 
             int rightContextLength, Set<String> speakers, Integer index, Document transcriptDoc) throws TransformerException, XPathExpressionException{
         Node sibling;  
         loop:
@@ -349,7 +349,7 @@ public class DGD2KWICSnippetCreator {
                             if (Arrays.asList(Constants.TOKENS).contains (node.getLocalName())){
                                 if (index < rightContextLength) {  
                                     Element rightElem = (Element) node;
-                                    DGD2KWICSnippetToken token = new DGD2KWICSnippetToken(rightElem);
+                                    DefaultKWICSnippetToken token = new DefaultKWICSnippetToken(rightElem);
                                     token.setParentId(getParentId(rightElem));
 
                                     for (Hit.Match match: matches){
@@ -383,7 +383,7 @@ public class DGD2KWICSnippetCreator {
                         
                     } else{
 
-                        DGD2KWICSnippetToken specialSibling = new DGD2KWICSnippetToken(siblingElem);
+                        DefaultKWICSnippetToken specialSibling = new DefaultKWICSnippetToken(siblingElem);
 
                         for (Hit.Match match: matches){
                             if(match.getID().equals(siblingElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){

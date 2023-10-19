@@ -15,7 +15,7 @@ import org.zumult.query.AdditionalSearchConstraint;
  *
  * @author Elena
  */
-public class DGD2SearchResult implements SearchResult {
+public class DefaultSearchResult implements SearchResult {
        
     private SearchQuery searchQuery;
     private MetadataQuery metadataQuery;

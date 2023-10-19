@@ -47,9 +47,9 @@ import org.zumult.query.Searcher;
  */
 public abstract class AbstractSearcher implements Searcher {
     
-    protected DGD2Pagination pagination = new DGD2Pagination();
-    protected DGD2SearchQuery query = new DGD2SearchQuery();
-    protected DGD2MetadataQuery metadataQuery = new DGD2MetadataQuery();
+    protected DefaultPagination pagination = new DefaultPagination();
+    protected DefaultSearchQuery query = new DefaultSearchQuery();
+    protected DefaultMetadataQuery metadataQuery = new DefaultMetadataQuery();
     protected HashMap<String, String[]> wordListsMap = null;
     protected HashMap<String, HashSet> synonymsMap = null;
     ArrayList<AdditionalSearchConstraint> additionalSearchConstraints = new ArrayList();
@@ -88,7 +88,7 @@ public abstract class AbstractSearcher implements Searcher {
                         }
                     }*/
                     
-                    additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(wordLists));
+                    additionalSearchConstraints.add(new DafaultAdditionalSearchConstraint(wordLists));
                 }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException | SAXException | ParserConfigurationException | IOException e){
                     Logger.getLogger(AbstractSearcher.class.getName()).log(Level.SEVERE, null, e);
                     throw new SearchServiceException("Please check the syntax of your wordlists!");
@@ -218,7 +218,7 @@ public abstract class AbstractSearcher implements Searcher {
             long millis_search = timeEnd_search - timeStart_search;
             System.out.println("Searching time (getStatistics): " + TimeUtilities.format(millis_search));
 
-            DGD2SearchStatistics result = new DGD2SearchStatistics();
+            DefaultSearchStatistics result = new DefaultSearchStatistics();
 
             result.setSearchTime(millis_search);
             result.setMetadataKey(metadataKey);
@@ -253,7 +253,7 @@ public abstract class AbstractSearcher implements Searcher {
         long millis_search = timeEnd_search - timeStart_search;
         //System.out.println("Searching time: " + TimeUtilities.format(millis_search));
         
-        DGD2SearchResult result = new DGD2SearchResult();
+        DefaultSearchResult result = new DefaultSearchResult();
         
         result.setSearchTime(millis_search);
         result.setSearchQuery(query);
@@ -292,7 +292,7 @@ public abstract class AbstractSearcher implements Searcher {
         System.out.println("Searching time: " + TimeUtilities.format(millis_search));
 
         /* Construct search result */
-        DGD2SearchResultPlus result = new DGD2SearchResultPlus();
+        DefaultSearchResultPlus result = new DefaultSearchResultPlus();
 
         result.setSearchTime(millis_search);
         result.setCutoff(count);
@@ -387,7 +387,7 @@ public abstract class AbstractSearcher implements Searcher {
                 Repetition r = new Repetition(element);
                 repetitions.add(r);
             }
-            additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(repetitionsStr));
+            additionalSearchConstraints.add(new DafaultAdditionalSearchConstraint(repetitionsStr));
 
         } catch (SAXException | ParserConfigurationException ex) {
            throw new SearchServiceException ("Please check the xml format of repetition-parameter!");
@@ -419,7 +419,7 @@ public abstract class AbstractSearcher implements Searcher {
                     }
                 }
 
-                additionalSearchConstraints.add(new DGD2AdditionalSearchConstraint(synonyms));
+                additionalSearchConstraints.add(new DafaultAdditionalSearchConstraint(synonyms));
             } catch (SAXException | ParserConfigurationException ex) {
                throw new SearchServiceException ("Please check the xml format of synonyms!");
             }
@@ -439,7 +439,7 @@ public abstract class AbstractSearcher implements Searcher {
         System.out.println("Searching time: " + TimeUtilities.format(millis_search));
 
         /* Construct search result */
-        DGD2SearchResultPlus result = new DGD2SearchResultPlus();
+        DefaultSearchResultPlus result = new DefaultSearchResultPlus();
         
         result.setSearchTime(millis_search);
         result.setCutoff(count);
