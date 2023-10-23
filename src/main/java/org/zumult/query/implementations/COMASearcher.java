@@ -19,6 +19,8 @@ import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchIndexType;
 import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
+import org.zumult.query.searchEngine.COMASearchEngine;
+import org.zumult.query.searchEngine.MTASBasedSearchEngine;
 
 /**
  *
@@ -29,7 +31,7 @@ public class COMASearcher extends AbstractSearcher {
     int SEARCH_INDEX_PREXIF_LENGTH = 4;
     
     @Override
-    protected SearchIndexType getSearchIndex(String searchIndex) throws SearchServiceException {
+    protected SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
         return new DGDSearchIndexType(searchIndex);
     }
 
@@ -124,5 +126,8 @@ public class COMASearcher extends AbstractSearcher {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
+    @Override
+    MTASBasedSearchEngine getSearchEngine(){
+        return new COMASearchEngine();
+    }
 }

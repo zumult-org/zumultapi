@@ -33,6 +33,7 @@ import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchIndexType;
 import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
+import org.zumult.query.searchEngine.DGD2SearchEngine;
 
 /**
  *
@@ -63,7 +64,7 @@ public class DGD2Searcher extends AbstractSearcher {
     @Override
     public Set<MetadataKey> filterMetadataKeysForSearch(Set<MetadataKey> metadataKeys, String searchIndex, String type) throws SearchServiceException{
         // TODO: implement localization
-        SearchIndexType index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndexType(searchIndex);
         
         // remove some metadata
         metadataKeys = removeFromMetadata(metadataKeys, Constants.METADATA_KEY_SPEAKER_BIRTH_DATE);
@@ -211,7 +212,7 @@ public class DGD2Searcher extends AbstractSearcher {
     public ArrayList<SampleQuery> getSampleQueries (String corpusID, String searchIndex) throws SearchServiceException{
         ArrayList<SampleQuery> queries = new ArrayList();
         
-        SearchIndexType index = getSearchIndex(searchIndex);
+        SearchIndexType index = getSearchIndexType(searchIndex);
         String path=null;
         switch(DGD2SearchIndexTypeEnum.valueOf(index.getValue())){
             case TRANSCRIPT_BASED_INDEX, TRANSCRIPT_BASED_INDEX_WITHOUT_PUNCT 
@@ -307,7 +308,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    protected SearchIndexType getSearchIndex(String searchIndex) throws SearchServiceException {
+    protected SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
         return new DGDSearchIndexType(searchIndex);
     }
     
@@ -316,5 +317,10 @@ public class DGD2Searcher extends AbstractSearcher {
         map.put(Locale.GERMAN.getLanguage(), myResourcesGER.getString(str));
         map.put(Locale.ENGLISH.getLanguage(),myResourcesEN.getString(str));
         return map;
+    }
+    
+    @Override
+    MTASBasedSearchEngine getSearchEngine(){
+        return new DGD2SearchEngine();
     }
 }
