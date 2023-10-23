@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zumult.query.implementations;
+package org.zumult.metadataquery;
 
 import java.io.IOException;
 import java.util.logging.Level;

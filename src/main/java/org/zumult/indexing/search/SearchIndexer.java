@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.TimeUtilities;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
+import org.zumult.query.searchEngine.DGD2SearchEngine;
 import org.zumult.query.searchEngine.SearchIndex;
 
 /**
@@ -91,7 +92,7 @@ public class SearchIndexer implements Indexer {
             inputDirectories.add(path);
         });
         
-        MTASBasedSearchEngine index = new MTASBasedSearchEngine();
+        MTASBasedSearchEngine index = new DGD2SearchEngine();
         // TS: this is a windows specific way of creating the path, or isn't it?
         SearchIndex searchIndex = index.createIndex(inputDirectories, INDEX_PATH + "\\"+ INDEX_NAME, MTAS_CONFIG_FILE_PATH + "\\" +MTAS_CONFIG_FILE_NAME);
 

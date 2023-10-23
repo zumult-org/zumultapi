@@ -14,7 +14,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.zumult.backend.Configuration"%>
-<%@page import="org.zumult.query.implementations.DGD2SearchIndexTypeEnum"%>
+<%@page import="org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum"%>
 <%@page import="org.zumult.query.searchEngine.SortTypeEnum"%>
 <%@page import="org.zumult.query.SearchStatistics"%>
 <%@page import="org.zumult.backend.BackendInterfaceFactory"%>

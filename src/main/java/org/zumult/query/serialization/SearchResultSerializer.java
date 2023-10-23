@@ -46,8 +46,8 @@ import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
+import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
 import org.zumult.query.implementations.ISOTEIKWICSnippetCreator;
-import org.zumult.query.implementations.DGD2SearchIndexTypeEnum;
 
 /**
  *

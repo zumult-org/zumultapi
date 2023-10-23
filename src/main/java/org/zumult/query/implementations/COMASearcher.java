@@ -17,6 +17,10 @@ import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.MetadataKey;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
+import org.zumult.query.SearchIndexType;
+import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
+import org.zumult.query.searchEngine.COMASearchEngine;
+import org.zumult.query.searchEngine.MTASBasedSearchEngine;
 
 /**
  *
@@ -27,27 +31,13 @@ public class COMASearcher extends AbstractSearcher {
     int SEARCH_INDEX_PREXIF_LENGTH = 4;
     
     @Override
-    DGD2SearchIndexTypeEnum getSearchIndex(String searchIndex) throws SearchServiceException {
-        if(searchIndex==null || searchIndex.isEmpty() || searchIndex.equals("null")){
-            return DGD2SearchIndexTypeEnum.TRANSCRIPT_BASED_INDEX;
-        }else {
-            try{
-                DGD2SearchIndexTypeEnum index = DGD2SearchIndexTypeEnum.valueOf(searchIndex);
-                return index;
-            } catch (NullPointerException ex){
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(". Search index ").append(searchIndex).append(" is not supported. Supported search indexes are: ");
-                    for (DGD2SearchIndexTypeEnum ob : DGD2SearchIndexTypeEnum.values()){
-                        sb.append(ob.name());
-                        sb.append(", ");
-                    }
-                    throw new SearchServiceException(sb.toString().trim().replaceFirst(",$",""));
-            }
-        }
+    protected SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
+        return new DGDSearchIndexType(searchIndex);
     }
 
     @Override
-    ArrayList<String> getIndexPaths(DGD2SearchIndexTypeEnum searchMode) throws IOException, SearchServiceException {
+    protected ArrayList<String> getIndexPaths(SearchIndexType searchMode) throws IOException, SearchServiceException{
+
         //System.out.println("PARAMETER (SEARCH MODE): " + index);
         Pattern r = Pattern.compile(Constants.CORPUS_SIGLE_PATTERN);
         Matcher m = r.matcher(metadataQuery.getCorpusQuery());
@@ -56,7 +46,7 @@ public class COMASearcher extends AbstractSearcher {
    
             ArrayList<String> indexIDs = new ArrayList();
             String str = Constants.WITH_PUNCTUTION_EXT;
-            switch(searchMode){
+            switch(DGD2SearchIndexTypeEnum.valueOf(searchMode.getValue())){
                 case TRANSCRIPT_BASED_INDEX:
                     indexIDs = Configuration.getTranscriptBasedIndexIDs();
                     str = Constants.WITHOUT_PUNCTUTION_EXT;
@@ -78,10 +68,11 @@ public class COMASearcher extends AbstractSearcher {
             
             //System.out.println(indexIDs);
 
-            if (indexIDs.size() > 0){
+            if (!indexIDs.isEmpty()){
                 ArrayList<String> indexPaths = new ArrayList();
 
                 for (String corpusID: corpora){
+                    System.out.println("Looking for " + corpusID);
                     File file = null;
                     for (String indexID: indexIDs){
                         if (indexID.substring(SEARCH_INDEX_PREXIF_LENGTH).startsWith(corpusID.replace("\"", "").trim()) && !indexID.endsWith(str)){
@@ -106,7 +97,9 @@ public class COMASearcher extends AbstractSearcher {
         } else {
            throw new IOException("You have not specified a valid corpus ID (search param 'corpusSigle=' in metadata query)");     
         }  
+        
     }
+
 
     @Override
     public ArrayList<SampleQuery> getSampleQueries(String corpusID, String searchIndex) throws SearchServiceException {
@@ -132,5 +125,9 @@ public class COMASearcher extends AbstractSearcher {
     public Set<AnnotationLayer> filterAnnotationLayersForSearch(Set<AnnotationLayer> annotationLayers, String searchIndex, String annotationLayerType) throws SearchServiceException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    MTASBasedSearchEngine getSearchEngine(){
+        return new COMASearchEngine();
+    }
 }

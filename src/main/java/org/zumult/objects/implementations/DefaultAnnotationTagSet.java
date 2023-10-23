@@ -14,10 +14,10 @@ import org.zumult.objects.AnnotationTagSet;
  *
  * @author Frick
  */
-public class DGD2AnnotationTagSet extends AbstractXMLObject implements AnnotationTagSet{
+public class DefaultAnnotationTagSet extends AbstractXMLObject implements AnnotationTagSet{
     XPath xPath = XPathFactory.newInstance().newXPath();
     
-    public DGD2AnnotationTagSet(Document xmlDocument) {
+    public DefaultAnnotationTagSet(Document xmlDocument) {
         super(xmlDocument);
     }
 

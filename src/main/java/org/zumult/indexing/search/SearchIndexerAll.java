@@ -18,8 +18,9 @@ import java.util.logging.Logger;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
 import org.zumult.io.TimeUtilities;
-import org.zumult.query.implementations.DGD2SearchIndexTypeEnum;
+import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
+import org.zumult.query.searchEngine.DGD2SearchEngine;
 import org.zumult.query.searchEngine.SearchIndex;
 
 /**
@@ -114,7 +115,7 @@ public class SearchIndexerAll implements Indexer {
         String outputNamePrefix = OUTPUT_NAME_PREFIXES.get(indexType);
         String indexPath = INDEX_PATH + "\\" + outputNamePrefix + corpusID.replace("-", "") + outputNameSuffix;
                 
-        MTASBasedSearchEngine index = new MTASBasedSearchEngine();
+        MTASBasedSearchEngine index = new DGD2SearchEngine();
         SearchIndex searchIndex = index.createIndex(inputDirectories, indexPath, configPath);
         info.put(searchIndex.getName(), searchIndex.getNumberOfIndexedDocuments());
         return info;

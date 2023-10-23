@@ -26,7 +26,7 @@
 <%@page import="org.zumult.io.IOHelper"%>
 <%@page import="org.zumult.backend.Configuration"%>
 <%@page import="org.zumult.objects.IDList"%>
-<%@page import="org.zumult.query.implementations.DGD2SearchIndexTypeEnum"%>
+<%@page import="org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum"%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
