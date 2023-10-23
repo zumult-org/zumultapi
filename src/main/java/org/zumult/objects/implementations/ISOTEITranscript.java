@@ -211,9 +211,12 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
             }
             
             
+            if(metadata!=null){
+                return new ISOTEITranscript(copyDocument, metadata.getDocument());
+            }else {
+                return new ISOTEITranscript(copyDocument);
+            }
 
-            return new ISOTEITranscript(copyDocument, metadata.getDocument());
-            
         } catch (TransformerException | IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
         }
