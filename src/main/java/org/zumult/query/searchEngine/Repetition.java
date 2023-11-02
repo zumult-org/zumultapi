@@ -55,7 +55,7 @@ public class Repetition {
     /**
      * The default value for the search mode.
      */
-    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
+    private SimilarityObject similarity = new SimilarityObject();
 
     /**
      * The default value for searching multi word repetitions
@@ -283,7 +283,15 @@ public class Repetition {
      * @return the {@code SimilarityTypeEnum} object
      */
     public SimilarityTypeEnum getSimilarityType() {
-        return this.similarity;
+        return this.similarity.type;
+    }
+    
+    public double getMinSimilarity(){
+        return this.similarity.min;
+    }
+    
+    public double getMaxSimilarity(){
+        return this.similarity.max;
     }
 
     /**
@@ -330,7 +338,7 @@ public class Repetition {
 
         if (similarityType != null && !similarityType.isEmpty()) {
             try {
-                this.similarity = SimilarityTypeEnum.valueOf(similarityType);
+                this.similarity.type = SimilarityTypeEnum.valueOf(similarityType);
             } catch (IllegalArgumentException ex) {
                 throw new SearchServiceException(getErrorMessage4());
             }
@@ -664,7 +672,7 @@ public class Repetition {
      *           min and max distance parameters are illegal
      */
     private void setDistance(final Element el) throws SearchServiceException {
-                String min = el
+        String min = el
                 .getElementsByTagName(Constants.REPETITION_MIN_DISTANCE)
                 .item(0)
                 .getTextContent();
@@ -938,6 +946,12 @@ public class Repetition {
         NORM
     }
 
+    private class SimilarityObject {
+        SimilarityTypeEnum type = SimilarityTypeEnum.EQUAL;
+        double min = 75.0;
+        double max = 100.0;
+    }
+    
     /**
     *  Repetition search mode.
     *
@@ -979,6 +993,11 @@ public class Repetition {
          * when all token forms exactly match those in the source element,
          * but have different transcribed forms.
          */
+        JACCARD_DISTANCE,
+        JACCARD_DISTANCE_COLOGNE_PHONETIC,
+        JARO_WINKLER_DISTANCE,
+        LEVENSHTEIN_DISTANCE,
+        ZUMULT_MIX,
         DIFF_PRON,
         /**
          * The word token sequence is recognized as a repetition

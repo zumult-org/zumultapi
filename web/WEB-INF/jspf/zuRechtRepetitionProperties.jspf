@@ -21,21 +21,26 @@
                     
                 <!--     <option value=4 ><%=myResources.getString("SameTranscriptionDiffNorm")%></option>
                    <option value=5 ><%=myResources.getString("SameNormDiffTranscription")%></option>
-                    <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>-->
+                    <option value=6 ><%=myResources.getString("SameLemmaDiffNorm")%></option>
                     
-                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>
-                    <option value=9 ><%=myResources.getString("FuzzyRepetitionSearchTest")%></option>
+                    <option value=7 ><%=myResources.getString("FuzzyRepetitionSearch")%></option>-->
+                    
                     
                     <option value=8 ><%=myResources.getString("ExtendedSearchWithOwnLemmaList")%></option>
                     
                     <option value=10 ><%=myResources.getString("GermaNetRepetitionsSearch")%></option>
                     <option value=11 ><%=myResources.getString("GermaNetRepetitionsSearchTest")%></option>
 
-                    <option value=12 ><%=myResources.getString("GermaNetRepetitionsSearchTestOrth")%></option>
+                <!--    <option value=12 ><%=myResources.getString("GermaNetRepetitionsSearchTestOrth")%></option>
                     <option value=13 ><%=myResources.getString("GermaNetRepetitionsSearchTestHypernym")%></option>
                     <option value=14 ><%=myResources.getString("GermaNetRepetitionsSearchTestHyponym")%></option>
                     <option value=15 ><%=myResources.getString("GermaNetRepetitionsSearchTestCompounds")%></option>
-                    
+                    <option value=9 >FUZZY_SCORE</option>-->
+                    <option value=16 >JACCARD_DISTANCE</option>
+                    <option value=17 >JACCARD_DISTANCE_COLOGNE_PHONETIC</option>
+                    <option value=18 >JARO_WINKLER_DISTANCE</option>
+                    <option value=19 >LEVENSHTEIN_DISTANCE</option>
+                    <option value=20 >ZUMULT MIX</option>
                 </select>                          
             </div>
         </div>

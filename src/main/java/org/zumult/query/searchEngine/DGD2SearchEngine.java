@@ -67,6 +67,7 @@ import org.zumult.query.SearchServiceException;
 import org.zumult.query.searchEngine.Repetition.PositionOverlapEnum;
 import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
 import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
+import org.zumult.query.searchEngine.util.SimilarityUtilities;
 
 /**
  *
@@ -277,7 +278,9 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
             
             repetitions:
             for(Repetition repetitionSpecification: repetitionSpecifications){
-                Repetition.SimilarityTypeEnum similarity = repetitionSpecifications.get(0).getSimilarityType();
+                SimilarityTypeEnum similarity = repetitionSpecification.getSimilarityType();
+                double similarityMeasureMin =  repetitionSpecification.getMinSimilarity();
+                double similarityMeasureMax =  repetitionSpecification.getMaxSimilarity();
                 
                 Set ignoredCustomPOS = repetitionSpecification.getIgnoredCustomPOS();
                 Boolean ignoreTokenOrder = repetitionSpecification.ignoreTokenOrder();
@@ -414,12 +417,39 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
                                 }
                             }
                            break;
+                        case JACCARD_DISTANCE:
+                            double jaccardDist = SimilarityUtilities.getJaccardDistance(sourceStr, possibleRepetitionStr);
+                            if (jaccardDist > similarityMeasureMin && jaccardDist < similarityMeasureMax){
+                                isRepetition =  true;
+                            }
+                            break;
+                        case JACCARD_DISTANCE_COLOGNE_PHONETIC:
+                            double jaccardDistPhon = SimilarityUtilities.getJaccardDistanceOfSoundexValue(sourceStr, possibleRepetitionStr);
+                            if (jaccardDistPhon > similarityMeasureMin && jaccardDistPhon < similarityMeasureMax){
+                                isRepetition =  true;
+                            }
+                            break;
+                        case JARO_WINKLER_DISTANCE:
+                            double jaroWinklerDist = SimilarityUtilities.getJaroWinklerDistance(sourceStr, possibleRepetitionStr);
+                            if (jaroWinklerDist > similarityMeasureMin && jaroWinklerDist < similarityMeasureMax){
+                                isRepetition =  true;
+                            }
+                            break;
+                        case LEVENSHTEIN_DISTANCE:
+                            double levenshteinDist = SimilarityUtilities.getLevenshteinDistance(sourceStr, possibleRepetitionStr);
+                            if (levenshteinDist > similarityMeasureMin && levenshteinDist < similarityMeasureMax){
+                                isRepetition =  true;
+                            }
+                            break;
+                        case ZUMULT_MIX:
+                            ZuMultStringSimilarityMeasure measure = new ZuMultStringSimilarityMeasure();
+                            isRepetition = measure.apply(sourceStr, possibleRepetitionStr);
+                            break;
                         case FUZZY:
                             if(!possibleRepetitionStr.equals(sourceStr)){                          
                                 isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, ignoreTokenOrder);
                             }
                             break;
-
                         case FUZZY_PLUS:
                            if(possibleRepetitionStr.equals(sourceStr)){
                                isRepetition=true;
@@ -488,7 +518,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         return !repetitionPron.equals(sourcePron);
     }
     
-    private List<String> getPrefixListForNewLayer(Repetition.SimilarityTypeEnum similarity){
+    private List<String> getPrefixListForNewLayer(SimilarityTypeEnum similarity){
         List<String> prefixList = new  ArrayList<String>();
         String layer="";
         switch(similarity){
@@ -596,7 +626,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
     }
     
     private Boolean checkGermaNet(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, 
-            GermaNet germanet, Boolean ignoreTokenOrder, Boolean justGermanet, Repetition.SimilarityTypeEnum similarity){
+            GermaNet germanet, Boolean ignoreTokenOrder, Boolean justGermanet, SimilarityTypeEnum similarity){
         boolean isRepetition=true;
          
         ArrayList<String> sourceArray = new ArrayList<String>(source.values());
@@ -691,7 +721,10 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         
     }
         
-    private boolean isFuzzyRepetition(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, Boolean ignoreTokenOrder){
+    private boolean isFuzzyRepetition(
+                                SortedMap<Integer, String> source, 
+                                SortedMap<Integer, String> possibleRepetitions, 
+                                Boolean ignoreTokenOrder){
         ArrayList<String> sourceArray = new ArrayList<String>(source.values());
         if(ignoreTokenOrder){
             Collections.sort(sourceArray);
@@ -1750,7 +1783,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         FuzzyScore o =  new FuzzyScore(new Locale("de"));
         int fs = o.fuzzyScore(s1, s2);
         if (fs==0){
-            fs = o.fuzzyScore(s2, s1);;
+            fs = o.fuzzyScore(s2, s1);
         }
         return fs;
     }
@@ -1769,7 +1802,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
     private Set<String> getSynonymsFromGermaNet(
                                             GermaNet germanet, 
                                             String str, 
-                                            Repetition.SimilarityTypeEnum mode){
+                                            SimilarityTypeEnum mode){
         Set<String> result = new HashSet();
         List <Synset> synsets = germanet.getSynsets(str);
             
