@@ -293,7 +293,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /************ click events for cancel buttons **********************************/
                 
                 $("#modal-repetitionsTabOptions").find('.btnCancel').on('click',function(){
-                    abortKWICSearchOptions(this, '#repetition-search-form');
+                    abortRepetitionSearchOptions(this, '#repetition-search-form');
                 });
                 
                 $("#modal-searchTabOptions").find('.btnCancel').on('click',function(){
@@ -321,7 +321,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /************ click events for ok buttons **********************************/
                 
                 $("#modal-repetitionsTabOptions").find('.btnOK').on('click',function(){
-                    setKWICSearchOptions(this, '#repetition-search-form');
+                    setRepetitionSearchOptions(this, '#repetition-search-form');
                 });
                 
                 $("#modal-searchTabOptions").find('.btnOK').on('click',function(){
@@ -352,7 +352,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 /********** click events for buttons with help infos **********************/
                 
                 $('#kwic-search-form').find('.btn-open-help').on("click", function(){
-                    $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtQueryTabHelp);
+                    $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtQueryTabHelp, function() {
+                        includeHTML(this);
+                    });            
                 }); 
                 
                 $('#vocabulary-search-form').find('.btn-open-help').on("click", function(){
@@ -957,7 +959,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         }
                     });
             }
-            
+           
 
             /*********************************************/
             /*             display kwic methods          */
@@ -1458,11 +1460,21 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(modalWindow).modal('hide');
             }
             
+            function setRepetitionSearchOptions(obj, formSelector){
+                configureGermaNetItems($(obj).closest('.modal'), formSelector);
+                setKWICSearchOptions(obj, formSelector);
+            }
+            
             function abortKWICSearchOptions(obj, formSelector){
                 var modalWindow = $(obj).closest('.modal'); 
                 abortConfigPageLength(modalWindow, formSelector);
                 abortConfigContext(modalWindow, formSelector);
                 abortSimpleSearchOption(modalWindow, formSelector);
+            }
+            
+            function abortRepetitionSearchOptions(obj, formSelector){
+                abortGermaNetItems($(obj).closest('.modal'), formSelector);
+                abortKWICSearchOptions(obj, formSelector);
             }
 
             function createXMLElement(name, content){
@@ -1494,16 +1506,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                
 
-            function abortSimpleSearchOption(selectorModal, selectorForm){
-                var selectedOption = $(selectorForm).find('.simpleQuerySyntaxLevel').val();
-                    $(selectorModal).find('.customSimpleQuerySyntaxLevel').val(selectedOption);
-            }
-
-            function abortConfigPageLength(selectorModal, selectorForm){
-                var selectedOption = $(selectorForm).find('.pageLength').val();
-                $(selectorModal).find('.customPageLength').val(selectedOption);
-            }
-
             function configureSimpleSearchOption(selectorModal, selectorForm){ 
                 var selectedLevel = $(selectorModal).find('.customSimpleQuerySyntaxLevel option:selected').val();
                 $(selectorForm).find('.simpleQuerySyntaxLevel').val(selectedLevel);
@@ -1514,12 +1516,20 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(selectorForm).find('.pageLength').val(selectedOption);       
             }
             
-            function abortConfigContext(selectorModal, selectorForm){
-                var selectedOptionLeft = $(selectorForm).find(".leftContext").val(); 
-                $(selectorModal).find(".customLeftContextLength").val(selectedOptionLeft);
+            function configureGermaNetItems(selectorModal, selectorForm){
+                var checkedGermanetItems = [];
+                $(selectorModal).find("input[name='customGermanetOption']:checked").each(function () {
+                    checkedGermanetItems.push($(this).val());
+                }); 
                 
-                var selectedOptionRight = $(selectorForm).find(".rightContext").val(); 
-                $(selectorModal).find(".customRightContextLength").val(selectedOptionRight);   
+                $(selectorForm).find("input[name='germanetOption']").each(function () {
+                    var value = $(this).val();
+                    if(checkedGermanetItems.includes(value)){
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }  
+                });
             }
             
             function configureContext(selectorModal, selectorForm){
@@ -1546,6 +1556,42 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 }else{
                     $(selectorForm).find('.rightContext').val(right);
                 }       
+            }
+            
+            function abortGermaNetItems(selectorModal, selectorForm){
+                
+                var checkedGermanetItems = [];
+                
+                $(selectorForm).find("input[name='germanetOption']:checked").each(function () {
+                    checkedGermanetItems.push($(this).val());
+                });
+                
+                $(selectorModal).find("input[name='customGermanetOption']").each(function () {
+                    var value = $(this).val();
+                    if(checkedGermanetItems.includes(value)){
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }  
+                });
+            }
+            
+            function abortSimpleSearchOption(selectorModal, selectorForm){
+                var selectedOption = $(selectorForm).find('.simpleQuerySyntaxLevel').val();
+                    $(selectorModal).find('.customSimpleQuerySyntaxLevel').val(selectedOption);
+            }
+
+            function abortConfigPageLength(selectorModal, selectorForm){
+                var selectedOption = $(selectorForm).find('.pageLength').val();
+                $(selectorModal).find('.customPageLength').val(selectedOption);
+            }
+            
+            function abortConfigContext(selectorModal, selectorForm){
+                var selectedOptionLeft = $(selectorForm).find(".leftContext").val(); 
+                $(selectorModal).find(".customLeftContextLength").val(selectedOptionLeft);
+                
+                var selectedOptionRight = $(selectorForm).find(".rightContext").val(); 
+                $(selectorModal).find(".customRightContextLength").val(selectedOptionRight);   
             }
          
             function completeSearchQuerySyntax(queryStr, selector){
@@ -1776,6 +1822,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(w.document.head).append(printStyleForQueryHelp);
                 $(w.document.body).html(content);
             }
+                         
+            function includeHTML(obj) {
+                $(obj).find('[data-include]').each(function() {
+                    var fileName = $(this).attr("data-include");
+                    $(this).load(fileName);
+                 });
+            }
 
             function processError(xhr, status){
                 if (status === "abort"){
@@ -1975,7 +2028,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).find('option:selected').removeAttr("selected");
                 $(obj).find("option[value=null]").prop('selected', 'selected');
             }
-            
+
             /**************************************************/
             /*                pos methods                     */
             /**************************************************/
@@ -2165,7 +2218,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         alert(str +"some of the reserved regular expression characters: . , + , * , ? , ( , ) , [ , ] , { , } , | , \\ ."+
                                 " Please remember to escape these characters with a backslash to override their special meaning." +
                                 " Otherwise they will be interpreted as regular expressions." + 
-                                "\n\nFor example," + "\n\n'Klump|Klumpen' looks for lemmas 'Klump' and 'Klumpen'"+
+                                "\n\nFor example," + "\n\n'(Klump|Klumpen)' looks for lemmas 'Klump' and 'Klumpen'"+
                                 "\n'Klump\\|Klumpen' looks for lemma 'Klump|Klumpen'\n\n'W.' looks for lemma 'WG', 'WC' etc.\n'W\\.'"+
                                 " looks for lemma 'W.' (=abbreviated first name) ");
                     }
@@ -2198,15 +2251,16 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             .html(createListValue(key, file.name))
                             .appendTo($("#customWordlists-list"));
                     
-                    $(".customWordlists-item-fileName").on({
-                        mouseenter: function () {
-                            $(this).css("overflow", "visible");
-                        },
-                        mouseleave: function () {
-                            $(this).css("overflow", "hidden");
-                        }
-                    });
+                        $(".customWordlists-item-fileName").on({
+                            mouseenter: function () {
+                                $(this).css("overflow", "visible");
+                            },
+                            mouseleave: function () {
+                                $(this).css("overflow", "hidden");
+                            }
+                        });
                     }
+                    addHelpLink("#customWordlists-list");
                 }else{
                     addItalicPlaceholder("#customWordlists-list");
                 }
@@ -2214,14 +2268,35 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             
             function addItalicPlaceholder(selector, text){
                 var placeholder = $(selector).attr("data-placeholder");
+                var helpLink = $(selector).attr("data-helplink");
+                var image = $(selector).attr("data-img");
                 var em = $('<em/>')
-                            .html(placeholder)
+                            .html(placeholder + image +helpLink)
                             .css("color", "gray")
                             .appendTo($(selector));
             }
             
+            function addHelpLink(selector){
+                var helpLink = $(selector).attr("data-helplink");
+                var div = $('<div/>')
+                       .css('text-align', 'right')
+                       .appendTo($(selector));
+               
+                var em = $('<em/>')
+                        .html(helpLink)
+                        .appendTo($(div));   
+            }
+
+            function addVar(obj){
+                var text = $(obj).val();
+                if(text===""){
+                   $(obj).val("$");
+                }
+            }
             function openHelpForVar(obj){
-                $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtMyWordlistsHelp);
+                $('.search-help-modal').modal('show').find('.modal-content').load(zuRechtMyWordlistsHelp, function() {
+                    includeHTML(this);
+                });   
             }
             
             function deleteVar(obj){

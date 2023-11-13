@@ -1,11 +1,14 @@
 <div class="form-group">
-    <div style="line-height:80%" class="mb-3"><small><i><%=myResources.getString("CustomWordListsInfo2")%></i></small></div>
+    <div class="mb-3"><i><%=myResources.getString("CustomWordListsInfo2")%></i></div>
 
     <% for(int i=1; i<5; i++){ %>
     <div class="row mt-2 customVariableGroup">
         <div class="col-3">
             <label><%=myResources.getString("Variable")%> </label>
-            <input type="text" class="form-control-sm form-control customVariable">
+            <input type="text" 
+                   class="form-control-sm form-control customVariable"
+                   placeholder="z.B. $var"
+                   onclick="addVar(this)">
         </div>
         <div class="col-9">
             <label><%=myResources.getString("Wordlist")%> <small><i>(<%=myResources.getString("TXTFile")%>)</i></small></label>

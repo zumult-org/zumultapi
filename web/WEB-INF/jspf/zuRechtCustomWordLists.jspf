@@ -6,7 +6,12 @@
             <span class="icon"><i class='fa fa-upload'></i></span></button>
     </div>
 
-    <div class="card-body" id="customWordlists-list" data-placeholder="<%=myResources.getString("MyWordListsHelp")%> <span class='link' onclick='openHelpForVar(this)'><%=myResources.getString("LearnMore")%></span>">
-
+    <div class="card-body" id="customWordlists-list" 
+         data-placeholder="<%=myResources.getString("MyWordListsHelp")%>" 
+         data-helplink="<span class='link' onclick='openHelpForVar(this)'>
+            <%=myResources.getString("LearnMore")%></span>"
+         data-img="<img src='../images/query_help/wordlists_006.png' 
+         style='width: 100%;' 
+         alt='Query Builder'>">
     </div>
 </div>

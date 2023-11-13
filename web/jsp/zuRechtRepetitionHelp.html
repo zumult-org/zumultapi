@@ -1061,16 +1061,58 @@
     <!-- text -->
     <div>
         <p>One of the special features of ZuRecht is the option to use 
-            <a target="_blank" href='https://uni-tuebingen.de/fakultaeten/philosophische-fakultaet/fachbereiche/neuphilologie/seminar-fuer-sprachwissenschaft/arbeitsbereiche/allg-sprachwissenschaft-computerlinguistik/ressourcen/lexica/germanet-1/'>GermaNet</a>
-            tool (Kunze and Lemnitzer 2002, Henrich and Hinrichs 2010)
+            <a target="_blank" 
+               href='https://uni-tuebingen.de/fakultaeten/philosophische-fakultaet/fachbereiche/neuphilologie/seminar-fuer-sprachwissenschaft/arbeitsbereiche/allg-sprachwissenschaft-computerlinguistik/ressourcen/lexica/germanet-1/'>
+                GermaNet</a>
+            tool (<a target="_blank" 
+                     href="http://www.lrec-conf.org/proceedings/lrec2002/pdf/73.pdf">
+                Kunze and Lemnitzer 2002</a>, 
+                <a target="_blank" 
+                     href="http://www.lrec-conf.org/proceedings/lrec2010/pdf/264_Paper.pdf">
+                    Henrich and Hinrichs 2010</a>)
             integrated into the search process. It allows to find
             repetition constructions that may contain synonyms, hyperonyms or 
             hyponyms specified in the GermaNet Version 17.0.
         </p>
-    </div> 
-
+        <p>The use of GermaNet is only possible when searching 
+            at the lemma annotation level. In the 
+            "Search mode", you can choose whether 
+            you want to use GermaNet in addition to the usual repetition search
+            by comparing lemmas and in this way expand the result list 
+            with the entries from GermaNet (Option: <i>same lemma 
+                (use GermaNet additionally)</i>), or alternatively, you can
+            display repetitions that have been identified 
+            exclusively through the use of GermaNet (Option: <i>same lemma 
+                (use GermaNet only)</i>).</p>
+        <img src="../images/query_help/repetition_029.png" style="width: 30%;" alt="search mode options" />
+    </div>
+    
+    <!-- blank line -->
+    <br>
+    
+    <!-- text -->
+    <div>
+        <p>
+            By clicking on the button with the three vertical dots icon 
+        located next to the search button,</p>
+        
+        <img src="../images/query_help/repetition_031.png" 
+             style="width: 50%;" 
+             alt="search options modal" />
+        <br><br>
+        <p>you can open the "Search Options" 
+        modal window and select which elements (synonyms, hypernyms, hyponyms, 
+        compounds) to include when searching for repetitions by using GermaNet.
+        </p>
+        <img src="../images/query_help/repetition_030.png" 
+             style="width: 30%;border: 1px solid" 
+             alt="search options modal" />
+    </div>
 </div>
 <div class="modal-footer">
-    <button class="btn" style="background-color: #337AB7;color: #ffffff" onclick="printQueryHelp(this)"><span class="fa fa-print" aria-hidden="true"></span> Print</button>
+    <button class="btn" 
+            style="background-color: #337AB7;color: #ffffff" 
+            onclick="printQueryHelp(this)">
+        <span class="fa fa-print" aria-hidden="true"></span> Print</button>
     <button class="btn btn-light" data-dismiss="modal">Close</button>
 </div>

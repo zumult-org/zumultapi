@@ -38,19 +38,22 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
     public static void main(String[] args) {        
         try {
             
-            corpusIDsForIndexing = new HashSet<>(Arrays.asList("GWSS"));
+            corpusIDsForIndexing = new HashSet<>(Arrays.asList("UNSD"));
             DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input"; //iso-tei transcripts
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_GWSS_31_05_2023";
+            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_UNSD_06_11_2023";
             
             new ISOTEI2TranscriptBasedFormat().doit();
             
         } catch (IOException | JDOMException ex) {
-            Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ISOTEI2TranscriptBasedFormat.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
     
+    @Override
     void transformAndSaveTranscript(File f, Transcript t, Set<MetadataKey> metadataKeys, 
             File newFileTranscriptBased) throws IOException, JDOMException{
         

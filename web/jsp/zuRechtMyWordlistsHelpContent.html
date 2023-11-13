@@ -1,0 +1,168 @@
+<!-- text -->
+<div>
+    <p>
+        The search engine of ZuRecht is built on the 
+        <a target="_blank" 
+           href='https://textexploration.github.io/mtas/search_cql.html'>
+            MTAS Query Language</a> 
+        that allows to use user-defined wordlists stored in variables. 
+        This function is useful if you want to search for a large number 
+        of words at the same time. Instead of typing them individually 
+        into the search query field, you can create a .txt file containing 
+        these words and include it directly in the search query as a variable.
+    </p>
+</div>  
+            
+<!-- text -->
+<div>
+    <p>The .txt document with you wordlists should contain one search item 
+        per line. The search item can be either a simple lemma:
+        <br>
+        <br>backen
+        <br>Currywurst
+        <br>Dessert
+        <br>essen
+        <br>...
+        <br>
+        <br>or a regular expression pattern, e.g.:
+        <br>
+        <br>Student(in|en)?
+        <br>Studenten.*
+        <br>.+platz
+        <br>...
+    </p>
+</div> 
+            
+<!-- blank line -->
+<br>
+               
+<!-- note -->
+<div class="query-note">
+    <span><b>NOTE:</b>
+        <br>Please use a backslash to escape special characters .*+?|()[]{}$, 
+            if you look for lemmas like 'P.S.' or 'Klump|Klumpen', 
+            otherwise they will be interpreted as regural expressions 
+            and return wrong results.
+        <br><br>Example:
+        <br><b>(Klump|Klumpen)</b> looks for lemmas "Klump" and "Klumpen"
+        <br><b>Klump\|Klumpen</b> looks for lemma "Klump|Klumpen"
+    </span>
+</div>
+                        
+<!-- blank line -->
+<br>
+            
+<!-- text -->
+<div>
+    <p>To upload you worlists, please use the upload button in the top right 
+        corner of the "My wordlists"-panel located below the corpora list:
+    </p>
+    <img src="../images/query_help/wordlists_001.png" 
+         style="width: 20%;" 
+         alt="My wordlists panel" >
+</div>
+            
+<!-- blank line -->
+<br>
+            
+<!-- text -->
+<div>
+    <p>Clicking the upload button will open a form where you can upload 
+        your wordlists and specifiy variables for them:
+    </p>
+    <img src="../images/query_help/wordlists_002.png" 
+         style="width: 60%;border: 1px solid black;" 
+         alt="Add wordlists form" >
+</div>
+            
+<!-- blank line -->
+<br>
+            
+<!-- note -->
+<div class="query-note">
+    <span><b>NOTE:</b>
+        <br>The variable name should start with '$' and must not contain 
+        any spaces or special characters, e.g. '$1', '$var1' or '$words'. 
+        <br>Each variable may occur only once.
+    </span>
+</div>
+            
+<!-- blank line -->
+<br>
+            
+<!-- text -->
+<div>
+    <p>You are allowed to upload multiple wordlists. 
+        Clicking the green 'OK'-button will save them and 
+        display to you in the "My wordlists"-panel:
+    </p>
+    <img src="../images/query_help/wordlists_003.png" 
+         style="width: 20%;" 
+         alt="My wordlists panel" >
+</div>
+            
+<!-- blank line -->
+<br>
+            
+<!-- text -->
+<div>
+    <p>Now you can use your wordlists in the query in the following way:</p>
+</div>
+            
+<!-- example -->
+<div class="query-example clearfix" onclick="copyQuery(this)">
+    <div class="float-left">[lemma=$MyWordList]</div>
+    <span class="query-description"></span>
+    <input type="hidden" 
+           class="mode" 
+           value="SPEAKER_BASED_INDEX_WITHOUT_PUNCT"/>
+    <div class="float-right">Corpus: FOLK</div>
+</div>
+            
+<!-- blank line -->
+<br>
+            
+<!-- text -->
+<div>
+    <p>You also can use the Query Builder to select one of your wordlists:</p>
+    <img src="../images/query_help/wordlists_004.png" 
+         style="width: 60%;" 
+         alt="Query Builder" >
+</div>
+            
+<!-- blank line -->
+<br>
+
+<!-- note -->
+<div class="query-note">
+    <span><b>NOTE:</b>
+        <br>The items of the wordlist will be interpreted 
+        as regular expressions if combined with the <b>=</b> operator, 
+        but not if combined with the <b>==</b> operator.
+    </span>
+</div>
+
+<!-- blank line -->
+<br>
+
+<!-- note -->
+<div class="query-note">
+    <span><b>TIP:</b>
+        <br>If you have a long list of words, but only want to search for 
+        adjectives that this list contains, you can use the following query: 
+        <b>[lemma=$MyWordList & pos="ADJ."]</b>
+    </span>
+</div>
+
+<!-- blank line -->
+<br>
+
+<!-- text -->
+<div>
+    <p>To delete the uploaded wordlists, click on the Trash-button next 
+        to the appropriate wordlist:
+    </p>
+    <img src="../images/query_help/wordlists_005.png" 
+         style="width: 20%;" 
+         alt="My wordlists panel" >
+</div>

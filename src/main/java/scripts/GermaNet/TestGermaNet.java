@@ -108,24 +108,7 @@ public final class TestGermaNet {
                        result.addAll(getOrthForms(lexUnits));
                    }
                 }
-               case GERMANET_ORTH -> {
-                   result.addAll(getOrthForms(lexicalUnits));
-               }
-               case GERMANET_COMPOUNDS -> {
-                   result.addAll(getCompounds(lexicalUnits, str));
-               }
-               case GERMANET_HYPERNYM -> {
-                   for (Synset otherSynset: hypernyms) {
-                       List<LexUnit> lexUnits = otherSynset.getLexUnits();
-                       result.addAll(getOrthForms(lexUnits));
-                   }
-                }
-               case GERMANET_HYPONYM -> {
-                   for (Synset otherSynset: hyponyms) {
-                       List<LexUnit> lexUnits = otherSynset.getLexUnits();
-                       result.addAll(getOrthForms(lexUnits));
-                   }
-                }
+               
                default -> {
                    throw new IllegalStateException("Unexpected value: " + mode);
                 }
@@ -150,34 +133,6 @@ public final class TestGermaNet {
 
         for (LexUnit lexUnit: lexUnits) {
             result.addAll(lexUnit.getOrthForms());
-        }
-
-        return result;
-    }
-
-    /**
-     * Returns a set of compounds for the specified word.
-     *
-     * @param lexUnits
-     * @param word
-     * @return a set of strings
-     */
-    private static Set<String> getCompounds(final List<LexUnit> lexUnits,
-                                            final String word) {
-
-        Set<String> result = new HashSet();
-
-        for (LexUnit lexUnit: lexUnits) {
-            List<String> orthForms = lexUnit.getOrthForms();
-
-            if (orthForms.size() == 1
-                && orthForms.get(0).equals(word)) {
-
-                // add head of compounds
-                if (lexUnit.getCompoundInfo() != null) {
-                    result.add(lexUnit.getCompoundInfo().getHead());
-                }
-            }
         }
 
         return result;
