@@ -484,26 +484,11 @@ public abstract class AbstractSearcher implements Searcher {
         SearchIndexType index = getSearchIndexType(searchIndex);
 
         // create a list with repetition-objects
-        ArrayList<Repetition> repetitions = new ArrayList();
+        ArrayList<Repetition> repetitions = getRepetitionObjectsFromXMLString(
+             repetitionsStr);
         
-        try {
-            Document doc = (Document) IOHelper
-                    .DocumentFromText(repetitionsStr);
-            NodeList nodes = doc
-                    .getElementsByTagName(Constants.REPETITION);
-            for (int i=0; i<nodes.getLength(); i++){
-                Element element = ((Element)(nodes.item(i)));
-                Repetition r = new Repetition(element);
-                repetitions.add(r);
-            }
-            searchConstraints.add(
+        searchConstraints.add(
                     new DefaultAdditionalSearchConstraint(repetitionsStr));
-
-        } catch (SAXException | ParserConfigurationException ex) {
-           throw new SearchServiceException (
-                "Please check the xml format of repetition-parameter!");
-        }
-        
         
         //create a list of synonyms
         HashMap<String, HashSet> synonymMap = new HashMap();
@@ -511,36 +496,10 @@ public abstract class AbstractSearcher implements Searcher {
         if(synonymStr!=null && !synonymStr.isEmpty()){
             String synonyms = synonymStr.replaceAll("\\s+","");
         
-            try {
-                Document doc = (Document) IOHelper
-                        .DocumentFromText(synonyms);
-                NodeList nodes = doc
-                     .getElementsByTagName(Constants.REPETITION_SYNONYMS);
-
-                Element element = ((Element)(nodes.item(0)));
-                String[] wordSets = element.getTextContent().split(";");
-                for (String wordSet : wordSets) {
-                    ArrayList<String> wordList = new ArrayList(
-                            Arrays.asList(wordSet.split(",")));
-
-                    for(String word: wordList){
-                        HashSet words = new HashSet(wordList);
-                        words.remove(word);
-                        if(synonymMap.containsKey(word)){
-                            words.addAll(synonymMap.get(word));
-                        }
-                        synonymMap.put(word, words);
-                    }
-                }
-
-                searchConstraints.add(
+            synonymMap = getSynonymMap (synonyms);
+            searchConstraints.add(
                    new DefaultAdditionalSearchConstraint(synonyms));
-            } catch (SAXException | ParserConfigurationException ex) {
-               throw new SearchServiceException (
-                       "Please check the xml format of synonyms!");
-            }
         }
-        
         
         /* Search with MTAS using cqp query language */
         final long timeStart_search = System.currentTimeMillis();
@@ -586,6 +545,76 @@ public abstract class AbstractSearcher implements Searcher {
     public IDList getCorporaForSearch(String searchIndex){
         IDList corpora = Configuration.getCorpusIDs();
         return corpora;
+    }
+    
+    private HashMap<String, HashSet> getSynonymMap (String synonyms) 
+            throws IOException, SearchServiceException{
+        
+        HashMap<String, HashSet> synonymMap = new HashMap();
+
+        try {
+            Document doc = (Document) IOHelper.DocumentFromText(synonyms);
+            NodeList nodes = doc
+                    .getElementsByTagName(Constants.REPETITION_SYNONYMS);
+
+            Element element = ((Element)(nodes.item(0)));
+            String[] wordSets = element.getTextContent().split(";");
+            
+            for (String wordSet : wordSets) {
+                if(!wordSet.contains(",")){
+                    throw new SearchServiceException (
+                        "Please check the format of your synonym file "
+                        + "Synonyms should be separated by commas "
+                        + "and each synonym set should end with a semicolon."
+                        + " You can get help by clicking the question mark "
+                        + "button to the right of the query input field.");
+                }
+                ArrayList<String> wordList = new ArrayList(
+                            Arrays.asList(wordSet.split(",")));
+
+                for(String word: wordList){
+                    HashSet words = new HashSet(wordList);
+                    words.remove(word);
+                    if(synonymMap.containsKey(word)){
+                        words.addAll(synonymMap.get(word));
+                    }
+                    synonymMap.put(word, words);
+                }
+            }
+
+        } catch (SAXException | ParserConfigurationException ex) {
+               throw new SearchServiceException (
+                       "Please check the xml format of synonyms!");
+        }
+        
+        return synonymMap;
+    }
+    
+    private ArrayList<Repetition> getRepetitionObjectsFromXMLString(
+            String repetitionsStr) throws SearchServiceException, IOException{
+        ArrayList<Repetition> repetitions = new ArrayList();
+        try {
+            Document doc = (Document) IOHelper
+                    .DocumentFromText(repetitionsStr);
+            NodeList nodes = doc
+                    .getElementsByTagName(Constants.REPETITION);
+            for (int i=0; i<nodes.getLength(); i++){
+                Element element = ((Element)(nodes.item(i)));
+                Repetition r = new Repetition(element);
+                repetitions.add(r);
+            }
+
+        } catch (SAXException | ParserConfigurationException ex) {
+           throw new SearchServiceException (
+                "Please check the xml format of the repetition-parameter!");
+        }
+        if(repetitions.isEmpty()){
+            throw new SearchServiceException (
+                "Please specify repetition-parameters!");
+        }else{
+            return repetitions;
+        }
+        
     }
     
     abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) 

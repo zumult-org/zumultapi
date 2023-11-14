@@ -1,0 +1,2036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quantification corpus="UNSD"
+                totalDuration="193333.75588989258"
+                totalTokens="460075">
+   <event audio-duration="3167.502685546875" id="UNSD_E_00002" tokens="6848">
+      <speechEvent audio-duration="3167.502685546875"
+                   id="UNSD_E_00002_SE_02"
+                   tokens="6848"
+                   types="1025">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00051" tokens="5012">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2014-09-13</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="10488.1796875" id="UNSD_E_00004" tokens="0">
+      <speechEvent audio-duration="10488.1796875"
+                   id="UNSD_E_00004_SE_01"
+                   tokens="0"
+                   types="0">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Fragebuch</property>
+         <speaker id="UNSD_S_00037" tokens="0">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">82</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-03-08</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Loganholme</property>
+   </event>
+   <event audio-duration="11358.468017578125" id="UNSD_E_00005" tokens="6239">
+      <speechEvent audio-duration="8922.6904296875"
+                   id="UNSD_E_00005_SE_01"
+                   tokens="0"
+                   types="0">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Fragebuch</property>
+         <speaker id="UNSD_S_00024" tokens="0">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00051" tokens="0">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">69</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <speechEvent audio-duration="2435.777587890625"
+                   id="UNSD_E_00005_SE_02"
+                   tokens="6239"
+                   types="1023">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00024" tokens="1545">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00051" tokens="3001">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">69</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-03-05</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="3917.906005859375" id="UNSD_E_00006" tokens="7445">
+      <speechEvent audio-duration="1057.626708984375"
+                   id="UNSD_E_00006_SE_01"
+                   tokens="0"
+                   types="0">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Fragebuch</property>
+         <speaker id="UNSD_S_00009" tokens="0">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">82</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00024" tokens="0">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <speechEvent audio-duration="2860.279296875"
+                   id="UNSD_E_00006_SE_02"
+                   tokens="7445"
+                   types="1384">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00009" tokens="4499">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">82</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00024" tokens="335">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-03-09</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Caboolture</property>
+   </event>
+   <event audio-duration="2069.268310546875" id="UNSD_E_00008" tokens="5280">
+      <speechEvent audio-duration="2069.268310546875"
+                   id="UNSD_E_00008_SE_02"
+                   tokens="5280"
+                   types="844">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00022" tokens="3179">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">78</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00051" tokens="1052">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">69</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-03-07</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="1121.2957763671875" id="UNSD_E_00009" tokens="3345">
+      <speechEvent audio-duration="1121.2957763671875"
+                   id="UNSD_E_00009_SE_02"
+                   tokens="3345"
+                   types="728">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00001" tokens="1740">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">58</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00051" tokens="803">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">69</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-03-06</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="3910.590087890625" id="UNSD_E_00010" tokens="10430">
+      <speechEvent audio-duration="3910.590087890625"
+                   id="UNSD_E_00010_SE_02"
+                   tokens="10430"
+                   types="1503">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00005" tokens="5307">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00032" tokens="1140">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">66</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-10-17</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="3267.13330078125" id="UNSD_E_00011" tokens="11815">
+      <speechEvent audio-duration="3267.13330078125"
+                   id="UNSD_E_00011_SE_02"
+                   tokens="11815"
+                   types="1770">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00035" tokens="96">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">60</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00060" tokens="5494">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">72</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00061" tokens="4285">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">75</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-10-20</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Loganholme</property>
+   </event>
+   <event audio-duration="3167.62744140625" id="UNSD_E_00012" tokens="7347">
+      <speechEvent audio-duration="3167.62744140625"
+                   id="UNSD_E_00012_SE_02"
+                   tokens="7347"
+                   types="1293">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00009" tokens="5379">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">82</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-10-21</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Caboolture</property>
+   </event>
+   <event audio-duration="3631.508056640625" id="UNSD_E_00013" tokens="11719">
+      <speechEvent audio-duration="3631.508056640625"
+                   id="UNSD_E_00013_SE_02"
+                   tokens="11719"
+                   types="1265">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00006" tokens="2652">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">67</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00038" tokens="4843">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2015-10-22</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Runcorn</property>
+   </event>
+   <event audio-duration="5816.783203125" id="UNSD_E_00015" tokens="15093">
+      <speechEvent audio-duration="5816.783203125"
+                   id="UNSD_E_00015_SE_02"
+                   tokens="15093"
+                   types="1487">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00022" tokens="9374">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">79</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00035" tokens="151">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">60</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00036" tokens="1480">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">81</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-19</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="5028.0068359375" id="UNSD_E_00016" tokens="13770">
+      <speechEvent audio-duration="5028.0068359375"
+                   id="UNSD_E_00016_SE_02"
+                   tokens="13770"
+                   types="1715">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00012" tokens="862">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">75</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00014" tokens="1634">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">62</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00025" tokens="7974">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-20</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="3284.466552734375" id="UNSD_E_00018" tokens="8649">
+      <speechEvent audio-duration="3284.466552734375"
+                   id="UNSD_E_00018_SE_02"
+                   tokens="8649"
+                   types="1259">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00006" tokens="6444">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-22</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Runcorn</property>
+   </event>
+   <event audio-duration="3287.94970703125" id="UNSD_E_00020" tokens="11292">
+      <speechEvent audio-duration="3287.94970703125"
+                   id="UNSD_E_00020_SE_02"
+                   tokens="11292"
+                   types="1379">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00006" tokens="3855">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00038" tokens="4168">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">72</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-22</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Runcorn</property>
+   </event>
+   <event audio-duration="4315.66455078125" id="UNSD_E_00021" tokens="10829">
+      <speechEvent audio-duration="4315.66455078125"
+                   id="UNSD_E_00021_SE_02"
+                   tokens="10829"
+                   types="1651">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00011" tokens="2269">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">47</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00051" tokens="1239">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">70</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00054" tokens="5624">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">75</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-23</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="2955.02197265625" id="UNSD_E_00023" tokens="5626">
+      <speechEvent audio-duration="2955.02197265625"
+                   id="UNSD_E_00023_SE_02"
+                   tokens="5626"
+                   types="1147">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00002" tokens="3892">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">86</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00024" tokens="223">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-25</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="3409.98828125" id="UNSD_E_00024" tokens="9798">
+      <speechEvent audio-duration="3409.98828125"
+                   id="UNSD_E_00024_SE_02"
+                   tokens="9798"
+                   types="1380">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00001" tokens="1829">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00042" tokens="5467">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">64</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00051" tokens="166">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">70</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-25</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="7014.5615234375" id="UNSD_E_00025" tokens="24927">
+      <speechEvent audio-duration="7014.5615234375"
+                   id="UNSD_E_00025_SE_02"
+                   tokens="24927"
+                   types="2637">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00059" tokens="8693">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">74</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00060" tokens="10804">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">73</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-27</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Nerang</property>
+   </event>
+   <event audio-duration="6415.6220703125" id="UNSD_E_00027" tokens="18678">
+      <speechEvent audio-duration="6415.6220703125"
+                   id="UNSD_E_00027_SE_02"
+                   tokens="18678"
+                   types="2140">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00048" tokens="14991">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">67</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-28</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Wycliffe</property>
+   </event>
+   <event audio-duration="739.0023193359375" id="UNSD_E_00028" tokens="1604">
+      <speechEvent audio-duration="739.0023193359375"
+                   id="UNSD_E_00028_SE_02"
+                   tokens="1604"
+                   types="389">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00043" tokens="1251">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">0</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-01-29</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="2261.622314453125" id="UNSD_E_00030" tokens="5896">
+      <speechEvent audio-duration="2261.622314453125"
+                   id="UNSD_E_00030_SE_02"
+                   tokens="5896"
+                   types="912">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00041" tokens="3378">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">60</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-01</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="2096.4873046875" id="UNSD_E_00033" tokens="6428">
+      <speechEvent audio-duration="2096.4873046875"
+                   id="UNSD_E_00033_SE_02"
+                   tokens="6428"
+                   types="944">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00053" tokens="1905">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">0</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00058" tokens="1976">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">0</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-02</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="6248.30810546875" id="UNSD_E_00034" tokens="14995">
+      <speechEvent audio-duration="6248.30810546875"
+                   id="UNSD_E_00034_SE_02"
+                   tokens="14995"
+                   types="1493">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00035" tokens="64">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">60</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00037" tokens="12921">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">83</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-02</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Redland City</property>
+   </event>
+   <event audio-duration="3774.55224609375" id="UNSD_E_00036" tokens="12073">
+      <speechEvent audio-duration="3774.55224609375"
+                   id="UNSD_E_00036_SE_02"
+                   tokens="12073"
+                   types="1396">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00027" tokens="2442">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">73</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00028" tokens="6585">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New South Wales</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-06</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Sydney</property>
+   </event>
+   <event audio-duration="5234.6123046875" id="UNSD_E_00039" tokens="14072">
+      <speechEvent audio-duration="5234.6123046875"
+                   id="UNSD_E_00039_SE_02"
+                   tokens="14072"
+                   types="1670">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00030" tokens="9476">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">75</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New South Wales</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-08</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Sydney</property>
+   </event>
+   <event audio-duration="3462.331298828125" id="UNSD_E_00040" tokens="8775">
+      <speechEvent audio-duration="3462.331298828125"
+                   id="UNSD_E_00040_SE_02"
+                   tokens="8775"
+                   types="1029">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00017" tokens="4388">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">55</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New South Wales</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-09</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Sydney</property>
+   </event>
+   <event audio-duration="5259.6025390625" id="UNSD_E_00041" tokens="15396">
+      <speechEvent audio-duration="5259.6025390625"
+                   id="UNSD_E_00041_SE_02"
+                   tokens="15396"
+                   types="1825">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00004" tokens="3782">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">79</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00050" tokens="6579">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-12</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="403.3346252441406" id="UNSD_E_00042" tokens="1010">
+      <speechEvent audio-duration="403.3346252441406"
+                   id="UNSD_E_00042_SE_02"
+                   tokens="1010"
+                   types="326">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00050" tokens="682">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-12</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="540.8432006835938" id="UNSD_E_00043" tokens="1647">
+      <speechEvent audio-duration="540.8432006835938"
+                   id="UNSD_E_00043_SE_02"
+                   tokens="1647"
+                   types="468">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00016" tokens="343">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">62</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00050" tokens="708">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-13</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="3081.616943359375" id="UNSD_E_00044" tokens="8238">
+      <speechEvent audio-duration="3081.616943359375"
+                   id="UNSD_E_00044_SE_02"
+                   tokens="8238"
+                   types="1086">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00016" tokens="4320">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">62</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-13</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="1738.2745361328125" id="UNSD_E_00045" tokens="2592">
+      <speechEvent audio-duration="1738.2745361328125"
+                   id="UNSD_E_00045_SE_02"
+                   tokens="2592"
+                   types="582">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00039" tokens="1875">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">83</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-13</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="2674.385498046875" id="UNSD_E_00046" tokens="6287">
+      <speechEvent audio-duration="2674.385498046875"
+                   id="UNSD_E_00046_SE_02"
+                   tokens="6287"
+                   types="1176">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00064" tokens="3490">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">88</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2016-02-15</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="8199.8984375" id="UNSD_E_00048" tokens="22408">
+      <speechEvent audio-duration="8199.8984375"
+                   id="UNSD_E_00048_SE_02"
+                   tokens="22408"
+                   types="2331">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00046" tokens="8238">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">62</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00050" tokens="2689">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">72</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00057" tokens="5469">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">70</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-02-09</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="2772.74560546875" id="UNSD_E_00049" tokens="8953">
+      <speechEvent audio-duration="2772.74560546875"
+                   id="UNSD_E_00049_SE_02"
+                   tokens="8953"
+                   types="954">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00008" tokens="3606">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">67</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00019" tokens="2213">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">64</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-02-18</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Victoria Point</property>
+   </event>
+   <event audio-duration="6265.11376953125" id="UNSD_E_00051" tokens="17131">
+      <speechEvent audio-duration="6265.11376953125"
+                   id="UNSD_E_00051_SE_02"
+                   tokens="17131"
+                   types="1748">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">4</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00037" tokens="7589">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">84</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00035" tokens="12">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">61</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00058" tokens="9">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">0</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00061" tokens="6808">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">77</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-02-21</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Loganholme</property>
+   </event>
+   <event audio-duration="1442.7938232421875" id="UNSD_E_00052" tokens="3733">
+      <speechEvent audio-duration="1442.7938232421875"
+                   id="UNSD_E_00052_SE_02"
+                   tokens="3733"
+                   types="685">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">4</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00037" tokens="905">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">84</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00035" tokens="73">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">61</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00058" tokens="408">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">0</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00061" tokens="1323">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">77</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-02-21</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Loganholme</property>
+   </event>
+   <event audio-duration="2356.73681640625" id="UNSD_E_00053" tokens="6018">
+      <speechEvent audio-duration="2356.73681640625"
+                   id="UNSD_E_00053_SE_02"
+                   tokens="6018"
+                   types="942">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00024" tokens="929">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">61</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00056" tokens="3150">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">79</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-02-22</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">North Lakes</property>
+   </event>
+   <event audio-duration="6053.771484375" id="UNSD_E_00054" tokens="22363">
+      <speechEvent audio-duration="6053.771484375"
+                   id="UNSD_E_00054_SE_02"
+                   tokens="22363"
+                   types="2108">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00038" tokens="6769">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">73</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00059" tokens="9310">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">75</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-02-23</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Runcorn</property>
+   </event>
+   <event audio-duration="3752.0185546875" id="UNSD_E_00055" tokens="6996">
+      <speechEvent audio-duration="3752.0185546875"
+                   id="UNSD_E_00055_SE_02"
+                   tokens="6996"
+                   types="1054">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00015" tokens="2982">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">85</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00042" tokens="4014">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">65</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-08-24</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="4367.7705078125" id="UNSD_E_00056" tokens="6303">
+      <speechEvent audio-duration="4367.7705078125"
+                   id="UNSD_E_00056_SE_02"
+                   tokens="6303"
+                   types="893">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00013" tokens="1540">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">83</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00015" tokens="955">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">85</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00042" tokens="1160">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">65</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-19</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="2891.445556640625" id="UNSD_E_00057" tokens="6781">
+      <speechEvent audio-duration="2891.445556640625"
+                   id="UNSD_E_00057_SE_02"
+                   tokens="6781"
+                   types="861">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00045" tokens="4884">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New Britain</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-21</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Vunapope</property>
+   </event>
+   <event audio-duration="3365.54541015625" id="UNSD_E_00058" tokens="7601">
+      <speechEvent audio-duration="3365.54541015625"
+                   id="UNSD_E_00058_SE_02"
+                   tokens="7601"
+                   types="972">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00045" tokens="5329">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New Britain</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-22</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Vunapope</property>
+   </event>
+   <event audio-duration="3287.386962890625" id="UNSD_E_00059" tokens="8752">
+      <speechEvent audio-duration="3287.386962890625"
+                   id="UNSD_E_00059_SE_02"
+                   tokens="8752"
+                   types="1086">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00029" tokens="6502">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New Britain</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-25</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Kokopo</property>
+   </event>
+   <event audio-duration="2905.756103515625" id="UNSD_E_00060" tokens="7893">
+      <speechEvent audio-duration="2905.756103515625"
+                   id="UNSD_E_00060_SE_02"
+                   tokens="7893"
+                   types="999">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00045" tokens="2191">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">68</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00063" tokens="2710">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New Britain</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-26</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Kokopo</property>
+   </event>
+   <event audio-duration="1921.22314453125" id="UNSD_E_00061" tokens="4237">
+      <speechEvent audio-duration="1921.22314453125"
+                   id="UNSD_E_00061_SE_02"
+                   tokens="4237"
+                   types="745">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00052" tokens="2065">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">54</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">New Britain</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-26</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Kokopo</property>
+   </event>
+   <event audio-duration="1583.8836669921875" id="UNSD_E_00062" tokens="3755">
+      <speechEvent audio-duration="1583.8836669921875"
+                   id="UNSD_E_00062_SE_02"
+                   tokens="3755"
+                   types="860">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00009" tokens="2783">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">84</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-28</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Caboolture</property>
+   </event>
+   <event audio-duration="2185.234130859375" id="UNSD_E_00063" tokens="5016">
+      <speechEvent audio-duration="2185.234130859375"
+                   id="UNSD_E_00063_SE_02"
+                   tokens="5016"
+                   types="907">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00024" tokens="3987">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">59</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-09-30</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Brisbane</property>
+   </event>
+   <event audio-duration="3112.499755859375" id="UNSD_E_00064" tokens="9066">
+      <speechEvent audio-duration="3112.499755859375"
+                   id="UNSD_E_00064_SE_02"
+                   tokens="9066"
+                   types="1208">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00033" tokens="6398">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">74</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00038" tokens="1029">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-10-02</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Runcorn</property>
+   </event>
+   <event audio-duration="366.69561767578125" id="UNSD_E_00065" tokens="1144">
+      <speechEvent audio-duration="366.69561767578125"
+                   id="UNSD_E_00065_SE_02"
+                   tokens="1144"
+                   types="323">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00033" tokens="240">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">74</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00038" tokens="641">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-10-02</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Runcorn</property>
+   </event>
+   <event audio-duration="2495.592041015625" id="UNSD_E_00066" tokens="7394">
+      <speechEvent audio-duration="2495.592041015625"
+                   id="UNSD_E_00066_SE_02"
+                   tokens="7394"
+                   types="1032">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">3</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00033" tokens="2246">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">74</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00038" tokens="109">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00047" tokens="3233">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">78</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2017-10-04</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Capalaba</property>
+   </event>
+   <event audio-duration="4601.60546875" id="UNSD_E_00067" tokens="5386">
+      <speechEvent audio-duration="4601.60546875"
+                   id="UNSD_E_00067_SE_02"
+                   tokens="5386"
+                   types="931">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00057" tokens="2092">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00045" tokens="1430">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">69</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2018-03-01</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="2310.9052734375" id="UNSD_E_00068" tokens="5658">
+      <speechEvent audio-duration="2310.9052734375"
+                   id="UNSD_E_00068_SE_02"
+                   tokens="5658"
+                   types="914">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">2</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00045" tokens="1944">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">69</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+         <speaker id="UNSD_S_00057" tokens="2058">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">71</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2018-03-01</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <event audio-duration="1952.616455078125" id="UNSD_E_00069" tokens="5344">
+      <speechEvent audio-duration="1952.616455078125"
+                   id="UNSD_E_00069_SE_02"
+                   tokens="5344"
+                   types="785">
+         <property dgd-parameter="v_e_se_anzahl_s" label="Anzahl Sprecher">1</property>
+         <property dgd-parameter="v_e_se_mediale_realisierung"
+                   label="Mediale Realisierung">Face-to-face</property>
+         <property dgd-parameter="v_e_se_sprachen" label="Sprachen">Deutsch</property>
+         <property dgd-parameter="v_e_se_forscherbeteiligung" label="Forscherbeteiligung">Verbal beteiligt</property>
+         <property dgd-parameter="v_e_se_elizitiertheit" label="Elizitiertheit">Elizitiert</property>
+         <property dgd-parameter="v_e_se_art" label="Art">Interview</property>
+         <speaker id="UNSD_S_00004" tokens="2619">
+            <property dgd-parameter="v_ses_alter_s" label="Alter">81</property>
+            <property dgd-parameter="v_ses_rolle_s" label="Rolle">Gewährsperson</property>
+         </speaker>
+      </speechEvent>
+      <property dgd-parameter="v_e_in_dgd_seit" label="In DGD seit Version">2.21</property>
+      <property dgd-parameter="v_e_region" label="Aufnahmeort (Region)">Queensland</property>
+      <property dgd-parameter="v_e_land" label="Aufnahmeort (Land)">Australien</property>
+      <property dgd-parameter="v_e_kreis" label="Aufnahmeort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_e_datum" label="Datum">2018-07-10</property>
+      <property dgd-parameter="v_e_ort" label="Aufnahmeort (Ortsname)">Cairns</property>
+   </event>
+   <speaker id="UNSD_S_00001" speechEvents="2" tokens="3569" types="835">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Ipswich</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1957</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00002" speechEvents="1" tokens="3892" types="982">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1930</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Pililo</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">West New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00004" speechEvents="2" tokens="6401" types="1142">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Cairns</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1937</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00005" speechEvents="1" tokens="5307" types="1081">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1947</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00006" speechEvents="3" tokens="12951" types="1416">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Wynnum</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1948</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00008" speechEvents="1" tokens="3606" types="603">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1950</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00009" speechEvents="4" tokens="12661" types="2080">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Caboolture</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1933</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00011" speechEvents="1" tokens="2269" types="557">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Logan City</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Australien</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1969</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Manly</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00012" speechEvents="1" tokens="862" types="314">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1941</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">New Irland</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00013" speechEvents="1" tokens="1540" types="395">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Bracken Ridge</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1934</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00014" speechEvents="1" tokens="1634" types="469">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1954</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00015" speechEvents="2" tokens="3937" types="835">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Bracken Ridge</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1932</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">New Irland</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00016" speechEvents="2" tokens="4663" types="884">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Kokopo</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New Ireland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1954</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Papua-Neuguinea</property>
+   </speaker>
+   <speaker id="UNSD_S_00017" speechEvents="1" tokens="4388" types="756">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Sydney</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1961</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00019" speechEvents="1" tokens="2213" types="502">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Victoria Point</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1953</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00022" speechEvents="2" tokens="12553" types="1323">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Ipswich</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1937</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Kavieng</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Ireland</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00024" speechEvents="7" tokens="7019" types="1404">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1956</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00025" speechEvents="1" tokens="7974" types="1286">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1945</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Mussau Island</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Ireland Province</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00027" speechEvents="1" tokens="2442" types="591">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">City of Canterbury-Bankstown</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1943</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Ramale</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00028" speechEvents="1" tokens="6585" types="988">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Sydney</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1945</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Ramale</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00029" speechEvents="1" tokens="6502" types="965">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Highland Park</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1949</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Seragil Plantation</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Baining</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00030" speechEvents="1" tokens="9476" types="1417">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Sydney</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1941</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00032" speechEvents="1" tokens="1140" types="362">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Burpengary</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1949</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00033" speechEvents="3" tokens="8884" types="1230">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Redland City</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1943</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Namatanai</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Ireland</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00035" speechEvents="5" tokens="396" types="212">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Logan City</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1956</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Buka</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00036" speechEvents="1" tokens="1480" types="476">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Woodridge</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1935</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Gil-Gil Plantation</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Ireland</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00037" speechEvents="4" tokens="21415" types="1954">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Woodridge</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1933</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00038" speechEvents="6" tokens="17559" types="1911">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Runcorn</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1944</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Kerawat</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00039" speechEvents="1" tokens="1875" types="440">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Kewarra Beach</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1933</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00041" speechEvents="1" tokens="3378" types="726">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1956</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00042" speechEvents="3" tokens="10641" types="1383">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Rothwell</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1952</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00043" speechEvents="1" tokens="1251" types="355">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">9999</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Nicht dokumentiert</property>
+   </speaker>
+   <speaker id="UNSD_S_00045" speechEvents="5" tokens="15778" types="1595">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Toowoomba</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1949</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00046" speechEvents="1" tokens="8238" types="1355">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Sydney</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New South Wales</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1955</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00047" speechEvents="1" tokens="3233" types="641">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Capalaba</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1939</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">New Irland</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00048" speechEvents="1" tokens="14991" types="1940">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1949</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rakanda</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Duke of York Islands</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00050" speechEvents="4" tokens="10658" types="1705">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Kewarra Beach</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1945</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Kokopo</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00051" speechEvents="7" tokens="11273" types="1478">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Bracken Ridge</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1946</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Kokopo</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00052" speechEvents="1" tokens="2065" types="549">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Kokopo</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">New Ireland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1963</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Papua-Neuguinea</property>
+   </speaker>
+   <speaker id="UNSD_S_00053" speechEvents="1" tokens="1905" types="479">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">9999</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Nicht dokumentiert</property>
+   </speaker>
+   <speaker id="UNSD_S_00054" speechEvents="1" tokens="5624" types="1151">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1941</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00056" speechEvents="1" tokens="3150" types="673">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Brisbane</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1938</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Kavieng</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Ireland</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00057" speechEvents="3" tokens="9619" types="1568">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Männlich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Mooroobool</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1947</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00058" speechEvents="3" tokens="2393" types="548">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">9999</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Nicht dokumentiert</property>
+   </speaker>
+   <speaker id="UNSD_S_00059" speechEvents="2" tokens="18003" types="2128">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Canungra</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1942</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Kerawat</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00060" speechEvents="2" tokens="16298" types="2208">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1943</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">St. Paul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Nicht dokumentiert</property>
+   </speaker>
+   <speaker id="UNSD_S_00061" speechEvents="3" tokens="12416" types="1768">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Redland City</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1940</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Vunapope</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+   <speaker id="UNSD_S_00063" speechEvents="1" tokens="2710" types="608">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Vunamami</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">East New Britain</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1958</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Buka</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">Nicht dokumentiert</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Papua-Neuguinea</property>
+   </speaker>
+   <speaker id="UNSD_S_00064" speechEvents="1" tokens="3490" types="914">
+      <property dgd-parameter="v_s_geschlecht" label="Geschlecht">Weiblich</property>
+      <property dgd-parameter="v_s_wohn_ort" label="Wohnort (Ortsname)">Cairns</property>
+      <property dgd-parameter="v_s_wohn_reg" label="Wohnort (Region)">Queensland</property>
+      <property dgd-parameter="v_s_geb_land" label="Geburtsort (Land)">Papua-Neuguinea</property>
+      <property dgd-parameter="v_s_geb_jahr" label="Geburtsdatum (Jahr)">1928</property>
+      <property dgd-parameter="v_s_geb_ort" label="Geburtsort (Ortsname)">Rabaul</property>
+      <property dgd-parameter="v_s_geb_kreis" label="Geburtsort (Kreis)">Nicht vorhanden</property>
+      <property dgd-parameter="v_s_geb_reg" label="Geburtsort (Region)">New Britain</property>
+      <property dgd-parameter="v_s_wohn_land" label="Wohnort (Land)">Australien</property>
+   </speaker>
+</quantification>

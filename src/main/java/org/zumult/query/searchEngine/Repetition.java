@@ -55,7 +55,7 @@ public class Repetition {
     /**
      * The default value for the search mode.
      */
-    private SimilarityTypeEnum similarity = SimilarityTypeEnum.EQUAL;
+    private final SimilarityObject similarity = new SimilarityObject();
 
     /**
      * The default value for searching multi word repetitions
@@ -74,7 +74,7 @@ public class Repetition {
     */
     public Repetition(final Element el) throws SearchServiceException {
         setRepetitionType(el);
-        setSimilarityType(el);
+        setSimilarity(el);
         setSpeakerOptions(el);
         setSpeakerChange(el);
         setIgnoredCustomPOS(el);
@@ -283,7 +283,19 @@ public class Repetition {
      * @return the {@code SimilarityTypeEnum} object
      */
     public SimilarityTypeEnum getSimilarityType() {
-        return this.similarity;
+        return this.similarity.type;
+    }
+    
+    public double getMinSimilarity(){
+        return this.similarity.min;
+    }
+    
+    public double getMaxSimilarity(){
+        return this.similarity.max;
+    }
+    
+    public Set<GermaNetModeEnum> getGermaNetMode(){
+        return this.similarity.germaNetMode;
     }
 
     /**
@@ -313,16 +325,18 @@ public class Repetition {
     }
 
     /**
-     * Sets the mode for repetition search (SimilarityTypeEnum).
-     *
+     * Sets the mode for repetition search (SimilarityTypeEnum) and GermaNet
+     * items (GermaNetModeEnum) if GermaNet is selected as a seach mode.
+     * 
      * @param el repetition as xml object
      *
      * @throws org.zumult.query.SearchServiceException if the
      *           search mode parameter is illegal or not supported
      */
-    private void setSimilarityType(final Element el)
+    private void setSimilarity(final Element el)
             throws SearchServiceException {
-
+        
+        // set similarity  type
         String similarityType = el
                 .getElementsByTagName(Constants.REPETITION_SIMILARITY_TYPE)
                 .item(0)
@@ -330,13 +344,58 @@ public class Repetition {
 
         if (similarityType != null && !similarityType.isEmpty()) {
             try {
-                this.similarity = SimilarityTypeEnum.valueOf(similarityType);
+                this.similarity.type = SimilarityTypeEnum
+                                                .valueOf(similarityType);
             } catch (IllegalArgumentException ex) {
-                throw new SearchServiceException(getErrorMessage4());
+                
+                String message = ". Please specify the similarity type."
+                    + " Supported similarity types are: "
+                    + getEnumValuesAsString(SimilarityTypeEnum.values());
+                
+                throw new SearchServiceException(message);
             }
         } else {
             throw new SearchServiceException("You have not specified "
                     + "the type of repetition similarity!");
+        }
+        
+        if(this.similarity.type.equals(SimilarityTypeEnum.GERMANET_PLUS)
+            || this.similarity.type.equals(SimilarityTypeEnum.GERMANET)) {
+            setGermaNetItems(el);
+        }
+    }
+    
+    private void setGermaNetItems(final Element el)
+            throws SearchServiceException{
+
+        String germaNetItems = el
+                .getElementsByTagName(Constants.REPETITION_GERMANET_ITEMS)
+                .item(0)
+                .getTextContent();
+        
+        if (germaNetItems != null && !germaNetItems.isEmpty()) {
+            
+            String[] germaNetItemsArray = germaNetItems.split(
+                Constants.PIPE_SYMBOL);
+
+            Set<GermaNetModeEnum> germaNetItemsSet = new HashSet<>();
+            
+            for (String str : germaNetItemsArray){
+                try {
+                    GermaNetModeEnum mode = GermaNetModeEnum
+                                                .valueOf(str);
+                    germaNetItemsSet.add(mode);
+                } catch (IllegalArgumentException ex) {
+                    
+                    String message = str + " is not correct."
+                      + " Supported GermaNet items are: "
+                      + getEnumValuesAsString(GermaNetModeEnum.values());
+                    
+                    throw new SearchServiceException(message);
+                }
+            }
+            
+            this.similarity.germaNetMode = germaNetItemsSet;
         }
     }
 
@@ -363,7 +422,12 @@ public class Repetition {
             try {
                 this.type = RepetitionTypeEnum.valueOf(repetitionType);
             } catch (IllegalArgumentException ex) {
-                throw new SearchServiceException(getErrorMessage3());
+                
+                String message = ". Please specify the repetition type."
+                    + " Supported repetition types are: "
+                    + getEnumValuesAsString(RepetitionTypeEnum.values());
+                
+                throw new SearchServiceException(message);
             }
         } else {
             throw new SearchServiceException("You have not specified "
@@ -382,7 +446,7 @@ public class Repetition {
         if (posToBeIgnored != null && !posToBeIgnored.isEmpty()) {
 
             String[] posToBeIgnoredArray = posToBeIgnored.split(
-                Constants.REPETITION_IGNORED_POS_SEPARATOR);
+                Constants.PIPE_SYMBOL);
 
             Set posToBeIgnoredSet =
                 new HashSet<>(Arrays.asList(posToBeIgnoredArray));
@@ -391,7 +455,7 @@ public class Repetition {
                     posToBeIgnoredSet;
         }
     }
-
+    
     private void setOptionIgnoreTokenOrder(final Element el)
             throws SearchServiceException {
 
@@ -433,7 +497,12 @@ public class Repetition {
                 this.position.positionOverlap =
                     PositionOverlapEnum.valueOf(positionOverlap);
             } catch (IllegalArgumentException ex) {
-               throw new SearchServiceException(getErrorMessage2());
+                
+                String message = ". Please check the position "
+                    + "to speaker overlap. Supported positions are: "
+                    + getEnumValuesAsString(PositionOverlapEnum.values());
+                
+               throw new SearchServiceException(message);
             }
         }
     }
@@ -495,7 +564,14 @@ public class Repetition {
                         minDistanceInt;
 
             } catch (IllegalArgumentException ex) {
-                throw new SearchServiceException(getErrorMessage1());
+                
+               String message =". Please check"
+                    + " the specified position to speaker change."
+                    + " Supported positions are: "
+                    + getEnumValuesAsString(
+                            PositionSpeakerChangeEnum.values());
+                
+                throw new SearchServiceException(message);
             }
         }
    }
@@ -664,7 +740,7 @@ public class Repetition {
      *           min and max distance parameters are illegal
      */
     private void setDistance(final Element el) throws SearchServiceException {
-                String min = el
+        String min = el
                 .getElementsByTagName(Constants.REPETITION_MIN_DISTANCE)
                 .item(0)
                 .getTextContent();
@@ -903,6 +979,10 @@ public class Repetition {
 
     /**
      * Specifies the position of the repetition relative to the speaker change.
+     * 
+     * Positions that can be used
+     * {@link #FOLLOWEDBY}
+     * {@link #PRECEDEDBY}
      */
     public enum PositionSpeakerChangeEnum {
         /**
@@ -915,6 +995,57 @@ public class Repetition {
         PRECEDEDBY
     }
 
+    /**
+    * Specifies the items that should be included
+    * from GermaNet when used in the repetition search.
+    *
+    *  GermaNet items that can be used
+    *  {@link #SYN}
+    *  {@link #HYPO}
+    *  {@link #HYPER}
+    *  {@link #COMP}
+    */
+    public enum GermaNetModeEnum {
+        /**
+         * Synonyms.
+         */
+        SYN {
+            @Override
+            public String toString(){
+                return "Synonyms";
+            }
+        },
+        /** 
+         * Hyponyms.
+         */
+        HYPO {
+            @Override
+            public String toString(){
+                return "Hyponyms";
+            }
+        },
+        /**
+         * Hypernyms.
+         */
+        HYPER {
+            @Override
+            public String toString(){
+                return "Hypernyms";
+            }
+        },
+        /**
+         * Compounds.
+         */
+        COMP {
+            @Override
+            public String toString(){
+                return "Compounds";
+            }
+        };
+        
+
+    }
+    
     /**
     *  Specifies the annotation level for searching repetitions.
     *
@@ -938,6 +1069,13 @@ public class Repetition {
         NORM
     }
 
+    private class SimilarityObject {
+        SimilarityTypeEnum type = SimilarityTypeEnum.EQUAL;
+        Set<GermaNetModeEnum> germaNetMode = new HashSet();
+        double min = 75.0;
+        double max = 100.0;
+    }
+    
     /**
     *  Repetition search mode.
     *
@@ -953,11 +1091,6 @@ public class Repetition {
     *  {@link #OWN_LEMMA_LIST}
     *  {@link #GERMANET}
     *  {@link #GERMANET_PLUS}
-    *  {@link #GERMANET_ORTH}
-    *  {@link #GERMANET_ORTH}
-    *  {@link #GERMANET_HYPERNYM}
-    *  {@link #GERMANET_HYPONYM}
-    *  {@link #GERMANET_COMPOUNDS}
     */
     public enum SimilarityTypeEnum {
         /**
@@ -979,6 +1112,11 @@ public class Repetition {
          * when all token forms exactly match those in the source element,
          * but have different transcribed forms.
          */
+        JACCARD_DISTANCE,
+        JACCARD_DISTANCE_COLOGNE_PHONETIC,
+        JARO_WINKLER_DISTANCE,
+        LEVENSHTEIN_DISTANCE,
+        ZUMULT_MIX,
         DIFF_PRON,
         /**
          * The word token sequence is recognized as a repetition
@@ -1001,84 +1139,22 @@ public class Repetition {
         /**
          * GermaNet is used to identify repetitions.
          */
-        GERMANET,
-        /**
-         * Only GermaNet synonyms are used to identify repetitions.
-         */
-        GERMANET_ORTH,
-        /**
-         * Only GermaNet hypernyms are used to identify repetitions.
-         */
-        GERMANET_HYPERNYM,
-        /**
-         * Only GermaNet hyponyms are used to identify repetitions.
-         */
-        GERMANET_HYPONYM,
-        /**
-         * Only GermaNet compounds are used to identify repetitions.
-         */
-        GERMANET_COMPOUNDS;
+        GERMANET
     }
 
     public class Synonyms extends ArrayList<ArrayList<String>> {
     }
 
-    private String getErrorMessage1() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(". Please check")
-          .append(" the specified position to speaker change.")
-          .append(" Supported positions are: ");
-
-        for (PositionSpeakerChangeEnum ob: PositionSpeakerChangeEnum.values()) {
-            sb.append(ob.name());
-            sb.append(", ");
-        }
-
-        return deleteLastComma(sb.toString().trim());
-    }
-
-    private String getErrorMessage2() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(". Please check the position to speaker overlap.")
-          .append(" Supported positions are: ");
-
-        for (PositionOverlapEnum ob: PositionOverlapEnum.values()) {
-            sb.append(ob.name());
-            sb.append(", ");
-        }
-
-        return deleteLastComma(sb.toString().trim());
-    }
-
-    private String getErrorMessage3() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(". Please the specified repetition type.")
-          .append(" Supported repetition types are: ");
-
-        for (RepetitionTypeEnum ob: RepetitionTypeEnum.values()) {
-            sb.append(ob.name());
-            sb.append(", ");
-        }
-
-        return deleteLastComma(sb.toString().trim());
-    }
-
-    private String getErrorMessage4() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(". Please the specified the similarity type.")
-          .append(" Supported similarity types are: ");
-
-        for (RepetitionTypeEnum ob: RepetitionTypeEnum.values()) {
-            sb.append(ob.name());
-            sb.append(", ");
-        }
-        return deleteLastComma(sb.toString().trim());
-    }
-
     private String deleteLastComma(final String str) {
         return str.replaceFirst(",$", "");
+    }
+    
+    private <T extends Enum<T>> String getEnumValuesAsString(T[] values) {
+        StringBuilder sb = new StringBuilder();
+        for (T ob: values) {
+            sb.append(ob.name());
+            sb.append(", ");
+        }
+        return deleteLastComma(sb.toString().trim());
     }
 }

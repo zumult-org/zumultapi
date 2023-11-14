@@ -66,22 +66,26 @@
                   annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
                   similarityType = "<%=SimilarityTypeEnum.GERMANET%>";
                   break;
-                case "12":
-                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
-                  similarityType = "<%=SimilarityTypeEnum.GERMANET_ORTH%>";
-                  break;
-                case "13":
-                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
-                  similarityType = "<%=SimilarityTypeEnum.GERMANET_HYPERNYM%>";
-                  break;
-                case "14":
-                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
-                  similarityType = "<%=SimilarityTypeEnum.GERMANET_HYPONYM%>";
-                  break;
-                case "15":
-                  annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
-                  similarityType = "<%=SimilarityTypeEnum.GERMANET_COMPOUNDS%>";
-                  break;
+                case "16":
+                    annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                    similarityType = "<%=SimilarityTypeEnum.JACCARD_DISTANCE%>";
+                    break;
+                case "17":
+                    annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                    similarityType = "<%=SimilarityTypeEnum.JACCARD_DISTANCE_COLOGNE_PHONETIC%>";
+                    break;
+                case "18":
+                    annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                    similarityType = "<%=SimilarityTypeEnum.JARO_WINKLER_DISTANCE%>";
+                    break;
+                case "19":
+                    annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                    similarityType = "<%=SimilarityTypeEnum.LEVENSHTEIN_DISTANCE%>";
+                    break;
+                case "20":
+                    annotationLayer = "<%=RepetitionTypeEnum.LEMMA%>";
+                    similarityType = "<%=SimilarityTypeEnum.ZUMULT_MIX%>";
+                    break;
                 default:
                     alert("Search mode " + repetitionSearchMode + "is not supported!");
             }
@@ -111,7 +115,14 @@
                 checkedPOSToBeIgnored.push($(this).val());
             });
             
-            var ignoredCustomPOS = checkedPOSToBeIgnored.join('<%= Constants.REPETITION_IGNORED_POS_SEPARATOR %>');   
+            var ignoredCustomPOS = checkedPOSToBeIgnored.join('<%= Constants.PIPE_SYMBOL %>');   
+            
+            var checkedGermanetItems = [];
+            $(this).parent().find("input[name='germanetOption']:checked").each(function () {
+                checkedGermanetItems.push($(this).val());
+            });
+            
+            var germanetItems = checkedGermanetItems.join('<%= Constants.PIPE_SYMBOL %>');
             
             var contextLeft = $(this).find('.repetitionContextFieldLeft').val();
             var contextRight = $(this).find('.repetitionContextFieldRight').val();
@@ -199,6 +210,9 @@
                 "<",'<%= Constants.REPETITION_IGNORE_TOKEN_ORDER%>',">",
                 ignoreTokenOrder,
                 "</",'<%= Constants.REPETITION_IGNORE_TOKEN_ORDER%>',">",
+                "<",'<%= Constants.REPETITION_GERMANET_ITEMS%>',">",
+                germanetItems,
+                "</",'<%= Constants.REPETITION_GERMANET_ITEMS%>',">",
                 "</",'<%=Constants.REPETITION %>',">"
             );
                         

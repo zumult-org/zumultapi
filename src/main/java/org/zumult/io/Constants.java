@@ -301,6 +301,7 @@ public class Constants {
     public static final String REPETITION_SPEAKER_METADATA="speakerMetadata";
     public static final String REPETITION_TYPE = "repetitionType";
     public static final String REPETITION_SIMILARITY_TYPE="repetitionSimilarityType";
+    public static final String REPETITION_GERMANET_ITEMS="germaNetItems";
     public static final String REPETITION_MIN_DISTANCE="minDistance";
     public static final String REPETITION_MAX_DISTANCE="maxDistance";
     public static final String REPETITION_IGNORE_FUNCTIONAL_WORDS="ignoreFunctionalWords";
@@ -321,7 +322,7 @@ public class Constants {
     public static final String REPETITION_CONTEXT_RIGHT_MIN_DISTANCE="minDistanceToContextRight";
     public static final String REPETITION_CONTEXT_RIGHT_MAX_DISTANCE="maxDistanceToContextRight";
 
-    public static final String REPETITION_IGNORED_POS_SEPARATOR="\\|";
+    public static final String PIPE_SYMBOL ="\\|";
     
     public static final String CUSTOM_WORDLISTS_KEY = "wordLists";
     

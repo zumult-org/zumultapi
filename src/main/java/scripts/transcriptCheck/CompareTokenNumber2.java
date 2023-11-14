@@ -76,7 +76,7 @@ public class CompareTokenNumber2 {
                     if(n!=m){
                         
                         System.out.println ("A discrepancy was discovered in"
-                                + " transcript" + file.getName());
+                                + " transcript " + file.getName());
                         
                         for (int i=0; i<elements2.getLength(); i++){                           
                             Element element2 = (Element) elements2.item(i);

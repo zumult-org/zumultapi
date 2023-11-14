@@ -64,9 +64,11 @@ import org.zumult.io.Constants;
 import org.zumult.objects.IDList;
 import org.zumult.query.Hit;
 import org.zumult.query.SearchServiceException;
+import org.zumult.query.searchEngine.Repetition.GermaNetModeEnum;
 import org.zumult.query.searchEngine.Repetition.PositionOverlapEnum;
 import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
 import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
+import org.zumult.query.searchEngine.util.SimilarityUtilities;
 
 /**
  *
@@ -136,11 +138,7 @@ public class DGD2SearchEngine extends MTASBasedSearchEngine {
                     }
                     break;
                 case GERMANET:
-                case GERMANET_HYPERNYM:
-                case GERMANET_HYPONYM:
-                case GERMANET_ORTH: 
                 case GERMANET_PLUS:
-                case GERMANET_COMPOUNDS:
                     if(germanet==null){
                         try {
                             String data_path = Configuration.getGermanetPath();
@@ -277,7 +275,10 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
             
             repetitions:
             for(Repetition repetitionSpecification: repetitionSpecifications){
-                Repetition.SimilarityTypeEnum similarity = repetitionSpecifications.get(0).getSimilarityType();
+                SimilarityTypeEnum similarity = repetitionSpecification.getSimilarityType();
+                Set<GermaNetModeEnum> germanetItems = repetitionSpecification.getGermaNetMode();
+                double similarityMeasureMin =  repetitionSpecification.getMinSimilarity();
+                double similarityMeasureMax =  repetitionSpecification.getMaxSimilarity();
                 
                 Set ignoredCustomPOS = repetitionSpecification.getIgnoredCustomPOS();
                 Boolean ignoreTokenOrder = repetitionSpecification.ignoreTokenOrder();
@@ -374,6 +375,14 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
                     // get the appropriate string of the source
                     String sourceStr = rs.getStringForLayer(currentRepetitionLayer);
                     
+                    //sort maps if token order should be ignore
+                    String possibleRepetitionStrSorted = "";
+                    String sourceStrSorted = "";
+                    if(ignoreTokenOrder){
+                        possibleRepetitionStrSorted = sortedValues(sortedMap.values());
+                        sourceStrSorted = sortedValues(rs.getStringObjectsForLayer(currentRepetitionLayer).values());
+                    }
+                    
                     //compare
                     boolean isRepetition = false;
                     
@@ -383,13 +392,9 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
                                // this can be a repetition
                                isRepetition=true;
                             }else{
-                                if(ignoreTokenOrder){
-                                    String possibleRepetitionStrSorted = sortedValues(sortedMap.values());
-                                    String sourceStrSorted = sortedValues(rs.getStringObjectsForLayer(currentRepetitionLayer).values());
-                                    if(possibleRepetitionStrSorted.equals(sourceStrSorted)){
-                                        // this can be a repetition
-                                        isRepetition=true;
-                                    }
+                                if(ignoreTokenOrder && possibleRepetitionStrSorted.equals(sourceStrSorted)){
+                                    // this can be a repetition
+                                    isRepetition=true;
                                 }
                             }
                             break;
@@ -401,25 +406,83 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
                                 List<String> prefixList = getPrefixListForNewLayer(similarity);                              
                                 rs.addNewLayer(mtasCodecInfo, docID, prefixList, start, end);
                                 isRepetition = checkAdditionalLayer(rs, prefixList, mtasCodecInfo, sortedMap, docID);                      
-                            }else{
-                                if(ignoreTokenOrder){
-                                    String possibleRepetitionStrSorted = sortedValues(sortedMap.values());
-                                    String sourceStrSorted = sortedValues(rs.getStringObjectsForLayer(currentRepetitionLayer).values());
-                                    if(possibleRepetitionStrSorted.equals(sourceStrSorted)){
-                                        // this can be a repetition
-                                        List<String> prefixList = getPrefixListForNewLayer(similarity);                              
-                                        rs.addNewLayer(mtasCodecInfo, docID, prefixList, start, end);
-                                        isRepetition = checkAdditionalLayer(rs, prefixList, mtasCodecInfo, sortedMap, docID);
-                                    }
+                            } else {
+                                if (ignoreTokenOrder && possibleRepetitionStrSorted.equals(sourceStrSorted)){
+                                    // this can be a repetition
+                                    List<String> prefixList = getPrefixListForNewLayer(similarity);                              
+                                    rs.addNewLayer(mtasCodecInfo, docID, prefixList, start, end);
+                                    isRepetition = checkAdditionalLayer(rs, prefixList, mtasCodecInfo, sortedMap, docID);
                                 }
                             }
                            break;
+                        case JACCARD_DISTANCE:
+                            double jaccardDist = SimilarityUtilities.getJaccardDistance(sourceStr, possibleRepetitionStr);
+                            isRepetition =  jaccardDist > similarityMeasureMin && jaccardDist < similarityMeasureMax;
+                            if (!isRepetition && ignoreTokenOrder){
+                                jaccardDist = SimilarityUtilities.getJaccardDistance(sourceStrSorted, possibleRepetitionStrSorted);
+                                isRepetition =  jaccardDist > similarityMeasureMin && jaccardDist < similarityMeasureMax;
+                            }
+                            break;
+                        case JACCARD_DISTANCE_COLOGNE_PHONETIC:
+                            double jaccardDistPhon = SimilarityUtilities.getJaccardDistanceOfSoundexValue(sourceStr, possibleRepetitionStr);
+                            isRepetition =  jaccardDistPhon > similarityMeasureMin && jaccardDistPhon < similarityMeasureMax;
+                            if (!isRepetition && ignoreTokenOrder){
+                                jaccardDistPhon = SimilarityUtilities.getJaccardDistanceOfSoundexValue(sourceStrSorted, possibleRepetitionStrSorted);
+                                isRepetition =  jaccardDistPhon > similarityMeasureMin && jaccardDistPhon < similarityMeasureMax;
+                            }
+                            break;
+                        case JARO_WINKLER_DISTANCE:
+                            double jaroWinklerDist = SimilarityUtilities.getJaroWinklerDistance(sourceStr, possibleRepetitionStr);
+                            isRepetition = jaroWinklerDist > similarityMeasureMin && jaroWinklerDist < similarityMeasureMax;
+                            if (!isRepetition && ignoreTokenOrder){
+                                jaroWinklerDist = SimilarityUtilities.getJaroWinklerDistance(sourceStrSorted, possibleRepetitionStrSorted);
+                                isRepetition = jaroWinklerDist > similarityMeasureMin && jaroWinklerDist < similarityMeasureMax; 
+                            }
+                            break;
+                        case LEVENSHTEIN_DISTANCE:
+                            double levenshteinDist = SimilarityUtilities.getLevenshteinDistance(sourceStr, possibleRepetitionStr);
+                            isRepetition = levenshteinDist > similarityMeasureMin && levenshteinDist < similarityMeasureMax;
+                            if (!isRepetition && ignoreTokenOrder){
+                                levenshteinDist = SimilarityUtilities.getLevenshteinDistance(sourceStrSorted, possibleRepetitionStrSorted);
+                                isRepetition = levenshteinDist > similarityMeasureMin && levenshteinDist < similarityMeasureMax;
+                            }
+                            break;
+                        case ZUMULT_MIX:
+                            if (sourceStr.toLowerCase().contains(possibleRepetitionStr.toLowerCase()) 
+                            || possibleRepetitionStr.toLowerCase().contains(sourceStr.toLowerCase())) {
+                            /* this step is required because similarity measures 
+                            are not sufficient to identify "gut" and "supergut" as similar:
+
+                            JaccardDistance: 43.00000000000001% similar
+                            Soundex codes: gut = 42 supergut = 81742
+                            JaccardDistance (Soundex): 40.0% similar */
+            
+                                isRepetition = true;
+                            } else {
+                                // check Jaccard distance (case sensitive)
+                                double jaccardDistZuMult = SimilarityUtilities.getJaccardDistance(sourceStr, possibleRepetitionStr);
+                                isRepetition =  jaccardDistZuMult > similarityMeasureMin && jaccardDistZuMult < similarityMeasureMax;
+                                if (!isRepetition && ignoreTokenOrder){
+                                    jaccardDistZuMult = SimilarityUtilities.getJaccardDistance(sourceStrSorted, possibleRepetitionStrSorted);
+                                    isRepetition =  jaccardDistZuMult > similarityMeasureMin && jaccardDistZuMult < similarityMeasureMax;
+                                }
+                                
+                                if (!isRepetition){
+                                    // check Jaccard distance of soundex value (case insensitive)
+                                    double jaccardDistPhonZuMult = SimilarityUtilities.getJaccardDistanceOfSoundexValue(sourceStr, possibleRepetitionStr);
+                                    isRepetition =  jaccardDistPhonZuMult > similarityMeasureMin && jaccardDistPhonZuMult < similarityMeasureMax;
+                                    if (!isRepetition && ignoreTokenOrder){
+                                        jaccardDistPhonZuMult = SimilarityUtilities.getJaccardDistanceOfSoundexValue(sourceStrSorted, possibleRepetitionStrSorted);
+                                        isRepetition =  jaccardDistPhonZuMult > similarityMeasureMin && jaccardDistPhonZuMult < similarityMeasureMax;
+                                    }
+                                }
+                            }
+                            break;
                         case FUZZY:
                             if(!possibleRepetitionStr.equals(sourceStr)){                          
                                 isRepetition = isFuzzyRepetition(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, ignoreTokenOrder);
                             }
                             break;
-
                         case FUZZY_PLUS:
                            if(possibleRepetitionStr.equals(sourceStr)){
                                isRepetition=true;
@@ -434,18 +497,26 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
                             if(possibleRepetitionStr.equals(sourceStr)){
                                isRepetition=true;
                             }else{
-                               isRepetition = checkGermaNet(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, germanet, ignoreTokenOrder, false, similarity);
+                               isRepetition = checkGermaNet(
+                                       rs.getStringObjectsForLayer(currentRepetitionLayer), 
+                                       sortedMap, 
+                                       germanet, 
+                                       ignoreTokenOrder, 
+                                       false, 
+                                       germanetItems);
                             }
                             break;
-                        case GERMANET: 
-                        case GERMANET_ORTH:
-                        case GERMANET_HYPERNYM:
-                        case GERMANET_HYPONYM:
-                        case GERMANET_COMPOUNDS:
+                        case GERMANET:
                             if(possibleRepetitionStr.equals(sourceStr)){
                                isRepetition=false;
                             }else{
-                               isRepetition = checkGermaNet(rs.getStringObjectsForLayer(currentRepetitionLayer), sortedMap, germanet, ignoreTokenOrder, true, similarity);
+                               isRepetition = checkGermaNet(
+                                       rs.getStringObjectsForLayer(currentRepetitionLayer), 
+                                       sortedMap, 
+                                       germanet, 
+                                       ignoreTokenOrder, 
+                                       true,
+                                       germanetItems);
                             }
                         default:
                     }
@@ -480,7 +551,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         }
         
     }
-    
+
     private boolean checkAdditionalLayer(RepetitionSource rs, List<String> prefixList, 
             CodecInfo mtasCodecInfo, SortedMap<Integer, String> sortedMap, int docID) throws IOException{
         String sourcePron = rs.getStringForLayer(prefixList.get(0));   
@@ -488,7 +559,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         return !repetitionPron.equals(sourcePron);
     }
     
-    private List<String> getPrefixListForNewLayer(Repetition.SimilarityTypeEnum similarity){
+    private List<String> getPrefixListForNewLayer(SimilarityTypeEnum similarity){
         List<String> prefixList = new  ArrayList<String>();
         String layer="";
         switch(similarity){
@@ -595,28 +666,29 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         
     }
     
-    private Boolean checkGermaNet(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, 
-            GermaNet germanet, Boolean ignoreTokenOrder, Boolean justGermanet, Repetition.SimilarityTypeEnum similarity){
+    private Boolean checkGermaNet(SortedMap<Integer, 
+                                    String> source, 
+                                    SortedMap<Integer, String> possibleRepetitions, 
+                                    GermaNet germanet, 
+                                    Boolean ignoreTokenOrder, 
+                                    Boolean justGermanet, 
+                                    Set<GermaNetModeEnum> germanetItems){
         boolean isRepetition=true;
          
-        ArrayList<String> sourceArray = new ArrayList<String>(source.values());
+        ArrayList<String> sourceArray = new ArrayList<>(source.values());
         if(ignoreTokenOrder){
             Collections.sort(sourceArray);
         }
         Object[] sourceList = sourceArray.toArray();
         
-        ArrayList<String> possibleRepetitionArray = new ArrayList<String>(possibleRepetitions.values());
+        ArrayList<String> possibleRepetitionArray = new ArrayList<>(possibleRepetitions.values());
         if(ignoreTokenOrder){
             Collections.sort(possibleRepetitionArray);
         }
         Object[] possibleRepetitionList = possibleRepetitionArray.toArray();
         
         if(possibleRepetitionList.equals(sourceList)){
-            if (justGermanet){
-                isRepetition=false;
-            }else{
-                isRepetition=true;
-            }
+            isRepetition = !justGermanet;
             
         }else{
             for(int i=0; i<sourceList.length;i++){
@@ -624,7 +696,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
                 String s2 = (String) possibleRepetitionList[i];
                 if(!s1.equals(s2)){
                     // get synonyms for s1
-                    Set<String> synonyms = getSynonymsFromGermaNet(germanet, s1, similarity);
+                    Set<String> synonyms = getSynonymsFromGermaNet(germanet, s1, germanetItems);
                     if(!synonyms.contains(s2)){
                         isRepetition = false;
                         break;
@@ -691,7 +763,10 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         
     }
         
-    private boolean isFuzzyRepetition(SortedMap<Integer, String> source, SortedMap<Integer, String> possibleRepetitions, Boolean ignoreTokenOrder){
+    private boolean isFuzzyRepetition(
+                                SortedMap<Integer, String> source, 
+                                SortedMap<Integer, String> possibleRepetitions, 
+                                Boolean ignoreTokenOrder){
         ArrayList<String> sourceArray = new ArrayList<String>(source.values());
         if(ignoreTokenOrder){
             Collections.sort(sourceArray);
@@ -1750,7 +1825,7 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         FuzzyScore o =  new FuzzyScore(new Locale("de"));
         int fs = o.fuzzyScore(s1, s2);
         if (fs==0){
-            fs = o.fuzzyScore(s2, s1);;
+            fs = o.fuzzyScore(s2, s1);
         }
         return fs;
     }
@@ -1766,48 +1841,46 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
     /*         Help methods to get data from GermaNet                        */
     /*************************************************************************/   
     
-    private Set<String> getSynonymsFromGermaNet(
-                                            GermaNet germanet, 
-                                            String str, 
-                                            Repetition.SimilarityTypeEnum mode){
+    private Set<String> getSynonymsFromGermaNet(GermaNet germanet, 
+                                                String str, 
+                                                Set<GermaNetModeEnum> mode){
         Set<String> result = new HashSet();
         List <Synset> synsets = germanet.getSynsets(str);
             
         for (Synset synset : synsets){
-            //add orth forms, compounds info and synonyms
-            switch(mode){
-               case GERMANET:
-               case GERMANET_PLUS:
-                    result.addAll(getOrthFormsAndCompoundsForSynset(synset, str));
-                    
+            
+            List<LexUnit> lexical_units = synset.getLexUnits();
+
+            for (LexUnit lexUnit: lexical_units){
+                List<String> orth_forms = lexUnit.getOrthForms();
+
+                if (mode.contains(GermaNetModeEnum.SYN)) {
+                    result.addAll(orth_forms);
+                }
+
+                if (mode.contains(GermaNetModeEnum.COMP)) {
+                    if(orth_forms.size()==1 
+                            && orth_forms.get(0).equals(str)){
+                        // add head of compounds
+                        if(lexUnit.getCompoundInfo()!=null){
+                            result.add(lexUnit.getCompoundInfo().getHead());
+                        }
+                    }
+                }
+                
+                if (mode.contains(GermaNetModeEnum.HYPER)) {
                     for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hypernym)){
                         result.addAll(getOrthFormsForSynset(otherSynset));    
                     }
-                   
+                }
+                
+                if (mode.contains(GermaNetModeEnum.HYPO)) {
                     for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hyponym)){
                         result.addAll(getOrthFormsForSynset(otherSynset));    
                     }
-
-                   break;
-               case GERMANET_ORTH:
-                   result.addAll(getOrthFormsForSynset(synset));
-                   break;
-               case GERMANET_COMPOUNDS:
-                    result.addAll(getCompoundsForSynset(synset, str));
-                    break;
-               case GERMANET_HYPERNYM:
-                   for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hypernym)){
-                        result.addAll(getOrthFormsForSynset(otherSynset));    
-                    }
-                   break;
-               case GERMANET_HYPONYM:
-                   for (Synset otherSynset: synset.getRelatedSynsets(ConRel.has_hyponym)){
-                        result.addAll(getOrthFormsForSynset(otherSynset));    
-                    }
-                   break;
-               default:
+                }
             }
-            
+
             if (result.contains(str)){
                 result.remove(str);
             }
@@ -1826,47 +1899,5 @@ private SearchEngineResponseHitList searchRepetitions(ArrayList<String> indexPat
         
         return result;
     }
-    
-    private static Set<String> getCompoundsForSynset (Synset synset, 
-                                                     String word){
-        Set<String> result = new HashSet();
-        List<LexUnit> lexical_units = synset.getLexUnits();
 
-        for (LexUnit lexUnit: lexical_units){
-            List<String> orth_forms = lexUnit.getOrthForms();
-            
-            if(orth_forms.size()==1 
-                    && orth_forms.get(0).equals(word)){
-                // add head of compounds
-                if(lexUnit.getCompoundInfo()!=null){
-                    result.add(lexUnit.getCompoundInfo().getHead());
-                }
-            }
-        }
-        
-        return result;
-    }
-        
-    private static Set<String> getOrthFormsAndCompoundsForSynset (Synset synset, 
-                                                                  String word){
-        Set<String> result = new HashSet();
-        List<LexUnit> lexical_units = synset.getLexUnits();
-
-        for (LexUnit lexUnit: lexical_units){
-            List<String> orth_forms = lexUnit.getOrthForms();
-            
-            result.addAll(orth_forms);
-            
-            if(orth_forms.size()==1 
-                    && orth_forms.get(0).equals(word)){
-                // add head of compounds
-                if(lexUnit.getCompoundInfo()!=null){
-                    result.add(lexUnit.getCompoundInfo().getHead());
-                }
-            }
-        }
-        
-        return result;
-    }
-    
 }

@@ -519,13 +519,45 @@ and open the template in the editor.
         
     <query id="600">
         <string>[lemma="stopp"] within &lt;ses_rolle_s="Lehrer/in"/&gt;</string>
-        <description>find all forms of 'stopp' realized by teachers </description>
+        <description>find all forms of 'stopp' realized by teachers</description>
         <corpus>FOLK</corpus>
     </query>    
     <query id="601">
         <string>(&lt;word/&gt;&lt;word/&gt;&lt;word/&gt;) within &lt;e_se_lebensbereich="Bildung"/&gt;</string>
         <description>display all trigrams in the education domain</description>
         <corpus>FOLK</corpus>
+    </query>
+    
+    <!-- *********************************** UNSD ***************************** -->
+    <query id="602">
+        <string>[lemma="alle" &amp; pos="PL"]</string>
+        <description>find lemma 'alle', annotated as plural word</description>
+        <corpus>UNSD</corpus>
+    </query>
+    <query id="603">
+        <string>[lemma="laufen"][pos="VV" &amp; !lemma="laufen"]</string>
+        <description>find serial verb constructions containing the lemma 'laufen'</description>
+        <corpus>UNSD</corpus>
+    </query>
+    <query id="604">
+        <string>[word=".+ch" &amp; norm=".+g"]</string>
+        <description>find instances of g-spirantization in word-final position</description>
+        <corpus>UNSD</corpus>
+    </query>
+    <query id="605">
+        <string>[word="f.+" &amp; norm="pf.+"]</string>
+        <description>find instances of pf-deaffrication in word-initial position</description>
+        <corpus>UNSD</corpus>
+    </query>
+    <query id="606">
+        <string>[pos="FM-TP" &amp; word=".+im"]</string>
+        <description>find Tok Pisin loan words marked for transitivity</description>
+        <corpus>UNSD</corpus>
+    </query>
+    <query id="607">
+        <string>[pos="VV"][pos="(PWS|PWAV)"]&lt;/seg&gt;</string>
+        <description>find segments that end in a wh-question word preceded by a verb</description>
+        <corpus>UNSD</corpus>
     </query>
 
 </queries>
