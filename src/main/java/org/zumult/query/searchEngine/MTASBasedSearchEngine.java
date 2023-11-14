@@ -225,8 +225,7 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
             paramsCharFilterMtas.put("type", "file");
 
             Map<String, String> paramsTokenizer = new HashMap<>();
-            String configPath = new File(mtasConfigFile).getAbsolutePath();
-            paramsTokenizer.put("configFile", configPath);
+            paramsTokenizer.put("configFile", mtasConfigFile);
 
             Analyzer mtasAnalyzer;
             try {
