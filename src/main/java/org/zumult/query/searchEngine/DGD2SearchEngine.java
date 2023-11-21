@@ -81,6 +81,27 @@ public class DGD2SearchEngine extends MTASBasedSearchEngine {
     
     private static final String DONE = "DONE";
     
+    List<String> prefixListSpeakerXMLId = new ArrayList<String>(){
+        { add(Constants.METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER);}
+    };
+    
+    List<String> prefixListSpeakerOverlap = new ArrayList<String>(){
+        { add("speaker-overlap");}
+    };
+    
+    List<String> prefixListSpeakerOverlap2 = new ArrayList<String>(){
+        { add("word.type");}
+    };
+    
+        
+    List<String> prefixListInterval = new  ArrayList<String>(){
+        { add(Constants.TOKEN_INTERVAL);}
+    };
+    
+    List<String> prefixListPOS = new  ArrayList<String>(){
+        { add(Constants.ATTRIBUTE_NAME_POS);}
+    };
+    
     /*************************************************************************/
     /*                     SEARCH REPETITIONS                                */
     /*************************************************************************/

@@ -617,11 +617,11 @@ public abstract class AbstractSearcher implements Searcher {
         
     }
     
-    abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) 
+    public abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) 
             throws IOException, SearchServiceException;
     
-    abstract SearchIndexType getSearchIndexType(String searchIndex) 
+    public abstract SearchIndexType getSearchIndexType(String searchIndex) 
             throws SearchServiceException;
     
-    abstract MTASBasedSearchEngine getSearchEngine();
+    public abstract MTASBasedSearchEngine getSearchEngine();
 }

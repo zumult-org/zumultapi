@@ -243,7 +243,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }   
     
     @Override
-    protected ArrayList<String> getIndexPaths(SearchIndexType searchMode) throws IOException, SearchServiceException{
+    public ArrayList<String> getIndexPaths(SearchIndexType searchMode) throws IOException, SearchServiceException{
 
         //System.out.println("PARAMETER (SEARCH MODE): " + index);
         Pattern r = Pattern.compile(Constants.CORPUS_SIGLE_PATTERN);
@@ -308,7 +308,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    protected SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
+    public SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
         return new DGDSearchIndexType(searchIndex);
     }
     
@@ -320,7 +320,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    MTASBasedSearchEngine getSearchEngine(){
+    public MTASBasedSearchEngine getSearchEngine(){
         return new DGD2SearchEngine();
     }
 }

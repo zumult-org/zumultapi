@@ -4,16 +4,8 @@
  */
 package org.zumult.objects.implementations;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.transform.TransformerException;
-import org.jdom.Element;
-import org.w3c.dom.Document;
-import org.zumult.backend.Configuration;
-import org.zumult.io.IOHelper;
-import org.zumult.io.IOUtilities;
 import org.zumult.objects.CrossQuantification;
-import org.zumult.objects.MetadataKey;
+
 
 /**
  *

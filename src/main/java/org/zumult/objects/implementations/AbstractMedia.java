@@ -29,7 +29,7 @@ public abstract class AbstractMedia implements Media {
     
     
 
-    String[] cut(double startInSeconds, double endInSeconds) {
+    public String[] cut(double startInSeconds, double endInSeconds) {
         String thisUrlString = "";
         String thisID = getID() + "_" + UUID.randomUUID();
         switch (getType()) {
@@ -62,7 +62,7 @@ public abstract class AbstractMedia implements Media {
         return returnValue;        
     }
     
-    String[] still(double positionInSeconds){
+    public String[] still(double positionInSeconds){
         try {
             String thisUrlString = "";
             String thisID = getID() + "_" + UUID.randomUUID();

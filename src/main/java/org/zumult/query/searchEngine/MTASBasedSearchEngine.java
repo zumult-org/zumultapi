@@ -138,27 +138,7 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
         Constants.ATTRIBUTE_NAME_LEMMA, Constants.METADATA_KEY_MATCH_TYPE_WORD_TYPE,
         Constants.ATTRIBUTE_NAME_PHON
     };
-    
-    List<String> prefixListInterval = new  ArrayList<String>(){
-        { add(Constants.TOKEN_INTERVAL);}
-    };
-    
-    List<String> prefixListSpeakerXMLId = new ArrayList<String>(){
-        { add(Constants.METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER);}
-    };
-    
-    List<String> prefixListPOS = new  ArrayList<String>(){
-        { add(Constants.ATTRIBUTE_NAME_POS);}
-    };
-    
-    List<String> prefixListSpeakerOverlap = new ArrayList<String>(){
-        { add("speaker-overlap");}
-    };
-    
-    List<String> prefixListSpeakerOverlap2 = new ArrayList<String>(){
-        { add("word.type");}
-    };
-          
+              
 
     /**
      * Creates a search index.

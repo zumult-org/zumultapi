@@ -7,7 +7,6 @@ package org.zumult.backend.implementations;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +44,6 @@ import org.zumult.query.implementations.DGD2Searcher;
 import org.zumult.query.implementations.DGD2KWIC;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
-import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
 
