@@ -25,6 +25,7 @@ import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTypeEnum;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.implementations.DGD2AnnotationLayer;
@@ -322,5 +323,11 @@ public class DGD2Searcher extends AbstractSearcher {
     @Override
     public MTASBasedSearchEngine getSearchEngine(){
         return new DGD2SearchEngine();
+    }
+    
+    @Override
+    public IDList getCorporaForSearch(String searchIndex){
+        IDList corpora = Configuration.getCorpusIDs(); // corpora available for search
+        return corpora;
     }
 }

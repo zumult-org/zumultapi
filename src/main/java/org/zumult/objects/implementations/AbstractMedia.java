@@ -27,7 +27,7 @@ public abstract class AbstractMedia implements Media {
         this.urlString = urlString;
     }
     
-    
+    public abstract MediaUtilities getMediaUtilities();
 
     public String[] cut(double startInSeconds, double endInSeconds) {
         String thisUrlString = "";
@@ -39,7 +39,7 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(thisID, ".mp4");
                     // issue #70
                     outputFile.deleteOnExit();
-                    MediaUtilities.cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
+                    getMediaUtilities().cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                 } catch (IOException ex) {
                     Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,7 +51,7 @@ public abstract class AbstractMedia implements Media {
                     File outputFile2 = File.createTempFile(thisID, ".wav");
                     // issue #70
                     outputFile2.deleteOnExit();
-                    MediaUtilities.cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
+                    getMediaUtilities().cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
                     thisUrlString = outputFile2.getAbsolutePath();
                 } catch (IOException ex) {
                     Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +71,7 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(getID() + "_", ".png");
                     // issue #70
                     outputFile.deleteOnExit();
-                    MediaUtilities.getVideoImage(positionInSeconds, getURL(), outputFile.getAbsolutePath());
+                    getMediaUtilities().getVideoImage(positionInSeconds, getURL(), outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                     String[] returnValue = {thisID, thisUrlString};
                     return returnValue;        
@@ -97,7 +97,7 @@ public abstract class AbstractMedia implements Media {
 
     @Override
     public double getDuration() {
-        return MediaUtilities.getMediaDuration(getURL());
+        return getMediaUtilities().getMediaDuration(getURL());
     }
     
 }

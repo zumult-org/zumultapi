@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.objects.AnnotationLayer;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
@@ -129,5 +130,10 @@ public class COMASearcher extends AbstractSearcher {
     @Override
     public MTASBasedSearchEngine getSearchEngine(){
         return new COMASearchEngine();
+    }
+
+    @Override
+    public IDList getCorporaForSearch(String searchIndex) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

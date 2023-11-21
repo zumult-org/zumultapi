@@ -5,6 +5,8 @@
  */
 package org.zumult.objects.implementations;
 
+import org.zumult.backend.Configuration;
+import org.zumult.io.MediaUtilities;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
 
@@ -45,11 +47,15 @@ public class DGD2Media extends AbstractMedia {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public MediaUtilities getMediaUtilities(){
+        return new MediaUtilities(Configuration.getFfmpegPath());
+    }
+    
     
 
 
 
 
-    
     
 }
