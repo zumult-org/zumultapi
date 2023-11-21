@@ -42,7 +42,7 @@ public abstract class AbstractMedia implements Media {
                     getMediaUtilities().cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                 } catch (IOException ex) {
-                    Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case AUDIO:
@@ -54,7 +54,7 @@ public abstract class AbstractMedia implements Media {
                     getMediaUtilities().cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
                     thisUrlString = outputFile2.getAbsolutePath();
                 } catch (IOException ex) {
-                    Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
         }
@@ -77,7 +77,7 @@ public abstract class AbstractMedia implements Media {
                     return returnValue;        
             }
         } catch (IOException ex) {
-            Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
         
