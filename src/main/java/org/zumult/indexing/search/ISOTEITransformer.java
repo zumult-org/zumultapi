@@ -37,7 +37,7 @@ import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.ISOTEITranscript;
+import org.zumult.objects.implementations.DGD2Transcript;
 
 /**
  *
@@ -140,7 +140,7 @@ public abstract class ISOTEITransformer {
                 //transformAndSaveTranscript(transcriptDoc, metadataKeys, newFileTranscriptBased);
                 Transcript t = null;
                 try {
-                    t = new ISOTEITranscript(IOHelper.readDocument(f));
+                    t = new DGD2Transcript(IOHelper.readDocument(f));
                 } catch (SAXException | ParserConfigurationException | IOException ex) {
                     throw new IOException("Unable to parse the file " + f.getAbsolutePath(), ex);
                 }

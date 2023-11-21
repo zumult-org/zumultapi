@@ -58,6 +58,7 @@ import org.apache.lucene.search.spans.SpanWeight;
 import org.apache.lucene.search.spans.Spans;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.document.Document;
 import org.mvel2.MVEL;
 import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
@@ -69,6 +70,14 @@ import org.zumult.query.searchEngine.Repetition.PositionOverlapEnum;
 import org.zumult.query.searchEngine.Repetition.PositionSpeakerChangeEnum;
 import org.zumult.query.searchEngine.Repetition.SimilarityTypeEnum;
 import org.zumult.query.searchEngine.util.SimilarityUtilities;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+import org.zumult.io.IOHelper;
+import org.zumult.objects.Transcript;
+import org.zumult.objects.implementations.DGD2Transcript;
 
 /**
  *
@@ -102,6 +111,28 @@ public class DGD2SearchEngine extends MTASBasedSearchEngine {
         { add(Constants.ATTRIBUTE_NAME_POS);}
     };
     
+    @Override
+    public Document getDocument(File f) throws IOException {
+        
+        Document doc = new Document();
+
+        Transcript transcript = null;
+        try {
+            transcript = new DGD2Transcript(IOHelper.readDocument(f));
+        } catch (SAXException | ParserConfigurationException | IOException ex) {
+            throw new IOException("Unable to parse the file " + f.getAbsolutePath(), ex);
+        }
+        String transcriptID = transcript.getID();
+        String filename = f.getName().substring(0, f.getName().length() - XML_FILE_FORMAT.length());         
+            
+        doc.add(new StringField(FIELD_TRANSCRIPT_ID_FROM_FILE_NAME, filename, Field.Store.YES)); // is not used for searching
+        doc.add(new StringField(FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG, transcriptID, Field.Store.YES));
+        doc.add(new TextField(FIELD_TRANSCRIPT_CONTENT, f.getAbsolutePath(), Field.Store.YES));
+        doc.add(new TextField(FIELD_TRANSCRIPT_TOKEN_TOTAL, Integer.toString(transcript.getNumberOfTokens()), Field.Store.YES));
+        
+        return doc;
+    }
+        
     /*************************************************************************/
     /*                     SEARCH REPETITIONS                                */
     /*************************************************************************/

@@ -42,6 +42,7 @@ import org.zumult.objects.Measure;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.implementations.DGD2Event;
 import org.zumult.objects.implementations.DGD2Speaker;
+import org.zumult.objects.implementations.DGD2Transcript;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
@@ -236,7 +237,7 @@ public class DGD2Oracle extends AbstractIDSBackend {
                     DOMResult result = new DOMResult();
                     transformer.transform(source, result);
                     Document transformedDoc = (Document) result.getNode();            
-                    Transcript transcript = new ISOTEITranscript(transformedDoc);
+                    Transcript transcript = new DGD2Transcript(transformedDoc);
                     return transcript;
                 } catch (TransformerException ex) {
                     throw new IOException(ex);
@@ -257,7 +258,7 @@ public class DGD2Oracle extends AbstractIDSBackend {
             // AS OF 11-06-2019 (see Joachim's mail), they do!
             //xml = xml.replaceAll("<TEI>", "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\" xmlns:tei=\"http://www.tei-c.org/ns/1.0\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">");
             
-            Transcript transcript = new ISOTEITranscript(xml);
+            Transcript transcript = new DGD2Transcript(xml);
             return transcript;
     }
 
