@@ -74,7 +74,7 @@ public abstract class AbstractBackend implements BackendInterface {
             AnnotationBlock ab = new ISOTEIAnnotationBlock(IOHelper.ElementToString(annotationBlock));
             return ab;
         } catch (XPathExpressionException | TransformerException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractBackend.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
         }
         
@@ -243,7 +243,7 @@ public abstract class AbstractBackend implements BackendInterface {
                 list.add(element.getTextContent());
             }
         } catch (IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractBackend.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
