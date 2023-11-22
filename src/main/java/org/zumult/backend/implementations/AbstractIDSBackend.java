@@ -182,7 +182,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             DGD2Speaker speaker = new DGD2Speaker(doc);
             return speaker;
         } catch (IOException | XPathExpressionException | ParserConfigurationException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractIDSBackend.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

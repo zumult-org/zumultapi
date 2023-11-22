@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.ComaTranscript;
+import org.zumult.objects.implementations.COMATranscript;
 import org.zumult.query.SearchServiceException;
 import static org.zumult.query.searchEngine.MTASBasedSearchEngine.FIELD_TRANSCRIPT_CONTENT;
 import static org.zumult.query.searchEngine.MTASBasedSearchEngine.FIELD_TRANSCRIPT_ID_FROM_FILE_NAME;
@@ -44,7 +44,7 @@ public class COMASearchEngine extends MTASBasedSearchEngine {
 
         Transcript transcript = null;
         try {
-            transcript = new ComaTranscript(IOHelper.readDocument(f));
+            transcript = new COMATranscript(IOHelper.readDocument(f));
         } catch (SAXException | ParserConfigurationException | IOException ex) {
             throw new IOException("Unable to parse the file " + f.getAbsolutePath(), ex);
         }
