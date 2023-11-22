@@ -103,24 +103,7 @@ public class TestDGD2Backend {
         
         
         String idx = bi.getAnnotationBlockID4TokenID("FOLK_E_00047_SE_01_T_01", "c694");
-        System.out.println(idx);
-        
-        
-        
-        //SearchResult sr = bi.search("[word=\"kannst\"]", "cqp", "3.4", "FOLK", "0-t,0-t", 10000, 1, Boolean.FALSE, idx);
-        
-        
-        /*ArrayList<Hit> hits = sr.getHits();
-        for (Hit hit : hits){
-            ArrayList<Match> matches = hit.getMatches();
-            for (Match match : matches){
-                System.out.println(match.getID());
-            }
-        }*/
-        
-        //String xml = DGD2SearchResultSerializer.displayKWICinXML(sr);
-        //System.out.println(xml);
-        
+        System.out.println(idx);        
         
         Transcript t = bi.getTranscript("FOLK_E_00069_SE_01_T_01");
         System.out.println(t.getID());

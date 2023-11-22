@@ -483,8 +483,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
     private File createTmpFile(String fileType) throws IOException{
         File file = null;
         String actualPath = DefaultQuerySerializer.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        //String actualPath = SearchResultSerializer.class.getResource("SearchResultSerializer.class").getPath();
-        
+
         File target = new File(IOHelper.getProjectFile(actualPath), "downloads"); 
             try {         
                 file = File.createTempFile("tmp", "." + fileType, target);

@@ -24,6 +24,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
@@ -68,7 +69,7 @@ public class QuantifyCorpora implements Indexer {
     public void index() throws IOException {
                        
         try {
-            BackendInterface backend = new org.zumult.backend.implementations.AGDFileSystem();
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();;
             
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
@@ -354,7 +355,11 @@ public class QuantifyCorpora implements Indexer {
             
             System.err.println("Transcribed duration: "+totalDurationTranscribedEventsOnly);
             System.err.println("ALL tokens: "+ totalCorpusTokensAll);
-        } catch (XPathExpressionException | ParserConfigurationException ex) {
+        } catch (XPathExpressionException
+                | ParserConfigurationException
+                | ClassNotFoundException
+                | InstantiationException
+                | IllegalAccessException ex) {
             Logger.getLogger(QuantifyCorpora.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
