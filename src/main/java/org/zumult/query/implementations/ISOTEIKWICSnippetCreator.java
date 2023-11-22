@@ -21,14 +21,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.zumult.backend.BackendInterface;
-import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.IDList;
-import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.query.Hit;
 import org.zumult.query.KWICContext;
@@ -40,25 +37,17 @@ import org.zumult.query.KWICSnippet.KWICSnippetToken;
  * @author Elena
  */
 public class ISOTEIKWICSnippetCreator {
-    BackendInterface backendInterface;
     XPath xPath =  XPathFactory.newInstance().newXPath();
     
-    public ISOTEIKWICSnippetCreator(){
-        try {
-            backendInterface = BackendInterfaceFactory.newBackendInterface();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(ISOTEIKWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public DefaultKWICSnippet apply(String transcriptID, String leftMatchId, ArrayList<Hit.Match> matches, KWICContext leftContext, KWICContext rightContext) throws IOException {
-        Transcript transcript = backendInterface.getTranscript(transcriptID);
-        Document transcriptDoc = transcript.getDocument();
-        return apply(transcriptDoc, leftMatchId, matches, leftContext, rightContext);
-            
+    public ISOTEIKWICSnippetCreator() {
     }
     
-    public DefaultKWICSnippet apply(Document transcriptDoc, String leftMatchId, ArrayList<Hit.Match> matches, KWICContext leftContext, KWICContext rightContext) throws IOException {
+    public DefaultKWICSnippet apply(Document transcriptDoc, 
+                                    String leftMatchId, 
+                                    ArrayList<Hit.Match> matches, 
+                                    KWICContext leftContext, 
+                                    KWICContext rightContext) 
+                                                    throws IOException {
         
         int leftContextLength = leftContext.getLength();
         int rightContextAfterFirstMatch = getRightContextAfterFirstMatch(getHitLengthInTokens(matches) + rightContext.getLength());

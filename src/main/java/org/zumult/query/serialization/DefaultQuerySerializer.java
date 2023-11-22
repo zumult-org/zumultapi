@@ -6,11 +6,9 @@
 package org.zumult.query.serialization;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,7 +34,6 @@ import org.apache.commons.collections4.ListUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.BackendInterface;
-import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
@@ -348,63 +345,8 @@ public class DefaultQuerySerializer implements QuerySerializer {
         return null;
         
     }
- 
-
-    public File createKWICDownloadFile(KWIC ke, String fileType) throws IOException {
-
-        File file = createTmpFile(fileType);
-        ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
-        OutputStreamWriter bw = null;
-        
-        KWICContext leftContext = ke.getLeftContext();
-        KWICContext rightContext = ke.getRightContext();
-
-        try {
-            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
-            String transcriptId = "";
-            Document transcriptDoc = null;
-            bw = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
-            
-            bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            bw.write("<kwic>");
-            
-            ArrayList<Hit> hitArray = ke.getHits();
-            
-            for (Hit hit : hitArray) {
-
-                    String docID = hit.getDocId();
-                    String firstMatchID = hit.getFirstMatch().getID();
-                    String lastMatchID = hit.getLastMatch().getID();
-                    ArrayList<Hit.Match> matchArray = hit.getMatches();
-                    HashMap<String, String> metadata = hit.getMetadata();
-
-                    
-        
-                    if(!transcriptId.equals(docID)){
-                        transcriptId = docID;
-                        //System.out.println("Opening " + transcriptId);
-                        Transcript transcript = backendInterface.getTranscript(transcriptId);
-                        transcriptDoc = transcript.getDocument();
-                    }
-                
-                    bw.write(getKWICLine(docID, matchArray, firstMatchID, lastMatchID, 
-                            transcriptDoc, creator, leftContext, rightContext, metadata));
-            }  
-
-            bw.write("</kwic>");
-   
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | FileNotFoundException | UnsupportedEncodingException ex){
-            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (bw!=null){
-                bw.close();
-            }
-        }
-
-        return file;
-    }
-        
-    public File createKWICDownloadFileWithThreads(KWIC ke, String fileType) throws IOException {
+         
+    public File createKWICDownloadFile(KWIC ke, String fileType, BackendInterface backendInterface) throws IOException {
 
         File file = createTmpFile(fileType);
         ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
@@ -414,7 +356,6 @@ public class DefaultQuerySerializer implements QuerySerializer {
         KWICContext rightContext = ke.getRightContext();
 
         try {
-            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
 
             bw = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
             
@@ -469,10 +410,8 @@ public class DefaultQuerySerializer implements QuerySerializer {
                     
         linkedQueue.put(DONE);
    
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | FileNotFoundException | UnsupportedEncodingException ex){
-            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | InterruptedException ex) {
-            
+            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
         }finally {
             
         }
