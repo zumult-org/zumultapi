@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.query.StatisticEntry;
 import org.zumult.query.SearchStatistics;
-import org.zumult.query.serialization.SearchResultSerializer;
+import org.zumult.query.serialization.DefaultQuerySerializer;
 
 /**
  *
@@ -60,7 +60,7 @@ public class DefaultSearchStatistics extends AbstractSearchResultPlus implements
     
     @Override
     public String toXML() {
-        SearchResultSerializer searchResultSerializer = new SearchResultSerializer();
+        DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
         return searchResultSerializer.displayStatiscticsInXML(this);
     }
 

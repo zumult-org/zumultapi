@@ -15,8 +15,10 @@ import org.zumult.query.KWICSnippet;
 import org.zumult.query.MetadataQuery;
 import org.zumult.query.Pagination;
 import org.zumult.query.SearchQuery;
-import org.zumult.query.serialization.SearchResultSerializer;
+import org.zumult.query.serialization.DefaultQuerySerializer;
 import org.zumult.query.AdditionalSearchConstraint;
+import org.zumult.query.serialization.DGD2QuerySerializer;
+import org.zumult.query.serialization.QuerySerializer;
 
 /**
  *
@@ -61,8 +63,8 @@ public class DGD2KWIC<T> extends AbstractKWIC {
     private void createKWICSnippets(String fileType) 
             throws IOException, SearchServiceException{
         
-        SearchResultSerializer searchResultSerializer = 
-                new SearchResultSerializer();
+        DefaultQuerySerializer searchResultSerializer = 
+                new DefaultQuerySerializer();
         setKWICSnippets((T) searchResultSerializer.
                 createKWICDownloadFileWithThreads(this, fileType));
         //setKWICSnippets((T) searchResultSerializer.createKWICDownloadFile(this, fileType));
@@ -82,14 +84,13 @@ public class DGD2KWIC<T> extends AbstractKWIC {
     @Override
     public String toXML(){
         if(type.equals(Constants.SEARCH_TYPE_DOWNLOAD)){
-             SearchResultSerializer searchResultSerializer = new SearchResultSerializer();
+             DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
             return searchResultSerializer.displayKWICExportInXML(this);
         }else{
-            SearchResultSerializer searchResultSerializer = new SearchResultSerializer();
+            QuerySerializer searchResultSerializer = new DGD2QuerySerializer();
             return searchResultSerializer.displayKWICinXML(this);
         }
     }
-
 
     @Override
     public T getKWICSnippets() {

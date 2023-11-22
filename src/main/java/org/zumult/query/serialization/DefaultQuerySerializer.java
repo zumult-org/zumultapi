@@ -46,68 +46,68 @@ import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
-import org.zumult.query.implementations.DGDSearchIndexType.DGD2SearchIndexTypeEnum;
 import org.zumult.query.implementations.ISOTEIKWICSnippetCreator;
 
 /**
  *
  * @author Elena Frick
  */
-public class SearchResultSerializer {
+public class DefaultQuerySerializer implements QuerySerializer {
     
-    private static final String START_INTERVAL = "startInterval";
-    private static final String END_INTERVAL = "endInterval";
-    private static final String QUERY_PART = "query";
-    private static final String CORPUS_QUERY_PART = "corpusQuery";
-    private static final String ADDITIONAL_METADATA_QUERY_PART = "metadataQuery";
-    private static final String ADDITIONAL_SAERCH_CONSTRAINTS = "additionalSearchConstraints";
-    private static final String CUTOFF = "cutoff";
-    private static final String TOTAL_RESULTS = "total";
-    private static final String TOTAL_TRANSCRIPTS = "totalTranscripts";
-    private static final String SEARCH_TIME = "searchTime";
-    private static final String DISTINCT_VALUES = "distinctValues";
-    private static final String META_PART = "meta";
-    private static final String XML_ROOT = "response";
-    private static final String ITEMS_PER_PAGE = "itemsPerPage";
-    private static final String PAGE_START_INDEX = "pageStartIndex";
-    private static final String CONTEXT = "context";
-    private static final String CONTEXT_LENGTH = "length";
-    private static final String CONTEXT_ITEM = "item";
-    private static final String CONTEXT_LEFT = "left";
-    private static final String CONTEXT_RIGHT = "right";
-    private static final String HIT = "hit";
-    private static final String HITS_PART = "hits";
-    private static final String SNIPPET = "snippet";
-    private static final String START_MORE_MARKER = "isStartMore";
-    private static final String END_MORE_MARKER = "isEndMore";
-    private static final String ROW = "row";
-    private static final String SOURCE = "source";
-    private static final String MEDIA = "media";
-    private static final String MATCH = "match";
-    private static final String PARENT = "parent";
-    private static final String MODE = "searchMode";
-    private static final String CODE = "code";
-    private static final String SPEAKER_ID_MARKER = "who";
-    private static final String STATISTICS_TYPE = "metadataKey";
-    private static final String ITEMS = "items";
-    private static final String ITEM = "item";
-    private static final String METADATA_VALUE = "metadataValue";
-    private static final String NUMBER_OF_HITS = "numberOfHits";
-    private static final String FILE = "file";
+    protected static final String START_INTERVAL = "startInterval";
+    protected static final String END_INTERVAL = "endInterval";
+    protected static final String QUERY_PART = "query";
+    protected static final String CORPUS_QUERY_PART = "corpusQuery";
+    protected static final String ADDITIONAL_METADATA_QUERY_PART = "metadataQuery";
+    protected static final String ADDITIONAL_SAERCH_CONSTRAINTS = "additionalSearchConstraints";
+    protected static final String CUTOFF = "cutoff";
+    protected static final String TOTAL_RESULTS = "total";
+    protected static final String TOTAL_TRANSCRIPTS = "totalTranscripts";
+    protected static final String SEARCH_TIME = "searchTime";
+    protected static final String DISTINCT_VALUES = "distinctValues";
+    protected static final String META_PART = "meta";
+    protected static final String XML_ROOT = "response";
+    protected static final String ITEMS_PER_PAGE = "itemsPerPage";
+    protected static final String PAGE_START_INDEX = "pageStartIndex";
+    protected static final String CONTEXT = "context";
+    protected static final String CONTEXT_LENGTH = "length";
+    protected static final String CONTEXT_ITEM = "item";
+    protected static final String CONTEXT_LEFT = "left";
+    protected static final String CONTEXT_RIGHT = "right";
+    protected static final String HIT = "hit";
+    protected static final String HITS_PART = "hits";
+    protected static final String SNIPPET = "snippet";
+    protected static final String START_MORE_MARKER = "isStartMore";
+    protected static final String END_MORE_MARKER = "isEndMore";
+    protected static final String ROW = "row";
+    protected static final String SOURCE = "source";
+    protected static final String MEDIA = "media";
+    protected static final String MATCH = "match";
+    protected static final String PARENT = "parent";
+    protected static final String MODE = "searchMode";
+    protected static final String CODE = "code";
+    protected static final String SPEAKER_ID_MARKER = "who";
+    protected static final String STATISTICS_TYPE = "metadataKey";
+    protected static final String ITEMS = "items";
+    protected static final String ITEM = "item";
+    protected static final String METADATA_VALUE = "metadataValue";
+    protected static final String NUMBER_OF_HITS = "numberOfHits";
+    protected static final String FILE = "file";
     
     private static final String DONE = "DONE";
     
     DocumentBuilder db;
     
-    public SearchResultSerializer(){
+    public DefaultQuerySerializer() {
         try{
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
         } catch (ParserConfigurationException ex){
-            Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    @Override
     public String displayKWICinXML(KWIC obj) {
 
             Document document = db.newDocument();
@@ -153,11 +153,7 @@ public class SearchResultSerializer {
             code.setTextContent(obj.getSearchMode());
             mode.appendChild(code);
             meta.appendChild(mode);
-            
-            if (obj.getSearchMode().startsWith(DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name())){
-                totalTranscripts.setTextContent(String.valueOf(-1));
-            }
-            
+                        
             meta.appendChild(total);
             meta.appendChild(totalTranscripts);
             
@@ -345,7 +341,7 @@ public class SearchResultSerializer {
                 Element desc =  (Element) tokenElement.getElementsByTagName(Constants.ATTRIBUTE_NAME_DESC).item(0);
                 return desc.getAttribute(Constants.ATTRIBUTE_NAME_REND);
             }catch(java.lang.ClassCastException ex){
-                Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println(token.toString());
             }
         }
@@ -398,7 +394,7 @@ public class SearchResultSerializer {
             bw.write("</kwic>");
    
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | FileNotFoundException | UnsupportedEncodingException ex){
-            Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (bw!=null){
                 bw.close();
@@ -453,7 +449,7 @@ public class SearchResultSerializer {
                             Transcript transcript = backendInterface.getTranscript(transcriptId);
                             transcriptDoc = transcript.getDocument();
                         } catch (IOException ex) {
-                            Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     
@@ -463,9 +459,9 @@ public class SearchResultSerializer {
                                 leftContext, rightContext, metadata);
                         linkedQueue.put(line);
                     } catch (IOException ex) {
-                        Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                             
                 } 
@@ -474,7 +470,7 @@ public class SearchResultSerializer {
         linkedQueue.put(DONE);
    
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | FileNotFoundException | UnsupportedEncodingException ex){
-            Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | InterruptedException ex) {
             
         }finally {
@@ -486,7 +482,7 @@ public class SearchResultSerializer {
     
     private File createTmpFile(String fileType) throws IOException{
         File file = null;
-        String actualPath = SearchResultSerializer.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String actualPath = DefaultQuerySerializer.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         //String actualPath = SearchResultSerializer.class.getResource("SearchResultSerializer.class").getPath();
         
         File target = new File(IOHelper.getProjectFile(actualPath), "downloads"); 
@@ -670,7 +666,7 @@ public class SearchResultSerializer {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (IOException ex) {
-                Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -679,7 +675,7 @@ public class SearchResultSerializer {
             try {
                 bw.write(take);
             } catch (IOException ex) {
-                Logger.getLogger(SearchResultSerializer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
