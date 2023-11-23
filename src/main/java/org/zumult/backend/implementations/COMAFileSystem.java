@@ -50,6 +50,7 @@ import org.zumult.objects.implementations.COMACommunication;
 import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
+import org.zumult.objects.implementations.COMATranscript;
 import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
@@ -236,7 +237,7 @@ public class COMAFileSystem extends AbstractBackend {
             String xmlString = IOHelper.readUTF8(resolvedPath);
             String metadataString = IOHelper.ElementToString(transcriptionElement);
             
-            return new ISOTEITranscript(xmlString, metadataString);
+            return new COMATranscript(xmlString, metadataString);
 
         } catch (XPathExpressionException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);

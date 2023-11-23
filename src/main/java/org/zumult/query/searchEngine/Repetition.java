@@ -393,9 +393,13 @@ public class Repetition {
                     
                     throw new SearchServiceException(message);
                 }
-            }
+            } 
             
             this.similarity.germaNetMode = germaNetItemsSet;
+        } else {            
+            throw new SearchServiceException("You have not specified "
+                + "which items (synonyms, hyponyms, hypernyms or compounds)"
+                + " should be included when using GermaNet");
         }
     }
 

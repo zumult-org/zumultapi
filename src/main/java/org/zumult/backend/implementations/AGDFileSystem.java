@@ -35,7 +35,7 @@ import org.zumult.objects.implementations.DGD2Corpus;
 import org.zumult.objects.implementations.DGD2Event;
 import org.zumult.objects.implementations.DGD2Protocol;
 import org.zumult.objects.implementations.DGD2Speaker;
-import org.zumult.objects.implementations.ISOTEITranscript;
+import org.zumult.objects.implementations.DGD2Transcript;
 
 
 /**
@@ -132,7 +132,7 @@ public class AGDFileSystem extends AbstractIDSBackend {
         if (!transcriptFile.exists()) throw new IOException("No transcript with ID " + transcriptID + " in " + corpusFolder);
         
         String transcriptXML = IOHelper.readUTF8(transcriptFile);
-        Transcript transcript = new ISOTEITranscript(transcriptXML);
+        Transcript transcript = new DGD2Transcript(transcriptXML);
         return transcript;
     }
 

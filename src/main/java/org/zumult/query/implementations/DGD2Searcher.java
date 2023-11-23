@@ -25,6 +25,7 @@ import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTypeEnum;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.implementations.DGD2AnnotationLayer;
@@ -243,7 +244,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }   
     
     @Override
-    protected ArrayList<String> getIndexPaths(SearchIndexType searchMode) throws IOException, SearchServiceException{
+    public ArrayList<String> getIndexPaths(SearchIndexType searchMode) throws IOException, SearchServiceException{
 
         //System.out.println("PARAMETER (SEARCH MODE): " + index);
         Pattern r = Pattern.compile(Constants.CORPUS_SIGLE_PATTERN);
@@ -308,7 +309,7 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    protected SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
+    public SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
         return new DGDSearchIndexType(searchIndex);
     }
     
@@ -320,7 +321,13 @@ public class DGD2Searcher extends AbstractSearcher {
     }
     
     @Override
-    MTASBasedSearchEngine getSearchEngine(){
+    public MTASBasedSearchEngine getSearchEngine(){
         return new DGD2SearchEngine();
+    }
+    
+    @Override
+    public IDList getCorporaForSearch(String searchIndex){
+        IDList corpora = Configuration.getCorpusIDs(); // corpora available for search
+        return corpora;
     }
 }

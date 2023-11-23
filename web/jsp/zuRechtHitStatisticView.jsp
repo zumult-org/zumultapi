@@ -27,7 +27,6 @@
 <%@page import="java.lang.Integer"%>
 <%@page import="org.zumult.io.Constants"%>
 <%@page import="org.zumult.io.IOHelper"%>
-<%@page import="org.zumult.query.serialization.SearchResultSerializer"%>
 <%@page import="org.zumult.query.searchEngine.SortTypeEnum"%>
 <%@page import="org.zumult.query.SearchStatistics"%>
 <%@page import="org.zumult.backend.BackendInterfaceFactory"%>

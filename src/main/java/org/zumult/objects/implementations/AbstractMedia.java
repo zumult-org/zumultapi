@@ -27,9 +27,9 @@ public abstract class AbstractMedia implements Media {
         this.urlString = urlString;
     }
     
-    
+    public abstract MediaUtilities getMediaUtilities();
 
-    String[] cut(double startInSeconds, double endInSeconds) {
+    public String[] cut(double startInSeconds, double endInSeconds) {
         String thisUrlString = "";
         String thisID = getID() + "_" + UUID.randomUUID();
         switch (getType()) {
@@ -39,10 +39,10 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(thisID, ".mp4");
                     // issue #70
                     outputFile.deleteOnExit();
-                    MediaUtilities.cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
+                    getMediaUtilities().cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                 } catch (IOException ex) {
-                    Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case AUDIO:
@@ -51,10 +51,10 @@ public abstract class AbstractMedia implements Media {
                     File outputFile2 = File.createTempFile(thisID, ".wav");
                     // issue #70
                     outputFile2.deleteOnExit();
-                    MediaUtilities.cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
+                    getMediaUtilities().cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
                     thisUrlString = outputFile2.getAbsolutePath();
                 } catch (IOException ex) {
-                    Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
         }
@@ -62,7 +62,7 @@ public abstract class AbstractMedia implements Media {
         return returnValue;        
     }
     
-    String[] still(double positionInSeconds){
+    public String[] still(double positionInSeconds){
         try {
             String thisUrlString = "";
             String thisID = getID() + "_" + UUID.randomUUID();
@@ -71,13 +71,13 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(getID() + "_", ".png");
                     // issue #70
                     outputFile.deleteOnExit();
-                    MediaUtilities.getVideoImage(positionInSeconds, getURL(), outputFile.getAbsolutePath());
+                    getMediaUtilities().getVideoImage(positionInSeconds, getURL(), outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                     String[] returnValue = {thisID, thisUrlString};
                     return returnValue;        
             }
         } catch (IOException ex) {
-            Logger.getLogger(DGD2Media.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
         
@@ -97,7 +97,7 @@ public abstract class AbstractMedia implements Media {
 
     @Override
     public double getDuration() {
-        return MediaUtilities.getMediaDuration(getURL());
+        return getMediaUtilities().getMediaDuration(getURL());
     }
     
 }

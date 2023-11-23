@@ -14,7 +14,6 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import org.zumult.backend.Configuration;
 import org.zumult.objects.Media;
 
 /**
@@ -22,10 +21,15 @@ import org.zumult.objects.Media;
  * @author Thomas.Schmidt
  */
 public class MediaUtilities {
+    String ffmpegPath;
     
+    public MediaUtilities(String ffmpegPath){
+        this.ffmpegPath = ffmpegPath;
+    }
 
-    public static void getVideoImage(double time, String pathToInputFile, String pathToOutputFile) throws IOException{
-        String FFMPEGPATH = Configuration.getFfmpegPath();
+    public void getVideoImage(double time, String pathToInputFile, 
+                              String pathToOutputFile) throws IOException{
+
         File sourceFile = new File(pathToInputFile);
         File targetFile = new File(pathToOutputFile);
         
@@ -36,7 +40,7 @@ public class MediaUtilities {
         
 
         String[] commandAndParameters = {
-            FFMPEGPATH,
+            ffmpegPath,
             "-y",
             "-ss",
             Double.toString(time),
@@ -62,15 +66,18 @@ public class MediaUtilities {
         
     }
     
-    public static void cutVideo(double startTime, double endTime, String pathToInputFile, String pathToOutputFile) throws IOException {
+    public void cutVideo(double startTime, 
+                                double endTime, 
+                                String pathToInputFile, 
+                                String pathToOutputFile) throws IOException {
         //String FFMPEGPATH = "ffmpeg";
         //String FFMPEGPATH = "C:\\Program Files\\ffmpeg-20191101-53c21c2-win64-static\\bin\\ffmpeg.exe";
-        String FFMPEGPATH = Configuration.getFfmpegPath();
+
         File sourceFile = new File(pathToInputFile);
         File targetFile = new File(pathToOutputFile);
         
         String[] commandAndParameters = {
-            FFMPEGPATH,
+            ffmpegPath,
             "-y",
             "-i",
             sourceFile.getAbsolutePath(),
@@ -98,7 +105,7 @@ public class MediaUtilities {
     }
 
 
-    public static void cutAudio(double startTime, double endTime, String pathToInputFile, String pathToOutputFile) throws IOException {            
+    public void cutAudio(double startTime, double endTime, String pathToInputFile, String pathToOutputFile) throws IOException {            
         AudioInputStream audioInputStream;
 
         System.out.println("Cutting " + pathToInputFile);
@@ -139,7 +146,7 @@ public class MediaUtilities {
         audioInputStream.close();
     }
 
-    public static double getMediaDuration(String url) {
+    public double getMediaDuration(String url) {
         if (url.toUpperCase().endsWith(".WAV")){
             AudioInputStream audioInputStream = null;
             try {

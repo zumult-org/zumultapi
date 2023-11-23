@@ -81,7 +81,7 @@
                       </div>
                     </div>            
                     <div class="card mb-3">
-                      <img class="card-img-top" src="./images/query.png" alt="Card image cap">
+                      <img class="card-img-top" src="./images/query.jpg" alt="Card image cap">
                       <div class="card-body">
                         <h5 class="card-title">ZuRecht</h5>
                         <p class="card-text"><%=myResources.getString("ZuRechtShort")%></p>

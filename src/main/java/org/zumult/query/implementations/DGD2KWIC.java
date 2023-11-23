@@ -7,7 +7,13 @@ package org.zumult.query.implementations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.w3c.dom.Document;
+import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.io.Constants;
+import org.zumult.objects.Transcript;
 import org.zumult.query.Hit;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
@@ -15,8 +21,10 @@ import org.zumult.query.KWICSnippet;
 import org.zumult.query.MetadataQuery;
 import org.zumult.query.Pagination;
 import org.zumult.query.SearchQuery;
-import org.zumult.query.serialization.SearchResultSerializer;
+import org.zumult.query.serialization.DefaultQuerySerializer;
 import org.zumult.query.AdditionalSearchConstraint;
+import org.zumult.query.serialization.DGD2QuerySerializer;
+import org.zumult.query.serialization.QuerySerializer;
 
 /**
  *
@@ -60,36 +68,49 @@ public class DGD2KWIC<T> extends AbstractKWIC {
     
     private void createKWICSnippets(String fileType) 
             throws IOException, SearchServiceException{
-        
-        SearchResultSerializer searchResultSerializer = 
-                new SearchResultSerializer();
-        setKWICSnippets((T) searchResultSerializer.
-                createKWICDownloadFileWithThreads(this, fileType));
-        //setKWICSnippets((T) searchResultSerializer.createKWICDownloadFile(this, fileType));
-        
+
+        try {
+            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();     
+            DefaultQuerySerializer searchResultSerializer = 
+                    new DefaultQuerySerializer();
+            setKWICSnippets((T) searchResultSerializer
+                    .createKWICDownloadFile(this, fileType, backendInterface));
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
     
     private void createKWICSnippets() throws IOException, SearchServiceException{
             ArrayList arrayList = new ArrayList<>();
-            ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
-            for (Hit row : (ArrayList<Hit>) searchResult.getHits()){
-                    KWICSnippet snippetObj = creator.apply(row.getDocId(), row.getFirstMatch().getID(), row.getMatches(), getLeftContext(), getRightContext());
+            try {
+                ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
+                BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
+
+                for (Hit row : (ArrayList<Hit>) searchResult.getHits()){
+                    Transcript transcript = backendInterface.getTranscript(row.getDocId());
+                    Document transcriptDoc = transcript.getDocument();
+
+                    KWICSnippet snippetObj = creator.apply(transcriptDoc, row.getFirstMatch().getID(), row.getMatches(), getLeftContext(), getRightContext());
                     arrayList.add(snippetObj);
-            }
+                }
+  
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
             setKWICSnippets((T) arrayList);
     }
     
     @Override
     public String toXML(){
         if(type.equals(Constants.SEARCH_TYPE_DOWNLOAD)){
-             SearchResultSerializer searchResultSerializer = new SearchResultSerializer();
+             DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
             return searchResultSerializer.displayKWICExportInXML(this);
         }else{
-            SearchResultSerializer searchResultSerializer = new SearchResultSerializer();
+            QuerySerializer searchResultSerializer = new DGD2QuerySerializer();
             return searchResultSerializer.displayKWICinXML(this);
         }
     }
-
 
     @Override
     public T getKWICSnippets() {

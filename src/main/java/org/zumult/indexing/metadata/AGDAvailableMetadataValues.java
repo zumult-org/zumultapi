@@ -20,6 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.Constants;
 import org.zumult.io.IOUtilities;
@@ -51,7 +52,7 @@ public class AGDAvailableMetadataValues implements Indexer {
     @Override
     public void index() throws IOException {        
         try {
-            BackendInterface backend = new org.zumult.backend.implementations.AGDFileSystem();
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();;
             IDList corpora = backend.getCorpora();
                        
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -172,6 +173,8 @@ public class AGDAvailableMetadataValues implements Indexer {
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(AGDAvailableMetadataValues.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(AGDAvailableMetadataValues.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

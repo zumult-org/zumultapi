@@ -56,9 +56,6 @@ import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
@@ -74,12 +71,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.index.IndexNotFoundException;
 import org.apache.lucene.store.FSDirectory;
 import org.zumult.objects.IDList;
-import org.zumult.objects.Transcript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.io.IOHelper;
-import org.zumult.objects.implementations.ISOTEITranscript;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 import org.zumult.io.Constants;
 import org.zumult.query.Hit;
 import org.zumult.query.StatisticEntry;
@@ -100,12 +93,12 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
     private IndexWriterConfig config;
     
     protected static final int TIMEOUT = 10 * 60 * 1000;
-    private static final String FIELD_TRANSCRIPT_ID_FROM_FILE_NAME = "fileName";
-    protected static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = Constants.METADATA_KEY_TRANSCRIPT_DGD_ID; //t_dgd_kennung
-    protected static final String FIELD_TRANSCRIPT_CONTENT = "content";
-    private static final String FIELD_TRANSCRIPT_TOKEN_TOTAL = "tokenTotal";  // number of word tokens in transcript
+    public static final String FIELD_TRANSCRIPT_ID_FROM_FILE_NAME = "fileName";
+    public static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = Constants.METADATA_KEY_TRANSCRIPT_DGD_ID; //t_dgd_kennung
+    public static final String FIELD_TRANSCRIPT_CONTENT = "content";
+    public static final String FIELD_TRANSCRIPT_TOKEN_TOTAL = "tokenTotal";  // number of word tokens in transcript
 
-    private static final String XML_FILE_FORMAT = ".XML";
+    public static final String XML_FILE_FORMAT = ".XML";
     
     private static final String METADATA_NO_VALUE = "Annotation tag without value";
     private static final String METADATA_VALUE_NOT_AVAILABLE = "not available";
@@ -138,27 +131,7 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
         Constants.ATTRIBUTE_NAME_LEMMA, Constants.METADATA_KEY_MATCH_TYPE_WORD_TYPE,
         Constants.ATTRIBUTE_NAME_PHON
     };
-    
-    List<String> prefixListInterval = new  ArrayList<String>(){
-        { add(Constants.TOKEN_INTERVAL);}
-    };
-    
-    List<String> prefixListSpeakerXMLId = new ArrayList<String>(){
-        { add(Constants.METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER);}
-    };
-    
-    List<String> prefixListPOS = new  ArrayList<String>(){
-        { add(Constants.ATTRIBUTE_NAME_POS);}
-    };
-    
-    List<String> prefixListSpeakerOverlap = new ArrayList<String>(){
-        { add("speaker-overlap");}
-    };
-    
-    List<String> prefixListSpeakerOverlap2 = new ArrayList<String>(){
-        { add("word.type");}
-    };
-          
+              
 
     /**
      * Creates a search index.
@@ -326,26 +299,7 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
         }
     }
     
-    private Document getDocument(File f) throws IOException {
-        
-        Document doc = new Document();
-
-        Transcript transcript = null;
-        try {
-            transcript = new ISOTEITranscript(IOHelper.readDocument(f));
-        } catch (SAXException | ParserConfigurationException | IOException ex) {
-            throw new IOException("Unable to parse the file " + f.getAbsolutePath(), ex);
-        }
-        String transcriptID = transcript.getID();
-        String filename = f.getName().substring(0, f.getName().length() - XML_FILE_FORMAT.length());         
-            
-        doc.add(new StringField(FIELD_TRANSCRIPT_ID_FROM_FILE_NAME, filename, Field.Store.YES)); // is not used for searching
-        doc.add(new StringField(FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG, transcriptID, Field.Store.YES));
-        doc.add(new TextField(FIELD_TRANSCRIPT_CONTENT, f.getAbsolutePath(), Field.Store.YES));
-        doc.add(new TextField(FIELD_TRANSCRIPT_TOKEN_TOTAL, Integer.toString(transcript.getNumberOfTokens()), Field.Store.YES));
-        
-        return doc;
-    }
+    public abstract Document getDocument(File f) throws IOException ;
     
     private String getDistinctValues(String queryString, String transcript, String metadataKeyID, ArrayList<String> indexPaths, 
             Integer from, Integer to, SortTypeEnum sortType, String typeName, HashMap<String, String[]> wordLists) throws SearchServiceException, IOException{

@@ -20,7 +20,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.TimeUtilities;
@@ -540,12 +539,6 @@ public abstract class AbstractSearcher implements Searcher {
         
         return result;
     }
-
-    @Override
-    public IDList getCorporaForSearch(String searchIndex){
-        IDList corpora = Configuration.getCorpusIDs();
-        return corpora;
-    }
     
     private HashMap<String, HashSet> getSynonymMap (String synonyms) 
             throws IOException, SearchServiceException{
@@ -617,11 +610,11 @@ public abstract class AbstractSearcher implements Searcher {
         
     }
     
-    abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) 
+    public abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) 
             throws IOException, SearchServiceException;
     
-    abstract SearchIndexType getSearchIndexType(String searchIndex) 
+    public abstract SearchIndexType getSearchIndexType(String searchIndex) 
             throws SearchServiceException;
     
-    abstract MTASBasedSearchEngine getSearchEngine();
+    public abstract MTASBasedSearchEngine getSearchEngine();
 }

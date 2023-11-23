@@ -22,7 +22,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
-import org.zumult.objects.MetadataKey;
 import org.zumult.objects.TokenFilter;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
@@ -31,7 +30,7 @@ import org.zumult.objects.Transcript;
  *
  * @author Thomas_Schmidt
  */
-public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
+public abstract class ISOTEITranscript extends AbstractXMLObject implements Transcript {
 
     XPath xPath = XPathFactory.newInstance().newXPath();
     
@@ -212,9 +211,9 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
             
             
             if(metadata!=null){
-                return new ISOTEITranscript(copyDocument, metadata.getDocument());
+                return createNewInstance(copyDocument, metadata.getDocument());
             }else {
-                return new ISOTEITranscript(copyDocument);
+                return createNewInstance(copyDocument);
             }
 
         } catch (TransformerException | IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
@@ -681,36 +680,8 @@ public class ISOTEITranscript extends AbstractXMLObject implements Transcript {
         }
         
     }
-
-    @Override
-    public String getMetadataValue(MetadataKey key) {
-        // for issue #146
-        // this is tricky because we can only assume that the Metadata is some XML fragment
-        // the exact implementation of MetadataKey can help to determine
-        // how to do this, though
-        // for the moment, will only provide a value for COMA
-        if (key instanceof COMAMetadataKey comaKey){
-            /*
-            <Description>
-                <Key Name="transcription-name">60-414-1-3-a</Key>
-                <Key Name="Section ID">60-414-1-3-a</Key>
-                <Key Name="Section Title">Spoke German with husband, How they met</Key>
-                <Key Name="Section Type">Open-ended</Key>
-              </Description>            
-            */
-            XPath theXPath = XPathFactory.newInstance().newXPath();
-            try {
-                Element keyElement = 
-                        ((Element)theXPath.evaluate("//Key[@Name='" + comaKey.getName("en") + "']", metadata.getDocument().getDocumentElement(), XPathConstants.NODE));
-                if (keyElement==null) return null;
-                return keyElement.getTextContent();
-            } catch (XPathExpressionException ex) {
-                Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
-            }            
-        } else if (key instanceof DGD2MetadataKey dgd2Key){
-            // this remains to do, in case we need it (says TS, 01-09-2023)
-        }
-        return null;
-    }
+    
+    public abstract ISOTEITranscript createNewInstance(Document transcriptDocument, Document metadataDocument);
+    public abstract ISOTEITranscript createNewInstance(Document transcriptDocument);
     
 }

@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.MediaUtilities;
 import org.zumult.objects.IDList;
@@ -66,7 +67,7 @@ public class VideoImageCreater {
                 double time = transcript.getTimeForID(annotationBlockID);
                 String fileName = video.getID() + "_" + time + ".png";
                 File outputFile = new File(DONWLOAD_DIRECTORY + "\\"+ fileName);
-                MediaUtilities.getVideoImage(time, video.getURL(), outputFile.getAbsolutePath());
+                new MediaUtilities(Configuration.getFfmpegPath()).getVideoImage(time, video.getURL(), outputFile.getAbsolutePath());
             }
             
         }catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {

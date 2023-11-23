@@ -5,6 +5,8 @@
  */
 package org.zumult.objects.implementations;
 
+import org.zumult.backend.Configuration;
+import org.zumult.io.MediaUtilities;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
 
@@ -45,6 +47,9 @@ public class COMAMedia extends AbstractMedia {
     }
 
 
-    
+    @Override
+    public MediaUtilities getMediaUtilities(){
+        return new MediaUtilities(Configuration.getFfmpegPath());
+    }
     
 }

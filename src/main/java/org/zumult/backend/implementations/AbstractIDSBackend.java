@@ -7,7 +7,6 @@ package org.zumult.backend.implementations;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +44,6 @@ import org.zumult.query.implementations.DGD2Searcher;
 import org.zumult.query.implementations.DGD2KWIC;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
-import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
 
@@ -184,7 +182,7 @@ public abstract class AbstractIDSBackend extends AbstractBackend {
             DGD2Speaker speaker = new DGD2Speaker(doc);
             return speaker;
         } catch (IOException | XPathExpressionException | ParserConfigurationException ex) {
-            Logger.getLogger(AGDFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractIDSBackend.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
