@@ -160,6 +160,11 @@
     }
                 
     function createAutocompleteWithPOS(selector, inputRight, inputLeft){
+                        
+        var checkedCorpora = [];
+        $.each($("input[name='corpus']:checked"), function(){
+            checkedCorpora.push($(this).val());
+        });
         //var parser = new DOMParser();
         //var posTagSetXML = parser.parseFromString(posTagSet, "text/xml");
                                     
@@ -170,6 +175,13 @@
             .appendTo($("#autocompleteForQueryInputField"));
                                     
         $(posTagSetXML).find("[name='POS-tags']").children("category").each(function () {
+            
+            // exclude or include UNSD
+            var name = $(this).attr('name');
+            if (!checkedCorpora.includes('UNSD') && name.startsWith("UNSD")){
+                return;
+            }
+                    
             var optgroup = $('<optgroup/>')
                 .addClass('autocompleteForQueryInputField')
                 .attr("label", $(this).attr("name"))
@@ -180,14 +192,14 @@
             });
         });
 
-        var optgroupSpecial = $('<optgroup/>')
+      /*  var optgroupSpecial = $('<optgroup/>')
             .addClass('autocompleteForQueryInputField')
             .attr("label", 'Extra-tags')
             .appendTo($(sel));
 
         $(posTagSetXML).find("[name='Extra-tags']").children("category").each(function () {
             addPOSOptionToAutocomplete(selector, this, sel, inputRight, inputLeft);
-        });
+        });*/
     }
             
     function addPOSOptionToAutocomplete(selector, obj, sel, inputRight, inputLeft){

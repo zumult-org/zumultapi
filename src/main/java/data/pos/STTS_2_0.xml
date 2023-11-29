@@ -10,22 +10,28 @@
             geeigneten regulären Ausdruck, z.B. N.{1,} gesucht
             werden. Das braucht hier aber nicht geändert zu werden-->
             <category name="Nomina">
+                <!-- Abschnitttitel -->
                 <tag name="N"/>
-                <description></description>
+                <description/>
                 <!-- Das ist jetzt eine echte Kategorie, d.h. eine Wortart, für
                 die es ein POS-Tag gibt. -->
                 <category name="Apellativa">
+                    <!-- Zweite Spalte -->
                     <tag name="NN"/>
+                    <!-- Erste Spalte -->
                     <description>Tisch, Herr, [das] Reisen</description>
+                    <!-- Dritte Spalte -->
                 </category>
                 <category name="Eigennamen">
                     <tag name="NE"/>
                     <description>Hans, Hamburg, HSV</description>
                 </category>
             </category>
+            <!-- end nomina -->
+
             <category name="Verben">
                 <tag name="V"/>
-                <description></description>
+                <description/>
                 <category name="finites Verb, voll">
                     <tag name="VVFIN"/>
                     <description>[du] gehst, [wir] kommen [an]</description>
@@ -75,9 +81,28 @@
                     <description>[er hat] gekonnt</description>
                 </category>
             </category>
+            <!-- end verben -->
+
+            <category name="UNSD: Default-Verbformen">
+                <tag name="V"/>
+                <description/>
+                <category name="Auxiliarverb (STTS 2.0: VAFIN und VAINF)">
+                    <tag name="VA"/>
+                    <description>[du] hat, [er] is</description>
+                </category>
+                <category name="Modalverb (STTS 2.0: VMFIN und VMINF)">
+                    <tag name="VM"/>
+                    <description>[du] kann, [wi] muss</description>
+                </category>
+                <category name="Vollverb (STTS 2.0: VVFIN und VVINF)">
+                    <tag name="VV"/>
+                    <description>[du] leben, [wi] geht</description>
+                </category>
+            </category>
+
             <category name="Artikel">
                 <tag name="ART"/>
-                <description></description>
+                <description/>
                 <category name="bestimmter oder unbestimmter Artikel">
                     <tag name="ART"/>
                     <description>der, die, das, ein, eine</description>
@@ -85,7 +110,7 @@
             </category>
             <category name="Adjektive">
                 <tag name="ADJ"/>
-                <description></description>
+                <description/>
                 <category name="attributives Adjektiv">
                     <tag name="ADJA"/>
                     <description>[das] große [Haus]</description>
@@ -97,7 +122,7 @@
             </category>
             <category name="Pronomina">
                 <tag name="P"/>
-                <description></description>
+                <description/>
                 <category name="substituierendes Demonstrativpronomen">
                     <tag name="PDS"/>
                     <description>dieser, jener</description>
@@ -167,7 +192,7 @@
             </category>
             <category name="Kardinalzahlen">
                 <tag name="CARD"/>
-                <description></description>
+                <description/>
                 <category name="Kardinalzahl">
                     <tag name="CARD"/>
                     <description>zwei [Männer], [im Jahre] 1994</description>
@@ -175,7 +200,7 @@
             </category>
             <category name="Ordinalzahlen">
                 <tag name="ORD"/>
-                <description></description>
+                <description/>
                 <category name="Ordinalzahl">
                     <tag name="ORD"/>
                     <version version="2.0only"/>
@@ -184,7 +209,7 @@
             </category>
             <category name="Adverbien">
                 <tag name="ADV"/>
-                <description></description>
+                <description/>
                 <category name="Adverb">
                     <tag name="ADV"/>
                     <description>hier, bald, gestern</description>
@@ -192,7 +217,7 @@
             </category>
             <category name="Konjunktionen">
                 <tag name="KO"/>
-                <description></description>
+                <description/>
                 <category name="unterordnende Konjunktion mit 'zu' und Infinitiv">
                     <tag name="KOUI"/>
                     <description>um [zu leben], anstatt [zu fragen]</description>
@@ -212,7 +237,7 @@
             </category>
             <category name="Adpositionen">
                 <tag name="AP"/>
-                <description></description>
+                <description/>
                 <category name="Präposition; Zirkumposition links">
                     <tag name="APPR"/>
                     <description>in [der Stadt], ohne [mich]</description>
@@ -232,16 +257,17 @@
             </category>
             <category name="Interjektionen">
                 <tag name="ITJ"/>
-                <description></description>
+                <description/>
                 <category name="Interjektion">
                     <tag name="ITJ"/>
                     <version version="1.0only"/>
                     <description>mhm, ach, tja</description>
                 </category>
             </category>
+
             <category name="Partikeln">
                 <tag name="PTK"/>
-                <description></description>
+                <description/>
                 <category name="'zu' vor Infinitiv">
                     <tag name="PTKZU"/>
                     <description>zu [gehen]</description>
@@ -276,12 +302,29 @@
                 <category name="Partikel eines Mehrwortlexems">
                     <tag name="PTKMWL"/>
                     <version version="2.0only"/>
-                    <description>[x] noch, immer [+gesteigertes Adjektiv], schon [+gesteigertes Adjektiv]</description>
+                    <description>[x] noch, immer [+gesteigertes Adjektiv], schon [+gesteigertes
+                        Adjektiv]</description>
                 </category>
             </category>
+
+
+            <category name="UNSD: Zusätzliche Partikeln">
+                <tag name="PTK"/>
+                <description/>
+                <category name="Aspektpartikel">
+                    <tag name="PTKAM"/>
+                    <description>am [arbeiten]</description>
+                </category>
+                <category name="Pluralwort">
+                    <tag name="PL"/>
+                    <description>alle [Haus] 'Häuser'</description>
+                </category>
+            </category>
+
+
             <category name="nicht-grammatische Elemente (satz-unabhängige Elemente)">
                 <tag name="NG"/>
-                <description></description>
+                <description/>
                 <category name="Interjektionen, Responsive und Rezeptionssignale">
                     <tag name="NGIRR"/>
                     <version version="2.0only"/>
@@ -303,9 +346,10 @@
                     <description>lol, seufz</description>
                 </category>
             </category>
+
             <category name="satz-externe Elemente">
                 <tag name="SE"/>
-                <description></description>
+                <description/>
                 <category name="Diskursmarker">
                     <tag name="SEDM"/>
                     <version version="2.0only"/>
@@ -317,65 +361,93 @@
                     <description>ne, wa, gell</description>
                 </category>
             </category>
-        </category>
-        <category name="Extra-tags">
-            <description>zusätzliche tags</description>
-            <category name="Fremdsprachliches Material">
-                <tag name="FM"/>
-                <description>[er hat das mit "] A big fish [" übersetzt]</description>
+            <!--        </category> -->
+            <!-- end pos tags -->
+
+            <category name="Extra-Tags">
+                <description>zusätzliche tags</description>
+                <category name="Fremdsprachliches Material">
+                    <tag name="FM"/>
+                    <description>[er hat das mit "] A big fish [" übersetzt]</description>
+                </category>
+                <category name="Kompositions-Erstglied">
+                    <tag name="TRUNC"/>
+                    <description>an [und Abreise]</description>
+                </category>
+                <category
+                    name="Nichtwort: (Sonderzeichen enthaltend), Stottern, Wort-Bestandteil-Reste">
+                    <tag name="XY"/>
+                    <description>(D2XW3), w w [weißt du], [te] ha we [in der Normalisierung
+                        THW]</description>
+                </category>
+                <category name="Abbruch auf Wortebene">
+                    <tag name="AB"/>
+                    <version version="2.0only"/>
+                    <description>[er] gef, [er hat] ge</description>
+                </category>
+                <category name="Uninterpretierbar">
+                    <tag name="UI"/>
+                    <version version="2.0only"/>
+                    <description>+++ +++</description>
+                </category>
+                <category name="Buchstabiertes">
+                    <tag name="SPELL"/>
+                    <version version="2.0only"/>
+                    <description>[das wird mit] ce ha [geschrieben], [patient] B</description>
+                </category>
+                <category name="Äußerungsabbrüche">
+                    <tag name="AA"/>
+                    <version version="2.0only"/>
+                    <description>[das haus] das [in dem ich wohne]</description>
+                </category>
+                <category name="Objektsprache">
+                    <tag name="OS"/>
+                    <version version="2.0only"/>
+                    <description>[solche sätze wie] John liebt Mary</description>
+                </category>
+
+                <category name="Komma">
+                    <tag name="$,"/>
+                    <version version="1.0only"/>
+                    <description>,</description>
+                </category>
+                <category name="Satzbeendende Interpunktion">
+                    <tag name="$."/>
+                    <version version="1.0only"/>
+                    <description>. ? ! ; :</description>
+                </category>
+                <category name="sonstige Satzzeichen; satzintern">
+                    <tag name="$("/>
+                    <version version="1.0only"/>
+                    <description>- ( ) [ ]</description>
+                </category>
             </category>
-            <category name="Kompositions-Erstglied">
-                <tag name="TRUNC"/>
-                <description>an [und Abreise]</description>
+
+            <category name="UNSD: Zusätzliche Extra-Tags">
+                <description>zusätzliche tags</description>
+                <category name="Fremdsprachliches Material: Englisch">
+                    <tag name="FM-EN"/>
+                    <description>and, parents, you</description>
+                </category>
+                <category name="Fremdsprachliches Material: Tok Pisin">
+                    <tag name="FM-TP"/>
+                    <description>nambis 'Strand', solwara 'Meer'</description>
+                </category>
+                <category name="Fremdsprachliches Material: Kuanua">
+                    <tag name="FM-KU"/>
+                    <description>gunan 'Platz'</description>
+                </category>
+                <category name="Fremdsprachliches Material: Latein">
+                    <tag name="FM-LA"/>
+                    <description>mea culpa</description>
+                </category>
+                <category name="Fremdsprachliches Material: Spanisch">
+                    <tag name="FM-ES"/>
+                    <description>roca, siesta</description>
+                </category>
+
+                </category>
             </category>
-            <category name="Nichtwort: (Sonderzeichen enthaltend), Stottern, Wort-Bestandteil-Reste">
-                <tag name="XY"/>
-                <description>(D2XW3), w w [weißt du], [te] ha we [in der Normalisierung THW]</description>
-            </category>
-            <category name="Abbruch auf Wortebene">
-                <tag name="AB"/>
-                <version version="2.0only"/>
-                <description>[er] gef, [er hat] ge</description>
-            </category>		
-            <category name="Uninterpretierbar">
-                <tag name="UI"/>
-                <version version="2.0only"/>
-                <description>+++ +++</description>
-            </category>	
-            <category name="Buchstabiertes">
-                <tag name="SPELL"/>
-                <version version="2.0only"/>
-                <description>[das wird mit] ce ha [geschrieben], [patient] B</description>
-            </category>	
-            <category name="Äußerungsabbrüche">
-                <tag name="AA"/>
-                <version version="2.0only"/>
-                <description>[das haus] das [in dem ich wohne]</description>
-            </category>
-            <category name="Objektsprache">
-                <tag name="OS"/>
-                <version version="2.0only"/>
-                <description>[solche sätze wie] John liebt Mary</description>
-            </category>
-                        			
-            <category name="Komma">
-                <tag name="$,"/>
-                <version version="1.0only"/>
-                <description>,</description>
-            </category>
-            <!-- Für Kategorien, die nur in STTS 1 vorkommen, und nicht in den DGD-Daten
-            zu erwarten sind, wäre ein zusätzliches Attribut 
-            version="1.0only" hilfreich -->
-            <category name="Satzbeendende Interpunktion">
-                <tag name="$."/>
-                <version version="1.0only"/>
-                <description>. ? ! ; :</description>
-            </category>
-            <category name="sonstige Satzzeichen; satzintern">
-                <tag name="$("/>
-                <version version="1.0only"/>
-                <description>- ( ) [ ]</description>
-            </category>
-        </category>
+
     </annotation-set>
 </annotation-specification>
