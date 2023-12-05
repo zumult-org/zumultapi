@@ -304,14 +304,22 @@ public abstract class AbstractBackend implements BackendInterface {
         }
     }
 
-    @Override
+ @Override
     public Set<AnnotationLayer> getAnnotationLayersForSearch(String corpusQuery, String searchIndex, String annotationLayerType) throws SearchServiceException, IOException {
         // get all available annotation layers
         Set<AnnotationLayer> annotationLayers = new HashSet();
+        Set<String> names = new HashSet();
         Set<String> corporaIDs = IOHelper.getCorporaIDsFromCorpusQuery(corpusQuery);
         if (!corporaIDs.isEmpty()) {
             for (String corpusID : corporaIDs) {
-                annotationLayers.addAll(getAnnotationLayersForCorpus(corpusID, annotationLayerType));
+                Set<AnnotationLayer> annotationLayersForCorpus = getAnnotationLayersForCorpus(corpusID, annotationLayerType);
+                for (AnnotationLayer al: annotationLayersForCorpus){
+                    String name = al.getName("de");
+                    if (!names.contains(name)){
+                        names.add(name);
+                        annotationLayers.add(al);
+                    }
+                }
             }
         }
         // check if annotation layers can be searched
