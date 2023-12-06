@@ -47,7 +47,7 @@ public class ISOTEITranscriptConverter {
     
     String XSL_FLN = "/org/exmaralda/tei/xml/isotei2folker.xsl";
     String XSL_EXB = "/org/exmaralda/tei/xml/isotei2exmaralda.xsl";
-    String XSL_HTML = "/org/zumult/io/isotei2html_table.xsl";
+    String XSL_HTML = Constants.ISOTEI2HTML_STYLESHEET2;
     String XSL_TXT = "/org/exmaralda/tei/xml/isotei2txt.xsl";
     
     String[] XSL_EXB_SEQUENCE = {

@@ -3,9 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.zumult</groupId>
-    <artifactId>ProtoZumult</artifactId>
+  <!--<artifactId>ProtoZumult</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>war</packaging>-->
+    <artifactId>ZumultTest</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
     <name>ZuMultMVN</name>
     <url>https://zumult.org/</url>
     <build>
@@ -22,6 +25,57 @@
             </resource>   
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <includes>
+                        <include>**/org/zumult/backend/*</include>
+                        <include>**/org/zumult/backend/implementations/COMAFileSystem.*</include>
+                        <include>**/org/zumult/backend/implementations/AbstractBackend.*</include>
+                        <include>**/org/zumult/backend/implementations/FileSystemVirtualCollectionStore.*</include>
+                        <include>**/org/zumult/indexing/*</include>
+                        <include>**/org/zumult/io/COMAUtilities.*</include>
+                        <include>**/org/zumult/io/Constants.*</include>
+                        <include>**/org/zumult/io/FileIO.*</include>
+                        <include>**/org/zumult/io/IOHelper.*</include>
+                        <include>**/org/zumult/io/IOUtilities.*</include>
+                        <include>**/org/zumult/io/ISOTEINamespaceContext.*</include>
+                        <include>**/org/zumult/io/ISOTEITranscriptConverter.*</include>
+                        <include>**/org/zumult/io/MediaUtilities.*</include>
+                        <include>**/org/zumult/io/TimeUtilities.*</include>
+                        <include>**/org/zumult/io/XMLReader.*</include>
+                        <include>**/org/zumult/io/iso*.xsl</include>
+                        <include>**/org/zumult/objects/*</include>
+                        <include>**/org/zumult/objects/implementations/Abstract*.*</include>
+                        <include>**/org/zumult/objects/implementations/AndFilter.*</include>
+                        <include>**/org/zumult/objects/implementations/COMA*.*</include>
+                        <include>**/org/zumult/objects/implementations/Default*.*</include>
+                        <include>**/org/zumult/objects/implementations/ISOTEI*.*</include>
+                        <include>**/org/zumult/objects/implementations/MediaStreamer.*</include>
+                        <include>**/org/zumult/objects/implementations/NegatedFilter.*</include>
+                        <include>**/org/zumult/objects/implementations/TokenListTokenFilter.*</include>
+                        <include>**/org/zumult/objects/implementations/VirtualCollectionItemTranscriptExcerpt.*</include>
+                        <include>**/org/zumult/objects/implementations/XMLMetadata.*</include>
+                        <include>**/org/zumult/objects/implementations/ZumultVirtualCollection.*</include>
+                        <include>**/org/zumult/query/*</include>
+                        <include>**/org/zumult/query/implementations/Abstract*.*</include>
+                        <include>**/org/zumult/query/implementations/COMA*.*</include>
+                        <include>**/org/zumult/query/implementations/Default*.*</include>
+                        <include>**/org/zumult/query/implementations/ISOTEI*.*</include>
+                        <include>**/org/zumult/query/searchEngine/COMA*.*</include>
+                        <include>**/org/zumult/query/searchEngine/MTASBasedSearchEngine.*</include>
+                        <include>**/org/zumult/query/searchEngine/Repetition.*</include>
+                        <include>**/org/zumult/query/searchEngine/Search*.*</include>
+                        <include>**/org/zumult/query/searchEngine/SortTypeEnum.*</include>
+                        <include>**/org/zumult/query/searchEngine/util/SearchEngineUtilities.*</include>
+                        <include>**/org/zumult/query/searchEngine/parser/*</include>
+                        <include>**/org/zumult/query/serialization/QuerySerializer.*</include>
+                        <include>**/org/zumult/query/serialization/Default*.*</include>
+                    </includes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
