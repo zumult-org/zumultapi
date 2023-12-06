@@ -42,7 +42,7 @@
                         <include>**/org/zumult/io/IOHelper.*</include>
                         <include>**/org/zumult/io/IOUtilities.*</include>
                         <include>**/org/zumult/io/ISOTEINamespaceContext.*</include>
-                        <include>**/org/zumult/io/ISOTEITranscriptConverter.*</include>
+                        <include>**/org/zumult/io/ISOTEITranscriptConverter*.*</include>
                         <include>**/org/zumult/io/MediaUtilities.*</include>
                         <include>**/org/zumult/io/TimeUtilities.*</include>
                         <include>**/org/zumult/io/XMLReader.*</include>
@@ -67,6 +67,7 @@
                         <include>**/org/zumult/query/searchEngine/COMA*.*</include>
                         <include>**/org/zumult/query/searchEngine/MTASBasedSearchEngine.*</include>
                         <include>**/org/zumult/query/searchEngine/Repetition.*</include>
+                        <include>**/org/zumult/query/searchEngine/Repetition*.*</include>
                         <include>**/org/zumult/query/searchEngine/Search*.*</include>
                         <include>**/org/zumult/query/searchEngine/SortTypeEnum.*</include>
                         <include>**/org/zumult/query/searchEngine/util/SearchEngineUtilities.*</include>
