@@ -64,7 +64,7 @@ public class COMALocation extends AbstractXMLObject implements Location {
             String countryName = xPath.evaluate(xPathString, getDocument().getDocumentElement());
             return countryName;
         } catch (XPathExpressionException ex) {
-            Logger.getLogger(DGD2Location.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMALocation.class.getName()).log(Level.SEVERE, null, ex);
         }        
         return null;
     }

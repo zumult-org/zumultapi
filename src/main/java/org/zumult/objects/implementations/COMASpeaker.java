@@ -68,7 +68,7 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
                 result.add(location);
             }
         } catch (XPathExpressionException | ParserConfigurationException ex) {
-            Logger.getLogger(DGD2Speaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMASpeaker.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }

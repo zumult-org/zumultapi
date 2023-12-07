@@ -121,7 +121,7 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
                 result.add(tID);
             }
         } catch (XPathExpressionException ex) {
-            Logger.getLogger(DGD2Event.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMACommunication.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -138,7 +138,7 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
                 result.add(mID);
             }
         } catch (XPathExpressionException ex) {
-            Logger.getLogger(DGD2Event.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMACommunication.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -155,7 +155,7 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
                 result.add(pID);
             }
         } catch (XPathExpressionException ex) {
-            Logger.getLogger(DGD2Event.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMACommunication.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
