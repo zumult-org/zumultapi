@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.XMLConstants;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -141,7 +142,7 @@ public class ISOTEIKWICSnippetCreator {
                             token.setParentId(getParentId(rightElem));
 
                             for (Hit.Match match: matches){
-                                if(match.getID().equals(rightElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){
+                                if(match.getID().equals(rightElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
                                     token.markAsMatch();
                                 }
                             }
@@ -211,7 +212,7 @@ public class ISOTEIKWICSnippetCreator {
     
     private String getParentId(Element elem){
         Element parent = (Element) elem.getParentNode();
-        return parent.getAttributeNS(Constants.XML_NAMESPACE_URL, "id");
+        return parent.getAttributeNS(XMLConstants.XML_NS_URI, "id");
     }
         
     private static int getHitLengthInTokens(ArrayList<Hit.Match> matches){
@@ -261,7 +262,7 @@ public class ISOTEIKWICSnippetCreator {
                                     token.setParentId(getParentId(rightElem));
 
                                     for (Hit.Match match: matches){
-                                        if(match.getID().equals(rightElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){
+                                        if(match.getID().equals(rightElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
                                             token.markAsMatch();
                                             containsMatches = true;
                                         }
@@ -290,7 +291,7 @@ public class ISOTEIKWICSnippetCreator {
                         DefaultKWICSnippetToken specialSibling = new DefaultKWICSnippetToken(siblingElem);
                                 
                         for (Hit.Match match: matches){
-                            if(match.getID().equals(siblingElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){
+                            if(match.getID().equals(siblingElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
                                 specialSibling.markAsMatch();
                                 break;
                             }
@@ -342,7 +343,7 @@ public class ISOTEIKWICSnippetCreator {
                                     token.setParentId(getParentId(rightElem));
 
                                     for (Hit.Match match: matches){
-                                        if(match.getID().equals(rightElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){
+                                        if(match.getID().equals(rightElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
                                             token.markAsMatch();
                                             containsMatches = true;
                                         }
@@ -375,7 +376,7 @@ public class ISOTEIKWICSnippetCreator {
                         DefaultKWICSnippetToken specialSibling = new DefaultKWICSnippetToken(siblingElem);
 
                         for (Hit.Match match: matches){
-                            if(match.getID().equals(siblingElem.getAttributeNS(Constants.XML_NAMESPACE_URL, "id"))){
+                            if(match.getID().equals(siblingElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
                                 specialSibling.markAsMatch();
                                 break;
                             }

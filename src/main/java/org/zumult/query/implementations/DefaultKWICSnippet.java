@@ -6,11 +6,11 @@
 package org.zumult.query.implementations;
 
 import java.util.ArrayList;
+import javax.xml.XMLConstants;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSSerializer;
-import org.zumult.io.Constants;
 import org.zumult.objects.IDList;
 import org.zumult.query.KWICSnippet;
 
@@ -84,7 +84,7 @@ import org.zumult.query.KWICSnippet;
             @Override
             public String getID() {
                 Element el = (Element) element;
-                return el.getAttributeNS(Constants.XML_NAMESPACE_URL, "id");
+                return el.getAttributeNS(XMLConstants.XML_NS_URI, "id");
             }
 
             @Override

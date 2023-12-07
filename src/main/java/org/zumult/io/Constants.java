@@ -181,7 +181,6 @@ public class Constants {
     public static final String DEFAULT_QUERY_LANGUAGE = "cqp";
     public static final String DEFAULT_CQP_QUERY_LANGUAGE_VERSION = "MTAS 8.4.1.2";
     
-    public static final String XML_NAMESPACE_URL = "http://www.w3.org/XML/1998/namespace";
     public static final String TEI_NAMESPACE_URL = "http://www.tei-c.org/ns/1.0";
     
     public static final String ATTRIBUTE_NAME_START = "start";
