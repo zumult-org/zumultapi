@@ -18,6 +18,7 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.XMLReader;
 import org.zumult.objects.Event;
@@ -70,9 +71,9 @@ public class Measure_1 {
             ArrayList<TokenList> tokenLists = new ArrayList<>();
             for (String WL : WORDLISTS){
                 if(WL.startsWith("GOETHE")){
-                    tokenLists.add(XMLReader.readTokenListFromFile(new File(Constants.WORDLISTS_GOETHE_PATH + "/" + WL + ".xml")));
+                    tokenLists.add(XMLReader.readTokenListFromFile(new File(Configuration.getWordlistPath() + "/goethe" + "/" + WL + ".xml")));
                 }else if (WL.startsWith("HERDER")){
-                    tokenLists.add(XMLReader.readTokenListFromFile(new File(Constants.WORDLISTS_HERDER_PATH + "/" + WL + ".xml")));
+                    tokenLists.add(XMLReader.readTokenListFromFile(new File(Configuration.getWordlistPath() + "/herder" + "/" + WL + ".xml")));
                 }else{
                     throw new ClassNotFoundException(WL + " could not be found!");
                 }
