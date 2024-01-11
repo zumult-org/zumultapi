@@ -3,15 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.zumult</groupId>
-  <!--<artifactId>ProtoZumult</artifactId>
+    <artifactId>ProtoZumult</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>-->
-    <artifactId>ZumultTest</artifactId>
-    <version>1.0</version>
+   <!-- <packaging>war</packaging>-->
     <packaging>jar</packaging>
     <name>ZuMultMVN</name>
     <url>https://zumult.org/</url>
-    <build>
+        <build>
         <finalName>${project.artifactId}</finalName>
         <resources>
             <resource>
