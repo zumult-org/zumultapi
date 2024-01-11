@@ -22,7 +22,18 @@ import org.zumult.objects.IDList;
  * @author Thomas_Schmidt, Elena Frick
  */
 public class Configuration {
-    static String PATH = "/org/zumult/backend/Configuration.xml";
+    
+    // 2024-01-11 : for issue #169
+    // This is the name of the environment variable which holds the path
+    // to the configuration file. It has to be set via the appropriate system
+    // command, i.e.
+    // - setx ZUMULT_CONFIG_PATH c:\mypath\zumult-configuration.xml \m (on Windows)
+    // - export ZUMULT_CONFIG_PATH c:\mypath\zumult-configuration.xml (on Linux)
+    static final String SYS_ENV_KEY = "ZUMULT_CONFIG_PATH";
+    
+    
+    // 2024-01-11 : get rid of this for issue #169
+    //static String PATH = "/org/zumult/backend/Configuration.xml";
         
     private static String backendInterfaceClassPath;
     
@@ -136,11 +147,23 @@ public class Configuration {
     public static IDList getTranscriptBasedIndexIDs() {
         return transcriptBasedIndexIDs;
     }
+
     
     static void read(){
+        
         Configurations configs = new Configurations();
         try{
-            File f = new File(Configuration.class.getResource(PATH).getFile());
+            // 2024-01-11 : changed for issue #169
+            String PATH = System.getenv(SYS_ENV_KEY);
+            if (PATH==null){
+                System.out.println("Could not find an environment variable named ZUMULT_CONFIG_PATH.");
+                System.out.println("Cannot read ZuMult configuration.");
+                System.out.println("Exiting.");
+                System.exit(1);
+            }
+            
+            System.out.println("Reading configuration from " + PATH);
+            File f = new File(PATH);
             XMLConfiguration config = configs.xml(f.getAbsolutePath());
 
             backendInterfaceClassPath = config.getString("backend[@classPath]");

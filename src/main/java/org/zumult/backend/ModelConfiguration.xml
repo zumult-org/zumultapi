@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- As of 2024-01-11 and issue #169, this file is not used anymore by the application -->
+<!-- Place a copy of this file with appropriate values at an appropriate place and with an appropriate name in your system -->
+<!-- The application needs reading persmissions for this copy -->
+<!-- set the environment variable ZUMULT_CONFIG_PATH to the path of the copy -->
+<configuration>
+    
+    <!-- The attribute @classPath will tell ZuMult which backend implementation to use -->
+    <backend classPath="org.zumult.backend.implementations.COMAFileSystem">
+               
+        <search-index-path>D:\ZUMULT\INDICES\</search-index-path>
+        <search-index-speaker-based>SB_TGDP</search-index-speaker-based>
+        <search-index-transcript-based>SB_TGDP</search-index-transcript-based>     
+        <corpus-ids-for-indexing>TGDP</corpus-ids-for-indexing>
+        <metadata-path>D:\ZUMULT</metadata-path>
+        <ffmpeg-path>C:\Program Files\ffmpeg-5.1.2-essentials_build</ffmpeg-path>
+        <rest-api-base-url>http://localhost:8080/ZuMult_TGDP/api</rest-api-base-url>
+        <web-app-base-url>http://localhost:8080/ZuMult_TGDP</web-app-base-url>
+        <media-snippets-path>D:\ZUMULT\MEDIA-SNIPPETS</media-snippets-path>
+        <media-path>http://localhost:8080/corpusdata/</media-path>
+        
+        
+        
+        <media-archive-path>N:\ARCHIV</media-archive-path>
+        <media-distribution-path>N:\DISTRIBUTION</media-distribution-path>
+        <material-path></material-path>
+        <protocol-path></protocol-path>
+        <transcript-path>D:\AGD-DATA\dgd2_data\iso-transcripts</transcript-path>
+        <quantification-path></quantification-path>
+        <wordlist-path></wordlist-path>
+
+        
+        <database-url>https://dgd.ids-mannheim.de</database-url>
+        
+        <username>test@zumult.org</username>        
+        <password>Let!Me!In</password>
+        
+    </backend> 
+</configuration>
