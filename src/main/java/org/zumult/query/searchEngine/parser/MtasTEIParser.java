@@ -7,8 +7,10 @@
  * ******************************************************************************/
 package org.zumult.query.searchEngine.parser;
 
+import javax.xml.XMLConstants;
 import mtas.analysis.util.MtasConfigException;
 import mtas.analysis.util.MtasConfiguration;
+import org.zumult.io.Constants;
 
 /**
  * The Class MtasTEIParser.
@@ -31,8 +33,8 @@ public class MtasTEIParser extends MtasXMLParser {
    */
   @Override
   protected void initParser() throws MtasConfigException {
-    namespaceURI = "http://www.tei-c.org/ns/1.0";
-    namespaceURI_id = "http://www.w3.org/XML/1998/namespace";
+    namespaceURI = Constants.TEI_NAMESPACE_URL;
+    namespaceURI_id = XMLConstants.XML_NS_URI;
     rootTag = "TEI";
     contentTag = "text";
     allowNonContent = true;

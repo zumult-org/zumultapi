@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEITranscriptConverter;
@@ -1047,11 +1048,11 @@ public class ZumultDataServlet extends HttpServlet {
         if (wordlistID.equals("NONE")){
             pathToWordList = "";
         }else if(wordlistID.startsWith("GOETHE")){
-            pathToWordList = new File(Constants.WORDLISTS_GOETHE_PATH + "/" + wordlistID + ".xml").toURI().toString();
+            pathToWordList = new File(Configuration.getWordlistPath() + "/goethe" + "/" + wordlistID + ".xml").toURI().toString();
         }else if(wordlistID.startsWith("HERDER")){
-            pathToWordList = new File(Constants.WORDLISTS_HERDER_PATH + "/"+ wordlistID + ".xml").toURI().toString();
+            pathToWordList = new File(Configuration.getWordlistPath() + "/herder" + "/"+ wordlistID + ".xml").toURI().toString();
         }else {
-            pathToWordList = new File(Constants.WORDLISTS_THEMATIC_VOCABULARY_PATH + "/"+ wordlistID + ".xml").toURI().toString();
+            pathToWordList = new File(Configuration.getWordlistPath() + "/thematic-vocabulary/lemmas" + "/"+ wordlistID + ".xml").toURI().toString();
         }
         return pathToWordList;
     }

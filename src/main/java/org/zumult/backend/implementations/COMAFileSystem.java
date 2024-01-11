@@ -51,15 +51,13 @@ import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
 import org.zumult.objects.implementations.COMATranscript;
-import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.Searcher;
+import org.zumult.query.implementations.COMAKWIC;
 import org.zumult.query.implementations.COMASearcher;
-import org.zumult.query.implementations.DGD2KWIC;
-import org.zumult.query.implementations.DGD2Searcher;
 
 /**
  *
@@ -660,19 +658,19 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public KWIC getKWIC(SearchResultPlus searchResultPlus, String context) throws SearchServiceException, IOException {
-        KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_STANDARD);       
+        KWIC kwicView = new COMAKWIC(searchResultPlus, context, Constants.SEARCH_TYPE_STANDARD);       
         return kwicView;
     }
     
     @Override
     public KWIC exportKWIC(SearchResultPlus searchResultPlus, String context, String format) throws SearchServiceException, IOException {
-        KWIC kwicView = new DGD2KWIC(searchResultPlus, context, Constants.SEARCH_TYPE_DOWNLOAD, format);       
+        KWIC kwicView = new COMAKWIC(searchResultPlus, context, Constants.SEARCH_TYPE_DOWNLOAD, format);       
         return kwicView;
     }
 
     @Override
     public Searcher getSearcher() {
-        return new DGD2Searcher();
+        return new COMASearcher();
     }
 
     private void indexIDs(String corpusID, Map<String, String> id2Corpus, Map<String, String> id2parentID) throws XPathExpressionException, IOException, SAXException, ParserConfigurationException, TransformerException {

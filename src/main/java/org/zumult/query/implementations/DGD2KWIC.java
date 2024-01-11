@@ -72,7 +72,7 @@ public class DGD2KWIC<T> extends AbstractKWIC {
         try {
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();     
             DefaultQuerySerializer searchResultSerializer = 
-                    new DefaultQuerySerializer();
+                    new DGD2QuerySerializer();
             setKWICSnippets((T) searchResultSerializer
                     .createKWICDownloadFile(this, fileType, backendInterface));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {

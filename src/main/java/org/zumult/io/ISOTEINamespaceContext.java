@@ -17,8 +17,8 @@ public class ISOTEINamespaceContext implements NamespaceContext {
 
     @Override
     public String getNamespaceURI(String prefix) {
-        if (prefix == null) return "http://www.tei-c.org/ns/1.0";
-        else if ("tei".equals(prefix)) return "http://www.tei-c.org/ns/1.0";
+        if (prefix == null) return Constants.TEI_NAMESPACE_URL;
+        else if ("tei".equals(prefix)) return Constants.TEI_NAMESPACE_URL;
         else if ("xml".equals(prefix)) return XMLConstants.XML_NS_URI;
         return XMLConstants.NULL_NS_URI;
     }

@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -66,7 +67,7 @@ public abstract class ISOTEITransformer {
     static String DIR_OUT;
     
     static Namespace ns = Namespace.getNamespace(Constants.TEI_NAMESPACE_URL);
-    static Namespace xml = Namespace.getNamespace("xml", Constants.XML_NAMESPACE_URL);
+    static Namespace xml = Namespace.getNamespace("xml", XMLConstants.XML_NS_URI);
 
     BackendInterface backendInterface; 
     

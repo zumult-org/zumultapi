@@ -10,7 +10,7 @@
                 <!--<p>Here some text</p>-->
                 <div class="accordion md-accordion" id="thematic-vocabulary-list-accordion" role="tablist" aria-multiselectable="true">
                     <%
-                        File inputDir = new File(Constants.WORDFIELD_PATH);
+                        File inputDir = new File(Configuration.getWordlistPath() + "/thematic-vocabulary/queries");
 
                         File[] files = inputDir.listFiles();
                             if (files.length > 0){
