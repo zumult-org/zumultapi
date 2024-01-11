@@ -27,7 +27,7 @@ public class Configuration {
     // This is the name of the environment variable which holds the path
     // to the configuration file. It has to be set via the appropriate system
     // command, i.e.
-    // - setx ZUMULT_CONFIG_PATH c:\mypath\zumult-configuration.xml (on Windows)
+    // - setx ZUMULT_CONFIG_PATH c:\mypath\zumult-configuration.xml \m (on Windows)
     // - export ZUMULT_CONFIG_PATH c:\mypath\zumult-configuration.xml (on Linux)
     static final String SYS_ENV_KEY = "ZUMULT_CONFIG_PATH";
     
@@ -162,7 +162,8 @@ public class Configuration {
                 System.exit(1);
             }
             
-            File f = new File(Configuration.class.getResource(PATH).getFile());
+            System.out.println("Reading configuration from " + PATH);
+            File f = new File(PATH);
             XMLConfiguration config = configs.xml(f.getAbsolutePath());
 
             backendInterfaceClassPath = config.getString("backend[@classPath]");
