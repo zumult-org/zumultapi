@@ -20,7 +20,16 @@
         <media-path>http://localhost:8080/corpusdata/</media-path>
         
         <!-- new for #174 -->
+        <!-- not specifiying anything here should fallback to old AGD behaviour -->
         <!-- <isotei2html-xsl></isotei2html-xsl> -->
+        
+        <!-- new for #175 -->
+        <!-- not specifiying anything here should fallback to old AGD behaviour -->
+        <!-- <event2html-xsl></event2html-xsl>
+        <speechevent2html-xsl></speechevent2html-xsl>
+        <speaker2html-xsl></speaker2html-xsl>
+        <event-title-metadatakey></event-title-metadatakey> -->
+        
         
         
         <media-archive-path>N:\ARCHIV</media-archive-path>

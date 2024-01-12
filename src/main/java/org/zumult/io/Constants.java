@@ -57,9 +57,16 @@ public class Constants {
     public static String FLN2ISO_STYLESHEET = "/org/zumult/io/folker2isotei.xsl";
     
     public static String ISOTEI2HTML_STYLESHEET = "/org/zumult/io/isotei2html.xsl";
+    // now configurable as per #174
     public static String ISOTEI2HTML_STYLESHEET2 = "/org/zumult/io/isotei2html_table.xsl";
     public static String ISOTEI2HTML_ANNOTATIONS_STYLESHEET = "/org/zumult/io/isotei2html_annotations.xsl";
     public static String WORDLIST2HTML_STYLESHEET = "/org/zumult/io/tokenlist2html_table.xsl";
+    
+    // new for #175
+    public static String EVENT2HTML_STYLESHEET = "/org/zumult/io/folkEvent2html_table.xsl";
+    public static String SPEECHEVENT2HTML_STYLESHEET = "/org/zumult/io/speechEvent2Table.xsl";
+    public static String SPEAKER2HTML_STYLESHEET = "";
+    public static String EVENT_TITLE_METADATAKEY = "v_e_se_art";
     
     // issue #55
     public static String WORDLIST2HTML_PRINT_STYLESHEET = "/org/zumult/io/tokenlist2html_print.xsl";

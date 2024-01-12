@@ -57,6 +57,11 @@ public class Configuration {
     
     // new for #174
     private static String isoTei2HtmlStylesheet;
+    // new for #175
+    private static String event2HtmlStylesheet;
+    private static String speechEvent2HtmlStylesheet;
+    private static String speaker2HtmlStylesheet;
+    private static String eventTitleMetadataKey;
 
 
     // new 25-11-2020, for issue #22
@@ -152,6 +157,7 @@ public class Configuration {
         return transcriptBasedIndexIDs;
     }
     
+    // new for #174
     public static String getIsoTei2HTMLStylesheet(){
         if (isoTei2HtmlStylesheet!=null){
             return isoTei2HtmlStylesheet;
@@ -159,7 +165,39 @@ public class Configuration {
         return Constants.ISOTEI2HTML_STYLESHEET2;
     }
 
+    // new for #175
+    public static String getEvent2HTMLStylesheet(){
+        if (event2HtmlStylesheet!=null){
+            return event2HtmlStylesheet;
+        }
+        return Constants.EVENT2HTML_STYLESHEET;
+    }
     
+    // new for #175
+    public static String getSpeechEvent2HTMLStylesheet(){
+        if (speechEvent2HtmlStylesheet!=null){
+            return speechEvent2HtmlStylesheet;
+        }
+        return Constants.SPEECHEVENT2HTML_STYLESHEET;
+    }
+
+    // new for #175
+    public static String getSpeaker2HTMLStylesheet(){
+        if (speaker2HtmlStylesheet!=null){
+            return speaker2HtmlStylesheet;
+        }
+        return Constants.SPEAKER2HTML_STYLESHEET;
+    }
+    
+    // new for #175
+    public static String getEventTitleMetadataKey(){
+        if (eventTitleMetadataKey!=null){
+            return eventTitleMetadataKey;
+        }
+        return Constants.EVENT_TITLE_METADATAKEY;
+    }
+
+
     static void read(){
         
         Configurations configs = new Configurations();
@@ -182,6 +220,11 @@ public class Configuration {
             
             // new for #174
             isoTei2HtmlStylesheet = config.getString("backend.isotei2html-xsl");
+            // new for #175
+            event2HtmlStylesheet = config.getString("backend.event2html-xsl");
+            speechEvent2HtmlStylesheet = config.getString("backend.speechevent2html-xsl");
+            speaker2HtmlStylesheet = config.getString("backend.speaker2html-xsl");
+            eventTitleMetadataKey = config.getString("backend.event-title-metadatakey");
             
             germanetPath = config.getString("backend.germanet-path");
             wordlistPath = config.getString("backend.wordlist-path");
