@@ -30,7 +30,11 @@
                 <configuration>
                     <!-- changed 2024-11-01 for issue #172 -->
                     <excludes>
-                        <exclude>**/data/**</exclude>
+                        <exclude>**/data/annotations/**</exclude>
+                        <exclude>**/data/measures/**</exclude>
+                        <exclude>**/data/prototypeJson/**</exclude>
+                        <exclude>**/data/quantifications/**</exclude>
+                        <exclude>**/data/*.*</exclude>
                         <exclude>**/scripts/**</exclude>
                     </excludes>
                 </configuration>
