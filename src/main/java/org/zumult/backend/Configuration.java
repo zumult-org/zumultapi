@@ -14,6 +14,7 @@ import java.util.Set;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.zumult.io.Constants;
 import org.zumult.objects.IDList;
 
 
@@ -53,6 +54,9 @@ public class Configuration {
     private static String restAPIBaseURL;
     private static String webAppBaseURL;
     private static String searchIndexPath;
+    
+    // new for #174
+    private static String isoTei2HtmlStylesheet;
 
 
     // new 25-11-2020, for issue #22
@@ -147,6 +151,13 @@ public class Configuration {
     public static IDList getTranscriptBasedIndexIDs() {
         return transcriptBasedIndexIDs;
     }
+    
+    public static String getIsoTei2HTMLStylesheet(){
+        if (isoTei2HtmlStylesheet!=null){
+            return isoTei2HtmlStylesheet;
+        }
+        return Constants.ISOTEI2HTML_STYLESHEET2;
+    }
 
     
     static void read(){
@@ -168,6 +179,9 @@ public class Configuration {
 
             backendInterfaceClassPath = config.getString("backend[@classPath]");
             System.out.println("backendInterfaceClassPath: " + backendInterfaceClassPath );
+            
+            // new for #174
+            isoTei2HtmlStylesheet = config.getString("backend.isotei2html-xsl");
             
             germanetPath = config.getString("backend.germanet-path");
             wordlistPath = config.getString("backend.wordlist-path");

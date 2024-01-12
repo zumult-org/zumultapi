@@ -19,6 +19,8 @@
         <media-snippets-path>D:\ZUMULT\MEDIA-SNIPPETS</media-snippets-path>
         <media-path>http://localhost:8080/corpusdata/</media-path>
         
+        <!-- new for #174 -->
+        <!-- <isotei2html-xsl></isotei2html-xsl> -->
         
         
         <media-archive-path>N:\ARCHIV</media-archive-path>

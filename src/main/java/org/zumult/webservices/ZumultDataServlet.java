@@ -842,7 +842,9 @@ public class ZumultDataServlet extends HttpServlet {
             };
             
             
-            String transcriptHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_STYLESHEET2, transcript.toXML(), parameters); 
+            // changed for #174
+            //String transcriptHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_STYLESHEET2, transcript.toXML(), parameters); 
+            String transcriptHTML = new IOHelper().applyInternalStylesheetToString(Configuration.getIsoTei2HTMLStylesheet(), transcript.toXML(), parameters); 
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");                            
             response.getWriter().write(transcriptHTML);             
