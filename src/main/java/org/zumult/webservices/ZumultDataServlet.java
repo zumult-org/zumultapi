@@ -75,8 +75,8 @@ public class ZumultDataServlet extends HttpServlet {
             case "getSpeechEventMetadataHTML" : 
                 getSpeechEventMetadataHTML(request, response);
                 break;
-            // new for #175 (and for completeness sake
-            case "getSpeakertMetadataHTML" : 
+            // new for #175 (and for completeness sake)
+            case "getSpeakerMetadataHTML" : 
                 getSpeakerMetadataHTML(request, response);
                 break;
             case "getEventMetadataTitle" : 
@@ -171,7 +171,7 @@ public class ZumultDataServlet extends HttpServlet {
                 String speakerXML = speaker.toXML();        
                 // changed for issue #175
                 //String eventHTML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/folkEvent2html_table.xsl", eventXML);
-                String xslPath = Configuration.getEvent2HTMLStylesheet();
+                String xslPath = Configuration.getSpeaker2HTMLStylesheet();
                 String speakerHTML = new IOHelper().applyInternalStylesheetToString(xslPath, speakerXML);
                 response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");                            
@@ -232,6 +232,13 @@ public class ZumultDataServlet extends HttpServlet {
         try {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String speechEventID = request.getParameter("speechEventID");
+            
+            // these parameters are optional
+            String transcriptID = request.getParameter("transcriptID");
+            if (transcriptID==null){transcriptID = "x";}
+            String eventID = request.getParameter("eventID");
+            if (eventID==null){eventID = "x";}
+            
             if (speechEventID!=null){
                 // N.B. the idea seems to be to get the corresponding event as input for the XSL transformation
                 // and the XSL expects a parameter specifying the speech event
@@ -242,7 +249,9 @@ public class ZumultDataServlet extends HttpServlet {
                 String eventXML = event.toXML();        
                 // changed for issue #175
                 String[][] param = {
-                    {"speechEventID", speechEventID}
+                    {"speechEventID", speechEventID},
+                    {"transcriptID", transcriptID},
+                    {"eventID", eventID}
                 };
                 // change for issue #175
                 //String eventHTML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/speechEvent2Table.xsl", eventXML, param);

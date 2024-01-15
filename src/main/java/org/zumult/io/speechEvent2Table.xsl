@@ -3,7 +3,9 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="xs"
     version="2.0">
-    <xsl:param name="speechEventID"/>
+    <xsl:param name="speechEventID">x</xsl:param>
+    <xsl:param name="transcriptID">x</xsl:param>
+    <xsl:param name="eventID">x</xsl:param>
     
     <xsl:template match="/">        
         <div class="container" style="margin-bottom: 10px; font-size:smaller">
