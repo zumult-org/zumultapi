@@ -33,6 +33,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
+import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.backend.VirtualCollectionStore;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
@@ -63,7 +64,7 @@ import org.zumult.query.implementations.COMASearcher;
  *
  * @author thomas.schmidt
  */
-public class COMAFileSystem extends AbstractBackend {
+public class COMAFileSystem extends AbstractBackend implements MetadataFinderInterface {
     
     XPath xPath = XPathFactory.newInstance().newXPath();
     File topFolder = new File(Configuration.getMetadataPath());
@@ -769,6 +770,55 @@ public class COMAFileSystem extends AbstractBackend {
     @Override
     public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, Integer pageLength, Integer pageIndex, String searchIndex, String sortType, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
+
+    @Override
+    public IDList findSpeechEventsByMetadataValue(String corpusID, MetadataKey metadataKey, String metadataValue) {
+        IDList list = new IDList("SpeechEvent");
+        try {
+            Corpus corpus = getCorpus(corpusID);
+            Document comaDocument = corpus.getDocument();
+            String xp = "//Communication[Description/Key[@Name='" + metadataKey.getName("en") + "']='"
+                    + metadataValue + "']";
+            //System.out.println("Evaluating " + xp);
+            NodeList allKeys = (NodeList) xPath.evaluate(xp, comaDocument, XPathConstants.NODESET);
+            for (int i=0; i<allKeys.getLength(); i++){
+                Element communicationElement = ((Element)(allKeys.item(i)));
+                list.add(communicationElement.getAttribute("Id"));
+            }
+        } catch (XPathExpressionException | IOException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    @Override
+    public IDList findEventsByMetadataValue(String corpusID, MetadataKey metadataKey, String metadataValue) {
+        IDList list = findSpeechEventsByMetadataValue(corpusID, metadataKey, metadataValue);
+        list.setObjectName("Event");
+        return list;
+    }
+    
+    @Override
+    public IDList findSpeakersByMetadataValue(String corpusID, MetadataKey metadataKey, String metadataValue) {
+        IDList list = new IDList("Speaker");
+        try {
+            Corpus corpus = getCorpus(corpusID);
+            Document comaDocument = corpus.getDocument();
+            String xp = "//Speaker[Description/Key[@Name='" + metadataKey.getName("en") + "']='"
+                    + metadataValue + "']";
+            //System.out.println("Evaluating " + xp);
+            NodeList allKeys = (NodeList) xPath.evaluate(xp, comaDocument, XPathConstants.NODESET);
+            for (int i=0; i<allKeys.getLength(); i++){
+                Element communicationElement = ((Element)(allKeys.item(i)));
+                list.add(communicationElement.getAttribute("Id"));
+            }
+        } catch (XPathExpressionException | IOException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
   
 }

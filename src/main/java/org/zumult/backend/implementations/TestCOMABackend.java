@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.Configuration;
+import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
@@ -52,6 +53,12 @@ public class TestCOMABackend {
             System.out.println("ID: " + recordingPlaceKey.getID());
             IDList places = bi.getAvailableValues("TGDP", recordingPlaceKey);
             for (String place : places){
+                System.out.println(place);
+            }
+            
+            IDList newBraunfels = ((MetadataFinderInterface)(bi))
+                    .findSpeechEventsByMetadataValue("TGDP", recordingPlaceKey, "New Braunfels");
+            for (String place : newBraunfels){
                 System.out.println(place);
             }
 
