@@ -454,7 +454,9 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public IDList getAvailableValues(String corpusID, MetadataKey metadataKey) {
-        return getAvailableValues(corpusID, metadataKey.getID());
+        //return getAvailableValues(corpusID, metadataKey.getID());
+        // changed for #178
+        return getAvailableValues(corpusID, metadataKey.getName("en"));
     }
 
     @Override
@@ -464,7 +466,9 @@ public class COMAFileSystem extends AbstractBackend {
             Document comaDocument = corpus.getDocument();
             Set<String> valueSet = new HashSet<>();
             // this will go wrong, for example if both Transcript and Speaker have a key "name"!
-            NodeList allKeys = (NodeList) xPath.evaluate("//Key[@Name='" + metadataKeyID + "']", comaDocument, XPathConstants.NODESET);
+            String xp = "//Key[@Name='" + metadataKeyID + "']";
+            //System.out.println("Evaluating " + xp);
+            NodeList allKeys = (NodeList) xPath.evaluate(xp, comaDocument, XPathConstants.NODESET);
             for (int i=0; i<allKeys.getLength(); i++){
                 Element keyElement = ((Element)(allKeys.item(i)));
                 valueSet.add(keyElement.getTextContent());

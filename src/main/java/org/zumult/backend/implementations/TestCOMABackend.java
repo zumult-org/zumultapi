@@ -47,6 +47,16 @@ public class TestCOMABackend {
             IDList transcripts = speechEvent.getTranscripts();
             long now2 = System.currentTimeMillis();
             
+            MetadataKey recordingPlaceKey = bi.findMetadataKeyByID("SpeechEvent_Recording Place");
+            System.out.println("Name: " + recordingPlaceKey.getName("en"));
+            System.out.println("ID: " + recordingPlaceKey.getID());
+            IDList places = bi.getAvailableValues("TGDP", recordingPlaceKey);
+            for (String place : places){
+                System.out.println(place);
+            }
+
+            System.exit(0);
+            
             long time1 = (now1 - start);
             long time2 = (now2 - now1);
             System.out.println(time1 + "ms for getting speech event");
@@ -54,7 +64,6 @@ public class TestCOMABackend {
             for (String id : transcripts){
                 System.out.println(id);
             }
-            System.exit(0);
             
             
             Corpus corpus = bi.getCorpus("TGDP");
