@@ -41,7 +41,20 @@ public class TestCOMABackend {
             
             System.out.println(Configuration.getSearchIndexPath());
             
+            long start = System.currentTimeMillis();
+            SpeechEvent speechEvent = bi.getSpeechEvent("TGDP_1-7-1");
+            long now1 = System.currentTimeMillis();
+            IDList transcripts = speechEvent.getTranscripts();
+            long now2 = System.currentTimeMillis();
             
+            long time1 = (now1 - start);
+            long time2 = (now2 - now1);
+            System.out.println(time1 + "ms for getting speech event");
+            System.out.println(time2 + "ms for getting transcript IDs");
+            for (String id : transcripts){
+                System.out.println(id);
+            }
+            System.exit(0);
             
             
             Corpus corpus = bi.getCorpus("TGDP");

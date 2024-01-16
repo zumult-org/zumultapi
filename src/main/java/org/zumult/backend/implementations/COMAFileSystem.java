@@ -73,6 +73,9 @@ public class COMAFileSystem extends AbstractBackend {
     
     static final Map<String, Corpus> corpusID2Corpus = new HashMap<>();
     
+    // added for #177
+    static final Map<String, MetadataKey> foundMetadataKeys = new HashMap<>();
+    
     static {
         try {
             // Make a map with IDs
@@ -115,7 +118,7 @@ public class COMAFileSystem extends AbstractBackend {
         if (corpusID2Corpus.containsKey(corpusID)){
             return corpusID2Corpus.get(corpusID);
         }
-        //System.out.println("Getting corpus: " + corpusID);
+        System.out.println("Getting corpus: " + corpusID);
         File corpusFolder = new File(topFolder, corpusID);
         File comaFile = new File(corpusFolder, corpusID + ".coma");
         //System.out.println("Coma file: " + comaFile.getAbsolutePath());
@@ -136,6 +139,7 @@ public class COMAFileSystem extends AbstractBackend {
     public SpeechEvent getSpeechEvent(String speechEventID) throws IOException {
         try {
             String corpusID = findCorpusID(speechEventID);
+            //System.out.println("CorpusID " + corpusID);
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -313,7 +317,9 @@ public class COMAFileSystem extends AbstractBackend {
             <Filename>MT_270110_Shirin_s.exs</Filename>
             */
             // N.B.: ends-with is not present in XPath 1.0, and we don't have support for XPath 2.0
-            NodeList allTranscripts = (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
+            NodeList allTranscripts = 
+                    (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", 
+                            communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allTranscripts.getLength(); i++){
                 Element transcriptElement = ((Element)(allTranscripts.item(i)));
                 result.add(transcriptElement.getAttribute("Id"));
@@ -547,12 +553,19 @@ public class COMAFileSystem extends AbstractBackend {
 
     @Override
     public MetadataKey findMetadataKeyByID(String id) {
+        // changed for #177
+        if (foundMetadataKeys.containsKey(id)){
+            return foundMetadataKeys.get(id);
+        }
         try {
             IDList corpora = getCorpora();
             for (String corpusID : corpora){
                 Corpus corpus = getCorpus(corpusID);
                 for (MetadataKey key : corpus.getMetadataKeys()){
-                    if (key.getID().equals(id)) return key;
+                    if (key.getID().equals(id)) {
+                        foundMetadataKeys.put(id, key);
+                        return key;
+                    }
                 }
             }
         } catch (IOException ex) {
