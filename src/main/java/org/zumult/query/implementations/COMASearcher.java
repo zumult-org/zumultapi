@@ -8,6 +8,7 @@ package org.zumult.query.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import org.zumult.backend.Configuration;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
@@ -55,16 +56,27 @@ public class COMASearcher extends AbstractSearcher {
 
     @Override
     public IDList getCorporaForSearch(String searchIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        IDList corpora = Configuration.getCorpusIDs(); // corpora available for search
+        return corpora;
+   }
 
     @Override
     public ArrayList<String> getIndexPaths(SearchIndexType searchIndex) throws IOException, SearchServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String soleSearchIndexPath = Configuration.getSearchIndexPath();
+        ArrayList<String> result = new ArrayList<>();
+        result.add(soleSearchIndexPath);
+        return result;
     }
 
     @Override
     public SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new SearchIndexType(){
+            @Override
+            public String getValue() {
+                return DGDSearchIndexType.DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name();
+            }
+            
+        };
+                
     }
 }
