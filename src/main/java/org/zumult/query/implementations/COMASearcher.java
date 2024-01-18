@@ -5,6 +5,7 @@
  */
 package org.zumult.query.implementations;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
@@ -62,9 +63,12 @@ public class COMASearcher extends AbstractSearcher {
 
     @Override
     public ArrayList<String> getIndexPaths(SearchIndexType searchIndex) throws IOException, SearchServiceException {
-        String soleSearchIndexPath = Configuration.getSearchIndexPath();
+        String searchIndexPath = Configuration.getSearchIndexPath();
         ArrayList<String> result = new ArrayList<>();
-        result.add(soleSearchIndexPath);
+        for (String indexID : Configuration.getSpeakerBasedIndexIDs()){
+            File file = new File(Configuration.getSearchIndexPath(), indexID);
+            result.add(file.getAbsolutePath());
+        }
         return result;
     }
 
