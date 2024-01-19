@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -22,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.io.IOUtilities;
 import org.zumult.query.Hit;
-import org.zumult.query.Hit.Match;
 import org.zumult.query.StatisticEntry;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.KWIC;
@@ -90,7 +88,8 @@ public class DefaultQuerySerializer implements QuerySerializer {
     protected static final String NUMBER_OF_HITS = "numberOfHits";
     protected static final String FILE = "file";
     
-    private static final String DONE = "DONE";
+    // was private, changed this for #182
+    static final String DONE = "DONE";
     
     DocumentBuilder db;
     
@@ -399,7 +398,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
         return file;
     }
     
-    private File createTmpFile(String fileType) throws IOException{
+    /*private File createTmpFile(String fileType) throws IOException{
         File file = null;
         String actualPath = DefaultQuerySerializer.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
@@ -412,7 +411,14 @@ public class DefaultQuerySerializer implements QuerySerializer {
             }
         
         return file;
-    }
+    }*/
+    
+    // TS, 2024-01-19, changed this for issue #182
+    private File createTmpFile(String fileType) throws IOException{
+        File file = File.createTempFile("tmp", "." + fileType);
+        file.deleteOnExit();
+        return file;
+    }    
     
     protected String getKWICLine(String docID, 
             ArrayList<Hit.Match> matchArray, String firstMatchID, String lastMatchID, Document transcriptDoc, ISOTEIKWICSnippetCreator creator,
@@ -438,7 +444,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
     }
     
    
-    private class Consumer implements Runnable {
+    
+    // was private, changed for #182
+    class Consumer implements Runnable {
 
         private final BlockingQueue<String> queue;
         private final OutputStreamWriter bw;

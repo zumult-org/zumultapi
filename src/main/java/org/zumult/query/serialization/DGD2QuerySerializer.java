@@ -4,19 +4,28 @@
  */
 package org.zumult.query.serialization;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.collections4.ListUtils;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.w3c.dom.Element;
+import org.zumult.backend.BackendInterface;
 import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.query.KWIC;
 import org.zumult.io.FileIO;
+import org.zumult.io.IOHelper;
+import org.zumult.objects.Transcript;
 import org.zumult.query.Hit;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
@@ -75,7 +84,7 @@ public class DGD2QuerySerializer extends DefaultQuerySerializer {
         
     }
     
-        private String getAdditionalInfos(String docID, String firstMatchID, String lastMatchID, 
+    private String getAdditionalInfos(String docID, String firstMatchID, String lastMatchID, 
             ArrayList<Hit.Match> matchArray, KWICSnippet snippetObj) throws IOException{
 
         StringBuilder bw = new StringBuilder();
@@ -196,7 +205,7 @@ public class DGD2QuerySerializer extends DefaultQuerySerializer {
         return bw.toString();
     }
         
-            private String getContentOfToken(KWICSnippet.KWICSnippetToken token){
+    private String getContentOfToken(KWICSnippet.KWICSnippetToken token){
         Element tokenElement = token.asXMLElement();
         if(tokenElement.getNodeName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
             return token.asXMLElement().getTextContent();
@@ -211,9 +220,103 @@ public class DGD2QuerySerializer extends DefaultQuerySerializer {
                 System.out.println(token.toString());
             }
         }
-        return null;
-        
+        return null;        
     }
+
+    // TS, 2024-01-18, for issue #182
+    @Override
+    public File createKWICDownloadFile(KWIC ke, String fileType, BackendInterface backendInterface) throws IOException {
+        File file = createTmpFile(fileType);
+        ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
+        OutputStreamWriter bw = null;
+        
+        KWICContext leftContext = ke.getLeftContext();
+        KWICContext rightContext = ke.getRightContext();
+
+        try {
+
+            bw = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+            
+            bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            bw.write("<kwic>");
+            
+            List<Hit> hitArray = ke.getHits();
+            
+            int targetSize = 50;
+            LinkedBlockingQueue<String> linkedQueue   = new LinkedBlockingQueue<>(); 
+            
+            new Thread(new DefaultQuerySerializer.Consumer(linkedQueue, bw)).start();
+            
+            List<List<Hit>> largeList = ListUtils.partition(hitArray, targetSize);
+            
+            
+            largeList.parallelStream().forEach((List<Hit> x) -> {
+                String transcriptId = "";
+                org.w3c.dom.Document transcriptDoc = null;
+                for (Hit hit : x) {
+                    String docID = hit.getDocId();
+                    String firstMatchID = hit.getFirstMatch().getID();
+                    String lastMatchID = hit.getLastMatch().getID();
+                    ArrayList<Hit.Match> matchArray = hit.getMatches();
+                    HashMap<String, String> metadata = hit.getMetadata();
+
+                    if(!transcriptId.equals(docID)){
+                        try {
+                            transcriptId = docID;
+                            //System.out.println("Opening " + transcriptId);
+       
+                            Transcript transcript = backendInterface.getTranscript(transcriptId);
+                            transcriptDoc = transcript.getDocument();
+                        } catch (IOException ex) {
+                            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);                            
+                            // TS: Why not throw an exception?
+                        }
+                    }
+                    
+                    String line;
+                    try {
+                        line = getKWICLine(docID, matchArray, firstMatchID, lastMatchID, transcriptDoc, creator, 
+                                leftContext, rightContext, metadata);
+                        linkedQueue.put(line);
+                    } catch (IOException | InterruptedException ex) {
+                        Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                            
+                } 
+            });
+                    
+        linkedQueue.put(DONE);
+   
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
+            // TS: Why not throw these exceptions?
+            // throw new IOException(ex);
+        } finally {
+            
+        }
+
+        return file;
+    }
+    
+    // does not work for me in the COMA context, so I put it here
+    // and changed it in the superclass (#182)
+    private File createTmpFile(String fileType) throws IOException{
+        File file = null;
+        String actualPath = DefaultQuerySerializer.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
+        File target = new File(IOHelper.getProjectFile(actualPath), "downloads"); 
+        try {         
+            file = File.createTempFile("tmp", "." + fileType, target);
+            file.deleteOnExit();
+        } catch(IOException ex){
+            throw new IOException("Temporary file with KWIC could not be created: " + target.getAbsolutePath() + " does not exist ", ex);
+        }
+        
+        return file;
+    }
+    
+    
+    
    
    
 }
