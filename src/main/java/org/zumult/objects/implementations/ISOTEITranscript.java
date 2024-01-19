@@ -156,12 +156,15 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             
             // throw out annotationBlocks and other things on the same level
             NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*", copyDocument.getDocumentElement(), XPathConstants.NODESET);
-            String minTimeString = when1.getAttribute("interval");
+            /*String minTimeString = when1.getAttribute("interval");
             if (minTimeString==null || minTimeString.length()==0){
                 minTimeString = "0.0";
             }
-            double minTime = Double.parseDouble(minTimeString);
-            double maxTime = Double.parseDouble(when2.getAttribute("interval"));
+            double minTime = Double.parseDouble(minTimeString);*/
+            double minTime = getInterval(when1);
+            //double maxTime = Double.parseDouble(when2.getAttribute("interval"));
+            double maxTime = getInterval(when2);
+            
             for (int i=0; i<nodes.getLength(); i++){                
                 Element node = (Element) nodes.item(i);
                 String startID = node.getAttribute("start"); //.substring(1);                
@@ -233,12 +236,13 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             // this could be done faster by using nested intervals
             for (int i=0; i<whenNodes.getLength(); i++){
                 Element whenNode = (Element) whenNodes.item(i);
-                String interval = whenNode.getAttribute("interval");
                 String id = whenNode.getAttribute("xml:id");                
+                /*String interval = whenNode.getAttribute("interval");
                 double time = 0.0;
                 if (interval!=null && interval.length()>0){
                     time = Double.parseDouble(interval);
-                }
+                }*/
+                double time = getInterval(whenNode);
                 //System.out.println(id + " / " + time);
                 if (time<=time1){
                     idOfFirst = id;
@@ -266,11 +270,12 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             //Element whenElement = xmlDocument.getElementById(startID);
             Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
             //System.out.println(whenElement);
-            String interval = whenElement.getAttribute("interval");
+            /*String interval = whenElement.getAttribute("interval");
             if (interval==null || interval.length()==0){
                 return 0.0;
             }
-            return Double.parseDouble(interval);
+            return Double.parseDouble(interval);*/
+            return getInterval(whenElement);
         } catch (XPathExpressionException ex) {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -287,11 +292,14 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 String endID = element.getAttribute("end"); //.substring(1);
                 Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
                 //System.out.println(endID);
-                String interval = whenElement.getAttribute("interval");
+                /*String interval = whenElement.getAttribute("interval");
                 if (interval!=null || interval.length()>0){
                     double timeValue = Double.parseDouble(interval);
                     maxTimeValue = Math.max(timeValue, maxTimeValue);
-                }
+                }*/
+                double timeValue = getInterval(whenElement);
+                maxTimeValue = Math.max(timeValue, maxTimeValue);
+                
             }
             return maxTimeValue;
         } catch (XPathExpressionException ex) {
@@ -454,6 +462,16 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         return 0.0;
     }
 
+    // TS, added 19-01-2024: the XML schema still seems to allow first <when> without @interval
+    private double getInterval(Element element){
+        String interval = element.getAttribute("interval");
+        if (interval==null || interval.isEmpty()){
+            return 0.0;
+        }
+        double time = Double.parseDouble(interval);
+        return time;        
+    }
+    
     private void indexTime() {
         timeIndex = new HashMap<>();
         try {
@@ -462,9 +480,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             for (int i=0; i<allWhens.getLength(); i++){
                 Element thisWhen = (Element) allWhens.item(i);
                 String id = thisWhen.getAttribute("xml:id");
-                String interval = thisWhen.getAttribute("interval");
-                double time = Double.parseDouble(interval);
-                timeIndex.put(id, time);
+                timeIndex.put(id, getInterval(thisWhen));
             }            
         } catch (XPathExpressionException ex) {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
@@ -480,30 +496,35 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             String name = element.getLocalName();
             switch (name){
                 case "when" : 
-                    return Double.parseDouble(element.getAttribute("interval"));
+                    //return Double.parseDouble(element.getAttribute("interval"));
+                    return getInterval(element);
                 case "annotationBlock" : 
                     String startID = element.getAttribute("start");
                     Element whenElement = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                    return Double.parseDouble(whenElement.getAttribute("interval"));
+                    //return Double.parseDouble(whenElement.getAttribute("interval"));
+                    return getInterval(whenElement);
                 default :
                     // new, issue #71 : this is, among others maybe, for pauses
                     if (element.getAttribute("start")!=null){
                         String startID2 = element.getAttribute("start");
                         Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        return Double.parseDouble(whenElement2.getAttribute("interval"));
+                        //return Double.parseDouble(whenElement2.getAttribute("interval"));
+                        return getInterval(whenElement2);
                     }
                     // nearest anchor?
                     Element anchorElement = ((Element)xPath.evaluate("//preceding-sibling::tei:anchor[1]", element, XPathConstants.NODE));                   
                     if (anchorElement!=null){
                         String synch = anchorElement.getAttribute("synch");
                         Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + synch + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        return Double.parseDouble(whenElement2.getAttribute("interval"));
+                        //return Double.parseDouble(whenElement2.getAttribute("interval"));
+                        return getInterval(whenElement2);
                     } else {
                         // superordinate annotationBlock?
                         Element annotationBlock = ((Element)xPath.evaluate("//ancestor::tei:annotationBlock[1]", element, XPathConstants.NODE));                   
                         String startID2 = annotationBlock.getAttribute("start");
                         Element whenElement3 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        return Double.parseDouble(whenElement3.getAttribute("interval"));                        
+                        //return Double.parseDouble(whenElement3.getAttribute("interval"));                        
+                        return getInterval(whenElement3);                            
                     }
             }                        
         } catch (XPathExpressionException ex) {
@@ -681,6 +702,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         
     }
     
+    // what is this???
     public abstract ISOTEITranscript createNewInstance(Document transcriptDocument, Document metadataDocument);
     public abstract ISOTEITranscript createNewInstance(Document transcriptDocument);
     
