@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.w3c.dom.Document;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.io.Constants;
+import org.zumult.objects.Transcript;
 import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.Hit;
+import org.zumult.query.KWICSnippet;
 import org.zumult.query.MetadataQuery;
 import org.zumult.query.Pagination;
 import org.zumult.query.SearchQuery;
@@ -36,21 +39,23 @@ public class COMAKWIC<T> extends AbstractKWIC {
     private static final int DEFAULT_LEFT_CONTEXT_LENGTH = Constants.KWIC_DEFAULT_CONTEXT_LENGTH;
     
     
-    public COMAKWIC (SearchResultPlus searchResult, String context, String type)
-            throws SearchServiceException, IOException{
+    public COMAKWIC (SearchResultPlus searchResult, String context, String type) throws SearchServiceException, IOException{
         this.type=type;
         this.searchResult = searchResult;
         setContext(context);
-        this.createKWICSnippets("xml");      
+        if(type.equals(Constants.SEARCH_TYPE_DOWNLOAD)){
+            this.createKWICSnippets("xml");      
+        } else{
+            this.createKWICSnippets();
+        }      
     }
     
-    public COMAKWIC (SearchResultPlus searchResult, String context, 
-                    String type, String fileType) 
-                        throws SearchServiceException, IOException{
+    public COMAKWIC (SearchResultPlus searchResult, String context, String type, String fileType) throws SearchServiceException, IOException{
         this.type=type;
         this.searchResult = searchResult;
         setContext(context);
         this.createKWICSnippets(fileType);
+        
     }
     
     public void setKWICSnippets(T kwicSnippets){
@@ -122,12 +127,35 @@ public class COMAKWIC<T> extends AbstractKWIC {
             throw new IOException(ex);
         }           
     }
+    
+    private void createKWICSnippets() throws IOException, SearchServiceException{
+        ArrayList arrayList = new ArrayList<>();
+        try {
+            ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
+            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
+
+            for (Hit row : (ArrayList<Hit>) searchResult.getHits()){
+                Transcript transcript = backendInterface.getTranscript(row.getDocId());
+                Document transcriptDoc = transcript.getDocument();
+                KWICSnippet snippetObj = creator.apply(transcriptDoc, row.getFirstMatch().getID(), row.getMatches(), getLeftContext(), getRightContext());
+                arrayList.add(snippetObj);
+            }
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+            // better throw this, or not?
+            throw new IOException(ex);
+        }
+        setKWICSnippets((T) arrayList);
+    }
+    
 
 
 
     @Override
-    public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String toXML(){
+        DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
+        return searchResultSerializer.displayKWICinXML(this);
     }
     
     // the following methods just seem to be passing through properties of the searchResult    

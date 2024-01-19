@@ -103,20 +103,20 @@ public class DefaultQuerySerializer implements QuerySerializer {
     }
     
     @Override
-    public String displayKWICinXML(KWIC obj) {
+    public String displayKWICinXML(KWIC kwicObj) {
 
             Document document = db.newDocument();
             Element root = document.createElement(XML_ROOT);
             root.setAttribute("type", "kwic");
 
             Element query = document.createElement(QUERY_PART);
-            query.setTextContent(obj.getSearchQuery().getQueryString());
+            query.setTextContent(kwicObj.getSearchQuery().getQueryString());
 
             Element metadataQuery = document.createElement(ADDITIONAL_METADATA_QUERY_PART);
-            metadataQuery.setTextContent(obj.getMetadataQuery().getAdditionalMetadata());
+            metadataQuery.setTextContent(kwicObj.getMetadataQuery().getAdditionalMetadata());
             
             Element corpusQuery = document.createElement(CORPUS_QUERY_PART);
-            corpusQuery.setTextContent(obj.getMetadataQuery().getCorpusQuery());
+            corpusQuery.setTextContent(kwicObj.getMetadataQuery().getCorpusQuery());
             
             root.appendChild(query);
             root.appendChild(metadataQuery);
@@ -125,27 +125,27 @@ public class DefaultQuerySerializer implements QuerySerializer {
             Element meta = document.createElement(META_PART);
 
             Element cutoffElem = document.createElement(CUTOFF);
-            Boolean cutoff = obj.getCutoff();
+            Boolean cutoff = kwicObj.getCutoff();
             cutoffElem.setTextContent(String.valueOf(cutoff));
             meta.appendChild(cutoffElem);
             Element total = document.createElement(TOTAL_RESULTS);
             Element totalTranscripts = document.createElement(TOTAL_TRANSCRIPTS);
 
             if (cutoff){
-                 total.setTextContent(String.valueOf(obj.getTotalHits()));
-                 totalTranscripts.setTextContent(String.valueOf(obj.getTotalTranscripts()));
+                 total.setTextContent(String.valueOf(kwicObj.getTotalHits()));
+                 totalTranscripts.setTextContent(String.valueOf(kwicObj.getTotalTranscripts()));
             }else {
                 total.setTextContent(String.valueOf(-1));
                 totalTranscripts.setTextContent(String.valueOf(-1));
             }
             
             Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
-            itemsPerPage.setTextContent(String.valueOf(obj.getPagination().getItemsPerPage()));
+            itemsPerPage.setTextContent(String.valueOf(kwicObj.getPagination().getItemsPerPage()));
             meta.appendChild(itemsPerPage);
 
             Element mode = document.createElement(MODE);
             Element code = document.createElement(CODE);
-            code.setTextContent(obj.getSearchMode());
+            code.setTextContent(kwicObj.getSearchMode());
             mode.appendChild(code);
             meta.appendChild(mode);
                         
@@ -153,11 +153,11 @@ public class DefaultQuerySerializer implements QuerySerializer {
             meta.appendChild(totalTranscripts);
             
             Element searchTime = document.createElement(SEARCH_TIME);
-            searchTime.setTextContent(TimeUtilities.format(obj.getSearchTime()));
+            searchTime.setTextContent(TimeUtilities.format(kwicObj.getSearchTime()));
             meta.appendChild(searchTime);
             
             Element pageStartIndex = document.createElement(PAGE_START_INDEX);
-            pageStartIndex.setTextContent(String.valueOf(obj.getPagination().getPageStartIndex()));
+            pageStartIndex.setTextContent(String.valueOf(kwicObj.getPagination().getPageStartIndex()));
             meta.appendChild(pageStartIndex);
 
             Element context = document.createElement(CONTEXT);
@@ -167,10 +167,10 @@ public class DefaultQuerySerializer implements QuerySerializer {
             Element leftLength = document.createElement(CONTEXT_LENGTH);
             Element rightItem = document.createElement(CONTEXT_ITEM);
             Element rightLength = document.createElement(CONTEXT_LENGTH);
-            leftItem.setTextContent(obj.getLeftContext().getType());
-            rightItem.setTextContent(obj.getRightContext().getType());
-            leftLength.setTextContent(String.valueOf(obj.getLeftContext().getLength()));
-            rightLength.setTextContent(String.valueOf(obj.getRightContext().getLength()));
+            leftItem.setTextContent(kwicObj.getLeftContext().getType());
+            rightItem.setTextContent(kwicObj.getRightContext().getType());
+            leftLength.setTextContent(String.valueOf(kwicObj.getLeftContext().getLength()));
+            rightLength.setTextContent(String.valueOf(kwicObj.getRightContext().getLength()));
             left.appendChild(leftItem);
             left.appendChild(leftLength);
             right.appendChild(rightItem);
@@ -181,10 +181,10 @@ public class DefaultQuerySerializer implements QuerySerializer {
             
             root.appendChild(meta);
             
-            if(obj.getAdditionalSearchConstraints()!=null){
+            if(kwicObj.getAdditionalSearchConstraints()!=null){
                 Element additionalSearchConstraints = document.createElement(ADDITIONAL_SAERCH_CONSTRAINTS);
                 
-                for (AdditionalSearchConstraint additionalSearchConstraint: obj.getAdditionalSearchConstraints()){
+                for (AdditionalSearchConstraint additionalSearchConstraint: kwicObj.getAdditionalSearchConstraints()){
                     NodeList nodes = additionalSearchConstraint.getDocument().getChildNodes();
                     for (int i=0; i<nodes.getLength(); i++){
                         Node node = document.importNode(nodes.item(i), true);
@@ -196,8 +196,8 @@ public class DefaultQuerySerializer implements QuerySerializer {
             }
 
             Element hits = document.createElement(HITS_PART);
-            ArrayList<Hit> rows = obj.getHits();
-            ArrayList<KWICSnippet> snippets = (ArrayList<KWICSnippet>) obj.getKWICSnippets();
+            ArrayList<Hit> rows = kwicObj.getHits();
+            ArrayList<KWICSnippet> snippets = (ArrayList<KWICSnippet>) kwicObj.getKWICSnippets();
             
             int index = 0;
             for (Hit row : rows){
