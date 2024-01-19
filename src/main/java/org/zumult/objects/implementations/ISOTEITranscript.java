@@ -494,6 +494,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         try {
             Element element = (Element)xPath.evaluate("//*[@xml:id='" + id + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
             String name = element.getLocalName();
+            //System.out.println("Name of element " + name);
+            //System.out.println("ID of element " + element.getAttribute("xml:id"));
             switch (name){
                 case "when" : 
                     //return Double.parseDouble(element.getAttribute("interval"));
@@ -505,22 +507,29 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                     return getInterval(whenElement);
                 default :
                     // new, issue #71 : this is, among others maybe, for pauses
-                    if (element.getAttribute("start")!=null){
+                    // watch out!!! getAttribute never returns null, but empty string??
+                    //if (element.getAttribute("start")!=null){
+                    if (!(element.getAttribute("start").isEmpty())){                        
+                        //System.out.println("Case 1 : the element does have a start attribute");
                         String startID2 = element.getAttribute("start");
                         Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
                         //return Double.parseDouble(whenElement2.getAttribute("interval"));
                         return getInterval(whenElement2);
                     }
                     // nearest anchor?
-                    Element anchorElement = ((Element)xPath.evaluate("//preceding-sibling::tei:anchor[1]", element, XPathConstants.NODE));                   
+                    Element anchorElement = ((Element)xPath.evaluate("preceding-sibling::tei:anchor[1]", element, XPathConstants.NODE));                   
                     if (anchorElement!=null){
+                        //System.out.println("Case 2 : there is a preceding anchor element");
                         String synch = anchorElement.getAttribute("synch");
+                        //System.out.println("Anchor synch = " + synch);
+                            
                         Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + synch + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
                         //return Double.parseDouble(whenElement2.getAttribute("interval"));
                         return getInterval(whenElement2);
                     } else {
+                        //System.out.println("Case 3 : We are trying annotationBlock");
                         // superordinate annotationBlock?
-                        Element annotationBlock = ((Element)xPath.evaluate("//ancestor::tei:annotationBlock[1]", element, XPathConstants.NODE));                   
+                        Element annotationBlock = ((Element)xPath.evaluate("ancestor::tei:annotationBlock[1]", element, XPathConstants.NODE));                   
                         String startID2 = annotationBlock.getAttribute("start");
                         Element whenElement3 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
                         //return Double.parseDouble(whenElement3.getAttribute("interval"));                        

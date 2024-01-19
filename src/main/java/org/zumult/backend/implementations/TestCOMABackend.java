@@ -40,6 +40,18 @@ public class TestCOMABackend {
             BackendInterface bi = new COMAFileSystem();
             System.out.println("There.");
             
+            String transcriptID = "1-7-1-24-a";
+            String tokenID = "a6_w29";
+            Transcript transcript = bi.getTranscript(transcriptID);
+            String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
+            String url = bi.getMedia(audioID).getURL();
+            System.out.println(url);
+            double time = transcript.getTimeForID(tokenID);
+            System.out.println(time);
+            
+            System.exit(0);
+            
+            
             System.out.println(Configuration.getSearchIndexPath());
             
             long start = System.currentTimeMillis();
