@@ -200,7 +200,7 @@ public class Configuration {
     static XMLConfiguration config;
     
     // new for #192
-    public static String getCofigurationVariable(String variableName){
+    public static String getConfigurationVariable(String variableName){
         return config.getString("backend." + variableName);
     } 
     
