@@ -196,6 +196,15 @@ public class Configuration {
         }
         return Constants.EVENT_TITLE_METADATAKEY;
     }
+    
+    static XMLConfiguration config;
+    
+    // new for #192
+    public static String getConfigurationVariable(String variableName){
+        return config.getString("backend." + variableName);
+    } 
+    
+    
 
 
     static void read(){
@@ -213,7 +222,9 @@ public class Configuration {
             
             System.out.println("Reading configuration from " + PATH);
             File f = new File(PATH);
-            XMLConfiguration config = configs.xml(f.getAbsolutePath());
+            // changed for #192
+            //XMLConfiguration config = configs.xml(f.getAbsolutePath());
+            config = configs.xml(f.getAbsolutePath());
 
             backendInterfaceClassPath = config.getString("backend[@classPath]");
             System.out.println("backendInterfaceClassPath: " + backendInterfaceClassPath );
