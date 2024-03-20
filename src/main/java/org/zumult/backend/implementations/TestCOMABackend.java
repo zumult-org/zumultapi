@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.Configuration;
+import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
@@ -39,9 +40,49 @@ public class TestCOMABackend {
             BackendInterface bi = new COMAFileSystem();
             System.out.println("There.");
             
+            String transcriptID = "1-7-1-24-a";
+            String tokenID = "a6_w29";
+            Transcript transcript = bi.getTranscript(transcriptID);
+            String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
+            String url = bi.getMedia(audioID).getURL();
+            System.out.println(url);
+            double time = transcript.getTimeForID(tokenID);
+            System.out.println(time);
+            
+            System.exit(0);
+            
+            
             System.out.println(Configuration.getSearchIndexPath());
             
+            long start = System.currentTimeMillis();
+            SpeechEvent speechEvent = bi.getSpeechEvent("TGDP_1-7-1");
+            long now1 = System.currentTimeMillis();
+            IDList transcripts = speechEvent.getTranscripts();
+            long now2 = System.currentTimeMillis();
             
+            MetadataKey recordingPlaceKey = bi.findMetadataKeyByID("SpeechEvent_Recording Place");
+            System.out.println("Name: " + recordingPlaceKey.getName("en"));
+            System.out.println("ID: " + recordingPlaceKey.getID());
+            IDList places = bi.getAvailableValues("TGDP", recordingPlaceKey);
+            for (String place : places){
+                System.out.println(place);
+            }
+            
+            IDList newBraunfels = ((MetadataFinderInterface)(bi))
+                    .findSpeechEventsByMetadataValue("TGDP", recordingPlaceKey, "New Braunfels");
+            for (String place : newBraunfels){
+                System.out.println(place);
+            }
+
+            System.exit(0);
+            
+            long time1 = (now1 - start);
+            long time2 = (now2 - now1);
+            System.out.println(time1 + "ms for getting speech event");
+            System.out.println(time2 + "ms for getting transcript IDs");
+            for (String id : transcripts){
+                System.out.println(id);
+            }
             
             
             Corpus corpus = bi.getCorpus("TGDP");

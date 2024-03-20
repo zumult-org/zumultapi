@@ -118,7 +118,13 @@ public class ZumultDataServlet extends HttpServlet {
             // issue #55
             case "printDownloadWordlist" :
                 printDownloadWordlist(request, response);
-                break;                
+                break;      
+            default : 
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write("<span>Unknown command</span>");             
+                response.getWriter().close();                            
+                break;
         }
     }
 

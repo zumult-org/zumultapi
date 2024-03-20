@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -22,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zumult.io.IOUtilities;
 import org.zumult.query.Hit;
-import org.zumult.query.Hit.Match;
 import org.zumult.query.StatisticEntry;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.KWIC;
@@ -90,7 +88,8 @@ public class DefaultQuerySerializer implements QuerySerializer {
     protected static final String NUMBER_OF_HITS = "numberOfHits";
     protected static final String FILE = "file";
     
-    private static final String DONE = "DONE";
+    // was private, changed this for #182
+    static final String DONE = "DONE";
     
     DocumentBuilder db;
     
@@ -104,20 +103,20 @@ public class DefaultQuerySerializer implements QuerySerializer {
     }
     
     @Override
-    public String displayKWICinXML(KWIC obj) {
+    public String displayKWICinXML(KWIC kwicObj) {
 
             Document document = db.newDocument();
             Element root = document.createElement(XML_ROOT);
             root.setAttribute("type", "kwic");
 
             Element query = document.createElement(QUERY_PART);
-            query.setTextContent(obj.getSearchQuery().getQueryString());
+            query.setTextContent(kwicObj.getSearchQuery().getQueryString());
 
             Element metadataQuery = document.createElement(ADDITIONAL_METADATA_QUERY_PART);
-            metadataQuery.setTextContent(obj.getMetadataQuery().getAdditionalMetadata());
+            metadataQuery.setTextContent(kwicObj.getMetadataQuery().getAdditionalMetadata());
             
             Element corpusQuery = document.createElement(CORPUS_QUERY_PART);
-            corpusQuery.setTextContent(obj.getMetadataQuery().getCorpusQuery());
+            corpusQuery.setTextContent(kwicObj.getMetadataQuery().getCorpusQuery());
             
             root.appendChild(query);
             root.appendChild(metadataQuery);
@@ -126,27 +125,27 @@ public class DefaultQuerySerializer implements QuerySerializer {
             Element meta = document.createElement(META_PART);
 
             Element cutoffElem = document.createElement(CUTOFF);
-            Boolean cutoff = obj.getCutoff();
+            Boolean cutoff = kwicObj.getCutoff();
             cutoffElem.setTextContent(String.valueOf(cutoff));
             meta.appendChild(cutoffElem);
             Element total = document.createElement(TOTAL_RESULTS);
             Element totalTranscripts = document.createElement(TOTAL_TRANSCRIPTS);
 
             if (cutoff){
-                 total.setTextContent(String.valueOf(obj.getTotalHits()));
-                 totalTranscripts.setTextContent(String.valueOf(obj.getTotalTranscripts()));
+                 total.setTextContent(String.valueOf(kwicObj.getTotalHits()));
+                 totalTranscripts.setTextContent(String.valueOf(kwicObj.getTotalTranscripts()));
             }else {
                 total.setTextContent(String.valueOf(-1));
                 totalTranscripts.setTextContent(String.valueOf(-1));
             }
             
             Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
-            itemsPerPage.setTextContent(String.valueOf(obj.getPagination().getItemsPerPage()));
+            itemsPerPage.setTextContent(String.valueOf(kwicObj.getPagination().getItemsPerPage()));
             meta.appendChild(itemsPerPage);
 
             Element mode = document.createElement(MODE);
             Element code = document.createElement(CODE);
-            code.setTextContent(obj.getSearchMode());
+            code.setTextContent(kwicObj.getSearchMode());
             mode.appendChild(code);
             meta.appendChild(mode);
                         
@@ -154,11 +153,11 @@ public class DefaultQuerySerializer implements QuerySerializer {
             meta.appendChild(totalTranscripts);
             
             Element searchTime = document.createElement(SEARCH_TIME);
-            searchTime.setTextContent(TimeUtilities.format(obj.getSearchTime()));
+            searchTime.setTextContent(TimeUtilities.format(kwicObj.getSearchTime()));
             meta.appendChild(searchTime);
             
             Element pageStartIndex = document.createElement(PAGE_START_INDEX);
-            pageStartIndex.setTextContent(String.valueOf(obj.getPagination().getPageStartIndex()));
+            pageStartIndex.setTextContent(String.valueOf(kwicObj.getPagination().getPageStartIndex()));
             meta.appendChild(pageStartIndex);
 
             Element context = document.createElement(CONTEXT);
@@ -168,10 +167,10 @@ public class DefaultQuerySerializer implements QuerySerializer {
             Element leftLength = document.createElement(CONTEXT_LENGTH);
             Element rightItem = document.createElement(CONTEXT_ITEM);
             Element rightLength = document.createElement(CONTEXT_LENGTH);
-            leftItem.setTextContent(obj.getLeftContext().getType());
-            rightItem.setTextContent(obj.getRightContext().getType());
-            leftLength.setTextContent(String.valueOf(obj.getLeftContext().getLength()));
-            rightLength.setTextContent(String.valueOf(obj.getRightContext().getLength()));
+            leftItem.setTextContent(kwicObj.getLeftContext().getType());
+            rightItem.setTextContent(kwicObj.getRightContext().getType());
+            leftLength.setTextContent(String.valueOf(kwicObj.getLeftContext().getLength()));
+            rightLength.setTextContent(String.valueOf(kwicObj.getRightContext().getLength()));
             left.appendChild(leftItem);
             left.appendChild(leftLength);
             right.appendChild(rightItem);
@@ -182,10 +181,10 @@ public class DefaultQuerySerializer implements QuerySerializer {
             
             root.appendChild(meta);
             
-            if(obj.getAdditionalSearchConstraints()!=null){
+            if(kwicObj.getAdditionalSearchConstraints()!=null){
                 Element additionalSearchConstraints = document.createElement(ADDITIONAL_SAERCH_CONSTRAINTS);
                 
-                for (AdditionalSearchConstraint additionalSearchConstraint: obj.getAdditionalSearchConstraints()){
+                for (AdditionalSearchConstraint additionalSearchConstraint: kwicObj.getAdditionalSearchConstraints()){
                     NodeList nodes = additionalSearchConstraint.getDocument().getChildNodes();
                     for (int i=0; i<nodes.getLength(); i++){
                         Node node = document.importNode(nodes.item(i), true);
@@ -197,8 +196,8 @@ public class DefaultQuerySerializer implements QuerySerializer {
             }
 
             Element hits = document.createElement(HITS_PART);
-            ArrayList<Hit> rows = obj.getHits();
-            ArrayList<KWICSnippet> snippets = (ArrayList<KWICSnippet>) obj.getKWICSnippets();
+            ArrayList<Hit> rows = kwicObj.getHits();
+            ArrayList<KWICSnippet> snippets = (ArrayList<KWICSnippet>) kwicObj.getKWICSnippets();
             
             int index = 0;
             for (Hit row : rows){
@@ -399,7 +398,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
         return file;
     }
     
-    private File createTmpFile(String fileType) throws IOException{
+    /*private File createTmpFile(String fileType) throws IOException{
         File file = null;
         String actualPath = DefaultQuerySerializer.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
@@ -412,7 +411,14 @@ public class DefaultQuerySerializer implements QuerySerializer {
             }
         
         return file;
-    }
+    }*/
+    
+    // TS, 2024-01-19, changed this for issue #182
+    private File createTmpFile(String fileType) throws IOException{
+        File file = File.createTempFile("tmp", "." + fileType);
+        file.deleteOnExit();
+        return file;
+    }    
     
     protected String getKWICLine(String docID, 
             ArrayList<Hit.Match> matchArray, String firstMatchID, String lastMatchID, Document transcriptDoc, ISOTEIKWICSnippetCreator creator,
@@ -438,7 +444,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
     }
     
    
-    private class Consumer implements Runnable {
+    
+    // was private, changed for #182
+    class Consumer implements Runnable {
 
         private final BlockingQueue<String> queue;
         private final OutputStreamWriter bw;

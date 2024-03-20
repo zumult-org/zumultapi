@@ -5,6 +5,9 @@
  */
 package org.zumult.backend;
 
+import org.zumult.backend.implementations.AGDFileSystem;
+import org.zumult.backend.implementations.AbstractIDSBackend;
+
 /**
  *
  * @author Thomas_Schmidt
@@ -15,6 +18,8 @@ public class TestConfiguration {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        AbstractIDSBackend bi = new AGDFileSystem();
+        
         System.out.println(Configuration.getBackendInterfaceClassPath());
         System.out.println(Configuration.getMediaPath());
         System.out.println(Configuration.getRestAPIBaseURL());

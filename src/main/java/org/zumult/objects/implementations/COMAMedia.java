@@ -23,7 +23,16 @@ public class COMAMedia extends AbstractMedia {
 
     @Override
     public MEDIA_TYPE getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String url = super.getURL();
+        int index = url.lastIndexOf(".");
+        String suffix = url.substring(index+1).toLowerCase();
+        switch(suffix){
+            case "mp3" :
+            case "wav" : 
+                return MEDIA_TYPE.AUDIO;
+            default :
+                return MEDIA_TYPE.VIDEO;
+        }
     }
     
     @Override

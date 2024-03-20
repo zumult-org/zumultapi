@@ -6,15 +6,22 @@ package org.zumult.query.implementations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.w3c.dom.Document;
+import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
+import org.zumult.io.Constants;
+import org.zumult.objects.Transcript;
 import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.Hit;
-import org.zumult.query.KWIC;
-import org.zumult.query.KWICContext;
+import org.zumult.query.KWICSnippet;
 import org.zumult.query.MetadataQuery;
 import org.zumult.query.Pagination;
 import org.zumult.query.SearchQuery;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
+import org.zumult.query.serialization.DefaultQuerySerializer;
 
 /**
  *
@@ -26,94 +33,193 @@ public class COMAKWIC<T> extends AbstractKWIC {
     private final SearchResultPlus searchResult;
     private T kwicSnippets;
     
-    public COMAKWIC (SearchResultPlus searchResult, String context, String type)
-            throws SearchServiceException, IOException{
+    private static final String DEFAULT_RIGHT_CONTEXT_ITEM = Constants.KWIC_DEFAULT_CONTEXT_ITEM;
+    private static final String DEFAULT_LEFT_CONTEXT_ITEM = Constants.KWIC_DEFAULT_CONTEXT_ITEM;
+    private static final int DEFAULT_RIGHT_CONTEXT_LENGTH = Constants.KWIC_DEFAULT_CONTEXT_LENGTH;
+    private static final int DEFAULT_LEFT_CONTEXT_LENGTH = Constants.KWIC_DEFAULT_CONTEXT_LENGTH;
+    
+    
+    public COMAKWIC (SearchResultPlus searchResult, String context, String type) throws SearchServiceException, IOException{
         this.type=type;
         this.searchResult = searchResult;
         setContext(context);
-        this.createKWICSnippets("xml");      
+        if(type.equals(Constants.SEARCH_TYPE_DOWNLOAD)){
+            this.createKWICSnippets("xml");      
+        } else{
+            this.createKWICSnippets();
+        }      
     }
     
-    public COMAKWIC (SearchResultPlus searchResult, String context, 
-                    String type, String fileType) 
-                        throws SearchServiceException, IOException{
+    public COMAKWIC (SearchResultPlus searchResult, String context, String type, String fileType) throws SearchServiceException, IOException{
         this.type=type;
         this.searchResult = searchResult;
         setContext(context);
         this.createKWICSnippets(fileType);
+        
     }
     
-    private void setContext(String context) throws SearchServiceException{
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setKWICSnippets(T kwicSnippets){
+        this.kwicSnippets = kwicSnippets;
     }
     
-    private void createKWICSnippets(String fileType) 
-            throws IOException, SearchServiceException{      
-    }
-
     @Override
     public Object getKWICSnippets() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return kwicSnippets;
     }
 
     @Override
     public String getType() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return type;
     }
+
+    private void setContext(String context) throws SearchServiceException{
+        int rightContextLength = DEFAULT_RIGHT_CONTEXT_LENGTH;
+        int leftContextLength = DEFAULT_LEFT_CONTEXT_LENGTH;
+        String rightContextItem = DEFAULT_RIGHT_CONTEXT_ITEM;
+        String leftContextItem = DEFAULT_LEFT_CONTEXT_ITEM;  
+        if (context != null && !context.isEmpty()){
+                try{
+                    String[] ct = context.split(Constants.KWIC_LEFT_RIGHT_CONTEXT_DELIMITER);
+                    String[] lc = ct[0].split(Constants.KWIC_CONTEXT_DELIMITER);
+                    String[] rc = ct[1].split(Constants.KWIC_CONTEXT_DELIMITER);
+
+                    leftContextItem = checkItemSyntax(lc[1]);
+                    rightContextItem = checkItemSyntax(rc[1]);
+                    
+                    if (leftContextItem.equals(DEFAULT_LEFT_CONTEXT_ITEM)){
+                        if (Integer.valueOf(lc[0]) > Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX){
+                            leftContextLength = Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX;
+                        }else if (Integer.valueOf(lc[0]) >= 0){
+                            leftContextLength = Integer.valueOf(lc[0]);
+                        }
+                    } else {
+                        throw new SearchServiceException("Please specify the context in tokens! Characters are not supported yet.");
+                    }
+
+                    if (rightContextItem.equals(DEFAULT_RIGHT_CONTEXT_ITEM)){
+                        if (Integer.valueOf(rc[0]) > Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX){
+                            rightContextLength = Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX;
+                        }else if (Integer.valueOf(rc[0]) >= 0){
+                            rightContextLength = Integer.valueOf(rc[0]);
+                        }                   
+                    }else{
+                        throw new SearchServiceException("Please specify the context in tokens! Characters are not supported yet.");
+                    } 
+                }catch(NumberFormatException | ArrayIndexOutOfBoundsException e){
+                    throw new SearchServiceException("Please check the context syntax. The correct pattern is : 'context=3-t,3-t' or 'context=3-c,3-c'");
+                }
+        }
+        
+        super.setRightContext(rightContextItem, rightContextLength);
+        super.setLeftContext(leftContextItem, leftContextLength);
+    }
+
+    
+    
+    private void createKWICSnippets(String fileType) throws IOException, SearchServiceException{      
+        try {
+            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();     
+            DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
+            setKWICSnippets((T) searchResultSerializer.createKWICDownloadFile(this, fileType, backendInterface));
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+            // better throw this, or not (?)
+            throw new IOException(ex);
+        }           
+    }
+    
+    private void createKWICSnippets() throws IOException, SearchServiceException{
+        ArrayList arrayList = new ArrayList<>();
+        try {
+            ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
+            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
+
+            for (Hit row : (ArrayList<Hit>) searchResult.getHits()){
+                Transcript transcript = backendInterface.getTranscript(row.getDocId());
+                Document transcriptDoc = transcript.getDocument();
+                KWICSnippet snippetObj = creator.apply(transcriptDoc, row.getFirstMatch().getID(), row.getMatches(), getLeftContext(), getRightContext());
+                arrayList.add(snippetObj);
+            }
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+            // better throw this, or not?
+            throw new IOException(ex);
+        }
+        setKWICSnippets((T) arrayList);
+    }
+    
+
+
 
     @Override
-    public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String toXML(){
+        DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
+        return searchResultSerializer.displayKWICinXML(this);
     }
-
+    
+    // the following methods just seem to be passing through properties of the searchResult    
     @Override
     public ArrayList<Hit> getHits() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getHits();
     }
 
     @Override
     public Pagination getPagination() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getPagination();
     }
 
     @Override
     public Boolean getCutoff() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getCutoff();
+    }
+    
+    @Override
+    public long getSearchTime(){
+        return this.searchResult.getSearchTime();
     }
 
     @Override
     public int getTotalHits() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getTotalHits();
     }
 
     @Override
     public int getTotalTranscripts() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getTotalTranscripts();
     }
 
     @Override
     public SearchQuery getSearchQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getSearchQuery();
     }
 
     @Override
     public MetadataQuery getMetadataQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getMetadataQuery();
     }
 
     @Override
     public String getSearchMode() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public long getSearchTime() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getSearchMode();
     }
 
     @Override
     public ArrayList<AdditionalSearchConstraint> getAdditionalSearchConstraints() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.searchResult.getAdditionalSearchConstraints();
+    }
+    
+    private String checkItemSyntax(String str) throws SearchServiceException{
+        switch (str) {
+            case Constants.KWIC_CONTEXT_ITEM_FOR_TOKEN, 
+                 Constants.KWIC_CONTEXT_ITEM_FOR_CHARACTERS -> {
+                return str;
+            }
+            default -> throw new SearchServiceException(str 
+                    + " is not a supported context. "
+                    + "The correct pattern is : "
+                    + "'context=3-t,3-t' or 'context=3-c,3-c'");
+        }
     }
     
 
