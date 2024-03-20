@@ -63,11 +63,11 @@
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc6 -->
-        <dependency>
+        <!-- <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.4</version>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA</artifactId>
