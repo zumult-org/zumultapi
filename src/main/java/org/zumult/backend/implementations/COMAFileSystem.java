@@ -197,11 +197,26 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             
             String xp = "//Media[@Id='" + mediaID + "']";
             Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
-            String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
-            //File corpusFolder = new File(topFolder, corpusID);
-            //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
-            String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
-            return new COMAMedia(mediaID, urlString);
+            if (mediaElement!=null){
+                String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
+                //File corpusFolder = new File(topFolder, corpusID);
+                //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+                String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
+                return new COMAMedia(mediaID, urlString);
+            } else {
+                // 07-06-2024
+                // this is a fallback in case the ID of the recording, not the ID of the media was provided
+                // not sure if this is a good idea
+                String xp2 = "//Recording[@Id='" + mediaID + "']/Media[1]";
+                Element mediaElement2 = (Element) (Node) xPath.evaluate(xp2, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+                if (mediaElement2!=null){
+                    String nsLink = mediaElement2.getElementsByTagName("NSLink").item(0).getTextContent();
+                    //File corpusFolder = new File(topFolder, corpusID);
+                    //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+                    String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
+                    return new COMAMedia(mediaID, urlString);
+                }
+            }
             
         } catch (XPathExpressionException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
