@@ -57,6 +57,7 @@ public class Configuration {
     
     // new for #174
     private static String isoTei2HtmlStylesheet;
+    private static String isoTei2HtmlAnnotationsStylesheet;
     // new for #175
     private static String event2HtmlStylesheet;
     private static String speechEvent2HtmlStylesheet;
@@ -164,6 +165,14 @@ public class Configuration {
         }
         return Constants.ISOTEI2HTML_STYLESHEET2;
     }
+    
+    public static String getIsoTei2HTMLAnnotationsStylesheet() {
+        if (isoTei2HtmlAnnotationsStylesheet!=null){
+            return isoTei2HtmlAnnotationsStylesheet;
+        }
+        return Constants.ISOTEI2HTML_ANNOTATIONS_STYLESHEET;
+    }
+    
 
     // new for #175
     public static String getEvent2HTMLStylesheet(){
@@ -231,6 +240,7 @@ public class Configuration {
             
             // new for #174
             isoTei2HtmlStylesheet = config.getString("backend.isotei2html-xsl");
+            isoTei2HtmlAnnotationsStylesheet = config.getString("backend.isotei2html-annotations-xsl");
             // new for #175
             event2HtmlStylesheet = config.getString("backend.event2html-xsl");
             speechEvent2HtmlStylesheet = config.getString("backend.speechevent2html-xsl");
@@ -275,6 +285,7 @@ public class Configuration {
            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     
     
 }

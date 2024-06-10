@@ -949,7 +949,7 @@ public class ZumultDataServlet extends HttpServlet {
             String startAnnotationBlockID = request.getParameter("startAnnotationBlockID");
             String endAnnotationBlockID = request.getParameter("endAnnotationBlockID");
             
-            System.out.println("getAnnotations called with TRANSCRIPT ID=" + transcriptID + " and START_ANNOTATION_BLOCK_ID=" + startAnnotationBlockID);
+            //System.out.println("getAnnotations called with TRANSCRIPT ID=" + transcriptID + " and START_ANNOTATION_BLOCK_ID=" + startAnnotationBlockID);
             
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             Transcript transcript = backend.getTranscript(transcriptID);
@@ -959,7 +959,10 @@ public class ZumultDataServlet extends HttpServlet {
                 {"END_ANNOTATION_BLOCK_ID", endAnnotationBlockID},
             };
 
-            String annotationHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_ANNOTATIONS_STYLESHEET, transcript.toXML(), parameters);
+            String xsl = Configuration.getIsoTei2HTMLAnnotationsStylesheet();            
+            
+            //String annotationHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_ANNOTATIONS_STYLESHEET, transcript.toXML(), parameters);
+            String annotationHTML = new IOHelper().applyInternalStylesheetToString(xsl, transcript.toXML(), parameters);
             //System.out.println("********* ANNOTATION HTML ************\n" + annotationHTML);
             
             response.setContentType("text/html");
