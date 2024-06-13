@@ -29,8 +29,8 @@ public class SearchIndexer implements Indexer {
     
     private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
     private String MTAS_CONFIG_FILE_NAME = "mtas_config_TB.xml";
-    private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\index_Test";
-    private String INDEX_NAME = "TB_UNSD";
+    private String INDEX_PATH = "C:\\Users\\Elena\\IDS\\ZuMult\\INDICES";
+    private String INDEX_NAME = "TB_EXMARaLDA-DemoKorpus";
     
     private String[] INPUT_DIRECTORIES =
         {
@@ -61,7 +61,7 @@ public class SearchIndexer implements Indexer {
      */
     public static void main(String[] args) {
         try {
-            File[] INPUT_DIRECTORY_FILES = new File("C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_UNSD_06_11_2023").listFiles(new FileFilter(){
+            File[] INPUT_DIRECTORY_FILES = new File("C:\\Users\\Elena\\IDS\\ZuMult\\data\\coma").listFiles(new FileFilter(){
                 @Override
                 public boolean accept(File pathname) {
                     System.out.println(pathname.getAbsolutePath());
