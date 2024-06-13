@@ -68,20 +68,7 @@
                 
                 <div class="card-deck">
                     <div class="card mb-3">
-                      <a href="#" class="pop">
-                        <img class="card-img-top" src="./images/preselection.png" alt="Card image cap">
-                      </a>
-                      <div class="card-body">
-                            <h5 class="card-title">ZuMal</h5>
-                            <p class="card-text">
-                                <%=myResources.getString("ZuMalShort")%>                                
-                            </p>
-                            <!-- <a href="./jsp/zuMal.jsp" class="btn btn-primary" target="_blank">ZuMal</a> -->
-                            <a href="prototype/dist/zuMal.jsp" class="btn btn-primary" target="_blank">ZuMal</a>
-                      </div>
-                    </div>            
-                    <div class="card mb-3">
-                      <img class="card-img-top" src="./images/query.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="./images/query.jpg" alt="Card image cap">
                       <div class="card-body">
                         <h5 class="card-title">ZuRecht</h5>
                         <p class="card-text"><%=myResources.getString("ZuRechtShort")%></p>
@@ -93,52 +80,21 @@
                       <div class="card-body">
                         <h5 class="card-title">ZuViel</h5>
                         <p class="card-text"><%=myResources.getString("ZuVielShort")%></p>
-                        <a href="./jsp/zuViel.jsp?transcriptID=FOLK_E_00349_SE_01_T_01" class="btn btn-primary" target="_blank">ZuViel</a>
+                        <a href="./jsp/zuViel.jsp?transcriptID=ID2668D68B-60BC-E915-A7D3-68DE4A6AB954" class="btn btn-primary" target="_blank">ZuViel</a>
                       </div>
                     </div>            
-                    
-                </div>
-                
-                
-                <div class="card-deck">
                     <div class="card mb-3">
-                      <img class="card-img-top" src="./images/actions.png" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">ZuHand</h5>
-                        <p class="card-text"><%=myResources.getString("ZuHandShort")%></p>
-                        <a href="./jsp/zuHand.jsp" class="btn btn-primary" target="_blank">ZuHand</a>
-                      </div>
-                    </div>                                
-                    <div class="card mb-3">
-                      <img class="card-img-top" src="./images/crossquantification.png" alt="Card image cap">
+                                              <img class="card-img-top" src="./images/crossquantification.png" alt="Card image cap">
                       <div class="card-body">
                         <h5 class="card-title">ZuZweit</h5>
                         <p class="card-text"><%=myResources.getString("ZuZweitShort")%></p>
                         <a href="./jsp/zuZweit.jsp?metaField1=v_e_se_interaktionsdomaene&metaField2=v_s_geschlecht"" class="btn btn-primary" target="_blank">ZuZweit</a>
                       </div>
-                    </div>    
-                   <div class="card mb-3">
-                      <img class="card-img-top" src="./images/corpusoverview.png" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title"><%=myResources.getString("CorpusOverview")%></h5>
-                        <p class="card-text"><%=myResources.getString("CorpusOverviewShort")%></p>
-                        <a href="./jsp/corpusoverview.jsp" class="btn btn-primary" target="_blank"><%=myResources.getString("CorpusOverview")%></a>
-                        </div>
-                    </div>         
+
+                    </div>            
+                    
                 </div>
-                <!--
-                <div class="card-deck">
-                    <div class="card mb-3">
-                      <img class="card-img-top" src="./images/Rest-API.png" style="width: 400px;" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">REST API</h5>
-                        <p class="card-text"><%=myResources.getString("RestAPIShort")%></p>
-                        <a href="api" class="btn btn-primary" target="_blank">Rest API</a>
-                      </div>
-                    </div>                                
-                </div>-->
                 
-            </div>
             <div class="col-sm-2">
             </div>
         </div>
