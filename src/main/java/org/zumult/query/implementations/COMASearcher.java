@@ -63,15 +63,14 @@ public class COMASearcher extends AbstractSearcher {
 
     @Override
     public ArrayList<String> getIndexPaths(SearchIndexType searchIndex) throws IOException, SearchServiceException {
-        String searchIndexPath = Configuration.getSearchIndexPath();
         ArrayList<String> result = new ArrayList<>();
-        for (String indexID : Configuration.getSpeakerBasedIndexIDs()){
+        for (String indexID : Configuration.getTranscriptBasedIndexIDs()){
             File file = new File(Configuration.getSearchIndexPath(), indexID);
             result.add(file.getAbsolutePath());
         }
         return result;
     }
-
+    
     @Override
     public SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
         return new SearchIndexType(){
