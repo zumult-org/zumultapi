@@ -135,7 +135,6 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     <ul class="nav nav-tabs small" role="tablist">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" id="query-tab" href="#query-tab-content" role="tab"><%=myResources.getString("Query")%></a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" id="vocabulary-tab" href="#vocabulary-tab-content" role="tab"><%=myResources.getString("Vocabulary")%></a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" id="repetitions-tab" href="#repetition-tab-content" role="tab"><%=myResources.getString("Repetitions")%></a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -169,27 +168,16 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                                     <div class="table-wrapper table-responsive" id="statistics-result"></div>
 
                                     <%@include file="../WEB-INF/jspf/zuRechtVocabularySearchOptionsModal.jspf" %>
-                                    <%@include file="../WEB-INF/jspf/zuRechtThematicVocabularyLists.jspf" %>
                                               
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Repetitions tab -->
-                        <div class="tab-pane mt-3" id="repetition-tab-content">
-                            <h2><%=myResources.getString("SearchForRepetitions")%></h2>
-                            <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchForm.jspf" %>
-                            <%@include file="../WEB-INF/jspf/zuRechtRepetitionSearchOptionsModal.jspf" %>
-                            <div id="repetition-search-result-area" class="searchResultArea"></div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
   
         <%@include file="../WEB-INF/jspf/zuRechtConstants.jspf" %>
-        <%@include file="../WEB-INF/jspf/zuRechtRepetitionXMLCreator.jspf" %>
         <script type="text/javascript">
             var languageTag = '<%=currentLocale.toLanguageTag()%>';
             var ajaxSearchRequest = null;
@@ -2386,4 +2374,3 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         </script>
     </body>
 </html>
-
