@@ -92,10 +92,7 @@ public class Constants {
     public static final String DATA_QUANTIFICATIONS_PATH = "/data/quantifications/";
     public static final String DATA_ZUMAL_PATH = "/data/zumal/";
     public static final String DATA_POS_PATH = "/data/pos/";
-    
-    public static final String METADATA_SELECTION_PATH = "/data/MetadataSelection.xml";
-    public static final String ALL_CORPORA_PATH = "/data/AllCorpora.xml";
-    
+
     public static final String JAVA_FOLDER_PATH = "/src/main/java";
             
     public static String[] LEIPZIG_WORDLISTS =
