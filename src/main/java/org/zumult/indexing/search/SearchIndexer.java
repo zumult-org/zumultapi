@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.TimeUtilities;
+import org.zumult.query.searchEngine.COMASearchEngine;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
-import org.zumult.query.searchEngine.DGD2SearchEngine;
 import org.zumult.query.searchEngine.SearchIndex;
 
 /**
@@ -90,7 +90,7 @@ public class SearchIndexer implements Indexer {
             inputDirectories.add(path);
         });
         
-        MTASBasedSearchEngine index = new DGD2SearchEngine();
+        MTASBasedSearchEngine index = new COMASearchEngine();
         String path = new File(INDEX_PATH, INDEX_NAME).getAbsolutePath();
         String mtasConfigPath = new File(MTAS_CONFIG_FILE_PATH, MTAS_CONFIG_FILE_NAME).getAbsolutePath();
         SearchIndex searchIndex = index.createIndex(inputDirectories, path, mtasConfigPath);
