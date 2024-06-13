@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
-import org.zumult.backend.implementations.AGDFileSystem;
+import org.zumult.backend.implementations.COMAFileSystem;
 import org.zumult.indexing.Indexer;
 import org.zumult.objects.IDList;
 
@@ -52,7 +52,7 @@ public class OutputIDLists implements Indexer {
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             // is it much faster this way?
             // YES, by a factor of about 1 gazillion!!!!
-            backendInterface = new AGDFileSystem();
+            backendInterface = new COMAFileSystem();
             
             IDList corpora = backendInterface.getCorpora();
             String corporaList = corpora.toXML();
