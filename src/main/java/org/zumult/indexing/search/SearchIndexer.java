@@ -28,9 +28,10 @@ import org.zumult.query.searchEngine.SearchIndex;
 public class SearchIndexer implements Indexer {
     
     private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
-    private String MTAS_CONFIG_FILE_NAME = "mtas_config_TB.xml";
-    private String INDEX_PATH = "C:\\Users\\Elena\\IDS\\ZuMult\\INDICES";
-    private String INDEX_NAME = "TB_EXMARaLDA-DemoKorpus";
+    private String MTAS_CONFIG_FILE_NAME = "demo_mtas_config_SB.xml";
+    private String INDEX_PATH = "D:\\ZUMULT\\INDICES";
+    private String INDEX_NAME = "SB_EXMARaLDA-Demokorpus-Small";
+    private static String CORPUS_TOP_LEVEL_FOLDER = "D:\\ZUMULT\\EXMARaLDA-DemoKorpus-Small";
     
     private String[] INPUT_DIRECTORIES =
         {
@@ -61,7 +62,7 @@ public class SearchIndexer implements Indexer {
      */
     public static void main(String[] args) {
         try {
-            File[] INPUT_DIRECTORY_FILES = new File("C:\\Users\\Elena\\IDS\\ZuMult\\data\\coma").listFiles(new FileFilter(){
+            File[] INPUT_DIRECTORY_FILES = new File(CORPUS_TOP_LEVEL_FOLDER).listFiles(new FileFilter(){
                 @Override
                 public boolean accept(File pathname) {
                     System.out.println(pathname.getAbsolutePath());

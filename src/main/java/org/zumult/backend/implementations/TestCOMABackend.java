@@ -36,53 +36,67 @@ public class TestCOMABackend {
 
     private void doit() {
         try {
-            System.out.println(":" + Configuration.getMetadataPath());
-            BackendInterface bi = new COMAFileSystem();
-            System.out.println("There.");
+            System.out.println(
+                    "--- Configuration path : " +
+                    Configuration.getBackendInterfaceClassPath()
+            );
             
-            String transcriptID = "TRS_1-7-1-24-a";
-            String tokenID = "a6_w29";
+            System.out.println(
+                    "--- Metadata path : " +
+                    Configuration.getMetadataPath()
+            );
+            BackendInterface bi = new COMAFileSystem();
+            System.out.println("--- Initialised COMAFileSystem.");
+            
+            for (String id : bi.getCorpora()){
+                System.out.println("--- Corpus : " + id);
+            }
+            
+            
+            String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
+            String tokenID = "w120";
             Transcript transcript = bi.getTranscript(transcriptID);
             String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
             String url = bi.getMedia(audioID).getURL();
-            System.out.println(url);
+            System.out.println("--- Media URL for transcript " + transcriptID + " : " + url);
             double time = transcript.getTimeForID(tokenID);
-            System.out.println(time);
+            System.out.println("--- Time for token " + tokenID + " in  transcript " + transcriptID + " : " + time);
             
-            System.exit(0);
             
             
             System.out.println(Configuration.getSearchIndexPath());
             
             long start = System.currentTimeMillis();
-            SpeechEvent speechEvent = bi.getSpeechEvent("TGDP_1-7-1");
+            SpeechEvent speechEvent = bi.getSpeechEvent("IDC9DB990B-E34B-3EA5-41AC-FFE8D4347196");
             long now1 = System.currentTimeMillis();
             IDList transcripts = speechEvent.getTranscripts();
-            long now2 = System.currentTimeMillis();
-            
-            MetadataKey recordingPlaceKey = bi.findMetadataKeyByID("SpeechEvent_Recording Place");
-            System.out.println("Name: " + recordingPlaceKey.getName("en"));
-            System.out.println("ID: " + recordingPlaceKey.getID());
-            IDList places = bi.getAvailableValues("TGDP", recordingPlaceKey);
+            long now2 = System.currentTimeMillis();            
+            for (String id : transcripts){
+                System.out.println("---  Transcript for " + speechEvent.getName() + " : " + id);
+            }
+
+            MetadataKey communicationTypeKey = bi.findMetadataKeyByID("SpeechEvent_Communication type");
+            System.out.println("--- Key Name: " + communicationTypeKey.getName("en"));
+            System.out.println("--- Key ID: " + communicationTypeKey.getID());
+            IDList places = bi.getAvailableValues("EXMARaLDA-Demokorpus", communicationTypeKey);
             for (String place : places){
-                System.out.println(place);
+                System.out.println("--- Available value for " + communicationTypeKey.getName("en") + " : "+ place);
             }
             
-            IDList newBraunfels = ((MetadataFinderInterface)(bi))
-                    .findSpeechEventsByMetadataValue("TGDP", recordingPlaceKey, "New Braunfels");
-            for (String place : newBraunfels){
-                System.out.println(place);
+            IDList tvdebates = ((MetadataFinderInterface)(bi))
+                    .findSpeechEventsByMetadataValue("EXMARaLDA-Demokorpus", communicationTypeKey, "television debate");
+            for (String tvdebate : tvdebates){
+                System.out.println("--- TV debate : " + bi.getSpeechEvent(tvdebate).getName());
             }
 
             System.exit(0);
+            
+            // what follows is for TGDP
             
             long time1 = (now1 - start);
             long time2 = (now2 - now1);
             System.out.println(time1 + "ms for getting speech event");
             System.out.println(time2 + "ms for getting transcript IDs");
-            for (String id : transcripts){
-                System.out.println(id);
-            }
             
             
             Corpus corpus = bi.getCorpus("TGDP");

@@ -64,7 +64,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                 fileName = f.getName();
             }
             
-            String transcriptID = t.getID();;
+            String transcriptID = t.getID();
             
             // get event and speech event
             String speechEventID = null;
@@ -177,7 +177,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                     addProxyPause(newBodyForSpeakerBasedView, pauseStartVar, transcriptEndVar, pauseID, pause_dur);
                 }
                 
-                if (newBodyForSpeakerBasedView.getChildren(Constants.ELEMENT_NAME_ANNOTATION_BLOCK, ns).size()>0){
+                if (!newBodyForSpeakerBasedView.getChildren(Constants.ELEMENT_NAME_ANNOTATION_BLOCK, ns).isEmpty()){
                     
                     /********************** Step 2: add segments of other speakers *************************************/
                     /******* (add segments of other speakers to the new body-element
@@ -570,7 +570,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
                 }
             }
                                 
-            if (newGlobalSpanGrp.getChildren().size()>0){
+            if (!newGlobalSpanGrp.getChildren().isEmpty()){
                 newBodyForSpeakerBasedView.addContent(newGlobalSpanGrp);
             }
         }
@@ -650,7 +650,7 @@ public class ISOTEI2SpeakerBasedFormat extends ISOTEITransformer {
             }    
         }
 
-        if (CommonEventOverlapSpanGrp.getChildren().size()>0){
+        if (!CommonEventOverlapSpanGrp.getChildren().isEmpty()){
             newBodyForSpeakerBasedView.addContent(CommonEventOverlapSpanGrp);
         }
     }
