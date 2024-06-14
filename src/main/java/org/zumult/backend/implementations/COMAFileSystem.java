@@ -333,8 +333,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             <Filename>MT_270110_Shirin_s.exs</Filename>
             */
             // N.B.: ends-with is not present in XPath 1.0, and we don't have support for XPath 2.0
-            NodeList allTranscripts = 
+            /*NodeList allTranscripts = 
                     (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", 
+                            communication.getDocument().getDocumentElement(), XPathConstants.NODESET);*/
+            NodeList allTranscripts = 
+                    (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']", 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allTranscripts.getLength(); i++){
                 Element transcriptElement = ((Element)(allTranscripts.item(i)));
