@@ -28,7 +28,7 @@ import org.zumult.query.searchEngine.SearchIndex;
 public class SearchIndexer implements Indexer {
     
     private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
-    private String MTAS_CONFIG_FILE_NAME = "demo_mtas_config_SB.xml";
+    private String MTAS_CONFIG_FILE_NAME = "demo_mtas_config.xml";
     private String INDEX_PATH = "D:\\ZUMULT\\INDICES";
     private String INDEX_NAME = "SB_EXMARaLDA-Demokorpus-Small";
     private static String CORPUS_TOP_LEVEL_FOLDER = "D:\\ZUMULT\\EXMARaLDA-DemoKorpus-Small";

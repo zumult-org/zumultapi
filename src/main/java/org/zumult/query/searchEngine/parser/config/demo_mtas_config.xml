@@ -13,7 +13,7 @@
     <!-- END MTAS INDEX CONFIGURATION -->
     
     <!-- START CONFIGURATION MTAS ISO/TEI PARSER -->
-    <!--    <parser name="mtas.analysis.parser.MtasTEIParser">-->
+        <!--<parser name="mtas.analysis.parser.MtasTEIParser">-->
     <parser name="org.zumult.query.searchEngine.parser.ZuMultParser">
         
         <!-- START GENERAL SETTINGS MTAS ISO/TEI PARSER -->
@@ -39,7 +39,7 @@
             
         <mappings>
             
-<!-- *************************** START WORDS **************************************** -->
+            <!-- START WORDS -->
             
             <!-- START: Mapping rules for <w>-elements  --> 
             
@@ -303,11 +303,10 @@
             
             <!-- END: Mapping rules for <vocal> and <incident>-elements  -->
             
-<!-- *************************** END WORDS **************************************** -->   
+            <!-- END WORDS -->   
 
 
-<!-- *************************** START WORD ANNOTATIONS **************************************** --> 
-                   
+            <!-- START WORD ANNOTATIONS -->          
             <mapping type="wordAnnotation" name="desc">
                 <token type="string" offset="false" realoffset="false" parent="false">
                     <pre>
@@ -319,10 +318,9 @@
                 </token>        
             </mapping>
             
-<!-- *************************** END WORD ANNOTATIONS **************************************** --> 
+            <!-- END WORD ANNOTATIONS -->
 
-
-<!-- *************************** START GROUPS **************************************** --> 
+            <!-- START GROUPS -->
             
             <!-- START: Mapping rules for <body>-elements  -->
             
@@ -451,9 +449,9 @@
             
              <!-- END: Mapping rule for <seg>-element -->
              
-<!-- *************************** END GROUPS **************************************** --> 
+            <!-- END GROUPS --> 
 
-<!-- *************************** START GROUPS ANNOTATIONS **************************************** --> 
+            <!-- START GROUP ANNOTATIONS --> 
             
             
             <!-- START: Mapping rule for <spanGrp>-elements, e.g.
@@ -607,14 +605,14 @@
                        
             <!-- END: Mapping rules for <span>-elements --> 
             
-<!-- *************************** END GROUPS ANNOTATIONS **************************************** -->
+            <!--  END GROUPS ANNOTATIONS  -->
 
-<!-- *************************** START RELATIONS **************************************** -->
-            
-            
-<!-- *************************** END RELATIONS **************************************** -->
+            <!--  START RELATIONS  -->
 
-        <!-- END MAPPINGS -->
+
+            <!--  END RELATIONS  -->
+
+            <!-- END MAPPINGS -->
         </mappings>
     </parser>
     <!-- END CONFIGURATION MTAS ISO/TEI PARSER -->
