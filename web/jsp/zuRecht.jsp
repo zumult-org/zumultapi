@@ -230,7 +230,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 addItalicPlaceholder("#customWordlists-list");    
 
                 $('#corpus-info-button').on("click", function(){
-                    var url = '<%=webAppBaseURL%>' + "/jsp/corpusoverview.jsp#FOLK";
+                    var url = "https://exmaralda.org/de/exmaralda-demokorpus/";
                     window.open(url); 
                 });
         

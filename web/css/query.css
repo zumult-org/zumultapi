@@ -100,7 +100,7 @@ td.kwic-link > a{color: #337AB7;}
 td.numberOfHits {text-align: center;}
 td.numberOfTokens {text-align: center;}
 /*td.numberOfHitsRel {text-align: center;}*/
-td.transcript{width: 100px; text-align: center;}
+td.transcript{text-align: center;}
 td.metadataValue {width: 350px; text-align: center;}
 td.open-kwic-link{width: 100%;}
 td.kwic-link{width: 250px;}
