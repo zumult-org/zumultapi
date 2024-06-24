@@ -40,10 +40,6 @@
                     <xsl:attribute name="title">
                         <xsl:value-of select = "$transcriptIdToolTip" />
                     </xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:text>../DGDLink?command=showData&amp;id=</xsl:text>
-                        <xsl:value-of select="substring(@source,0, 13)"/>
-                    </xsl:attribute>
                     <xsl:value-of select="@source"/>
                 </a>
             </td>
@@ -90,33 +86,7 @@
                 </span>
                 </button>
             </td>
-            <td class="dgd-link">
-                
-                <xsl:variable name="testId">
-                    <xsl:for-each select="snippet/*[@match='true']">
-                        <xsl:if test="@parent !=''">
-                            <xsl:value-of select="@xml:id"/>
-                            <!-- <xsl:if test="not(last())"><xsl:text> </xsl:text></xsl:if> -->
-                            <xsl:if test="not(position()=last())"><xsl:text> </xsl:text></xsl:if> 
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:variable>
-                
-                <xsl:if test="normalize-space($testId) != ''">
-                    <a target="_blank">
-                        <xsl:attribute name="title">
-                            <xsl:value-of select = "$dgdToolTip" />
-                        </xsl:attribute> 
-                        <xsl:attribute name="href">
-                            <xsl:text>../DGDLink?command=showTranscriptExcerpt&amp;transcriptID=</xsl:text>
-                            <xsl:value-of select="@source"/>
-                            <xsl:text>&amp;tokenIDs=</xsl:text>
-                            <xsl:copy-of select="$testId" />
-                        </xsl:attribute>
-                        DGD
-                    </a>
-                </xsl:if>
-            </td>
+           
             <td class="zumult-link">
             <!--    <a title="Show excerpt in ZuMult" target="_blank">
                     <xsl:attribute name="href">
@@ -204,12 +174,6 @@
             <a target="_blank">
                     <xsl:attribute name="title">
                         <xsl:value-of select = "$speakerInitialsToolTip" />
-                    </xsl:attribute>
-                    <xsl:attribute name="href">
-                        <xsl:text>../DGDLink?command=showSpeakerMetadata&amp;speakerInitials=</xsl:text>
-                        <xsl:value-of select="$firstSpeaker"/>
-                        <xsl:text>&amp;transcriptID=</xsl:text>
-                        <xsl:value-of select="$docID"/>
                     </xsl:attribute>
                     <xsl:value-of select="$firstSpeaker"/>
             </a>
