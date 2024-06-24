@@ -1,8 +1,5 @@
 <form id="vocabulary-search-form">
     <p><%=myResources.getString("UploadYourVocabularyFile")%> 
-        <button type="button" id="open-thematic-vocabulary-lists-btn" 
-        class="btn btn-success btn-sm ml-2" data-toggle="modal" 
-        data-target="#modal-thematicVocabularyLists"><%=myResources.getString("PreselectedThematicVocabulary")%></button>
     </p>
 
     <div class="input-group mb-3">
