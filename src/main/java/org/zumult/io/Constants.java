@@ -284,7 +284,7 @@ public class Constants {
     };
                 
     public static final String DEFAULT_LOCALE = "en-US";
-    public static final String DEFAULT_CORPUS = "FOLK";
+    public static final String DEFAULT_CORPUS = "EXMARaLDA-DemoKorpus";
     public static final String RANDOM_ID = "RANDOM-ID";
     public static final String DEFAULT_METADATA_KEY_SPEECH_EVENT = "e_se_art";
     public static final String DEFAULT_POS_TAGSET = "STTS_2_0";
