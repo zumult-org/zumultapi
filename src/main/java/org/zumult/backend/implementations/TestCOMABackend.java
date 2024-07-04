@@ -46,6 +46,7 @@ public class TestCOMABackend {
             String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
             String url = bi.getMedia(audioID).getURL();
             System.out.println(url);
+            Media partMedia = bi.getMedia(audioID, Media.MEDIA_FORMAT.WAV).getPart(0, 1);
             double time = transcript.getTimeForID(tokenID);
             System.out.println(time);
             
