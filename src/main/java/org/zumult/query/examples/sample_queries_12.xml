@@ -48,15 +48,5 @@ and open the template in the editor.
         <description>find all single word tokens</description>
         <corpus></corpus>
     </query>
-    <query id="9">
-        <string>[word="verhindern"] precededby [word="Armut"]</string>
-        <description>find 'untersuchung' preceded by 'die'</description>
-        <corpus>FOLK|GWSS</corpus>
-    </query>
-    <query id="10">
-        <string>[word="müssen"] !precededby [lemma="wir"]</string>
-        <description>find 'untersuchung' not preceded by 'die'</description>
-        <corpus>FOLK|GWSS</corpus>
-    </query>
 
 </queries>

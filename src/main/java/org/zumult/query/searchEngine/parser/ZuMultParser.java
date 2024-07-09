@@ -50,7 +50,7 @@ import org.zumult.query.searchEngine.util.SearchEngineUtilities;
  *
  * @author Elena
  */
-final public class ZuMultParser extends MtasTEIParser {
+public class ZuMultParser extends MtasTEIParser {
     
     int notIndexedTokens = 0;
     private static final Logger logger = Logger.getLogger(ZuMultParser.class.getName());
