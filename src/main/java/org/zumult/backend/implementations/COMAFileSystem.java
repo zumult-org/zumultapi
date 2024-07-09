@@ -199,8 +199,10 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             if (mediaElement!=null){
                 String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
+                
                 File corpusFolder = new File(topFolder, corpusID);
-                String fileString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+                String fileString = corpusFolder.toPath().resolve(nsLink).toString();
+                
                 String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
                 return new COMAMedia(mediaID, urlString, fileString);
             } else {
