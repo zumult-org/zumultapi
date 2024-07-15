@@ -160,6 +160,8 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
                 COMAMetadataKey comaMetadataKey = new COMAMetadataKey("Speaker_" + key, key, ObjectTypesEnum.SPEAKER);
                 result.add(comaMetadataKey);
             }
+            COMAMetadataKey comaMetadataKey = new COMAMetadataKey("Speaker_Sex", "Sex", ObjectTypesEnum.SPEAKER);
+            result.add(comaMetadataKey);
         } catch (XPathExpressionException ex) {
             Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
         }

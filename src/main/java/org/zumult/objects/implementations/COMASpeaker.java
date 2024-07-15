@@ -42,6 +42,11 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
     @Override
     public String getMetadataValue(MetadataKey key) {
         try {
+            if (key.getName("en").equals("Sex")){
+                String xPathString = "descendant::Sex/text()";
+                String value = xPath.evaluate(xPathString, getDocument().getDocumentElement());
+                return value;
+            }
             String xPathString = "descendant::Key[@Name='" + key.getName("en") + "']/text()";
             String value = xPath.evaluate(xPathString, getDocument().getDocumentElement());
             return value;
