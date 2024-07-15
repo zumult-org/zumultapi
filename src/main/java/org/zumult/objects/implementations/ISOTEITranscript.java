@@ -711,6 +711,28 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         
     }
     
+    @Override
+    public void setTimelineToZero() {
+        try {
+            Element firstWhenElement = ((Element)xPath.evaluate("//tei:when[1]", getDocument().getDocumentElement(), XPathConstants.NODE));
+            double firstTime = Double.parseDouble(firstWhenElement.getAttribute("interval"));
+            String xp = "//tei:when";
+            NodeList nodes = (NodeList)xPath.evaluate(xp, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){                
+                Element node = (Element) nodes.item(i);
+                double thisTime = Double.parseDouble(node.getAttribute("interval"));
+                double newTime = thisTime - firstTime;
+                node.setAttribute("interval", Double.toString(newTime));                
+            }
+            
+            
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    
     // what is this???
     public abstract ISOTEITranscript createNewInstance(Document transcriptDocument, Document metadataDocument);
     public abstract ISOTEITranscript createNewInstance(Document transcriptDocument);

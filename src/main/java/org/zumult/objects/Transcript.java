@@ -49,4 +49,6 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     
     // issue #69
     public String getLanguage();
+    
+    public void setTimelineToZero();
 }
