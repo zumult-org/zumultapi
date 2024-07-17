@@ -141,6 +141,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         try {
             String corpusID = findCorpusID(speechEventID);
             //System.out.println("CorpusID " + corpusID);
+            // make this robust
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + speechEventID);
+            }
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -165,6 +170,12 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public Speaker getSpeaker(String speakerID) throws IOException {
         try {
             String corpusID = findCorpusID(speakerID);
+            // make this robust
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + speakerID);
+            }
+            
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -189,6 +200,12 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public Media getMedia(String mediaID) throws IOException {
         try {
             String corpusID = findCorpusID(mediaID);
+            // make this robust
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + mediaID);
+            }
+            
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -236,7 +253,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             // we may need an indexer again...
             // or: we can iterate through all COMA files?
             // Shouldn't be that bad, so let's try
-            String corpusID = findCorpusID(transcriptID);
+            String corpusID = findCorpusID(transcriptID);            
             if (corpusID==null){
                 //System.out.println("Error: No corpus found for: " + transcriptID);
                 throw new IOException("Error: No corpus found for: " + transcriptID);
@@ -289,7 +306,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public IDList getEvents4Corpus(String corpusID) throws IOException {
         IDList result = new IDList("Event");
         try {
-            Corpus corpus = getCorpus(corpusID);
+            Corpus corpus = getCorpus(corpusID);               
             NodeList allCommunications = (NodeList) xPath.evaluate("//Communication", corpus.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allCommunications.getLength(); i++){
                 Element communicationElement = ((Element)(allCommunications.item(i)));
