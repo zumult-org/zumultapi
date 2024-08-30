@@ -78,13 +78,13 @@ public class TestCOMABackend {
             MetadataKey communicationTypeKey = bi.findMetadataKeyByID("SpeechEvent_Communication type");
             System.out.println("--- Key Name: " + communicationTypeKey.getName("en"));
             System.out.println("--- Key ID: " + communicationTypeKey.getID());
-            IDList places = bi.getAvailableValues("EXMARaLDA-Demokorpus", communicationTypeKey);
+            IDList places = bi.getAvailableValues("EXMARaLDA-DemoKorpus", communicationTypeKey);
             for (String place : places){
                 System.out.println("--- Available value for " + communicationTypeKey.getName("en") + " : "+ place);
             }
             
             IDList tvdebates = ((MetadataFinderInterface)(bi))
-                    .findSpeechEventsByMetadataValue("EXMARaLDA-Demokorpus", communicationTypeKey, "television debate");
+                    .findSpeechEventsByMetadataValue("EXMARaLDA-DemoKorpus", communicationTypeKey, "television debate");
             for (String tvdebate : tvdebates){
                 System.out.println("--- TV debate : " + bi.getSpeechEvent(tvdebate).getName());
             }
