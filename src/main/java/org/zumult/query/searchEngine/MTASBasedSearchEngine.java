@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -45,9 +43,6 @@ import org.apache.commons.io.input.ReversedLinesFileReader;
 import mtas.codec.util.CodecInfo;
 import mtas.codec.util.CodecSearchTree;
 import mtas.codec.util.CodecUtil;
-import mtas.parser.cql.MtasCQLParser;
-import mtas.parser.cql.ParseException;
-import mtas.parser.cql.TokenMgrError;
 import mtas.search.spans.util.MtasSpanQuery;
 import mtas.analysis.token.MtasTokenString;
 import org.apache.lucene.analysis.Analyzer;
@@ -85,7 +80,8 @@ import org.zumult.query.searchEngine.util.SearchEngineUtilities;
  * @version 1.0
  * 
  */
-public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
+public abstract class MTASBasedSearchEngine extends QueryCreater 
+                                            implements SearchEngineInterface {
     
     private static final Logger log = Logger.getLogger(MTASBasedSearchEngine.class.getName());
 
@@ -94,9 +90,9 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
     
     protected static final int TIMEOUT = 10 * 60 * 1000;
     public static final String FIELD_TRANSCRIPT_ID_FROM_FILE_NAME = "fileName";
-    public static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = Constants.METADATA_KEY_TRANSCRIPT_DGD_ID; //t_dgd_kennung
-    public static final String FIELD_TRANSCRIPT_CONTENT = "content";
-    public static final String FIELD_TRANSCRIPT_TOKEN_TOTAL = "tokenTotal";  // number of word tokens in transcript
+    public static final String FIELD_TRANSCRIPT_METADATA_T_DGD_KENNUNG = SearchIndexFieldEnum.TRANSCRIPT_KENNUNG.toString();
+    public static final String FIELD_TRANSCRIPT_CONTENT = SearchIndexFieldEnum.TRANSCRIPT_CONTENT.toString();
+    public static final String FIELD_TRANSCRIPT_TOKEN_TOTAL = SearchIndexFieldEnum.TRANSCRIPT_TOKEN_TOTAL.toString();  // number of word tokens in transcript
 
     public static final String XML_FILE_FORMAT = ".XML";
     
@@ -324,26 +320,7 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
         }
     }
         
-    protected MtasSpanQuery createQuery(String field, String queryString, HashMap < String, String [] > variables, MtasSpanQuery ignore, Integer maximumIgnoreLength) throws SearchServiceException, IOException {
-        try{
-            log.log(Level.INFO, "Searching {0}", queryString);
-            Reader reader = new BufferedReader(new StringReader(queryString));
-            MtasCQLParser p = new MtasCQLParser(reader);
-            MtasSpanQuery msq = p.parse(field, null, variables, ignore, maximumIgnoreLength);
-            reader.close();
-            return msq;
-        }catch (TokenMgrError | ParseException ex) {
-            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-            throw new SearchServiceException("Please check the query syntax: " + ex.getMessage()); 
-        }catch (IllegalArgumentException ex) {
-            Logger.getLogger(MTASBasedSearchEngine.class.getName()).log(Level.SEVERE, null, ex);
-            if(ex.getMessage().contains("expected ')'") || ex.getMessage().contains("end-of-string")){
-                throw new SearchServiceException("Please check the query syntax, for example, if all round brackets are closed!"); 
-            }else{
-                throw new SearchServiceException("Please check the query syntax: " + ex.getMessage()); 
-            }
-        }
-    }
+
 
     private void sortByAbsoluteValue( ArrayList<Map.Entry<SearchEngineStatisticEntry, Double>> array){
         Collections.sort(array, new Comparator<Map.Entry<SearchEngineStatisticEntry, Double>>() {
@@ -430,6 +407,7 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
         match.setId(CodecUtil.termValue(term.data));
         match.setStartPosition(term.startPosition);
         match.setEndPosition(term.startPosition);
+        match.setType(CodecUtil.termPrefix(term.data));
         return match;
     }
     
@@ -1054,6 +1032,43 @@ public abstract class MTASBasedSearchEngine implements SearchEngineInterface {
         
     }
     
+    /*************************************************************************************************/
+    /*                                 SEARCH BIGRAMS                                             */
+    /*************************************************************************************************/
+  
+      
+    
+    @Override
+    public SearchEngineResponseBigrams searchBigrams(
+                            ArrayList<String> indexPaths,
+                            String queryString,
+                            String metadataQueryString,
+                            Integer from,
+                            Integer to,
+                            Integer minFreq,
+                            Integer maxFreq,
+                            SortTypeEnum sortType,
+                            HashMap<String, String[]> wordLists,
+                            List<String> annotationLayerIDs,
+                            String within,
+                            List<String> elementsInBetween) 
+                                    throws SearchServiceException, IOException {
+        
+        NGramSearchEngine se = new NGramSearchEngine();
+        return se.searchBigrams(indexPaths,
+                                queryString,
+                                metadataQueryString,
+                                from,
+                                to,
+                                minFreq,
+                                maxFreq,
+                                sortType,
+                                wordLists,
+                                annotationLayerIDs,
+                                within,
+                                elementsInBetween);
+         
+    }
     
     /*************************************************************************************************/
     /*                                 SEARCH STATISTICS                                             */

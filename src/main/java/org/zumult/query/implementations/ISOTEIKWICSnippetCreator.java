@@ -8,8 +8,9 @@ package org.zumult.query.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.XMLConstants;
@@ -55,7 +56,7 @@ public class ISOTEIKWICSnippetCreator {
             
         DefaultKWICSnippet matchSnippet = new DefaultKWICSnippet();
         ArrayList<KWICSnippetToken> content = new ArrayList();
-        Set<String> speakers = new HashSet<>();
+        SortedSet<String> speakers = new TreeSet<>();
         xPath.setNamespaceContext(new ISOTEINamespaceContext());
 
         String xPathString = "//tei:*[@xml:id = '" + leftMatchId + "']";

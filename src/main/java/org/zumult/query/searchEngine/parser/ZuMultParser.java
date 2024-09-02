@@ -725,7 +725,11 @@ public class ZuMultParser extends MtasTEIParser {
               String[] value;
               if (postValue == null || postValue.length == 0) {
                 if (postValue == null){ //EF: null only if trim filter used and value is empty, otherwise always empty postValue
-                    System.out.print("postValue is null. The following MTASTokenString will not be created: ");
+                    
+                    for(String str : preValue) {
+                        System.out.print(str);
+                    }
+                    System.out.print(": postValue is null. This MTASTokenString will not be created! ");
                     notIndexedTokens++;
                 value = preValue.clone();
                 for (int k = 0; k < value.length; k++) {

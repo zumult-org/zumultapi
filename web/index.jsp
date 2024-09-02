@@ -54,7 +54,7 @@
     </head>
     
     <%
-       String pageTitle = myResources.getString("PrototypeApplications"); 
+       String pageTitle = myResources.getString("testApp"); 
     %>
 
     <body style="background-image: url('./images/doors.jpg');">
@@ -82,17 +82,7 @@
                         <p class="card-text"><%=myResources.getString("ZuVielShort")%></p>
                         <a href="./jsp/zuViel.jsp?transcriptID=ID2668D68B-60BC-E915-A7D3-68DE4A6AB954" class="btn btn-primary" target="_blank">ZuViel</a>
                       </div>
-                    </div>            
-                    <div class="card mb-3">
-                                              <img class="card-img-top" src="./images/crossquantification.png" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">ZuZweit</h5>
-                        <p class="card-text"><%=myResources.getString("ZuZweitShort")%></p>
-                        <a href="./jsp/zuZweit.jsp?metaField1=v_e_se_interaktionsdomaene&metaField2=v_s_geschlecht"" class="btn btn-primary" target="_blank">ZuZweit</a>
-                      </div>
-
-                    </div>            
-                    
+                    </div>                      
                 </div>
                 
             <div class="col-sm-2">

@@ -29,9 +29,9 @@ public class SearchIndexer implements Indexer {
     
     private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
     private String MTAS_CONFIG_FILE_NAME = "demo_mtas_config.xml";
-    private String INDEX_PATH = "D:\\ZUMULT\\INDICES";
-    private String INDEX_NAME = "SB_EXMARaLDA-Demokorpus-Small";
-    private static String CORPUS_TOP_LEVEL_FOLDER = "D:\\ZUMULT\\EXMARaLDA-DemoKorpus-Small";
+    private String INDEX_PATH = "C:\\Users\\Elena\\IDS\\GitHub\\zumultapi\\src\\main\\java\\data\\indices";
+    private String INDEX_NAME = "TB_EXMARaLDA-DemoKorpus";
+    private static String CORPUS_TOP_LEVEL_FOLDER = "C:\\Users\\Elena\\IDS\\GitHub\\zumultapi\\src\\main\\java\\data\\corpora\\EXMARaLDA-DemoKorpus";
     
     private String[] INPUT_DIRECTORIES =
         {

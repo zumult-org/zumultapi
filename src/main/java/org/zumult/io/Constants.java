@@ -118,6 +118,7 @@ public class Constants {
     public static final String METADATA_KEY_MATCH_TYPE_PAUSE_DURATION_CEIL = "pause.dur.ceil";
     public static final String METADATA_KEY_MATCH_TYPE_PAUSE_TYPE = "pause.type";
     public static final String METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER = "annotationBlock.speaker";
+    public static final String METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_ID = "annotationBlock.id";
     
     public static final String METADATA_KEY_MATCH_LOWERCASE ="_lc";
     
