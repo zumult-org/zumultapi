@@ -39,6 +39,7 @@ public class DefaultSearchResultBigrams extends AbstractSearchResultPlus impleme
 
     @Override
     public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        DefaultQuerySerializer serializer = new DefaultQuerySerializer();
+        return serializer.displayBigramsInXML(this);
     }
 }

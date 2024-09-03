@@ -33,13 +33,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.BackendInterface;
 import org.zumult.io.Constants;
-import org.zumult.io.IOHelper;
 import org.zumult.io.TimeUtilities;
 import org.zumult.objects.Transcript;
 import org.zumult.query.AdditionalSearchConstraint;
+import org.zumult.query.Bigram;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
+import org.zumult.query.SearchResult;
+import org.zumult.query.SearchResultBigrams;
 import org.zumult.query.implementations.ISOTEIKWICSnippetCreator;
 
 /**
@@ -87,6 +89,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
     protected static final String METADATA_VALUE = "metadataValue";
     protected static final String NUMBER_OF_HITS = "numberOfHits";
     protected static final String FILE = "file";
+    protected static final String SPACE = " ";
+    protected static final String BIGRAMS_PART = "bigrams";
+    protected static final String BIGRAM = "bigram";
     
     // was private, changed this for #182
     static final String DONE = "DONE";
@@ -104,40 +109,34 @@ public class DefaultQuerySerializer implements QuerySerializer {
     
     @Override
     public String displayKWICinXML(KWIC kwicObj) {
-
-            Document document = db.newDocument();
-            Element root = document.createElement(XML_ROOT);
+        
+            Document document = db.newDocument(); 
+            
+            Element root = createRoot(document,
+        kwicObj.getSearchQuery().getQueryString(),
+  kwicObj.getMetadataQuery().getAdditionalMetadata(),
+        kwicObj.getMetadataQuery().getCorpusQuery());
+            
             root.setAttribute("type", "kwic");
-
-            Element query = document.createElement(QUERY_PART);
-            query.setTextContent(kwicObj.getSearchQuery().getQueryString());
-
-            Element metadataQuery = document.createElement(ADDITIONAL_METADATA_QUERY_PART);
-            metadataQuery.setTextContent(kwicObj.getMetadataQuery().getAdditionalMetadata());
-            
-            Element corpusQuery = document.createElement(CORPUS_QUERY_PART);
-            corpusQuery.setTextContent(kwicObj.getMetadataQuery().getCorpusQuery());
-            
-            root.appendChild(query);
-            root.appendChild(metadataQuery);
-            root.appendChild(corpusQuery);
-
-            Element meta = document.createElement(META_PART);
 
             Element cutoffElem = document.createElement(CUTOFF);
             Boolean cutoff = kwicObj.getCutoff();
+  
+            int total = kwicObj.getTotalHits();
+            int totalTranscripts = kwicObj.getTotalTranscripts();
+            
+            if (!cutoff){
+                total= -1;
+                totalTranscripts = -1;
+            }
+            
+            Element meta = createMetaElement(document,
+                total, 
+                totalTranscripts,
+                kwicObj.getSearchTime());
+           
             cutoffElem.setTextContent(String.valueOf(cutoff));
             meta.appendChild(cutoffElem);
-            Element total = document.createElement(TOTAL_RESULTS);
-            Element totalTranscripts = document.createElement(TOTAL_TRANSCRIPTS);
-
-            if (cutoff){
-                 total.setTextContent(String.valueOf(kwicObj.getTotalHits()));
-                 totalTranscripts.setTextContent(String.valueOf(kwicObj.getTotalTranscripts()));
-            }else {
-                total.setTextContent(String.valueOf(-1));
-                totalTranscripts.setTextContent(String.valueOf(-1));
-            }
             
             Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
             itemsPerPage.setTextContent(String.valueOf(kwicObj.getPagination().getItemsPerPage()));
@@ -149,13 +148,6 @@ public class DefaultQuerySerializer implements QuerySerializer {
             mode.appendChild(code);
             meta.appendChild(mode);
                         
-            meta.appendChild(total);
-            meta.appendChild(totalTranscripts);
-            
-            Element searchTime = document.createElement(SEARCH_TIME);
-            searchTime.setTextContent(TimeUtilities.format(kwicObj.getSearchTime()));
-            meta.appendChild(searchTime);
-            
             Element pageStartIndex = document.createElement(PAGE_START_INDEX);
             pageStartIndex.setTextContent(String.valueOf(kwicObj.getPagination().getPageStartIndex()));
             meta.appendChild(pageStartIndex);
@@ -242,43 +234,51 @@ public class DefaultQuerySerializer implements QuerySerializer {
             return IOUtilities.documentToString(document); 
     }
 
-    public String displayStatiscticsInXML(SearchStatistics obj) {
-
-        Document document = db.newDocument();
-        Element root = document.createElement(XML_ROOT);
-        root.setAttribute("type", "statistics");
-        
-        Element query = document.createElement(QUERY_PART);
-        query.setTextContent(obj.getSearchQuery().getQueryString());
-        
-        Element metadataQuery = document.createElement(ADDITIONAL_METADATA_QUERY_PART);
-        metadataQuery.setTextContent(obj.getMetadataQuery().getAdditionalMetadata());
-            
-        Element corpusQuery = document.createElement(CORPUS_QUERY_PART);
-        corpusQuery.setTextContent(obj.getMetadataQuery().getCorpusQuery());
-        
+    public Element createMetaElement(Document document,
+            int results, int transcripts, long millis){
         Element meta = document.createElement(META_PART);
         
-        Element type = document.createElement(STATISTICS_TYPE);
-        type.setTextContent(String.valueOf(obj.getMetadataKey().getID()));
-        meta.appendChild(type);
-        
         Element totalHits = document.createElement(TOTAL_RESULTS);
-        totalHits.setTextContent(String.valueOf(obj.getTotalHits()));
+        totalHits.setTextContent(String.valueOf(results));
         meta.appendChild(totalHits);
         
         Element totalTranscripts = document.createElement(TOTAL_TRANSCRIPTS);
-        totalTranscripts.setTextContent(String.valueOf(obj.getTotalTranscripts()));
+        totalTranscripts.setTextContent(String.valueOf(transcripts));
         meta.appendChild(totalTranscripts);
+        
+        Element searchTime = document.createElement(SEARCH_TIME);
+        searchTime.setTextContent(TimeUtilities.format(millis));
+        meta.appendChild(searchTime);
+        
+        return meta;
+    }
+    
+    public String displayStatiscticsInXML(SearchStatistics obj) {
+
+        Document document = db.newDocument();
+        
+        Element root = createRoot(document,
+        obj.getSearchQuery().getQueryString(),
+  obj.getMetadataQuery().getAdditionalMetadata(),
+        obj.getMetadataQuery().getCorpusQuery());
+                    
+        root.setAttribute("type", "statistics");
+
+        Element meta = createMetaElement(document,
+                obj.getTotalHits(), 
+                obj.getTotalTranscripts(),
+                obj.getSearchTime());
+
+        Element type = document.createElement(STATISTICS_TYPE);
+        type.setTextContent(String.valueOf(obj.getMetadataKey().getID()));
+        meta.appendChild(type);
                 
         Element distinctValues = document.createElement(DISTINCT_VALUES);
         distinctValues.setTextContent(String.valueOf(obj.getNumberOfDistinctValues()));
         meta.appendChild(distinctValues);
         
-        Element searchTime = document.createElement(SEARCH_TIME);
-        searchTime.setTextContent(TimeUtilities.format(obj.getSearchTime()));
-        meta.appendChild(searchTime);
-        
+        root.appendChild(meta);
+                
         Element items = document.createElement(ITEMS);
         ArrayList<StatisticEntry> rows = obj.getStatistics();
         
@@ -301,11 +301,6 @@ public class DefaultQuerySerializer implements QuerySerializer {
             items.appendChild(item);
         }
         
-        
-        root.appendChild(query);
-        root.appendChild(metadataQuery);
-        root.appendChild(corpusQuery);
-        root.appendChild(meta);
         root.appendChild(items);
         
         document.appendChild(root);
@@ -487,5 +482,134 @@ public class DefaultQuerySerializer implements QuerySerializer {
             this.bw = bw;
         }
     }
+
+    public String displayBigramsInXML(SearchResultBigrams searchResultBigrams) {
+        Document document = db.newDocument();
+        Element root = createRoot(document,
+        searchResultBigrams.getSearchQuery().getQueryString(),
+  searchResultBigrams.getMetadataQuery().getAdditionalMetadata(),
+        searchResultBigrams.getMetadataQuery().getCorpusQuery());
+        root.setAttribute("type", "bigrams");
+        
+        Element meta = createMetaElement(document,
+                searchResultBigrams.getTotalHits(), 
+                searchResultBigrams.getTotalTranscripts(),
+                searchResultBigrams.getSearchTime());
+
+        Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
+        itemsPerPage.setTextContent(String.valueOf(searchResultBigrams.getPagination().getItemsPerPage()));
+        meta.appendChild(itemsPerPage);
+
+        Element mode = document.createElement(MODE);
+        Element code = document.createElement(CODE);
+        code.setTextContent(searchResultBigrams.getSearchMode());
+        mode.appendChild(code);
+        meta.appendChild(mode);
+   
+        Element pageStartIndex = document.createElement(PAGE_START_INDEX);
+        pageStartIndex.setTextContent(String.valueOf(searchResultBigrams.getPagination().getPageStartIndex()));
+        meta.appendChild(pageStartIndex);
+            
+        root.appendChild(meta);
+            
+        if(searchResultBigrams.getAdditionalSearchConstraints()!=null){
+            Element additionalSearchConstraints = document.createElement(ADDITIONAL_SAERCH_CONSTRAINTS);
+                
+            for (AdditionalSearchConstraint additionalSearchConstraint: searchResultBigrams.getAdditionalSearchConstraints()){
+                NodeList nodes = additionalSearchConstraint.getDocument().getChildNodes();
+                for (int i=0; i<nodes.getLength(); i++){
+                    Node node = document.importNode(nodes.item(i), true);
+                    additionalSearchConstraints.appendChild(node);
+                }
+            }
+                
+            root.appendChild(additionalSearchConstraints);
+        }
+            
+        Element bigrams = document.createElement(BIGRAMS_PART);
+        ArrayList<Bigram> rows = searchResultBigrams.getBigrams();
+
+        for (Bigram row : rows){
+            Element bigram = document.createElement(BIGRAM);
+            bigram.setAttribute(ROW, String.valueOf(row.getPosition()));
+                
+            bigram.setAttribute("norm", 
+                                    formatBigram(row, "norm"));
+            bigram.setAttribute("lemma", 
+                                    formatBigram(row, "lemma"));
+            bigram.setAttribute(TOTAL_RESULTS, String.valueOf(row.getNumberOfHits()));
+
+            bigrams.appendChild(bigram);
+        }
+ 
+        root.appendChild(bigrams);
+
+        document.appendChild(root);
+        return IOUtilities.documentToString(document); 
+    }
+    
+    protected Element createRoot(Document document, String searchQuery,
+        String additionalMetadata, String corpusQuery) {
+        Element root = document.createElement(XML_ROOT);
+        
+        Element query = document.createElement(QUERY_PART);
+        query.setTextContent(searchQuery);
+
+        Element metadataQuery = document.createElement(ADDITIONAL_METADATA_QUERY_PART);
+        metadataQuery.setTextContent(additionalMetadata);
+           
+        Element cq = document.createElement(CORPUS_QUERY_PART);
+        cq.setTextContent(corpusQuery);
+            
+        root.appendChild(query);
+        root.appendChild(metadataQuery);
+        root.appendChild(cq);
+        
+        return root;
+    }
+    
+    protected String formatBigram(Bigram b, String layer){
+        
+        String partner = b.getPartner();
+        Bigram.BigramType type = b.getType();
+        
+        StringBuilder sb = new StringBuilder();
+
+            if(type.equals(Bigram.BigramType.LEFT)){
+               if(partner.equals("{}")){
+                   sb.append(".").append(SPACE);
+               } else {
+                   sb.append(getValueFromMap(partner, layer))
+                     .append(SPACE);
+               }
+            } 
+            
+            sb.append(getValueFromMap(b.getQueryMatch(), layer));
+            
+            if(type.equals(Bigram.BigramType.RIGHT)){
+                if (partner.equals("{}")){
+                    sb.append(SPACE).append(".");
+                } else {
+                    sb.append(SPACE)
+                      .append(getValueFromMap(partner, layer));
+                }
+            }
+                        
+            return sb.toString();
+    }
+    
+    protected String getValueFromMap (String str, String layer) {
+        StringBuilder sb = new StringBuilder();
+        Pattern r = Pattern.compile(layer + "=([^,}]+)");
+        Matcher m = r.matcher(str);
+        while(m.find()){
+            sb.append(m.group(1))
+                    .append(SPACE);
+        }
+        return sb.toString().trim();
+    }
+
+
+
 }
 
