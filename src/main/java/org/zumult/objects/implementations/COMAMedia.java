@@ -17,8 +17,20 @@ import org.zumult.objects.MetadataKey;
 public class COMAMedia extends AbstractMedia {
 
     
+    String fileString;
+    
     public COMAMedia(String id, String urlString){
         super(id, urlString);
+    }
+        
+
+    public COMAMedia(String id, String urlString, String fileString){
+        super(id, urlString);
+        this.fileString = fileString;
+    }
+    
+    public String getFileString(){
+        return fileString;
     }
 
     @Override

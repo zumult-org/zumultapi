@@ -141,6 +141,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         try {
             String corpusID = findCorpusID(speechEventID);
             //System.out.println("CorpusID " + corpusID);
+            // make this robust
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + speechEventID);
+            }
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -165,6 +170,12 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public Speaker getSpeaker(String speakerID) throws IOException {
         try {
             String corpusID = findCorpusID(speakerID);
+            // make this robust
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + speakerID);
+            }
+            
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -189,6 +200,12 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public Media getMedia(String mediaID) throws IOException {
         try {
             String corpusID = findCorpusID(mediaID);
+            // make this robust
+            if (corpusID==null){
+                //System.out.println("Error: No corpus found for: " + transcriptID);
+                throw new IOException("Error: No corpus found for: " + mediaID);
+            }
+            
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
@@ -199,10 +216,12 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             if (mediaElement!=null){
                 String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
-                //File corpusFolder = new File(topFolder, corpusID);
-                //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+                
+                File corpusFolder = new File(topFolder, corpusID);
+                String fileString = corpusFolder.toPath().resolve(nsLink).toString();
+                
                 String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
-                return new COMAMedia(mediaID, urlString);
+                return new COMAMedia(mediaID, urlString, fileString);
             } else {
                 // 07-06-2024
                 // this is a fallback in case the ID of the recording, not the ID of the media was provided
@@ -234,7 +253,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             // we may need an indexer again...
             // or: we can iterate through all COMA files?
             // Shouldn't be that bad, so let's try
-            String corpusID = findCorpusID(transcriptID);
+            String corpusID = findCorpusID(transcriptID);            
             if (corpusID==null){
                 //System.out.println("Error: No corpus found for: " + transcriptID);
                 throw new IOException("Error: No corpus found for: " + transcriptID);
@@ -287,7 +306,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public IDList getEvents4Corpus(String corpusID) throws IOException {
         IDList result = new IDList("Event");
         try {
-            Corpus corpus = getCorpus(corpusID);
+            Corpus corpus = getCorpus(corpusID);               
             NodeList allCommunications = (NodeList) xPath.evaluate("//Communication", corpus.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allCommunications.getLength(); i++){
                 Element communicationElement = ((Element)(allCommunications.item(i)));
@@ -333,8 +352,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             <Filename>MT_270110_Shirin_s.exs</Filename>
             */
             // N.B.: ends-with is not present in XPath 1.0, and we don't have support for XPath 2.0
-            NodeList allTranscripts = 
+            /*NodeList allTranscripts = 
                     (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", 
+                            communication.getDocument().getDocumentElement(), XPathConstants.NODESET);*/
+            NodeList allTranscripts = 
+                    (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']", 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allTranscripts.getLength(); i++){
                 Element transcriptElement = ((Element)(allTranscripts.item(i)));
