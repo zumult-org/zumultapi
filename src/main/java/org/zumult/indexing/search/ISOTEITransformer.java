@@ -38,7 +38,7 @@ import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.DGD2Transcript;
+import org.zumult.objects.implementations.COMATranscript;
 
 /**
  *
@@ -52,15 +52,15 @@ public abstract class ISOTEITransformer {
     static List<String> SPEAKER_METADATA_TO_BE_IGNORED_IN_TRANSCRIPT_BASED_MODE = Arrays.asList(Constants.METADATA_KEY_SPEAKER_NAME, 
             Constants.METADATA_KEY_SPEAKER_OTHER_NAMES, Constants.METADATA_KEY_SPEAKER_PSEUDONYM);
 
-    static boolean ADD_REPETITIONS = true;
+    static boolean ADD_REPETITIONS = false;
     static boolean ADD_METADATA = true;
     static boolean FORMAT_PAUSE_DURATION = true;
     static boolean ADD_PROXY_PAUSES = true;
     static boolean ADD_SPEAKER_OVERLAPS = true;
-    static boolean ADD_TOKEN_START_AND_END = true;
-    static boolean ADD_DIFF_NORM = true;
+    static boolean ADD_TOKEN_START_AND_END = false;
+    static boolean ADD_DIFF_NORM = false;
     static boolean ADD_OCCURRENCE = false;
-    static boolean ADD_VIDEOS_NUMBER = true;
+    static boolean ADD_VIDEOS_NUMBER = false;
     
     static Set<String> corpusIDsForIndexing;
     static String DIR_IN;
@@ -141,7 +141,7 @@ public abstract class ISOTEITransformer {
                 //transformAndSaveTranscript(transcriptDoc, metadataKeys, newFileTranscriptBased);
                 Transcript t = null;
                 try {
-                    t = new DGD2Transcript(IOHelper.readDocument(f));
+                    t = new COMATranscript(IOHelper.readDocument(f));
                 } catch (SAXException | ParserConfigurationException | IOException ex) {
                     throw new IOException("Unable to parse the file " + f.getAbsolutePath(), ex);
                 }

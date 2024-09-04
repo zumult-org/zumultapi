@@ -38,9 +38,9 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
     public static void main(String[] args) {        
         try {
             
-            corpusIDsForIndexing = new HashSet<>(Arrays.asList("UNSD"));
+            corpusIDsForIndexing = new HashSet<>(Arrays.asList("EXMARaLDA-DemoKorpus"));
             DIR_IN = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\input"; //iso-tei transcripts
-            DIR_OUT = "C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_UNSD_06_11_2023";
+            DIR_OUT = "C:\\Users\\Elena\\IDS\\ZuMult\\data\\coma";
             
             new ISOTEI2TranscriptBasedFormat().doit();
             
@@ -283,7 +283,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
         System.out.println("Adding metadata...");
         
         /******* Add speaker metadata ********/
-        
+       
         // iterate through person-elements 
         List persons = transcriptDoc.getRootElement().getChild(Constants.ELEMENT_NAME_TEI_HEADER, ns).getChild(Constants.ELEMENT_NAME_PROFILE_DESC, ns)
                     .getChild(Constants.ELEMENT_NAME_PARTIC_DESC, ns).getChildren(Constants.ELEMENT_NAME_PERSON, ns);              
@@ -313,36 +313,46 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
                 Iterator newBody1Iterator = newBodyForTranscriptBasedView.getChildren(Constants.ELEMENT_NAME_ANNOTATION_BLOCK, ns).iterator();
                 while (newBody1Iterator.hasNext()){
                     Element annotationBlock = (Element) newBody1Iterator.next();
-                    if (annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_WHO).equals(person)){         
+                    String who = annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_WHO);
+                    if (who.equals(person)){
+                        
+                        String from = annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_START);
+                        String to = annotationBlock.getAttributeValue(Constants.ATTRIBUTE_NAME_END);
+                        
+                        Element metaSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
+                        metaSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_META);
+                        metaSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_SUBTYPE, Constants.SPANGRP_SUBTYPE_TIME_BASED);
                                     
                         for (MetadataKey metadataKey : metadataKeys){
                                        
                             if (metadataKey.getLevel().equals(ObjectTypesEnum.SPEAKER)){
-                                if (!SPEAKER_METADATA_TO_BE_IGNORED_IN_TRANSCRIPT_BASED_MODE.contains(metadataKey.getID())){
-                                    String value = speaker.getMetadataValue(metadataKey);
+                              String value = speaker.getMetadataValue(metadataKey);
                                     if (!value.isEmpty() && !METADATA_VALUES_TO_BE_IGNORED.contains(value)){
                                         if (!metadataKey.getID().equals(Constants.METADATA_KEY_SPEAKER_BIRTH_DATE)) {
-                                            annotationBlock.setAttribute(metadataKey.getID(), value);
+                                            addMetadataSpan(metaSpanGrp, metadataKey.getID(), from, to, value);
                                         }else if (metadataKey.getID().equals(Constants.METADATA_KEY_SPEAKER_BIRTH_DATE) && !SPEAKER_BIRTH_DATE_TO_BE_IGNORED.contains(value)){
+                                            addMetadataSpan(metaSpanGrp, metadataKey.getID(), from, to, value);                                      
                                             // additional metadata
-                                            annotationBlock.setAttribute(Constants.METADATA_KEY_SPEAKER_YEAR_OF_BIRTH, value.substring(0, 4));
+                                            addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEAKER_YEAR_OF_BIRTH, from, to, value.substring(0, 4));
                                         }
                                     }
-                                }
-                                                
+                              
                             }else if (metadataKey.getLevel().equals(ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT) && speakerInSpeechEvent!=null){                                          
                                 String value = speakerInSpeechEvent.getMetadataValue(metadataKey);
                                 if (!value.isEmpty() && !METADATA_VALUES_TO_BE_IGNORED.contains(value)){
                                     if (!(metadataKey.getID().equals(Constants.METADATA_KEY_SPEAKER_BIRTH_AGE) && SPEAKER_BIRTH_AGE_TO_BE_IGNORED.contains(value))){
-                                        annotationBlock.setAttribute(metadataKey.getID(), value);
+                                        addMetadataSpan(metaSpanGrp, metadataKey.getID(), from, to, value);
                                     }
                                 }
                             }     
-                        }
+                        }                       
                                     
                         // additional metadata
-                        annotationBlock.setAttribute(Constants.METADATA_KEY_SPEAKER_DGD_ID, speakerId);
+                        addMetadataSpan(metaSpanGrp, Constants.METADATA_KEY_SPEAKER_DGD_ID, from, to, speakerId);
 
+                        annotationBlock.addContent(metaSpanGrp);
+
+                        
                     }
                 }
             }
@@ -353,7 +363,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
                     
                     
         /******* Add event and speech event metadata ********/
-        
+
         Element metaSpanGrp = new Element(Constants.ELEMENT_NAME_SPAN_GRP, ns);
         metaSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_TYPE, Constants.SPANGRP_TYPE_META);
         metaSpanGrp.setAttribute(Constants.ATTRIBUTE_NAME_SUBTYPE, Constants.SPANGRP_SUBTYPE_TIME_BASED);
@@ -395,7 +405,7 @@ public class ISOTEI2TranscriptBasedFormat extends ISOTEITransformer {
 
         }
     }
-          
+        
     void addOccurrence(Element annotationBlock, Element body) throws JDOMException{
         Iterator segmentsIterator = annotationBlock.getChild(Constants.ELEMENT_NAME_U, ns).getChildren().iterator();
         while (segmentsIterator.hasNext()) {

@@ -9,7 +9,7 @@
                                 for (String corpusId: corpusIDsForIndexing){
                                     %> 
                             <div class="corpora custom-control custom-checkbox">
-                            <input class="custom-control-input" name="corpus" type="checkbox" id="<%=corpusId.replaceAll("-","")%>" value="<%=corpusId%>"
+                            <input class="custom-control-input" name="corpus" type="checkbox" id="<%=corpusId%>" value="<%=corpusId%>"
                                    <% 
                                        if (userSpecifiedCorpora!=null){
 
@@ -23,8 +23,8 @@
                                         <%}
                                     }%>
                                                    />
-                            <label class="custom-control-label" for="<%=corpusId.replaceAll("-","")%>">
-                             <%=corpusId.replaceAll("-","")%>
+                            <label class="custom-control-label" for="<%=corpusId%>">
+                             <%=corpusId%>
                             </label>
 
                             </div>

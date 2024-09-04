@@ -8,6 +8,7 @@ package org.zumult.query.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import org.zumult.backend.Configuration;
 import org.zumult.objects.AnnotationLayer;
@@ -16,6 +17,8 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchIndexType;
+import org.zumult.query.SearchResultBigrams;
+import org.zumult.query.SearchResultPlus;
 import org.zumult.query.searchEngine.COMASearchEngine;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
 
@@ -63,24 +66,33 @@ public class COMASearcher extends AbstractSearcher {
 
     @Override
     public ArrayList<String> getIndexPaths(SearchIndexType searchIndex) throws IOException, SearchServiceException {
-        String searchIndexPath = Configuration.getSearchIndexPath();
         ArrayList<String> result = new ArrayList<>();
-        for (String indexID : Configuration.getSpeakerBasedIndexIDs()){
+        for (String indexID : Configuration.getTranscriptBasedIndexIDs()){
             File file = new File(Configuration.getSearchIndexPath(), indexID);
             result.add(file.getAbsolutePath());
         }
         return result;
     }
-
+    
     @Override
     public SearchIndexType getSearchIndexType(String searchIndex) throws SearchServiceException {
         return new SearchIndexType(){
             @Override
             public String getValue() {
-                return DGDSearchIndexType.DGD2SearchIndexTypeEnum.SPEAKER_BASED_INDEX.name();
+                return null;
             }
             
         };
                 
+    }
+
+    @Override
+    public SearchResultBigrams searchBigrams(String searchIndex, String sortType, String bigramType, List<String> annotationLayerIDs4BigramGroups, List<String> elementsInBetweenToBeIgnored, String scope, Integer minFreq, Integer maxFreq) throws SearchServiceException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

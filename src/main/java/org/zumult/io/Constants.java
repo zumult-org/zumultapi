@@ -92,10 +92,7 @@ public class Constants {
     public static final String DATA_QUANTIFICATIONS_PATH = "/data/quantifications/";
     public static final String DATA_ZUMAL_PATH = "/data/zumal/";
     public static final String DATA_POS_PATH = "/data/pos/";
-    
-    public static final String METADATA_SELECTION_PATH = "/data/MetadataSelection.xml";
-    public static final String ALL_CORPORA_PATH = "/data/AllCorpora.xml";
-    
+
     public static final String JAVA_FOLDER_PATH = "/src/main/java";
             
     public static String[] LEIPZIG_WORDLISTS =
@@ -121,6 +118,7 @@ public class Constants {
     public static final String METADATA_KEY_MATCH_TYPE_PAUSE_DURATION_CEIL = "pause.dur.ceil";
     public static final String METADATA_KEY_MATCH_TYPE_PAUSE_TYPE = "pause.type";
     public static final String METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_SPEAKER = "annotationBlock.speaker";
+    public static final String METADATA_KEY_MATCH_TYPE_ANNOTATION_BLOCK_ID = "annotationBlock.id";
     
     public static final String METADATA_KEY_MATCH_LOWERCASE ="_lc";
     
@@ -287,7 +285,7 @@ public class Constants {
     };
                 
     public static final String DEFAULT_LOCALE = "en-US";
-    public static final String DEFAULT_CORPUS = "FOLK";
+    public static final String DEFAULT_CORPUS = "EXMARaLDA-DemoKorpus";
     public static final String RANDOM_ID = "RANDOM-ID";
     public static final String DEFAULT_METADATA_KEY_SPEECH_EVENT = "e_se_art";
     public static final String DEFAULT_POS_TAGSET = "STTS_2_0";

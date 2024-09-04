@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.indexing.Indexer;
 import org.zumult.io.TimeUtilities;
+import org.zumult.query.searchEngine.COMASearchEngine;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
-import org.zumult.query.searchEngine.DGD2SearchEngine;
 import org.zumult.query.searchEngine.SearchIndex;
 
 /**
@@ -28,9 +28,10 @@ import org.zumult.query.searchEngine.SearchIndex;
 public class SearchIndexer implements Indexer {
     
     private String MTAS_CONFIG_FILE_PATH = "src\\main\\java\\org\\zumult\\query\\searchEngine\\parser\\config";
-    private String MTAS_CONFIG_FILE_NAME = "mtas_config_TB.xml";
-    private String INDEX_PATH = "C:\\Users\\Frick\\IDS\\ZuMult\\index_Test";
-    private String INDEX_NAME = "TB_UNSD";
+    private String MTAS_CONFIG_FILE_NAME = "demo_mtas_config.xml";
+    private String INDEX_PATH = "C:\\Users\\Elena\\IDS\\GitHub\\zumultapi\\src\\main\\java\\data\\indices";
+    private String INDEX_NAME = "TB_EXMARaLDA-DemoKorpus";
+    private static String CORPUS_TOP_LEVEL_FOLDER = "C:\\Users\\Elena\\IDS\\GitHub\\zumultapi\\src\\main\\java\\data\\corpora\\EXMARaLDA-DemoKorpus";
     
     private String[] INPUT_DIRECTORIES =
         {
@@ -61,7 +62,7 @@ public class SearchIndexer implements Indexer {
      */
     public static void main(String[] args) {
         try {
-            File[] INPUT_DIRECTORY_FILES = new File("C:\\Users\\Frick\\IDS\\ZuMult\\data\\lucene_9_daten_für_neue_indizes\\output_TB_UNSD_06_11_2023").listFiles(new FileFilter(){
+            File[] INPUT_DIRECTORY_FILES = new File(CORPUS_TOP_LEVEL_FOLDER).listFiles(new FileFilter(){
                 @Override
                 public boolean accept(File pathname) {
                     System.out.println(pathname.getAbsolutePath());
@@ -90,7 +91,7 @@ public class SearchIndexer implements Indexer {
             inputDirectories.add(path);
         });
         
-        MTASBasedSearchEngine index = new DGD2SearchEngine();
+        MTASBasedSearchEngine index = new COMASearchEngine();
         String path = new File(INDEX_PATH, INDEX_NAME).getAbsolutePath();
         String mtasConfigPath = new File(MTAS_CONFIG_FILE_PATH, MTAS_CONFIG_FILE_NAME).getAbsolutePath();
         SearchIndex searchIndex = index.createIndex(inputDirectories, path, mtasConfigPath);

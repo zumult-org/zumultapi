@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.zumult.objects.IDList;
 import org.zumult.query.SearchServiceException;
@@ -124,6 +125,21 @@ public interface SearchEngineInterface {
 
     
     public SearchIndex createIndex(Set<Path> inputDirectories, String indexPath, Object... configuration) throws IOException;
+
+    public SearchEngineResponseBigrams searchBigrams (
+                                ArrayList<String> indexPaths, 
+                                String queryString, 
+                                String metadataQueryString,
+                                Integer from, 
+                                Integer to,
+                                Integer minFreq,
+                                Integer maxFreq,
+                                SortTypeEnum sortType, 
+                                HashMap<String, String[]> wordLists,
+                                List<String> annotationLayerIDs,
+                                String within,
+                                List<String> elementsInBetween) 
+                                throws SearchServiceException, IOException;
 }
 
 

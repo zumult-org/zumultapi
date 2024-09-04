@@ -19,7 +19,7 @@ public class DefaultAdditionalSearchConstraint extends AbstractXMLObject impleme
         super(xmlDocument);
     }
 
-    DefaultAdditionalSearchConstraint(String repetitionsStr) {
+    public DefaultAdditionalSearchConstraint(String repetitionsStr) {
         super(repetitionsStr);
     }
 }

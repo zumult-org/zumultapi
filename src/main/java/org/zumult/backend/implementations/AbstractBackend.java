@@ -8,6 +8,7 @@ package org.zumult.backend.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -42,6 +43,7 @@ import org.zumult.objects.implementations.DefaultAnnotationTagSet;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchResult;
+import org.zumult.query.SearchResultBigrams;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.Searcher;
@@ -395,6 +397,22 @@ public abstract class AbstractBackend implements BackendInterface {
     public IDList getCorporaForSearch(String searchIndex){
         Searcher searcher = getSearcher();
         return searcher.getCorporaForSearch(searchIndex);
+    }
+    
+    @Override
+    public SearchResultBigrams searchBigrams(String queryString, String queryLanguage, String queryLanguageVersion,
+            String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
+            String searchIndex, String sortType, String bigramType,
+            List<String> annotationLayerIDs4BigramGroups, List<String> elementsInBetweenToBeIgnored,
+            String scope, Integer minFreq, Integer maxFreq, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException {
+        Searcher searcher = getSearcher();
+        searcher.setQuery(queryString, queryLanguage, queryLanguageVersion);
+        searcher.setCollection(corpusQuery, metadataQuery);
+        searcher.setPagination(pageLength , pageIndex);
+        searcher.setAdditionalSearchConstraints(additionalSearchConstraints);
+        return searcher.searchBigrams(searchIndex, sortType,
+                bigramType, annotationLayerIDs4BigramGroups, elementsInBetweenToBeIgnored,
+                scope, minFreq, maxFreq);
     }
     
 }

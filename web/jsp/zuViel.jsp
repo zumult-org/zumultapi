@@ -12,7 +12,6 @@
 <%@page import="java.io.File"%>
 <%@page import="org.zumult.backend.Configuration"%>
 <%@page import="org.zumult.io.FileIO"%>
-<%@page import="org.zumult.objects.implementations.DGD2MetadataKey"%>
 <%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="org.zumult.objects.IDList"%>
 <%@page import="org.zumult.io.Constants"%>

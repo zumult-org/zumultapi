@@ -122,7 +122,7 @@ public class COMAKWIC<T> extends AbstractKWIC {
             DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
             setKWICSnippets((T) searchResultSerializer.createKWICDownloadFile(this, fileType, backendInterface));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMAKWIC.class.getName()).log(Level.SEVERE, null, ex);
             // better throw this, or not (?)
             throw new IOException(ex);
         }           
@@ -142,7 +142,7 @@ public class COMAKWIC<T> extends AbstractKWIC {
             }
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(DGD2KWIC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(COMAKWIC.class.getName()).log(Level.SEVERE, null, ex);
             // better throw this, or not?
             throw new IOException(ex);
         }

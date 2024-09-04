@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,6 @@ import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchStatistics;
 import org.zumult.query.StatisticEntry;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
-import org.zumult.query.searchEngine.Repetition;
 import org.zumult.query.searchEngine.SearchEngineResponse;
 import org.zumult.query.searchEngine.SearchEngineResponseHitList;
 import org.zumult.query.searchEngine.SearchEngineResponseStatistics;
@@ -40,6 +40,8 @@ import org.zumult.query.searchEngine.SortTypeEnum;
 import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.Searcher;
 import org.zumult.query.SearchIndexType;
+import org.zumult.query.searchEngine.SearchEngineResponseBigrams;
+import org.zumult.query.SearchResultBigrams;
 
 /**
  *
@@ -52,7 +54,7 @@ public abstract class AbstractSearcher implements Searcher {
     protected DefaultMetadataQuery metadataQuery = new DefaultMetadataQuery();
     protected HashMap<String, String[]> wordListsMap = null;
     protected HashMap<String, HashSet> synonymsMap = null;
-    ArrayList<AdditionalSearchConstraint> searchConstraints = new ArrayList();
+    protected ArrayList<AdditionalSearchConstraint> searchConstraints = new ArrayList();
     
     @Override
     public void setCollection(String corpusQueryStr, String metadataQueryStr) 
@@ -313,7 +315,7 @@ public abstract class AbstractSearcher implements Searcher {
         return result;
     }
    
-        @Override
+    @Override
     public SearchStatistics getStatistics(
                                 String searchIndex, 
                                 String sortType, 
@@ -328,7 +330,7 @@ public abstract class AbstractSearcher implements Searcher {
             if(sortType!=null){
                 try{
                     sort = SortTypeEnum.valueOf(sortType);
-                }catch (NullPointerException ex){
+                }catch (NullPointerException | IllegalArgumentException ex){
                     StringBuilder sb = new StringBuilder();
                     sb.append(". Sort type ").append(sortType)
                             .append(" is not supported. "
@@ -372,6 +374,76 @@ public abstract class AbstractSearcher implements Searcher {
             result.setStatistics(searchResult.getStatistics());
             result.setNumberOfDistinctValues(
                     searchResult.getNumberOfDistinctValues());
+            result.setTotalHits(searchResult.getHitsTotal());
+            result.setTotalTranscripts(
+                    searchResult.getTranscriptsTotal());
+            result.setAdditionalSearchConstraints(
+                    searchConstraints);
+
+            return result;
+    }
+    
+    
+    @Override
+    public SearchResultBigrams searchBigrams(
+                                String searchIndex,
+                                String sortType,
+                                String bigramType, 
+                                List<String> annotationLayerIDs4BigramGroups,
+                                List<String> elementsInBetweenToBeIgnored,
+                                String scope,
+                                Integer minFreq,
+                                Integer maxFreq) 
+                                throws SearchServiceException, IOException{
+            
+            // set index
+            SearchIndexType index = getSearchIndexType(searchIndex);
+        
+            // set sort type
+            SortTypeEnum sort = SortTypeEnum.ABS_DESC;
+            if(sortType!=null){
+                try{
+                    sort = SortTypeEnum.valueOf(sortType);
+                }catch (NullPointerException | IllegalArgumentException ex){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(". Sort type ").append(sortType)
+                            .append(" is not supported. "
+                                    + "Supported sort types are: ABS_DESC and ABS_ASC.");
+                    throw new SearchServiceException(sb.toString()
+                            .trim().replaceFirst(",$",""));
+                }
+            }
+        
+            final long timeStart_search = System.currentTimeMillis();
+            
+            MTASBasedSearchEngine se = getSearchEngine();
+            SearchEngineResponseBigrams searchResult = se.searchBigrams(getIndexPaths(index),
+                    query.getReplacedQueryString(),
+                    metadataQuery.getAdditionalMetadata(), 
+                    pagination.getPageStartIndex() + 1, 
+                    pagination.getPageStartIndex() + pagination.getItemsPerPage(),
+                    minFreq,
+                    maxFreq,
+                   sort,
+                   wordListsMap,
+                   annotationLayerIDs4BigramGroups,
+                   scope,
+                   elementsInBetweenToBeIgnored);
+
+            final long timeEnd_search = System.currentTimeMillis();
+            long millis_search = timeEnd_search - timeStart_search;
+            System.out.println("Searching time (searchBigrams): " 
+                    + TimeUtilities.format(millis_search));
+
+            DefaultSearchResultBigrams result = new DefaultSearchResultBigrams();
+
+            result.setSearchTime(millis_search);
+            result.setSortType(sort.name());
+            result.setSearchQuery(query);
+            result.setMetadataQuery(metadataQuery);
+            result.setSearchMode(index.getValue());
+            result.setPagination(pagination);
+            result.setBigrams(searchResult.getBigrams());
             result.setTotalHits(searchResult.getHitsTotal());
             result.setTotalTranscripts(
                     searchResult.getTranscriptsTotal());
@@ -463,153 +535,7 @@ public abstract class AbstractSearcher implements Searcher {
         }
         return list;
     }
-    
-    @Override
-    public SearchResultPlus searchRepetitions(
-                                String searchIndex, 
-                                Boolean cutoff, 
-                                IDList metadataIDs, 
-                                String repetitionsStr, 
-                                String synonymStr) 
-                                throws IOException, SearchServiceException {
-        
-        // set cutoff
-        Boolean count = Constants.DEFAULT_CUTOFF;
-        if(cutoff!=null){
-            count = cutoff;
-        }
-
-        // set index
-        SearchIndexType index = getSearchIndexType(searchIndex);
-
-        // create a list with repetition-objects
-        ArrayList<Repetition> repetitions = getRepetitionObjectsFromXMLString(
-             repetitionsStr);
-        
-        searchConstraints.add(
-                    new DefaultAdditionalSearchConstraint(repetitionsStr));
-        
-        //create a list of synonyms
-        HashMap<String, HashSet> synonymMap = new HashMap();
-
-        if(synonymStr!=null && !synonymStr.isEmpty()){
-            String synonyms = synonymStr.replaceAll("\\s+","");
-        
-            synonymMap = getSynonymMap (synonyms);
-            searchConstraints.add(
-                   new DefaultAdditionalSearchConstraint(synonyms));
-        }
-        
-        /* Search with MTAS using cqp query language */
-        final long timeStart_search = System.currentTimeMillis();
-
-        MTASBasedSearchEngine se = getSearchEngine();
-        SearchEngineResponseHitList searchResult = se.searchRepetitions(
-                getIndexPaths(index), 
-                query.getReplacedQueryString(), 
-                metadataQuery.getAdditionalMetadata(), 
-                pagination.getPageStartIndex() + 1, 
-                pagination.getPageStartIndex() + pagination.getItemsPerPage(),
-                count, 
-                metadataIDs, 
-                repetitions, 
-                synonymMap, 
-                wordListsMap);
-
-        final long timeEnd_search = System.currentTimeMillis();
-        long millis_search = timeEnd_search - timeStart_search;
-        System.out.println("Searching time: " 
-                + TimeUtilities.format(millis_search));
-
-        /* Construct search result */
-        DefaultSearchResultPlus result = new DefaultSearchResultPlus();
-        
-        result.setSearchTime(millis_search);
-        result.setCutoff(count);
-        result.setSearchQuery(query);
-        result.setMetadataQuery(metadataQuery);
-        result.setSearchMode(index.getValue());
-        result.setPagination(pagination);
-        result.setHits(searchResult.getHits());
-        result.setTotalHits(searchResult.getHitsTotal());
-        result.setAdditionalSearchConstraints(
-                searchConstraints);
-        result.setTotalTranscripts(
-                searchResult.getTranscriptsTotal());
-        
-        return result;
-    }
-    
-    private HashMap<String, HashSet> getSynonymMap (String synonyms) 
-            throws IOException, SearchServiceException{
-        
-        HashMap<String, HashSet> synonymMap = new HashMap();
-
-        try {
-            Document doc = (Document) IOHelper.DocumentFromText(synonyms);
-            NodeList nodes = doc
-                    .getElementsByTagName(Constants.REPETITION_SYNONYMS);
-
-            Element element = ((Element)(nodes.item(0)));
-            String[] wordSets = element.getTextContent().split(";");
-            
-            for (String wordSet : wordSets) {
-                if(!wordSet.contains(",")){
-                    throw new SearchServiceException (
-                        "Please check the format of your synonym file "
-                        + "Synonyms should be separated by commas "
-                        + "and each synonym set should end with a semicolon."
-                        + " You can get help by clicking the question mark "
-                        + "button to the right of the query input field.");
-                }
-                ArrayList<String> wordList = new ArrayList(
-                            Arrays.asList(wordSet.split(",")));
-
-                for(String word: wordList){
-                    HashSet words = new HashSet(wordList);
-                    words.remove(word);
-                    if(synonymMap.containsKey(word)){
-                        words.addAll(synonymMap.get(word));
-                    }
-                    synonymMap.put(word, words);
-                }
-            }
-
-        } catch (SAXException | ParserConfigurationException ex) {
-               throw new SearchServiceException (
-                       "Please check the xml format of synonyms!");
-        }
-        
-        return synonymMap;
-    }
-    
-    private ArrayList<Repetition> getRepetitionObjectsFromXMLString(
-            String repetitionsStr) throws SearchServiceException, IOException{
-        ArrayList<Repetition> repetitions = new ArrayList();
-        try {
-            Document doc = (Document) IOHelper
-                    .DocumentFromText(repetitionsStr);
-            NodeList nodes = doc
-                    .getElementsByTagName(Constants.REPETITION);
-            for (int i=0; i<nodes.getLength(); i++){
-                Element element = ((Element)(nodes.item(i)));
-                Repetition r = new Repetition(element);
-                repetitions.add(r);
-            }
-
-        } catch (SAXException | ParserConfigurationException ex) {
-           throw new SearchServiceException (
-                "Please check the xml format of the repetition-parameter!");
-        }
-        if(repetitions.isEmpty()){
-            throw new SearchServiceException (
-                "Please specify repetition-parameters!");
-        }else{
-            return repetitions;
-        }
-        
-    }
-    
+     
     public abstract ArrayList<String> getIndexPaths(SearchIndexType searchIndex) 
             throws IOException, SearchServiceException;
     
