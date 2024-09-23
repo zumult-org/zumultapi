@@ -50,7 +50,7 @@ public class TestCOMABackend {
                     Configuration.getMetadataPath()
             );
             BackendInterface bi = new COMAFileSystem();
-            SearchResultPlus searchResult = bi.search("[norm=\"in\"][norm=\"die\"][norm=\".+\"]", null, null, "TGDP", null, 1, null, null, null, null, null);
+            SearchResultPlus searchResult = bi.search("[norm=\"in\"][norm=\"die\"][norm=\".+\"]", null, null, "TGDP", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
             KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");
             long t2 = System.currentTimeMillis();
@@ -58,6 +58,9 @@ public class TestCOMABackend {
             String kwicXML = qs.displayKWICinXML(kwic);
             long t3 = System.currentTimeMillis();
             System.out.println(kwicXML);
+            
+            System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
+            
             
             System.exit(0);
 

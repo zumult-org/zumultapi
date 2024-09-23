@@ -8,6 +8,7 @@ package org.zumult.query.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -39,9 +40,12 @@ import org.zumult.query.KWICSnippet.KWICSnippetToken;
  * @author Elena
  */
 public class ISOTEIKWICSnippetCreator {
+    
     XPath xPath =  XPathFactory.newInstance().newXPath();
+    Set<String> TOKEN_NAMES = new HashSet<>();
     
     public ISOTEIKWICSnippetCreator() {
+        TOKEN_NAMES.addAll(Arrays.asList(Constants.TOKENS));
     }
     
     public DefaultKWICSnippet apply(Document transcriptDoc, 
@@ -59,22 +63,19 @@ public class ISOTEIKWICSnippetCreator {
         SortedSet<String> speakers = new TreeSet<>();
         xPath.setNamespaceContext(new ISOTEINamespaceContext());
         
-        /*System.out.println("------------------");
-        System.out.println("Left match id : " + leftMatchId);
-        for (Hit.Match match : matches){
-            System.out.println(match.getID() + " / " + match.getType());
-        }
-        System.out.println("------------------");*/
-
-        String xPathString = "//tei:*[@xml:id = '" + leftMatchId + "']";
+        // /tei:TEI/tei:text[1]/tei:body[1]/tei:annotationBlock[5]/tei:u[1]/tei:seg[1]/tei:w[1]
+        String xPathString = "/tei:TEI/tei:text[1]/tei:body[1]/tei:annotationBlock/tei:u/tei:seg/tei:*[@xml:id = '" + leftMatchId + "']";
     
         try{
-            Node nNode = ((NodeList) xPath.compile(xPathString).evaluate(transcriptDoc, XPathConstants.NODESET)).item(0);
-            Element firstElem = (Element) nNode;
-            Node firstMatch = nNode;
+            //Node nNode = ((NodeList) xPath.compile(xPathString).evaluate(transcriptDoc, XPathConstants.NODESET)).item(0);
+            //Element firstElem = (Element) nNode;
+            // seems to make it faster by 5% to 10%
+            Element firstElem = (Element) xPath.compile(xPathString).evaluate(transcriptDoc, XPathConstants.NODE);
+            Node firstMatch = firstElem;
+            Node nNode = firstElem;
                 
             if (firstElem.getParentNode().getLocalName().equals(Constants.ELEMENT_NAME_BODY)){                  
-                    
+                // WHY WOULD I EVER GET HERE??
                 // get left context
                 setLeftContextForBodyChild(matches, firstMatch, matchSnippet, content, leftContextLength, speakers, 0, transcriptDoc);
                    
@@ -86,13 +87,14 @@ public class ISOTEIKWICSnippetCreator {
                 // get right context 
                 setRightContextForBodyChild(matches, firstMatch, matchSnippet, content, rightContextAfterFirstMatch, speakers, 0, transcriptDoc);
                    
-            }else{
+            } else {
                     
                 // get first annotationBlock
-                String xpathString = "//tei:"+ Constants.ELEMENT_NAME_ANNOTATION_BLOCK +"[descendant::*[@xml:id='" + leftMatchId + "']]";
+                //String xpathString = "//tei:"+ Constants.ELEMENT_NAME_ANNOTATION_BLOCK +"[descendant::*[@xml:id='" + leftMatchId + "']]";
                 //Node firstAnnotationBlock = (Element) xPath.evaluate(xpathString, TranscriptDoc, XPathConstants.NODE);
-                Node firstAnnotationBlock = (Node) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
-                Element firstAnnotationBlockElem = (Element) firstAnnotationBlock;
+                //Node firstAnnotationBlock = (Node) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
+                //Node firstAnnotationBlock = (Node) firstElem.getParentNode().getParentNode().getParentNode();
+                Element firstAnnotationBlockElem = (Element) firstElem.getParentNode().getParentNode().getParentNode();
                 String speaker = firstAnnotationBlockElem.getAttribute(Constants.ATTRIBUTE_NAME_WHO);
                 speaker = getSpeakerInitials(speaker, transcriptDoc);
                 // get left context
@@ -101,7 +103,7 @@ public class ISOTEIKWICSnippetCreator {
                 while (( sibling = nNode.getPreviousSibling()) != null){
 
                     nNode = sibling;
-                    if (Arrays.asList(Constants.TOKENS).contains (nNode.getLocalName())){
+                    if (TOKEN_NAMES.contains (nNode.getLocalName())){
                         if (index < leftContextLength) {   
 
                             Element leftElem = (Element) nNode;
@@ -113,7 +115,7 @@ public class ISOTEIKWICSnippetCreator {
                                 ++index;
                             }
 
-                        }else{
+                        } else{
                             matchSnippet.setStartMore(true);
                             break;
                         }
@@ -122,7 +124,7 @@ public class ISOTEIKWICSnippetCreator {
                 
                 if (index < leftContextLength) {
                     // get more left context
-                    setLeftContextForBodyChild(matches, firstAnnotationBlock, matchSnippet, content, leftContextLength, speakers, index, transcriptDoc);
+                    setLeftContextForBodyChild(matches, firstAnnotationBlockElem, matchSnippet, content, leftContextLength, speakers, index, transcriptDoc);
                 }
 
                 // set first match
@@ -140,17 +142,18 @@ public class ISOTEIKWICSnippetCreator {
                 index = 0;
                 nNode = firstMatch;
                   
-                // get rigth context
+                // get right context
                 while (( sibling = nNode.getNextSibling()) != null){
                     nNode = sibling;
-                    if (Arrays.asList(Constants.TOKENS).contains (nNode.getLocalName())){
+                    if (TOKEN_NAMES.contains (nNode.getLocalName())){
                         if (index < rightContextAfterFirstMatch) {  
                             Element rightElem = (Element) nNode;
                             DefaultKWICSnippetToken token = new DefaultKWICSnippetToken(rightElem);
                             token.setParentId(getParentId(rightElem));
 
+                            String rightElemID = rightElem.getAttributeNS(XMLConstants.XML_NS_URI, "id");
                             for (Hit.Match match: matches){
-                                if(match.getID().equals(rightElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
+                                if(match.getID().equals(rightElemID)){
                                     token.markAsMatch();
                                 }
                             }
@@ -169,7 +172,7 @@ public class ISOTEIKWICSnippetCreator {
                     
                 if (index < rightContextAfterFirstMatch){
                     // get more right context   
-                    setRightContextForBodyChild(matches, firstAnnotationBlock, matchSnippet, content, rightContextAfterFirstMatch, speakers, index, transcriptDoc);
+                    setRightContextForBodyChild(matches, firstAnnotationBlockElem, matchSnippet, content, rightContextAfterFirstMatch, speakers, index, transcriptDoc);
                 }
             }
 
@@ -179,9 +182,7 @@ public class ISOTEIKWICSnippetCreator {
         } 
 
         IDList speakerList = new IDList("speakers");
-        for (String speaker : speakers){
-            speakerList.add(speaker);
-        }
+        speakerList.addAll(speakers);
 
         matchSnippet.setContent(content);
         matchSnippet.setSpeakerIds(speakerList);
@@ -190,37 +191,22 @@ public class ISOTEIKWICSnippetCreator {
     
     private String getSpeakerInitials(String speaker, Document transcriptDoc){
         
-        String xpathString = "//tei:person[@xml:id='" + speaker + "']";
-        Node personNode = null;
         try {
-            personNode = (Node) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
+            
+            // /tei:TEI/tei:teiHeader[1]/tei:profileDesc[1]/tei:particDesc[1]/tei:person[1]
+            String xpathString = "/tei:TEI/tei:teiHeader[1]/tei:profileDesc[1]/tei:particDesc[1]/tei:person[@xml:id='" + speaker + "']";
+            Element personElement = (Element) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
+            if (personElement!=null){
+                return personElement.getAttribute("n");
+            } 
         } catch (XPathExpressionException ex) {
             Logger.getLogger(ISOTEIKWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (personNode!=null){
-            Element personElement = (Element) personNode;
-            String speakerInitials = personElement.getAttribute("n");
-            return speakerInitials;
-        }else{
-            return speaker;
-        }
-        
-    /*    Element personElement = null; 
-        try {
-            personElement = ((Element)xPath.evaluate("//tei:person[@xml:id='" + speaker + "']", transcriptDoc, XPathConstants.NODE));
-        } catch (XPathExpressionException ex) {
-            Logger.getLogger(DGD2KWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (personElement!=null){
-            return personElement.getAttribute("n");
-        }else{
-            return speaker;
-        }*/
+        return speaker;
     }
     
     private String getParentId(Element elem){
-        Element parent = (Element) elem.getParentNode();
-        return parent.getAttributeNS(XMLConstants.XML_NS_URI, "id");
+        return ((Element) elem.getParentNode()).getAttributeNS(XMLConstants.XML_NS_URI, "id");
     }
         
     private static int getHitLengthInTokens(ArrayList<Hit.Match> matches){
@@ -236,10 +222,7 @@ public class ISOTEIKWICSnippetCreator {
     }
     
     private int getRightContextAfterFirstMatch(int rightContextAfterFirstMatch){
-        if (rightContextAfterFirstMatch > Constants.KWIC_TOKEN_CONTEXT_LENGTH_AFTER_FIRST_MATCH_MAX){
-            rightContextAfterFirstMatch = Constants.KWIC_TOKEN_CONTEXT_LENGTH_AFTER_FIRST_MATCH_MAX;
-        }
-        return rightContextAfterFirstMatch;
+        return Math.min(rightContextAfterFirstMatch, Constants.KWIC_TOKEN_CONTEXT_LENGTH_AFTER_FIRST_MATCH_MAX);
     }
     
     private void setLeftContextForBodyChild(ArrayList<Hit.Match> matches, Node nNode, 

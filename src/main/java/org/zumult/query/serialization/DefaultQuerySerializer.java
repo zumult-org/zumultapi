@@ -373,9 +373,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
                         line = getKWICLine(docID, matchArray, firstMatchID, lastMatchID, transcriptDoc, creator, 
                                 leftContext, rightContext, metadata);
                         linkedQueue.put(line);
-                    } catch (IOException ex) {
-                        Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
+                    } catch (IOException | InterruptedException ex) {
                         Logger.getLogger(DefaultQuerySerializer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                             
@@ -428,9 +426,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
         
         //add metadata
         for (String key: metadata.keySet()){
-            sb.append("<"+key+">");
+            sb.append("<").append(key).append(">");
             sb.append(metadata.get(key));
-            sb.append("</"+key+">");
+            sb.append("</").append(key).append(">");
         }
         
         sb.append("</kwic-line>");
