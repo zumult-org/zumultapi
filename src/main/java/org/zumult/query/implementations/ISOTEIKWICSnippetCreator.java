@@ -52,12 +52,19 @@ public class ISOTEIKWICSnippetCreator {
                                                     throws IOException {
         
         int leftContextLength = leftContext.getLength();
-        int rightContextAfterFirstMatch = getRightContextAfterFirstMatch(getHitLengthInTokens(matches) + rightContext.getLength());
-            
+        int rightContextAfterFirstMatch = getRightContextAfterFirstMatch(getHitLengthInTokens(matches)) + rightContext.getLength();
+        //System.out.println("rightContextAfterFirstMatch : " + rightContextAfterFirstMatch);    
         DefaultKWICSnippet matchSnippet = new DefaultKWICSnippet();
         ArrayList<KWICSnippetToken> content = new ArrayList();
         SortedSet<String> speakers = new TreeSet<>();
         xPath.setNamespaceContext(new ISOTEINamespaceContext());
+        
+        /*System.out.println("------------------");
+        System.out.println("Left match id : " + leftMatchId);
+        for (Hit.Match match : matches){
+            System.out.println(match.getID() + " / " + match.getType());
+        }
+        System.out.println("------------------");*/
 
         String xPathString = "//tei:*[@xml:id = '" + leftMatchId + "']";
     
@@ -219,7 +226,9 @@ public class ISOTEIKWICSnippetCreator {
     private static int getHitLengthInTokens(ArrayList<Hit.Match> matches){
         int length = 0;
         for (Hit.Match match: matches){
-            if(match.getID().startsWith(Constants.ELEMENT_NAME_WORD_TOKEN)){
+            //if(match.getID().startsWith(Constants.ELEMENT_NAME_WORD_TOKEN)){
+            // changed 22-09-2024, TS
+            if(match.getType().startsWith("word")){
                 length++;
             }
         }

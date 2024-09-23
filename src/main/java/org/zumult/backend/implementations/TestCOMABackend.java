@@ -20,6 +20,10 @@ import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
+import org.zumult.query.KWIC;
+import org.zumult.query.SearchResultPlus;
+import org.zumult.query.serialization.DefaultQuerySerializer;
+import org.zumult.query.serialization.QuerySerializer;
 
 /**
  *
@@ -46,6 +50,18 @@ public class TestCOMABackend {
                     Configuration.getMetadataPath()
             );
             BackendInterface bi = new COMAFileSystem();
+            SearchResultPlus searchResult = bi.search("[norm=\"in\"][norm=\"die\"][norm=\".+\"]", null, null, "TGDP", null, 1, null, null, null, null, null);
+            long t1 = System.currentTimeMillis();
+            KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");
+            long t2 = System.currentTimeMillis();
+            QuerySerializer qs = new DefaultQuerySerializer();
+            String kwicXML = qs.displayKWICinXML(kwic);
+            long t3 = System.currentTimeMillis();
+            System.out.println(kwicXML);
+            
+            System.exit(0);
+
+
             System.out.println("--- Initialised COMAFileSystem.");
             
             for (String id : bi.getCorpora()){
