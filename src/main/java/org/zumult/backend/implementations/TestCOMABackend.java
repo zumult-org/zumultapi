@@ -5,6 +5,7 @@
  */
 package org.zumult.backend.implementations;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
+import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
@@ -53,11 +55,14 @@ public class TestCOMABackend {
             SearchResultPlus searchResult = bi.search("[norm=\"in\"][norm=\"die\"][norm=\".+\"]", null, null, "TGDP", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
             KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");
+            //KWIC kwic = bi.exportKWIC(searchResult, "3-t,3-t", "xml");
             long t2 = System.currentTimeMillis();
-            QuerySerializer qs = new DefaultQuerySerializer();
+            DefaultQuerySerializer qs = new DefaultQuerySerializer();
+            //File f = qs.createKWICDownloadFile(kwic, "xml", bi);
             String kwicXML = qs.displayKWICinXML(kwic);
             long t3 = System.currentTimeMillis();
             System.out.println(kwicXML);
+            //System.out.println(IOHelper.readUTF8(f));
             
             System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
             
