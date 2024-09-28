@@ -113,9 +113,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
             Document document = db.newDocument(); 
             
             Element root = createRoot(document,
-        kwicObj.getSearchQuery().getQueryString(),
-  kwicObj.getMetadataQuery().getAdditionalMetadata(),
-        kwicObj.getMetadataQuery().getCorpusQuery());
+            kwicObj.getSearchQuery().getQueryString(),
+            kwicObj.getMetadataQuery().getAdditionalMetadata(),
+            kwicObj.getMetadataQuery().getCorpusQuery());
             
             root.setAttribute("type", "kwic");
 
@@ -339,7 +339,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
             List<Hit> hitArray = ke.getHits();
             
             int targetSize = 50;
-            LinkedBlockingQueue<String> linkedQueue   = new LinkedBlockingQueue<String>(); 
+            LinkedBlockingQueue<String> linkedQueue   = new LinkedBlockingQueue<>(); 
             
             new Thread(new Consumer(linkedQueue, bw)).start();
             
@@ -417,22 +417,22 @@ public class DefaultQuerySerializer implements QuerySerializer {
             ArrayList<Hit.Match> matchArray, String firstMatchID, String lastMatchID, Document transcriptDoc, ISOTEIKWICSnippetCreator creator,
             KWICContext leftContext, KWICContext rightContext, HashMap<String, String> metadata) throws IOException{
         
-        StringBuilder sb = new StringBuilder();
-        
-        sb.append("<kwic-line>");
-        
-        // create snippet           
-        KWICSnippet snippetObj = creator.apply(transcriptDoc, firstMatchID, matchArray, leftContext, rightContext);
-        
-        //add metadata
-        for (String key: metadata.keySet()){
-            sb.append("<").append(key).append(">");
-            sb.append(metadata.get(key));
-            sb.append("</").append(key).append(">");
-        }
-        
-        sb.append("</kwic-line>");
-        return sb.toString();
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("<kwic-line>");
+
+            // create snippet           
+            KWICSnippet snippetObj = creator.apply(transcriptDoc, firstMatchID, matchArray, leftContext, rightContext);
+
+            //add metadata
+            for (String key: metadata.keySet()){
+                sb.append("<").append(key).append(">");
+                sb.append(metadata.get(key));
+                sb.append("</").append(key).append(">");
+            }
+
+            sb.append("</kwic-line>");
+            return sb.toString();
         
     }
     
