@@ -38,8 +38,17 @@ public class COMAKWIC<T> extends AbstractKWIC {
     private static final int DEFAULT_RIGHT_CONTEXT_LENGTH = Constants.KWIC_DEFAULT_CONTEXT_LENGTH;
     private static final int DEFAULT_LEFT_CONTEXT_LENGTH = Constants.KWIC_DEFAULT_CONTEXT_LENGTH;
     
+    BackendInterface backendInterface;
+    
+    
     
     public COMAKWIC (SearchResultPlus searchResult, String context, String type) throws SearchServiceException, IOException{
+        try {
+            backendInterface = BackendInterfaceFactory.newBackendInterface();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(COMAKWIC.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }
         this.type=type;
         this.searchResult = searchResult;
         setContext(context);
@@ -51,6 +60,12 @@ public class COMAKWIC<T> extends AbstractKWIC {
     }
     
     public COMAKWIC (SearchResultPlus searchResult, String context, String type, String fileType) throws SearchServiceException, IOException{
+        try {
+            backendInterface = BackendInterfaceFactory.newBackendInterface();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(COMAKWIC.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }
         this.type=type;
         this.searchResult = searchResult;
         setContext(context);
@@ -87,20 +102,20 @@ public class COMAKWIC<T> extends AbstractKWIC {
                     rightContextItem = checkItemSyntax(rc[1]);
                     
                     if (leftContextItem.equals(DEFAULT_LEFT_CONTEXT_ITEM)){
-                        if (Integer.valueOf(lc[0]) > Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX){
+                        if (Integer.parseInt(lc[0]) > Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX){
                             leftContextLength = Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX;
-                        }else if (Integer.valueOf(lc[0]) >= 0){
-                            leftContextLength = Integer.valueOf(lc[0]);
+                        }else if (Integer.parseInt(lc[0]) >= 0){
+                            leftContextLength = Integer.parseInt(lc[0]);
                         }
                     } else {
                         throw new SearchServiceException("Please specify the context in tokens! Characters are not supported yet.");
                     }
 
                     if (rightContextItem.equals(DEFAULT_RIGHT_CONTEXT_ITEM)){
-                        if (Integer.valueOf(rc[0]) > Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX){
+                        if (Integer.parseInt(rc[0]) > Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX){
                             rightContextLength = Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX;
-                        }else if (Integer.valueOf(rc[0]) >= 0){
-                            rightContextLength = Integer.valueOf(rc[0]);
+                        } else if (Integer.parseInt(rc[0]) >= 0){
+                            rightContextLength = Integer.parseInt(rc[0]);
                         }                   
                     }else{
                         throw new SearchServiceException("Please specify the context in tokens! Characters are not supported yet.");
@@ -117,34 +132,28 @@ public class COMAKWIC<T> extends AbstractKWIC {
     
     
     private void createKWICSnippets(String fileType) throws IOException, SearchServiceException{      
-        try {
-            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();     
-            DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer();
-            setKWICSnippets((T) searchResultSerializer.createKWICDownloadFile(this, fileType, backendInterface));
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(COMAKWIC.class.getName()).log(Level.SEVERE, null, ex);
-            // better throw this, or not (?)
-            throw new IOException(ex);
-        }           
+        DefaultQuerySerializer searchResultSerializer = new DefaultQuerySerializer(); // better throw this, or not (?)
+        setKWICSnippets((T) searchResultSerializer.createKWICDownloadFile(this, fileType, backendInterface));           
     }
     
     private void createKWICSnippets() throws IOException, SearchServiceException{
         ArrayList arrayList = new ArrayList<>();
-        try {
-            ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
-            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
-
-            for (Hit row : (ArrayList<Hit>) searchResult.getHits()){
-                Transcript transcript = backendInterface.getTranscript(row.getDocId());
-                Document transcriptDoc = transcript.getDocument();
-                KWICSnippet snippetObj = creator.apply(transcriptDoc, row.getFirstMatch().getID(), row.getMatches(), getLeftContext(), getRightContext());
-                arrayList.add(snippetObj);
+        ISOTEIKWICSnippetCreator creator = new ISOTEIKWICSnippetCreator();
+        //BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
+        String lastDocID = null;
+        Transcript transcript = null;
+        Document transcriptDoc = null;
+        for (Hit row : searchResult.getHits()){
+            String thisDocID = row.getDocId();
+            // only get a new transcript if necessary
+            // this seems to speed up everything by 30% to 50%
+            if (lastDocID==null || (!lastDocID.equals(thisDocID))){
+                transcript = backendInterface.getTranscript(row.getDocId());
+                transcriptDoc = transcript.getDocument();
+                lastDocID = thisDocID;
             }
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(COMAKWIC.class.getName()).log(Level.SEVERE, null, ex);
-            // better throw this, or not?
-            throw new IOException(ex);
+            KWICSnippet snippetObj = creator.apply(transcriptDoc, row.getFirstMatch().getID(), row.getMatches(), getLeftContext(), getRightContext());
+            arrayList.add(snippetObj);
         }
         setKWICSnippets((T) arrayList);
     }

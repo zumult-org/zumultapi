@@ -264,6 +264,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         // the start time is equal to the time value of the when element which the first body element refers to via @start
         try {
             Element firstElement = (Element) xPath.evaluate("//tei:body/*[@start][1]", getDocument().getDocumentElement(), XPathConstants.NODE);
+            if (firstElement==null) return -1;
             String startID = firstElement.getAttribute("start"); //.substring(1);
             //System.out.println("StartID: " + startID);
             // no idea why this is not working here. it does work above (or not?)

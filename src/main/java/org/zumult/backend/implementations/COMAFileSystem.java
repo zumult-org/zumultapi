@@ -271,6 +271,10 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             String nsLinkModified = nsLink.substring(0, nsLink.lastIndexOf(".")) + ".xml";
             File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
             
+            if (!(resolvedPath.exists())){
+                throw new IOException("Error: No transcript found for: " + transcriptID);
+            }
+            
             String xmlString = IOHelper.readUTF8(resolvedPath);
             String metadataString = IOHelper.ElementToString(transcriptionElement);
             
