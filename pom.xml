@@ -5,8 +5,7 @@
     <groupId>org.zumult</groupId>
     <artifactId>ProtoZumult</artifactId>
     <version>1.0</version>
-   <!-- <packaging>war</packaging>-->
-    <packaging>jar</packaging>
+    <packaging>${project.packaging}</packaging>
     <name>ZuMultMVN</name>
     <url>https://zumult.org/</url>
         <build>
@@ -60,6 +59,7 @@
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.packaging>jar</project.packaging>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc6 -->
