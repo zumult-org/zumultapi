@@ -11,6 +11,10 @@ Install EXMARaLDA jar first and then package jar:
 
 `mvn clean package`
 
+Alternatively package a war:
+
+`mvn clean package "-Dproject.packaging=war"`
+
 
 ## Deploying using docker
 
