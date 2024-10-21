@@ -64,7 +64,7 @@ public class ISOTEIKWICSnippetCreator {
         xPath.setNamespaceContext(new ISOTEINamespaceContext());
         
         // /tei:TEI/tei:text[1]/tei:body[1]/tei:annotationBlock[5]/tei:u[1]/tei:seg[1]/tei:w[1]
-        String xPathString = "/tei:TEI/tei:text[1]/tei:body[1]/tei:annotationBlock/tei:u/tei:seg/tei:*[@xml:id = '" + leftMatchId + "']";
+        String xPathString = "/tei:TEI/tei:text[1]/tei:body[1]/descendant::tei:*[@xml:id = '" + leftMatchId + "']";
     
         try{
             //Node nNode = ((NodeList) xPath.compile(xPathString).evaluate(transcriptDoc, XPathConstants.NODESET)).item(0);

@@ -427,7 +427,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             
             */
             NodeList allVideos = (NodeList)
-                    xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.mp4' or substring(Filename, string-length(Filename)-3)='.MP4']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
+                    xPath.evaluate("//Media[substring(NSLink, string-length(NSLink)-3)='.mp4' or substring(NSLink, string-length(NSLink)-3)='.MP4']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allVideos.getLength(); i++){
                 Element mediaElement = ((Element)(allVideos.item(i)));
                 result.add(mediaElement.getAttribute("Id"));

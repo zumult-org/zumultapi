@@ -366,7 +366,7 @@
                     <!-- **************************** -->
                     <!-- ***** WORDLIST SELECTION   * -->
                     <!-- **************************** -->
-                    <div class="input-group mb-3 input-group-sm" style="padding-left:20px; padding-right:10px;">
+                    <div class="input-group mb-3 input-group-sm" style="padding-left:20px; padding-right:10px;visibility:hidden;">
                         <div class="input-group-prepend" style="width:90px;">
                             <span class="input-group-text" id="subtitletypelabel" title="<%=myResources.getString("ReferenceWordlist")%>"><%=myResources.getString("RefWordlist")%></span>
                         </div>

@@ -50,14 +50,14 @@ public class COMAMedia extends AbstractMedia {
     @Override
     public Media getPart(double startInSeconds, double endInSeconds) {
         String[] idAndUrl = cut(startInSeconds, endInSeconds);
-        return new COMAMedia(idAndUrl[0], idAndUrl[0]);
+        return new COMAMedia(idAndUrl[0], idAndUrl[1]);
     }
     
     @Override
     public Media getVideoImage(double positionInSeconds) {
         String[] idAndUrl = still(positionInSeconds); 
         if (idAndUrl!=null){
-            return new COMAMedia(idAndUrl[0], idAndUrl[0]);            
+            return new COMAMedia(idAndUrl[0], idAndUrl[1]);            
         }
         return null;
     }
