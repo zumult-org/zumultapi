@@ -34,7 +34,7 @@ The user database is specified in `META-INF/context.xml`:
 <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" factory="org.apache.commons.dbcp.BasicDataSourceFactory" 
     maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/TestDB" password="-" type="javax.sql.DataSource" url="-" username="-"/>
 <Realm className="org.apache.catalina.realm.DataSourceRealm" dataSourceName="jdbc/TestDB" debug="99" localDataSource="true" 
-    roleNameCol="CO_DS_READ" userCredCol="CO_PASS" userNameCol="CO_USER" userRoleTable="PRAGDB.T_USERS_EXT" userTable="PRAGDB.T_USERS_EXT"/>
+    roleNameCol="CO_DS_READ" userCredCol="CO_PASS" userNameCol="CO_USER" userRoleTable="-" userTable="-"/>
 ```
 
 The same approach should work for any other RDB as long as the application has permission to access the respective table (via url/username/password) 

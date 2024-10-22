@@ -42,6 +42,7 @@ import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -452,7 +453,7 @@ public class ZumultDataServlet extends HttpServlet {
             }
             
             // 1st VIDEO
-            if (videoArchive && videoIDs.size()>0){
+            if (videoArchive && !videoIDs.isEmpty()){
                 Media partVideo = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE).getPart(startTime, endTime);
                 allFiles.add(new File(partVideo.getURL()));
                 System.out.println("[Download] Added video " + partVideo.getURL());                
@@ -549,6 +550,7 @@ public class ZumultDataServlet extends HttpServlet {
             
             //File zipFile = new File(Configuration.getMediaSnippetsPath(), "ZuMult-Download_" + UUID.randomUUID() + ".zip");      
             File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
+            System.out.println("Download directory : " + downloadDirectory.getAbsolutePath());
             File zipFile = new File(downloadDirectory, "ZuMult-Download_" + UUID.randomUUID() + ".zip");
             FileOutputStream dest = new FileOutputStream(zipFile);
             ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));        

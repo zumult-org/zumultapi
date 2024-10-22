@@ -166,6 +166,7 @@
     
     <xsl:template match="tei:u"/>
     
+    
     <xsl:template match="tei:w">
         <xsl:variable name="ID" select="@xml:id"/>
         <xsl:variable name="norm" select="@norm"/>
@@ -332,6 +333,21 @@
         </tr>
     </xsl:template>
     
+    <xsl:template match="tei:seg[@type='utterance']">
+        <xsl:apply-templates/>
+        <xsl:choose>
+            <xsl:when test="@subtype='interrogative'">
+                <xsl:text>? </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@subtype='interrupted'">
+                <xsl:text>... </xsl:text>                
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>. </xsl:text>                
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <!-- to do : highlight -->
     <xsl:template match="tei:seg//tei:pause">
         <xsl:if test="$VIS_PAUSE_INSIDE_U='TRUE'">
@@ -351,6 +367,9 @@
                     <xsl:otherwise>
                         <xsl:choose>
                             <xsl:when test="@type='micro'">(.) </xsl:when>
+                            <xsl:when test="@type='short'">(-) </xsl:when>
+                            <xsl:when test="@type='medium'">(--) </xsl:when>
+                            <xsl:when test="@type='long'">(--) </xsl:when>
                             <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="substring-before(substring-after(@dur, 'PT'), 'S')"/><xsl:text>) </xsl:text></xsl:otherwise>
                         </xsl:choose>
                     </xsl:otherwise>
@@ -358,6 +377,7 @@
             </span>
         </xsl:if>
     </xsl:template>
+    
     
     <xsl:template match="tei:anchor[@type]">
         <xsl:choose>

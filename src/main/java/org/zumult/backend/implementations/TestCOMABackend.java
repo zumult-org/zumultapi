@@ -52,7 +52,7 @@ public class TestCOMABackend {
                     Configuration.getMetadataPath()
             );
             BackendInterface bi = new COMAFileSystem();
-            SearchResultPlus searchResult = bi.search("[norm=\"in\"][norm=\"die\"][norm=\".+\"]", null, null, "TGDP", null, 1000, null, null, null, null, null);
+            SearchResultPlus searchResult = bi.search("[word=\"juste\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
             KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");
             //KWIC kwic = bi.exportKWIC(searchResult, "3-t,3-t", "xml");
@@ -67,7 +67,7 @@ public class TestCOMABackend {
             System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
             
             
-            System.exit(0);
+            //System.exit(0);
 
 
             System.out.println("--- Initialised COMAFileSystem.");
@@ -78,11 +78,16 @@ public class TestCOMABackend {
             
             
             String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
+            
+            IDList videos4Transcript = bi.getVideos4Transcript(transcriptID);
+            System.out.println("Videos : " + String.join(" / ", videos4Transcript) );
+            
             String tokenID = "w120";
             Transcript transcript = bi.getTranscript(transcriptID);
             String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
             String url = bi.getMedia(audioID).getURL();
             System.out.println("--- Media URL for transcript " + transcriptID + " : " + url);
+            bi.getMedia(audioID).getPart(0.5, 1.5);
             double time = transcript.getTimeForID(tokenID);
             System.out.println("--- Time for token " + tokenID + " in  transcript " + transcriptID + " : " + time);
             

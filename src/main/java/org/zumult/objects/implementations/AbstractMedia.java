@@ -39,7 +39,11 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(thisID, ".mp4");
                     // issue #70
                     outputFile.deleteOnExit();
-                    getMediaUtilities().cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
+                    String path = getURL();
+                    if (this instanceof COMAMedia){
+                        path = ((COMAMedia)this).fileString;
+                    }
+                    getMediaUtilities().cutVideo(startInSeconds, endInSeconds, path, outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                 } catch (IOException ex) {
                     Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,8 +55,12 @@ public abstract class AbstractMedia implements Media {
                     File outputFile2 = File.createTempFile(thisID, ".wav");
                     // issue #70
                     outputFile2.deleteOnExit();
-                    getMediaUtilities().cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
-                    thisUrlString = outputFile2.getAbsolutePath();
+                    String path = getURL();
+                    if (this instanceof COMAMedia){
+                        path = ((COMAMedia)this).fileString;
+                    }
+                    getMediaUtilities().cutAudio(startInSeconds, endInSeconds, path, outputFile2.getAbsolutePath());
+                    thisUrlString = outputFile2.getAbsolutePath();                    
                 } catch (IOException ex) {
                     Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -71,7 +79,11 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(getID() + "_", ".png");
                     // issue #70
                     outputFile.deleteOnExit();
-                    getMediaUtilities().getVideoImage(positionInSeconds, getURL(), outputFile.getAbsolutePath());
+                    String path = getURL();
+                    if (this instanceof COMAMedia){
+                        path = ((COMAMedia)this).fileString;
+                    }                    
+                    getMediaUtilities().getVideoImage(positionInSeconds, path, outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                     String[] returnValue = {thisID, thisUrlString};
                     return returnValue;        
