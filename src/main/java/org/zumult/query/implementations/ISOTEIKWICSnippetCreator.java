@@ -43,18 +43,18 @@ public class ISOTEIKWICSnippetCreator {
     
     XPath xPath =  XPathFactory.newInstance().newXPath();
     Set<String> TOKEN_NAMES = new HashSet<>();
-    
+
     public ISOTEIKWICSnippetCreator() {
         TOKEN_NAMES.addAll(Arrays.asList(Constants.TOKENS));
     }
-    
+
     public DefaultKWICSnippet apply(Document transcriptDoc, 
                                     String leftMatchId, 
                                     ArrayList<Hit.Match> matches, 
                                     KWICContext leftContext, 
                                     KWICContext rightContext) 
                                                     throws IOException {
-        
+
         int leftContextLength = leftContext.getLength();
         int rightContextAfterFirstMatch = getRightContextAfterFirstMatch(getHitLengthInTokens(matches)) + rightContext.getLength();
         //System.out.println("rightContextAfterFirstMatch : " + rightContextAfterFirstMatch);    
@@ -62,33 +62,34 @@ public class ISOTEIKWICSnippetCreator {
         ArrayList<KWICSnippetToken> content = new ArrayList();
         SortedSet<String> speakers = new TreeSet<>();
         xPath.setNamespaceContext(new ISOTEINamespaceContext());
+
+
         
-        // /tei:TEI/tei:text[1]/tei:body[1]/tei:annotationBlock[5]/tei:u[1]/tei:seg[1]/tei:w[1]
         String xPathString = "/tei:TEI/tei:text[1]/tei:body[1]/descendant::tei:*[@xml:id = '" + leftMatchId + "']";
-    
+        
         try{
             //Node nNode = ((NodeList) xPath.compile(xPathString).evaluate(transcriptDoc, XPathConstants.NODESET)).item(0);
             //Element firstElem = (Element) nNode;
             // seems to make it faster by 5% to 10%
             Element firstElem = (Element) xPath.compile(xPathString).evaluate(transcriptDoc, XPathConstants.NODE);
             Node firstMatch = firstElem;
-            Node nNode = firstElem;
-                
+            Node nNode = firstElem; 
+
             if (firstElem.getParentNode().getLocalName().equals(Constants.ELEMENT_NAME_BODY)){                  
-                // WHY WOULD I EVER GET HERE??
+                // WHY WOULD I EVER GET HERE?? -> Elena: there are incidents, vocals and pauses outside of the annotationBlock
                 // get left context
                 setLeftContextForBodyChild(matches, firstMatch, matchSnippet, content, leftContextLength, speakers, 0, transcriptDoc);
-                   
+
                 // set first match
                 DefaultKWICSnippetToken special = new DefaultKWICSnippetToken(firstElem);
                 special.markAsMatch();
                 content.add(special);
-                    
+
                 // get right context 
                 setRightContextForBodyChild(matches, firstMatch, matchSnippet, content, rightContextAfterFirstMatch, speakers, 0, transcriptDoc);
-                   
+
             } else {
-                    
+
                 // get first annotationBlock
                 //String xpathString = "//tei:"+ Constants.ELEMENT_NAME_ANNOTATION_BLOCK +"[descendant::*[@xml:id='" + leftMatchId + "']]";
                 //Node firstAnnotationBlock = (Element) xPath.evaluate(xpathString, TranscriptDoc, XPathConstants.NODE);
@@ -121,7 +122,7 @@ public class ISOTEIKWICSnippetCreator {
                         }
                     }                  
                 }
-                
+
                 if (index < leftContextLength) {
                     // get more left context
                     setLeftContextForBodyChild(matches, firstAnnotationBlockElem, matchSnippet, content, leftContextLength, speakers, index, transcriptDoc);
@@ -133,15 +134,15 @@ public class ISOTEIKWICSnippetCreator {
                 first.markAsMatch();
                 content.add(first);
                 speakers.add(speaker);
-                
+
                 if (firstElem.getLocalName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
                     --rightContextAfterFirstMatch;
                 }
-                    
+
                 // go back to first match
                 index = 0;
                 nNode = firstMatch;
-                  
+
                 // get right context
                 while (( sibling = nNode.getNextSibling()) != null){
                     nNode = sibling;
@@ -168,8 +169,8 @@ public class ISOTEIKWICSnippetCreator {
                         }
                     }
                 }
-                    
-                    
+
+
                 if (index < rightContextAfterFirstMatch){
                     // get more right context   
                     setRightContextForBodyChild(matches, firstAnnotationBlockElem, matchSnippet, content, rightContextAfterFirstMatch, speakers, index, transcriptDoc);
@@ -188,9 +189,9 @@ public class ISOTEIKWICSnippetCreator {
         matchSnippet.setSpeakerIds(speakerList);
         return matchSnippet;     
     }
-    
+
     private String getSpeakerInitials(String speaker, Document transcriptDoc){
-        
+
         try {
             
             // /tei:TEI/tei:teiHeader[1]/tei:profileDesc[1]/tei:particDesc[1]/tei:person[1]
@@ -202,13 +203,13 @@ public class ISOTEIKWICSnippetCreator {
         } catch (XPathExpressionException ex) {
             Logger.getLogger(ISOTEIKWICSnippetCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return speaker;
-    }
-    
+            return speaker;
+        }
+        
     private String getParentId(Element elem){
         return ((Element) elem.getParentNode()).getAttributeNS(XMLConstants.XML_NS_URI, "id");
     }
-        
+
     private static int getHitLengthInTokens(ArrayList<Hit.Match> matches){
         int length = 0;
         for (Hit.Match match: matches){
@@ -220,11 +221,11 @@ public class ISOTEIKWICSnippetCreator {
         }
         return length;    
     }
-    
+
     private int getRightContextAfterFirstMatch(int rightContextAfterFirstMatch){
         return Math.min(rightContextAfterFirstMatch, Constants.KWIC_TOKEN_CONTEXT_LENGTH_AFTER_FIRST_MATCH_MAX);
-    }
-    
+        }
+
     private void setLeftContextForBodyChild(ArrayList<Hit.Match> matches, Node nNode, 
             DefaultKWICSnippet matchSnippet, ArrayList<KWICSnippetToken> content, 
         int leftContextLength, Set<String> speakers, Integer index, Document transcriptDoc) throws TransformerException, XPathExpressionException{
@@ -236,7 +237,7 @@ public class ISOTEIKWICSnippetCreator {
                 if (sibling.getNodeType()==1){
                     Element siblingElem = (Element) sibling;
                     if(sibling.getLocalName().equals(Constants.ELEMENT_NAME_ANNOTATION_BLOCK)){
-           
+
                         AnnotationBlock annotationBlock = new ISOTEIAnnotationBlock(IOHelper.ElementToString(siblingElem));
                         Document annotationBlockDoc = annotationBlock.getDocument();
                         String speaker = annotationBlockDoc.getDocumentElement().getAttribute(Constants.ATTRIBUTE_NAME_WHO);
@@ -260,7 +261,7 @@ public class ISOTEIKWICSnippetCreator {
                                             containsMatches = true;
                                         }
                                     }
-                                            
+
                                     content.add(0, token);
 
                                     if (node.getLocalName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
@@ -275,14 +276,14 @@ public class ISOTEIKWICSnippetCreator {
                                 }
                             }
                         }
-            
+
                         if(containsMatches){                           
                             speakers.add(speaker);
                         }
                     }else{
-                                                               
+
                         DefaultKWICSnippetToken specialSibling = new DefaultKWICSnippetToken(siblingElem);
-                                
+
                         for (Hit.Match match: matches){
                             if(match.getID().equals(siblingElem.getAttributeNS(XMLConstants.XML_NS_URI, "id"))){
                                 specialSibling.markAsMatch();
@@ -291,26 +292,26 @@ public class ISOTEIKWICSnippetCreator {
                         }
 
                         content.add(0, specialSibling);
-                            
+
                     }
-                    
+
                 }
             }else {
                 matchSnippet.setEndMore(true);
                 break;
             }  
-                       
+
         }
     }
-        
-        
+
+
     private void setRightContextForBodyChild(ArrayList<Hit.Match> matches, Node nNode, 
            DefaultKWICSnippet matchSnippet, ArrayList<KWICSnippetToken> content, 
             int rightContextLength, Set<String> speakers, Integer index, Document transcriptDoc) throws TransformerException, XPathExpressionException{
         Node sibling;  
         loop:
         while (( sibling = nNode.getNextSibling()) != null){
-                
+
             nNode = sibling;
             if (index < rightContextLength){
                 if (sibling.getNodeType()==1){
@@ -323,7 +324,7 @@ public class ISOTEIKWICSnippetCreator {
                         String speaker = annotationBlockDoc.getDocumentElement().getAttribute(Constants.ATTRIBUTE_NAME_WHO);
                         speaker = getSpeakerInitials(speaker, transcriptDoc);
                         boolean containsMatches = false;
-                        
+
 
                         NodeList nodeList = (NodeList) xPath.compile("//tei:"+ Constants.ELEMENT_NAME_SEG +"/tei:*").evaluate(annotationBlockDoc, XPathConstants.NODESET);
 
@@ -341,7 +342,7 @@ public class ISOTEIKWICSnippetCreator {
                                             containsMatches = true;
                                         }
                                     }
-                                            
+
                                     content.add(token);
 
                                     if (node.getLocalName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
@@ -360,10 +361,10 @@ public class ISOTEIKWICSnippetCreator {
                         if(containsMatches){     
                             speakers.add(speaker); 
                         }
-                     
+
                     } else if (sibling.getLocalName().equals(Constants.ELEMENT_NAME_SPAN_GRP)){
                         //ignore
-                        
+
                     } else{
 
                         DefaultKWICSnippetToken specialSibling = new DefaultKWICSnippetToken(siblingElem);
@@ -376,7 +377,7 @@ public class ISOTEIKWICSnippetCreator {
                         }                   
 
                         content.add(specialSibling);
-     
+
                     }
                 }
             }else {
@@ -385,5 +386,5 @@ public class ISOTEIKWICSnippetCreator {
             }          
         }
     }       
-    
+
 }
