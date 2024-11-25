@@ -95,8 +95,13 @@ public class ISOTEIKWICSnippetCreator {
                 //Node firstAnnotationBlock = (Element) xPath.evaluate(xpathString, TranscriptDoc, XPathConstants.NODE);
                 //Node firstAnnotationBlock = (Node) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
                 //Node firstAnnotationBlock = (Node) firstElem.getParentNode().getParentNode().getParentNode();
-                Element firstAnnotationBlockElem = (Element) firstElem.getParentNode().getParentNode().getParentNode();
+                // This is wrong if we have nested <seg>s
+                //Element firstAnnotationBlockElem = (Element) firstElem.getParentNode().getParentNode().getParentNode();
+                
+                String xpathString = "ancestor::tei:"+ Constants.ELEMENT_NAME_ANNOTATION_BLOCK + "[1]";
+                Element firstAnnotationBlockElem = (Element) xPath.evaluate(xpathString, firstElem, XPathConstants.NODE);
                 String speaker = firstAnnotationBlockElem.getAttribute(Constants.ATTRIBUTE_NAME_WHO);
+                //System.out.println("Speaker is " + speaker);
                 speaker = getSpeakerInitials(speaker, transcriptDoc);
                 // get left context
                 int index = 0;
@@ -192,10 +197,13 @@ public class ISOTEIKWICSnippetCreator {
 
     private String getSpeakerInitials(String speaker, Document transcriptDoc){
 
+        String xpathString = "//tei:person[@xml:id='" + speaker + "']";
+        //System.out.println("Looking for " + speaker);
+        //Node personNode = null;
         try {
             
             // /tei:TEI/tei:teiHeader[1]/tei:profileDesc[1]/tei:particDesc[1]/tei:person[1]
-            String xpathString = "/tei:TEI/tei:teiHeader[1]/tei:profileDesc[1]/tei:particDesc[1]/tei:person[@xml:id='" + speaker + "']";
+            //String xpathString = "/tei:TEI/tei:teiHeader[1]/tei:profileDesc[1]/tei:particDesc[1]/tei:person[@xml:id='" + speaker + "']";
             Element personElement = (Element) xPath.compile(xpathString).evaluate(transcriptDoc, XPathConstants.NODE);
             if (personElement!=null){
                 return personElement.getAttribute("n");
