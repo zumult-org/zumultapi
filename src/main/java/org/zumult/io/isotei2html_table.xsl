@@ -173,8 +173,10 @@
         <xsl:variable name="lemma" select="@lemma"/>
         <xsl:variable name="pos" select="@pos"/>
         <xsl:variable name="trans" select="."/>
-        <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
-        <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>        
+        <!-- <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
+        <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>      -->   
+        <xsl:variable name="startAnchor" select="preceding::tei:anchor[1]/@synch"/>        
+        <xsl:variable name="endAnchor" select="following::tei:anchor[1]/@synch"/>
         <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
         <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
         <span data-start="{$start}" data-end="{$end}" data-norm="{$norm}" data-lemma="{$lemma}" data-pos="{$pos}" data-id="{$ID}">
