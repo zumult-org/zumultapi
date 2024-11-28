@@ -359,8 +359,9 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             /*NodeList allTranscripts = 
                     (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);*/
+            String xpath = "//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']";
             NodeList allTranscripts = 
-                    (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']", 
+                    (NodeList) xPath.evaluate(xpath, 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allTranscripts.getLength(); i++){
                 Element transcriptElement = ((Element)(allTranscripts.item(i)));
