@@ -72,6 +72,9 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-8" style="background:white;padding-top: 20px; border-radius: 15px;">
+                <div class="m-3 text-center">
+                    <a href="./jsp/corpusoverview.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-outline-info" target="_blank">Corpora</a>                    
+                </div>
                 
                 <div class="card-deck">
                     <div class="card mb-3">

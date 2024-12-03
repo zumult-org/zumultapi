@@ -44,7 +44,7 @@
     %>
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ZuMult: AGD Corpus Overview</title>
+        <title>ZuMult: Corpus Overview</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -69,9 +69,9 @@
 
     </head>
     <body>
-        <% String pageTitle = "Korpusübersicht Archiv für Gesprochenes Deutsch"; 
+        <% String pageTitle = "Korpusübersicht"; 
            if ("en".equals(language)) {
-               pageTitle = "Corpus overview Archive for Spoken German";
+               pageTitle = "Corpus overview";
            }
            String pageName = "ZuMult";
         %>
@@ -83,13 +83,12 @@
             <div class="col-sm-8">
                 <p class="text-justify">
                 <% if ("en".equals(language)) { %>
-                    This page gives an overview of the <%= corpora.size() %> spoken language corpora of the 
-                    <a href="http://agd.ids-mannheim.de" target="_blank">Archive for Spoken German</a>
-                    which are available online.
+                    This page gives an overview of the <%= corpora.size() %> corpora available in this 
+                    <a href="http://zumult.org" target="_blank">ZuMult</a> instance.
                 <% } else { %>
-                    Diese Seite gibt einen Überblick über die <%= corpora.size() %> mündlichen Korpora des
-                    <a href="http://agd.ids-mannheim.de" target="_blank">Archiv für Gesprochenes Deutsch</a>,
-                    die online zugänglich sind. 
+                    Diese Seite gibt einen Überblick über die <%= corpora.size() %> Korpora, die in dieser
+                    <a href="http://zumult.org" target="_blank">ZuMult</a>-Instanz
+                    zugänglich sind. 
                 <% } %>
                 </p>
             </div>
@@ -112,7 +111,7 @@
                   <div class="row no-gutters">
                     <div class="col-md-2">
                         <figure class="figure">
-                            <img src="../images/corpora/<%= corpusID %>.png" class="card-img-top rounded" alt="...">
+                            <img src="../images/words.jpg" class="card-img-top rounded" alt="...">
                             <% if (IMAGE_COPYRIGHT_MAP.containsKey(corpusID)) { %>
                                 <figcaption class="figure-caption text-right">&copy; <%= IMAGE_COPYRIGHT_MAP.get(corpusID) %></figcaption>                            
                             <% } %>
@@ -123,14 +122,6 @@
                             <h5 class="card-title"><%=acronym%></h5>
                             <h6 class="card-subtitle mb-2 text-muted"><%=name%></h6>
                             <p class="card-text"><%=description%></p>
-                            <a class="card-link" target="_blank" href="eventstable.jsp?corpusID=<%=corpusID%>">
-                                <%= backendInterface.getEvents4Corpus(corpusID).size() %> 
-                                <% if ("en".equals(language)) { %>
-                                    Events
-                                <% } else { %>
-                                    Ereignisse
-                                <% } %>
-                            </a>
                             <a class="card-link"  target="_blank" href="speecheventstable.jsp?corpusID=<%=corpusID%>">
                                 <%= backendInterface.getSpeechEvents4Corpus(corpusID).size() %>
                                 <% if ("en".equals(language)) { %>
