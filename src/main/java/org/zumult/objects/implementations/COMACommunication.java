@@ -113,7 +113,8 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
     public IDList getTranscripts() {
         IDList result = new IDList("transcript");
         try {
-            String xPathString = "descendant::Transcription";
+            //String xPathString = "descendant::Transcription";
+            String xPathString = "descendant::Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']";
             NodeList transcriptionNodeList = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<transcriptionNodeList.getLength(); i++){
                 Element transcriptionElement = (Element)(transcriptionNodeList.item(i));

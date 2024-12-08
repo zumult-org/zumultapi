@@ -8,6 +8,7 @@ package org.zumult.query.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.zumult.backend.Configuration;
@@ -67,8 +68,22 @@ public class COMASearcher extends AbstractSearcher {
     @Override
     public ArrayList<String> getIndexPaths(SearchIndexType searchIndex) throws IOException, SearchServiceException {
         ArrayList<String> result = new ArrayList<>();
+        // this is for #219
+        String corpQ = metadataQuery.corpusQuery.replaceAll("corpusSigle=", "").replace("\"", "");
+        // Corpus: corpusSigle="INTV"
+        System.out.println("Corpus: " + corpQ);        
+        String[] corps = (corpQ + "|").split("\\|");
+        Set<String> corpora = new HashSet<>();
+        for (String c : corps){
+            corpora.add(c.trim());
+        }
+            
         //for (String indexID : Configuration.getTranscriptBasedIndexIDs()){
         for (String indexID : Configuration.getSpeakerBasedIndexIDs()){
+            // this is for #219
+            String thisCorpus = indexID.substring(indexID.indexOf("_")+1);
+            if (!corpora.contains(thisCorpus)) continue;
+
             File file = new File(Configuration.getSearchIndexPath(), indexID);
             result.add(file.getAbsolutePath());
         }

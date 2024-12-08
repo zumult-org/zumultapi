@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.io.IOHelper;
@@ -51,7 +52,7 @@ public class TestCOMABackend {
                     "--- Metadata path : " +
                     Configuration.getMetadataPath()
             );
-            BackendInterface bi = new COMAFileSystem();
+            BackendInterface bi = new COMAFileSystem(); 
             SearchResultPlus searchResult = bi.search("[word=\"juste\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
             KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");

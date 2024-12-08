@@ -8,9 +8,16 @@
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>ZuMultMVN</name>
-    <url>https://zumult.org/</url>
+    
+    <!-- related to #214 -->
+    <repositories>
+        <repository>
+          <id>github-manual</id>
+          <url>https://raw.githubusercontent.com/Exmaralda-Org/exmaralda/master/src/build/webjar/</url>
+        </repository>        
+    </repositories>    <url>https://zumult.org/</url>
         <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>       
         <resources>
             <resource>
               <directory>src/main/resources</directory>
@@ -20,8 +27,12 @@
             </resource>
             <resource>
                  <directory>src/main/java</directory>
+                  <excludes>
+                        <exclude>/data/corpora/**</exclude>
+                        <exclude>/data/indices/**</exclude>
+                 </excludes>
             </resource>   
-        </resources>
+        </resources>      
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -68,10 +79,11 @@
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.4</version>
         </dependency> -->
+        <!-- see #214 -->
         <dependency>
             <groupId>org.exmaralda</groupId>
-            <artifactId>EXMARaLDA</artifactId>
-            <version>Preview-20220623</version>
+            <artifactId>EXMARaLDA_WEB</artifactId>
+            <version>1.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
