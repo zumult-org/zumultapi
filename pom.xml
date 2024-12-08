@@ -5,7 +5,7 @@
     <groupId>org.zumult</groupId>
     <artifactId>ProtoZumult</artifactId>
     <version>1.0</version>
-   <!-- <packaging>war</packaging>-->
+    <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>ZuMultMVN</name>
     <url>https://zumult.org/</url>
