@@ -1,10 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
-    <version>0.0.2-alpha</version>
+    <version>0.0.3-alpha</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>zumultapi</name>
@@ -14,7 +16,11 @@
         <repository>
           <id>github-manual</id>
           <url>https://raw.githubusercontent.com/Exmaralda-Org/exmaralda/master/src/build/webjar/</url>
-        </repository>        
+        </repository>  
+      <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/zumult-org/zumultapi</url>
+        </repository>                  
     </repositories>    
     <url>https://zumult.org/</url>
         <build>
@@ -42,12 +48,8 @@
                 <configuration>
                     <!-- changed 2024-11-01 for issue #172 -->
                     <excludes>
-                        <exclude>**/data/annotations/**</exclude>
-                        <exclude>**/data/measures/**</exclude>
-                        <exclude>**/data/prototypeJson/**</exclude>
                         <exclude>**/data/quantifications/**</exclude>
                         <exclude>**/data/*.*</exclude>
-                        <exclude>**/scripts/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -74,24 +76,49 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc6 -->
-        <!-- <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.4</version>
-        </dependency> -->
-        <!-- see #214 -->
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        
+        <!-- MTAS with a lot of transitive dependencies, esp. Lucene -->
+        
+        <!-- https://mvnrepository.com/artifact/org.textexploration.mtas/mtas -->
+        <dependency>
+            <groupId>org.textexploration.mtas</groupId>
+            <artifactId>mtas</artifactId>
+            <version>8.9.0.0</version>
+            <!-- This is an experiment for #184 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.solr</groupId>
+                    <artifactId>solr-test-framework</artifactId>
+                </exclusion> 
+                <exclusion>
+                    <groupId>org.apache.solr</groupId>
+                    <artifactId>solr-core</artifactId>                    
+                </exclusion>               
+            </exclusions>            
+            
+        </dependency>
+
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        
+        <!-- EXMARaLDA is needed for many small tasks, -->
+        <!-- It has transitive dependencies for XML processing (e.g. JDOM, SAXON) -->
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
             <version>1.0.0</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.1.3</version>
-        </dependency>
+
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+
+        <!-- Dependencies related to (Apache) Commons -->
 
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli for validator CLI -->
         <dependency>
@@ -117,18 +144,6 @@
             <version>2.6</version>
             <type>jar</type>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.11.3</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4</artifactId>
-            <version>4.7.1</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -147,6 +162,27 @@
             <artifactId>commons-text</artifactId>
             <version>1.6</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>        
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        
+        
+        
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        
+        <!-- JSON Processing (I think) -->
+        
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -165,54 +201,46 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.7</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/com.fasterxml.util/java-merge-sort -->
         <dependency>
             <groupId>com.fasterxml.util</groupId>
             <artifactId>java-merge-sort</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.textexploration.mtas/mtas -->
-        <dependency>
-            <groupId>org.textexploration.mtas</groupId>
-            <artifactId>mtas</artifactId>
-            <version>8.9.0.0</version>
-            <!-- This is an experiment for #184 -->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.solr</groupId>
-                    <artifactId>solr-test-framework</artifactId>
-                </exclusion> 
-                <exclusion>
-                    <groupId>org.apache.solr</groupId>
-                    <artifactId>solr-core</artifactId>                    
-                </exclusion>               
-            </exclusions>            
-            
-        </dependency>
+
+        <!-- I suspect that the following four are not used anywhere -->
         <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-        <dependency>
+        <!-- <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mvel/mvel2 -->
-        <dependency>
-            <groupId>org.mvel</groupId>
-            <artifactId>mvel2</artifactId>
-            <version>2.4.14.Final</version>
-        </dependency>
+        </dependency> -->
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <!-- <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency> -->        
+        <!-- https://mvnrepository.com/artifact/net.javacrumbs/json-xml -->
+        <!-- <dependency>
+            <groupId>net.javacrumbs</groupId>
+            <artifactId>json-xml</artifactId>
+            <version>2.1</version>
+        </dependency> -->
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <!-- <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency> -->
+        
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        <!-- ***************************** -->
+        
+        <!-- JERSEY -->
+        
+        
         <!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -224,30 +252,33 @@
             <artifactId>jersey-hk2</artifactId>
             <version>2.29.1</version>
         </dependency>
-        <!-- see https://www.codejava.net/coding/solved-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception  -->
+        
+        
+        
+        
+        
+        
+        
+        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.0</version>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
+            <version>4.7.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.javacrumbs/json-xml -->
+
+        <!-- https://mvnrepository.com/artifact/org.mvel/mvel2 -->
         <dependency>
-            <groupId>net.javacrumbs</groupId>
-            <artifactId>json-xml</artifactId>
-            <version>2.1</version>
+            <groupId>org.mvel</groupId>
+            <artifactId>mvel2</artifactId>
+            <version>2.4.14.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20220320</version>
-        </dependency>
+        
         <!-- https://mvnrepository.com/artifact/de.tuebingen.uni.sfs.germanet/germanet-api -->
-        <dependency>
+        <!-- <dependency>
             <groupId>de.tuebingen.uni.sfs.germanet</groupId>
             <artifactId>germanet-api</artifactId>
             <version>13.3.1</version>
-        </dependency>
+        </dependency> -->
         
         <!-- These two are new because they were needed after solr exclusion (issue #184) -->
         <dependency>
