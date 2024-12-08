@@ -8,6 +8,11 @@
 
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
+<%@page import="org.zumult.objects.IDList"%>
+<%@page import="org.zumult.backend.BackendInterfaceFactory"%>
+<%@page import="org.zumult.backend.BackendInterface"%>
+
+
 
 
 <!DOCTYPE html>
@@ -36,7 +41,6 @@
         
         <link rel="stylesheet" href="css/overview.css"/>       
         
-        <%@include file="WEB-INF/jspf/matomoTracking.jspf" %>       
         
         <script>
             $(document).ready(function(){
@@ -55,9 +59,12 @@
     
     <%
        String pageTitle = myResources.getString("testApp"); 
+       BackendInterface bi = BackendInterfaceFactory.newBackendInterface();
+       IDList allTranscriptIDs =  bi.getTranscripts4Corpus(bi.getCorpora().get(0));
+       String randomTranscriptID = allTranscriptIDs.get((int)(Math.random() * (allTranscriptIDs.size())));
     %>
 
-    <body style="background-image: url('./images/doors.jpg');">
+    <body style="background-image: url('./images/talking.png');">
         
         <% String pageName = "ZuMult"; %>
         <%@include file="../WEB-INF/jspf/zumultNav.jspf" %>                                                
@@ -65,6 +72,9 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-8" style="background:white;padding-top: 20px; border-radius: 15px;">
+                <div class="m-3 text-center">
+                    <a href="./jsp/corpusoverview.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-outline-info" target="_blank">Corpora</a>                    
+                </div>
                 
                 <div class="card-deck">
                     <div class="card mb-3">
@@ -80,7 +90,7 @@
                       <div class="card-body">
                         <h5 class="card-title">ZuViel</h5>
                         <p class="card-text"><%=myResources.getString("ZuVielShort")%></p>
-                        <a href="./jsp/zuViel.jsp?transcriptID=ID2668D68B-60BC-E915-A7D3-68DE4A6AB954" class="btn btn-primary" target="_blank">ZuViel</a>
+                        <a href="./jsp/zuViel.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuViel</a>
                       </div>
                     </div>                      
                 </div>

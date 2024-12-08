@@ -106,9 +106,10 @@
                   //  Long dur = System.currentTimeMillis() - time;
                   //  time = System.currentTimeMillis();
                     SpeechEvent speechEvent = backendInterface.getSpeechEvent(speechEventID);
+                    String firstTranscriptID = speechEvent.getTranscripts().get(0);
             %>
                     <tr>
-                        <th><%=speechEventID%></th>
+                        <th><a href="zuViel.jsp?transcriptID=<%= firstTranscriptID %>" target="_blank"><%=speechEventID%></a></th>
                         <% 
                             for (MetadataKey metadataKey : metadataKeys){ 
                             String metadataValue = speechEvent.getMetadataValue(metadataKey);
