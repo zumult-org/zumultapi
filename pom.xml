@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.zumult</groupId>
-    <artifactId>ProtoZumult</artifactId>
-    <version>1.0</version>
+    <artifactId>zumultapi</artifactId>
+    <version>0.0.1-alpha</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
-    <name>ZuMultMVN</name>
+    <name>zumultapi</name>
     
     <!-- related to #214 -->
     <repositories>
@@ -15,7 +15,8 @@
           <id>github-manual</id>
           <url>https://raw.githubusercontent.com/Exmaralda-Org/exmaralda/master/src/build/webjar/</url>
         </repository>        
-    </repositories>    <url>https://zumult.org/</url>
+    </repositories>    
+    <url>https://zumult.org/</url>
         <build>
         <finalName>${project.artifactId}</finalName>       
         <resources>
@@ -270,4 +271,12 @@
             </plugin>
         </plugins>
     </reporting>
+    
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/zumult-org/zumultapi</url>
+        </repository>
+    </distributionManagement>    
+    
 </project>
