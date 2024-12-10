@@ -670,6 +670,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 node.removeAttribute("pos");
                 node.removeAttribute("phon");
             }
+            
+            documentChanged();
 
 
         } catch (XPathExpressionException ex) {
@@ -725,7 +727,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 double newTime = thisTime - firstTime;
                 node.setAttribute("interval", Double.toString(newTime));                
             }
-            
+            documentChanged();
+            indexTime();
             
         } catch (XPathExpressionException ex) {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);

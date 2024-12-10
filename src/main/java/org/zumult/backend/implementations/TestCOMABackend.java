@@ -79,16 +79,23 @@ public class TestCOMABackend {
             
             
             //String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
-            String transcriptID = "ISO_manv_2018_e_triage";
+            //String transcriptID = "ISO_manv_2018_e_triage";
+            String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
             
             IDList videos4Transcript = bi.getVideos4Transcript(transcriptID);
             System.out.println("Videos : " + String.join(" / ", videos4Transcript) );
             
             String tokenID = "w120";
             Transcript transcript = bi.getTranscript(transcriptID);
+            Transcript part = transcript.getPart(10.0, 20.0, true);
+            System.out.println(part.toXML());
+            part.setTimelineToZero();
+            System.out.println(part.toXML());
+            //System.out.println(IOHelper.DocumentToString(part.getDocument()));
+            
             Transcript transcript2 = bi.getTranscript(transcriptID, Transcript.TranscriptFormats.EXB);
             
-            System.out.println(transcript2.toXML());
+            //System.out.println(transcript2.toXML());
             
             System.exit(0);
             

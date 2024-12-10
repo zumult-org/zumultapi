@@ -38,6 +38,20 @@ public abstract class AbstractXMLObject implements XMLSerializable {
     public AbstractXMLObject(String xmlString) {
         this.xmlString = xmlString;
     }
+    
+    public void setXML(Document xmlDocument){
+        this.xmlDocument = xmlDocument;
+        documentChanged();
+    }
+
+    public void setXML(String xmlString){
+        try {
+            this.xmlString = xmlString;
+            xmlDocument = IOHelper.DocumentFromText(xmlString);
+        } catch (IOException | SAXException | ParserConfigurationException ex) {
+            Logger.getLogger(AbstractXMLObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public String toXML() throws TransformerConfigurationException, TransformerException {
@@ -61,6 +75,15 @@ public abstract class AbstractXMLObject implements XMLSerializable {
             }
         }
         return xmlDocument;
+    }
+    
+    // this must be called when the document is changed
+    public void documentChanged(){
+        try {
+            xmlString = IOHelper.DocumentToString(xmlDocument);
+        } catch (TransformerException ex) {
+            Logger.getLogger(AbstractXMLObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
