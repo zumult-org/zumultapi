@@ -414,5 +414,13 @@ public abstract class AbstractBackend implements BackendInterface {
                 bigramType, annotationLayerIDs4BigramGroups, elementsInBetweenToBeIgnored,
                 scope, minFreq, maxFreq);
     }
+
+    @Override
+    public Transcript getTranscript(String transcriptID, Transcript.TranscriptFormats transcriptFormat) throws IOException {
+        // for #223, does nothing for the moment
+        return getTranscript(transcriptID);
+    }
+    
+    
     
 }

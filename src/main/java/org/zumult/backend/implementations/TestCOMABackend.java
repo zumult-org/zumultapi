@@ -78,13 +78,20 @@ public class TestCOMABackend {
             }
             
             
-            String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
+            //String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
+            String transcriptID = "ISO_manv_2018_e_triage";
             
             IDList videos4Transcript = bi.getVideos4Transcript(transcriptID);
             System.out.println("Videos : " + String.join(" / ", videos4Transcript) );
             
             String tokenID = "w120";
             Transcript transcript = bi.getTranscript(transcriptID);
+            Transcript transcript2 = bi.getTranscript(transcriptID, Transcript.TranscriptFormats.EXB);
+            
+            System.out.println(transcript2.toXML());
+            
+            System.exit(0);
+            
             String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
             String url = bi.getMedia(audioID).getURL();
             System.out.println("--- Media URL for transcript " + transcriptID + " : " + url);

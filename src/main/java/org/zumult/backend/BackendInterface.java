@@ -57,6 +57,7 @@ public interface BackendInterface {
     public Media getMedia(String mediaID, Media.MEDIA_FORMAT format) throws IOException;    
 
     public Transcript getTranscript(String transcriptID) throws IOException;    
+    public Transcript getTranscript(String transcriptID, Transcript.TranscriptFormats transcriptFormat) throws IOException;    // #223
     
     public Protocol getProtocol(String protocolID) throws IOException;
 
