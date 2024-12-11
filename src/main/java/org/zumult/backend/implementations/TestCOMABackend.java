@@ -7,6 +7,7 @@ package org.zumult.backend.implementations;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +54,19 @@ public class TestCOMABackend {
                     Configuration.getMetadataPath()
             );
             BackendInterface bi = new COMAFileSystem(); 
+            
+            Random random = new Random();
+            IDList allCorpusIDs = bi.getCorpora();
+            String randomCorpusID = allCorpusIDs.get(random.nextInt(allCorpusIDs.size()));
+            System.out.println(randomCorpusID);
+            IDList allTranscriptIDs =  bi.getTranscripts4Corpus(randomCorpusID);
+            System.out.println(String.join("  //  ", allTranscriptIDs));
+            String randomTranscriptID = allTranscriptIDs.get(random.nextInt(allTranscriptIDs.size()));
+            
+            System.out.println(randomCorpusID + " / " + randomTranscriptID);
+            
+            System.exit(0);
+            
             SearchResultPlus searchResult = bi.search("[word=\"juste\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
             KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");

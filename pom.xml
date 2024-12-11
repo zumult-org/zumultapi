@@ -8,7 +8,7 @@
     <artifactId>zumultapi</artifactId>
     <version>0.0.3-alpha</version>
     <!-- <packaging>war</packaging> -->
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>zumultapi</name>
     
     <!-- related to #214 -->
