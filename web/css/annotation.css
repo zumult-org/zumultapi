@@ -1,0 +1,94 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23.01.2024, 12:37:21
+    Author     : bernd
+*/
+
+table.annotations {
+    margin-top : 15px;
+    border : 3px solid gray;
+}
+
+
+table.annotations td {
+    white-space: nowrap;
+    border: 1px solid rgb(245,245,245);
+}
+
+div.annotations-div td.numbering {
+    font-weight: bold;
+    min-width: 50px;
+    background: gray;
+    color: white;
+    text-align:center;
+}
+
+div.annotations-div td.speaker {
+    min-width:160px;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 10px;
+}
+
+table.annotations td.id {
+    color : gray;
+    font-size : 8pt;
+}
+
+table.annotations th {
+    text-align: right;
+    padding-right: 10px;
+}
+
+table.annotations td.trans {
+    font-size : 15pt;
+    padding-right: 5px;
+}
+
+table.annotations td.original {
+    background : rgb(252, 239, 169);
+}
+
+table.annotations td.translation {
+    font-style : italic;
+}
+
+table.annotations td.lang {
+    font-size : 8pt;
+}
+
+table.annotations td.eng {
+    color: blue;
+}
+
+table.annotations td.amb {
+    color: red;
+}
+
+table.annotations td.xxx {
+    color: green;
+}
+
+table.annotations td.norm {
+    font-size : 11pt;
+    padding-right: 5px;
+}
+
+table.annotations td.lemma {
+    font-style : italic;
+    padding-right: 5px;
+}
+
+table.annotations td.pos {
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+table.annotations td.phon {
+    font-size : 9pt;
+    font-family: monospace;
+}
+
