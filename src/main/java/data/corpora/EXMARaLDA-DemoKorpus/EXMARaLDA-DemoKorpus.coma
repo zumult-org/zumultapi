@@ -2,7 +2,7 @@
 <Corpus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="IDA6876531-A9D8-3C38-9BAA-BB30AFE13DB4" Name="EXMARaLDA-DemoKorpus" uniqueSpeakerDistinction="//speaker/abbreviation" xsi:noNamespaceSchemaLocation="http://www.exmaralda.org/xml/CoMaCorpus.xsd">
   <DBNode />
   <CorpusData>
-    <Communication Id="IDC9DB990B-E34B-3EA5-41AC-FFE8D4347196" Name="Anne Will: Halbes Wahlrecht">
+    <Communication Id="C_Anne_Will" Name="Anne Will: Halbes Wahlrecht">
       <Setting>
         <Person>ID8FC194ED-5508-A062-8C28-14D9088F0C70</Person>
         <Person>IDD343F401-AE6B-AD89-8E1F-732663CD180F</Person>
@@ -20,7 +20,7 @@
         <LanguageCode>deu</LanguageCode>
         <Description />
       </Language>
-      <Transcription Id="IDE57E5B6C-E67B-B454-E462-4E4868C79333">
+      <Transcription Id="EXB_Anne_Will">
         <Name>AnneWill</Name>
         <Filename>AnneWill.exb</Filename>
         <NSLink>AnneWill/AnneWill.exb</NSLink>
@@ -28,10 +28,14 @@
           <Key Name="segmented">false</Key>
           <Key Name="Recording ID">MID50033F28-D20F-9912-A793-45272C398F0A</Key>
         </Description>
-        <Availability>
-          <Available>false</Available>
-          <ObtainingInformation />
-        </Availability>
+      </Transcription>
+      <Transcription Id="Anne_Will">
+        <Name>AnneWill</Name>
+        <Filename>AnneWill.xml</Filename>
+        <NSLink>AnneWill/AnneWill.xml</NSLink>
+        <Description>
+          <Key Name="Recording ID">MID50033F28-D20F-9912-A793-45272C398F0A</Key>
+        </Description>
       </Transcription>
       <Recording Id="RID7D37BDAC-9DDB-B6CD-34D3-A50A67CBA980">
         <Name>AnneWill</Name>
@@ -61,7 +65,12 @@
         <Description />
       </Location>
     </Communication>
-    <Communication Id="IDDEFABF46-991B-650A-3700-E89F2D535801" Name="Beckhams">
+    
+    <!-- *********************** -->
+    <!-- *********************** -->
+    <!-- *********************** -->
+    
+    <Communication Id="C_Beckhams" Name="Beckhams">
       <Setting>
         <Person>ID86B2E7B5-41FA-B027-37C1-1FD84D1A75A2</Person>
         <Person>ID978CA883-97DC-5021-672F-DBF532495C93</Person>
@@ -88,7 +97,7 @@
         </Period>
         <Description />
       </Location>
-      <Transcription Id="ID269EDCBC-D822-EE50-22AA-AD529AC7BD5D">
+      <Transcription Id="EXB_Beckhams">
         <Name>Beckhams</Name>
         <Filename>Beckhams.exb</Filename>
         <NSLink>Beckhams/Beckhams.exb</NSLink>
@@ -96,11 +105,16 @@
           <Key Name="segmented">false</Key>
           <Key Name="Recording ID">MID8FED5BE3-D35F-691E-37CC-F420DA31913D</Key>
         </Description>
-        <Availability>
-          <Available>false</Available>
-          <ObtainingInformation />
-        </Availability>
       </Transcription>
+      <Transcription Id="Beckhams">
+        <Name>Beckhams</Name>
+        <Filename>Beckhams.xml</Filename>
+        <NSLink>Beckhams/Beckhams.xml</NSLink>
+        <Description>
+          <Key Name="Recording ID">MID8FED5BE3-D35F-691E-37CC-F420DA31913D</Key>
+        </Description>
+      </Transcription>
+
       <Recording Id="RIDEB95C961-B6F6-D14D-4265-23D80BAE2228">
         <Name>Beckhams</Name>
         <RecordingDuration>265043</RecordingDuration>
@@ -119,7 +133,12 @@
         <Description />
       </Recording>
     </Communication>
-    <Communication Id="ID0D01F6AF-57F3-858F-BA58-9A0D304D6A72" Name="Ségolène Royal: Débat">
+    
+    <!-- *********************** -->
+    <!-- *********************** -->
+    <!-- *********************** -->
+    
+    <Communication Id="C_Royal" Name="Ségolène Royal: Débat">
       <Setting>
         <Person>ID17B52FA2-5CC0-088D-00C1-F68E7BB7149C</Person>
         <Person>IDC9129917-9D0A-5BEA-ED97-5E50AD64A38F</Person>
@@ -147,7 +166,7 @@
         <Country>France</Country>
         <Description />
       </Location>
-      <Transcription Id="ID2668D68B-60BC-E915-A7D3-68DE4A6AB954">
+      <Transcription Id="EXB_Royal">
         <Name>Royal</Name>
         <Filename>Royal.exb</Filename>
         <NSLink>Royal/Royal.exb</NSLink>
@@ -155,10 +174,15 @@
           <Key Name="segmented">false</Key>
           <Key Name="Recording ID">MID5501F873-8D95-3B4D-77F0-DAFFDA1CDE81</Key>
         </Description>
-        <Availability>
-          <Available>false</Available>
-          <ObtainingInformation />
-        </Availability>
+      </Transcription>
+      <Transcription Id="Royal">
+        <Name>Royal</Name>
+        <Filename>Royal.xml</Filename>
+        <NSLink>Royal/Royal.xml</NSLink>
+        <Description>
+          <Key Name="segmented">false</Key>
+          <Key Name="Recording ID">MID5501F873-8D95-3B4D-77F0-DAFFDA1CDE81</Key>
+        </Description>
       </Transcription>
       <Recording Id="RID1DB60C4E-E4F3-3431-638D-CDE28E352D25">
         <Name>Royal</Name>
