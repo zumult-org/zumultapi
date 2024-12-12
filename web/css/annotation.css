@@ -27,7 +27,7 @@ div.annotations-div td.numbering {
 }
 
 div.annotations-div td.speaker {
-    min-width:160px;
+    min-width:100px;
     font-weight: bold;
     text-align: right;
     padding-right: 10px;
@@ -91,4 +91,9 @@ table.annotations td.phon {
     font-size : 9pt;
     font-family: monospace;
 }
+
+td.highlight-playback {
+    background-color: #00008b !important;
+}
+
 
