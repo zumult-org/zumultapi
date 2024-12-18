@@ -247,6 +247,7 @@
                     <xsl:apply-templates/>                    
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:if test="@type='repair'">/</xsl:if>
             <xsl:if test="not(following-sibling::*[1][self::tei:pc]) and following-sibling::*">
                 <xsl:text> </xsl:text>                
             </xsl:if>
