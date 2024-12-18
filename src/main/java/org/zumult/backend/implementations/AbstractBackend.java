@@ -8,7 +8,6 @@ package org.zumult.backend.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -27,6 +26,7 @@ import org.zumult.backend.BackendInterface;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
+import org.zumult.io.ISOTEITranscriptConverter;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTagSet;
@@ -40,10 +40,11 @@ import org.zumult.objects.ResourceServiceException;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.DefaultAnnotationTagSet;
+import org.zumult.objects.implementations.EXBTranscript;
 import org.zumult.objects.implementations.ISOTEIAnnotationBlock;
+import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchResult;
-import org.zumult.query.SearchResultBigrams;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.Searcher;
@@ -399,7 +400,7 @@ public abstract class AbstractBackend implements BackendInterface {
         return searcher.getCorporaForSearch(searchIndex);
     }
     
-    @Override
+    /*@Override
     public SearchResultBigrams searchBigrams(String queryString, String queryLanguage, String queryLanguageVersion,
             String corpusQuery, String metadataQuery, Integer pageLength, Integer pageIndex, 
             String searchIndex, String sortType, String bigramType,
@@ -413,12 +414,25 @@ public abstract class AbstractBackend implements BackendInterface {
         return searcher.searchBigrams(searchIndex, sortType,
                 bigramType, annotationLayerIDs4BigramGroups, elementsInBetweenToBeIgnored,
                 scope, minFreq, maxFreq);
-    }
+    }*/
 
     @Override
     public Transcript getTranscript(String transcriptID, Transcript.TranscriptFormats transcriptFormat) throws IOException {
-        // for #223, does nothing for the moment
-        return getTranscript(transcriptID);
+        // for #223
+        switch (transcriptFormat){
+            case ISOTEI : 
+                return getTranscript(transcriptID);
+            case EXB :
+                Transcript isoTranscript = getTranscript(transcriptID);
+                ISOTEITranscriptConverter teiConverter = new ISOTEITranscriptConverter((ISOTEITranscript) isoTranscript);
+                String xml = teiConverter.convert(ISOTEITranscriptConverter.FORMATS.EXB);
+                EXBTranscript exbTranscript = new EXBTranscript(xml);
+                return exbTranscript;
+            default :
+                return getTranscript(transcriptID);
+
+        }
+        
     }
     
     

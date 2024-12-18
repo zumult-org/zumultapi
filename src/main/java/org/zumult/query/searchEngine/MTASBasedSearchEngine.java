@@ -1038,7 +1038,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
   
       
     
-    @Override
+    /*@Override
     public SearchEngineResponseBigrams searchBigrams(
                             ArrayList<String> indexPaths,
                             String queryString,
@@ -1068,7 +1068,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                 within,
                                 elementsInBetween);
          
-    }
+    }*/
     
     /*************************************************************************************************/
     /*                                 SEARCH STATISTICS                                             */

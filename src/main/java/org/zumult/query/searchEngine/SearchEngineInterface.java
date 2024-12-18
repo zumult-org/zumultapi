@@ -126,7 +126,7 @@ public interface SearchEngineInterface {
     
     public SearchIndex createIndex(Set<Path> inputDirectories, String indexPath, Object... configuration) throws IOException;
 
-    public SearchEngineResponseBigrams searchBigrams (
+    /*public SearchEngineResponseBigrams searchBigrams (
                                 ArrayList<String> indexPaths, 
                                 String queryString, 
                                 String metadataQueryString,
@@ -139,7 +139,7 @@ public interface SearchEngineInterface {
                                 List<String> annotationLayerIDs,
                                 String within,
                                 List<String> elementsInBetween) 
-                                throws SearchServiceException, IOException;
+                                throws SearchServiceException, IOException;*/
 }
 
 
