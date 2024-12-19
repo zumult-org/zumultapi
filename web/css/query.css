@@ -118,6 +118,10 @@ td.right-context{text-align: left; min-width: 250px; margin-right: 30px;}
 td.metadatakey {text-align: right; font-weight:bold;}
 td.metadatavalue {text-align: left; font-weight:normal;}
 
+#modal-video {
+    max-height:400px;
+}
+
 /************** collapsible elements ******/        
 .content {display: none;}      
 .collapsible {cursor: pointer; border: none; text-align: right; text-decoration: underline; color: blue; margin: 10px; color: #337AB7;}

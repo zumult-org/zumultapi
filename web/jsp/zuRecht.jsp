@@ -89,10 +89,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         <script src="https://kit.fontawesome.com/ed5adda70b.js" crossorigin="anonymous"></script>
         
         
-        <script src="https://unpkg.com/wavesurfer.js"></script>
+        <!-- <script src="https://unpkg.com/wavesurfer.js"></script>
         <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
         <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js"></script>
-        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js"></script> -->
 
         <script src="../js/jquery.twbsPagination.js" type="text/javascript"></script>
         <script src="../js/zuRecht.collapsible.js" type="text/javascript"></script>
@@ -146,8 +146,9 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     </div>
                 </div>
             </div>
-            <%@include file="../WEB-INF/jspf/metadataModal.jspf" %>
         </div>
+        <%@include file="../WEB-INF/jspf/metadataModal.jspf" %>
+        <%@include file="../WEB-INF/jspf/videoModal.jspf" %>
   
         <%@include file="../WEB-INF/jspf/zuRechtConstants.jspf" %>
         <script type="text/javascript">
@@ -285,6 +286,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     });      
                
                 });
+                
                                     
             });
             
@@ -520,14 +522,116 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).closest('form').submit();    
             }
             
-            function playbackMedia(obj){
+            function playbackAudio(obj){
                 let transcriptID = $(obj).data('transcriptid');
                 let tokenID = $(obj).data('tokenid');
-                alert(transcriptID + " / " + tokenID);
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getAudio',
+                        transcriptID: transcriptID,
+                        tokenID: tokenID
+                    },
+                    function( data ) {
+                        let time = $(data).find("time").text();
+                        let audioURL = $(data).find("audio").first().text();
+                        if (audioURL.length === 0){
+                            alert('No audio for ' + transcriptID);                            
+                        } else {
+                            insertAudioPlayer(obj, audioURL, Math.max(0.0, time - 1.0));
+                        }
+                    }
+                );                    
         
             }
             
+            function insertAudioPlayer(parent, audioURL, time){
+                let randomID = 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+                let audioHTML = "<audio type=\"audio/x-wav\" src=\"" + audioURL + "\" id=\"" + randomID + "\"></audio>";
+                let pauseHTML = "<i class=\"fa-solid fa-pause\"></i>";
+                $(parent).html(audioHTML + pauseHTML);
+                const audio = $('#' + randomID)[0];
+                // Check if the audio is ready to play
+                if (audio.readyState >= 2) { // 2 = HAVE_CURRENT_DATA
+                    audio.currentTime = time; // Set the playback position
+                    audio.play(); // Start playing
+                } else {
+                    // If the audio is not ready, wait until it is loaded
+                    audio.addEventListener('canplay', function onCanPlay() {
+                        audio.currentTime = time; // Set the playback position
+                        audio.play(); // Start playing
+                        audio.removeEventListener('canplay', onCanPlay); // Remove the event listener
+                    });
+                }  
+                parent.onclick = function(){
+                    stopAudio(this, randomID);
+                };                
+            }
             
+            function stopAudio(parent, audioID){
+                const audio = $('#' + audioID)[0];
+                audio.pause();
+                let playHTML = "<i class=\"fa-solid fa-play\"></i>";
+                $(parent).html(playHTML);
+                parent.onclick = function(){
+                    playbackAudio(this);
+                };                
+            }
+            
+            
+            function playbackVideo(obj){
+                let transcriptID = $(obj).data('transcriptid');
+                let tokenID = $(obj).data('tokenid');
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getVideo',
+                        transcriptID: transcriptID,
+                        tokenID: tokenID
+                    },
+                    function( data ) {
+                        let time = $(data).find("time").text();
+                        let videoURL = $(data).find("video").first().text();
+                        if (videoURL.length === 0){
+                            alert('No video for ' + transcriptID);                            
+                        } else {
+                            insertVideoPlayer(obj, videoURL, Math.max(0.0, time - 1.0));
+                        }
+                    }
+                );                    
+        
+            }
+            
+            function insertVideoPlayer(parent, videoURL, time){
+                //let randomID = 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+                let videoHTML = "<video id=\"modal-video\" controls=\"controls\" type=\"video/mp4\" src=\"" + videoURL +  "\"></video>";
+                //let pauseHTML = "<i class=\"fa-solid fa-pause\"></i>";
+                //$(parent).html(pauseHTML);
+                $('#video-div').html(videoHTML);                
+                const video = $('#modal-video')[0];
+                // Check if the video is ready to play
+                if (video.readyState >= 2) { // 2 = HAVE_CURRENT_DATA
+                    video.currentTime = time; // Set the playback position
+                    video.play(); // Start playing
+                } else {
+                    // If the audio is not ready, wait until it is loaded
+                    video.addEventListener('canplay', function onCanPlay() {
+                        video.currentTime = time; // Set the playback position
+                        video.play(); // Start playing
+                        video.removeEventListener('canplay', onCanPlay); // Remove the event listener
+                    });
+                }  
+                $('#videoModal').modal("toggle");
+                //parent.onclick = function(){
+                    //stopVideo(this, randomID);
+                //};                
+            }
+            
+            function stopVideo(){
+                const video = $('#modal-video')[0];
+                video.pause();
+                video.remove();
+            }
       
             /**************************************************/
             /*             other help methods          */
@@ -773,6 +877,10 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(obj).find("option[value=null]").prop('selected', 'selected');
             }
 
+            // Add an event listener for when the modal is fully hidden
+            $(document).on('hidden.bs.modal','#videoModal', function () {
+                stopVideo();
+            });            
 
         </script>
     </body>

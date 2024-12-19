@@ -76,7 +76,7 @@
             </td>
 
             <td class="signal">
-                <button type="button" onclick="playbackMedia(this)" class="btn btn-sm py-0 px-1" title="Playback media">
+                <button type="button" onclick="playbackAudio(this)" class="btn btn-sm py-0 px-1" title="Playback audio">
                     <xsl:attribute name="data-tokenid">
                         <xsl:value-of select="snippet/*[@match='true']/@xml:id"/>
                     </xsl:attribute>
@@ -84,6 +84,18 @@
                         <xsl:value-of select="@source"/>
                     </xsl:attribute>
                     <i class="fa-solid fa-play"></i>
+                </button>
+            </td>
+            
+            <td class="signal">
+                <button type="button" onclick="playbackVideo(this)" class="btn btn-sm py-0 px-1" title="Playback video">
+                    <xsl:attribute name="data-tokenid">
+                        <xsl:value-of select="snippet/*[@match='true']/@xml:id"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>
+                    </xsl:attribute>
+                    <i class="fa-solid fa-video"></i>
                 </button>
             </td>
            

@@ -91,6 +91,12 @@ public class ZumultDataServlet extends HttpServlet {
             case "getTranscript" :
                 getTranscript(request, response);
                 break;
+            case "getAudio" :
+                getAudio(request, response);
+                break;
+            case "getVideo" :
+                getVideo(request, response);
+                break;
             case "getVideoImage" :
                 getVideoImage(request, response);
                 break;
@@ -1157,4 +1163,75 @@ public class ZumultDataServlet extends HttpServlet {
         }
         return pathToWordList;
     }
+
+    private void getAudio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String transcriptID = request.getParameter("transcriptID");
+            String tokenID = request.getParameter("tokenID");
+
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            Transcript transcript = backend.getTranscript(transcriptID);
+            double timeForToken = transcript.getTimeForID(tokenID);
+            IDList audioIDs = backend.getAudios4Transcript(transcriptID);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<result>");
+            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
+            sb.append("<tokenID>" + tokenID + "</tokenID>");
+            sb.append("<time>" + Double.toString(timeForToken) + "</time>");
+            for (String audioID : audioIDs){
+                    sb.append("<audio audioID=\"" + audioID + "\">");
+                    Media audio = backend.getMedia(audioID);
+                    sb.append(audio.getURL());
+                    sb.append("</audio>");
+            }
+            sb.append("</result>");
+
+            response.setContentType("application/xml");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(sb.toString());
+            response.getWriter().close();
+        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);            
+        }
+        
+    }
+
+
+    private void getVideo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String transcriptID = request.getParameter("transcriptID");
+            String tokenID = request.getParameter("tokenID");
+
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            Transcript transcript = backend.getTranscript(transcriptID);
+            double timeForToken = transcript.getTimeForID(tokenID);
+            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<result>");
+            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
+            sb.append("<tokenID>" + tokenID + "</tokenID>");
+            sb.append("<time>" + Double.toString(timeForToken) + "</time>");
+            for (String videoID : videoIDs){
+                    sb.append("<video audioID=\"" + videoID + "\">");
+                    Media video = backend.getMedia(videoID);
+                    sb.append(video.getURL());
+                    sb.append("</video>");
+            }
+            sb.append("</result>");
+
+            response.setContentType("application/xml");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(sb.toString());
+            response.getWriter().close();
+        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);            
+        }
+        
+    }
+
+
 }
