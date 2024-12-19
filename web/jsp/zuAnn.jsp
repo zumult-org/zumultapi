@@ -61,6 +61,11 @@
     } 
 
     String vttURL = Configuration.getWebAppBaseURL() + "/ZumultDataServlet?command=getVTT&transcriptID=" + transcriptID;
+    
+    int height = 400;
+    if (videoIDs.isEmpty()){
+        height+=320;
+    }
 
 %>
 
@@ -69,7 +74,7 @@
 <html>
         <html>
             <head>
-                <script src="../js/media_zupass.js"></script>
+                <script src="../js/media_zuann.js"></script>
                 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>        
                 <script src="https://kit.fontawesome.com/e215b03c17.js" crossorigin="anonymous"></script>
                 <link rel="stylesheet" href="../css/annotation.css">
@@ -165,7 +170,7 @@
         
         <div id="partitur-form" class="row mt-2">
             <div class="col-1"></div>
-            <div class="col-10 overflow-auto" style="height: 400px; width: 100%;">
+            <div class="col-10 overflow-auto" style="height: <%= Integer.toString(height)%>px; width: 100%;">
                     <%= html %>                
             </div>
             <div class="col-1"></div>

@@ -42,7 +42,6 @@ import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -173,6 +172,11 @@ public class ZumultDataServlet extends HttpServlet {
         try {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String speakerID = request.getParameter("speakerID");
+            String transcriptID = request.getParameter("transcriptID");
+            if (transcriptID!=null){
+                // i.e. speakerID is a transcript sigle, not the corpus ID
+                speakerID = backend.getTranscript(transcriptID).getSpeakerIDBySpeakerInitials(speakerID);
+            }
             if (speakerID!=null){
                 Speaker speaker = backend.getSpeaker(speakerID);
                 String speakerXML = speaker.toXML();        
@@ -206,6 +210,12 @@ public class ZumultDataServlet extends HttpServlet {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             // this does not really make sense : we want event metadata, so why are we passing speechEventID as parameter?
             String speechEventID = request.getParameter("speechEventID");
+            if (speechEventID==null){
+                String transcriptID = request.getParameter("transcriptID");
+                if (transcriptID!=null){
+                    speechEventID = backend.getSpeechEvent4Transcript(transcriptID);
+                }                
+            }
             if (speechEventID!=null){
                 // changed for issue #175
                 //Event event = backend.getEvent(eventID.substring(0,12));

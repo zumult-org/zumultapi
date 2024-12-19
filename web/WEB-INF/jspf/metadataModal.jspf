@@ -13,8 +13,6 @@
                 <div class="modal-body" id="metadata-body">
                 </div>
                 <div class="modal-footer">
-                    <a href="#" id="metadata-transcript-link" target="_blank">Transkript anzeigen</a>
-                    <a href="#" id="metadata-transcript-dgd-link" target="_blank">Transkript in DGD</a>
                 </div>
             </div>
         </div>

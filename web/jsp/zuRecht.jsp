@@ -86,6 +86,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/ed5adda70b.js" crossorigin="anonymous"></script>
+        
         
         <script src="https://unpkg.com/wavesurfer.js"></script>
         <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
@@ -144,10 +146,12 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     </div>
                 </div>
             </div>
+            <%@include file="../WEB-INF/jspf/metadataModal.jspf" %>
         </div>
   
         <%@include file="../WEB-INF/jspf/zuRechtConstants.jspf" %>
         <script type="text/javascript">
+            var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';
             var languageTag = '<%=currentLocale.toLanguageTag()%>';
             var ajaxSearchRequest = null;
             var ajaxDownLoadRequest = null;
@@ -406,8 +410,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 $(selector).find('.rowData-KWICSearch').text(xml);
                 
                 var data = new FormData();
-                data.append('speakerInitialsToolTip', '<%=myResources.getString("ShowSpeakerMetadataInDGD")%>');
-                data.append('transcriptIdToolTip', '<%=myResources.getString("ShowEventMetadataInDGD")%>');
+                data.append('speakerInitialsToolTip', '<%=myResources.getString("ShowSpeakerMetadata")%>');
+                data.append('transcriptIdToolTip', '<%=myResources.getString("ShowEventMetadata")%>');
                 data.append('zuMultToolTip', '<%=myResources.getString("ShowExcerptInZuMult")%>');
                 data.append('dgdToolTip', '<%=myResources.getString("ShowExcerptInDGD")%>');
 
@@ -477,13 +481,52 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
                             
             function openMetadata(obj){
-                $(obj).closest('form').append("<input type='hidden' name='lang' value='"+ '<%=currentLocale.getLanguage()%>' +"' />");
-                $(obj).closest('form').submit();    
+                let transcriptID = $(obj).data('transcriptid');
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getEventMetadataHTML',
+                        transcriptID: transcriptID
+                    },
+                    function( data ) {
+                        $("#metadata-body").html(data);
+                        $("#metadata-title").html(transcriptID);
+                        $('#metadataModal').modal("toggle");
+                    }
+                );                    
+                
             }
                          
+
+            function openSpeakerMetadata(obj){
+                let speakerID = $(obj).data('speakerid');
+                let transcriptID = $(obj).data('transcriptid');
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getSpeakerMetadataHTML',
+                        speakerID: speakerID,
+                        transcriptID: transcriptID
+                    },
+                    function( data ) {
+                        $("#metadata-body").html(data);
+                        $("#metadata-title").html(speakerID);
+                        $('#metadataModal').modal("toggle");
+                    }
+                );                    
+            }
+
             function openTranscript(obj){
                 $(obj).closest('form').submit();    
             }
+            
+            function playbackMedia(obj){
+                let transcriptID = $(obj).data('transcriptid');
+                let tokenID = $(obj).data('tokenid');
+                alert(transcriptID + " / " + tokenID);
+        
+            }
+            
             
       
             /**************************************************/
@@ -532,7 +575,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             
             
             function configureContext(selectorModal, selectorForm){
-                var defaultContextLength = 3;
+                var defaultContextLength = 5; // changed that from 3
                 var regex = /^(0?\d|1\d|2[0-5])$/;
                 var left = $(selectorModal).find(":text.customLeftContextLength").val();
                 if (!left.match(regex)) {                        
