@@ -495,8 +495,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                         $("#metadata-title").html(transcriptID);
                         $('#metadataModal').modal("toggle");
                     }
-                );                    
-                
+                );                                    
             }
                          
 

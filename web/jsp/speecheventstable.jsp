@@ -4,6 +4,8 @@
     Author     : Thomas_Schmidt
 --%>
 
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.TreeSet"%>
 <%@page import="org.zumult.objects.ObjectTypesEnum"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
@@ -29,24 +31,23 @@
         </style>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>                
+        <script src="https://kit.fontawesome.com/ed5adda70b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/overview.css"/>       
 
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
-        <script
-          src="https://code.jquery.com/jquery-3.3.1.js"
-          integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-          crossorigin="anonymous"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
         
 
         <script type="text/javascript">
+            var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';
+
             $(document).ready( function () {
                 //$('#myTable').DataTable();
                 $('#myTable').DataTable( {
@@ -58,17 +59,46 @@
                         }
                     ]
                 } );
-            } );            
+            } );          
+
+            function openTranscript(transcriptID){
+                let url = "./zuViel.jsp?transcriptID=" + transcriptID;
+                window.open(url, '_blank');    
+            }
+            
+            function openMetadata(speechEventID){
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getEventHTML',
+                        speechEventID : speechEventID
+                    },
+                    function( data ) {
+                        $("#metadata-body").html(data);
+                        $("#metadata-title").html(speechEventID);
+                        $('#metadataModal').modal("toggle");
+                    }
+                );                                    
+            }
         </script>
-        <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                        
+        
+        
+        
     </head>
     <body>
         <%
             String corpusID = request.getParameter("corpusID");
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
-            String corpusName = corpus.getName("de");
+            String corpusName = corpus.getName("en");
             Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEECH_EVENT);
+            List<MetadataKey> sortedMetadataKeys = new ArrayList<>(metadataKeys);   
+            sortedMetadataKeys.sort(new Comparator<MetadataKey>(){
+                @Override
+                public int compare(MetadataKey m1, MetadataKey m2){
+                    return m1.getName("en").compareTo(m2.getName("en"));
+                }
+            });
             IDList eventIDs = backendInterface.getEvents4Corpus(corpusID);           
             IDList speechEventIDs = new IDList("speechEvent");
             for (String eventID : eventIDs){
@@ -76,58 +106,71 @@
             }
         %>
         <% String pageName = "ZuMult"; %>
-        <% String pageTitle = "Sprechereignisübersicht Korpus " + corpusID  + " - " + corpusName; %>
+        <% String pageTitle = "Speech event overview corpus  - " + corpusName; %>
         <%@include file="../WEB-INF/jspf/zumultNav.jspf" %>                                                
         
         <div class="row">
             <div class="col-sm-1">
             </div>
             <div class="col-sm-10">
-        <table id="myTable" style="font-size:smaller;" class="stripe compact">
-            <thead>
-                <tr>
-                    <th>ID</th>
+                <table id="myTable" style="font-size:smaller;" class="stripe compact">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <%
+                                for (MetadataKey metadataKey : sortedMetadataKeys){
+                                    String keyName = metadataKey.getName("en");
+                            %>
+                                <th><%=keyName%></th>    
+                            <%
+                                }
+                            %>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <%
-                        for (MetadataKey metadataKey : metadataKeys){
-                            String keyName = metadataKey.getName("de");
+                        //Long time = System.currentTimeMillis();
+                        for (String speechEventID : speechEventIDs){
+                          //  Long dur = System.currentTimeMillis() - time;
+                          //  time = System.currentTimeMillis();
+                            SpeechEvent speechEvent = backendInterface.getSpeechEvent(speechEventID);
+                            String firstTranscriptID = speechEvent.getTranscripts().get(0);
+                            String name = speechEvent.getName();
                     %>
-                        <th><%=keyName%></th>    
+                            <tr>
+                                <th>
+                                    <button onclick="openMetadata('<%= speechEventID %>')" type="button" class="btn btn-sm py-0 px-1" title="Show all metadata">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button onclick="openTranscript('<%= firstTranscriptID %>')" type="button" class="btn btn-sm py-0 px-1" 
+                                            title="Open first transcript (<%= firstTranscriptID %>) in ZuViel">
+                                        <i class="fa-regular fa-file-lines"></i>
+                                    </button>
+                                </th>
+                                <th><%=name %></th>
+                                <% 
+                                    for (MetadataKey metadataKey : sortedMetadataKeys){ 
+                                    String metadataValue = speechEvent.getMetadataValue(metadataKey);
+                                %>
+                                <td class="metadata"
+                                    title="<%=metadataValue%>">
+                                    <%=metadataValue%>
+                                </td>
+                                <%
+                                    }
+                                %>
+                            </tr>
                     <%
                         }
                     %>
-                    <!-- <th>Location</th> -->
-                    <!-- <th>Time</th> -->
-                </tr>
-            </thead>
-            <tbody>
-            <%
-                //Long time = System.currentTimeMillis();
-                for (String speechEventID : speechEventIDs){
-                  //  Long dur = System.currentTimeMillis() - time;
-                  //  time = System.currentTimeMillis();
-                    SpeechEvent speechEvent = backendInterface.getSpeechEvent(speechEventID);
-                    String firstTranscriptID = speechEvent.getTranscripts().get(0);
-            %>
-                    <tr>
-                        <th><a href="zuViel.jsp?transcriptID=<%= firstTranscriptID %>" target="_blank"><%=speechEventID%></a></th>
-                        <% 
-                            for (MetadataKey metadataKey : metadataKeys){ 
-                            String metadataValue = speechEvent.getMetadataValue(metadataKey);
-                        %>
-                        <td><%=metadataValue%></td>
-                        <%
-                            }
-                        %>
-                        <!-- <td><%//=dur%>ms</td> -->
-                    </tr>
-            <%
-                }
-            %>
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
             </div>
-        <div class="col-sm-1">
+            <div class="col-sm-1">
+            </div>
         </div>
-            </div>
+        <%@include file="../WEB-INF/jspf/metadataModal.jspf" %>
+                    
     </body>
 </html>

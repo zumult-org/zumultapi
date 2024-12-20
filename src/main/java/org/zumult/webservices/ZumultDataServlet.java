@@ -69,6 +69,9 @@ public class ZumultDataServlet extends HttpServlet {
             case "download" :
                 download(request, response);
                 break;
+            case "getEventHTML" : 
+                getEventHTML(request, response);
+                break;
             case "getEventMetadataHTML" : 
                 getEventMetadataHTML(request, response);
                 break;
@@ -300,6 +303,40 @@ public class ZumultDataServlet extends HttpServlet {
             throw new IOException(ex);
         } 
     }
+
+    private void getEventHTML(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String speechEventID = request.getParameter("speechEventID");
+                       
+            if (speechEventID!=null){
+                Event event = backend.getEvent(backend.getEvent4SpeechEvent(speechEventID));
+                String eventXML = event.toXML();        
+                // change for issue #175
+                String xslPath = Configuration.getEvent2HTMLStylesheet();
+                String speechEventHTML = new IOHelper().applyInternalStylesheetToString(xslPath, eventXML);
+                
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(speechEventHTML);             
+                response.getWriter().close();            
+            }  else {
+                String errorHTML = "<div>Event " + speechEventID + " not found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | TransformerException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } 
+    }
+
+
 
     private void getEventMetadataTitle(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -1215,7 +1252,7 @@ public class ZumultDataServlet extends HttpServlet {
             sb.append("<tokenID>" + tokenID + "</tokenID>");
             sb.append("<time>" + Double.toString(timeForToken) + "</time>");
             for (String videoID : videoIDs){
-                    sb.append("<video audioID=\"" + videoID + "\">");
+                    sb.append("<video videoID=\"" + videoID + "\">");
                     Media video = backend.getMedia(videoID);
                     sb.append(video.getURL());
                     sb.append("</video>");
