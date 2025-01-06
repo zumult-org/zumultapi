@@ -18,7 +18,6 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.query.SampleQuery;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchIndexType;
-import org.zumult.query.SearchResultBigrams;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.searchEngine.COMASearchEngine;
 import org.zumult.query.searchEngine.MTASBasedSearchEngine;
@@ -102,10 +101,10 @@ public class COMASearcher extends AbstractSearcher {
                 
     }
 
-    @Override
+    /*@Override
     public SearchResultBigrams searchBigrams(String searchIndex, String sortType, String bigramType, List<String> annotationLayerIDs4BigramGroups, List<String> elementsInBetweenToBeIgnored, String scope, Integer minFreq, Integer maxFreq) throws SearchServiceException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    }*/
 
     @Override
     public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException {

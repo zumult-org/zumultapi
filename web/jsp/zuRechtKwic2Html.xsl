@@ -12,7 +12,7 @@
     
     <xsl:template match="/">
         <xsl:if test = "//meta/total > 0"> 
-            <table class="table table-hover table-sm borderless">
+            <table class="table table-hover table-sm borderless w-auto">
                 <!--<tr>
                     <th></th>
                     <th>Transcript</th>
@@ -33,10 +33,12 @@
     <xsl:template match="hit">
         <tr>
             <td class="numbering"><xsl:value-of select="@row"/></td>
-            <!--<td class="transcript"><xsl:value-of select="substring-before(@source, '_DF_01')"/></td>-->
             
             <td class="transcript">
-                <a target="_blank">
+                <a onclick="openMetadata(this)">
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>                        
+                    </xsl:attribute>
                     <xsl:attribute name="title">
                         <xsl:value-of select = "$transcriptIdToolTip" />
                     </xsl:attribute>
@@ -45,63 +47,59 @@
             </td>
             
             <td class="speaker" style="white-space: nowrap">              
-                <xsl:apply-templates select="snippet/@who">
+                <a onclick="openSpeakerMetadata(this)">
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>                        
+                    </xsl:attribute>
+                    <xsl:attribute name="data-speakerid">
+                        <xsl:value-of select="snippet/@who"/>                        
+                    </xsl:attribute>
+                    <xsl:attribute name="title">Show speaker metadata</xsl:attribute>
+                    <xsl:value-of select="snippet/@who"/>
+                </a>
+                <!-- Do not understand what this does -->
+                <!-- <xsl:apply-templates select="snippet/@who">
                     <xsl:with-param name="source" select="@source" /> 
-                </xsl:apply-templates> 
+                </xsl:apply-templates> -->
             </td>
-            <td class="hit">
+
+            <td class="left-context">
                 <xsl:if test="snippet/@isStartMore='true'"><xsl:text>... </xsl:text></xsl:if>
                 <xsl:apply-templates select="snippet/*[not(@match='true') and not(preceding-sibling::*[@match='true'])]"/>
+            </td>
+            <td class="hit">
                 <xsl:apply-templates select="snippet/*[@match='true' or (following-sibling::*[@match='true'] and preceding-sibling::*[@match='true'])]"/>
+            </td>
+            <td class="right-context">
                 <xsl:apply-templates select="snippet/*[not(@match='true') and not(following-sibling::*[@match='true'])]"/>
                 <xsl:if test="snippet/@isEndMore='true'"><xsl:text> ...</xsl:text></xsl:if>    
             </td>
-            <!--
-            <td class="left_context">
-                <xsl:if test="snippet/@isStartMore='true'"><xsl:text>...</xsl:text></xsl:if>
-                <xsl:apply-templates select="snippet/*[not(@match='true') and not(preceding-sibling::*[@match='true'])]"/>
+
+            <td class="signal">
+                <button type="button" onclick="playbackAudio(this)" class="btn btn-sm py-0 px-1" title="Playback audio">
+                    <xsl:attribute name="data-tokenid">
+                        <xsl:value-of select="snippet/*[@match='true']/@xml:id"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>
+                    </xsl:attribute>
+                    <i class="fa-solid fa-play"></i>
+                </button>
             </td>
-            <td class="matches">
-                <xsl:apply-templates select="snippet/*[@match='true' or (following-sibling::*[@match='true'] and preceding-sibling::*[@match='true'])]"/>                
-            </td>
-            <td class="right_context">
-                <xsl:apply-templates select="snippet/*[not(@match='true') and not(following-sibling::*[@match='true'])]"/>
-                <xsl:if test="snippet/@isEndMore='true'"><xsl:text>...</xsl:text></xsl:if>            
-            </td>
-            -->
-           <td class="signal">
-                <button type="button" class="btn btn-sm py-0 px-1 btn-open-oscillogram" title="Open oscillogram" style="display: none;">
-                <xsl:attribute name="data-value-start">
-                    <xsl:value-of select="@startInterval"/>
-                </xsl:attribute>
-                <xsl:attribute name="data-value-end">
-                    <xsl:value-of select="@endInterval"/>
-                </xsl:attribute>
-                <xsl:attribute name="data-value-source">
-                    <!--<xsl:value-of select="@media"/>-->
-                    <xsl:value-of select="@source"/>
-                </xsl:attribute>
-                <span class="icon">
-                    <i class="fa fa-signal"></i>
-                </span>
+            
+            <td class="signal">
+                <button type="button" onclick="playbackVideo(this)" class="btn btn-sm py-0 px-1" title="Playback video">
+                    <xsl:attribute name="data-tokenid">
+                        <xsl:value-of select="snippet/*[@match='true']/@xml:id"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>
+                    </xsl:attribute>
+                    <i class="fa-solid fa-video"></i>
                 </button>
             </td>
            
             <td class="zumult-link">
-            <!--    <a title="Show excerpt in ZuMult" target="_blank">
-                    <xsl:attribute name="href">
-                        <xsl:text>../jsp/zuViel.jsp?transcriptIDWithHighlights=</xsl:text>        
-                        <xsl:value-of select="@source"/>
-                        <xsl:text>&amp;form=norm&amp;howMuchAround=3&amp;aroundTokenID=</xsl:text>
-                        <xsl:value-of select="snippet/*[@match='true'][1]/@xml:id"/>
-                        <xsl:text>&amp;highlightIDs1=</xsl:text>
-                        <xsl:for-each select="snippet/*[@match='true']">
-                            <xsl:value-of select="@xml:id"/>
-                            <xsl:if test="not(position()=last())"><xsl:text> </xsl:text></xsl:if> 
-                        </xsl:for-each>
-                    </xsl:attribute>
-                        ZuMult
-                </a>-->
                 <form target='_blank' action='../jsp/zuViel.jsp' method='post'>                
                         <!-- <input type='hidden' name='transcriptIDWithHighlights'> -->
                         <input type='hidden' name='transcriptID'>
@@ -143,11 +141,11 @@
                                 <xsl:value-of select="snippet/*[@match='true'][position()=last()]/@xml:id"/>
                             </xsl:attribute>
                         </input>
-                        <button onclick='openTranscript(this)' type="button" class="btn btn-link my-0 py-0 btn-sm">
+                        <button onclick='openTranscript(this)' type="button" class="btn btn-sm py-0 px-1">
                             <xsl:attribute name="title">
                                 <xsl:value-of select = "$zuMultToolTip" />
                             </xsl:attribute>
-                            ZuViel
+                            <i class="fa-regular fa-file-lines"></i>
                         </button>
                 </form>
                 

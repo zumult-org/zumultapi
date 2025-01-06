@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lexicon>
+    <w orth="nah" pho="n ' a:" />
+    <w orth="cdu-nahen" pho="k d ' u: . n a: . @ n" />
+    <w orth="oder" pho="? ' o: . d 6" />
+    <w orth="der" pho="d ' e:6" />
+    <w orth="studentenverbindung" pho="S t u . d ' E n . t @ n . v 6 . b I n . d U N" />
+    <w orth="des" pho="d ' E s" />
+    <w orth="rcds" pho="? E r . ts ' e: . d e: . ? E s" />
+    <w orth="ist" pho="? ' I s t" />
+    <w orth="das" pho="d ' a s" />
+    <w orth="gottfried" pho="g ' O t . f r i: t" />
+    <w orth="ludewig" pho="l ' u: . d @ . v I C" />
+    <w orth="herzlich" pho="h ' E6 ts . l I C" />
+    <w orth="willkommen" pho="v I l . k ' O m . @ n" />
+    <w orth="hallo" pho="h ' a l . o:" />
+    <w orth="sie" pho="z ' i:" />
+    <w orth="sind" pho="z ' I n t" />
+    <w orth="nicht" pho="n ' I C t" />
+    <w orth="nur" pho="n ' u:6" />
+    <w orth="vorsitzender" pho="f ' o:6 . z I t . s @ n . d 6" />
+    <w orth="auch" pho="? ' aU x" />
+    <w orth="cdu-mitglied" pho="k d ' u: . m I t . g l i: t" />
+    <w orth="muss" pho="m ' U s" />
+    <w orth="man" pho="m ' a n" />
+    <w orth="wissen" pho="v ' I s . @ n" />
+    <w orth="wenn" pho="v ' E n" />
+    <w orth="sich" pho="z ' I C" />
+    <w orth="jetzt" pho="j ' E t s t" />
+    <w orth="ihren" pho="? ' i: . r @ n" />
+    <w orth="vorschlag" pho="f ' o:6 . S l a: k" />
+    <w orth="anhört" pho="? ' a n . h 2:6 t" />
+    <w orth="haben" pho="h ' a: . b @ n" />
+    <w orth="nämlich" pho="n ' E: m . l I C" />
+    <w orth="gesagt" pho="g @ . z ' a: k t" />
+    <w orth="und" pho="? ' U n t" />
+    <w orth="damit" pho="d a m . ' I t" />
+    <w orth="ratzfatz" pho="r ' a: . t s f a t s" />
+    <w orth="auf" pho="? ' aU f" />
+    <w orth="seite" pho="z ' aI . t @" />
+    <w orth="eins" pho="? ' aI n s" />
+    <w orth="katapultiert" pho="k a t . a . p U l . t ' i: r t" />
+    <w orth="dass" pho="d ' a s" />
+    <w orth="wahlrecht" pho="v ' a: l . r E C t" />
+    <w orth="ändern" pho="? ' E n . d 6 n" />
+    <w orth="sollten" pho="z ' O l . t @ n" />
+    <w orth="für" pho="f ' y:6" />
+    <w orth="diejenigen" pho="d ' i: . j e: . n I . g @ n" />
+    <w orth="die" pho="d ' i:" />
+    <w orth="arbeiten" pho="? ' a r . b aI . t @ n" />
+    <w orth="solle" pho="z ' O l . @" />
+    <w orth="es" pho="? ' E s" />
+    <w orth="ein" pho="? ' aI n" />
+    <w orth="doppeltes" pho="d ' O p . @ l . t @ s" />
+    <w orth="geben" pho="g ' e: . b @ n" />
+    <w orth="alle" pho="? ' a l . @" />
+    <w orth="anderen" pho="? ' a n . d @ . r @ n" />
+    <w orth="einfaches" pho="? ' aI n . f a . x @ s" />
+    <w orth="sagen" pho="z ' a: . g @ n" />
+    <w orth="um" pho="? ' U m" />
+    <w orth="arbeitslosen" pho="? ' a r . b aI t s . l o: . z @ n" />
+    <w orth="einen" pho="? ' aI . n @ n" />
+    <w orth="anreiz" pho="? ' a n . r aI ts" />
+    <w orth="zu" pho="ts ' u" />
+    <w orth="wieder" pho="v ' i: . d 6" />
+    <w orth="n" pho="? ' E n" />
+    <w orth="job" pho="dZ ' O p" />
+    <w orth="suchen" pho="z ' u: . x @ n" />
+    <w orth="momen" pho="m o . m ' E n" />
+    <w orth="also" pho="? ' a l . z o:" />
+    <w orth="erstmal" pho="? ' e:6 s t . m a: l" />
+    <w orth="in" pho="? ' I n" />
+    <w orth="bildzeitung" pho="b ' I l t . t s aI . t U N" />
+    <w orth="stand" pho="S t ' a n t" />
+    <w orth="so" pho="z ' o:" />
+    <w orth="ich" pho="? ' I C" />
+    <w orth="hab" pho="h ' a: p" />
+    <w orth="brief" pho="b r ' i: f" />
+    <w orth="geschrieben" pho="g @ . S r ' i: . b @ n" />
+    <w orth="an" pho="? ' a n" />
+    <w orth="vorsitzende" pho="f ' o:6 . z I t . s @ n . d @" />
+    <w orth="vereinigung" pho="f E6 . ? ' aI . n I . g U N" />
+    <w orth="cdu" pho="k d ' u:" />
+    <w orth="dem" pho="d ' e: m" />
+    <w orth="habe" pho="h ' a: . b @" />
+    <w orth="irgendwie" pho="? ' I6 . g @ n t . v i:" />
+    <w orth="aus" pho="? ' aU s" />
+    <w orth="meiner" pho="m ' aI . n 6" />
+    <w orth="sicht" pho="z ' I C t" />
+    <w orth="balance" pho="b a l . ' a n . ts @" />
+    <w orth="diesem" pho="d ' i: . z @ m" />
+    <w orth="land" pho="l ' a n t" />
+    <w orth="bisschen" pho="b ' I s . C @ n" />
+    <w orth="auseinander" pho="? aU s . ? aI . n ' a n . d 6" />
+    <w orth="kommt" pho="k ' O m t" />
+    <w orth="wir" pho="v ' i:6" />
+    <w orth="habens" pho="h ' a: . b @ n s" />
+    <w orth="früher" pho="f r ' y:6" />
+    <w orth="geschaft" pho="g @ . S ' a f t" />
+    <w orth="letzte" pho="l ' E t s . t @" />
+    <w orth="generation" pho="g e . n @ . r a . ts j ' o: n" />
+    <w orth="hier" pho="h ' i:6" />
+    <w orth="sozialstaat" pho="z ' o . ts j a: l . S t a: t" />
+    <w orth="etablieren" pho="? e t . ? a . p l ' i: . r @ n" />
+    <w orth="gut" pho="g ' u: t" />
+    <w orth="funktioniert" pho="f U N k . ts j o . n ' i:6 t" />
+    <w orth="hat" pho="h ' a t" />
+    <w orth="aber" pho="? ' a: . b 6" />
+    <w orth="leistungsträger" pho="l ' aI s . t U N s . t r E: . g 6" />
+    <w orth="menschen" pho="m ' E n . S @ n" />
+    <w orth="gehen" pho="g ' e: . @ n" />
+    <w orth="diesen" pho="d ' i: . z @ n" />
+    <w orth="weiter" pho="v ' aI . t 6" />
+    <w orth="finanzieren" pho="f i . n a n . ts ' i: . r @ n" />
+    <w orth="können" pho="k ' 9 n . @ n" />
+    <w orth="da" pho="d ' a" />
+    <w orth="dann" pho="d ' a n" />
+    <w orth="natürlich" pho="n a t . ' y:6 . l I C" />
+    <w orth="etwas" pho="? ' E t . v a s" />
+    <w orth="provokant" pho="p r o . v o . k ' a n t" />
+    <w orth="eh" pho="? ' e:" />
+    <w orth="jung" pho="j ' U N" />
+    <w orth="könnten" pho="k ' 9 n . t @ n" />
+    <w orth="doch" pho="d ' O x" />
+    <w orth="mal" pho="m ' a: l" />
+    <w orth="über" pho="? ' y: . b 6" />
+    <w orth="nachdenken" pho="n ' a: x . d E N . k @ n" />
+    <w orth="vor" pho="f ' o:6" />
+    <w orth="allem" pho="? ' a l . @ m" />
+    <w orth="den" pho="d ' e: n" />
+    <w orth="innerparteilichen" pho="? ' I n . 6 . p a r . t aI . l I C . @ n" />
+    <w orth="eigentlich" pho="? ' aI . g @ n t . l I C" />
+    <w orth="gar" pho="g ' a: r" />
+    <w orth="keinen" pho="k ' aI . n @ n" />
+    <w orth="öffentlichen" pho="? ' 9 f . @ n t . l I C . @ n" />
+    <w orth="diskurs" pho="d I s . k ' U6 s" />
+    <w orth="anzufangen" pho="? ' a n . ts u . f a N . @ n" />
+    <w orth="darüber" pho="d a r . ' y: . b 6" />
+    <w orth="was" pho="v ' a s" />
+    <w orth="machen" pho="m ' a x . @ n" />
+    <w orth="will" pho="v ' I l" />
+    <w orth="kurz" pho="k ' U6 ts" />
+    <w orth="bei" pho="b ' aI" />
+    <w orth="wahlrechtsä" pho="v ' a: l . r E C t . z E:" />
+    <w orth="nderung" pho="n d @ . r ' U N" />
+    <w orth="bleiben" pho="b l ' aI . b @ n" />
+    <w orth="als" pho="? ' a l s" />
+    <w orth="verstehn" pho="f 6 . S t ' e: n" />
+    <w orth="ja" pho="j ' a" />
+    <w orth="leute" pho="l ' OY . t @" />
+    <w orth="s" pho="? ' E s" />
+    <w orth="is" pho="? ' I s" />
+    <w orth="schon" pho="S ' o: n" />
+    <w orth="untersch" pho="? ' U n . t 6 S" />
+    <w orth="ied" pho="' i: t" />
+    <w orth="leitungs" pho="l ' aI . t U N s" />
+    <w orth="trägern" pho="t r ' E: . g 6 n" />
+    <w orth="dieser" pho="d ' i: . z 6" />
+    <w orth="gesellschaft" pho="g @ . z ' E l . S a f t" />
+    <w orth="familien" pho="f a m . ' i: l . j @ n" />
+    <w orth="steuern" pho="S t ' OY . 6 n" />
+    <w orth="zahlen" pho="ts ' a: . l @ n" />
+    <w orth="trotzdem" pho="t r ' O t s . d e: m" />
+    <w orth="obwohl" pho="? O p . v ' o: l" />
+    <w orth="zwa" pho="ts v ' a" />
+    <w orth="zwei" pho="ts v ' aI" />
+    <w orth="verdiener" pho="f 6 . d ' i: . n 6" />
+    <w orth="spitzensteuersatz" pho="S p ' I t . s @ n . S t OY . 6 . z a t s" />
+    <w orth="bundesrepublik" pho="b ' U n . d @ s . r e . p u . b l i: k" />
+    <w orth="spitzenmanager" pho="S p ' I t . s @ n . m E n . I . dZ 6" />
+    <w orth="ab" pho="? ' a p" />
+    <w orth="hundertundfünfzigtausend" pho="h ' U n . d 6 . t U n t . f Y n f . ts I C . t aU . z @ n t" />
+    <w orth="euro" pho="? ' OY . r o" />
+    <w orth="herr" pho="h ' E6" />
+    <w orth="heil" pho="h ' aI l" />
+    <w orth="ganz" pho="g ' a n ts" />
+    <w orth="vorhin" pho="f ' o:6 . h I n" />
+    <w orth="immer" pho="? ' I m . 6" />
+    <w orth="diskutieren" pho="d I s . k u . t ' i: . r @ n" />
+    <w orth="falsch" pho="f ' a l S" />
+    <w orth="gesamte" pho="g @ . z ' a m . t @" />
+    <w orth="zeit" pho="ts ' aI t" />
+    <w orth="alt" pho="? ' a l t" />
+    <w orth="hergebrachten" pho="h e:6 . ' E6 . g @ . b r a x . t @ n" />
+    <w orth="positionen" pho="p o . z i . ts j ' o: . n @ n" />
+    <w orth="sagt" pho="z ' a: k t" />
+    <w orth="müssen" pho="m ' Y s . @ n" />
+    <w orth="diskutueren" pho="d I s . k u . t ' u . @ . r @ n" />
+    <w orth="wie" pho="v ' i:" />
+    <w orth="armut" pho="? ' a r . m u: t" />
+    <w orth="verhindern" pho="f E6 . h ' I n . d 6 n" />
+    <w orth="frag" pho="f r ' a: k" />
+    <w orth="mich" pho="m ' I C" />
+    <w orth="wo" pho="v ' o:" />
+    <w orth="denn" pho="d ' E n" />
+    <w orth="maßnahmen" pho="m ' a: . s n a: . m @ n" />
+    <w orth="betreuungsrelation" pho="b @ . t r ' OY . U N s . r e . l a . ts j o: n" />
+    <w orth="universitäten" pho="? u . n i . v E6 . z i . t ' E: . t @ n" />
+    <w orth="noch" pho="n ' O x" />
+    <w orth="schlecht" pho="S l ' E C t" />
+    <w orth="schulen" pho="S ' u: . l @ n" />
+    <w orth="würde" pho="v ' Y6 . d @" />
+    <w orth="gerne" pho="g ' E6 . n @" />
+    <w orth="wirs" pho="v ' i6 s" />
+    <w orth="verstehen" pho="f E6 . S t ' e: . @ n" />
+    <w orth="wollen" pho="v ' O l . @ n" />
+    <w orth="dokumentiert" pho="d o . k u . m E n . t ' i:6 t" />
+    <w orth="sehen" pho="z ' e: . @ n" />
+    <w orth="stimme" pho="S t ' I m . @" />
+    <w orth="eines" pho="? ' aI . n @ s" />
+    <w orth="rentners" pho="r ' E n t . n 6 s" />
+    <w orth="zählen" pho="ts ' E: . l @ n" />
+    <w orth="leistungsträgern" pho="l ' aI s . t U N s . t r E: . g 6 n" />
+    <w orth="weniger" pho="v ' e: . n I . g 6" />
+    <w orth="wert" pho="v ' e:6 t" />
+    <w orth="möchte" pho="m ' 9 C . t @" />
+    <w orth="eine" pho="? ' aI . n @" />
+    <w orth="debatte" pho="d e . b ' a . t @" />
+    <w orth="anfangen" pho="? ' a n . f a N . @ n" />
+    <w orth="diese" pho="d ' i: . z @" />
+    <w orth="stärken" pho="S t ' E6 . k @ n" />
+    <w orth="steht" pho="S t ' e: t" />
+    <w orth="lasst" pho="l ' a s t" />
+    <w orth="uns" pho="? ' U n s" />
+    <w orth="nein" pho="n ' aI n" />
+    <w orth="überhaupt" pho="? y: . b 6 . h ' aU p t" />
+    <w orth="zweiten" pho="ts v ' aI . t @ n" />
+    <w orth="wollte" pho="v ' O l . t @" />
+    <w orth="schritt" pho="S r ' I t" />
+    <w orth="ersten" pho="? ' e:6 s . t @ n" />
+    <w orth="zwar" pho="ts v ' a: r" />
+    <w orth="verteilen" pho="f E6 . t ' aI . l @ n" />
+    <w orth="gelder" pho="g ' E l . d 6" />
+    <w orth="im" pho="? ' I m" />
+    <w orth="einholn" pho="? ' aI n . h O l n" />
+    <w orth="leuten" pho="l ' OY . t @ n" />
+    <w orth="starten" pho="S t ' a r . t @ n" />
+    <w orth="war" pho="v ' a: r" />
+    <w orth="ziel" pho="ts ' i: l" />
+    <w orth="innerhalb" pho="? ' I n . 6 . h a l p" />
+    <w orth="partei" pho="p a r . t ' aI" />
+    <w orth="nachher" pho="n ' a: x . h e:6" />
+    <w orth="gekommen" pho="g @ . k ' O m . @ n" />
+    <w orth="hattens" pho="h ' a t . @ n s" />
+    <w orth="ernst" pho="? ' E6 n s t" />
+    <w orth="gemeint" pho="g @ . m ' aI n t" />
+    <w orth="wollten" pho="v ' O l . t @ n" />
+    <w orth="gibs" pho="g ' i: p s" />
+    <w orth="nich" pho="n ' I C" />
+    <w orth="viel" pho="f ' i: l" />
+    <w orth="positive" pho="p ' o: . z i . t i: . v @" />
+    <w orth="rückmeldungen" pho="r ' Y k . m E l . d U N . @ n" />
+    <w orth="bekomm" pho="b @ . k ' O m" />
+    <w orth="glauben" pho="g l ' aU . b @ n" />
+    <w orth="ehrlich" pho="? ' e:6 . l I C" />
+    <w orth="von" pho="f ' O n" />
+    <w orth="bürgern" pho="b ' Y6 . g 6 n" />
+    <w orth="mir" pho="m ' i:6" />
+    <w orth="emails" pho="? ' i: . m e: l s" />
+    <w orth="bekommen" pho="b @ . k ' O m . @ n" />
+    <w orth="reicht" pho="r ' aI C t" />
+    <w orth="hartz" pho="h ' a r t s" />
+    <w orth="vier" pho="f ' i:6" />
+    <w orth="sätze" pho="z ' E t . s @" />
+    <w orth="diskutiert" pho="d I s . k u . t ' i:6 t" />
+    <w orth="wird" pho="v ' I6 t" />
+    <w orth="macht" pho="m ' a x t" />
+    <w orth="mit" pho="m ' I t" />
+    <w orth="einfachen" pho="? ' aI n . f a . x @ n" />
+    <w orth="kritische" pho="k r ' i: . t I S . @" />
+    <w orth="rückmeldung" pho="r ' Y k . m E l . d U N" />
+    <w orth="viele" pho="f ' i: . l @" />
+    <w orth="gefragt" pho="g @ . f r ' a: k t" />
+    <w orth="setzen" pho="z ' E t . s @ n" />
+    <w orth="schwerpunkte" pho="S v ' e:6 . p U N k . t @" />
+    <w orth="eben" pho="? ' e . b @ n" />
+    <w orth="anderes" pho="? ' a n . d @ . r @ s" />
+    <w orth="geissler" pho="g ' aI s . l 6" />
+    <w orth="beeindruckt" pho="b @ . ? ' aI n . d r U k t" />
+    <w orth="vom" pho="f ' O m" />
+    <w orth="ihres" pho="? ' i: . r @ s" />
+    <w orth="jungen" pho="j ' U N . @ n" />
+    <w orth="parteifreundes" pho="p a r . t aI . f r ' OY n . d @ s" />
+    <w orth="ähm" pho="? ' E: m" />
+    <w orth="meine" pho="m ' aI . n @" />
+    <w orth="weiß" pho="v ' aI s" />
+    <w orth="al" pho="? ' a l" />
+    <w orth="wi" pho="v ' I" />
+    <w orth="unterhalten" pho="? U n . t 6 . h ' a l . t @ n" />
+    <w orth="fünfundzwanzig" pho="f ' Y n . f U n t . t s v a n . t s I C" />
+    <w orth="jahren" pho="j ' a: . r @ n" />
+    <w orth="kann" pho="k ' a n" />
+    <w orth="unsinniges" pho="? U n . z ' I n . I . g @ s" />
+    <w orth="bin" pho="b ' I n" />
+    <w orth="froh" pho="f r ' o:" />
+    <w orth="äh" pho="? ' E:" />
+    <w orth="deswegen" pho="d ' E s . v e: . g @ n" />
+    <w orth="sollte" pho="z ' O l . t @" />
+    <w orth="pfanne" pho="p f ' a n . @" />
+    <w orth="haun" pho="h ' aU n" />
+    <w orth="ne" pho="n ' E" />
+    <w orth="hinzu" pho="h ' I n . ts u:" />
+    <w orth="fü" pho="f ' y:" />
+    <w orth="gen" pho="g ' @ n" />
+    <w orth="aller" pho="? ' a l . 6" />
+    <w orth="achtung" pho="? ' a x . t U N" />
+    <w orth="dürfen" pho="d ' Y6 . f @ N" />
+    <w orth="schulter" pho="S ' U l . t 6" />
+    <w orth="klopfen" pho="k l ' O p . f @ n" />
+    <w orth="gescheites" pho="g @ . S ' aI . t @ s" />
+    <w orth="sehr" pho="z ' e:6" />
+    <w orth="gescheit" pho="g @ . S ' aI t" />
+    <w orth="wahr" pho="v ' a: r" />
+    <w orth="machste" pho="m ' a x s . t @" />
+    <w orth="de" pho="d ' e" />
+    <w orth="opelarbeiter" pho="? ' o . p @ l . ? a r . b aI . t 6" />
+    <w orth="nun" pho="n ' u: n" />
+    <w orth="plötzlich" pho="p l ' 9 t s . l I C" />
+    <w orth="weil" pho="v ' aI l" />
+    <w orth="denfer" pho="d ' E n . f 6" />
+    <w orth="kolo" pho="k ' o: . l o" />
+    <w orth="kolorado" pho="k o . l o . r ' a: . d o" />
+    <w orth="dortige" pho="d ' O6 . t I . g @" />
+    <w orth="bord" pho="b ' O6 t" />
+    <w orth="general" pho="g e . n @ . r ' a: l" />
+    <w orth="motors" pho="m ' o: . t O6 s" />
+    <w orth="mist" pho="m ' I s t" />
+    <w orth="gemacht" pho="g @ . m ' a x t" />
+    <w orth="arbeitslos" pho="? ' a r . b aI t s . l o: s" />
+    <w orth="vorher" pho="f ' o:6 . h e:6" />
+    <w orth="stimmen" pho="S t ' I m . @ n" />
+    <w orth="er" pho="? ' E6" />
+    <w orth="nächsten" pho="n ' E: C s . t @ n" />
+    <w orth="landtagswahl" pho="l a n t . t a: . k s v ' a: l" />
+    <w orth="kommen" pho="k ' O m . @ n" />
+    <w orth="unglauliche" pho="? ' U n . g l aU . l I C . @" />
+    <w orth="schwierigkeiten" pho="S v ' i: . r I C . k aI . t @ n" />
+    <w orth="grundansatz" pho="g r ' u: n . d a n . z a t s" />
+    <w orth="richtig" pho="r ' I C . t I C" />
+    <w orth="politik" pho="p o . l i . t ' i: k" />
+    <w orth="klar" pho="k l ' a: r" />
+    <w orth="kein" pho="k ' aI n" />
+    <w orth="gegensatz" pho="g ' e: . g @ n . z a t s" />
+    <w orth="arbeitsplatz" pho="? ' a r . b aI t s . p l a t s" />
+    <w orth="verloren" pho="f E6 . l ' o: . r @ n" />
+    <w orth="hilfe" pho="h ' I l . f @" />
+    <w orth="solidarität" pho="z o . l i . d a . r i . t ' E: t" />
+    <w orth="brauchn" pho="b r ' aU . x n" />
+    <w orth="gegen" pho="g ' e: . g @ n" />
+    <w orth="ausspielen" pho="? ' aU s . S p i: . l @ n" />
+    <w orth="endsolidarisierte" pho="? ' E n t . z o: . l i . d a . r i . z j 6 . t @" />
+    <w orth="läuft" pho="l ' OY f t" />
+    <w orth="ins" pho="? ' I n s" />
+    <w orth="elend" pho="? ' e . l E n t" />
+    <w orth="führn" pho="f ' y:6 n" />
+    <w orth="zusammen" pho="ts u . z ' a . m @ n" />
+    <w orth="entschuldigung" pho="? E n . t S ' U l . d I . g U N" />
+    <w orth="idiotischen" pho="? i . d j ' o: . t I S . @ n" />
+    <w orth="einzelnen" pho="? ' aI n . ts @ l . n @ n" />
+    <w orth="schule" pho="S ' u: . l @" />
+    <w orth="junge" pho="j ' U N . @" />
+    <w orth="unionvorsitzenden" pho="? u n . j ' o: n . f o:6 S . z I t . s @ n . d @ n" />
+    <w orth="älteren" pho="? ' E l . t @ . r @ n" />
+    <w orth="gleichzeitig" pho="g l ' aI C . ts aI . t I C" />
+    <w orth="hüftgelenk" pho="h ' Y f t . g @ . l E N k" />
+    <w orth="denke" pho="d ' E N . k @" />
+    <w orth="dahinter" pho="d a . h ' I n . t 6" />
+    <w orth="steckt" pho="S t ' E k t" />
+    <w orth="sorge" pho="z ' O6 . g @" />
+    <w orth="reihe" pho="r ' aI . @" />
+    <w orth="westerwelle" pho="v ' E s . t 6 . v E l . @" />
+    <w orth="genau" pho="g @ . n ' aU" />
+    <w orth="offensichtlich" pho="? ' O f . @ n . z I C t . l I C" />
+    <w orth="we" pho="v ' E" />
+    <w orth="stelle" pho="S t ' E l . @" />
+    <w orth="wolln" pho="v ' O l n" />
+    <w orth="ers" pho="? ' E6 s" />
+    <w orth="jedem" pho="j ' e: . d @ m" />
+    <w orth="studentenwitz" pho="S t u . d ' E n . t @ n . v I t s" />
+    <w orth="staatsaffaire" pho="S t ' a: . t s ? a . f aI . r @" />
+    <w orth="festhalten" pho="f ' E s t . h a l . t @ n" />
+    <w orth="sache" pho="z ' a x . @" />
+    <w orth="halbes" pho="h ' a l . b @ s" />
+    <w orth="rentner" pho="r ' E n t . n 6" />
+    <w orth="hieße" pho="h ' i: . s @" />
+    <w orth="kollege" pho="k O l . ' e: . g @" />
+    <w orth="studenten" pho="S t u . d ' E n . t @ n" />
+    <w orth="wäre" pho="v ' E: . r @" />
+    <w orth="dumm" pho="d ' U m" />
+    <w orth="gelaufen" pho="g @ . l ' aU . f @ n" />
+    <w orth="wär" pho="v ' E:6" />
+    <w orth="wirklich" pho="v ' I6 . k l I C" />
+    <w orth="hunderfünfzigprozentig" pho="h ' U n . d 6 . f Y n f . ts I C . p r o . ts E n . t I C" />
+    <w orth="erst" pho="? ' e:6 s t" />
+    <w orth="ihn" pho="? ' i: n" />
+    <w orth="geglaubt" pho="g @ . g l ' aU p t" />
+    <w orth="wiederhole" pho="v i: . d 6 . h ' o: . l @" />
+    <w orth="anstacheln" pho="? ' a n . S t a . x @ l n" />
+    <w orth="provoziert" pho="p r o . v o . ts ' i:6 t" />
+    <w orth="nach" pho="n ' a: x" />
+    <w orth="vorne" pho="f ' O6 . n @" />
+    <w orth="geht" pho="g ' e: t" />
+    <w orth="find" pho="f ' I n t" />
+    <w orth="meinung" pho="m ' aI . n U N" />
+    <w orth="ordnung" pho="? ' O6 . d n U N" />
+    <w orth="redet" pho="r ' e: . d @ t" />
+    <w orth="davon" pho="d a f . ' O n" />
+    <w orth="unbedingt" pho="? ' U n . b @ . d I N t" />
+    <w orth="andere" pho="? ' a n . d @ . r @" />
+    <w orth="antworten" pho="? ' a n t . v O6 . t @ n" />
+    <w orth="finden" pho="f ' I n . d @ n" />
+    <w orth="sehe" pho="z ' e: . @" />
+    <w orth="nei" pho="n ' aI" />
+    <w orth="bildungspolitik" pho="b ' I l . d U N s . p o . l i . t i: k" />
+    <w orth="antwort" pho="? ' a n t . v O6 t" />
+    <w orth="sendung" pho="z ' E n . d U N" />
+    <w orth="danke" pho="d ' a N . k @" />
+    <w orth="zunächst" pho="ts u . n ' E: C s t" />
+    <w orth="vielen" pho="f ' i: . l @ n" />
+    <w orth="dank" pho="d ' a N k" />
+    <w orth="geschildert" pho="g @ . S ' I l . d 6 t" />
+</lexicon>

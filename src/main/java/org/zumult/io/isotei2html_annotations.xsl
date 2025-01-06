@@ -29,13 +29,13 @@
                     <xsl:value-of select="@who"/>
                 </th>
                 <td>
-                    <xsl:apply-templates select="descendant::tei:seg"/>
+                    <xsl:apply-templates select="descendant::tei:seg[not(parent::tei:seg)]"/>
                 </td>
             </tr>
         </table>
     </xsl:template>
     
-    <xsl:template match="tei:seg">
+    <xsl:template match="tei:u/tei:seg">
         <xsl:variable name="ID" select="@xml:id"/>        
         <table class="annotations">
             
@@ -58,7 +58,7 @@
             
             <xsl:for-each select="('norm', 'lemma', 'pos', 'phon', 'type')">
                 <xsl:variable name="CURRENT_LEVEL" select="current()"/>
-                <xsl:if test="$CURRENT_SEG/child::tei:w[@*/name()=$CURRENT_LEVEL]">
+                <xsl:if test="$CURRENT_SEG/descendant::tei:w[@*/name()=$CURRENT_LEVEL]">
                     <tr>
                         <xsl:attribute name="class">token-anno <xsl:value-of select="$CURRENT_LEVEL"/></xsl:attribute>
                         <th class="anno-label"><xsl:value-of select="$CURRENT_LEVEL"/></th>
@@ -154,7 +154,9 @@
                 <xsl:value-of select="@type"/>
             </th>
             <xsl:variable name="THIS_SPAN_GRP" select="."/>
-            <xsl:apply-templates select="ancestor::tei:annotationBlock/descendant::tei:seg[1]/child::*[not(self::tei:anchor)][1]" mode="START_FOR_SPAN_GRP">
+            <xsl:apply-templates 
+                select="ancestor::tei:annotationBlock/descendant::tei:seg[1]/descendant::*[not(self::tei:seg or self::tei:anchor)][1]" 
+                mode="START_FOR_SPAN_GRP">
                 <xsl:with-param name="SPAN_GRP" select="$THIS_SPAN_GRP"/>
             </xsl:apply-templates>            
         </tr>
@@ -172,8 +174,8 @@
                 <xsl:variable name="THE_SPAN" select="$SPAN_GRP/descendant::tei:span[@from=$ID]"/>
                 <xsl:variable name="SPAN_FROM" select="$THE_SPAN/@from"/>
                 <xsl:variable name="SPAN_TO" select="$THE_SPAN/@to"/>
-                <xsl:variable name="FROM_POSITION" select="count(preceding-sibling::*[not(self::tei:anchor)])"/>
-                <xsl:variable name="TO_POSITION" select="count(following-sibling::*[@xml:id=$SPAN_TO]/preceding-sibling::*[not(self::tei:anchor)])"/>
+                <xsl:variable name="FROM_POSITION" select="count(preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
+                <xsl:variable name="TO_POSITION" select="count(following::*[@xml:id=$SPAN_TO]/preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
                 <xsl:variable name="LENGTH" select="$TO_POSITION - $FROM_POSITION + 1"/>
                 <td class="anno-span">
                     <xsl:attribute name="colspan">
@@ -187,15 +189,15 @@
                 </td>
                 <xsl:choose>
                     <xsl:when test="$SPAN_FROM!=$SPAN_TO">
-                        <xsl:if test="following-sibling::*[@xml:id=$SPAN_TO]/following-sibling::*[not(self::tei:anchor)]">
-                            <xsl:apply-templates select="following-sibling::*[@xml:id=$SPAN_TO]/following-sibling::*[not(self::tei:anchor)][1]" mode="START_FOR_SPAN_GRP">
+                        <xsl:if test="following::*[@xml:id=$SPAN_TO]/following::*[not(self::tei:anchor or self::tei:seg)]">
+                            <xsl:apply-templates select="following::*[@xml:id=$SPAN_TO]/following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
                                 <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>
                             </xsl:apply-templates>
                         </xsl:if>                        
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:if test="./following-sibling::*[not(self::tei:anchor)]">
-                            <xsl:apply-templates select="./following-sibling::*[not(self::tei:anchor)][1]" mode="START_FOR_SPAN_GRP">
+                        <xsl:if test="./following::*[not(self::tei:anchor or self::tei:seg)]">
+                            <xsl:apply-templates select="./following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
                                 <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>
                             </xsl:apply-templates>
                         </xsl:if>                        
@@ -208,8 +210,8 @@
                 <xsl:variable name="THE_SPAN" select="$SPAN_GRP/descendant::tei:span[@from=$SYNCH]"/>
                 <xsl:variable name="SPAN_FROM" select="$THE_SPAN/@from"/>
                 <xsl:variable name="SPAN_TO" select="$THE_SPAN/@to"/>
-                <xsl:variable name="FROM_POSITION" select="count(preceding-sibling::*[not(self::tei:anchor)])"/>
-                <xsl:variable name="TO_POSITION" select="count(following-sibling::*[@synch=$SPAN_TO]/preceding-sibling::*[not(self::tei:anchor)])"/>
+                <xsl:variable name="FROM_POSITION" select="count(preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
+                <xsl:variable name="TO_POSITION" select="count(following::*[@synch=$SPAN_TO]/preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
                 <xsl:variable name="LENGTH" select="$TO_POSITION - $FROM_POSITION"/>
                 <td class="anno-span">
                     <xsl:attribute name="colspan">
@@ -218,8 +220,8 @@
                     <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', $THE_SPAN/text())"/>
                     <xsl:value-of select="$THE_SPAN/text()"/>
                 </td>                
-                <xsl:if test="following-sibling::*[@synch=$SPAN_TO]/following-sibling::*[not(self::tei:anchor)]">
-                    <xsl:apply-templates select="following-sibling::*[@synch=$SPAN_TO]/following-sibling::*[not(self::tei:anchor)][1]" mode="START_FOR_SPAN_GRP">
+                <xsl:if test="following::*[@synch=$SPAN_TO]/following::*[not(self::tei:anchor or self::tei:seg)]">
+                    <xsl:apply-templates select="following::*[@synch=$SPAN_TO]/following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
                         <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>                    
                     </xsl:apply-templates>
                 </xsl:if>
@@ -227,8 +229,8 @@
             
             <xsl:otherwise>
                 <td> </td>
-                <xsl:if test="following-sibling::*[not(self::tei:anchor)]">
-                    <xsl:apply-templates select="following-sibling::*[not(self::tei:anchor)][1]" mode="START_FOR_SPAN_GRP">
+                <xsl:if test="following::*[not(self::tei:anchor or self::tei:seg)]">
+                    <xsl:apply-templates select="following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
                         <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>                    
                     </xsl:apply-templates>
                 </xsl:if>

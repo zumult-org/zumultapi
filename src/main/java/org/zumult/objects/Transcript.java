@@ -15,6 +15,13 @@ import org.w3c.dom.NodeList;
  */
 public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     
+    // #223
+    public enum TranscriptFormats {
+        ISOTEI,
+        EXB,
+        EAF
+    }
+    
     public int getNumberOfTokens();
     public int getNumberOfTypes();
     

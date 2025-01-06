@@ -4,13 +4,13 @@
         <div class="col">
             <label><%=myResources.getString("Left").toLowerCase()%> <small><i>(max. 25 <%=myResources.getString("WordTokens")%>)</i></small></label>
             <div class="form-group">                                                   
-                <input type="text" class="form-control form-control-sm customLeftContextLength" maxlength="2"  value="3">
+                <input type="text" class="form-control form-control-sm customLeftContextLength" maxlength="2"  value="5">
             </div>
         </div>
         <div class="col">
             <label><%=myResources.getString("Right").toLowerCase()%> <small><i>(max. 25 <%=myResources.getString("WordTokens")%>)</i></small></label>
             <div class="form-group mr-2">
-                <input type="text" class="form-control form-control-sm customRightContextLength" maxlength="2" value="3">
+                <input type="text" class="form-control form-control-sm customRightContextLength" maxlength="2" value="5">
             </div>
         </div>
     </div>

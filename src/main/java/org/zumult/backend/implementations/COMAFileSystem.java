@@ -52,6 +52,7 @@ import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
 import org.zumult.objects.implementations.COMATranscript;
+import org.zumult.objects.implementations.EXBTranscript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
@@ -285,8 +286,45 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         }
         
         return null;
-
     }
+
+    @Override
+    public Transcript getTranscript(String transcriptID, Transcript.TranscriptFormats transcriptFormat) throws IOException {
+        try {
+            switch (transcriptFormat){
+                case ISOTEI :
+                    return getTranscript(transcriptID);
+                case EXB :
+                    String corpusID = findCorpusID(transcriptID);
+                    if (corpusID==null){
+                        throw new IOException("Error: No corpus found for: " + transcriptID);
+                    }
+                    Corpus corpus = getCorpus(corpusID);
+                    Document corpusDocument = corpus.getDocument();
+                    String xp = "//Transcription[@Id='" + transcriptID + "']";
+                    Element transcriptionElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+                    String nsLink = transcriptionElement.getElementsByTagName("NSLink").item(0).getTextContent();
+                    File corpusFolder = new File(topFolder, corpusID);
+                    String nsLinkModified = nsLink.substring(0, nsLink.lastIndexOf(".")) + ".exb";
+                    File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
+                    
+                    if (!(resolvedPath.exists())){
+                        throw new IOException("Error: No transcript found for: " + transcriptID);
+                    }
+                    
+                    String xmlString = IOHelper.readUTF8(resolvedPath);                    
+                    return new EXBTranscript(xmlString);
+                case EAF : 
+                    
+            }
+            return super.getTranscript(transcriptID, transcriptFormat); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }
+    }
+    
+    
 
     @Override
     public IDList getCorpora() throws IOException {

@@ -11,9 +11,9 @@
 <%@page import="org.zumult.objects.IDList"%>
 <%@ page pageEncoding="UTF-8" %>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="http://agd.ids-mannheim.de/folk.shtml">
+        <a class="navbar-brand" href="http://zumult.org">
             <% String imgSrc = "../images/agd.png"; %>
-            <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/>
+            <!-- <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/> -->
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <a class="navbar-brand" href="http://www.zumult.org"><b><%= pageName %></b></a>

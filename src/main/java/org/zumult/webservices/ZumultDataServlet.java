@@ -42,7 +42,6 @@ import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -70,6 +69,9 @@ public class ZumultDataServlet extends HttpServlet {
             case "download" :
                 download(request, response);
                 break;
+            case "getEventHTML" : 
+                getEventHTML(request, response);
+                break;
             case "getEventMetadataHTML" : 
                 getEventMetadataHTML(request, response);
                 break;
@@ -91,6 +93,12 @@ public class ZumultDataServlet extends HttpServlet {
                 break;
             case "getTranscript" :
                 getTranscript(request, response);
+                break;
+            case "getAudio" :
+                getAudio(request, response);
+                break;
+            case "getVideo" :
+                getVideo(request, response);
                 break;
             case "getVideoImage" :
                 getVideoImage(request, response);
@@ -173,6 +181,11 @@ public class ZumultDataServlet extends HttpServlet {
         try {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String speakerID = request.getParameter("speakerID");
+            String transcriptID = request.getParameter("transcriptID");
+            if (transcriptID!=null){
+                // i.e. speakerID is a transcript sigle, not the corpus ID
+                speakerID = backend.getTranscript(transcriptID).getSpeakerIDBySpeakerInitials(speakerID);
+            }
             if (speakerID!=null){
                 Speaker speaker = backend.getSpeaker(speakerID);
                 String speakerXML = speaker.toXML();        
@@ -206,6 +219,12 @@ public class ZumultDataServlet extends HttpServlet {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             // this does not really make sense : we want event metadata, so why are we passing speechEventID as parameter?
             String speechEventID = request.getParameter("speechEventID");
+            if (speechEventID==null){
+                String transcriptID = request.getParameter("transcriptID");
+                if (transcriptID!=null){
+                    speechEventID = backend.getSpeechEvent4Transcript(transcriptID);
+                }                
+            }
             if (speechEventID!=null){
                 // changed for issue #175
                 //Event event = backend.getEvent(eventID.substring(0,12));
@@ -284,6 +303,40 @@ public class ZumultDataServlet extends HttpServlet {
             throw new IOException(ex);
         } 
     }
+
+    private void getEventHTML(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String speechEventID = request.getParameter("speechEventID");
+                       
+            if (speechEventID!=null){
+                Event event = backend.getEvent(backend.getEvent4SpeechEvent(speechEventID));
+                String eventXML = event.toXML();        
+                // change for issue #175
+                String xslPath = Configuration.getEvent2HTMLStylesheet();
+                String speechEventHTML = new IOHelper().applyInternalStylesheetToString(xslPath, eventXML);
+                
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(speechEventHTML);             
+                response.getWriter().close();            
+            }  else {
+                String errorHTML = "<div>Event " + speechEventID + " not found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | TransformerException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } 
+    }
+
+
 
     private void getEventMetadataTitle(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -1000,7 +1053,7 @@ public class ZumultDataServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(partiturHTML);            
             response.getWriter().close();
-        } catch (Exception ex) {
+        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
             Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
         }               
@@ -1147,4 +1200,75 @@ public class ZumultDataServlet extends HttpServlet {
         }
         return pathToWordList;
     }
+
+    private void getAudio(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String transcriptID = request.getParameter("transcriptID");
+            String tokenID = request.getParameter("tokenID");
+
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            Transcript transcript = backend.getTranscript(transcriptID);
+            double timeForToken = transcript.getTimeForID(tokenID);
+            IDList audioIDs = backend.getAudios4Transcript(transcriptID);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<result>");
+            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
+            sb.append("<tokenID>" + tokenID + "</tokenID>");
+            sb.append("<time>" + Double.toString(timeForToken) + "</time>");
+            for (String audioID : audioIDs){
+                    sb.append("<audio audioID=\"" + audioID + "\">");
+                    Media audio = backend.getMedia(audioID);
+                    sb.append(audio.getURL());
+                    sb.append("</audio>");
+            }
+            sb.append("</result>");
+
+            response.setContentType("application/xml");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(sb.toString());
+            response.getWriter().close();
+        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);            
+        }
+        
+    }
+
+
+    private void getVideo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String transcriptID = request.getParameter("transcriptID");
+            String tokenID = request.getParameter("tokenID");
+
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            Transcript transcript = backend.getTranscript(transcriptID);
+            double timeForToken = transcript.getTimeForID(tokenID);
+            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<result>");
+            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
+            sb.append("<tokenID>" + tokenID + "</tokenID>");
+            sb.append("<time>" + Double.toString(timeForToken) + "</time>");
+            for (String videoID : videoIDs){
+                    sb.append("<video videoID=\"" + videoID + "\">");
+                    Media video = backend.getMedia(videoID);
+                    sb.append(video.getURL());
+                    sb.append("</video>");
+            }
+            sb.append("</result>");
+
+            response.setContentType("application/xml");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(sb.toString());
+            response.getWriter().close();
+        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);            
+        }
+        
+    }
+
+
 }
