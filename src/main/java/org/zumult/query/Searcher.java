@@ -34,13 +34,13 @@ public interface Searcher {
     public Set<AnnotationLayer> filterAnnotationLayersForGroupingHits(Set<AnnotationLayer> annotationLayers, String searchIndex, String annotationLayerType) throws SearchServiceException;
     public Set<AnnotationLayer> filterAnnotationLayersForSearch(Set<AnnotationLayer> annotationLayers, String searchIndex, String annotationLayerType) throws SearchServiceException;
     public SearchResultPlus searchRepetitions(String searchIndex, Boolean cutoff, IDList metadataIDs, String repetitions, String synonyms) throws SearchServiceException, IOException;
-    public SearchResultBigrams searchBigrams(String searchIndex,
+    /*public SearchResultBigrams searchBigrams(String searchIndex,
                                       String sortType,
                                       String bigramType, 
                                       List<String> annotationLayerIDs4BigramGroups,
                                       List<String> elementsInBetweenToBeIgnored,
                                       String scope,
                                       Integer minFreq,
-                                      Integer maxFreq) throws SearchServiceException, IOException;
+                                      Integer maxFreq) throws SearchServiceException, IOException;*/
 
 }

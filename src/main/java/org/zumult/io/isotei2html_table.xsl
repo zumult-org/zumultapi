@@ -7,7 +7,7 @@
     exclude-result-prefixes="xs"
     version="2.0">
     
-    <xsl:output method="xhtml" omit-xml-declaration="yes" indent="no"/>
+    <xsl:output method="xml" omit-xml-declaration="yes" indent="no"/>
     <xsl:strip-space elements="*"/>
 
     <!-- whether to include a column for the dropdown menu -->
@@ -247,8 +247,16 @@
                     <xsl:apply-templates/>                    
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:text> </xsl:text>
+            <xsl:if test="@type='repair'">/</xsl:if>
+            <xsl:if test="not(following-sibling::*[1][self::tei:pc]) and following-sibling::*">
+                <xsl:text> </xsl:text>                
+            </xsl:if>
         </span>
+    </xsl:template>
+    
+    <xsl:template match="tei:pc">
+        <xsl:apply-templates/>                    
+        <xsl:text> </xsl:text>                
     </xsl:template>
     
     <xsl:template match="tei:w/text()">
@@ -335,19 +343,28 @@
         </tr>
     </xsl:template>
     
-    <xsl:template match="tei:seg[@type='utterance']">
+    <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">
         <xsl:apply-templates/>
         <xsl:choose>
-            <xsl:when test="@subtype='interrogative'">
+            <xsl:when test="@type='utterance' and @subtype='interrogative'">
                 <xsl:text>? </xsl:text>                
             </xsl:when>
-            <xsl:when test="@subtype='interrupted'">
+            <xsl:when test="@type='utterance' and @subtype='interrupted'">
                 <xsl:text>... </xsl:text>                
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="@type='utterance' and @subtype='modeless'">
+                <xsl:text>&#x02d9; </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='declarative'">
                 <xsl:text>. </xsl:text>                
-            </xsl:otherwise>
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='exclamative'">
+                <xsl:text>! </xsl:text>                
+            </xsl:when>
         </xsl:choose>
+        <xsl:if test="following-sibling::tei:seg">
+            <br/>
+        </xsl:if>        
     </xsl:template>
     
     <!-- to do : highlight -->
@@ -379,6 +396,7 @@
             </span>
         </xsl:if>
     </xsl:template>
+    
     
     
     <xsl:template match="tei:anchor[@type]">

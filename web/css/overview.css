@@ -16,3 +16,28 @@ and open the template in the editor.
     table.speech-event-table {
         font-size : smaller;
     }
+    
+    td.metadata {
+        white-space: nowrap; 
+        max-width: 100px; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
+    
+    th.sorting {
+        border: 1px solid gray;
+    }
+    
+    td.metadatakey {
+        text-align: right; font-weight:bold;
+    }
+    td.metadatavalue {
+        text-align: left; font-weight:normal;
+    }
+    
+    th {
+        white-space: nowrap;         
+    }
+    
+    
+    

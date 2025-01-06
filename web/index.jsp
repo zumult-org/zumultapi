@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="java.util.Locale"%>
+<%@page import="java.util.Random"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="org.zumult.objects.IDList"%>
 <%@page import="org.zumult.backend.BackendInterfaceFactory"%>
@@ -60,8 +61,11 @@
     <%
        String pageTitle = myResources.getString("testApp"); 
        BackendInterface bi = BackendInterfaceFactory.newBackendInterface();
-       IDList allTranscriptIDs =  bi.getTranscripts4Corpus(bi.getCorpora().get(0));
-       String randomTranscriptID = allTranscriptIDs.get((int)(Math.random() * (allTranscriptIDs.size())));
+       Random random = new Random();
+       IDList allCorpusIDs = bi.getCorpora();
+       String randomCorpusID = allCorpusIDs.get(random.nextInt(allCorpusIDs.size()));
+       IDList allTranscriptIDs =  bi.getTranscripts4Corpus(randomCorpusID);
+       String randomTranscriptID = allTranscriptIDs.get(random.nextInt(allTranscriptIDs.size()));
     %>
 
     <body style="background-image: url('./images/talking.png');">
@@ -73,12 +77,13 @@
             </div>
             <div class="col-sm-8" style="background:white;padding-top: 20px; border-radius: 15px;">
                 <div class="m-3 text-center">
-                    <a href="./jsp/corpusoverview.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-outline-info" target="_blank">Corpora</a>                    
+                    This ZuMult instance has <%= allCorpusIDs.size() %> corpora: <%= String.join(" / ", allCorpusIDs) %>
+                    <a href="./jsp/corpusoverview.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-outline-info ml-3" target="_blank">Corpus Overview</a>                    
                 </div>
                 
                 <div class="card-deck">
                     <div class="card mb-3">
-                        <img class="card-img-top" src="./images/query.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="./images/query.png" alt="Card image cap">
                       <div class="card-body">
                         <h5 class="card-title">ZuRecht</h5>
                         <p class="card-text"><%=myResources.getString("ZuRechtShort")%></p>
@@ -88,9 +93,12 @@
                     <div class="card mb-3">
                       <img class="card-img-top" src="./images/transcript2.png" alt="Card image cap">
                       <div class="card-body">
-                        <h5 class="card-title">ZuViel</h5>
+                        <h5 class="card-title">ZuViel / ZuPass / ZuAnn</h5>
                         <p class="card-text"><%=myResources.getString("ZuVielShort")%></p>
                         <a href="./jsp/zuViel.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuViel</a>
+                        <a href="./jsp/zuPass.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuPass</a>
+                        <a href="./jsp/zuAnn.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuAnn</a>
+                        <small class="text-muted ml-2"><%= randomCorpusID %> / <%= randomTranscriptID %> </small>
                       </div>
                     </div>                      
                 </div>

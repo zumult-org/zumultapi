@@ -40,8 +40,6 @@ import org.zumult.query.searchEngine.SortTypeEnum;
 import org.zumult.query.AdditionalSearchConstraint;
 import org.zumult.query.Searcher;
 import org.zumult.query.SearchIndexType;
-import org.zumult.query.searchEngine.SearchEngineResponseBigrams;
-import org.zumult.query.SearchResultBigrams;
 
 /**
  *
@@ -384,7 +382,7 @@ public abstract class AbstractSearcher implements Searcher {
     }
     
     
-    @Override
+    /*@Override
     public SearchResultBigrams searchBigrams(
                                 String searchIndex,
                                 String sortType,
@@ -451,7 +449,7 @@ public abstract class AbstractSearcher implements Searcher {
                     searchConstraints);
 
             return result;
-    }
+    }*/
     
     @Override
     public IDList searchTokensForTranscript(String searchIndex, 

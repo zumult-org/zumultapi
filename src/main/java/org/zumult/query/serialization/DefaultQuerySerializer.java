@@ -36,12 +36,9 @@ import org.zumult.io.Constants;
 import org.zumult.io.TimeUtilities;
 import org.zumult.objects.Transcript;
 import org.zumult.query.AdditionalSearchConstraint;
-import org.zumult.query.Bigram;
 import org.zumult.query.KWICContext;
 import org.zumult.query.KWICSnippet;
 import org.zumult.query.KWICSnippet.KWICSnippetToken;
-import org.zumult.query.SearchResult;
-import org.zumult.query.SearchResultBigrams;
 import org.zumult.query.implementations.ISOTEIKWICSnippetCreator;
 
 /**
@@ -481,11 +478,11 @@ public class DefaultQuerySerializer implements QuerySerializer {
         }
     }
 
-    public String displayBigramsInXML(SearchResultBigrams searchResultBigrams) {
+    /*public String displayBigramsInXML(SearchResultBigrams searchResultBigrams) {
         Document document = db.newDocument();
         Element root = createRoot(document,
         searchResultBigrams.getSearchQuery().getQueryString(),
-  searchResultBigrams.getMetadataQuery().getAdditionalMetadata(),
+        searchResultBigrams.getMetadataQuery().getAdditionalMetadata(),
         searchResultBigrams.getMetadataQuery().getCorpusQuery());
         root.setAttribute("type", "bigrams");
         
@@ -544,7 +541,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
 
         document.appendChild(root);
         return IOUtilities.documentToString(document); 
-    }
+    }*/
     
     protected Element createRoot(Document document, String searchQuery,
         String additionalMetadata, String corpusQuery) {
@@ -566,7 +563,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
         return root;
     }
     
-    protected String formatBigram(Bigram b, String layer){
+    /*protected String formatBigram(Bigram b, String layer){
         
         String partner = b.getPartner();
         Bigram.BigramType type = b.getType();
@@ -594,7 +591,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
             }
                         
             return sb.toString();
-    }
+    }*/
     
     protected String getValueFromMap (String str, String layer) {
         StringBuilder sb = new StringBuilder();
