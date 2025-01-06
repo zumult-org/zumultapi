@@ -34,10 +34,11 @@
             </resource>
             <resource>
                  <directory>src/main/java</directory>
-                  <excludes>
+                 <!-- no longer needed, #221 --> 
+                 <!-- <excludes>
                         <exclude>/data/corpora/**</exclude>
                         <exclude>/data/indices/**</exclude>
-                 </excludes>
+                 </excludes> -->
             </resource>   
         </resources>      
         <plugins>
