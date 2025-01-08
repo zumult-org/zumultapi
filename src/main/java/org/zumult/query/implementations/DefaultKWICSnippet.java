@@ -79,6 +79,8 @@ import org.zumult.query.KWICSnippet;
 
             public void markAsMatch(){
                 this.match = true;
+                //System.out.println("**** Marked as match: " + getID());
+                
             }
 
             @Override

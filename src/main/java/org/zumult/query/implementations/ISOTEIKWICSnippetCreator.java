@@ -55,6 +55,8 @@ public class ISOTEIKWICSnippetCreator {
                                     KWICContext rightContext) 
                                                     throws IOException {
 
+        
+        
         int leftContextLength = leftContext.getLength();
         int rightContextAfterFirstMatch = getRightContextAfterFirstMatch(getHitLengthInTokens(matches)) + rightContext.getLength();
         //System.out.println("rightContextAfterFirstMatch : " + rightContextAfterFirstMatch);    
@@ -98,31 +100,33 @@ public class ISOTEIKWICSnippetCreator {
                 // This is wrong if we have nested <seg>s
                 //Element firstAnnotationBlockElem = (Element) firstElem.getParentNode().getParentNode().getParentNode();
                 
-                String xpathString = "ancestor::tei:"+ Constants.ELEMENT_NAME_ANNOTATION_BLOCK + "[1]";
-                Element firstAnnotationBlockElem = (Element) xPath.evaluate(xpathString, firstElem, XPathConstants.NODE);
-                String speaker = firstAnnotationBlockElem.getAttribute(Constants.ATTRIBUTE_NAME_WHO);
+                String xpathString = "ancestor::tei:"+ Constants.ELEMENT_NAME_ANNOTATION_BLOCK + "[1]";                     // XPath to find the ancestor annotationBlock
+                Element firstAnnotationBlockElem = (Element) xPath.evaluate(xpathString, firstElem, XPathConstants.NODE);   // evaluate the XPath
+                String speaker = firstAnnotationBlockElem.getAttribute(Constants.ATTRIBUTE_NAME_WHO);                       // get the speaker attribute
                 //System.out.println("Speaker is " + speaker);
-                speaker = getSpeakerInitials(speaker, transcriptDoc);
+                speaker = getSpeakerInitials(speaker, transcriptDoc);                                                       // determine the speaker initials
                 // get left context
                 int index = 0;
                 Node sibling;
-                while (( sibling = nNode.getPreviousSibling()) != null){
+                while (( sibling = nNode.getPreviousSibling()) != null){                                                    // while there is another previous sibling
 
                     nNode = sibling;
-                    if (TOKEN_NAMES.contains (nNode.getLocalName())){
-                        if (index < leftContextLength) {   
+                    if (TOKEN_NAMES.contains (nNode.getLocalName())){                                                       // if the element is one of {<w>, <pause>, <incident>, <vocal>, <pc>} 
+                        if (index < leftContextLength) {                                                                    // ... and if we haven't reached the left context length yet
 
                             Element leftElem = (Element) nNode;
                             DefaultKWICSnippetToken token = new DefaultKWICSnippetToken(leftElem);
                             token.setParentId(getParentId(leftElem));
                             content.add(0, token);
+                            //if (token.belongsToMatch()) System.out.println("Added token " + token.getID() + " as match");
+                            
 
                             if (nNode.getLocalName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
                                 ++index;
                             }
 
-                        } else{
-                            matchSnippet.setStartMore(true);
+                        } else {
+                            matchSnippet.setStartMore(true);                                                                // we have reached the context length, but there is more to the left
                             break;
                         }
                     }                  
@@ -136,8 +140,9 @@ public class ISOTEIKWICSnippetCreator {
                 // set first match
                 DefaultKWICSnippetToken first = new DefaultKWICSnippetToken(firstElem);
                 first.setParentId(getParentId(firstElem));
-                first.markAsMatch();
+                first.markAsMatch(); // <=====
                 content.add(first);
+                //if (first.belongsToMatch()) System.out.println("Added token " + first.getID() + " as match");
                 speakers.add(speaker);
 
                 if (firstElem.getLocalName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
@@ -149,7 +154,7 @@ public class ISOTEIKWICSnippetCreator {
                 nNode = firstMatch;
 
                 // get right context
-                while (( sibling = nNode.getNextSibling()) != null){
+                while (( sibling = nNode.getNextSibling()) != null){                    // same as above, but in the other direction
                     nNode = sibling;
                     if (TOKEN_NAMES.contains (nNode.getLocalName())){
                         if (index < rightContextAfterFirstMatch) {  
@@ -158,12 +163,15 @@ public class ISOTEIKWICSnippetCreator {
                             token.setParentId(getParentId(rightElem));
 
                             String rightElemID = rightElem.getAttributeNS(XMLConstants.XML_NS_URI, "id");
+                            //System.out.println("***** leftMatchId=" + leftMatchId + " // rightElemID=" + rightElemID);
+                            
                             for (Hit.Match match: matches){
                                 if(match.getID().equals(rightElemID)){
                                     token.markAsMatch();
                                 }
                             }
                             content.add(token);
+                            //if (token.belongsToMatch()) System.out.println("Added token " + token.getID() + " as match");
 
                             if (nNode.getLocalName().equals(Constants.ELEMENT_NAME_WORD_TOKEN)){
                                 ++index;
@@ -182,7 +190,7 @@ public class ISOTEIKWICSnippetCreator {
                 }
             }
 
-        }catch (XPathExpressionException | NullPointerException | TransformerException ex) {
+        } catch (XPathExpressionException | NullPointerException | TransformerException ex) {
             throw new IOException("Can not create a snippet of " +  leftMatchId
                 +"' from transcript '" + transcriptDoc.getDocumentURI() + "' " + ex);
         } 
@@ -192,6 +200,7 @@ public class ISOTEIKWICSnippetCreator {
 
         matchSnippet.setContent(content);
         matchSnippet.setSpeakerIds(speakerList);
+        //System.out.println("---------------- DONE");
         return matchSnippet;     
     }
 

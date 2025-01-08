@@ -63,7 +63,7 @@
                 </xsl:if>
                 <tr>
                     <td class="wordlist-entry">
-                        <xsl:attribute name="onclick">javascript:findForms('<xsl:value-of select="$TYPE"/>', '<xsl:value-of select="@form"/>')</xsl:attribute>
+                        <xsl:attribute name="onclick">javascript:findForms("<xsl:value-of select="$TYPE"/>", "<xsl:value-of select="@form"/>")</xsl:attribute>
                        <!-- checkmark if it's in the other wordlist -->
                        <xsl:if test="$TOKEN_LIST/descendant::token[@form=current()/@form]"><span style="color: green">&#x2713; </span></xsl:if>
                        <xsl:if test="$ARRAY/token[@form=current()/@form]"><span style="color: red">&#x2713; </span></xsl:if>

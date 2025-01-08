@@ -345,7 +345,7 @@
     
     <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">
         <xsl:apply-templates/>
-        <xsl:choose>
+        <!-- <xsl:choose>
             <xsl:when test="@type='utterance' and @subtype='interrogative'">
                 <xsl:text>? </xsl:text>                
             </xsl:when>
@@ -361,7 +361,7 @@
             <xsl:when test="@type='utterance' and @subtype='exclamative'">
                 <xsl:text>! </xsl:text>                
             </xsl:when>
-        </xsl:choose>
+        </xsl:choose> -->
         <xsl:if test="following-sibling::tei:seg">
             <br/>
         </xsl:if>        

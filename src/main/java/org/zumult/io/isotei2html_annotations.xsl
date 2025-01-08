@@ -117,6 +117,9 @@
                         <xsl:otherwise>
                             <xsl:choose>
                                 <xsl:when test="@type='micro'">(.) </xsl:when>
+                                <xsl:when test="@type='short'">(-) </xsl:when>
+                                <xsl:when test="@type='medium'">(--) </xsl:when>
+                                <xsl:when test="@type='long'">(---) </xsl:when>
                                 <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="substring-before(substring-after(@dur, 'PT'), 'S')"/><xsl:text>)</xsl:text></xsl:otherwise>
                             </xsl:choose>
                         </xsl:otherwise>

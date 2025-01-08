@@ -209,7 +209,14 @@ public class DefaultQuerySerializer implements QuerySerializer {
                 tokens.stream().map((token) -> {
                     Element elem = token.asXMLElement();
                     if(token.belongsToMatch()){
+                        //System.out.println(token.getID() + " gets match=true");
                         elem.setAttribute(MATCH, String.valueOf(token.belongsToMatch()));
+                    } else {
+                        // to make sure...
+                        if (elem.hasAttribute(MATCH)){
+                            elem.removeAttribute(MATCH);
+                            //System.out.println("Removed match attribute from " + token.getID());
+                        }
                     }
                     elem.setAttribute(PARENT, token.getParentId());
                     return elem;
@@ -222,6 +229,7 @@ public class DefaultQuerySerializer implements QuerySerializer {
                 hits.appendChild(hit);
                 
                 index++;
+                //System.out.println("--------");
             }
             
             root.appendChild(hits);

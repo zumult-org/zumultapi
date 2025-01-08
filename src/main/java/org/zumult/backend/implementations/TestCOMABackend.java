@@ -65,24 +65,26 @@ public class TestCOMABackend {
             
             System.out.println(randomCorpusID + " / " + randomTranscriptID);
             
-            System.exit(0);
+            //System.exit(0);
             
-            SearchResultPlus searchResult = bi.search("[word=\"juste\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
+            SearchResultPlus searchResult = bi.search("[word=\"in\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
-            KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");
+            System.out.println("Search done.");
+            KWIC kwic = bi.getKWIC(searchResult, "5-t,5-t");
             //KWIC kwic = bi.exportKWIC(searchResult, "3-t,3-t", "xml");
             long t2 = System.currentTimeMillis();
             DefaultQuerySerializer qs = new DefaultQuerySerializer();
             //File f = qs.createKWICDownloadFile(kwic, "xml", bi);
             String kwicXML = qs.displayKWICinXML(kwic);
+            System.out.println("XML done.");
             long t3 = System.currentTimeMillis();
-            System.out.println(kwicXML);
+            //System.out.println(kwicXML);
             //System.out.println(IOHelper.readUTF8(f));
             
             System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
             
             
-            //System.exit(0);
+            System.exit(0);
 
 
             System.out.println("--- Initialised COMAFileSystem.");

@@ -42,6 +42,7 @@ import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.implementations.COMATranscript;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -367,10 +368,19 @@ public class ZumultDataServlet extends HttpServlet {
             }
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             Transcript transcript = backend.getTranscript(transcriptID);
+            
+            String transcriptXML = transcript.toXML();
+            /*boolean flattenSeg = true;
+            if (flattenSeg){
+                //transcriptXML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/flattenSegHierarchy.xsl", transcriptXML);
+                transcriptXML = new IOHelper().applyInternalStylesheetToString("/org/exmaralda/tei/xml/flattenSegHierarchy.xsl", transcriptXML);
+            }*/
+            
+            
             String[][] parameters = {
                 {"TYPE", subtitleType}
             };
-            String vtt = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/isotei2vtt.xsl", transcript.toXML(), parameters);
+            String vtt = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/isotei2vtt.xsl", transcriptXML, parameters);
             response.setContentType("text/vtt");
             response.setCharacterEncoding("UTF-8");                            
             response.getWriter().write(vtt);             
@@ -965,6 +975,13 @@ public class ZumultDataServlet extends HttpServlet {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             Transcript transcript = backend.getTranscript(transcriptID);
             
+            String transcriptXML = transcript.toXML();
+            /*boolean flattenSeg = true;
+            if (flattenSeg){
+                //transcriptXML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/flattenSegHierarchy.xsl", transcriptXML);
+                transcriptXML = new IOHelper().applyInternalStylesheetToString("/org/exmaralda/tei/xml/flattenSegHierarchy.xsl", transcriptXML);
+            }*/
+            
             String[][] parameters = {
                 {"FORM", form},
                 {"SHOW_NORM_DEV", showNormDev},
@@ -983,7 +1000,7 @@ public class ZumultDataServlet extends HttpServlet {
             //String transcriptHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_STYLESHEET2, transcript.toXML(), parameters); 
             String xsl = Configuration.getIsoTei2HTMLStylesheet();
             System.out.println("Applying " + xsl + " to transcript.");
-            String transcriptHTML = new IOHelper().applyInternalStylesheetToString(xsl, transcript.toXML(), parameters); 
+            String transcriptHTML = new IOHelper().applyInternalStylesheetToString(xsl, transcriptXML, parameters); 
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");                            
             response.getWriter().write(transcriptHTML);             
