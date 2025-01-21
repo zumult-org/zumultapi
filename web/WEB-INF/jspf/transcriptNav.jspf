@@ -24,6 +24,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
 
+                <li class="nav-item active" style="line-height: 1">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="./zuViel.jsp?transcriptID=<%=previousTranscriptID%>"
+                       title="Previous transcript: <%=previousTranscriptID%>"
+                       >
+                       <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+
                 <!-- ******************* -->
                 <!-- *     METADATA    * -->
                 <!-- ******************* -->
@@ -41,6 +51,17 @@
                         <span class="titleID"><%= transcriptID %></span>
                     </a>
                 </li>
+                
+                <li class="nav-item active" style="line-height: 1">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="./zuViel.jsp?transcriptID=<%=followingTranscriptID%>"
+                       title="Next transcript: <%=followingTranscriptID%>"
+                       >
+                       <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+                
                 
                 <!-- **************************** -->
                 <!-- *     DISPLAY PARAMETERS   * -->

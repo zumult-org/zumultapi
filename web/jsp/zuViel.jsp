@@ -101,6 +101,11 @@
         visSpeechRate="FALSE";
     }
     
+    String flattenSeg = request.getParameter("flattenSeg");
+    if (flattenSeg==null){
+        flattenSeg = "TRUE";
+    }
+    
     String startAnnotationBlockID = request.getParameter("startAnnotationBlockID");
     if (startAnnotationBlockID==null){
         startAnnotationBlockID = "";
@@ -149,6 +154,7 @@
             highlightIDsArray[i-1] = "";
         }        
     }
+    
 
 
     /**** START: for user defined vocabulary lists and for action sequences****/
@@ -216,11 +222,27 @@
     
     /**** END: for user defined vocabulary lists ****/
                     
-    String corpusID = transcriptID.substring(0,4);
+    String corpusID = backend.getCorpus4Event(backend.getEvent4SpeechEvent(backend.getSpeechEvent4Transcript(transcriptID)));
     String speechEventID = backend.getSpeechEvent4Transcript(transcriptID); //transcriptID.substring(0,18);
     String eventID = backend.getEvent4SpeechEvent(speechEventID); // transcriptID.substring(0,12);
     IDList videos = backend.getVideos4Transcript(transcriptID);   
     IDList audios = backend.getAudios4Transcript(transcriptID);
+    
+    String previousTranscriptID = null;
+    String followingTranscriptID = null;
+    IDList allTranscriptsForThisCorpus = backend.getTranscripts4Corpus(corpusID);
+    int index = allTranscriptsForThisCorpus.indexOf(transcriptID);
+    if (index>0){
+        previousTranscriptID = allTranscriptsForThisCorpus.get(index-1);
+    } else {
+        previousTranscriptID = allTranscriptsForThisCorpus.get(allTranscriptsForThisCorpus.size()-1);
+    }
+    if (index<allTranscriptsForThisCorpus.size()-1){
+        followingTranscriptID = allTranscriptsForThisCorpus.get(index+1);    
+    } else {
+        followingTranscriptID = allTranscriptsForThisCorpus.get(0);
+    }
+    
     
     String speechEventName = backend.getSpeechEvent(speechEventID).getName();
     
@@ -346,7 +368,7 @@
         <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
         
     </head>
-    <body onload="init()">
+    <body onload="init()" id="zuviel-body">
         <%@include file="../WEB-INF/jspf/transcriptNav.jspf" %>                                                
 
         <!-- ************************************** -->

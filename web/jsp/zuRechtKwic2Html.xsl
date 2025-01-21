@@ -75,6 +75,7 @@
                 <xsl:if test="snippet/@isEndMore='true'"><xsl:text> ...</xsl:text></xsl:if>    
             </td>
 
+            
             <td class="signal">
                 <button type="button" onclick="playbackAudio(this)" class="btn btn-sm py-0 px-1" title="Playback audio">
                     <xsl:attribute name="data-tokenid">
@@ -99,6 +100,41 @@
                 </button>
             </td>
            
+            <td class="signal">
+                <button type="button" onclick="foldoutTranscript(this)" class="btn btn-sm py-0 px-1" title="Foldout transcript">
+                    <!-- <xsl:attribute name="onclick">
+                        <xsl:text>foldoutTranscript(this, '</xsl:text>
+                        <xsl:value-of select="@source"/>
+                        <xsl:text>','</xsl:text>
+                        <xsl:value-of select="snippet/*[@match='true'][1]/@xml:id"/>                        
+                        <xsl:text>','</xsl:text>
+                        <xsl:value-of select="snippet/*[@match='true'][position()=last()]/@xml:id"/>
+                        <xsl:text>','</xsl:text>
+                        <xsl:for-each select="snippet/*[@match='true']">
+                            <xsl:value-of select="@xml:id"/>
+                            <xsl:if test="not(position()=last())"><xsl:text> </xsl:text></xsl:if> 
+                        </xsl:for-each>
+                        <xsl:text>')</xsl:text>
+                    </xsl:attribute> -->
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-starttokenid">
+                        <xsl:value-of select="snippet/*[@match='true'][1]/@xml:id"/>                        
+                    </xsl:attribute>
+                    <xsl:attribute name="data-endtokenid">
+                        <xsl:value-of select="snippet/*[@match='true'][position()=last()]/@xml:id"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-highlightids1">
+                        <xsl:for-each select="snippet/*[@match='true']">
+                            <xsl:value-of select="@xml:id"/>
+                            <xsl:if test="not(position()=last())"><xsl:text> </xsl:text></xsl:if> 
+                        </xsl:for-each>
+                    </xsl:attribute>
+                    <i class="fa-regular fa-square-caret-right"></i>
+                </button>
+            </td>
+
             <td class="zumult-link">
                 <form target='_blank' action='../jsp/zuViel.jsp' method='post'>                
                         <!-- <input type='hidden' name='transcriptIDWithHighlights'> -->
@@ -109,7 +145,7 @@
                         </input>
                         <input type='hidden' name='form'>
                             <xsl:attribute name="value">
-                                <xsl:text>norm</xsl:text>
+                                <xsl:text>trans</xsl:text>
                             </xsl:attribute>
                         </input>
                        <input type='hidden' name='howMuchAround'>

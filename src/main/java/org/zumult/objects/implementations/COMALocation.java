@@ -54,7 +54,14 @@ public class COMALocation extends AbstractXMLObject implements Location {
 
     @Override
     public String getPlacename() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String xPathString = "descendant::City/text()";
+            String countryName = xPath.evaluate(xPathString, getDocument().getDocumentElement());
+            return countryName;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMALocation.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        return null;
     }
 
     @Override

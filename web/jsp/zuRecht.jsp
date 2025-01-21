@@ -100,6 +100,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         <script src="../js/zuRecht.corpusCheckbox.js" type="text/javascript"></script>
         <script src="../js/xslTransformation.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="../css/query.css" />
+        <link rel="stylesheet" type="text/css" href="../css/transcript.css" />
         
         <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
 
@@ -141,11 +142,17 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                             <h2><%=myResources.getString("SearchByQuery")%></h2>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchForm.jspf" %>
                             <%@include file="../WEB-INF/jspf/zuRechtKWICSearchOptionsModal.jspf" %>
-                            <div id="kwic-search-result-area" class="searchResultArea"></div>
+                            <div id="kwic-search-result-area" class="searchResultArea">
+                            </div>
                         </div>
                     </div>
+                            
+                    <!-- include start explanations -->        
+                    <%@include file="../WEB-INF/jspf/startexplanation.jspf" %>
                 </div>
             </div>
+                            
+                            
         </div>
         <%@include file="../WEB-INF/jspf/metadataModal.jspf" %>
         <%@include file="../WEB-INF/jspf/videoModal.jspf" %>
@@ -408,6 +415,8 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
             }
             
             function displayKWIC(selector, xml){
+                $('#start-explanation').remove();
+            
                 $(selector).find(".openXML-KWICSearch-area").css("display", "block");
                 $(selector).find('.rowData-KWICSearch').text(xml);
                 
@@ -516,6 +525,54 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                     }
                 );                    
             }
+
+            //function foldoutTranscript(tdObj, transcriptID, startTokenID, endTokenID, highlightIDs1){
+            function foldoutTranscript(tdObj){
+                let transcriptID = $(tdObj).data('transcriptid');
+                let startTokenID = $(tdObj).data('starttokenid');
+                let endTokenID = $(tdObj).data('endtokenid');
+                let highlightIDs1 = $(tdObj).data('highlightids1');
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getTranscript',
+                        transcriptID: transcriptID,
+                        startTokenID: startTokenID,
+                        endTokenID: endTokenID,
+                        highlightIDs1: highlightIDs1,
+                        highlightIDs2: '',
+                        highlightIDs3: '',
+                        form: 'trans',
+                        showNormDev: 'FALSE',
+                        visSpeechRate: 'FALSE',
+                        dropdown: 'FALSE',
+                        wordlistID: 'NONE',
+                        howMuchAround: 2
+                    },
+                    function( data ) {
+                        let randomID = 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+                        let tr = $(tdObj).closest('tr');
+                        let newRow = $('<tr id="' + randomID + '"><td></td><td></td><td></td><td colspan="3">' + data + '</td></tr>');
+                        tr.after(newRow);
+                        
+                        let collapseTranscriptHTML = '<i class="fa-regular fa-square-caret-down"></i>';
+                        $(tdObj).html(collapseTranscriptHTML);
+                        tdObj.onclick = function(){
+                            collapseTranscript(randomID, tdObj);
+                        };                
+
+                    }
+                );                    
+            }
+            
+            function collapseTranscript(id, tdObj){
+                $('#' + id).remove();
+                $(tdObj).html('<i class="fa-regular fa-square-caret-right"></i>');
+                tdObj.onclick = function(){
+                    foldoutTranscript(this);
+                };                
+            }
+                
 
             function openTranscript(obj){
                 $(obj).closest('form').submit();    

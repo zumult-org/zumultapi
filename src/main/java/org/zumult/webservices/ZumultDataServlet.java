@@ -954,10 +954,29 @@ public class ZumultDataServlet extends HttpServlet {
             + "&showNormDev=" + showNormDev
             + "&visSpeechRate=" + visSpeechRate
             */
-            String transcriptID = request.getParameter("transcriptID");
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+
+            String transcriptID = request.getParameter("transcriptID");            
+            Transcript transcript = backend.getTranscript(transcriptID);
+
+                                   
             String wordlistID = request.getParameter("wordlistID");
+            
             String startAnnotationBlockID = request.getParameter("startAnnotationBlockID");
             String endAnnotationBlockID = request.getParameter("endAnnotationBlockID");
+                        
+            String startTokenID = request.getParameter("startTokenID");
+            String endTokenID = request.getParameter("endTokenID");
+            String howMuchAround = request.getParameter("howMuchAround");
+            if (startTokenID!=null && endTokenID!=null){
+                startAnnotationBlockID = backend.getNearestAnnotationBlockID4TokenID(transcriptID, startTokenID);
+                endAnnotationBlockID = backend.getNearestAnnotationBlockID4TokenID(transcriptID, endTokenID);
+                if(howMuchAround.length()>0){
+                    startAnnotationBlockID = transcript.getAnnotationBlockID(startAnnotationBlockID, -Integer.parseInt(howMuchAround));
+                    endAnnotationBlockID = transcript.getAnnotationBlockID(endAnnotationBlockID, Integer.parseInt(howMuchAround));
+                }
+            }
+            
 
             String form = request.getParameter("form");
             String showNormDev = request.getParameter("showNormDev");
@@ -967,13 +986,16 @@ public class ZumultDataServlet extends HttpServlet {
             String highlightIDs2 = request.getParameter("highlightIDs2");
             String highlightIDs3 = request.getParameter("highlightIDs3");
             
+            String dropdown = request.getParameter("dropdown");
+            if (dropdown==null){
+                dropdown = "TRUE";
+            }
+            
            /* String pathToWordList = new File(getServletContext().getRealPath("/data/" + wordlistID + ".xml"))
                     .toURI().toString();*/
             String pathToWordList = pathToWordList(wordlistID);
             
             
-            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
-            Transcript transcript = backend.getTranscript(transcriptID);
             
             String transcriptXML = transcript.toXML();
             /*boolean flattenSeg = true;
@@ -993,6 +1015,8 @@ public class ZumultDataServlet extends HttpServlet {
                 {"HIGHLIGHT_IDS_1", highlightIDs1},
                 {"HIGHLIGHT_IDS_2", highlightIDs2},
                 {"HIGHLIGHT_IDS_3", highlightIDs3},
+
+                {"DROPDOWN", dropdown}
             };
             
             

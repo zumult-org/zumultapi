@@ -14,6 +14,8 @@
     <xsl:param name="DROPDOWN">TRUE</xsl:param>
     <!-- whether to include a column for numbering -->
     <xsl:param name="NUMBERING">TRUE</xsl:param>
+    <!-- whether to include a row for translation -->    
+    <xsl:param name="TRANSLATION">en</xsl:param>
     <!-- 
         which form of tokens to display
         trans : the transcribed form
@@ -159,6 +161,12 @@
                     </xsl:attribute>
                 </xsl:if>
                 <xsl:apply-templates select="tei:u/child::tei:*"/>                
+                <xsl:if test="string-length($TRANSLATION)&gt;0 and descendant::tei:spanGrp[@type=$TRANSLATION]">
+                    <br/>
+                    <span class="translation">
+                        <xsl:apply-templates select="descendant::tei:spanGrp[@type=$TRANSLATION]/tei:span"/>
+                    </span>
+                </xsl:if>
             </td>
         </tr>
     </xsl:template>

@@ -148,21 +148,21 @@
     function findForms(type, form){
         var searchRegex = new RegExp("\\b" + form + "\\b");
         //
-        //alert(lemma);        
+        //alert(type + " / " + form);        
         //
         // very annoying -- distinguish here between dom and jquery elements
         if (form!==lastFormSearched){
             //$("span[data-" + type + "='" + lastFormSearched + "']").removeClass("highlight-search");            
             var lastSearchRegex = new RegExp("\\b" + lastFormSearched + "\\b");
             // issue #66 allow regex
-            $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(lastSearchRegex)); }).removeClass("highlight-search");
+            $("span").filter(function() { return ($(this).data(type)!==null && typeof $(this).data(type) === 'string' && $(this).data(type).match(lastSearchRegex)); }).removeClass("highlight-search");
             
             countSearch=0;
         } else {
             countSearch++;
             //if (countSearch >= $("span[data-" + type + "='" + form + "']").length){
             // issue #66 allow regex
-            if (countSearch >= $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).length){
+            if (countSearch >= $("span").filter(function() { return ($(this).data(type)!==null && typeof $(this).data(type) === 'string' && $(this).data(type).match(searchRegex)); }).length){
                 countSearch = 0;
             }
         }
@@ -170,11 +170,11 @@
         //$("span[data-" + type + "='" + form + "']").addClass("highlight2");
         
         // issue #66 allow regex
-        $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).fadeIn(500);
-        $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); }).addClass("highlight2");
+        $("span").filter(function() {return ($(this).data(type)!==null && typeof $(this).data(type) === 'string' && $(this).data(type).match(searchRegex)); }).fadeIn(500);
+        $("span").filter(function() {return ($(this).data(type)!==null && typeof $(this).data(type) === 'string' && $(this).data(type).match(searchRegex)); }).addClass("highlight2");
         
         //var currentForm = $("span[data-" + type + "='" + form + "']")[countSearch];
-        var currentForm = $("span").filter(function() { return ($(this).data(type) && $(this).data(type).match(searchRegex)); })[countSearch];
+        var currentForm = $("span").filter(function() {return ($(this).data(type)!==null && typeof $(this).data(type) === 'string' && $(this).data(type).match(searchRegex)); })[countSearch];
         currentForm.scrollIntoView(true);
         
         // make it briefly flash, the more things flash, the better the science

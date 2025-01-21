@@ -6,9 +6,9 @@
 
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
-    <version>0.0.3-alpha</version>
+    <version>0.0.6-alpha</version>
     <!-- <packaging>war</packaging> -->
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>zumultapi</name>
     
     <!-- related to #214 -->
@@ -111,7 +111,7 @@
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
             <type>jar</type>
         </dependency>
 
