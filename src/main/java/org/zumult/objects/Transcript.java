@@ -28,7 +28,10 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     public double getStartTime();
     public double getEndTime();
     
+    // this will return the nearest time before the element with that ID
     public double getTimeForID(String id);
+    // this will return the nearest time after the element with that ID
+    public double getNextTimeForID(String id);
     
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock);
     public Transcript getPart(double time1, double time2, boolean expandToFullAnnotationBlock);

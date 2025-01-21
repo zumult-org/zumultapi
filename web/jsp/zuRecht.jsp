@@ -156,6 +156,7 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
         </div>
         <%@include file="../WEB-INF/jspf/metadataModal.jspf" %>
         <%@include file="../WEB-INF/jspf/videoModal.jspf" %>
+        <%@include file="../WEB-INF/jspf/imageModal.jspf" %>
   
         <%@include file="../WEB-INF/jspf/zuRechtConstants.jspf" %>
         <script type="text/javascript">
@@ -565,6 +566,39 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 );                    
             }
             
+            function foldoutStillSeries(tdObj){
+                let transcriptID = $(tdObj).data('transcriptid');
+                let startTokenID = $(tdObj).data('starttokenid');
+                let endTokenID = $(tdObj).data('endtokenid');
+                $.post(
+                    BASE_URL + "/ZumultDataServlet",
+                    { 
+                        command: 'getStillSeries',
+                        transcriptID: transcriptID,
+                        startTokenID: startTokenID,
+                        endTokenID: endTokenID,
+                    },
+                    function( data ) {
+                        if ($(data).find("error").length > 0){
+                            alert('No video for ' + transcriptID);                            
+                            return;
+                        }
+                        let randomID = 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+                        let tr = $(tdObj).closest('tr');
+                        let newRow = $('<tr id="' + randomID + '"><td></td><td></td><td></td><td colspan="3">' + data + '</td></tr>');
+                        tr.before(newRow);
+                        
+                        /*let collapseTranscriptHTML = '<i class="fa-regular fa-square-caret-down"></i>';
+                        $(tdObj).html(collapseTranscriptHTML);
+                        tdObj.onclick = function(){
+                            collapseTranscript(randomID, tdObj);
+                        };*/                
+
+                    }
+                );                    
+            }
+            
+            
             function collapseTranscript(id, tdObj){
                 $('#' + id).remove();
                 $(tdObj).html('<i class="fa-regular fa-square-caret-right"></i>');
@@ -632,6 +666,13 @@ String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replac
                 parent.onclick = function(){
                     playbackAudio(this);
                 };                
+            }
+            
+            function largerImage(obj){                
+                let imageURL = $(obj).attr('src');
+                let imageHTML = "<img id=\"modal-video\" src=\"" + imageURL +  "\"/>";
+                $('#image-div').html(imageHTML);                
+                $('#imageModal').modal("toggle");
             }
             
             

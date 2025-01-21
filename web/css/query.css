@@ -118,6 +118,26 @@ td.right-context{text-align: left; min-width: 250px; margin-right: 30px;}
 td.metadatakey {text-align: right; font-weight:bold;}
 td.metadatavalue {text-align: left; font-weight:normal;}
 
+/* for the video still series */
+
+div.thumb-still {
+    display: inline-block;
+    padding: 2px;
+}
+img.thumb-still {
+    border-radius: 1px;
+    border: 1px solid gray;
+}
+
+img.thumb-still:hover {
+    transform: scale(2.5);
+}
+
+span.thumb-time {
+    font-size: 8pt;
+    color: gray; 
+}
+
 #modal-video {
     max-height:400px;
 }

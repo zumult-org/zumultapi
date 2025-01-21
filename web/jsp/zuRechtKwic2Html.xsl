@@ -102,20 +102,6 @@
            
             <td class="signal">
                 <button type="button" onclick="foldoutTranscript(this)" class="btn btn-sm py-0 px-1" title="Foldout transcript">
-                    <!-- <xsl:attribute name="onclick">
-                        <xsl:text>foldoutTranscript(this, '</xsl:text>
-                        <xsl:value-of select="@source"/>
-                        <xsl:text>','</xsl:text>
-                        <xsl:value-of select="snippet/*[@match='true'][1]/@xml:id"/>                        
-                        <xsl:text>','</xsl:text>
-                        <xsl:value-of select="snippet/*[@match='true'][position()=last()]/@xml:id"/>
-                        <xsl:text>','</xsl:text>
-                        <xsl:for-each select="snippet/*[@match='true']">
-                            <xsl:value-of select="@xml:id"/>
-                            <xsl:if test="not(position()=last())"><xsl:text> </xsl:text></xsl:if> 
-                        </xsl:for-each>
-                        <xsl:text>')</xsl:text>
-                    </xsl:attribute> -->
                     <xsl:attribute name="data-transcriptid">
                         <xsl:value-of select="@source"/>
                     </xsl:attribute>
@@ -132,6 +118,21 @@
                         </xsl:for-each>
                     </xsl:attribute>
                     <i class="fa-regular fa-square-caret-right"></i>
+                </button>
+            </td>
+            
+            <td class="signal">
+                <button type="button" onclick="foldoutStillSeries(this)" class="btn btn-sm py-0 px-1" title="Foldout still series">
+                    <xsl:attribute name="data-transcriptid">
+                        <xsl:value-of select="@source"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-starttokenid">
+                        <xsl:value-of select="snippet/*[@match='true'][1]/@xml:id"/>                        
+                    </xsl:attribute>
+                    <xsl:attribute name="data-endtokenid">
+                        <xsl:value-of select="snippet/*[@match='true'][position()=last()]/@xml:id"/>
+                    </xsl:attribute>
+                    <i class="fas fa-images"></i>
                 </button>
             </td>
 

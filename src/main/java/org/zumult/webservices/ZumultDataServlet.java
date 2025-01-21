@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
+import org.exmaralda.folker.utilities.TimeStringFormatter;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
@@ -42,7 +43,6 @@ import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
-import org.zumult.objects.implementations.COMATranscript;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -103,6 +103,9 @@ public class ZumultDataServlet extends HttpServlet {
                 break;
             case "getVideoImage" :
                 getVideoImage(request, response);
+                break;
+            case "getStillSeries" :  // new for #235
+                getStillSeries(request, response);
                 break;
             case "getExpansion" :
                 getExpansion(request, response);
@@ -400,6 +403,72 @@ public class ZumultDataServlet extends HttpServlet {
         
     }
     
+    private void getStillSeries(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            
+            String transcriptID = request.getParameter("transcriptID");
+            String startTokenID = request.getParameter("startTokenID");
+            String endTokenID = request.getParameter("endTokenID");
+            
+            if (backend.getVideos4Transcript(transcriptID).isEmpty()){
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("<div><error/><div>");
+                response.getWriter().close();             
+                return;
+            }
+            
+            String videoID = backend.getVideos4Transcript(transcriptID).get(0);            
+            
+            Transcript transcript = backend.getTranscript(transcriptID);
+            Media video = backend.getMedia(videoID, Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
+
+            File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
+            
+            
+            double startTime = transcript.getTimeForID(startTokenID);
+            double endTime = transcript.getNextTimeForID(endTokenID);
+            
+            // make sure that startTime and endTime are at least 0.6s apart
+            if (endTime - startTime < 0.6){
+                double whatsMissing = 0.6 - (endTime - startTime);
+                startTime = Math.max(0.0, startTime - whatsMissing / 2);
+                endTime = endTime + whatsMissing / 2;
+            }
+            
+            String resultHTML = "<div>";
+            
+            double delta = (endTime - startTime) / 5;
+            for (int i=0; i<6; i++){
+                double thisTime = startTime + i * delta;
+                Media videoImage = video.getVideoImage(thisTime);
+                File targetFile = new File(downloadDirectory, "ZuMult-Image_" + UUID.randomUUID() + ".png");
+                Files.move(new File(videoImage.getURL()).toPath(), targetFile.toPath());
+                String imgHTML = "<img class=\"thumb-still\"  onclick=\"largerImage(this)\" src=\"../downloads/" + targetFile.getName() + "\" width=\"100px\"/>";
+                resultHTML+=
+                        "<div class=\"thumb-still\">" 
+                        + imgHTML + "<br/>"
+                        + "<span class=\"thumb-time\">" + TimeStringFormatter.formatSeconds(thisTime, true, 2) + "</span>"
+                        + "</div>"
+                        ;
+                
+            }
+            
+            resultHTML+="</div>";
+            
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(resultHTML);
+            response.getWriter().close();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }
+        
+    }
+    
+    
     private void getVideoImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String videoID = request.getParameter("videoID");
@@ -410,8 +479,6 @@ public class ZumultDataServlet extends HttpServlet {
             
             File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
             File targetFile = new File(downloadDirectory, "ZuMult-Image_" + UUID.randomUUID() + ".png");
-            //Files.move(Paths.get(new URL(videoImage.getURL()).toURI()), targetFile.toPath());
-            //System.out.println("*************" + videoImage.getURL
             Files.move(new File(videoImage.getURL()).toPath(), targetFile.toPath());
             
             
@@ -1310,6 +1377,7 @@ public class ZumultDataServlet extends HttpServlet {
         }
         
     }
+
 
 
 }
