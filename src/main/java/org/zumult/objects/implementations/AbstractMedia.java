@@ -70,14 +70,14 @@ public abstract class AbstractMedia implements Media {
         return returnValue;        
     }
     
-    // 21-01-2023 new for #235
-    public String[][] stillSeries(double[] positionsInSeconds){
+    // 21-01-2023 new for #235 ... don't seem to need it
+    /*public String[][] stillSeries(double[] positionsInSeconds){
         String[][] returnValue = new String[positionsInSeconds.length][2];
         for (int i=0; i<positionsInSeconds.length; i++){
             returnValue[i] = still(positionsInSeconds[i]);
         }
         return returnValue;
-    }
+    }*/
     
     public String[] still(double positionInSeconds){
         try {

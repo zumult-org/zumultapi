@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +33,8 @@ import org.zumult.backend.Configuration;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEITranscriptConverter;
+import org.zumult.io.MausConnection;
+import org.zumult.io.PraatConnection;
 import org.zumult.objects.AnnotationBlock;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
@@ -131,7 +134,13 @@ public class ZumultDataServlet extends HttpServlet {
             // issue #55
             case "printDownloadWordlist" :
                 printDownloadWordlist(request, response);
-                break;      
+                break;   
+            case "getMausAlignment" : 
+                getMausAlignment(request, response);
+                break;   
+            case "getMicroView" : 
+                getMicroView(request, response);
+                break;   
             default : 
                 response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");                            
@@ -464,6 +473,82 @@ public class ZumultDataServlet extends HttpServlet {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
+        }
+        
+    }
+    
+    private void getMausAlignment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String transcriptID = request.getParameter("transcriptID");
+        String annotationBlockID = request.getParameter("annotationBlockID");
+        String format = request.getParameter("format");
+        String xml = new MausConnection().getMausAligment(transcriptID, annotationBlockID, format);
+        response.setContentType("application/xml");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(xml);
+        response.getWriter().close();
+    }
+    
+    private void getMicroView(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String transcriptID = request.getParameter("transcriptID");
+            String annotationBlockID = request.getParameter("annotationBlockID");
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            
+            Transcript transcript = backend.getTranscript(transcriptID);
+            AnnotationBlock annotationBlock = backend.getAnnotationBlock(transcriptID, annotationBlockID);
+            double startTime = transcript.getTimeForID(annotationBlock.getStart());
+            double endTime = transcript.getTimeForID(annotationBlock.getEnd());
+            IDList audioIDs = backend.getAudios4Transcript(transcriptID);
+            if (audioIDs.isEmpty()){
+                throw new IOException("No audio");
+            }
+            Media audio = backend.getMedia(audioIDs.get(0), Media.MEDIA_FORMAT.WAV);
+            Media partAudio = audio.getPart(startTime, endTime);
+            File audioFile = new File(partAudio.getURL());
+            
+            PraatConnection praatConnection = new PraatConnection();
+            String pitchXML = praatConnection.getPitchAsXML(audioFile);
+            
+            String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
+            
+            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+            List<File> videoStills = new ArrayList();
+            if (!(videoIDs.isEmpty())){
+                Media video = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
+                File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
+                for (double time = startTime; time<endTime; time+=0.5){
+                    Media videoStill = video.getVideoImage(time);
+                    File videoStillFile = new File(videoStill.getURL());
+                    File targetFile = new File(downloadDirectory, videoStillFile.getName());
+                    Files.move(videoStillFile.toPath(), targetFile.toPath());
+                    videoStills.add(targetFile);
+                }
+            }
+            
+            String allXML = "<document>";
+            allXML+=pitchXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
+            allXML+=mausXML;
+            allXML+="<video-stills>";
+            for (File videoStill : videoStills){
+                allXML+="<video-still>";
+                allXML+=videoStill.getName();
+                allXML+="</video-still>";
+            }
+            allXML+="</video-stills>";
+            allXML+="</document>";
+            
+            //System.out.println(allXML);
+            
+            String svg = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/pitch2SVG.xsl", allXML);
+            
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(svg);
+            response.getWriter().close();
+            
+        } catch (TransformerException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);            
         }
         
     }
@@ -1377,6 +1462,8 @@ public class ZumultDataServlet extends HttpServlet {
         }
         
     }
+    
+    
 
 
 
