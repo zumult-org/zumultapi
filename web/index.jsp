@@ -68,42 +68,57 @@
        String randomTranscriptID = allTranscriptIDs.get(random.nextInt(allTranscriptIDs.size()));
     %>
 
-    <body style="background-image: url('./images/talking.png');">
+    <body style="background-image: url('./images/talking.png');height: 1080px;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;">
         
         <% String pageName = "ZuMult"; %>
         <%@include file="../WEB-INF/jspf/zumultNav.jspf" %>                                                
-        <div class="row">
-            <div class="col-sm-2">
-            </div>
-            <div class="col-sm-8" style="background:white;padding-top: 20px; border-radius: 15px;">
-                <div class="m-3 text-center">
-                    This ZuMult instance has <%= allCorpusIDs.size() %> corpora: <%= String.join(" / ", allCorpusIDs) %>
-                    <a href="./jsp/corpusoverview.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-outline-info ml-3" target="_blank">Corpus Overview</a>                    
-                </div>
-                
-                <div class="card-deck">
-                    <div class="card mb-3">
-                        <img class="card-img-top" src="./images/query.png" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">ZuRecht</h5>
-                        <p class="card-text"><%=myResources.getString("ZuRechtShort")%></p>
-                            <a href="./jsp/zuRecht.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-primary" target="_blank">ZuRecht</a>
-                      </div>
-                    </div>            
-                    <div class="card mb-3">
-                      <img class="card-img-top" src="./images/transcript2.png" alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">ZuViel / ZuPass / ZuAnn</h5>
-                        <p class="card-text"><%=myResources.getString("ZuVielShort")%></p>
-                        <a href="./jsp/zuViel.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuViel</a>
-                        <a href="./jsp/zuPass.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuPass</a>
-                        <a href="./jsp/zuAnn.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuAnn</a>
-                        <small class="text-muted ml-2"><%= randomCorpusID %> / <%= randomTranscriptID %> </small>
-                      </div>
-                    </div>                      
-                </div>
-                
-            <div class="col-sm-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10" style="background:white;padding-top: 20px; border-radius: 15px; min-width: 1920px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="m-1 text-center">
+                                This ZuMult instance has <%= allCorpusIDs.size() %> corpora: <%= String.join(" / ", allCorpusIDs) %>
+                                <a href="./jsp/corpusoverview.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-outline-info ml-3" target="_blank">Corpus Overview</a>                    
+                            </div>                        
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-deck">
+                                    <div class="card mb-3" style="min-width:800px;">
+                                        <img class="card-img-top" src="./images/query.png" alt="Card image cap">
+                                      <div class="card-body">
+                                        <h5 class="card-title">ZuRecht</h5>
+                                        <p class="card-text"><%=myResources.getString("ZuRechtShort")%></p>
+                                            <a href="./jsp/zuRecht.jsp?lang=<%=currentLocale.getLanguage()%>" class="btn btn-primary" target="_blank">ZuRecht</a>
+                                      </div>
+                                    </div>            
+                                    <div class="card mb-3" style="min-width:800px;">
+                                      <img class="card-img-top" src="./images/transcript2.png" alt="Card image cap">
+                                      <div class="card-body">
+                                        <h5 class="card-title">ZuViel / ZuPass / ZuAnn</h5>
+                                        <p class="card-text"><%=myResources.getString("ZuVielShort")%></p>
+                                        <a href="./jsp/zuViel.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuViel</a>
+                                        <a href="./jsp/zuPass.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuPass</a>
+                                        <a href="./jsp/zuAnn.jsp?transcriptID=<%= randomTranscriptID %>" class="btn btn-primary" target="_blank">ZuAnn</a>
+                                        <small class="text-muted ml-2"><%= randomCorpusID %> / <%= randomTranscriptID %> </small>
+                                      </div>
+                                    </div>                      
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <div class="col-1"></div>
             </div>
         </div>
             

@@ -33,14 +33,11 @@
     }
     
     String pageName = "ZuMin";
-    String pageTitle = transcriptID;
+    String pageTitle = transcriptID + " - " + annotationBlockID;
     
     String speechEventID = backend.getSpeechEvent4Transcript(transcriptID);
-    //String transcriptID = "ISO_robmus_2015_01_002";
-    //String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
-    //Transcript exbTranscript = backend.getTranscript(transcriptID, Transcript.TranscriptFormats.EXB);
     
-    /*String videoIDsParameter = request.getParameter("videoIDs");
+    String videoIDsParameter = request.getParameter("videoIDs");
     List<String> videoIDs = new ArrayList<>();
     if (videoIDsParameter==null || videoIDsParameter.length()==0){
         videoIDs = backend.getVideos4SpeechEvent(speechEventID);
@@ -56,9 +53,29 @@
     } else {
         String[] audioIDsSplit = audioIDsParameter.split("\\|");
         audioIDs.addAll(Arrays.asList(audioIDsSplit));
-    } */
+    } 
 
     String vttURL = Configuration.getWebAppBaseURL() + "/ZumultDataServlet?command=getVTT&transcriptID=" + transcriptID;
+    
+    Transcript transcript = backend.getTranscript(transcriptID);
+    double startTime = transcript.getTimeForID(annotationBlockID);
+    String[][] transcriptParameters = {
+        {"FORM", "trans"},
+        {"SHOW_NORM_DEV", "FALSE"},
+        {"VIS_SPEECH_RATE", "FALSE"},
+        {"AROUND_ANNOTATION_BLOCK_ID", annotationBlockID},
+        {"HOW_MUCH_AROUND", "3"},
+        {"HIGHLIGHT_ANNOTATION_BLOCK", annotationBlockID},        
+        {"TOKEN_LIST_URL", ""},
+        {"DROPDOWN", "FALSE"},
+        {"TRANSLATION", ""}
+    };
+    
+    String transcriptHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_STYLESHEET2, 
+            transcript.toXML(), 
+            transcriptParameters); 
+
+
 
 %>
 
@@ -67,7 +84,8 @@
 <html>
         <html>
             <head>
-                <script src="../js/media_zupass.js"></script>
+                <link rel="stylesheet" href="../css/transcript.css"/>
+                <script src="../js/media_zumin.js"></script>
                 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>        
                 <script src="https://kit.fontawesome.com/e215b03c17.js" crossorigin="anonymous"></script>
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
@@ -80,7 +98,12 @@
                     var transcriptID = '<%= transcriptID %>';
                     var annotationBlockID = '<%= annotationBlockID %>';
                     var vttURL = '<%= vttURL %>';
-                    var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';       
+                    var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';   
+                    var startTime = <%= startTime %>
+                    var xPerSecond = 600;
+                    
+                    var svg;                    
+                    var pt;
                     
                     function loadMicroView(){
                         $.post(
@@ -89,9 +112,14 @@
                                 command: 'getMicroView',
                                 transcriptID: transcriptID,
                                 annotationBlockID: annotationBlockID,
+                                xPerSecond : xPerSecond
                             },
                             function( data ) {
                                 $('#microViewDiv').html(data);
+                                // need to do this only once per document
+                                svg = document.getElementById('pitchSVG');
+                                pt = svg.createSVGPoint();                                
+                                
                             }
                         );                    
                         
@@ -99,61 +127,93 @@
                     
                 </script>
                 
-                <style type="text/css">
-                    table {
-                        border-collapse : collapse;
-                    }
-                    td {
-                        white-space:nowrap;
-                        border: none;
-                    }
-                    td.empty {
-                        background: rgb(230,230,230);
-                        border: none;
-                    }
-                    td.ver {
-                        font-size:14pt;
-                        font-weight: bold;
-                    }
-                    td.att, td.mov, td.it-ph, td.op, td.en {
-                        font-size: 10pt;
-                        background : rgb(255,255,204);
-                    }
-                    td.walk, td.smile, td.nod, td.act {
-                        font-size: 10pt;
-                        background : rgb(204,255,204);
-                    }
-                    td.DataCoverage, td.Aktivität, td.Wahrnehmung, td.VPsichtbar {
-                        font-size: 10pt;
-                        background : rgb(177,233,244);
-                    }
-                    td.label {
-                        font-weight:bold;
-                        position: sticky;
-                        left: 0; z-index: 1;
-                        background-color: white;
-                    }
-                    td.tli {
-                        font-size:8pt;
-                        color: rgb(200,200,200);
-                    }
-                    td.highlight-playback{
-                        border: 2px solid gray; 
-                        color: red;
-                    }                    
-                </style>
             </head>
     <body onload="initialiseMedia()">
         <%@include file="../WEB-INF/jspf/zumultNav.jspf" %>                                                
                
         <div id="video-form" class="row justify-content-center" style="margin-top:80px;">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <table>
+                    <%
+                        if (!audioIDs.isEmpty() && videoIDs.isEmpty()){
+                    %>
+                    <tr>
+                    <% for (int i=0; i<Math.min(audioIDs.size(),2); i++){
+                        String audioID = audioIDs.get(i);
+                        Media audio = backend.getMedia(audioID);
+                        String url = audio.getURL();
+                        String id = "master-audio";
+                        if (i>0){
+                            id = "audio-" + Integer.toString(i);
+                        }
+                    %>
+                    <td>
+                        <audio controls="controls" name="audio" id="<%= id %>" style="margin-right:30px">
+                            <source src="<%= url %>" type="audio/wav"/>
+                        </video>
+                    </td>
+                    <%
+                        }
+                    %>
+                    </tr>
+                    <%
+                        }
+                    %>
+                    <tr>
+                        <% 
+                            for (int i=0; i<Math.min(videoIDs.size(),2); i++){
+                                String videoID = videoIDs.get(i);
+                                Media video = backend.getMedia(videoID);
+                                String url = video.getURL();
+                                String id = "master-video";
+                                if (i>0){
+                                    id = "video-" + Integer.toString(i);
+                                }
+                        %>
+                        <td>
+                            <video width="480" height="320" controls="controls" name="video" id="<%= id %>" style="margin-right:30px">
+                                <source src="<%= url %>" type="video/mp4"/>
+                                <track label="trans" kind="subtitles" srclang="de" src="<%= vttURL %>" default="default">
+                                <track label="norm" kind="subtitles" srclang="de" src="<%= vttURL + "&subtitleType=norm"%>">                
+                            </video>
+                        </td>
+                        <td>
+                            <div style="background: #f8f9fa; height: 270px; border-radius: 3px; padding: 3px;">
+                                <a href="javascript:addVideoImageToCollection('<%= videoID %>')" 
+                                   title="<%=myResources.getString("AddVideoImageCollection")%>" style="color:black">
+                                    <i class="far fa-plus-square"></i>
+                                </a><br/>          
+                                <a href="javascript:getVideoImage('<%= videoID %>')" 
+                                   title="<%=myResources.getString("ExtractVideoImage")%>" style="color:black">
+                                    <i class="fas fa-camera-retro"></i>
+                                </a><br/>
+                                <a href="javascript:frameBackward()" title="<%=myResources.getString("PrecedingFrame")%>" style="color:black">
+                                    <i class="fas fa-step-backward"></i>
+                                </a><br/>
+                                <a href="javascript:frameForward()" title="<%=myResources.getString("NextFrame")%>" style="color:black">
+                                    <i class="fas fa-step-forward"></i>
+                                </a>
+                            </div>                        
+                        </td>
+                    <%
+                        }
+                    %>    
+                    </tr>
+                </table>
+                
+            </div>
+            <div class="col-5">
+                <%= transcriptHTML %>
+            </div>
+            <div class="col-1"></div>
         </div>
         
         <div id="partitur-form" class="row mt-2">
             <div class="col-1"></div>
             <div class="col-10 overflow-auto" id="microViewDiv">
                 <p>
-                    <table>
+                    <table class="table">
                         <tr>
                             <td>
                                 <img src="../images/loading.gif"/>                                
@@ -173,6 +233,8 @@
         
         <script type="text/javascript">
             loadMicroView();
+            jump(startTime);
+            
         </script>
         
     </body>

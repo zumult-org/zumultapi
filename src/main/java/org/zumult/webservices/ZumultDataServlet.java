@@ -492,6 +492,7 @@ public class ZumultDataServlet extends HttpServlet {
         try {
             String transcriptID = request.getParameter("transcriptID");
             String annotationBlockID = request.getParameter("annotationBlockID");
+            String xPerSecond = request.getParameter("xPerSecond");
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             
             Transcript transcript = backend.getTranscript(transcriptID);
@@ -509,25 +510,55 @@ public class ZumultDataServlet extends HttpServlet {
             PraatConnection praatConnection = new PraatConnection();
             String pitchXML = praatConnection.getPitchAsXML(audioFile);
             
-            String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
+            String[] xmlArray = new String[1];
             
-            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+            Thread mausThread = new Thread(){                
+                @Override
+                public void run() {
+                    String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
+                    xmlArray[0] = mausXML;
+                }                
+            };
+            mausThread.start();
+            
+            //String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
+            
             List<File> videoStills = new ArrayList();
-            if (!(videoIDs.isEmpty())){
-                Media video = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
-                File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
-                for (double time = startTime; time<endTime; time+=0.5){
-                    Media videoStill = video.getVideoImage(time);
-                    File videoStillFile = new File(videoStill.getURL());
-                    File targetFile = new File(downloadDirectory, videoStillFile.getName());
-                    Files.move(videoStillFile.toPath(), targetFile.toPath());
-                    videoStills.add(targetFile);
-                }
-            }
+            Thread ffmpegThread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+                        if (!(videoIDs.isEmpty())){
+                            Media video = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
+                            File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
+                            for (double time = startTime; time<endTime; time+=0.5){
+                                Media videoStill = video.getVideoImage(time);
+                                File videoStillFile = new File(videoStill.getURL());
+                                File targetFile = new File(downloadDirectory, videoStillFile.getName());
+                                Files.move(videoStillFile.toPath(), targetFile.toPath());
+                                videoStills.add(targetFile);
+                            }
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }                                
+            };
+            ffmpegThread.start();
+            
+             // Wait for threads to complete
+            try {
+                mausThread.join();
+                ffmpegThread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Main thread interrupted");
+            }            
             
             String allXML = "<document>";
             allXML+=pitchXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-            allXML+=mausXML;
+            allXML+=xmlArray[0];
             allXML+="<video-stills>";
             for (File videoStill : videoStills){
                 allXML+="<video-still>";
@@ -539,6 +570,9 @@ public class ZumultDataServlet extends HttpServlet {
             
             //System.out.println(allXML);
             
+            String[][] parameters ={
+                {"X_PER_SECOND", xPerSecond}
+            };
             String svg = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/pitch2SVG.xsl", allXML);
             
             response.setContentType("text/html");

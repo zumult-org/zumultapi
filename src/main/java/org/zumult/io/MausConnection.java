@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.exmaralda.partitureditor.jexmaralda.BasicTranscription;
 import org.exmaralda.partitureditor.jexmaralda.convert.PraatConverter;
+import org.exmaralda.partitureditor.sound.AudioProcessor;
 import org.exmaralda.webservices.MAUSConnector;
 import org.jdom.JDOMException;
 import org.zumult.backend.BackendInterface;
@@ -44,11 +45,16 @@ public class MausConnection {
             Media partAudio = backend.getMedia(audioID, Media.MEDIA_FORMAT.WAV).getPart(startTime, endTime);
             File audioFile = new File(partAudio.getURL());
             
+            File audioFile16kHzMono = File.createTempFile("ZuMult_", ".wav");
+            AudioProcessor audioProcessor = new AudioProcessor();
+            audioProcessor.stereoToMono16kHz(audioFile, audioFile16kHzMono);
+            
             HashMap<String, Object> otherParameters = new HashMap<>();
             otherParameters.put("LANGUAGE", MausConnection.mapLanguageCode2ToMAUS(transcript.getLanguage()));
             
             MAUSConnector mausConnector = new MAUSConnector();
-            String praatTextString = mausConnector.callMAUS(textFile, audioFile, otherParameters);
+            //String praatTextString = mausConnector.callMAUS(textFile, audioFile, otherParameters);
+            String praatTextString = mausConnector.callMAUS(textFile, audioFile16kHzMono, otherParameters);
             audioFile.delete();
             textFile.delete();
             

@@ -5,7 +5,7 @@
     exclude-result-prefixes="xs math"
     version="2.0">
     
-    <xsl:param name="X_PER_SECOND" select="600" as="xs:integer"/>
+    <xsl:param name="X_PER_SECOND" as="xs:integer">600</xsl:param>
     
     <xsl:variable name="STILLS" select="//video-stills"/>    
     
@@ -13,10 +13,16 @@
     <xsl:template match="/">
         <xsl:variable name="WIDTH" select="xs:int(//tli[last()]/@time * $X_PER_SECOND + 100)" />
         <xsl:variable name="HEIGHT" select="650"/>
-        <svg xmlns="http://www.w3.org/2000/svg" style="padding:10px;border:1px solid lightGray;margin:10px;">            
+        <svg xmlns="http://www.w3.org/2000/svg" style="padding:10px;border:1px solid lightGray;margin:10px;" id="pitchSVG">            
             <xsl:attribute name="width"><xsl:value-of select="$WIDTH"/>px</xsl:attribute>
             <xsl:attribute name="height"><xsl:value-of select="$HEIGHT"/>px</xsl:attribute>
+            <xsl:attribute name="data-xPerSecond"><xsl:value-of select="$X_PER_SECOND"/></xsl:attribute>
+            <xsl:attribute name="data-start"><xsl:value-of select="//tli[1]/@time"/></xsl:attribute>
+            <xsl:attribute name="data-end"><xsl:value-of select="//tli[last()]/@time"/></xsl:attribute>
+            <xsl:attribute name="onmousemove">moveSVGCursor(evt)</xsl:attribute>
+            <xsl:attribute name="onclick">setSVGCursor(evt)</xsl:attribute>
             
+
             <rect x="0" y="0" width="{$WIDTH - 100}" height="350" fill="aliceblue"/>
 
             <!-- dashed lines and captions for the y-axis -->
@@ -128,17 +134,28 @@
                 </xsl:for-each>
             </g>
             
+            <line id="svg_cursor" x1="0" x2="0" y1="0" y2="{$HEIGHT}" style="stroke:#00008b;stroke-width:1"></line>
+            
+            
         </svg>
     </xsl:template>
     
+    <xsl:variable name="delta" select="0.01"/>
+    
     <!-- The pitch contour -->
     <xsl:template match="pitch">
+        <circle xmlns="http://www.w3.org/2000/svg" r="3" fill="red">           
+            <xsl:attribute name="cx" select="@time * $X_PER_SECOND"/>
+            <xsl:attribute name="cy" select="350 - @pitch div 2"/>
+        </circle>                
         <xsl:choose>
-            <xsl:when test="preceding-sibling::pitch[1]/@pitch='--undefined--'">
-                <circle xmlns="http://www.w3.org/2000/svg" r="2" fill="red">           
-                    <xsl:attribute name="cx" select="@time * $X_PER_SECOND"/>
-                    <xsl:attribute name="cy" select="350 - @pitch div 2"/>
-                </circle>                
+           <xsl:when test="preceding-sibling::pitch[1]/@pitch='--undefined--' or not(preceding-sibling::pitch)">
+               <line xmlns="http://www.w3.org/2000/svg" style="stroke:red;stroke-width:2">
+                   <xsl:attribute name="x1" select="(@time - $delta) * $X_PER_SECOND"/>
+                   <xsl:attribute name="x2" select="@time * $X_PER_SECOND"/>
+                   <xsl:attribute name="y1" select="350 - @pitch div 2"/>
+                   <xsl:attribute name="y2" select="350 - @pitch div 2"/>                                
+               </line>                
             </xsl:when>
             <xsl:otherwise>
                 <line xmlns="http://www.w3.org/2000/svg" style="stroke:red;stroke-width:2">
@@ -149,5 +166,25 @@
                 </line>                
             </xsl:otherwise>
         </xsl:choose>
+        
+        <xsl:choose>
+            <xsl:when test="following-sibling::pitch[1]/@pitch='--undefined--' or not(following-sibling::pitch)">
+                <line xmlns="http://www.w3.org/2000/svg" style="stroke:red;stroke-width:2">
+                    <xsl:attribute name="x1" select="@time * $X_PER_SECOND"/>
+                    <xsl:attribute name="x2" select="(@time + $delta) * $X_PER_SECOND"/>
+                    <xsl:attribute name="y1" select="350 - @pitch div 2"/>
+                    <xsl:attribute name="y2" select="350 - @pitch div 2"/>                                
+                </line>                
+            </xsl:when>
+            <xsl:otherwise>
+                <line xmlns="http://www.w3.org/2000/svg" style="stroke:red;stroke-width:2">
+                    <xsl:attribute name="x1" select="following-sibling::pitch[1]/@time * $X_PER_SECOND"/>
+                    <xsl:attribute name="x2" select="@time * $X_PER_SECOND"/>
+                    <xsl:attribute name="y1" select="350 - following-sibling::pitch[1]/@pitch div 2"/>
+                    <xsl:attribute name="y2" select="350 - @pitch div 2"/>                                
+                </line>                
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:template>
 </xsl:stylesheet>

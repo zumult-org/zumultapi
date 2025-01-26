@@ -43,6 +43,7 @@
     <xsl:param name="HIGHLIGHT_IDS_1"/>
     <xsl:param name="HIGHLIGHT_IDS_2"/>
     <xsl:param name="HIGHLIGHT_IDS_3"/>
+    <xsl:param name="HIGHLIGHT_ANNOTATION_BLOCK"/>
     
     <xsl:variable name="HIGHLIGHT">
         <ids>
@@ -105,6 +106,9 @@
         <tr class="annotationBlock">
             <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
             <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>
+            <xsl:if test="$HIGHLIGHT_ANNOTATION_BLOCK = @xml:id">
+                <xsl:attribute name="style">background:lightGreen; font-size:larger;</xsl:attribute>
+            </xsl:if>
             
             <td class="tablerow_cursor">
                 <xsl:variable name="startAnchor" select="@start"/>
