@@ -39,5 +39,10 @@ and open the template in the editor.
         white-space: nowrap;         
     }
     
+    img.start:hover {
+        transform: scale(2.5);
+    }
+    
+    
     
     

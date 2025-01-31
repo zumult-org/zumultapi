@@ -234,7 +234,7 @@
         <script type="text/javascript">
             loadMicroView();
             jump(startTime);
-            
+            getMasterMediaPlayer().pause();
         </script>
         
     </body>

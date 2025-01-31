@@ -449,6 +449,7 @@
                     <a class="dropdown-item" onclick="javascript:setEndSelection(this)">End Selection</a>
                     <a class="dropdown-item" onclick="javascript:showAnnotations(this)">Annotations...</a>
                     <a class="dropdown-item" onclick="javascript:showPartitur(this)">Partitur...</a>
+                    <a class="dropdown-item" onclick="javascript:showZuMin(this)">Micro View (ZuMin)...</a>
                 </div>
             </div>                
         </td>        

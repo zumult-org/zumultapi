@@ -28,7 +28,7 @@
             <!-- ******************* -->
             <!-- * PROJECT LINKS  ** -->
             <!-- ******************* -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto>
               <li class="nav-item">
                 <a class="nav-link" href="<%= Configuration.getWebAppBaseURL()%>"><%=myResources.getString("Home")%></a>
               </li>
