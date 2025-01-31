@@ -61,7 +61,7 @@
     
     function showPartitur(element){
         var id = element.closest("tr").dataset.annotationBlockId;   
-        if (id==null) return;
+        if (id===null) return;
         $.post(
                 BASE_URL + "/ZumultDataServlet",
                 { 
@@ -80,6 +80,14 @@
                     $('#waitSpinner').toggle();
                 }
               );                
+    }
+    
+    function showZuMin(element){
+        var annotationBlockID = element.closest("tr").dataset.annotationBlockId;   
+        if (annotationBlockID===null) return;
+        let url = "./zuMin.jsp?transcriptID=" + transcriptID + "&annotationBlockID=" + annotationBlockID;
+        window.open(url, '_blank').focus();
+        
     }
     
     function showProtocol(){

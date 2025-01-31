@@ -56,8 +56,8 @@
 -->
 
 <% 
-    //String username = request.getUserPrincipal().getName();
-    String username = "thomas.schmidt@ids-mannheim.de";
+    
+    String username = "bratislav.metulski@takkatukka.fr";
     
     BackendInterface backend = BackendInterfaceFactory.newBackendInterface(); 
     
@@ -73,11 +73,6 @@
     
     /**** START: for user defined vocabulary lists ****/
     
-    //String transcriptIDWithHighlights = request.getParameter("transcriptIDWithHighlights");
-    
-    if (transcriptID==null){
-        //transcriptID = transcriptIDWithHighlights;
-    } 
     
     Transcript transcript = backend.getTranscript(transcriptID);
     
@@ -332,7 +327,7 @@
             
             var startAnnotationBlockID = '<%= startAnnotationBlockID %>';
             var endAnnotationBlockID = '<%= endAnnotationBlockID %>';
-            var startTime = '<%= startTime %>';
+            var startTime = <%= startTime %>;
 
             var vttURL = '<%= vttURL %>';
             
@@ -365,7 +360,6 @@
             
         </script>
         <script src="../js/media.js"></script>
-        <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
         
     </head>
     <body onload="init()" id="zuviel-body">
@@ -601,6 +595,9 @@
             reloadWordlist();
             reloadTranscript('<%= makeVisibleID %>');
             reloadSVG('small');
+            jump(startTime);
+            getMasterMediaPlayer().pause();
+            
         </script>
     </body>
 </html>

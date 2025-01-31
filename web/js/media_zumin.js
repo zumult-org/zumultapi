@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+var skipUpdate = false;
+
 function getMasterMediaPlayer(){
 	if (document.getElementById('master-video')){  
 		return $("#master-video")[0];
@@ -74,7 +76,7 @@ function initialiseMedia(){
 
 /* this will give every token a double click handler so that it can initialise playback */
 function addOnDblClicks(){
-    $("td").dblclick(function(e) {
+    $("span.token").dblclick(function(e) {
         e.preventDefault();
         clearSelection();        
         jump(this.dataset.start);
@@ -181,10 +183,14 @@ function updateTime(){
     //updateSVGDummy(elapsedTime);
     
     
-    updateSVGCursor(elapsedTime);
+    if (!skipUpdate){
+        updateSVGCursor(elapsedTime);
+    }
+    
+    skipUpdate = false;
 
     // this is finding all the span elements (tokens) that are within the current time
-    var spanElements = document.getElementsByTagName('td');
+    var spanElements = document.getElementsByTagName('span');
     for (var i = 0; i < spanElements.length; i++) {
         spanElement = spanElements[i];
         start = spanElement.getAttribute('data-start');
@@ -202,6 +208,7 @@ function updateTime(){
             spanElement.classList.remove("highlight-playback");            
         }
     }     
+    
     
     var tableCursorElements = document.getElementsByClassName('tablerow_cursor');
     for (var i = 0; i < tableCursorElements.length; i++) {
@@ -224,12 +231,41 @@ function updateSVGCursor(time){
     var cursor = document.getElementById('svg_cursor')    
     if (cursor!==null){
         // one second is ten pixels? seems like
-        var newX = (time - startTime) * 10;
+        var newX = (time - startTime) * xPerSecond;
         cursor.setAttribute('x1', newX);
         cursor.setAttribute('x2', newX);
         
         cursor.scrollIntoView({inline: "center"});
     }
+}
+
+
+
+function moveSVGCursor(evt){
+    /*var cursor = document.getElementById('svg_cursor')    
+    pt.x = evt.clientX;
+
+    // The cursor point, translated into svg coordinates
+    var cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse());
+    cursor.setAttribute('x1', cursorpt.x);
+    cursor.setAttribute('x2', cursorpt.x);*/
+    
+}
+
+function setSVGCursor(evt){
+    var cursor = document.getElementById('svg_cursor')    
+    pt.x = evt.clientX;
+    var cursorpt =  pt.matrixTransform(svg.getScreenCTM().inverse());
+
+    skipUpdate = true;
+    var player = getMasterMediaPlayer();
+    let newTime = startTime + (cursorpt.x / xPerSecond );
+    player.currentTime=newTime;
+
+    // The cursor point, translated into svg coordinates
+    cursor.setAttribute('x1', cursorpt.x);
+    cursor.setAttribute('x2', cursorpt.x);
+    
 }
 
 function seek() {

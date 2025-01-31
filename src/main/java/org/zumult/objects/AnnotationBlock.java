@@ -14,5 +14,7 @@ public interface AnnotationBlock extends XMLSerializable, Identifiable {
     public String getSpeaker();
     public String getStart();
     public String getEnd();
+    
+    public String getWordText();
 
 }

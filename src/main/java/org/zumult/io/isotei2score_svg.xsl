@@ -147,7 +147,7 @@
                         </xsl:for-each>
                         
                         <!-- the crosshair cursor -->
-                        <line id="svg_cursor" x1="0" x2="0" y1="0" y2="{$WIDTH}" style="stroke:rgb(180,200,200);stroke-width:1"></line>
+                        <line id="svg_cursor" x1="0" x2="0" y1="0" y2="{$HEIGHT}" style="stroke:rgb(180,200,200);stroke-width:1"></line>
                         
                         <!-- <xsl:apply-templates select="//tei:body/*"/> -->
                         <xsl:choose>                

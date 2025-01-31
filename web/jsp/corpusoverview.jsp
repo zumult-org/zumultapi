@@ -4,6 +4,7 @@
     Author     : Thomas_Schmidt
 --%>
 
+<%@page import="java.io.File"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="java.util.HashMap"%>
@@ -16,23 +17,6 @@
 <%@include file="../WEB-INF/jspf/locale.jspf" %>     
 <html>
     <%
-       String[][] IMAGE_COPYRIGHT = {
-           {"DNAM", "Christian Zimmer"},
-           {"GDSA", "Christian Zimmer"},
-           {"IS--", "Anne Betten"},
-           {"ISW-", "Anne Betten"},
-           {"ISZ-", "Anne Betten"},
-           {"JK--", "Projekt 'Jugend, Kommunikation, Medien'"},
-           {"MEKI", "IFM, LMU München"},
-           {"MEND", "Aaron Schmidt-Riese"},
-        
-       };
-       
-       HashMap<String, String> IMAGE_COPYRIGHT_MAP = new HashMap<>();
-       for (String[] s : IMAGE_COPYRIGHT){
-           IMAGE_COPYRIGHT_MAP.put(s[0], s[1]);
-       }
-        
        BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
        String backendName = backendInterface.getName();
        String backendAcronym = backendInterface.getAcronym();
@@ -65,8 +49,6 @@
             
         </script>
         
-        <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
-
     </head>
     <body>
         <% String pageTitle = "Korpusübersicht"; 
@@ -111,10 +93,18 @@
                   <div class="row no-gutters">
                     <div class="col-md-2">
                         <figure class="figure">
-                            <img src="../images/words.jpg" class="card-img-top rounded" alt="...">
-                            <% if (IMAGE_COPYRIGHT_MAP.containsKey(corpusID)) { %>
-                                <figcaption class="figure-caption text-right">&copy; <%= IMAGE_COPYRIGHT_MAP.get(corpusID) %></figcaption>                            
-                            <% } %>
+                            <%
+                                String corpusImgSrc = "../images/words.jpg";
+                                String tryPath = "/images/corpora/" + corpusID + ".png";
+                                String path = request.getSession().getServletContext().getRealPath(tryPath);
+                                if (path!=null){
+                                    File image = new File(path);    
+                                    if (image.exists()){
+                                        corpusImgSrc = ".." + tryPath;
+                                    }
+                                }
+                            %>
+                            <img src="<%= corpusImgSrc %>" class="card-img-top rounded" alt="...">
                         </figure>
                     </div>
                     <div class="col-md-10">                  

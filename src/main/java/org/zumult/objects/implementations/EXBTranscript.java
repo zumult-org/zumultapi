@@ -93,6 +93,22 @@ public class EXBTranscript extends AbstractXMLObject implements Transcript {
         }
         return 0.0;
     }
+    
+    @Override
+    public double getNextTimeForID(String id) {
+        try {
+            BasicTranscription bt = getBasicTranscription();
+            TimelineItem tli = bt.getBody().getCommonTimeline().getTimelineItemWithID(id);
+            if (tli.getTime()>=0){
+                return tli.getTime();
+            }
+            return bt.getBody().getCommonTimeline().getPreviousTime(id);
+        } catch (JexmaraldaException ex) {
+            Logger.getLogger(EXBTranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0.0;
+    }
+    
 
     @Override
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock) {
@@ -214,5 +230,6 @@ public class EXBTranscript extends AbstractXMLObject implements Transcript {
     public Document getXmlDocument() {
         return super.getDocument();
     }
+
     
 }

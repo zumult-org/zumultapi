@@ -21,6 +21,7 @@ import org.zumult.objects.Media;
  * @author Thomas.Schmidt
  */
 public class MediaUtilities {
+    
     String ffmpegPath;
     
     public MediaUtilities(String ffmpegPath){
