@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : thomas.schmidt
 */
 
-    body { 
+    body#zuviel-body { 
         padding-top: 70px; 
         padding-bottom: 100px;
     }
@@ -108,6 +108,11 @@ and open the template in the editor.
     /* this is the color for the annotation block */
     td.highlight-playback {
         background-color: #00008b;
+    }
+    
+    span.translation {
+        color: gray;
+        font-size: 10pt;
     }
 
     

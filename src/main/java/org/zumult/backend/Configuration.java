@@ -43,6 +43,7 @@ public class Configuration {
     private static String mediaDistributionPath;
     private static String mediaSnippetsPath;
     private static String ffmpegPath;
+    private static String praatPath;
     private static String wordlistPath;
     private static String germanetPath;
     
@@ -106,6 +107,10 @@ public class Configuration {
         return ffmpegPath;
     }
     
+    public static String getPraatPath(){
+        return praatPath;
+    }
+
     public static String getTranscriptPath(){
         return transcriptPath;
     }
@@ -254,6 +259,7 @@ public class Configuration {
             mediaDistributionPath = config.getString("backend.media-distribution-path");
             mediaSnippetsPath = config.getString("backend.media-snippets-path");
             ffmpegPath = config.getString("backend.ffmpeg-path");
+            praatPath = config.getString("backend.praat-path");
             
             metadataPath = config.getString("backend.metadata-path");
             materialPath = config.getString("backend.material-path");            

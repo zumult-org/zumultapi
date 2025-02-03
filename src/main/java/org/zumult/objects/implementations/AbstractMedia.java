@@ -39,7 +39,11 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(thisID, ".mp4");
                     // issue #70
                     outputFile.deleteOnExit();
-                    getMediaUtilities().cutVideo(startInSeconds, endInSeconds, getURL(), outputFile.getAbsolutePath());
+                    String path = getURL();
+                    if (this instanceof COMAMedia){
+                        path = ((COMAMedia)this).fileString;
+                    }
+                    getMediaUtilities().cutVideo(startInSeconds, endInSeconds, path, outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                 } catch (IOException ex) {
                     Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,8 +55,12 @@ public abstract class AbstractMedia implements Media {
                     File outputFile2 = File.createTempFile(thisID, ".wav");
                     // issue #70
                     outputFile2.deleteOnExit();
-                    getMediaUtilities().cutAudio(startInSeconds, endInSeconds, getURL(), outputFile2.getAbsolutePath());
-                    thisUrlString = outputFile2.getAbsolutePath();
+                    String path = getURL();
+                    if (this instanceof COMAMedia){
+                        path = ((COMAMedia)this).fileString;
+                    }
+                    getMediaUtilities().cutAudio(startInSeconds, endInSeconds, path, outputFile2.getAbsolutePath());
+                    thisUrlString = outputFile2.getAbsolutePath();                    
                 } catch (IOException ex) {
                     Logger.getLogger(AbstractMedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -61,6 +69,15 @@ public abstract class AbstractMedia implements Media {
         String[] returnValue = {thisID, thisUrlString};
         return returnValue;        
     }
+    
+    // 21-01-2023 new for #235 ... don't seem to need it
+    /*public String[][] stillSeries(double[] positionsInSeconds){
+        String[][] returnValue = new String[positionsInSeconds.length][2];
+        for (int i=0; i<positionsInSeconds.length; i++){
+            returnValue[i] = still(positionsInSeconds[i]);
+        }
+        return returnValue;
+    }*/
     
     public String[] still(double positionInSeconds){
         try {
@@ -71,7 +88,11 @@ public abstract class AbstractMedia implements Media {
                     File outputFile = File.createTempFile(getID() + "_", ".png");
                     // issue #70
                     outputFile.deleteOnExit();
-                    getMediaUtilities().getVideoImage(positionInSeconds, getURL(), outputFile.getAbsolutePath());
+                    String path = getURL();
+                    if (this instanceof COMAMedia){
+                        path = ((COMAMedia)this).fileString;
+                    }                    
+                    getMediaUtilities().getVideoImage(positionInSeconds, path, outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
                     String[] returnValue = {thisID, thisUrlString};
                     return returnValue;        

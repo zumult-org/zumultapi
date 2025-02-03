@@ -1,0 +1,52 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="px-4" id="start-explanation">    
+    <div class="table-wrapper table-responsive myKWIC" id="kwic_display">
+        <p>Simple CQP queries can look like this:</p>
+
+        <table class=table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">CQP Query</th>
+                    <th scope="col">What this query will find</th>
+                </tr>
+            </thead>
+            <tr>
+                <th scope="row" class="text-monospace" style="font-size:14pt">[word="in"]</th>
+                <td>all instances of the transcribed form "in"</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-monospace" style="font-size:14pt">[lemma="go"]</th>
+                <td>all tokens whose lemma is “gehen”, i.e., “go”, but also “went”, “goes”, “going”, etc. </td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-monospace" style="font-size:14pt">[pos="JJ"]</th>
+                <td>
+                    all tokens whose POS is JJ (for adjective in the Penn POS tagset), e.g., “young”, “small”, “wide”, “good”, etc. <br/>
+                    Please note that tagsets vary between corpora and languages.
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            You can add metadata restriction to a query, e.g.:                            
+        </p>
+        <ul>
+            <li>
+                <span class="text-monospace">[norm="in"] within &lt;Sex="female"/&gt;</span>
+                to restrict query to female speakers
+            </li>
+            <li>
+                <span class="text-monospace">[norm="in"] within &lt;Recording_Date="2007.*"/&gt;</span>
+                to restrict query to interviews from 2007
+            </li>
+        </ul>
+
+        <p>
+            For more query examples, please see
+            <a href="https://docs.google.com/document/d/1InEQzxIZ_G-0f5KpED6djpzzm2bX9IqANfvb3lxZZ6o/edit#heading=h.iher1aozbmv6"
+               target="_blank">this GoogleDoc</a>
+
+        </p>
+    </div>
+</div>

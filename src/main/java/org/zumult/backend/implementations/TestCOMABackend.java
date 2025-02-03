@@ -7,10 +7,12 @@ package org.zumult.backend.implementations;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.io.IOHelper;
@@ -51,17 +53,32 @@ public class TestCOMABackend {
                     "--- Metadata path : " +
                     Configuration.getMetadataPath()
             );
-            BackendInterface bi = new COMAFileSystem();
-            SearchResultPlus searchResult = bi.search("[norm=\"in\"][norm=\"die\"][norm=\".+\"]", null, null, "TGDP", null, 1000, null, null, null, null, null);
+            BackendInterface bi = new COMAFileSystem(); 
+            
+            Random random = new Random();
+            IDList allCorpusIDs = bi.getCorpora();
+            String randomCorpusID = allCorpusIDs.get(random.nextInt(allCorpusIDs.size()));
+            System.out.println(randomCorpusID);
+            IDList allTranscriptIDs =  bi.getTranscripts4Corpus(randomCorpusID);
+            System.out.println(String.join("  //  ", allTranscriptIDs));
+            String randomTranscriptID = allTranscriptIDs.get(random.nextInt(allTranscriptIDs.size()));
+            
+            System.out.println(randomCorpusID + " / " + randomTranscriptID);
+            
+            //System.exit(0);
+            
+            SearchResultPlus searchResult = bi.search("[word=\"in\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
-            KWIC kwic = bi.getKWIC(searchResult, "3-t,3-t");
+            System.out.println("Search done.");
+            KWIC kwic = bi.getKWIC(searchResult, "5-t,5-t");
             //KWIC kwic = bi.exportKWIC(searchResult, "3-t,3-t", "xml");
             long t2 = System.currentTimeMillis();
             DefaultQuerySerializer qs = new DefaultQuerySerializer();
             //File f = qs.createKWICDownloadFile(kwic, "xml", bi);
             String kwicXML = qs.displayKWICinXML(kwic);
+            System.out.println("XML done.");
             long t3 = System.currentTimeMillis();
-            System.out.println(kwicXML);
+            //System.out.println(kwicXML);
             //System.out.println(IOHelper.readUTF8(f));
             
             System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
@@ -77,12 +94,31 @@ public class TestCOMABackend {
             }
             
             
+            //String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
+            //String transcriptID = "ISO_manv_2018_e_triage";
             String transcriptID = "IDE57E5B6C-E67B-B454-E462-4E4868C79333";
+            
+            IDList videos4Transcript = bi.getVideos4Transcript(transcriptID);
+            System.out.println("Videos : " + String.join(" / ", videos4Transcript) );
+            
             String tokenID = "w120";
             Transcript transcript = bi.getTranscript(transcriptID);
+            Transcript part = transcript.getPart(10.0, 20.0, true);
+            System.out.println(part.toXML());
+            part.setTimelineToZero();
+            System.out.println(part.toXML());
+            //System.out.println(IOHelper.DocumentToString(part.getDocument()));
+            
+            Transcript transcript2 = bi.getTranscript(transcriptID, Transcript.TranscriptFormats.EXB);
+            
+            //System.out.println(transcript2.toXML());
+            
+            System.exit(0);
+            
             String audioID = transcript.getMetadataValue(bi.findMetadataKeyByID("Transcript_Recording ID"));
             String url = bi.getMedia(audioID).getURL();
             System.out.println("--- Media URL for transcript " + transcriptID + " : " + url);
+            bi.getMedia(audioID).getPart(0.5, 1.5);
             double time = transcript.getTimeForID(tokenID);
             System.out.println("--- Time for token " + tokenID + " in  transcript " + transcriptID + " : " + time);
             

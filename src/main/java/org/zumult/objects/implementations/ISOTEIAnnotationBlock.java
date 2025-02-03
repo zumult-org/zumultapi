@@ -6,6 +6,8 @@
 package org.zumult.objects.implementations;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.zumult.objects.AnnotationBlock;
 
 /**
@@ -42,6 +44,18 @@ public class ISOTEIAnnotationBlock extends AbstractXMLObject implements Annotati
     @Override
     public String getEnd() {
         return super.getDocument().getDocumentElement().getAttribute("end");
+    }
+
+    @Override
+    public String getWordText() {
+        String result = "";
+        NodeList wElements = super.getDocument().getElementsByTagName("w");
+        for (int i=0; i<wElements.getLength(); i++){
+            Element e = (Element)(wElements.item(i));
+            String words = e.getTextContent();
+            result+=words + " ";
+        }
+        return result.trim();
     }
     
 }

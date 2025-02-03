@@ -13,7 +13,7 @@ function getCurrentPosition(){
 }
 
 function getVideoImage(videoID){
-    var WEBSERVICE = "/ZumultDataServlet?command=getVideoImage"
+    var WEBSERVICE = "/ZumultDataServlet?command=getVideoImage";
     var PARAMETERS =    "&videoID=" + videoID
                      +  "&position=" + getCurrentPosition();
     $.get(BASE_URL + WEBSERVICE + PARAMETERS, function( data ) {

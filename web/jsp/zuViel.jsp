@@ -56,8 +56,8 @@
 -->
 
 <% 
-    //String username = request.getUserPrincipal().getName();
-    String username = "thomas.schmidt@ids-mannheim.de";
+    
+    String username = "bratislav.metulski@takkatukka.fr";
     
     BackendInterface backend = BackendInterfaceFactory.newBackendInterface(); 
     
@@ -73,11 +73,6 @@
     
     /**** START: for user defined vocabulary lists ****/
     
-    //String transcriptIDWithHighlights = request.getParameter("transcriptIDWithHighlights");
-    
-    if (transcriptID==null){
-        //transcriptID = transcriptIDWithHighlights;
-    } 
     
     Transcript transcript = backend.getTranscript(transcriptID);
     
@@ -99,6 +94,11 @@
     String visSpeechRate = request.getParameter("visSpeechRate");
     if (visSpeechRate==null){
         visSpeechRate="FALSE";
+    }
+    
+    String flattenSeg = request.getParameter("flattenSeg");
+    if (flattenSeg==null){
+        flattenSeg = "TRUE";
     }
     
     String startAnnotationBlockID = request.getParameter("startAnnotationBlockID");
@@ -149,6 +149,7 @@
             highlightIDsArray[i-1] = "";
         }        
     }
+    
 
 
     /**** START: for user defined vocabulary lists and for action sequences****/
@@ -216,11 +217,27 @@
     
     /**** END: for user defined vocabulary lists ****/
                     
-    String corpusID = transcriptID.substring(0,4);
+    String corpusID = backend.getCorpus4Event(backend.getEvent4SpeechEvent(backend.getSpeechEvent4Transcript(transcriptID)));
     String speechEventID = backend.getSpeechEvent4Transcript(transcriptID); //transcriptID.substring(0,18);
     String eventID = backend.getEvent4SpeechEvent(speechEventID); // transcriptID.substring(0,12);
     IDList videos = backend.getVideos4Transcript(transcriptID);   
     IDList audios = backend.getAudios4Transcript(transcriptID);
+    
+    String previousTranscriptID = null;
+    String followingTranscriptID = null;
+    IDList allTranscriptsForThisCorpus = backend.getTranscripts4Corpus(corpusID);
+    int index = allTranscriptsForThisCorpus.indexOf(transcriptID);
+    if (index>0){
+        previousTranscriptID = allTranscriptsForThisCorpus.get(index-1);
+    } else {
+        previousTranscriptID = allTranscriptsForThisCorpus.get(allTranscriptsForThisCorpus.size()-1);
+    }
+    if (index<allTranscriptsForThisCorpus.size()-1){
+        followingTranscriptID = allTranscriptsForThisCorpus.get(index+1);    
+    } else {
+        followingTranscriptID = allTranscriptsForThisCorpus.get(0);
+    }
+    
     
     String speechEventName = backend.getSpeechEvent(speechEventID).getName();
     
@@ -310,7 +327,7 @@
             
             var startAnnotationBlockID = '<%= startAnnotationBlockID %>';
             var endAnnotationBlockID = '<%= endAnnotationBlockID %>';
-            var startTime = '<%= startTime %>';
+            var startTime = <%= startTime %>;
 
             var vttURL = '<%= vttURL %>';
             
@@ -343,10 +360,9 @@
             
         </script>
         <script src="../js/media.js"></script>
-        <%@include file="../WEB-INF/jspf/matomoTracking.jspf" %>                
         
     </head>
-    <body onload="init()">
+    <body onload="init()" id="zuviel-body">
         <%@include file="../WEB-INF/jspf/transcriptNav.jspf" %>                                                
 
         <!-- ************************************** -->
@@ -366,7 +382,7 @@
                     <!-- **************************** -->
                     <!-- ***** WORDLIST SELECTION   * -->
                     <!-- **************************** -->
-                    <div class="input-group mb-3 input-group-sm" style="padding-left:20px; padding-right:10px;">
+                    <div class="input-group mb-3 input-group-sm" style="padding-left:20px; padding-right:10px;visibility:hidden;">
                         <div class="input-group-prepend" style="width:90px;">
                             <span class="input-group-text" id="subtitletypelabel" title="<%=myResources.getString("ReferenceWordlist")%>"><%=myResources.getString("RefWordlist")%></span>
                         </div>
@@ -579,6 +595,9 @@
             reloadWordlist();
             reloadTranscript('<%= makeVisibleID %>');
             reloadSVG('small');
+            jump(startTime);
+            getMasterMediaPlayer().pause();
+            
         </script>
     </body>
 </html>

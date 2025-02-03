@@ -71,8 +71,16 @@
             <xsl:when test="$TYPE='norm'"><xsl:value-of select="@norm"/></xsl:when>
             <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
         </xsl:choose>
-        <xsl:text> </xsl:text>
+        <xsl:if test="not(following-sibling::*[1][self::tei:pc]) and following-sibling::*">
+            <xsl:text> </xsl:text>                
+        </xsl:if>
     </xsl:template>
+    
+    <xsl:template match="tei:pc">
+        <xsl:apply-templates/>                    
+        <xsl:text> </xsl:text>                
+    </xsl:template>
+    
     
     <xsl:template match="tei:desc">
         <xsl:choose>
@@ -97,6 +105,9 @@
             <xsl:otherwise>
                 <xsl:choose>
                     <xsl:when test="@type='micro'">(.) </xsl:when>
+                    <xsl:when test="@type='short'">(-) </xsl:when>
+                    <xsl:when test="@type='medium'">(--) </xsl:when>
+                    <xsl:when test="@type='long'">(---) </xsl:when>
                     <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="substring-before(substring-after(@dur, 'PT'), 'S')"/><xsl:text>) </xsl:text></xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>

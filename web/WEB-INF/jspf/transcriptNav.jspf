@@ -16,13 +16,23 @@
                    imgSrc = "../eslo-demo/img/eslo_colloque.jpg"; 
                }
             %>
-            <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/>
+            <!-- <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/> -->
         </a>
         
         
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active" style="line-height: 1">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="./zuViel.jsp?transcriptID=<%=previousTranscriptID%>"
+                       title="Previous transcript: <%=previousTranscriptID%>"
+                       >
+                       <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
 
                 <!-- ******************* -->
                 <!-- *     METADATA    * -->
@@ -41,6 +51,17 @@
                         <span class="titleID"><%= transcriptID %></span>
                     </a>
                 </li>
+                
+                <li class="nav-item active" style="line-height: 1">
+                    <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
+                    <a class="nav-link" 
+                       href="./zuViel.jsp?transcriptID=<%=followingTranscriptID%>"
+                       title="Next transcript: <%=followingTranscriptID%>"
+                       >
+                       <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+                
                 
                 <!-- **************************** -->
                 <!-- *     DISPLAY PARAMETERS   * -->
@@ -61,7 +82,7 @@
                     IDList allTranscripts = backend.getTranscripts4SpeechEvent(speechEventID);
                     //if (allTranscripts.size()>1){
                 %>        
-                <li class="nav-item dropdown active">
+                <!-- <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        title="<%=myResources.getString("AllDatasetsSpeechEvent")%>"
@@ -88,7 +109,7 @@
                             </div>
                         <%        
                     //}                
-                %>
+                %> -->
                 
                 <!-- ******************* -->
                 <!-- *     SELECTION   * -->
@@ -109,13 +130,13 @@
                            <%=myResources.getString("Download")%>...
                         </a>
 
-                        <div class="dropdown-divider"></div>
+                        <!-- <div class="dropdown-divider"></div>
                         
                         <a class="dropdown-item" 
                            onclick="javascript:addSelectionToCollection()"
                            title="<%=myResources.getString("AddSelectionCollection")%>">
                            <%=myResources.getString("AddToCollection")%>...
-                        </a>
+                        </a> -->
 
                     </div>
                 </li>

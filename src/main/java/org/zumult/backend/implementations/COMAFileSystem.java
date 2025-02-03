@@ -52,6 +52,7 @@ import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
 import org.zumult.objects.implementations.COMATranscript;
+import org.zumult.objects.implementations.EXBTranscript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
@@ -285,8 +286,45 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         }
         
         return null;
-
     }
+
+    @Override
+    public Transcript getTranscript(String transcriptID, Transcript.TranscriptFormats transcriptFormat) throws IOException {
+        try {
+            switch (transcriptFormat){
+                case ISOTEI :
+                    return getTranscript(transcriptID);
+                case EXB :
+                    String corpusID = findCorpusID(transcriptID);
+                    if (corpusID==null){
+                        throw new IOException("Error: No corpus found for: " + transcriptID);
+                    }
+                    Corpus corpus = getCorpus(corpusID);
+                    Document corpusDocument = corpus.getDocument();
+                    String xp = "//Transcription[@Id='" + transcriptID + "']";
+                    Element transcriptionElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+                    String nsLink = transcriptionElement.getElementsByTagName("NSLink").item(0).getTextContent();
+                    File corpusFolder = new File(topFolder, corpusID);
+                    String nsLinkModified = nsLink.substring(0, nsLink.lastIndexOf(".")) + ".exb";
+                    File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
+                    
+                    if (!(resolvedPath.exists())){
+                        throw new IOException("Error: No transcript found for: " + transcriptID);
+                    }
+                    
+                    String xmlString = IOHelper.readUTF8(resolvedPath);                    
+                    return new EXBTranscript(xmlString);
+                case EAF : 
+                    
+            }
+            return super.getTranscript(transcriptID, transcriptFormat); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }
+    }
+    
+    
 
     @Override
     public IDList getCorpora() throws IOException {
@@ -359,8 +397,9 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             /*NodeList allTranscripts = 
                     (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);*/
+            String xpath = "//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']";
             NodeList allTranscripts = 
-                    (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']", 
+                    (NodeList) xPath.evaluate(xpath, 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allTranscripts.getLength(); i++){
                 Element transcriptElement = ((Element)(allTranscripts.item(i)));
@@ -427,7 +466,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             
             */
             NodeList allVideos = (NodeList)
-                    xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.mp4' or substring(Filename, string-length(Filename)-3)='.MP4']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
+                    xPath.evaluate("//Media[substring(NSLink, string-length(NSLink)-3)='.mp4' or substring(NSLink, string-length(NSLink)-3)='.MP4']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allVideos.getLength(); i++){
                 Element mediaElement = ((Element)(allVideos.item(i)));
                 result.add(mediaElement.getAttribute("Id"));

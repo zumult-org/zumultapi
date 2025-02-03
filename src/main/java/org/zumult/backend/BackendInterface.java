@@ -32,7 +32,6 @@ import org.zumult.query.SearchStatistics;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.KWIC;
 import org.zumult.query.SampleQuery;
-import org.zumult.query.SearchResultBigrams;
 import org.zumult.query.Searcher;
 
 /**
@@ -57,6 +56,7 @@ public interface BackendInterface {
     public Media getMedia(String mediaID, Media.MEDIA_FORMAT format) throws IOException;    
 
     public Transcript getTranscript(String transcriptID) throws IOException;    
+    public Transcript getTranscript(String transcriptID, Transcript.TranscriptFormats transcriptFormat) throws IOException;    // #223
     
     public Protocol getProtocol(String protocolID) throws IOException;
 
@@ -241,12 +241,12 @@ public interface BackendInterface {
             Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
     
     
-    public SearchResultBigrams searchBigrams(String queryString, String queryLanguage, String queryLanguageVersion, 
+    /*public SearchResultBigrams searchBigrams(String queryString, String queryLanguage, String queryLanguageVersion, 
             String corpusQuery, String metadataQuery, Integer pageLength, 
             Integer pageIndex, String searchIndex, String sortType,
             String bigramType, List<String> annotationLayerIDs4BigramGroups,
             List<String> elementsInBetweenToBeIgnored, String scope,
-            Integer minFreq, Integer maxFreq, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
+            Integer minFreq, Integer maxFreq, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;*/
         
     /**
      * Searches in the specified search index according to the specified parameters 

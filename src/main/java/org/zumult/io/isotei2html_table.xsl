@@ -7,13 +7,15 @@
     exclude-result-prefixes="xs"
     version="2.0">
     
-    <xsl:output method="xhtml" omit-xml-declaration="yes" indent="no"/>
+    <xsl:output method="xml" omit-xml-declaration="yes" indent="no"/>
     <xsl:strip-space elements="*"/>
 
     <!-- whether to include a column for the dropdown menu -->
     <xsl:param name="DROPDOWN">TRUE</xsl:param>
     <!-- whether to include a column for numbering -->
     <xsl:param name="NUMBERING">TRUE</xsl:param>
+    <!-- whether to include a row for translation -->    
+    <xsl:param name="TRANSLATION">en</xsl:param>
     <!-- 
         which form of tokens to display
         trans : the transcribed form
@@ -41,6 +43,7 @@
     <xsl:param name="HIGHLIGHT_IDS_1"/>
     <xsl:param name="HIGHLIGHT_IDS_2"/>
     <xsl:param name="HIGHLIGHT_IDS_3"/>
+    <xsl:param name="HIGHLIGHT_ANNOTATION_BLOCK"/>
     
     <xsl:variable name="HIGHLIGHT">
         <ids>
@@ -103,6 +106,9 @@
         <tr class="annotationBlock">
             <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
             <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>
+            <xsl:if test="$HIGHLIGHT_ANNOTATION_BLOCK = @xml:id">
+                <xsl:attribute name="style">background:lightGreen; font-size:larger;</xsl:attribute>
+            </xsl:if>
             
             <td class="tablerow_cursor">
                 <xsl:variable name="startAnchor" select="@start"/>
@@ -159,6 +165,12 @@
                     </xsl:attribute>
                 </xsl:if>
                 <xsl:apply-templates select="tei:u/child::tei:*"/>                
+                <xsl:if test="string-length($TRANSLATION)&gt;0 and descendant::tei:spanGrp[@type=$TRANSLATION]">
+                    <br/>
+                    <span class="translation">
+                        <xsl:apply-templates select="descendant::tei:spanGrp[@type=$TRANSLATION]/tei:span"/>
+                    </span>
+                </xsl:if>
             </td>
         </tr>
     </xsl:template>
@@ -166,14 +178,17 @@
     
     <xsl:template match="tei:u"/>
     
+    
     <xsl:template match="tei:w">
         <xsl:variable name="ID" select="@xml:id"/>
         <xsl:variable name="norm" select="@norm"/>
         <xsl:variable name="lemma" select="@lemma"/>
         <xsl:variable name="pos" select="@pos"/>
         <xsl:variable name="trans" select="."/>
-        <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
-        <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>        
+        <!-- <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
+        <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>      -->   
+        <xsl:variable name="startAnchor" select="preceding::tei:anchor[1]/@synch"/>        
+        <xsl:variable name="endAnchor" select="following::tei:anchor[1]/@synch"/>
         <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
         <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
         <span data-start="{$start}" data-end="{$end}" data-norm="{$norm}" data-lemma="{$lemma}" data-pos="{$pos}" data-id="{$ID}">
@@ -244,8 +259,16 @@
                     <xsl:apply-templates/>                    
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:text> </xsl:text>
+            <xsl:if test="@type='repair'">/</xsl:if>
+            <xsl:if test="not(following-sibling::*[1][self::tei:pc]) and following-sibling::*">
+                <xsl:text> </xsl:text>                
+            </xsl:if>
         </span>
+    </xsl:template>
+    
+    <xsl:template match="tei:pc">
+        <xsl:apply-templates/>                    
+        <xsl:text> </xsl:text>                
     </xsl:template>
     
     <xsl:template match="tei:w/text()">
@@ -332,6 +355,30 @@
         </tr>
     </xsl:template>
     
+    <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">
+        <xsl:apply-templates/>
+        <!-- <xsl:choose>
+            <xsl:when test="@type='utterance' and @subtype='interrogative'">
+                <xsl:text>? </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='interrupted'">
+                <xsl:text>... </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='modeless'">
+                <xsl:text>&#x02d9; </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='declarative'">
+                <xsl:text>. </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='exclamative'">
+                <xsl:text>! </xsl:text>                
+            </xsl:when>
+        </xsl:choose> -->
+        <xsl:if test="following-sibling::tei:seg">
+            <br/>
+        </xsl:if>        
+    </xsl:template>
+    
     <!-- to do : highlight -->
     <xsl:template match="tei:seg//tei:pause">
         <xsl:if test="$VIS_PAUSE_INSIDE_U='TRUE'">
@@ -351,6 +398,9 @@
                     <xsl:otherwise>
                         <xsl:choose>
                             <xsl:when test="@type='micro'">(.) </xsl:when>
+                            <xsl:when test="@type='short'">(-) </xsl:when>
+                            <xsl:when test="@type='medium'">(--) </xsl:when>
+                            <xsl:when test="@type='long'">(--) </xsl:when>
                             <xsl:otherwise><xsl:text>(</xsl:text><xsl:value-of select="substring-before(substring-after(@dur, 'PT'), 'S')"/><xsl:text>) </xsl:text></xsl:otherwise>
                         </xsl:choose>
                     </xsl:otherwise>
@@ -358,6 +408,8 @@
             </span>
         </xsl:if>
     </xsl:template>
+    
+    
     
     <xsl:template match="tei:anchor[@type]">
         <xsl:choose>
@@ -397,6 +449,7 @@
                     <a class="dropdown-item" onclick="javascript:setEndSelection(this)">End Selection</a>
                     <a class="dropdown-item" onclick="javascript:showAnnotations(this)">Annotations...</a>
                     <a class="dropdown-item" onclick="javascript:showPartitur(this)">Partitur...</a>
+                    <a class="dropdown-item" onclick="javascript:showZuMin(this)">Micro View (ZuMin)...</a>
                 </div>
             </div>                
         </td>        
