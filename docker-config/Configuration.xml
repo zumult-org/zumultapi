@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <backend classPath="org.zumult.backend.implementations.COMAFileSystem">
+        
+        <!-- ************************************ -->
+        <!-- for Docker Image including DemoKorpus -->
+        <!-- ************************************ -->
+
+        <rest-api-base-url>http://localhost:8080/zumult/api</rest-api-base-url>
+        <web-app-base-url>http://localhost:8080/zumult</web-app-base-url>
+        <metadata-path>/home/corpusdata/corpora</metadata-path>
+        <media-snippets-path>/var/lib/tomcat/webapps/zumult/downloads</media-snippets-path>
+        <ffmpeg-path>ffmpeg</ffmpeg-path>
+        <media-path>http://localhost:8080/corpusdata/</media-path>
+        <search-index-path>/home/corpusdata/indices/</search-index-path>
+        
+        <!-- *******   END: for for Docker Image including DemoKorpus   ***** -->
+
+        <!-- ************************************************************** -->
+        <!-- ***** WHAT FOLLOWS IS NOT SPECIFIC TO SERVER OR LOCAL MACHINES -->
+        <!-- ************************************************************** -->
+
+        <search-index-transcript-based>TB_EXMARaLDA-DemoKorpus</search-index-transcript-based>
+        <corpus-ids-for-indexing>EXMARaLDA-DemoKorpus</corpus-ids-for-indexing>
+    </backend>
+</configuration> 
