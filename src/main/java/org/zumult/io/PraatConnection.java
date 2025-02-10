@@ -65,7 +65,8 @@ public class PraatConnection {
         File tempScript = writeTempScript(WRITE_PITCH_SCRIPT_PATH);
         File pitchOut = File.createTempFile("pitch", ".txt");
         
-        ProcessBuilder pb = new ProcessBuilder(PRAAT_PATH, tempScript.getAbsolutePath(), audio.getAbsolutePath(), pitchOut.getAbsolutePath());
+        // 10-02-2025, added flag for #237
+        ProcessBuilder pb = new ProcessBuilder(PRAAT_PATH, "--no-pref-window", tempScript.getAbsolutePath(), audio.getAbsolutePath(), pitchOut.getAbsolutePath());
         System.out.println(pb.command());
         Process p = pb.start();
         try {
