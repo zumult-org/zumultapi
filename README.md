@@ -1,22 +1,25 @@
 # zumultapi
 
-This is the code from the ZuMult project (http://zumult.org), transferred from UHH's Gitlab to Github on 03 May 2022
+This is the code from the ZuMult project (http://zumult.org), transferred from UHH's Gitlab to Github on 03 May 2022.
 
 
-## Building using maven
+## maven
 
-Install EXMARaLDA jar first and then package jar:
+       <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/zumult-org/zumultapi</url>
+        </repository>   
 
-`mvn install:install-file -Dfile=lib/EXMARaLDA_WEB.jar -DgroupId=org.exmaralda -DartifactId=EXMARaLDA -Dversion=Preview-20220623 -Dpackaging=jar`
-
-`mvn clean package`
-
-Alternatively package a war:
-
-`mvn clean package "-Dproject.packaging=war"`
+        <dependency>
+            <groupId>org.zumult</groupId>
+            <artifactId>zumultapi</artifactId>
+            <version>0.0.6-alpha</version>
+        </dependency>     
 
 
 ## Deploying using docker
+
+**To be updated soon**
 
 Build image (also builds war and deploys using tomcat):
 

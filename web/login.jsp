@@ -22,9 +22,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body style="background: #4f5559;">
+    <body style="background: black;">
         <div style="margin-right:25%; margin-left:25%; margin-top:15%; border-radius: 25px; padding: 20px; 
-            width: 50%; border: 8px solid #1ab3b3; background : #f1f0e9; font-family: sans-serif;">
+            width: 50%; border: 8px solid rgb(53,104,17); background : white; font-family: sans-serif;">
             <form method="POST" action="j_security_check">
                 <table>
                     <tr>
@@ -40,7 +40,6 @@
                                                 <td colspan="2">
                                                     <div style="padding-bottom:10px;">
                                                     <%=myResources.getString("LoginText")%>
-                                                    <a target="_blank" href="https://dgd.ids-mannheim.de">https://dgd.ids-mannheim.de</a>
                                                     </div>                                                
                                                 </td>
                                         </tr>
@@ -56,7 +55,6 @@
                                             <td colspan="2" style="margin-top : 10px; font-size: 10pt;">
                                                 <div style="padding-top:10px; padding-bottom:10px;">
                                                 <%=myResources.getString("DGDEULA")%><br/>
-                                                <a target="_blank" href="https://dgd.ids-mannheim.de/dgd/pragdb.dgd_extern.sys_use">https://dgd.ids-mannheim.de/dgd/pragdb.dgd_extern.sys_use</a>
                                                 </div>
                                             </td>
                                         </tr>
