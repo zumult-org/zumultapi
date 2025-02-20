@@ -19,17 +19,15 @@ This is the code from the ZuMult project (http://zumult.org), transferred from U
 
 ## Deploying using docker
 
-**To be updated soon**
+Build image (also builds war and deploys using tomcat) and clone the EXMARaLDA demo corpus:
 
-Build image (also builds war and deploys using tomcat):
-
-`docker build . -t zumult`
+`docker build --build-arg GITHUB_PAT={your_github_pat} . -t zumult`
 
 Run the image in container:
 
 `docker run --rm -p 8080:8080 --name zumult zumult:latest`
 
-and vist http://localhost:8080/zumult/
+and visit http://localhost:8080/zumultapi/
 
 Specifiying a different (local) folder as the corpusdata folder for container:
 
