@@ -32,6 +32,7 @@ ENV HOME=/usr/app
 ENV ZUMULT_CONFIG_PATH=/usr/app/Configuration.xml
 ENV CORPUSDATA=/home/corpusdata
 ARG GITHUB_PAT
+ARG HTTPS_CERT=false
 
 VOLUME ["/home/corpusdata"]
 
@@ -40,26 +41,34 @@ WORKDIR $HOME
 COPY --from=build $WAR_FILE /usr/app/zumultapi.war
 COPY --from=build $HOME/docker-entrypoint.sh /usr/app/docker-entrypoint.sh
 COPY --from=build $HOME/docker-config/server.xml /usr/app/server.xml
-COPY --from=build $HOME/docker-config/Configuration.xml /usr/app/Configuration.xml
+COPY --from=build $HOME/docker-config/Configuration.xm[l] /usr/app/Configuration.xml
+COPY --from=build $HOME/docker-config/Configuration_UDE.xml /usr/app/Configuration_UDE.xml
 COPY --from=build $HOME/docker-config/web.xml /usr/app/web.xml
+COPY --from=build $HOME/docker-config/server.[p]12 /usr/app/server.p12
 RUN mkdir -p $CORPUSDATA
 RUN git clone --depth 1 https://$GITHUB_PAT@github.com/zumult-org/exmaraldademocorpus.git
 WORKDIR exmaraldademocorpus
 RUN git lfs install && git lfs pull
 RUN git status
 WORKDIR $HOME
-#RUN mv exmaraldademocorpus/src/main/java/data/corpora/EXMARaLDA-DemoKorpus $CORPUSDATA/corpora
 RUN mv exmaraldademocorpus/src/main/java/data/* $CORPUSDATA
-
+RUN if [ "$HTTPS_CERT" = "true" ] ; then \
+    mv -f /usr/app/Configuration_UDE.xml /usr/app/Configuration.xml; \
+    fi 
 
 EXPOSE 8080
+EXPOSE 8443
 # configuration and deployment as tomcat webapp   
 RUN cp -f /usr/app/server.xml ${CATALINA_HOME}/conf/server.xml \
     && unzip -q /usr/app/zumultapi.war -d ${CATALINA_WEBAPP}/zumultapi \
     && mkdir -p ${CATALINA_WEBAPP}/zumultapi/downloads \
     && rm -Rf ${CATALINA_WEBAPP}/ROOT \
     && chmod 755 /usr/app/docker-entrypoint.sh \
-    && cp -f /usr/app/web.xml ${CATALINA_WEBAPP}/zumultapi/WEB-INF/web.xml
+    && cp -f /usr/app/web.xml ${CATALINA_WEBAPP}/zumultapi/WEB-INF/web.xml 
+RUN if [ "$HTTPS_CERT" = "true" ] ; then \
+    mkdir -p ${CATALINA_HOME}/ssl \
+    && cp -f /usr/app/server.p12 ${CATALINA_HOME}/ssl/server.p12; \
+    fi 
 
 
 HEALTHCHECK CMD curl --fail http://localhost:8080/zumultapi || exit 1
