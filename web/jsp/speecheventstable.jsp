@@ -66,6 +66,11 @@
                 window.open(url, '_blank');    
             }
             
+            function openMedia(speechEventID){
+                let url = "./mediaOverview.jsp?speechEventID=" + speechEventID;
+                window.open(url, '_blank');    
+            }
+
             function openMetadata(speechEventID){
                 $.post(
                     BASE_URL + "/ZumultDataServlet",
@@ -142,6 +147,10 @@
                                 <th>
                                     <button onclick="openMetadata('<%= speechEventID %>')" type="button" class="btn btn-sm py-0 px-1" title="Show all metadata">
                                         <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button onclick="openMedia('<%= speechEventID %>')" type="button" class="btn btn-sm py-0 px-1" 
+                                            title="Open media overview (<%= speechEventID %>) in ZuViel">
+                                        <i class="fa-solid fa-video"></i>
                                     </button>
                                     <button onclick="openTranscript('<%= firstTranscriptID %>')" type="button" class="btn btn-sm py-0 px-1" 
                                             title="Open first transcript (<%= firstTranscriptID %>) in ZuViel">

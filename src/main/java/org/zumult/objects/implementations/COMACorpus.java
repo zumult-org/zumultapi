@@ -87,7 +87,8 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
                 case SPEECH_EVENT -> getSpeechEventMetadataKeys();
                 case SPEAKER -> getSpeakerMetadataKeys();
                 case SPEAKER_IN_SPEECH_EVENT -> getSpeakerInSpeechEventMetadataKeys();
-                case TRANSCRIPT -> getTranscriptMetadataKeys();                    
+                case TRANSCRIPT -> getTranscriptMetadataKeys();  
+                case MEDIA -> getMediaMetadataKeys();
                 default -> getMetadataKeys();
             };
         }else {
@@ -191,6 +192,27 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         return result;        
     }
     
+    public Set<MetadataKey> getMediaMetadataKeys() {
+        // use a stylesheet with group()?
+        // not now - let's keep that simple
+        Set<MetadataKey> result = new HashSet<>();
+        try {
+            String xPathString = "//Media/Description/Key";
+            NodeList allKeys = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            HashSet<String> keySet = new HashSet<>();
+            for (int i=0; i<allKeys.getLength(); i++){
+                Element keyElement = ((Element)(allKeys.item(i)));
+                keySet.add(keyElement.getAttribute("Name"));
+            }      
+            for (String key: keySet){
+                COMAMetadataKey comaMetadataKey = new COMAMetadataKey("Media_" + key, key, ObjectTypesEnum.MEDIA);
+                result.add(comaMetadataKey);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;        
+    }
     
     @Override
     public Set<String> getSpeakerLocationTypes() {

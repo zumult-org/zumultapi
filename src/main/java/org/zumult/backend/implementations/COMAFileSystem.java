@@ -216,13 +216,15 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             String xp = "//Media[@Id='" + mediaID + "']";
             Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             if (mediaElement!=null){
+                Element descriptionElement = (Element) mediaElement.getElementsByTagName("Description").item(0);
+                String descriptionXML = IOHelper.ElementToString(descriptionElement);
                 String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
                 
                 File corpusFolder = new File(topFolder, corpusID);
                 String fileString = corpusFolder.toPath().resolve(nsLink).toString();
                 
                 String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
-                return new COMAMedia(mediaID, urlString, fileString);
+                return new COMAMedia(mediaID, urlString, fileString, descriptionXML);
             } else {
                 // 07-06-2024
                 // this is a fallback in case the ID of the recording, not the ID of the media was provided
@@ -230,15 +232,20 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                 String xp2 = "//Recording[@Id='" + mediaID + "']/Media[1]";
                 Element mediaElement2 = (Element) (Node) xPath.evaluate(xp2, corpusDocument.getDocumentElement(), XPathConstants.NODE);
                 if (mediaElement2!=null){
+                    Element descriptionElement = (Element) mediaElement2.getElementsByTagName("Description").item(0);
+                    String descriptionXML = IOHelper.ElementToString(descriptionElement);
                     String nsLink = mediaElement2.getElementsByTagName("NSLink").item(0).getTextContent();
                     //File corpusFolder = new File(topFolder, corpusID);
                     //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
+                    File corpusFolder = new File(topFolder, corpusID);
+                    String fileString = corpusFolder.toPath().resolve(nsLink).toString();
+
                     String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
-                    return new COMAMedia(mediaID, urlString);
+                    return new COMAMedia(mediaID, urlString, fileString, descriptionXML);
                 }
             }
             
-        } catch (XPathExpressionException ex) {
+        } catch (XPathExpressionException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

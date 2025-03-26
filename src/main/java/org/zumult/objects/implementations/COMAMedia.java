@@ -5,6 +5,13 @@
  */
 package org.zumult.objects.implementations;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Element;
 import org.zumult.backend.Configuration;
 import org.zumult.io.MediaUtilities;
 import org.zumult.objects.Media;
@@ -18,6 +25,8 @@ public class COMAMedia extends AbstractMedia {
 
     
     String fileString;
+    XMLMetadata metadata;
+    
     
     public COMAMedia(String id, String urlString){
         super(id, urlString);
@@ -29,6 +38,13 @@ public class COMAMedia extends AbstractMedia {
         this.fileString = fileString;
     }
     
+    public COMAMedia(String id, String urlString, String fileString, String metadataXML){
+        super(id, urlString);
+        this.fileString = fileString;
+        metadata = new XMLMetadata(metadataXML);
+    }
+
+
     public String getFileString(){
         return fileString;
     }
@@ -64,7 +80,30 @@ public class COMAMedia extends AbstractMedia {
 
     @Override
     public String getMetadataValue(MetadataKey key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (key instanceof COMAMetadataKey comaKey){
+            /*
+            <Description>
+                <Key Name="transcription-name">60-414-1-3-a</Key>
+                <Key Name="Section ID">60-414-1-3-a</Key>
+                <Key Name="Section Title">Spoke German with husband, How they met</Key>
+                <Key Name="Section Type">Open-ended</Key>
+              </Description>            
+            */
+            XPath theXPath = XPathFactory.newInstance().newXPath();
+            try {
+                Element keyElement = 
+                        ((Element)theXPath.evaluate("//Key[@Name='" 
+                                + comaKey.getName("en") + "']", 
+                               metadata.getDocument().getDocumentElement(), 
+                               XPathConstants.NODE));
+                if (keyElement==null) return null;
+                return keyElement.getTextContent();
+            } catch (XPathExpressionException ex) {
+                Logger.getLogger(ISOTEITranscript.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }            
+        } 
+        return null;
     }
 
 
