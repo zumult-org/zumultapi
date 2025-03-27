@@ -55,6 +55,8 @@ RUN mv exmaraldademocorpus/src/main/java/data/* $CORPUSDATA
 RUN if [ "$HTTPS_CERT" = "true" ] ; then \
     mv -f /usr/app/Configuration_UDE.xml /usr/app/Configuration.xml; \
     fi 
+RUN touch /opt/java/openjdk/lib/jaxp.properties && echo javax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl >> /opt/java/openjdk/lib/jaxp.properties 
+
 
 EXPOSE 8080
 EXPOSE 8443
