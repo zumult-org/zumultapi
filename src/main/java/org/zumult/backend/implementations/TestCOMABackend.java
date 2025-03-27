@@ -84,6 +84,20 @@ public class TestCOMABackend {
             System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
             
             
+            SpeechEvent speechEventX = bi.getSpeechEvent("RC_Study_Day1_Trial-2");
+            String corpusID = bi.getCorpus4Event(bi.getEvent4SpeechEvent(speechEventX.getID()));
+            IDList videoList = bi.getVideos4SpeechEvent(speechEventX.getID());
+            IDList audioList = bi.getAudios4SpeechEvent(speechEventX.getID());
+            Set<MetadataKey> metadataKeysX = bi.getMetadataKeys4Corpus(corpusID, ObjectTypesEnum.MEDIA);
+            for (String videoID : videoList){
+                Media video = bi.getMedia(videoID);
+                for (MetadataKey mk : metadataKeysX){
+                    String y = video.getMetadataValue(mk);
+                    System.out.println(mk.getName("en") + " / " + y);
+                }
+            }
+            
+            
             System.exit(0);
 
 
