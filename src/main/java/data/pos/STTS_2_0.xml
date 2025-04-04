@@ -300,7 +300,7 @@
                     <description>sehr, nur, ziemlich</description>
                 </category>
                 <category name="Partikel eines Mehrwortlexems">
-                    <tag name="PTKMWL" ud-mapping="PART"/>
+                    <tag name="PTKMWL" ud-mapping="ADV"/>
                     <version version="2.0only"/>
                     <description>[x] noch, immer [+gesteigertes Adjektiv], schon [+gesteigertes
                         Adjektiv]</description>
