@@ -65,7 +65,14 @@ public class TestCOMABackend {
             
             System.out.println(randomCorpusID + " / " + randomTranscriptID);
             
-            //System.exit(0);
+            Corpus remCorpus = bi.getCorpus("ESLO-DEMO-REMOTE");
+            Media media = bi.getMedia("M_COMM_ESLO2_ENT_1005_REMOTE");
+            System.out.println(media.getURL());
+            
+            Transcript remTrans = bi.getTranscript("ISO_ESLO2_ENT_1005_C_REMOTE");
+            System.out.println(remTrans.toXML());
+            
+            System.exit(0);
             
             SearchResultPlus searchResult = bi.search("[word=\"in\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();

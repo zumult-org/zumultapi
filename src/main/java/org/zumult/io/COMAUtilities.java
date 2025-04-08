@@ -30,5 +30,9 @@ public class COMAUtilities {
             default : return "";
         }
     }
+    
+    public static boolean isHttpLink(String link){
+        return link.toLowerCase().matches("^http(s)?://.+");
+    }
 
 }

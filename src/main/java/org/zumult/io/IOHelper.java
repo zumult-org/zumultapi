@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -94,12 +96,22 @@ public class IOHelper {
     }
     
     public static String readUTF8(File file) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file, "UTF-8");
+        Scanner scanner = new Scanner(file, StandardCharsets.UTF_8.name());
         String xml = scanner.useDelimiter("\\A").next();
         scanner.close();
         return xml;    
     }
     
+    public static String httpReadUTF8(String urlString) throws MalformedURLException, IOException {
+        URL url = new URL(urlString);
+        InputStream inputStream = url.openStream();
+
+        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());        
+        String xml = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        return xml;    
+    }
+
     public static void writeUTF8(File file, String text) throws FileNotFoundException, IOException{
         OutputStreamWriter writer =
              new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
@@ -115,6 +127,7 @@ public class IOHelper {
     public static void writeDocument(Document document, File file) throws TransformerException, IOException{
         Files.write(file.toPath(), DocumentToString(document).getBytes("UTF-8"));        
     }
+
     
         
     public String applyInternalStylesheetToString(String pathToStylesheet, String xml) throws TransformerException{
