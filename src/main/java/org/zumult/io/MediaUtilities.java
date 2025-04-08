@@ -7,6 +7,7 @@ package org.zumult.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioFileFormat;
@@ -31,7 +32,7 @@ public class MediaUtilities {
     public void getVideoImage(double time, String pathToInputFile, 
                               String pathToOutputFile) throws IOException{
 
-        File sourceFile = new File(pathToInputFile);
+        //File sourceFile = new File(pathToInputFile);
         File targetFile = new File(pathToOutputFile);
         
         // ffmpeg.exe" -i N:\ARCHIV\FOLK\FOLK_E_00069\FOLK_E_00069_SE_01_V_01_DF_01.mp4 
@@ -46,7 +47,7 @@ public class MediaUtilities {
             "-ss",
             Double.toString(time),
             "-i",
-            sourceFile.getAbsolutePath(),
+            pathToInputFile, //sourceFile.getAbsolutePath(),
             "-vframes",
             "1",
             targetFile.getAbsolutePath()
@@ -74,14 +75,14 @@ public class MediaUtilities {
         //String FFMPEGPATH = "ffmpeg";
         //String FFMPEGPATH = "C:\\Program Files\\ffmpeg-20191101-53c21c2-win64-static\\bin\\ffmpeg.exe";
 
-        File sourceFile = new File(pathToInputFile);
+        //File sourceFile = new File(pathToInputFile);
         File targetFile = new File(pathToOutputFile);
         
         String[] commandAndParameters = {
             ffmpegPath,
             "-y",
             "-i",
-            sourceFile.getAbsolutePath(),
+            pathToInputFile, //sourceFile.getAbsolutePath(),
             "-ss",
             Double.toString(startTime),
             "-c",
@@ -108,15 +109,29 @@ public class MediaUtilities {
 
     public void cutAudio(double startTime, double endTime, String pathToInputFile, String pathToOutputFile) throws IOException {            
         AudioInputStream audioInputStream;
-
         System.out.println("Cutting " + pathToInputFile);
-        File soundFile = new File(pathToInputFile);
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(soundFile);    
-        } catch (UnsupportedAudioFileException uafe){
-            IOException wrappedException = new IOException("Unsupported audio file:" + uafe.getLocalizedMessage());
-            throw wrappedException;
+        
+        // 2025-04-08 changed for #246
+        if (!(COMAUtilities.isHttpLink(pathToInputFile))){
+            try {
+                File soundFile = new File(pathToInputFile);
+                audioInputStream = AudioSystem.getAudioInputStream(soundFile);    
+            } catch (UnsupportedAudioFileException ex){
+                Logger.getLogger(MediaUtilities.class.getName()).log(Level.SEVERE, null, ex);
+                IOException wrappedException = new IOException("Unsupported audio file:" + ex.getLocalizedMessage());
+                throw wrappedException;
+            }
+        } else {
+            try {
+                URL url = new URL(pathToInputFile);
+                audioInputStream = AudioSystem.getAudioInputStream(url);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(MediaUtilities.class.getName()).log(Level.SEVERE, null, ex);
+                IOException wrappedException = new IOException("Unsupported audio file:" + ex.getLocalizedMessage());
+                throw wrappedException;
+            }
         }
+            
         AudioFormat audioFormat = audioInputStream.getFormat();        
 
         if (audioFormat.getFrameSize() == AudioSystem.NOT_SPECIFIED){
@@ -151,14 +166,24 @@ public class MediaUtilities {
         if (url.toUpperCase().endsWith(".WAV")){
             AudioInputStream audioInputStream = null;
             try {
-                File file = new File(url);
-                audioInputStream = AudioSystem.getAudioInputStream(file);
-                AudioFormat format = audioInputStream.getFormat();
-                long audioFileLength = file.length();
-                int frameSize = format.getFrameSize();
-                float frameRate = format.getFrameRate();            
-                float durationInSeconds = (audioFileLength / (frameSize * frameRate));
-                return (durationInSeconds);
+                // 2025-04-08 changed for #246
+                if (!(COMAUtilities.isHttpLink(url))){
+                    File file = new File(url);
+                    audioInputStream = AudioSystem.getAudioInputStream(file);
+                    AudioFormat format = audioInputStream.getFormat();
+                    long audioFileLength = file.length();
+                    int frameSize = format.getFrameSize();
+                    float frameRate = format.getFrameRate();            
+                    float durationInSeconds = (audioFileLength / (frameSize * frameRate));
+                    return (durationInSeconds);
+                } else {
+                    URL theUrl = new URL(url);
+                    audioInputStream = AudioSystem.getAudioInputStream(theUrl);
+                    AudioFormat format = audioInputStream.getFormat();
+                    long frames = audioInputStream.getFrameLength();
+                    double durationInSeconds = (frames+0.0) / format.getFrameRate();                    
+                    return (durationInSeconds);
+                }
             } catch (UnsupportedAudioFileException | IOException ex) {
                 Logger.getLogger(MediaUtilities.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
@@ -169,6 +194,8 @@ public class MediaUtilities {
                 }
             }
         }
+        
+        // here's a to do: get media duration for other file types via FFMPEG
         return -1;
     }
     
