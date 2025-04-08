@@ -4,6 +4,7 @@
     Author     : bernd
 --%>
 
+<%@page import="javax.xml.transform.TransformerFactory"%>
 <%@page import="java.io.File"%>
 <%@page import="org.zumult.io.IOHelper"%>
 <%@page import="org.zumult.objects.AnnotationBlock"%>
@@ -56,6 +57,10 @@
                 String searchIndexPath = Configuration.getSearchIndexPath();
                 boolean indexPathExists = new File(metadataPath).exists();
                 
+                TransformerFactory factory = TransformerFactory.newInstance();
+                String transformerClassName = factory.getClass().getName();
+
+                
                 /*String treeTaggerPath = Configuration.getConfigurationVariable("tree-tagger-directory");
                 boolean treeTaggerDirExists =  new File(treeTaggerPath).exists();                
                 String treeTaggerPmDe = Configuration.getConfigurationVariable("tree-tagger-parameter-file-german");
@@ -91,6 +96,9 @@
                     <% } else { %>
                         <span class="error"> Path does not exist.</span>
                     <% } %>
+                </li>
+                <li>
+                    <b>Transformer class name: </b> <%= transformerClassName %>
                 </li>
                 
                 
