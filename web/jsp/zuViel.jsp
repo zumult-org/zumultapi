@@ -449,7 +449,17 @@
             <!-- *********************** -->
             <!-- ****  CENTER COL   **** -->
             <!-- *********************** -->
-            <div class="col-sm-6" id="columnCenter">
+            <%
+                if (!videos.isEmpty() || !audios.isEmpty()){              
+            %>
+                    <div class="col-sm-6" id="columnCenter">
+            <%
+                } else {              
+            %>
+                    <div class="col-sm-10" id="columnCenter">
+            <%
+                }             
+            %>
                 
                 <!-- *** EXPAND BEFORE *** -->
                 <% if (startAnnotationBlockID!=null && startAnnotationBlockID.length()>0) { %>
@@ -484,6 +494,9 @@
             <!-- *********************** -->
             <!-- *********************** -->
             <!-- right column --> 
+            <%
+                if (!videos.isEmpty() || !audios.isEmpty()){              
+            %>
             <div class="col-sm-4" id="columnRight">
 
                 <div style="position: fixed;">                    
@@ -501,7 +514,7 @@
                         </div>                        
                     </div>
 
-                    
+
                     <div id="players">
                     <%
                        if (!videos.isEmpty()){ 
@@ -563,10 +576,12 @@
                             </audio>                                             
                     <% } %>
                     </div>
+
                     
-                        
-                </div>                       
+                </div>    
             </div> <!-- end right column -->
+                    <%}                           
+                    %>
         </div>
     </div>
         </div>
