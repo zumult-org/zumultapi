@@ -1021,7 +1021,9 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
 
                     }
 
-                }
+                } else {
+            throw new IOException ("Search index directory is null!");
+        }
             }
         result.setHits(arrayOfHits);
         
