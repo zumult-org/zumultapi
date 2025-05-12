@@ -140,7 +140,10 @@
                           //  Long dur = System.currentTimeMillis() - time;
                           //  time = System.currentTimeMillis();
                             SpeechEvent speechEvent = backendInterface.getSpeechEvent(speechEventID);
-                            String firstTranscriptID = speechEvent.getTranscripts().get(0);
+                            String firstTranscriptID = null;
+                            if (!speechEvent.getTranscripts().isEmpty()){
+                                firstTranscriptID = speechEvent.getTranscripts().get(0);
+                            }
                             String name = speechEvent.getName();
                     %>
                             <tr>
@@ -152,10 +155,12 @@
                                             title="Open media overview (<%= speechEventID %>) in ZuViel">
                                         <i class="fa-solid fa-video"></i>
                                     </button>
-                                    <button onclick="openTranscript('<%= firstTranscriptID %>')" type="button" class="btn btn-sm py-0 px-1" 
-                                            title="Open first transcript (<%= firstTranscriptID %>) in ZuViel">
-                                        <i class="fa-regular fa-file-lines"></i>
-                                    </button>
+                                    <% if (firstTranscriptID!=null){ %>
+                                        <button onclick="openTranscript('<%= firstTranscriptID %>')" type="button" class="btn btn-sm py-0 px-1" 
+                                                title="Open first transcript (<%= firstTranscriptID %>) in ZuViel">
+                                            <i class="fa-regular fa-file-lines"></i>
+                                        </button>
+                                    <% } %>    
                                 </th>
                                 <th><%=name %></th>
                                 <% 

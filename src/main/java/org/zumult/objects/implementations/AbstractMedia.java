@@ -41,7 +41,9 @@ public abstract class AbstractMedia implements Media {
                     outputFile.deleteOnExit();
                     String path = getURL();
                     if (this instanceof COMAMedia){
-                        path = ((COMAMedia)this).fileString;
+                        // 2025-04-08 changed for #26
+                        String fs = ((COMAMedia)this).fileString;
+                        if (fs!=null) {path = fs;}
                     }
                     getMediaUtilities().cutVideo(startInSeconds, endInSeconds, path, outputFile.getAbsolutePath());
                     thisUrlString = outputFile.getAbsolutePath();
@@ -57,7 +59,9 @@ public abstract class AbstractMedia implements Media {
                     outputFile2.deleteOnExit();
                     String path = getURL();
                     if (this instanceof COMAMedia){
-                        path = ((COMAMedia)this).fileString;
+                        // 2025-04-08 changed for #26
+                        String fs = ((COMAMedia)this).fileString;
+                        if (fs!=null) {path = fs;}
                     }
                     getMediaUtilities().cutAudio(startInSeconds, endInSeconds, path, outputFile2.getAbsolutePath());
                     thisUrlString = outputFile2.getAbsolutePath();                    

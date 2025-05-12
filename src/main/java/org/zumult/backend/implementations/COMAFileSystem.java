@@ -35,6 +35,7 @@ import org.xml.sax.SAXException;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.backend.VirtualCollectionStore;
+import org.zumult.io.COMAUtilities;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
@@ -150,6 +151,8 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
+            System.out.println("Looking for speech event " + speechEventID + " in corpus " + corpusID);
+            
             String xp = "//Communication[@Id='" + speechEventID + "']";
             Element communicationElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
 
@@ -219,12 +222,17 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                 Element descriptionElement = (Element) mediaElement.getElementsByTagName("Description").item(0);
                 String descriptionXML = IOHelper.ElementToString(descriptionElement);
                 String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
-                
-                File corpusFolder = new File(topFolder, corpusID);
-                String fileString = corpusFolder.toPath().resolve(nsLink).toString();
-                
-                String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
-                return new COMAMedia(mediaID, urlString, fileString, descriptionXML);
+
+                // 2025-04-08 change for issue #246
+                if (!COMAUtilities.isHttpLink(nsLink)){
+                    File corpusFolder = new File(topFolder, corpusID);
+                    String fileString = corpusFolder.toPath().resolve(nsLink).toString();
+                    String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
+                    return new COMAMedia(mediaID, urlString, fileString, descriptionXML);
+                } else {
+                    return new COMAMedia(mediaID, nsLink, null, descriptionXML);                    
+                }
+                                
             } else {
                 // 07-06-2024
                 // this is a fallback in case the ID of the recording, not the ID of the media was provided
@@ -237,11 +245,16 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                     String nsLink = mediaElement2.getElementsByTagName("NSLink").item(0).getTextContent();
                     //File corpusFolder = new File(topFolder, corpusID);
                     //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
-                    File corpusFolder = new File(topFolder, corpusID);
-                    String fileString = corpusFolder.toPath().resolve(nsLink).toString();
 
-                    String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
-                    return new COMAMedia(mediaID, urlString, fileString, descriptionXML);
+                    // 2025-04-08 change for issue #246
+                    if (!COMAUtilities.isHttpLink(nsLink)){
+                        File corpusFolder = new File(topFolder, corpusID);
+                        String fileString = corpusFolder.toPath().resolve(nsLink).toString();
+                        String urlString = Configuration.getMediaPath() + "/" + corpusID + "/" + nsLink;
+                        return new COMAMedia(mediaID, urlString, fileString, descriptionXML);
+                    } else {
+                        return new COMAMedia(mediaID, nsLink, null, descriptionXML);                    
+                    }
                 }
             }
             
@@ -275,18 +288,27 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             String xp = "//Transcription[@Id='" + transcriptID + "']";
             Element transcriptionElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             String nsLink = transcriptionElement.getElementsByTagName("NSLink").item(0).getTextContent();
-            File corpusFolder = new File(topFolder, corpusID);
-            String nsLinkModified = nsLink.substring(0, nsLink.lastIndexOf(".")) + ".xml";
-            File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
             
-            if (!(resolvedPath.exists())){
-                throw new IOException("Error: No transcript found for: " + transcriptID);
+            // 2025-04-08 change for issue #246
+            if (!(COMAUtilities.isHttpLink(nsLink))){
+                File corpusFolder = new File(topFolder, corpusID);
+                String nsLinkModified = nsLink.substring(0, nsLink.lastIndexOf(".")) + ".xml";
+                File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
+
+                if (!(resolvedPath.exists())){
+                    throw new IOException("Error: No transcript found for: " + transcriptID);
+                }
+
+                String xmlString = IOHelper.readUTF8(resolvedPath);
+                String metadataString = IOHelper.ElementToString(transcriptionElement);
+
+                return new COMATranscript(xmlString, metadataString);
+            } else {
+                String xmlString = IOHelper.httpReadUTF8(nsLink); 
+                String metadataString = IOHelper.ElementToString(transcriptionElement);
+
+                return new COMATranscript(xmlString, metadataString);                
             }
-            
-            String xmlString = IOHelper.readUTF8(resolvedPath);
-            String metadataString = IOHelper.ElementToString(transcriptionElement);
-            
-            return new COMATranscript(xmlString, metadataString);
 
         } catch (XPathExpressionException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
@@ -670,6 +692,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public String getSpeechEvent4Transcript(String transcriptID) throws IOException {
         try {
             String corpusID = findCorpusID(transcriptID);
+            System.out.println("CorpusID for " + transcriptID + "=" + corpusID);
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             String xp = "//Transcription[@Id='" + transcriptID + "']/ancestor::Communication";
