@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/zumult"/>
+<Context path="/zumult">
+
+  <!-- The JDBC driver for the user DB -->
+  <Resource driverClassName="org.mariadb.jdbc.Driver" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+            initialSize="0" logAbandoned="true" maxActive="10" maxIdle="10" maxWait="5000" 
+            minEvictableIdleTimeMillis="600000" minIdle="0" name="jdbc/USER_DB" password="----" 
+            removeAbandoned="true" removeAbandonedTimeout="300" testOnBorrow="true" testWhileIdle="true" 
+            timeBetweenEvictionRunsMillis="60000" type="javax.sql.DataSource" 
+            url="jdbc:mariadb://127.0.0.1:3306/db_userdb" username="----" 
+            validationQuery="select 1"/>
+  
+  <!-- The user DB -->
+  <Realm className="org.apache.catalina.realm.DataSourceRealm" dataSourceName="jdbc/USER_DB" debug="99" 
+         localDataSource="true" 
+         roleNameCol="role" 
+         userCredCol="password" 
+         userNameCol="email" 
+         userRoleTable="db_userdb.t_roles" 
+         userTable="db_userdb.t_users">
+    
+    <!-- <CredentialHandler algorithm="md5" className="org.apache.catalina.realm.MessageDigestCredentialHandler"/> -->
+  </Realm>
+
+
+</Context>
