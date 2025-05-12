@@ -151,6 +151,8 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
+            System.out.println("Looking for speech event " + speechEventID + " in corpus " + corpusID);
+            
             String xp = "//Communication[@Id='" + speechEventID + "']";
             Element communicationElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
 
@@ -690,6 +692,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     public String getSpeechEvent4Transcript(String transcriptID) throws IOException {
         try {
             String corpusID = findCorpusID(transcriptID);
+            System.out.println("CorpusID for " + transcriptID + "=" + corpusID);
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             String xp = "//Transcription[@Id='" + transcriptID + "']/ancestor::Communication";

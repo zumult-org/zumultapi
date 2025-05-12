@@ -60,21 +60,27 @@ public class TestCOMABackend {
             String randomCorpusID = allCorpusIDs.get(random.nextInt(allCorpusIDs.size()));
             System.out.println(randomCorpusID);
             IDList allTranscriptIDs =  bi.getTranscripts4Corpus(randomCorpusID);
-            System.out.println(String.join("  //  ", allTranscriptIDs));
+            //System.out.println(String.join("  //  ", allTranscriptIDs));
             String randomTranscriptID = allTranscriptIDs.get(random.nextInt(allTranscriptIDs.size()));
+            String speechEventID = bi.getSpeechEvent4Transcript(randomTranscriptID);
+            
+            System.out.println("SpeechEvent : " + speechEventID);
             
             System.out.println(randomCorpusID + " / " + randomTranscriptID);
             
-            Corpus remCorpus = bi.getCorpus("ESLO-DEMO-REMOTE");
-            Media media = bi.getMedia("M_COMM_ESLO2_ENT_1005_REMOTE");
+            Corpus remCorpus = bi.getCorpus("ESLO");
+            //Media media = bi.getMedia("M_COMM_ESLO2_ENT_1005_REMOTE");
+            //System.out.println(media.getURL());
+            
+            Transcript remTrans = bi.getTranscript("ESLO1_CONF_503_C_TRANS");
+            System.out.println("========= " + remTrans.getID());
+            
+            Media media = bi.getMedia(bi.getAudios4Transcript(remTrans.getID()).get(0));
             System.out.println(media.getURL());
             
-            Transcript remTrans = bi.getTranscript("ISO_ESLO2_ENT_1005_C_REMOTE");
-            System.out.println(remTrans.toXML());
+            //System.exit(0);
             
-            System.exit(0);
-            
-            SearchResultPlus searchResult = bi.search("[word=\"in\"]", null, null, "EXMARaLDA-DemoKorpus", null, 1000, null, null, null, null, null);
+            SearchResultPlus searchResult = bi.search("[word=\"en\"]", null, null, "ESLO", null, 1000, null, null, null, null, null);
             long t1 = System.currentTimeMillis();
             System.out.println("Search done.");
             KWIC kwic = bi.getKWIC(searchResult, "5-t,5-t");
@@ -85,11 +91,12 @@ public class TestCOMABackend {
             String kwicXML = qs.displayKWICinXML(kwic);
             System.out.println("XML done.");
             long t3 = System.currentTimeMillis();
-            //System.out.println(kwicXML);
+            System.out.println(kwicXML);
             //System.out.println(IOHelper.readUTF8(f));
             
             System.out.println("KWIC: " + (t2 - t1) + " / " + "Serialize: " + (t3-t2));
             
+            System.exit(0);
             
             SpeechEvent speechEventX = bi.getSpeechEvent("RC_Study_Day1_Trial-2");
             String corpusID = bi.getCorpus4Event(bi.getEvent4SpeechEvent(speechEventX.getID()));
