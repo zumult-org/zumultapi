@@ -1,0 +1,12 @@
+<div class="svg-wrapper">
+    <div id="svg">
+        <%//= transcriptSVG %>
+        <i class="fas fa-spinner fa-spin"></i>
+        <p style="color:gray"><%=myResources.getString("WaitDensityViewerLoading")%></p>                                
+    </div>                        
+    <div class="magnify-svg">
+        <a href="#svgModal" data-toggle="modal" data-target="#svgModal" id="svgModalAnchor">
+         <i class="fas fa-search-plus"></i>
+        </a>
+    </div>                        
+</div>

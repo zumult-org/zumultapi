@@ -449,7 +449,17 @@
             <!-- *********************** -->
             <!-- ****  CENTER COL   **** -->
             <!-- *********************** -->
-            <div class="col-sm-6" id="columnCenter">
+            <%
+                if (!videos.isEmpty() || !audios.isEmpty()){              
+            %>
+                    <div class="col-sm-6" id="columnCenter">
+            <%
+                } else {              
+            %>
+                    <div class="col-sm-10" id="columnCenter">
+            <%
+                }             
+            %>
                 
                 <!-- *** EXPAND BEFORE *** -->
                 <% if (startAnnotationBlockID!=null && startAnnotationBlockID.length()>0) { %>
@@ -484,89 +494,17 @@
             <!-- *********************** -->
             <!-- *********************** -->
             <!-- right column --> 
+            <% if (!videos.isEmpty() || !audios.isEmpty()){ %>
             <div class="col-sm-4" id="columnRight">
-
                 <div style="position: fixed;">                    
-
-                    <div class="svg-wrapper">
-                        <div id="svg">
-                            <%//= transcriptSVG %>
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <p style="color:gray"><%=myResources.getString("WaitDensityViewerLoading")%></p>                                
-                        </div>                        
-                        <div class="magnify-svg">
-                            <a href="#svgModal" data-toggle="modal" data-target="#svgModal" id="svgModalAnchor">
-                                <i class="fas fa-search-plus"></i>
-                            </a>
-                        </div>                        
-                    </div>
-
-                    
-                    <div id="players">
-                    <%
-                       if (!videos.isEmpty()){ 
-                            
-                    %>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <video id="masterMediaPlayer" width="480" height="270" controls="controls">
-                                            <source src="<%=backend.getMedia(videos.get(0)).getURL()%>" type="video/mp4">
-                                            <track label="trans" kind="subtitles" srclang="de" src="<%= vttURL %>" default="default">
-                                            <track label="norm" kind="subtitles" srclang="de" src="<%= vttURL + "&subtitleType=norm"%>">
-                                        </video>          
-                                    </td>
-                                    <td>
-                                        <div style="background: #f8f9fa; height: 270px; border-radius: 3px; padding: 3px;">
-                                            <a href="javascript:addVideoImageToCollection('<%= videos.get(0) %>')" 
-                                               title="<%=myResources.getString("AddVideoImageCollection")%>" style="color:black">
-                                                <i class="far fa-plus-square"></i>
-                                            </a><br/>          
-                                            <a href="javascript:getVideoImage('<%= videos.get(0) %>')" 
-                                               title="<%=myResources.getString("ExtractVideoImage")%>" style="color:black">
-                                                <i class="fas fa-camera-retro"></i>
-                                            </a><br/>
-                                            <a href="javascript:frameBackward()" title="<%=myResources.getString("PrecedingFrame")%>" style="color:black">
-                                                <i class="fas fa-step-backward"></i>
-                                            </a><br/>
-                                            <a href="javascript:frameForward()" title="<%=myResources.getString("NextFrame")%>" style="color:black">
-                                                <i class="fas fa-step-forward"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                    <%      if (videos.size()>1){ %>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <video id="secondaryVideoPlayer" width="480" height="270" muted="muted">
-                                            <source src="<%=backend.getMedia(videos.get(1)).getURL()%>" type="video/mp4">
-                                        </video>                            
-                                    </td>
-                                    <td>
-                                        <div style="background: #f8f9fa; height: 270px; border-radius: 3px; padding: 3px;">
-                                            <a href="javascript:addVideoImageToCollection('<%= videos.get(1) %>')" title="<%=myResources.getString("AddVideoImageCollection")%>" style="color:black">
-                                                <i class="far fa-plus-square"></i>
-                                            </a><br/>          
-                                            <a href="javascript:getVideoImage('<%= videos.get(1) %>')" title="<%=myResources.getString("ExtractVideoImage")%>" style="color:black">
-                                                <i class="fas fa-camera-retro"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                    <%      }
-                    } else { %>
-                            <audio id="masterMediaPlayer" width="480" controls="controls" style="width:480px;">
-                                <source src="<%=backend.getMedia(audios.get(0)).getURL()%>" type="audio/mp3">
-                            </audio>                                             
-                    <% } %>
-                    </div>
-                    
-                        
-                </div>                       
-            </div> <!-- end right column -->
+                    <%@include file="../WEB-INF/jspf/zuVielDensityNav.jspf" %> 
+                    <%@include file="../WEB-INF/jspf/zuVielMediaPlayers.jspf" %> 
+                </div>    
+            </div> 
+            <% } %>
+            <!-- end right column -->
+            
+            
         </div>
     </div>
         </div>

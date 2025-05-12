@@ -1,0 +1,58 @@
+<div id="players">
+    <% if (!videos.isEmpty()){ %>
+        <table>
+            <tr>
+                <td>
+                    <video id="masterMediaPlayer" width="480" height="270" controls="controls">
+                        <source src="<%=backend.getMedia(videos.get(0)).getURL()%>" type="video/mp4">
+                        <track label="trans" kind="subtitles" srclang="de" src="<%= vttURL %>" default="default">
+                        <track label="norm" kind="subtitles" srclang="de" src="<%= vttURL + "&subtitleType=norm"%>">
+                    </video>          
+                </td>
+                <td>
+                    <div style="background: #f8f9fa; height: 270px; border-radius: 3px; padding: 3px;">
+                        <a href="javascript:addVideoImageToCollection('<%= videos.get(0) %>')" 
+                           title="<%=myResources.getString("AddVideoImageCollection")%>" style="color:black">
+                           <i class="far fa-plus-square"></i>
+                        </a><br/>          
+                        <a href="javascript:getVideoImage('<%= videos.get(0) %>')" 
+                           title="<%=myResources.getString("ExtractVideoImage")%>" style="color:black">
+                           <i class="fas fa-camera-retro"></i>
+                        </a><br/>
+                        <a href="javascript:frameBackward()" title="<%=myResources.getString("PrecedingFrame")%>" style="color:black">
+                            <i class="fas fa-step-backward"></i>
+                        </a><br/>
+                        <a href="javascript:frameForward()" title="<%=myResources.getString("NextFrame")%>" style="color:black">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    <%  if (videos.size()>1){ %>
+        <table>
+            <tr>
+                <td>
+                    <video id="secondaryVideoPlayer" width="480" height="270" muted="muted">
+                       <source src="<%=backend.getMedia(videos.get(1)).getURL()%>" type="video/mp4">
+                    </video>                            
+                </td>
+                <td>
+                    <div style="background: #f8f9fa; height: 270px; border-radius: 3px; padding: 3px;">
+                        <a href="javascript:addVideoImageToCollection('<%= videos.get(1) %>')" title="<%=myResources.getString("AddVideoImageCollection")%>" style="color:black">
+                            <i class="far fa-plus-square"></i>
+                        </a><br/>          
+                        <a href="javascript:getVideoImage('<%= videos.get(1) %>')" title="<%=myResources.getString("ExtractVideoImage")%>" style="color:black">
+                            <i class="fas fa-camera-retro"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    <%      }
+    } else { %>
+        <audio id="masterMediaPlayer" width="480" controls="controls" style="width:480px;">
+            <source src="<%=backend.getMedia(audios.get(0)).getURL()%>" type="audio/mp3">
+        </audio>                                             
+    <% } %>
+</div>
