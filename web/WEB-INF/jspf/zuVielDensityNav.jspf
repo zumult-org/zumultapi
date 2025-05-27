@@ -1,5 +1,5 @@
 <div class="svg-wrapper">
-    <div id="svg">
+    <div id="svg" style="max-height: 300px;">
         <%//= transcriptSVG %>
         <i class="fas fa-spinner fa-spin"></i>
         <p style="color:gray"><%=myResources.getString("WaitDensityViewerLoading")%></p>                                

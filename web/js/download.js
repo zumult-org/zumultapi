@@ -21,7 +21,7 @@ function requestDownload(){
         }
     ); */
     
-    $('#downloadStopperModal').modal('show');
+    //$('#downloadStopperModal').modal('show');
     
     $.post(
             BASE_URL + "/ZumultDataServlet",
