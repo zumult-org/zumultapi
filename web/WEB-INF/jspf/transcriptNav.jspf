@@ -28,7 +28,7 @@
                     <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
                     <a class="nav-link" 
                        href="./zuViel.jsp?transcriptID=<%=previousTranscriptID%>"
-                       title="Previous transcript: <%=previousTranscriptID%>"
+                       title="<%=myResources.getString("PreviousTranscript")%>: <%=previousTranscriptID%>"
                        >
                        <i class="fas fa-chevron-left"></i>
                     </a>
@@ -56,7 +56,7 @@
                     <!-- <a class="nav-link" href="#metadataModal" data-toggle="modal">Metadaten</a> -->
                     <a class="nav-link" 
                        href="./zuViel.jsp?transcriptID=<%=followingTranscriptID%>"
-                       title="Next transcript: <%=followingTranscriptID%>"
+                       title="<%=myResources.getString("NextTranscript")%>: <%=followingTranscriptID%>"
                        >
                        <i class="fas fa-chevron-right"></i>
                     </a>
@@ -218,7 +218,7 @@
               <a class="nav-link" target="_blank" href="<%= Constants.ZUMULT_PROJECT_ULR%>"><%=myResources.getString("Project")%></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" target="_blank" href="../doc/Handreichung-ZuViel.html">Help</a>
+            <a class="nav-link" target="_blank" href="../doc/Handreichung-ZuViel.html"><%=myResources.getString("Help")%></a>
           </li>
         </ul>
 
@@ -227,7 +227,8 @@
         <!-- *********************** -->
       <select id="selectLang" class="ml-3" style="width: 100px;">
           <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
-          <option value="en"<%if (!currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
+          <option value="en"<%if (currentLocale.getLanguage().equals(Locale.ENGLISH.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
+          <option value="fr"<%if (currentLocale.getLanguage().equals(Locale.FRENCH.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
       </select>
                 
     </nav>                
