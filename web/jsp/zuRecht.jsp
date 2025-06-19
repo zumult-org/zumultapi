@@ -32,43 +32,43 @@
 
 <%
     
-String pageParam_q = request.getParameter("q");
-String pageParam_cq = request.getParameter("cq"); // e.g. &cq=GWSS
-List userSpecifiedCorpora = null;   
-if (pageParam_cq!=null){
-   String[] pageParam_corpora = pageParam_cq.split("\\|");
-   userSpecifiedCorpora = Arrays.asList(pageParam_corpora);
-}
-
-String pageParam_form = request.getParameter("form");
-String pageParam_context = request.getParameter("context");
-String pageParam_leftContext = null;
-String pageParam_rightContext = null;
-if (pageParam_context!=null && Pattern.matches("\\d{1,2}-t,\\d{1,2}-t", pageParam_context)){
-    String[] ct = pageParam_context.split(Constants.KWIC_LEFT_RIGHT_CONTEXT_DELIMITER);
-    String[] lc = ct[0].split(Constants.KWIC_CONTEXT_DELIMITER);
-    
-    if (Integer.valueOf(lc[0]) > Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX){
-        pageParam_leftContext = String.valueOf(Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX);
-    }else if (Integer.valueOf(lc[0]) >= 0){
-        pageParam_leftContext = lc[0];
+    String pageParam_q = request.getParameter("q");
+    String pageParam_cq = request.getParameter("cq"); // e.g. &cq=GWSS
+    List userSpecifiedCorpora = null;   
+    if (pageParam_cq!=null){
+       String[] pageParam_corpora = pageParam_cq.split("\\|");
+       userSpecifiedCorpora = Arrays.asList(pageParam_corpora);
     }
-    
-    String[] rc = ct[1].split(Constants.KWIC_CONTEXT_DELIMITER);
-    if (Integer.valueOf(rc[0]) > Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX){
-        pageParam_rightContext = String.valueOf(Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX);
-    }else if (Integer.valueOf(rc[0]) >= 0){
-        pageParam_rightContext = rc[0];
-    }    
-}
 
-String pageParam_mode = request.getParameter("mode"); // e.g. &mode=SPEAKER_BASED_INDEX
+    String pageParam_form = request.getParameter("form");
+    String pageParam_context = request.getParameter("context");
+    String pageParam_leftContext = null;
+    String pageParam_rightContext = null;
+    if (pageParam_context!=null && Pattern.matches("\\d{1,2}-t,\\d{1,2}-t", pageParam_context)){
+        String[] ct = pageParam_context.split(Constants.KWIC_LEFT_RIGHT_CONTEXT_DELIMITER);
+        String[] lc = ct[0].split(Constants.KWIC_CONTEXT_DELIMITER);
 
-// get part-of-speech tagset
-BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
-AnnotationTagSet annotationTagSet = backend.getAnnotationTagSet(Constants.DEFAULT_POS_TAGSET);
-String annotationTagSetString = annotationTagSet.toXML().replaceAll("[\\t\\n\\r]+","").replaceAll("\\s+"," ").replaceAll("> <", "><");
-String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replace("\'", "\\\'");
+        if (Integer.valueOf(lc[0]) > Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX){
+            pageParam_leftContext = String.valueOf(Constants.KWIC_TOKEN_LEFT_CONTEXT_LENGTH_MAX);
+        }else if (Integer.valueOf(lc[0]) >= 0){
+            pageParam_leftContext = lc[0];
+        }
+
+        String[] rc = ct[1].split(Constants.KWIC_CONTEXT_DELIMITER);
+        if (Integer.valueOf(rc[0]) > Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX){
+            pageParam_rightContext = String.valueOf(Constants.KWIC_TOKEN_RIGHT_CONTEXT_LENGTH_MAX);
+        }else if (Integer.valueOf(rc[0]) >= 0){
+            pageParam_rightContext = rc[0];
+        }    
+    }
+
+    String pageParam_mode = request.getParameter("mode"); // e.g. &mode=SPEAKER_BASED_INDEX
+
+    // get part-of-speech tagset
+    BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+    AnnotationTagSet annotationTagSet = backend.getAnnotationTagSet(Constants.DEFAULT_POS_TAGSET);
+    String annotationTagSetString = annotationTagSet.toXML().replaceAll("[\\t\\n\\r]+","").replaceAll("\\s+"," ").replaceAll("> <", "><");
+    String annotationTagSetXML = annotationTagSetString.replace("\"", "\\\"").replace("\'", "\\\'");
 
 %>
 <%@include file="../WEB-INF/jspf/locale.jspf" %>     

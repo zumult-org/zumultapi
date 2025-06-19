@@ -416,28 +416,59 @@ public class ZumultDataServlet extends HttpServlet {
         try {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             
+            int numberOfImages = 6;
+            
+            String numerOfImagesProvided = request.getParameter("numberOfImages");
+            if (numerOfImagesProvided!=null){
+                numberOfImages = Integer.parseInt(numerOfImagesProvided);
+            }
+            
+            
+            String videoID = request.getParameter("videoID");
+            String startTimeProvided = request.getParameter("startTime");
+            String endTimeProvided = request.getParameter("endTime");
+
             String transcriptID = request.getParameter("transcriptID");
             String startTokenID = request.getParameter("startTokenID");
             String endTokenID = request.getParameter("endTokenID");
+
             
-            if (backend.getVideos4Transcript(transcriptID).isEmpty()){
-                response.setContentType("text/html");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("<div><error/><div>");
-                response.getWriter().close();             
-                return;
+            if (videoID==null){
+                if (backend.getVideos4Transcript(transcriptID).isEmpty()){
+                    response.setContentType("text/html");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("<div><error/><div>");
+                    response.getWriter().close();             
+                    return;
+                }
+                videoID = backend.getVideos4Transcript(transcriptID).get(0);            
             }
             
-            String videoID = backend.getVideos4Transcript(transcriptID).get(0);            
             
-            Transcript transcript = backend.getTranscript(transcriptID);
+            Transcript transcript = null;
+            if (transcriptID!=null){
+                transcript = backend.getTranscript(transcriptID);
+            }
             Media video = backend.getMedia(videoID, Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
 
             File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
             
+            double startTime = 0.0;
+            double endTime = -1;
             
-            double startTime = transcript.getTimeForID(startTokenID);
-            double endTime = transcript.getNextTimeForID(endTokenID);
+            if (startTokenID!=null && transcript!=null){
+                startTime = transcript.getTimeForID(startTokenID);
+            } else if (startTimeProvided!=null){
+                startTime = Double.parseDouble(startTimeProvided);
+            }
+            if (endTokenID!=null && transcript!=null){
+                endTime = transcript.getNextTimeForID(endTokenID);
+            } else if (endTimeProvided!=null){
+                endTime = Double.parseDouble(endTimeProvided);
+            }
+            if (endTime<0){
+                endTime = video.getDuration() - 0.1;
+            }
             
             // make sure that startTime and endTime are at least 0.6s apart
             if (endTime - startTime < 0.6){
@@ -448,8 +479,8 @@ public class ZumultDataServlet extends HttpServlet {
             
             String resultHTML = "<div>";
             
-            double delta = (endTime - startTime) / 5;
-            for (int i=0; i<6; i++){
+            double delta = (endTime - startTime) / (numberOfImages - 1);
+            for (int i=0; i<numberOfImages; i++){
                 double thisTime = startTime + i * delta;
                 Media videoImage = video.getVideoImage(thisTime);
                 File targetFile = new File(downloadDirectory, "ZuMult-Image_" + UUID.randomUUID() + ".png");
@@ -1172,6 +1203,13 @@ public class ZumultDataServlet extends HttpServlet {
             String highlightIDs2 = request.getParameter("highlightIDs2");
             String highlightIDs3 = request.getParameter("highlightIDs3");
             
+            String visIncidentNotTypes = request.getParameter("visIncidentNotTypes");
+            if (visIncidentNotTypes==null){
+                // this is MANV specific, should not stay here
+                visIncidentNotTypes="gaz;tri-sit;post;act;tri-kat";
+            }
+            
+            
             String dropdown = request.getParameter("dropdown");
             if (dropdown==null){
                 dropdown = "TRUE";
@@ -1202,7 +1240,9 @@ public class ZumultDataServlet extends HttpServlet {
                 {"HIGHLIGHT_IDS_2", highlightIDs2},
                 {"HIGHLIGHT_IDS_3", highlightIDs3},
 
-                {"DROPDOWN", dropdown}
+                {"DROPDOWN", dropdown},
+                
+                {"VIS_INCIDENT_NOT_TYPES", visIncidentNotTypes}
             };
             
             

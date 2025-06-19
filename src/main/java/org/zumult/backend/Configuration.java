@@ -43,6 +43,7 @@ public class Configuration {
     private static String mediaDistributionPath;
     private static String mediaSnippetsPath;
     private static String ffmpegPath;
+    private static String ffprobePath;
     private static String praatPath;
     private static String wordlistPath;
     private static String germanetPath;
@@ -107,6 +108,10 @@ public class Configuration {
         return ffmpegPath;
     }
     
+    public static String getFfprobePath(){
+        return ffprobePath;
+    }
+
     public static String getPraatPath(){
         return praatPath;
     }
@@ -259,6 +264,15 @@ public class Configuration {
             mediaDistributionPath = config.getString("backend.media-distribution-path");
             mediaSnippetsPath = config.getString("backend.media-snippets-path");
             ffmpegPath = config.getString("backend.ffmpeg-path");
+            ffprobePath = config.getString("backend.ffprobe-path");
+            if (ffprobePath==null){
+                // try to guess the path, if it is not provided in the config file
+                File ffmpegFile = new File(ffmpegPath);
+                File ffprobeFile = new File(ffmpegFile.getParentFile(), ffmpegFile.getName().replaceAll("mpeg", "probe"));
+                if (ffprobeFile.exists()){
+                    ffprobePath = ffprobeFile.getAbsolutePath();
+                }
+            }
             praatPath = config.getString("backend.praat-path");
             
             metadataPath = config.getString("backend.metadata-path");

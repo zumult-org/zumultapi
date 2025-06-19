@@ -67,67 +67,30 @@
 <%@include file="../WEB-INF/jspf/locale.jspf" %> 
 
 <html>
-        <html>
-            <head>
-                <script src="../js/media_zupass.js"></script>
-                <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>        
-                <script src="https://kit.fontawesome.com/e215b03c17.js" crossorigin="anonymous"></script>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-                <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>                
+    <head>
 
-                <script>
-                    // probably all variables from the URL should be mirrored in this way
-                    var speechEventID = '<%= speechEventID %>';
-                    var transcriptID = '<%= transcriptID %>';
-                    var vttURL = '<%= vttURL %>';
-                    var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';                    
-                </script>
-                
-                <style type="text/css">
-                    table {
-                        border-collapse : collapse;
-                    }
-                    td {
-                        white-space:nowrap;
-                        border: 1px solid rgb(200,200,200);;
-                    }
-                    td.empty {
-                        background: rgb(230,230,230);
-                        border: none;
-                    }
-                    td.ver {
-                        font-size:14pt;
-                        font-weight: bold;
-                    }
-                    td.att, td.mov, td.it-ph, td.op, td.en {
-                        font-size: 10pt;
-                        background : rgb(255,255,204);
-                    }
-                    td.walk, td.smile, td.nod, td.act {
-                        font-size: 10pt;
-                        background : rgb(204,255,204);
-                    }
-                    td.DataCoverage, td.Aktivität, td.Wahrnehmung, td.VPsichtbar {
-                        font-size: 10pt;
-                        background : rgb(177,233,244);
-                    }
-                    td.label {
-                        font-weight:bold;
-                        position: sticky;
-                        left: 0; z-index: 1;
-                        background-color: white;
-                    }
-                    td.tli {
-                        font-size:8pt;
-                        color: rgb(200,200,200);
-                    }
-                    td.highlight-playback{
-                        border: 2px solid gray; 
-                        color: red;
-                    }                    
-                </style>
-            </head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ZuPass: <%= transcriptID %></title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">       
+        <link rel="stylesheet" href="../css/zupass.css">
+
+        <script src="../js/media_zupass.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>        
+        <script src="https://kit.fontawesome.com/ed5adda70b.js" crossorigin="anonymous"></script>
+        
+        
+        <script>
+            // probably all variables from the URL should be mirrored in this way
+            var speechEventID = '<%= speechEventID %>';
+            var transcriptID = '<%= transcriptID %>';
+            var vttURL = '<%= vttURL %>';
+            var BASE_URL = '<%= Configuration.getWebAppBaseURL() %>';                    
+        </script>
+
+
+    </head>
     <body onload="initialiseMedia()">
         <%@include file="../WEB-INF/jspf/zumultNav.jspf" %>                                                
                
@@ -205,7 +168,7 @@
         
         <div id="partitur-form" class="row mt-2">
             <div class="col-1"></div>
-            <div class="col-10 overflow-auto" style="height: 400px;">
+            <div class="col-10 overflow-auto" style="max-height: 800px;">
                     <%= html %>                
             </div>
             <div class="col-1"></div>

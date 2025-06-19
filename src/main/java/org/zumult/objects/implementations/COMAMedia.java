@@ -109,7 +109,35 @@ public class COMAMedia extends AbstractMedia {
 
     @Override
     public MediaUtilities getMediaUtilities(){
-        return new MediaUtilities(Configuration.getFfmpegPath());
+        return new MediaUtilities(Configuration.getFfmpegPath(), Configuration.getFfprobePath());
     }
+
+    @Override
+    public double getDuration() {
+        XPath theXPath = XPathFactory.newInstance().newXPath();
+        try {
+            // look for existing ffprobe metadata - video?
+            Element keyElement = ((Element)theXPath.evaluate("//Key[@Name='ffprobe-video-duration']", 
+                           metadata.getDocument().getDocumentElement(), 
+                           XPathConstants.NODE));
+            if (keyElement!=null) {
+                double value = Double.parseDouble(keyElement.getTextContent());
+                return value;
+            }
+            // look for existing ffprobe metadata - audio?
+            keyElement = ((Element)theXPath.evaluate("//Key[@Name='ffprobe-audio-duration']", 
+                           metadata.getDocument().getDocumentElement(), 
+                           XPathConstants.NODE));
+            if (keyElement!=null) {
+                double value = Double.parseDouble(keyElement.getTextContent());
+                return value;
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return super.getDuration();
+    }
+    
+    
     
 }

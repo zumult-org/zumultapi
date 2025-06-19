@@ -1,0 +1,85 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 18.06.2025, 15:54:02
+    Author     : bernd
+*/
+table {
+    border-collapse : collapse;
+}
+td {
+    white-space:nowrap;
+    border: 1px solid rgb(200,200,200);;
+}
+td.empty {
+    background: rgb(230,230,230);
+    border: none;
+}
+
+td.t {
+   font-size: 14pt;
+   font-weight: bold;
+}
+
+td.d {
+    font-size: 10pt;
+}
+
+td.a {
+    font-size: 10pt;
+    background-color: rgb(220,220,220);
+}
+
+
+/* use 5 different hässliche background colors for events in d-tiers */
+td.d-1 {
+    background : rgb(204,255,204);        
+}
+td.d-2 {
+    background : rgb(177,233,244);    
+}
+td.d-3 {
+    background : rgb(255, 255, 204);    
+}
+td.d-4 {
+    background : rgb(230, 242, 255);    
+}
+td.d-5 {
+    background : rgb(255, 230, 255);    
+}
+
+/* use 5 different hässliche font colors for events in a-tiers */
+td.a-1 {
+    color : rgb(0, 51, 204);      
+}
+td.a-2 {
+    color : rgb(0, 102, 0);    
+}
+td.a-3 {
+    color : rgb(128, 0, 0);    
+}
+td.a-4 {
+    color : rgb(255, 153, 0);    
+}
+td.a-5 {
+    color : rgb(102, 0, 102);    
+}
+
+
+
+td.label {
+    position: sticky;
+    left: 0; z-index: 1;
+    background-color: white;
+}
+td.tli {
+    font-size:8pt;
+    color: rgb(200,200,200);
+}
+td.highlight-playback{
+    border: 2px solid gray; 
+    color: red;
+}                    
+

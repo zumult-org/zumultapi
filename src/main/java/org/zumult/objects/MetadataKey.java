@@ -9,7 +9,7 @@ package org.zumult.objects;
  *
  * @author Thomas_Schmidt
  */
-public interface MetadataKey extends Identifiable {
+public interface MetadataKey extends Identifiable, Comparable<MetadataKey>  {
     
     String getName(String language);
     
@@ -18,5 +18,13 @@ public interface MetadataKey extends Identifiable {
     Class getValueClass();
     
     boolean isQuantified();
+
+    @Override
+    public default int compareTo(MetadataKey o) {
+       return (getName("en").compareTo(o.getName("en")));
+    }
+
+    
+    
     
 }

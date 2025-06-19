@@ -391,6 +391,8 @@
                     tokenList : tokenList
                 },
                 function( data ) {
+                    $("#preview-container").empty();
+                    $("#preview-container").height(0);
                     $("#transcript-container").html(data);
 
                     $("#tr" + startSelection).addClass("selectionStart");

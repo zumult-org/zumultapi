@@ -10,48 +10,59 @@
 <%@page import="org.zumult.objects.MetadataKey"%>
 <%@page import="org.zumult.objects.IDList"%>
 <%@ page pageEncoding="UTF-8" %>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="http://zumult.org">
-            <% String imgSrc = "../images/agd.png"; %>
-            <!-- <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/> -->
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="navbar-brand" href="http://www.zumult.org"><b><%= pageName %></b></a>
-            <ul class="navbar-nav mr-auto">
+       
+        <div class="container-fluid">
+            <!-- **************************************** -->
+            <!-- * a logo if you want one               * -->
+            <!-- **************************************** -->
+            <a class="navbar-brand" href="http://zumult.org">
+                <% String imgSrc = "../images/agd.png"; %>
+                <!-- <img src="<%= imgSrc %>" height="30" class="d-inline-block align-top" alt=""/> -->
+            </a>
 
-                <li class="nav-item active">
-                    <%= pageTitle %>
-                </li>
-                
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- ******************************************* -->
+                <!-- * Page name linked to the ZuMult homepage * -->
+                <!-- ******************************************* -->
+                <a class="navbar-brand" href="http://www.zumult.org"><b><%= pageName %></b></a>
+                <!-- ******************************************* -->
+                <!-- * Title of this particular page           * -->
+                <!-- ******************************************* -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <%= pageTitle %>
+                    </li>
 
-            <!-- ******************* -->
-            <!-- * PROJECT LINKS  ** -->
-            <!-- ******************* -->
-            <ul class="navbar-nav ml-auto>
-              <li class="nav-item">
-                <a class="nav-link" href="<%= Configuration.getWebAppBaseURL()%>"><%=myResources.getString("Home")%></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" target="_blank" href="<%= Constants.ZUMULT_PROJECT_ULR%>"><%=myResources.getString("Project")%></a>
-              </li>
-              <% if (pageName == "ZuMal") { %>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="../../doc/Handreichung-<%=pageName%>.html">Help</a>
-                </li>
-              <% } %>
-            </ul>
+                </ul>
 
-            <!-- *********************** -->
-            <!-- * LANGUAGE SELECTOR  ** -->
-            <!-- *********************** -->
-            <% if (pageName != "ZuMal") { %>
-            <select id="selectLang" class="ml-3" style="width: 100px;">
-                <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
-                <option value="en"<%if (!currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
-            </select>
-            <% } %>
+                <div class="ms-auto">
+                    <!-- ******************* -->
+                    <!-- * PROJECT LINKS  ** -->
+                    <!-- ******************* -->
+                    <ul class="navbar-nav ml-auto>
+                      <li class="nav-item">
+                        <a class="nav-link" href="<%= Configuration.getWebAppBaseURL()%>"><%=myResources.getString("Home")%></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="<%= Constants.ZUMULT_PROJECT_ULR%>"><%=myResources.getString("Project")%></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="../../doc/Handreichung-<%=pageName%>.html">Help</a>
+                      </li>
+                      <!-- *********************** -->
+                      <!-- * LANGUAGE SELECTOR  ** -->
+                      <!-- *********************** -->
+                      <select id="selectLang" class="ml-3" style="width: 100px;">
+                          <option value="de"<%if (currentLocale.getLanguage().equals(Locale.GERMAN.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnGerman")%></option>
+                          <option value="en"<%if (currentLocale.getLanguage().equals(Locale.ENGLISH.toLanguageTag())){%> selected <%}%>><%=myResources.getString("ChangeLanguageBtnEnglish")%></option>
+                      </select>                          
+                    </ul>
 
+                </div>
+
+            </div>
         </div>
                             
     </nav>                

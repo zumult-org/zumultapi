@@ -31,6 +31,9 @@
     <xsl:param name="VIS_SPEECH_RATE">TRUE</xsl:param>
     <!-- whether or not to display pauses inside utterances -->
     <xsl:param name="VIS_PAUSE_INSIDE_U">TRUE</xsl:param>
+    <!-- Types of incident on top level to be ignored (new 16-06-2025) -->
+    <!-- let's expect a semicolon separated list here -->
+    <xsl:param name="VIS_INCIDENT_NOT_TYPES"></xsl:param>
     
     
     <!-- start and end of the transcript ; empty for whole transcript -->
@@ -73,9 +76,27 @@
     <xsl:param name="TOKEN_LIST_URL"/>
     <xsl:variable name="TOKEN_LIST" select="document($TOKEN_LIST_URL)/*"/> 
     
+    <xsl:variable name="VIS_INCIDENT_NOT_TYPES_LIST">
+        <ids>
+            <xsl:for-each select="tokenize($VIS_INCIDENT_NOT_TYPES, ';')">
+                <id><xsl:value-of select="current()"/></id>
+            </xsl:for-each>                
+        </ids>
+    </xsl:variable>
+    
+    <!-- New 16-06-2025 -->
+    <!-- Sort in order of appearance? -->
+    <xsl:variable name="SORTED_SPEAKERS">
+        <tei:particDesc>
+            <xsl:for-each-group select="//tei:annotationBlock" group-by="@who">
+                <xsl:copy-of select="//tei:person[@xml:id=current-grouping-key()]"/>
+            </xsl:for-each-group>
+        </tei:particDesc>
+    </xsl:variable>
     
     
     <xsl:template match="/">
+        <!-- <xsl:message select="$VIS_INCIDENT_NOT_TYPES_LIST"/> -->
         <xsl:apply-templates select="//tei:text"/>
     </xsl:template>
     
@@ -147,7 +168,8 @@
                 <xsl:attribute name="class">
                     <xsl:text>transcript-text</xsl:text>
                     <xsl:text> color-</xsl:text>
-                    <xsl:value-of select="count(//tei:person[@xml:id=$SPEAKER_ID]/preceding-sibling::tei:person) + 1"/>
+                    <!-- <xsl:value-of select="count(//tei:person[@xml:id=$SPEAKER_ID]/preceding-sibling::tei:person) + 1"/> -->
+                    <xsl:value-of select="count($SORTED_SPEAKERS/descendant::tei:person[@xml:id=$SPEAKER_ID]/preceding-sibling::tei:person) + 1"/>
                 </xsl:attribute>
                 <xsl:if test="$VIS_SPEECH_RATE='TRUE' and descendant::tei:spanGrp[@type='speech-rate']">
                     <xsl:variable name="SPEECH-RATE" select="descendant::tei:spanGrp[@type='speech-rate']/tei:span/text()"/>
@@ -296,63 +318,67 @@
     
     
     <xsl:template match="tei:body/*[not(self::tei:annotationBlock)]">
-        <xsl:variable name="ID" select="@xml:id"/>
-        <tr class="nonAnnotationBlock">
-            <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
-            <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>            
-            <td class="tablerow_cursor">
-                <xsl:variable name="startAnchor" select="@start"/>
-                <xsl:variable name="endAnchor" select="@end"/>
-                <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-                <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
-                <xsl:attribute name="data-start" select="$start"/>
-                <xsl:attribute name="data-end" select="$end"/>
-                <xsl:text>&#x2009;</xsl:text>
-            </td>
-            <xsl:if test="$DROPDOWN='TRUE'">
-                <xsl:call-template name="MAKE_DROPDOWN"/>
-            </xsl:if>
-            <xsl:if test="$NUMBERING='TRUE'">
-                <td class="numbering">
-                    <xsl:variable name="NUMBER" select="count(preceding-sibling::*) + 1"/>
-                    <xsl:if test="$NUMBER &lt; 10">0</xsl:if>
-                    <xsl:if test="$NUMBER &lt; 100">0</xsl:if>
-                    <xsl:if test="$NUMBER &lt; 1000">0</xsl:if>
-                    <xsl:value-of select="$NUMBER"/>
+        <xsl:variable name="THIS_TYPE" select="@type"/>
+        <xsl:if test="not(@type) or not($VIS_INCIDENT_NOT_TYPES_LIST/descendant::id[text()=$THIS_TYPE])">
+            <xsl:variable name="ID" select="@xml:id"/>
+            <tr class="nonAnnotationBlock">
+                <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
+                <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>            
+                <td class="tablerow_cursor">
+                    <xsl:variable name="startAnchor" select="@start"/>
+                    <xsl:variable name="endAnchor" select="@end"/>
+                    <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
+                    <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
+                    <xsl:attribute name="data-start" select="$start"/>
+                    <xsl:attribute name="data-end" select="$end"/>
+                    <xsl:text>&#x2009;</xsl:text>
+                    <xsl:value-of select="@type"/>
                 </td>
-            </xsl:if>
-            
-            <td> </td>
-            <td>
-                <span>
-                    <xsl:attribute name="class">
-                        <xsl:text>transcript-text </xsl:text>
+                <xsl:if test="$DROPDOWN='TRUE'">
+                    <xsl:call-template name="MAKE_DROPDOWN"/>
+                </xsl:if>
+                <xsl:if test="$NUMBERING='TRUE'">
+                    <td class="numbering">
+                        <xsl:variable name="NUMBER" select="count(preceding-sibling::*) + 1"/>
+                        <xsl:if test="$NUMBER &lt; 10">0</xsl:if>
+                        <xsl:if test="$NUMBER &lt; 100">0</xsl:if>
+                        <xsl:if test="$NUMBER &lt; 1000">0</xsl:if>
+                        <xsl:value-of select="$NUMBER"/>
+                    </td>
+                </xsl:if>
+                
+                <td> </td>
+                <td>
+                    <span>
+                        <xsl:attribute name="class">
+                            <xsl:text>transcript-text </xsl:text>
+                            <xsl:choose>
+                                <xsl:when test="self::tei:pause">pause</xsl:when>
+                                <xsl:otherwise>desc</xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:if test="$EXTRA_HIGHLIGHT/descendant::id[text()=$ID]">
+                                <xsl:text> highlight-search-extra</xsl:text>
+                            </xsl:if>
+                            <xsl:if test="$HIGHLIGHT/descendant::id[text()=$ID]">
+                                <xsl:text> highlight-search</xsl:text>
+                            </xsl:if>
+                        </xsl:attribute>
+                        <xsl:attribute name="id" select="@xml:id"/>
                         <xsl:choose>
-                            <xsl:when test="self::tei:pause">pause</xsl:when>
-                            <xsl:otherwise>desc</xsl:otherwise>
+                            <xsl:when test="descendant-or-self::*[@rend]">
+                                <xsl:value-of select="descendant-or-self::*[@rend]/@rend"/>                            
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>((</xsl:text>
+                                <xsl:value-of select="descendant::tei:desc"/>
+                                <xsl:text>)) </xsl:text>
+                            </xsl:otherwise>
                         </xsl:choose>
-                        <xsl:if test="$EXTRA_HIGHLIGHT/descendant::id[text()=$ID]">
-                            <xsl:text> highlight-search-extra</xsl:text>
-                        </xsl:if>
-                        <xsl:if test="$HIGHLIGHT/descendant::id[text()=$ID]">
-                            <xsl:text> highlight-search</xsl:text>
-                        </xsl:if>
-                    </xsl:attribute>
-                    <xsl:attribute name="id" select="@xml:id"/>
-                    <xsl:choose>
-                        <xsl:when test="descendant-or-self::*[@rend]">
-                            <xsl:value-of select="descendant-or-self::*[@rend]/@rend"/>                            
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text>((</xsl:text>
-                            <xsl:value-of select="descendant::tei:desc"/>
-                            <xsl:text>)) </xsl:text>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:text> </xsl:text>
-                </span>                
-            </td>
-        </tr>
+                        <xsl:text> </xsl:text>
+                    </span>                
+                </td>
+            </tr>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">

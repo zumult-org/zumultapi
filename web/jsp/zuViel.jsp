@@ -96,6 +96,12 @@
         visSpeechRate="FALSE";
     }
     
+    String visIncidentNotTypes = request.getParameter("visIncidentNotTypes");
+    if (visIncidentNotTypes==null){
+        // this is MANV specific, should not stay here
+        visIncidentNotTypes="gaz;tri-sit;post;act;tri-kat";
+    }
+
     String flattenSeg = request.getParameter("flattenSeg");
     if (flattenSeg==null){
         flattenSeg = "TRUE";
@@ -259,6 +265,7 @@
         {"FORM", form},
         {"SHOW_NORM_DEV", showNormDev},
         {"VIS_SPEECH_RATE", visSpeechRate},
+        {"VIS_INCIDENT_NOT_TYPES", visIncidentNotTypes},
         {"START_ANNOTATION_BLOCK_ID", startAnnotationBlockID}, 
         {"END_ANNOTATION_BLOCK_ID", endAnnotationBlockID},
         {"AROUND_ANNOTATION_BLOCK_ID", aroundAnnotationBlockID},
@@ -470,11 +477,39 @@
                         <i class="fas fa-angle-double-up" aria-hidden="true"></i>
                     </button>                
                 <% } %>
+
+                <!-- *******************************  -->
+                <!-- *** LOAD A PREVIEW IF NEEDED *** -->
+                <!-- *******************************  -->
+                <% if (startAnnotationBlockID==null || startAnnotationBlockID.length()==0) { 
+                    Transcript previewTranscript = partTranscript.getPart(1, 12);
+                    String previewHTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_STYLESHEET2, previewTranscript.toXML(), transcriptParameters); 
+                %>
+                <div class="container" id="preview-container" style="position:relative; width:100%; height: 800px; cursor: not-allowed">
+                    <div id="preview-overlay" style="background-color: gray; position:absolute; top:0; left:0; bottom:0; right:0; 
+                         z-index: 10; opacity: 0.3;">   
+                         <div style="position: absolute;  top: 50%; left: 50%;">
+                            <span class="badge badge-pill badge-primary" 
+                                  style="transform: rotate(-20deg); font-size:1.5rem; opacity: 1 !important; margin:20px;">Preview</span><br/>
+                            <i class="fas fa-spinner fa-spin fa-5x"></i>                            
+                        </div>
+                    </div>
+                    <div id="preview-transcript" style="position:absolute; top:0; left:0; bottom:0; right:0; max-height:800px; overflow: hidden;">
+                        <%= previewHTML %>
+                    </div>
+                </div>
+                <% } %>
+                <!-- *******************************  -->
+                <!-- *******************************  -->
+                <!-- *******************************  -->
                 
                 <div class="container" id="transcript-container">
+
                     <%//= transcriptHTML %>
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p style="color:gray"><%=myResources.getString("WaitTranscriptLoading")%></p>
+                    <p style="color:gray; font-size:14pt; padding-top:20px;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <%=myResources.getString("WaitTranscriptLoading")%>
+                    </p>
                 </div>
 
                 <!-- *** EXPAND AFTER *** -->                    

@@ -75,6 +75,37 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     
     
     @Override
+    public Transcript getPart(int startIndex, int endIndex) {
+        try {
+            Element startAnnotationBlock = (Element)xPath.evaluate("//tei:annotationBlock[" + Integer.toString(startIndex) + "]",
+                    getDocument().getDocumentElement(), XPathConstants.NODE);
+            if (startAnnotationBlock==null){
+                startAnnotationBlock = (Element)xPath.evaluate("//tei:annotationBlock[1]",
+                    getDocument().getDocumentElement(), XPathConstants.NODE);
+            }
+            if (startAnnotationBlock==null){ return null; }
+            Element endAnnotationBlock = (Element)xPath.evaluate("//tei:annotationBlock[" + Integer.toString(endIndex) + "]",
+                    getDocument().getDocumentElement(), XPathConstants.NODE);
+            if (endAnnotationBlock==null){
+                endAnnotationBlock = (Element)xPath.evaluate("//tei:annotationBlock[last()]",
+                    getDocument().getDocumentElement(), XPathConstants.NODE);
+            }
+            if (endAnnotationBlock==null){ return null; }
+            
+            String startID = startAnnotationBlock.getAttribute("xml:id");
+            String endID = endAnnotationBlock.getAttribute("xml:id");
+            
+            return getPart(startID, endID, true);
+            
+            
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
+    }
+
+    @Override
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock) {
         System.out.println("Trying " + id1 + " / " + id2);
         try {

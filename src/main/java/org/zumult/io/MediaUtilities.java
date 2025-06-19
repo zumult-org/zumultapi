@@ -24,10 +24,17 @@ import org.zumult.objects.Media;
 public class MediaUtilities {
     
     String ffmpegPath;
+    String ffprobePath;
     
     public MediaUtilities(String ffmpegPath){
         this.ffmpegPath = ffmpegPath;
     }
+    
+    public MediaUtilities(String ffmpegPath, String ffProbePath){
+        this.ffmpegPath = ffmpegPath;
+        this.ffprobePath = ffProbePath;
+    }
+    
 
     public void getVideoImage(double time, String pathToInputFile, 
                               String pathToOutputFile) throws IOException{

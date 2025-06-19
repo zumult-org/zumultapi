@@ -100,6 +100,17 @@
         </xsl:choose>
     </xsl:variable>
 
+
+
+    <!-- New 16-06-2025 -->
+    <!-- Sort in order of appearance? -->
+    <xsl:variable name="SORTED_SPEAKERS">
+        <tei:particDesc>
+            <xsl:for-each-group select="//tei:annotationBlock" group-by="@who">
+                <xsl:copy-of select="//tei:person[@xml:id=current-grouping-key()]"/>
+            </xsl:for-each-group>
+        </tei:particDesc>
+    </xsl:variable>
     
 
     <xsl:template match="/">
@@ -121,7 +132,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg">
                         
                         <xsl:variable name="WIDTH" select="10 * ($END_TIME - $START_TIME) + 20" />
-                        <xsl:variable name="HEIGHT" select="count(//tei:person)*$LINE_HEIGHT + $OFFSET"/>
+                        <!-- <xsl:variable name="HEIGHT" select="count(//tei:person)*$LINE_HEIGHT + $OFFSET"/> -->
+                        <xsl:variable name="HEIGHT" select="count($SORTED_SPEAKERS/descendant::tei:person)*$LINE_HEIGHT + $OFFSET"/>
                         
                         <xsl:attribute name="width"><xsl:value-of select="$WIDTH"/>px</xsl:attribute>
                         <xsl:attribute name="height"><xsl:value-of select="$HEIGHT"/>px</xsl:attribute>
@@ -179,7 +191,8 @@
         <!-- <xsl:variable name="ZERO" select="//tei:body/*[@start][1]/@start"/> -->
         
         <xsl:variable name="WHO" select="@who"/>
-        <xsl:variable name="WHO_POSITION" select="count(//tei:person[@xml:id=$WHO]/preceding-sibling::tei:person)"/>
+        <!-- <xsl:variable name="WHO_POSITION" select="count(//tei:person[@xml:id=$WHO]/preceding-sibling::tei:person)"/> -->
+        <xsl:variable name="WHO_POSITION" select="count($SORTED_SPEAKERS/descendant::tei:person[@xml:id=$WHO]/preceding-sibling::tei:person)"/> 
         <!-- <xsl:variable name="ZERO_TIME" select="//tei:when[@xml:id=$ZERO]/@interval"/> -->
         <xsl:variable name="THIS_START_TIME" select="//tei:when[@xml:id=$THIS_START]/@interval"/>
         <xsl:variable name="THIS_END_TIME" select="//tei:when[@xml:id=$THIS_END]/@interval"/>
@@ -201,7 +214,8 @@
                 <xsl:choose>
                     <xsl:when test="$WHO">
                         <xsl:text>color-</xsl:text>
-                        <xsl:value-of select="count(//tei:person[@xml:id=$WHO]/preceding-sibling::tei:person) + 1"/>                        
+                        <!-- <xsl:value-of select="count(//tei:person[@xml:id=$WHO]/preceding-sibling::tei:person) + 1"/> -->                        
+                        <xsl:value-of select="count($SORTED_SPEAKERS/descendant::tei:person[@xml:id=$WHO]/preceding-sibling::tei:person) + 1"/>                        
                     </xsl:when>
                     <xsl:otherwise>pause</xsl:otherwise>
                 </xsl:choose>

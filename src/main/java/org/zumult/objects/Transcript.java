@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
  * @author Thomas_Schmidt
  */
 public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
+
     
     // #223
     public enum TranscriptFormats {
@@ -35,6 +36,7 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock);
     public Transcript getPart(double time1, double time2, boolean expandToFullAnnotationBlock);
+    public Transcript getPart(int startIndex, int endIndex);
     
     
     public TokenList getTokenList(String type);

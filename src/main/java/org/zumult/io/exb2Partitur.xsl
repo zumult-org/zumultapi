@@ -2,8 +2,13 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:math="http://www.w3.org/2005/xpath-functions/math"
+    xmlns:exmaralda="http://www.exmaralda.org"        
     exclude-result-prefixes="xs math"
     version="3.0">
+    
+    <!-- whether to include a th for controls -->
+    <xsl:param name="CONTROLS">TRUE</xsl:param>
+    
     
     <xsl:variable name="TIMELINE_COPY">
         <timeline>
@@ -16,30 +21,42 @@
         </timeline>
     </xsl:variable>
     
+    <xsl:variable name="SPEAKERTABLE_COPY">
+        <speakertable>
+            <xsl:for-each select="//speaker">
+                <xsl:copy>
+                    <xsl:copy-of select="@*"/>
+                    <xsl:attribute name="position" select="count(preceding-sibling::speaker) + 1"/>
+                </xsl:copy>
+            </xsl:for-each>            
+        </speakertable>    
+    </xsl:variable>
+    
+    <xsl:variable name="TIER_CATEGORIES">
+        <tier-categories>
+            <xsl:for-each-group select="//tier" group-by="@category">
+                <xsl:sort select="."/>
+                <category>
+                    <xsl:attribute name="type" select="current-group()[1]/@type"/>
+                    <xsl:value-of select="current-grouping-key()"/>
+                </category>
+            </xsl:for-each-group>
+        </tier-categories>
+    </xsl:variable>
+    
     <xsl:template match="/">
             <div>
-                
-                
                 <div style="width:100%; overflow:auto;" >
                     <table class="w-100 d-block d-md-table">
                         <tr>
                             <td class="empty"> </td>
                             <xsl:apply-templates select="//tli"/>
                         </tr>
-                        <xsl:apply-templates select="//tier"/>
+                        <xsl:apply-templates select="//tier">
+                            <xsl:sort select="exmaralda:tierSorter(.)" data-type="number" order="ascending"/>
+                        </xsl:apply-templates>
                     </table>
                 </div>
-                
-                <!-- <div style="width:100%; text-align:center; margin-top:10px;">
-                    <svg id="measurement" width="2400" height="200" xmlns="http://www.w3.org/2000/svg" style="background:rgb(220,220,220); border: dotted 3px gray">
-                        <text x="5" y="15" fill="black">Some measurement</text>
-                        <line x1="0" y1="100" x2="2400" y2="100" style="stroke:gray;stroke-width:2" stroke-dasharray="4" />
-                        <circle id="circle1" cx="0" cy="100" r="10" style="fill:red;" />
-                        <rect id="rect1" x ="0" y="80" height="12" width ="12" stroke-width ="1px" stroke ="black" fill="white" />
-                        <line id="line1" x1="0" y1="100" x2="0" y2="80" style="stroke:black;stroke-width:1"/>
-                    </svg>
-                    
-                </div> -->
             </div>
         
     </xsl:template>
@@ -61,9 +78,14 @@
             <xsl:copy-of select="."/>
         </xsl:variable>
         <tr>
+            <xsl:if test="$CONTROLS='TRUE'">
+                <xsl:call-template name="INSERT_CONTROLS">
+                    <xsl:with-param name="TIER" select="."/>
+                </xsl:call-template>
+            </xsl:if>
             <td>
                 <xsl:attribute name="class">
-                    <!-- <xsl:value-of select="@category"/>--><xsl:text> label</xsl:text>
+                    <xsl:value-of select="@type"/><xsl:text> label</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="@display-name"/>
             </td>
@@ -102,7 +124,11 @@
                 <xsl:value-of select="$COLSPAN"/>
             </xsl:attribute>
             <xsl:attribute name="class">
-                <xsl:value-of select="../@category"/>
+                <xsl:text>event </xsl:text>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="../@type"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="exmaralda:getCSSCategory(../@category, ../@type)"/>
             </xsl:attribute>
             <xsl:attribute name="data-start">
                 <xsl:value-of select="$TIMELINE_COPY/descendant::tli[@id=$START]/@time"/>
@@ -124,6 +150,62 @@
         </xsl:if>
         
     </xsl:template>
+    
+    <xsl:template name="INSERT_CONTROLS">
+        <xsl:param name="TIER"/>
+        <td class="controls">
+            <!-- **************************************************** -->
+            <!-- *** Buttons to do things with this tier         *** -->    
+            <!-- **************************************************** -->
+            <div class="container">
+                <div class="btn-group m-3" role="group"> 
+                    <button id="next-event-btn-{$TIER/@id}" class="btn btn-outline-primary btn-sm"
+                        title="Click to find next event in this tier" onclick="findNextEvent('{$TIER/@id}')">
+                        <i class="fa-solid fa-right-to-line"></i>
+                    </button>              
+                    <button id="hide-tier-btn-{$TIER/@id}" class="btn btn-outline-primary btn-sm"
+                        title="Click to hide tier" onclick="hideTier('{$TIER/@id}')">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </button>                                    
+                </div>
+            </div>
+        </td>
+        
+    </xsl:template>
+
+    <xsl:function name="exmaralda:getCSSCategory" as="xs:string">
+        <xsl:param name="CATEGORY"/>
+        <xsl:param name="TYPE"/>
+        <xsl:value-of select="concat($TYPE, '-', count($TIER_CATEGORIES/descendant::category[text()=$CATEGORY]/preceding-sibling::category[@type=$TYPE])+1)"/>
+    </xsl:function>
+        
+
+    <xsl:function name="exmaralda:tierSorter" as="xs:integer">
+        <xsl:param name="TIER"/>
+        <xsl:variable name="TIER_SPEAKER" select="$TIER/@speaker"/>
+        <xsl:variable name="TIER_CATEGORY" select="$TIER/@category"/>
+        <xsl:variable name="SPEAKER_WEIGHT" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$SPEAKERTABLE_COPY/descendant::speaker[@id=$TIER_SPEAKER]">
+                    <xsl:variable name="POS" select="$SPEAKERTABLE_COPY/descendant::speaker[@id=$TIER_SPEAKER]/@position"/>
+                    <xsl:value-of select="xs:integer($POS)"/>                    
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="floor(count($SPEAKERTABLE_COPY/descendant::speaker) + 1)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="TYPE_WEIGHT" as="xs:integer">
+            <xsl:choose>
+                <xsl:when test="$TIER/@type='t'">2</xsl:when>
+                <xsl:when test="$TIER/@type='d'">4</xsl:when>
+                <xsl:when test="$TIER/@type='a'">6</xsl:when>
+                <xsl:otherwise>8</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>        
+        <xsl:variable name="CATEGORY_WEIGHT" select="count($TIER_CATEGORIES/descendant::category[text()=$TIER_CATEGORY]/preceding-sibling::category) + 1" as="xs:integer"/>
+        <xsl:value-of select="xs:integer(100 * $SPEAKER_WEIGHT + 10 * $TYPE_WEIGHT + $CATEGORY_WEIGHT)"/>           
+    </xsl:function>
     
     
     
