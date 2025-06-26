@@ -7,7 +7,7 @@
     version="3.0">
     
     <!-- whether to include a th for controls -->
-    <xsl:param name="CONTROLS">TRUE</xsl:param>
+    <xsl:param name="CONTROLS">FALSE</xsl:param>
     
     
     <xsl:variable name="TIMELINE_COPY">

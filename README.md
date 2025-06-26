@@ -1,6 +1,7 @@
 # zumultapi
 
 This is the code from the ZuMult project (http://zumult.org), transferred from UHH's Gitlab to Github on 03 May 2022.
+This code is distributed under a *GPL v3 license*. Any code derived from it must also be published under that license. 
 
 
 ## maven
