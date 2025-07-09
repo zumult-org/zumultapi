@@ -9,7 +9,7 @@
     <!-- last change: 01-04-2025 -->
     <version>0.0.8-alpha</version>
     <!-- <packaging>war</packaging> -->
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>zumultapi</name>
     
     <!-- related to #214 -->
