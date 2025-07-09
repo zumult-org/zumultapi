@@ -1,8 +1,0 @@
-<div class="form-group">
-    <span><b><%=myResources.getString("LevelForSimpleSearches")%></b></span>
-    <div style="line-height:80%"><small><i><%=myResources.getString("SelectLevelForSimpleSearches")%> <%=myResources.getString("SelectLevelForSimpleSearchesExample")%></i></small></div>
-    <select class="form-control form-control-sm mt-3 customSimpleQuerySyntaxLevel">
-        <option value="word"><%=myResources.getString("TranscribedForm")%></option>
-        <option value="lemma" selected><%=myResources.getString("Lemma")%></option>
-    </select>
-</div>
