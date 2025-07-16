@@ -6,8 +6,8 @@
 
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
-    <!-- last change: 01-04-2025 -->
-    <version>0.1</version>
+    <!-- last change: 15-07-2025 -->
+    <version>0.1.1</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>zumultapi</name>

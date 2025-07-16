@@ -1456,7 +1456,7 @@ public class ZumultDataServlet extends HttpServlet {
 
     private String pathToWordList(String wordlistID){
         String pathToWordList;
-        if (wordlistID.equals("NONE")){
+        if (wordlistID==null || wordlistID.equals("NONE")){
             pathToWordList = "";
         }else if(wordlistID.startsWith("GOETHE")){
             pathToWordList = new File(Configuration.getWordlistPath() + "/goethe" + "/" + wordlistID + ".xml").toURI().toString();
