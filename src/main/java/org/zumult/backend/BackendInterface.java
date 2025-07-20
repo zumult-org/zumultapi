@@ -42,6 +42,7 @@ public interface BackendInterface {
     
     public VirtualCollectionStore getVirtualCollectionStore();
     
+    // Methods for getting information about the backend itself
     public String getID();
     public String getName();
     public String getAcronym();
@@ -61,9 +62,16 @@ public interface BackendInterface {
     public Protocol getProtocol(String protocolID) throws IOException;
 
     public IDList getCorpora() throws IOException;    
+    
     public IDList getEvents4Corpus(String corpusID) throws IOException;    
     public IDList getSpeechEvents4Corpus(String corpusID) throws IOException;    
     public IDList getSpeakers4Corpus(String corpusID) throws IOException;    
+    public IDList getMedia4Corpus(String corpusID) throws IOException;    
+    //new 29-10-2019, Elena
+    public IDList getTranscripts4Corpus(String corpusID) throws IOException;
+    
+    
+    
     public IDList getSpeechEvents4Event(String eventID) throws IOException;
     public IDList getSpeechEvents4Speaker(String speakerID) throws IOException;
     public IDList getTranscripts4SpeechEvent(String speechEventID) throws IOException;
@@ -112,8 +120,6 @@ public interface BackendInterface {
     // new 08-04-2019, Elena 
     public AnnotationBlock getAnnotationBlock(String transcriptID, String annotationBlockId) throws IOException;
     
-    //new 29-10-2019, Elena
-    public IDList getTranscripts4Corpus(String corpusID) throws IOException;
     
     //new 30.01.2020, Elena
     public Measure getMeasure4SpeechEvent(String speechEventID, String type, String reference);

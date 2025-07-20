@@ -83,17 +83,25 @@ public abstract class AbstractBackend implements BackendInterface {
         
     }
 
+    @Override
+    public IDList getMedia4Corpus(String corpusID) throws IOException {
+        IDList allMedia = new IDList("media");        
+        IDList speechEvents = getSpeechEvents4Corpus(corpusID);
+        for (String speechEventID : speechEvents) {
+            IDList media = getSpeechEvent(speechEventID).getMedia();
+            allMedia.addAll(media);
+        }
+        return allMedia;
+    }
+
 
     @Override
     public IDList getTranscripts4Corpus(String corpusID) throws IOException {
         IDList allTranscripts = new IDList("transcript");
-        IDList events = getEvents4Corpus(corpusID);
-        for (String eventID : events) {
-            IDList speechEvents = getEvent(eventID).getSpeechEvents();
-            for (String speechEventID : speechEvents) {
-                IDList transcripts = getSpeechEvent(speechEventID).getTranscripts();
-                allTranscripts.addAll(transcripts);
-            }
+        IDList speechEvents = getSpeechEvents4Corpus(corpusID);
+        for (String speechEventID : speechEvents) {
+            IDList transcripts = getSpeechEvent(speechEventID).getTranscripts();
+            allTranscripts.addAll(transcripts);
         }
         return allTranscripts;
     }
