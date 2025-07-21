@@ -6,8 +6,8 @@
 
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
-    <!-- last change: 15-07-2025 -->
-    <version>0.1.1</version>
+    <!-- last change: 16-07-2025 -->
+    <version>0.1.4</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>zumultapi</name>
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.12</version>
             <type>jar</type>
         </dependency>
         
@@ -174,7 +174,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>2.15.1</version>
             <type>jar</type>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
