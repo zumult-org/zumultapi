@@ -15,6 +15,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import org.exmaralda.common.jdomutilities.IOUtilities;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -37,6 +39,7 @@ import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.backend.VirtualCollectionStore;
 import org.zumult.io.COMAUtilities;
 import org.zumult.io.Constants;
+import org.zumult.io.FileIO;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Event;
@@ -47,12 +50,14 @@ import org.zumult.objects.MetadataKey;
 import org.zumult.objects.Protocol;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
+import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.COMACommunication;
 import org.zumult.objects.implementations.COMACorpus;
 import org.zumult.objects.implementations.COMAMedia;
 import org.zumult.objects.implementations.COMASpeaker;
 import org.zumult.objects.implementations.COMATranscript;
+import org.zumult.objects.implementations.DefaultTokenList;
 import org.zumult.objects.implementations.EXBTranscript;
 import org.zumult.query.SearchServiceException;
 import org.zumult.query.SearchResultPlus;
@@ -85,9 +90,10 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             COMAFileSystem comaFileSystem = new COMAFileSystem();
             IDList corpora = comaFileSystem.getCorpora();
             for (String corpusID : corpora){
-                System.out.println("Indexing " + corpusID + " started. ");
-                //Corpus corpus = comaFileSystem.getCorpus(corpusID);               
+                System.out.println("[COMAFileSystem] Indexing IDs for " + corpusID + " started. ");
                 comaFileSystem.indexIDs(corpusID, id2Corpus, id2parentID);                
+                System.out.println("[COMAFileSystem] Calculating statistics for " + corpusID + " started. ");
+                comaFileSystem.calculateStatistics(corpusID);
             }
         } catch (IOException | XPathExpressionException | SAXException | ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
@@ -801,6 +807,102 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         return new COMASearcher();
     }
 
+    
+    private File getStatsFile(String corpusID){
+        File topFolder = new File(Configuration.getMetadataPath());
+        File corpusFolder = new File(topFolder, corpusID);
+        File STATS_FILE = new File(corpusFolder, corpusID + ".stats");
+        return STATS_FILE;
+        
+    }
+    
+    private void calculateStatistics(String corpusID) throws IOException{
+        File topFolder = new File(Configuration.getMetadataPath());
+        File corpusFolder = new File(topFolder, corpusID);
+        File STATS_FILE = new File(corpusFolder, corpusID + ".stats");
+        
+        boolean statsFileExists = STATS_FILE.exists();
+        
+        if (statsFileExists){
+            File comaFile = new File(corpusFolder, corpusID + ".coma");
+            Path fileComa = Paths.get(comaFile.getAbsolutePath());
+            BasicFileAttributes attrComa = Files.readAttributes(fileComa, BasicFileAttributes.class);
+            FileTime lastModifiedTimeComa = attrComa.lastModifiedTime();
+
+
+            Path fileIndex = Paths.get(STATS_FILE.getAbsolutePath());
+            BasicFileAttributes attrIndex = Files.readAttributes(fileIndex, BasicFileAttributes.class);
+            FileTime lastModifiedTimeIndex = attrIndex.lastModifiedTime();
+            
+            boolean comaModifiedAfterStats = (lastModifiedTimeComa.compareTo(lastModifiedTimeIndex)>0);
+            if (comaModifiedAfterStats) {
+                System.out.println("[COMAFileSysten] Coma was modified after stats. ");
+            } else {
+                System.out.println("[COMAFileSysten] Stats exist and are up-to-date.");
+                return;
+            }
+        } else {
+            System.out.println("[COMAFileSysten] There are no stats yet. ");
+        }
+            
+        System.out.println("[COMAFileSysten] Calcualating stats for " + corpusID);
+        
+        //=========================
+        COMAFileSystem backend = new COMAFileSystem();
+        
+        org.jdom.Document outDocument = new org.jdom.Document(new org.jdom.Element("corpus-statistics").setAttribute("id", corpusID));
+        
+        
+        TokenList allTokenList = new DefaultTokenList("transcription");
+        IDList speechEventIDs = backend.getSpeechEvents4Corpus(corpusID);
+
+        IDList speakerIDs = backend.getSpeakers4Corpus(corpusID);
+        int countSpeakers = speakerIDs.size();
+        int countSpeechEvents = speechEventIDs.size();
+        int countTranscripts = backend.getTranscripts4Corpus(corpusID).size();
+        outDocument.getRootElement().setAttribute("speakers", Integer.toString(countSpeakers));
+        outDocument.getRootElement().setAttribute("speech-events", Integer.toString(countSpeechEvents));
+        outDocument.getRootElement().setAttribute("transcripts", Integer.toString(countTranscripts));
+        
+        for (String speechEventID : speechEventIDs){
+            TokenList seTokenList = new DefaultTokenList("transcription");
+            org.jdom.Element seElement = new org.jdom.Element("speech-event");
+            seElement.setAttribute("id", speechEventID);
+            outDocument.getRootElement().addContent(seElement);
+            IDList transcriptIDs = backend.getTranscripts4SpeechEvent(speechEventID);
+            for (String transcriptID : transcriptIDs){
+                //if (transcriptID.equals("TRS_1-167-1-22-a")) continue;
+                Transcript transcript = backend.getTranscript(transcriptID);        
+                int types = transcript.getNumberOfTypes();
+                int tokens = transcript.getNumberOfTokens();
+                TokenList thisTokenList = transcript.getTokenList("transcription");
+                allTokenList = allTokenList.merge(thisTokenList);
+                seTokenList = seTokenList.merge(thisTokenList);
+                
+
+                org.jdom.Element transcriptElement = new org.jdom.Element("transcript");
+                transcriptElement.setAttribute("id", transcriptID);
+                transcriptElement.setAttribute("tokens", Integer.toString(tokens));
+                transcriptElement.setAttribute("types", Integer.toString(types));
+
+                double duration = transcript.getEndTime() - transcript.getStartTime();
+                transcriptElement.setAttribute("duration", Double.toString(duration));                    
+
+                seElement.addContent(transcriptElement);
+            }
+            seElement.setAttribute("types", Integer.toString(seTokenList.getNumberOfTypes()));
+            
+        }
+        
+        outDocument.getRootElement().setAttribute("types", Integer.toString(allTokenList.getNumberOfTypes()));
+        
+        FileIO.writeDocumentToLocalFile(STATS_FILE, outDocument);
+        
+        
+        
+    }
+    
+    
     private void indexIDs(String corpusID, Map<String, String> id2Corpus, Map<String, String> id2parentID) throws XPathExpressionException, IOException, SAXException, ParserConfigurationException, TransformerException {
         File corpusFolder = new File(topFolder, corpusID);
         File comaFile = new File(corpusFolder, corpusID + ".coma");
