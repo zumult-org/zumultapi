@@ -836,16 +836,16 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             
             boolean comaModifiedAfterStats = (lastModifiedTimeComa.compareTo(lastModifiedTimeIndex)>0);
             if (comaModifiedAfterStats) {
-                System.out.println("[COMAFileSysten] Coma was modified after stats. ");
+                System.out.println("[COMAFileSystem] Coma was modified after stats. ");
             } else {
-                System.out.println("[COMAFileSysten] Stats exist and are up-to-date.");
+                System.out.println("[COMAFileSystem] Stats exist and are up-to-date.");
                 return;
             }
         } else {
-            System.out.println("[COMAFileSysten] There are no stats yet. ");
+            System.out.println("[COMAFileSystem] There are no stats yet. ");
         }
             
-        System.out.println("[COMAFileSysten] Calcualating stats for " + corpusID);
+        System.out.println("[COMAFileSystem] Calculating stats for " + corpusID);
         
         //=========================
         COMAFileSystem backend = new COMAFileSystem();
@@ -898,6 +898,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         
         FileIO.writeDocumentToLocalFile(STATS_FILE, outDocument);
         
+        System.out.println("[COMAFileSystem] Stats for " + corpusID + " calculated and written to " + STATS_FILE.getAbsolutePath());
         
         
     }
