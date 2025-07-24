@@ -808,7 +808,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     }
 
     
-    private File getStatsFile(String corpusID){
+    public File getStatsFile(String corpusID){
         File topFolder = new File(Configuration.getMetadataPath());
         File corpusFolder = new File(topFolder, corpusID);
         File STATS_FILE = new File(corpusFolder, corpusID + ".stats");
