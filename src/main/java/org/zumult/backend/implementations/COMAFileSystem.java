@@ -15,7 +15,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -28,7 +27,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.exmaralda.common.jdomutilities.IOUtilities;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -652,22 +650,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     }
 
     private String findCorpusID(String someID) throws IOException {
-        //System.out.println("Trying to find corpus ID for " + someID);
         return id2Corpus.get(someID);
-        /*for (String corpusID : getCorpora()){            
-            try {
-                Corpus tryCorpus = getCorpus(corpusID);
-                Document tryCorpusDocument = tryCorpus.getDocument();
-                String xp = "//*[@Id='" + someID + "']";
-                Element tryElement = (Element) (Node) xPath.evaluate(xp, tryCorpusDocument.getDocumentElement(), XPathConstants.NODE);
-                if (tryElement!=null){
-                    return corpusID;
-                }
-            } catch (XPathExpressionException ex) {
-                Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-            }            
-        }
-        return null;*/
     }
 
 
@@ -711,6 +694,29 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         }
         return null;
     }
+
+    @Override
+    public IDList getSpeechEvents4Speaker(String speakerID) throws IOException {
+        try {
+            String corpusID = findCorpusID(speakerID);
+            System.out.println("CorpusID for " + speakerID + "=" + corpusID);
+            Corpus corpus = getCorpus(corpusID);
+            Document corpusDocument = corpus.getDocument();
+            String xp = "//Person[text()='" + speakerID + "']/ancestor::Communication";
+            NodeList allComms = (NodeList) xPath.evaluate(xp, corpusDocument, XPathConstants.NODESET);            
+            IDList result = new IDList("SpeechEvents");
+            for (int i=0; i<allComms.getLength(); i++){
+                Element commElement = ((Element)(allComms.item(i)));
+                result.add(commElement.getAttribute("Id"));
+            }
+            return result;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
 
     @Override
     public String getEvent4SpeechEvent(String speechEventID) throws IOException {
@@ -1032,6 +1038,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    @Override
+    public String getCorpus4Speaker(String speakerID) throws IOException {
+        return id2Corpus.get(speakerID);        
     }
   
 }

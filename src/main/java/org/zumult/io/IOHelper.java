@@ -50,6 +50,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.xml.transform.OutputKeys;
 import org.zumult.objects.MetadataKey;
 import org.zumult.query.SearchServiceException;
 
@@ -71,6 +72,7 @@ public class IOHelper {
     public static String ElementToString(Element xmlElement) throws TransformerConfigurationException, TransformerException{
         DOMSource domSource = new DOMSource(xmlElement);
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");        
         StringWriter sw = new StringWriter();
         StreamResult sr = new StreamResult(sw);
         transformer.transform(domSource, sr);

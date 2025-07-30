@@ -90,6 +90,7 @@ public interface BackendInterface {
     public String getSpeechEvent4Transcript(String transcriptID) throws IOException;
     public String getEvent4SpeechEvent(String speechEventID) throws IOException;
     public String getCorpus4Event(String eventID) throws IOException;
+    public String getCorpus4Speaker(String speakerID) throws IOException;
     //new 10-07-2020, Elena
     // removed 07-07-2022, issue #45
     //public String getEvent4Transcript(String transcriptID) throws IOException; // we need this because getSpeechEvent4Transcript can return null

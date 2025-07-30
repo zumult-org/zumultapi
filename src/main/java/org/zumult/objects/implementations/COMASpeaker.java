@@ -5,6 +5,7 @@
  */
 package org.zumult.objects.implementations;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +19,8 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Location;
 import org.zumult.objects.MetadataKey;
@@ -85,7 +88,13 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
 
     @Override
     public IDList getSpeechEvents() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            return backend.getSpeechEvents4Speaker(getID());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException ex) {
+            Logger.getLogger(COMASpeaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new IDList("SpeechEvents");
     }
     
 }

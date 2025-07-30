@@ -162,6 +162,9 @@
                         <xsl:text> cont</xsl:text>
                     </xsl:if>
                 </xsl:attribute>
+                <xsl:attribute name="onclick">showSpeaker('<xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/tei:idno[1]"/>')</xsl:attribute>
+                <xsl:attribute name="title">Click to show speaker metadata</xsl:attribute>
+                <xsl:attribute name="style">cursor: pointer;</xsl:attribute>
                 <xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/@n"/>
             </td>      
             <td class="transcript-text">

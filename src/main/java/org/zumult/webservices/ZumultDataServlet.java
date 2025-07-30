@@ -78,12 +78,12 @@ public class ZumultDataServlet extends HttpServlet {
             case "getEventMetadataHTML" : 
                 getEventMetadataHTML(request, response);
                 break;
-            case "getSpeechEventMetadataHTML" : 
-                getSpeechEventMetadataHTML(request, response);
+            case "getSpeechEventMetadata" : 
+                getSpeechEventMetadata(request, response);
                 break;
             // new for #175 (and for completeness sake)
-            case "getSpeakerMetadataHTML" : 
-                getSpeakerMetadataHTML(request, response);
+            case "getSpeakerMetadata" : 
+                getSpeakerMetadata(request, response);
                 break;
             case "getEventMetadataTitle" : 
                 getEventMetadataTitle(request, response);
@@ -189,25 +189,46 @@ public class ZumultDataServlet extends HttpServlet {
     }// </editor-fold>
 
     // new for issue #175
-    private void getSpeakerMetadataHTML(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void getSpeakerMetadata(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String speechEventID = request.getParameter("speechEventID");
             String speakerID = request.getParameter("speakerID");
             String transcriptID = request.getParameter("transcriptID");
-            if (transcriptID!=null){
-                // i.e. speakerID is a transcript sigle, not the corpus ID
-                speakerID = backend.getTranscript(transcriptID).getSpeakerIDBySpeakerInitials(speakerID);
+            String format = request.getParameter("format");
+            if (format==null || format.length()==0){
+                format = "html";
             }
-            if (speakerID!=null){
-                Speaker speaker = backend.getSpeaker(speakerID);
-                String speakerXML = speaker.toXML();        
-                // changed for issue #175
-                //String eventHTML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/folkEvent2html_table.xsl", eventXML);
-                String xslPath = Configuration.getSpeaker2HTMLStylesheet();
-                String speakerHTML = new IOHelper().applyInternalStylesheetToString(xslPath, speakerXML);
+            
+            IDList speakerIDs = new IDList("Speakers");
+            // three cases
+            if (speechEventID!=null){
+                // 1. we have a speech event ID
+                speakerIDs = backend.getSpeakers4SpeechEvent(speechEventID);                
+            } else if (speakerID!=null && transcriptID!=null){
+                // 2. the speakerID is a transcript sigle, not the corpus ID
+                String corpusSpeakerID = backend.getTranscript(transcriptID).getSpeakerIDBySpeakerInitials(speakerID);
+                speakerIDs.add(corpusSpeakerID);                
+            } else {
+                // 3. we have a single speaker ID
+                speakerIDs.add(speakerID);
+            }
+            if (!speakerIDs.isEmpty()){
+                String allXML = "<Speakers>";
+                for (String id : speakerIDs){
+                    Speaker speaker = backend.getSpeaker(id);
+                    String speakerXML = IOHelper.ElementToString(IOHelper.DocumentFromText(speaker.toXML()).getDocumentElement());        
+                    allXML+=speakerXML;
+                }
+                allXML += "</Speakers>";
+                String result = allXML;
+                if (format.equals("html")){
+                    String xslPath = Configuration.getSpeaker2HTMLStylesheet();
+                    result = new IOHelper().applyInternalStylesheetToString(xslPath, allXML);
+                }
                 response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");                            
-                response.getWriter().write(speakerHTML);             
+                response.getWriter().write(result);             
                 response.getWriter().close();            
             } else {
                 String errorHTML = "<div>Speaker " + speakerID + " not found.</div>";
@@ -223,8 +244,100 @@ public class ZumultDataServlet extends HttpServlet {
             Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
         } 
-        
     }
+    
+    private void getSpeechEventMetadata(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String eventID = request.getParameter("eventID");
+            String speechEventID = request.getParameter("speechEventID");
+            String transcriptID = request.getParameter("transcriptID");
+            String speakerID = request.getParameter("speakerID");
+            String format = request.getParameter("format");
+            if (format==null || format.length()==0){
+                format = "html";
+            }
+            
+            IDList speechEventIDs = new IDList("SpeechEvents");
+            
+            if (eventID!=null){
+                speechEventIDs = backend.getSpeechEvents4Event(eventID);
+            } else if (speechEventID!=null){
+                speechEventIDs.add(speechEventID);
+            } else if (transcriptID!=null){
+                speechEventIDs.add(backend.getSpeechEvent4Transcript(transcriptID));
+            } else if (speakerID!=null){
+                speechEventIDs = backend.getSpeechEvents4Speaker(speakerID);
+            }
+            
+            if (!speechEventIDs.isEmpty()){
+                String allXML = "<SpeechEvents>";
+                for (String id : speechEventIDs){
+                    SpeechEvent speechEvent = backend.getSpeechEvent(id);
+                    String speechEventXML = IOHelper.ElementToString(IOHelper.DocumentFromText(speechEvent.toXML()).getDocumentElement());        
+                    allXML+=speechEventXML;
+                }
+                allXML += "</SpeechEvents>";
+                String result = allXML;
+                if (format.equals("html")){
+                    String xslPath = Configuration.getSpeechEvent2HTMLStylesheet();
+                    result = new IOHelper().applyInternalStylesheetToString(xslPath, allXML);
+                }
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(result);             
+                response.getWriter().close();            
+            } else {
+                String errorHTML = "<div>Speaker " + speakerID + " not found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+            
+            
+            
+            if (speechEventID!=null){
+                // N.B. the idea seems to be to get the corresponding event as input for the XSL transformation
+                // and the XSL expects a parameter specifying the speech event
+                // should be okay (just unnecessary) for COMA because events and speech events are identical there...
+                // changed for issue #175
+                //Event event = backend.getEvent(eventID.substring(0,12));
+                Event event = backend.getEvent(backend.getEvent4SpeechEvent(speechEventID));
+                String eventXML = event.toXML();        
+                // changed for issue #175
+                String[][] param = {
+                    {"speechEventID", speechEventID},
+                    {"transcriptID", transcriptID},
+                    {"eventID", eventID}
+                };
+                // change for issue #175
+                //String eventHTML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/speechEvent2Table.xsl", eventXML, param);
+                String xslPath = Configuration.getSpeechEvent2HTMLStylesheet();
+                String speechEventHTML = new IOHelper().applyInternalStylesheetToString(xslPath, eventXML, param);
+                
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(speechEventHTML);             
+                response.getWriter().close();            
+            }  else {
+                String errorHTML = "<div>Event " + speechEventID + " not found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | TransformerException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } 
+    }
+    
+    
+    
 
     private void getEventMetadataHTML(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -266,55 +379,6 @@ public class ZumultDataServlet extends HttpServlet {
         } 
     }
 
-    private void getSpeechEventMetadataHTML(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
-            String speechEventID = request.getParameter("speechEventID");
-            
-            // these parameters are optional
-            String transcriptID = request.getParameter("transcriptID");
-            if (transcriptID==null){transcriptID = "x";}
-            String eventID = request.getParameter("eventID");
-            if (eventID==null){eventID = "x";}
-            
-            if (speechEventID!=null){
-                // N.B. the idea seems to be to get the corresponding event as input for the XSL transformation
-                // and the XSL expects a parameter specifying the speech event
-                // should be okay (just unnecessary) for COMA because events and speech events are identical there...
-                // changed for issue #175
-                //Event event = backend.getEvent(eventID.substring(0,12));
-                Event event = backend.getEvent(backend.getEvent4SpeechEvent(speechEventID));
-                String eventXML = event.toXML();        
-                // changed for issue #175
-                String[][] param = {
-                    {"speechEventID", speechEventID},
-                    {"transcriptID", transcriptID},
-                    {"eventID", eventID}
-                };
-                // change for issue #175
-                //String eventHTML = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/speechEvent2Table.xsl", eventXML, param);
-                String xslPath = Configuration.getSpeechEvent2HTMLStylesheet();
-                String speechEventHTML = new IOHelper().applyInternalStylesheetToString(xslPath, eventXML, param);
-                
-                response.setContentType("text/html");
-                response.setCharacterEncoding("UTF-8");                            
-                response.getWriter().write(speechEventHTML);             
-                response.getWriter().close();            
-            }  else {
-                String errorHTML = "<div>Event " + speechEventID + " not found.</div>";
-                response.setContentType("text/html");
-                response.setCharacterEncoding("UTF-8");                            
-                response.getWriter().write(errorHTML);             
-                response.getWriter().close();            
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | TransformerException ex) {
-            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        } 
-    }
 
     private void getEventHTML(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -1535,6 +1599,7 @@ public class ZumultDataServlet extends HttpServlet {
         }
         
     }
+
     
     
 
