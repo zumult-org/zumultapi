@@ -65,6 +65,9 @@ public class Configuration {
     private static String speechEvent2HtmlStylesheet;
     private static String speaker2HtmlStylesheet;
     private static String eventTitleMetadataKey;
+    
+    private static String statisticsStylesheet;
+    
 
 
     // new 25-11-2020, for issue #22
@@ -183,6 +186,14 @@ public class Configuration {
         return Constants.ISOTEI2HTML_ANNOTATIONS_STYLESHEET;
     }
     
+    public static String getStatistics2HTMLStylesheet(){
+        if (statisticsStylesheet!=null){
+            return statisticsStylesheet;
+        }
+        return Constants.STATISTICS2HTML_STYLESHEET;
+        
+    }
+    
 
     // new for #175
     public static String getEvent2HTMLStylesheet(){
@@ -255,6 +266,7 @@ public class Configuration {
             event2HtmlStylesheet = config.getString("backend.event2html-xsl");
             speechEvent2HtmlStylesheet = config.getString("backend.speechevent2html-xsl");
             speaker2HtmlStylesheet = config.getString("backend.speaker2html-xsl");
+            statisticsStylesheet = config.getString("backend.statistics2html-xsl");
             eventTitleMetadataKey = config.getString("backend.event-title-metadatakey");
             
             germanetPath = config.getString("backend.germanet-path");

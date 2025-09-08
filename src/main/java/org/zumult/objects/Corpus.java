@@ -33,4 +33,7 @@ public interface Corpus extends XMLSerializable, Identifiable, Metadatable {
     
     public CrossQuantification getCrossQuantification(MetadataKey metadataKey1, MetadataKey metadataKey2, String unit) throws IOException, ResourceServiceException ;
     
+    // new 08-09-2025: issue #262
+    public CorpusStatistics getCorpusStatistics();
+    
 }

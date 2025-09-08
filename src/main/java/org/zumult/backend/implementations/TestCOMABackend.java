@@ -5,17 +5,14 @@
  */
 package org.zumult.backend.implementations;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
-import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
-import org.zumult.io.IOHelper;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
@@ -27,7 +24,6 @@ import org.zumult.objects.Transcript;
 import org.zumult.query.KWIC;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.serialization.DefaultQuerySerializer;
-import org.zumult.query.serialization.QuerySerializer;
 
 /**
  *
@@ -67,7 +63,17 @@ public class TestCOMABackend {
             System.out.println("SpeechEvent : " + speechEventID);
             
             System.out.println(randomCorpusID + " / " + randomTranscriptID);
+
             
+            Set<MetadataKey> metadataKeysGTXG = bi.getMetadataKeys4Corpus("GTXG", ObjectTypesEnum.TRANSCRIPT);
+            for (MetadataKey mk : metadataKeysGTXG){
+                System.out.println(mk.getID() + " --- " + mk.getName("en"));
+            }
+            
+            IDList transcriptsGTXG = bi.getSpeechEvent("GTXG_E_0001").getTranscripts();
+            System.out.println(String.join("\n", transcriptsGTXG));
+            
+            System.exit(0);
             Corpus remCorpus = bi.getCorpus("ESLO");
             //Media media = bi.getMedia("M_COMM_ESLO2_ENT_1005_REMOTE");
             //System.out.println(media.getURL());
@@ -78,6 +84,7 @@ public class TestCOMABackend {
             Media media = bi.getMedia(bi.getAudios4Transcript(remTrans.getID()).get(0));
             System.out.println(media.getURL());
             
+
             //System.exit(0);
             
             SearchResultPlus searchResult = bi.search("[word=\"en\"]", null, null, "ESLO", null, 1000, null, null, null, null, null);

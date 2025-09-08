@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -155,7 +156,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
-            System.out.println("Looking for speech event " + speechEventID + " in corpus " + corpusID);
+            //System.out.println("Looking for speech event " + speechEventID + " in corpus " + corpusID);
             
             String xp = "//Communication[@Id='" + speechEventID + "']";
             Element communicationElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
@@ -534,13 +535,44 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         // for the time being, let us look if the audio for the speech event 
         // contains a file with the same name as the transcript?
         //System.out.println("Getting audios 4 speech event: " + transcriptID);
-        return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
+        // return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
+        // 17-08-2025: issue #260
+        // <Key Name="Recording ID">REC_GTXG_E_001_SE_OEA_0002</Key>
+        Transcript transcript = getTranscript(transcriptID);
+        String recordingIDs = transcript.getMetadataValue(findMetadataKeyByID("Transcript_Recording ID"));
+        if (recordingIDs!=null){
+            String[] recordingIDsTokens = recordingIDs.split(";");
+            IDList result = new IDList("audios");
+            for (String recordingIDToken : recordingIDsTokens){
+                Media.MEDIA_TYPE type = getMedia(recordingIDToken).getType();
+                if (type == Media.MEDIA_TYPE.AUDIO){
+                    result.add(recordingIDToken);
+                }
+            }
+            return result;
+        } else {
+            return getAudios4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
+        }
     }
 
     @Override
     public IDList getVideos4Transcript(String transcriptID) throws IOException {
         // This may be difficult because there is no mapping for this
-        return getVideos4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
+        Transcript transcript = getTranscript(transcriptID);
+        String recordingIDs = transcript.getMetadataValue(findMetadataKeyByID("Transcript_Recording ID"));
+        if (recordingIDs!=null){
+            String[] recordingIDsTokens = recordingIDs.split(";");
+            IDList result = new IDList("videos");
+            for (String recordingIDToken : recordingIDsTokens){
+                Media.MEDIA_TYPE type = getMedia(recordingIDToken).getType();
+                if (type == Media.MEDIA_TYPE.VIDEO){
+                    result.add(recordingIDToken);
+                }
+            }
+            return result;
+        } else {
+            return getVideos4SpeechEvent(getSpeechEvent4Transcript(transcriptID));
+        }
     }
 
     @Override
@@ -597,48 +629,6 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         }
         return null;
     }
-
-    // 07-07-2022, removed, issue #41
-    /* @Override
-    public MediaMetadata getMediaMetadata4Media(String eventID, String mediaID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
-    // 07-07-2022, removed, issue #41
-    /* @Override
-    public TranscriptMetadata getTranscriptMetadata4Transcript(String eventID, String transcriptID) {
-        try {
-            String corpusID = findCorpusID(eventID);
-            Document comaDocument = getCorpus(corpusID).getDocument();
-            /*
-                <Transcription Id="CIDID74BCDD4E-1A7D-05AB-22B3-C0792A3848EC">
-                   <Name>MT_270110_Shirin</Name>
-                   <Filename>MT_270110_Shirin_s.exs</Filename>
-                   <NSLink>Shirin_Zhi_Zhi/MT_270110_Shirin/MT_270110_Shirin_s.exs</NSLink>
-                   <Availability>
-                      <Available>false</Available>
-                      <ObtainingInformation/>
-                   </Availability>
-                   <Description>
-                      <Key Name="# EXB-SOURCE">Shirin_Zhi_Zhi/MT_270110_Shirin/MT_270110_Shirin.exb</Key>
-                      <Key Name="# e">642</Key>
-                      <Key Name="# sc">71</Key>
-                      <Key Name="Alignment status">fully aligned</Key>
-                      <Key Name="Annotation type: disfluency"            
-            */
-        /*} catch (IOException ex) {
-            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // difficulty here: need to implement TranscriptMetadata for Coma
-        // not sure how to do this yet
-        return null;
-    }*/
-
-    // 07-07-2022, removed, issue #41
-    /* @Override
-    public AdditionalMaterialMetadata getAdditionalMaterialMetadata4Corpus(String corpusID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    } */
 
 
 
@@ -738,43 +728,6 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         return getMedia(mediaID);
     }
 
-
-    // removed 07-07-2022, issue #45
-    /*@Override
-    public String getEvent4Transcript(String transcriptID) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
-
-    /*@Override
-    public Set<MetadataKey> getMetadataKeysForCorpus(String corpusID, String type) {
-        try {
-            // within a given object type, key names in COMA should be unique
-            Corpus corpus = getCorpus(corpusID);
-            
-            String comaNameOfObject = COMAUtilities.getComaNameForZumultName(type);
-
-            NodeList allKeys = (NodeList) xPath.evaluate("//Key[ancestor::*[@Id][1]/name()='" + comaNameOfObject + "']", 
-                    corpus.getDocument(), XPathConstants.NODESET);
-            Set<String> allKeyNames = new HashSet<>();
-            for (int i=0; i<allKeys.getLength(); i++){
-                Element keyElement = ((Element)(allKeys.item(i)));
-                String keyName = keyElement.getAttribute("Name");
-                allKeyNames.add(keyName);
-            }
-            
-            Set<MetadataKey> returnValue = new HashSet<>();
-            // to do
-            
-            
-            
-            return returnValue;
-        } catch (IOException | XPathExpressionException ex) {
-            Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }*/
-
     @Override
     public Protocol getProtocol(String protocolID) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -815,7 +768,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
 
     
     public File getStatsFile(String corpusID){
-        File topFolder = new File(Configuration.getMetadataPath());
+        //File topFolder = new File(Configuration.getMetadataPath());
         File corpusFolder = new File(topFolder, corpusID);
         File STATS_FILE = new File(corpusFolder, corpusID + ".stats");
         return STATS_FILE;
@@ -823,7 +776,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     }
     
     private void calculateStatistics(String corpusID) throws IOException{
-        File topFolder = new File(Configuration.getMetadataPath());
+        //File topFolder = new File(Configuration.getMetadataPath());
         File corpusFolder = new File(topFolder, corpusID);
         File STATS_FILE = new File(corpusFolder, corpusID + ".stats");
         
@@ -870,6 +823,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         outDocument.getRootElement().setAttribute("speech-events", Integer.toString(countSpeechEvents));
         outDocument.getRootElement().setAttribute("transcripts", Integer.toString(countTranscripts));
         
+        int i=0;
         for (String speechEventID : speechEventIDs){
             TokenList seTokenList = new DefaultTokenList("transcription");
             org.jdom.Element seElement = new org.jdom.Element("speech-event");
@@ -897,6 +851,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                 seElement.addContent(transcriptElement);
             }
             seElement.setAttribute("types", Integer.toString(seTokenList.getNumberOfTypes()));
+            if (i%50==0){
+                System.out.println("[" + i + "/" + speechEventIDs.size() + "]");
+            }
+            i++;
+            
             
         }
         

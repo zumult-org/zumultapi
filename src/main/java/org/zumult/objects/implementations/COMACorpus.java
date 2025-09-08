@@ -5,6 +5,8 @@
  */
 package org.zumult.objects.implementations;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -16,9 +18,12 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.zumult.backend.Configuration;
+import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
 import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.CorpusStatistics;
 import org.zumult.objects.CrossQuantification;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
@@ -239,8 +244,27 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         // there, we are using the acronym as the ID
         // so let's return the acronym for now
         return getAcronym();
-
     }
+
+    
+    COMACorpusStatistics corpusStatistics = null;
+    // new 08-09-2025: issue #262
+    @Override
+    public CorpusStatistics getCorpusStatistics() {
+        if (corpusStatistics==null){
+            try {
+                File topFolder = new File(Configuration.getMetadataPath());
+                File statFile = new File(new File(topFolder, getID()), getID() + ".stats");
+                String statXML = IOHelper.readUTF8(statFile);            
+                corpusStatistics = new COMACorpusStatistics(statXML);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return corpusStatistics;        
+    }
+    
+    
 
     @Override
     public Set<AnnotationLayer> getAnnotationLayers() {

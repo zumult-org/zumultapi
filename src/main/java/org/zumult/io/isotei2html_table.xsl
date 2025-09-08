@@ -12,10 +12,12 @@
 
     <!-- whether to include a column for the dropdown menu -->
     <xsl:param name="DROPDOWN">TRUE</xsl:param>
+    <!-- whether to include a column for play/pause buttons -->
+    <xsl:param name="PLAYPAUSEBUTTONS">TRUE</xsl:param>
     <!-- whether to include a column for numbering -->
     <xsl:param name="NUMBERING">TRUE</xsl:param>
     <!-- whether to include a row for translation -->    
-    <xsl:param name="TRANSLATION">en</xsl:param>
+    <xsl:param name="TRANSLATION">en;translation</xsl:param>
     <!-- 
         which form of tokens to display
         trans : the transcribed form
@@ -94,25 +96,34 @@
         </tei:particDesc>
     </xsl:variable>
     
-    
+    <!-- **************************************************************** -->    
+    <!-- **************************************************************** -->    
+    <!-- **************************************************************** -->    
     <xsl:template match="/">
-        <!-- <xsl:message select="$VIS_INCIDENT_NOT_TYPES_LIST"/> -->
         <xsl:apply-templates select="//tei:text"/>
     </xsl:template>
     
+    <!-- **************************************************************** -->    
+    <!-- **************************************************************** -->    
+    <!-- **************************************************************** -->    
     <xsl:template match="tei:text">
         <table class="transcript table-striped table-sm" id="transcript-table">
             <!-- <tr><td><xsl:value-of select="$TOKEN_LIST_URL"/></td></tr> -->
             <xsl:choose>                
+                <!-- We want an excerpt defined by start and end annotation block ID -->
                 <xsl:when test="$START_ANNOTATION_BLOCK_ID and $END_ANNOTATION_BLOCK_ID">
                     <xsl:apply-templates select="//tei:body/*[not(following-sibling::tei:*[@xml:id=$START_ANNOTATION_BLOCK_ID]) and not(preceding-sibling::tei:*[@xml:id=$END_ANNOTATION_BLOCK_ID])]"/>    
                 </xsl:when>
+                <!-- We want an excerpt defined by annotation block ID and context size 'around' -->
                 <xsl:when test="$AROUND_ANNOTATION_BLOCK_ID and $HOW_MUCH_AROUND">
-                    <xsl:variable name="AROUND_POSITION" select="count(//tei:body/*[@xml:id=$AROUND_ANNOTATION_BLOCK_ID]/preceding-sibling::*) + 1"/>
+                    <!-- <xsl:variable name="AROUND_POSITION" select="count(//tei:body/*[@xml:id=$AROUND_ANNOTATION_BLOCK_ID]/preceding-sibling::*) + 1"/> -->
+                    <!-- faster? -->
+                    <xsl:variable name="AROUND_POSITION" select="count(id($AROUND_ANNOTATION_BLOCK_ID)/preceding-sibling::*) + 1"/>                    
                     <xsl:variable name="AROUND_START" select="//tei:body/*[max((1, $AROUND_POSITION - $HOW_MUCH_AROUND))]/@xml:id"/>
                     <xsl:variable name="AROUND_END" select="//tei:body/*[min((count(//tei:body/*), $AROUND_POSITION + $HOW_MUCH_AROUND))]/@xml:id"/>                    
                     <xsl:apply-templates select="//tei:body/*[not(following-sibling::tei:*[@xml:id=$AROUND_START]) and not(preceding-sibling::tei:*[@xml:id=$AROUND_END])]"/>    
                 </xsl:when>
+                <!-- We want the entire transcript -->
                 <xsl:otherwise>
                     <xsl:apply-templates select="//tei:body/*"/>
                 </xsl:otherwise>
@@ -121,30 +132,57 @@
         </table>
     </xsl:template>
     
+    <!-- **************************************************************** -->    
+    <!-- **************************************************************** -->    
+    <!-- **************************************************************** -->    
     <xsl:template match="tei:annotationBlock">
         <xsl:variable name="SPEAKER_ID" select="@who"/>
+        <xsl:variable name="AB_COPY" select="."/>
         
         <tr class="annotationBlock">
+            <!-- <xsl:variable name="startAnchor" select="@start"/>
+            <xsl:variable name="endAnchor" select="@end"/>
+            <xsl:variable name="start" select="/tei:TEI/tei:text/[1]/tei:timeline[1]/tei:when[@xml:id=$startAnchor]/@interval"/>
+            <xsl:variable name="end" select="/tei:TEI/tei:text/[1]/tei:timeline[1]/tei:when[@xml:id=$endAnchor]/@interval"/> -->
+            
+            <!-- This may be much faster (?) -->
+            <xsl:variable name="start" select="id(@start)/@interval"/>
+            <xsl:variable name="end" select="id(@end)/@interval"/>
+            
             <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
             <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>
+            
+            <!-- This is for display in ZuMin -->
             <xsl:if test="$HIGHLIGHT_ANNOTATION_BLOCK = @xml:id">
                 <xsl:attribute name="style">background:lightGreen; font-size:larger;</xsl:attribute>
             </xsl:if>
             
+            <!-- table cell for row cursor (indicates media position) -->
             <td class="tablerow_cursor">
-                <xsl:variable name="startAnchor" select="@start"/>
-                <xsl:variable name="endAnchor" select="@end"/>
-                <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-                <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
                 <xsl:attribute name="data-start" select="$start"/>
                 <xsl:attribute name="data-end" select="$end"/>
                 <xsl:text>&#x2009;</xsl:text>
             </td>
 
+            <!-- table cell for dropdown menu -->
             <xsl:if test="$DROPDOWN='TRUE'">
                 <xsl:call-template name="MAKE_DROPDOWN"/>
             </xsl:if>
 
+            <!-- table cell for play/pause buttons -->
+            <xsl:if test="$PLAYPAUSEBUTTONS='TRUE'">
+                <td>
+                    <span onclick="playFromButton(this)" style="color:gray; margin-right:3px; cursor: pointer;">
+                        <xsl:attribute name="data-start" select="$start"/>
+                        <i class="fa-solid fa-play"></i>
+                    </span>
+                    <span onclick="pauseFromButton(this)"  style="color:gray; cursor: pointer;">
+                        <i class="fa-solid fa-pause"></i>
+                    </span>
+                </td>
+            </xsl:if>
+
+            <!-- table cell for numbering -->
             <xsl:if test="$NUMBERING='TRUE'">
                 <td class="numbering">
                     <xsl:variable name="NUMBER" select="count(preceding-sibling::*) + 1"/>
@@ -155,6 +193,7 @@
                 </td>
             </xsl:if>
             
+            <!-- table cell for speaker abbreviation -->
             <td>
                 <xsl:attribute name="class">
                     <xsl:text>speaker</xsl:text>
@@ -162,11 +201,18 @@
                         <xsl:text> cont</xsl:text>
                     </xsl:if>
                 </xsl:attribute>
-                <xsl:attribute name="onclick">showSpeaker('<xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/tei:idno[1]"/>')</xsl:attribute>
+                <!-- show speaker metadata on click -->
+                <!-- <xsl:attribute name="onclick">showSpeaker('<xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/tei:idno[1]"/>')</xsl:attribute> -->
+                <!-- this is faster (?) -->
+                <xsl:attribute name="onclick">showSpeaker('<xsl:value-of select="id($SPEAKER_ID)/tei:idno[1]"/>')</xsl:attribute>
                 <xsl:attribute name="title">Click to show speaker metadata</xsl:attribute>
                 <xsl:attribute name="style">cursor: pointer;</xsl:attribute>
-                <xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/@n"/>
+                <!-- <xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/@n"/> -->
+                <xsl:value-of select="id($SPEAKER_ID)/@n"/>
             </td>      
+            
+            
+            <!-- table cell for the actual transcription text -->
             <td class="transcript-text">
                 <xsl:attribute name="class">
                     <xsl:text>transcript-text</xsl:text>
@@ -190,11 +236,15 @@
                     </xsl:attribute>
                 </xsl:if>
                 <xsl:apply-templates select="tei:u/child::tei:*"/>                
-                <xsl:if test="string-length($TRANSLATION)&gt;0 and descendant::tei:spanGrp[@type=$TRANSLATION]">
-                    <br/>
-                    <span class="translation">
-                        <xsl:apply-templates select="descendant::tei:spanGrp[@type=$TRANSLATION]/tei:span"/>
-                    </span>
+                <xsl:if test="string-length($TRANSLATION)&gt;0">                    
+                    <xsl:for-each select="tokenize($TRANSLATION, ';')">
+                        <xsl:if test="$AB_COPY/descendant::tei:spanGrp[@type=current()]">
+                            <br/>
+                            <span class="translation">
+                                <xsl:apply-templates select="$AB_COPY/descendant::tei:spanGrp[@type=current()]/tei:span"/>
+                            </span>                        
+                        </xsl:if>
+                    </xsl:for-each>
                 </xsl:if>
             </td>
         </tr>
@@ -214,8 +264,13 @@
         <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>      -->   
         <xsl:variable name="startAnchor" select="preceding::tei:anchor[1]/@synch"/>        
         <xsl:variable name="endAnchor" select="following::tei:anchor[1]/@synch"/>
-        <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-        <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
+        <!-- <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
+        <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
+        <!-- This may be much faster (?) -->
+        <xsl:variable name="start" select="id(@start)/@interval"/>
+        <xsl:variable name="end" select="id(@end)/@interval"/>
+        
+        
         <span data-start="{$start}" data-end="{$end}" data-norm="{$norm}" data-lemma="{$lemma}" data-pos="{$pos}" data-id="{$ID}">
             <!-- use this if you have values for intonation level -->
             <!-- <xsl:attribute name="style">
@@ -328,10 +383,13 @@
                 <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
                 <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>            
                 <td class="tablerow_cursor">
-                    <xsl:variable name="startAnchor" select="@start"/>
+                    <!-- <xsl:variable name="startAnchor" select="@start"/>
                     <xsl:variable name="endAnchor" select="@end"/>
                     <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-                    <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
+                    <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
+                    <!-- This may be much faster (?) -->
+                    <xsl:variable name="start" select="id(@start)/@interval"/>
+                    <xsl:variable name="end" select="id(@end)/@interval"/>                    
                     <xsl:attribute name="data-start" select="$start"/>
                     <xsl:attribute name="data-end" select="$end"/>
                     <xsl:text>&#x2009;</xsl:text>
@@ -411,10 +469,14 @@
     <!-- to do : highlight -->
     <xsl:template match="tei:seg//tei:pause">
         <xsl:if test="$VIS_PAUSE_INSIDE_U='TRUE'">
-            <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
+            <!-- <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
             <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>        
             <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-            <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/>
+            <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
+            <!-- This may be much faster (?) -->
+            <xsl:variable name="start" select="id(@start)/@interval"/>
+            <xsl:variable name="end" select="id(@end)/@interval"/>
+            
             <span class="pause">
                 <xsl:attribute name="id" select="@xml:id"/>
                 <xsl:attribute name="data-start" select="$start"/>

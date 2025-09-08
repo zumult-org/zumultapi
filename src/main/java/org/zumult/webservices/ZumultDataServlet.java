@@ -1107,7 +1107,6 @@ public class ZumultDataServlet extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");                            
                 response.getWriter().write(wordListHTML);             
                 response.getWriter().close();                                
-                return;
             } else {
                 // output == outputDownload
                 String wordListTXT = new IOHelper()
@@ -1132,7 +1131,6 @@ public class ZumultDataServlet extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(responseXML);            
                 response.getWriter().close();
-                return;
             }
             
             
@@ -1167,10 +1165,10 @@ public class ZumultDataServlet extends HttpServlet {
             
             StringBuilder sb = new StringBuilder();
             sb.append("<result>");
-            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
-            sb.append("<startAnnotationBlockID>" + startAnnotationBlockID + "</startAnnotationBlockID>");
-            sb.append("<endAnnotationBlockID>" + endAnnotationBlockID + "</endAnnotationBlockID>");
-            sb.append("<startTime>" + Double.toString(startTime) + "</startTime>");
+            sb.append("<transcriptID>").append(transcriptID).append("</transcriptID>");
+            sb.append("<startAnnotationBlockID>").append(startAnnotationBlockID).append("</startAnnotationBlockID>");
+            sb.append("<endAnnotationBlockID>").append(endAnnotationBlockID).append("</endAnnotationBlockID>");
+            sb.append("<startTime>").append(Double.toString(startTime)).append("</startTime>");
             sb.append("</result>");
             
             response.setContentType("application/xml");
@@ -1431,8 +1429,8 @@ public class ZumultDataServlet extends HttpServlet {
             String[] coordinates = speechEvent.getCoordinatesForTime(time);
             StringBuilder sb = new StringBuilder();
             sb.append("<result>");
-            sb.append("<transcriptID>" + coordinates[0] + "</transcriptID>");
-            sb.append("<startAnnotationBlockID>" + coordinates[1] + "</startAnnotationBlockID>");
+            sb.append("<transcriptID>").append(coordinates[0]).append("</transcriptID>");
+            sb.append("<startAnnotationBlockID>").append(coordinates[1]).append("</startAnnotationBlockID>");
             sb.append("</result>");
             
             response.setContentType("application/xml");
@@ -1533,22 +1531,49 @@ public class ZumultDataServlet extends HttpServlet {
 
     private void getAudio(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            
+            // 18-08-2025: this is new: just get the URL for an audio ID
+            String audioID = request.getParameter("audioID");
+            if (audioID!=null){
+                StringBuilder sb = new StringBuilder();
+                sb.append("<result>");
+                sb.append("<audio audioID=\"").append(audioID).append("\">");
+                Media audio = backend.getMedia(audioID);
+                sb.append(audio.getURL());
+                sb.append("</audio>");
+                sb.append("</result>");
+
+                response.setContentType("application/xml");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(sb.toString());
+                response.getWriter().close();
+                return;
+            }
+            
+            // this is the old code
             String transcriptID = request.getParameter("transcriptID");
             String tokenID = request.getParameter("tokenID");
 
-            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             Transcript transcript = backend.getTranscript(transcriptID);
-            double timeForToken = transcript.getTimeForID(tokenID);
+            double timeForToken = 0.0;
+            if (tokenID!=null){
+                timeForToken = transcript.getTimeForID(tokenID);
+            }
+            
+            
             IDList audioIDs = backend.getAudios4Transcript(transcriptID);
 
             StringBuilder sb = new StringBuilder();
             sb.append("<result>");
-            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
-            sb.append("<tokenID>" + tokenID + "</tokenID>");
-            sb.append("<time>" + Double.toString(timeForToken) + "</time>");
-            for (String audioID : audioIDs){
-                    sb.append("<audio audioID=\"" + audioID + "\">");
-                    Media audio = backend.getMedia(audioID);
+            sb.append("<transcriptID>").append(transcriptID).append("</transcriptID>");
+            if (tokenID!=null){
+                sb.append("<tokenID>").append(tokenID).append("</tokenID>");
+            }
+            sb.append("<time>").append(Double.toString(timeForToken)).append("</time>");
+            for (String id : audioIDs){
+                    sb.append("<audio audioID=\"").append(id).append("\">");
+                    Media audio = backend.getMedia(id);
                     sb.append(audio.getURL());
                     sb.append("</audio>");
             }
@@ -1568,22 +1593,47 @@ public class ZumultDataServlet extends HttpServlet {
 
     private void getVideo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+
+            // 18-08-2025: this is new: just get the URL for an audio ID
+            String videoID = request.getParameter("videoID");
+            if (videoID!=null){
+                StringBuilder sb = new StringBuilder();
+                sb.append("<result>");
+                sb.append("<video videoID=\"").append(videoID).append("\">");
+                Media audio = backend.getMedia(videoID);
+                sb.append(audio.getURL());
+                sb.append("</video>");
+                sb.append("</result>");
+
+                response.setContentType("application/xml");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(sb.toString());
+                response.getWriter().close();
+                return;
+            }
+            
+            // this is the old code
             String transcriptID = request.getParameter("transcriptID");
             String tokenID = request.getParameter("tokenID");
 
-            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             Transcript transcript = backend.getTranscript(transcriptID);
-            double timeForToken = transcript.getTimeForID(tokenID);
+            double timeForToken = 0.0;
+            if (tokenID!=null){
+                timeForToken = transcript.getTimeForID(tokenID);
+            }
             IDList videoIDs = backend.getVideos4Transcript(transcriptID);
 
             StringBuilder sb = new StringBuilder();
             sb.append("<result>");
-            sb.append("<transcriptID>" + transcriptID + "</transcriptID>");
-            sb.append("<tokenID>" + tokenID + "</tokenID>");
-            sb.append("<time>" + Double.toString(timeForToken) + "</time>");
-            for (String videoID : videoIDs){
-                    sb.append("<video videoID=\"" + videoID + "\">");
-                    Media video = backend.getMedia(videoID);
+            sb.append("<transcriptID>").append(transcriptID).append("</transcriptID>");
+            if (tokenID!=null){
+                sb.append("<tokenID>").append(tokenID).append("</tokenID>");
+            }
+            sb.append("<time>").append(Double.toString(timeForToken)).append("</time>");
+            for (String id : videoIDs){
+                    sb.append("<video videoID=\"").append(id).append("\">");
+                    Media video = backend.getMedia(id);
                     sb.append(video.getURL());
                     sb.append("</video>");
             }

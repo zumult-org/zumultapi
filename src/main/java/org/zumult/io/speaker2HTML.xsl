@@ -10,7 +10,7 @@
                 <li class="nav-item" role="presentation">
                   <a aria-current="page" data-toggle="tab">
                       <xsl:attribute name="class">nav-link<xsl:if test="position()=1"> active</xsl:if></xsl:attribute>
-                      <xsl:attribute name="href" select="concat('#', replace(@Id, '\.', '_'))"/>
+                      <xsl:attribute name="href" select="concat('#', concat('TAB_', replace(@Id, '\.', '_')))"/>
                       <xsl:value-of select="@Id"/>                  
                   </a>
                 </li>                
@@ -24,7 +24,7 @@
     <xsl:template match="Speaker">
         <div role="tabpanel" aria-labelledby="home-tab">
             <xsl:attribute name="class">tab-pane fade<xsl:if test="not(preceding-sibling::Speaker)"> show active</xsl:if></xsl:attribute>
-            <xsl:attribute name="id" select="replace(@Id, '\.', '_')"/>
+            <xsl:attribute name="id" select="concat('TAB_', replace(@Id, '\.', '_'))"/>
             <table class="table table-striped table-sm">
                 <xsl:apply-templates select="Description/Key">
                     <xsl:sort select="@Name"/>
