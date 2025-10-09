@@ -501,13 +501,13 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
 
                         indexReader.close();
 
-                    }catch (IndexNotFoundException ex) {
+                    } catch (IndexNotFoundException ex) {
                         throw new IOException ("Search index could not be found! Please check " + indexPath, ex);
                     }
                 }
             }
                 
-        }else{
+        } else{
             throw new SearchServiceException("Parameter 'metadataQueryString' is not supported yet!");
         }
         

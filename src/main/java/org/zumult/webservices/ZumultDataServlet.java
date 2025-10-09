@@ -288,7 +288,7 @@ public class ZumultDataServlet extends HttpServlet {
                 response.getWriter().write(result);             
                 response.getWriter().close();            
             } else {
-                String errorHTML = "<div>Speaker " + speakerID + " not found.</div>";
+                String errorHTML = "<div>No speech events for " + speakerID + " found.</div>";
                 response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");                            
                 response.getWriter().write(errorHTML);             

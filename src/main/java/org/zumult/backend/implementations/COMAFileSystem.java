@@ -930,7 +930,9 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Document indexDocument = IOHelper.readDocument(comaIndexFile);
             NodeList childNodes = indexDocument.getDocumentElement().getChildNodes();
             for (int i=0; i<childNodes.getLength(); i++){
-                Element item = (Element)childNodes.item(i);
+                Node node = childNodes.item(i);
+                if (!(node instanceof Element)) continue;
+                Element item = (Element)node;
                 /*
                     <index corpus="TGDP" id="CIDIDCA77E918-392E-DC22-A0A2-5A25F6084C37"
                         parent="CIDE2EAFD16-32BD-43BF-6161-D4E1774950BC"/>                

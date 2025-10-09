@@ -16,21 +16,38 @@
             <span class="badge badge-primary">Metadata</span>    
             <xsl:apply-templates select="//Communication/Description"/>            
         </div>
-        <div>
-            <span class="badge badge-primary"><xsl:value-of select="count(descendant::Person)"/> Speakers</span>    
-        </div>
         
         <div>
-            <span class="badge badge-primary"><xsl:value-of select="count(descendant::Media[ends-with(descendant::NSLink, '.mp4')])"/> Videos</span>
-            <table class="table table-sm">
-                <xsl:apply-templates select="descendant::Media[ends-with(descendant::NSLink, '.mp4')]"/>
-            </table>
+            <span class="badge badge-primary mb-2">
+                <xsl:value-of select="count(descendant::Person)"/> Speakers
+            </span><br/>    
+            <xsl:for-each select="descendant::Person">
+                <span class="ml-2"><xsl:value-of select="text()"/><xsl:text> </xsl:text></span>
+            </xsl:for-each>
         </div>
         
+        <xsl:if test="descendant::Media[ends-with(descendant::NSLink, '.mp4')]">
+            <div>
+                <span class="badge badge-primary"><xsl:value-of select="count(descendant::Media[ends-with(descendant::NSLink, '.mp4')])"/> Videos</span>
+                <table class="table table-sm">
+                    <xsl:apply-templates select="descendant::Media[ends-with(descendant::NSLink, '.mp4')]"/>
+                </table>
+            </div>
+        </xsl:if>
+        
+        <xsl:if test="descendant::Media[ends-with(descendant::NSLink, '.wav')]">
+            <div>
+                <span class="badge badge-primary"><xsl:value-of select="count(descendant::Media[ends-with(descendant::NSLink, '.wav')])"/> Audios</span>    
+                <table class="table table-sm">
+                    <xsl:apply-templates select="descendant::Media[ends-with(descendant::NSLink, '.wav')]"/>
+                </table>            
+            </div>
+        </xsl:if>
+
         <div>
-            <span class="badge badge-primary"><xsl:value-of select="count(descendant::Media[ends-with(descendant::NSLink, '.wav')])"/> Audios</span>    
+            <span class="badge badge-primary"><xsl:value-of select="count(descendant::Transcription[ends-with(descendant::NSLink, '.xml')])"/> Transcripts</span>    
             <table class="table table-sm">
-                <xsl:apply-templates select="descendant::Media[ends-with(descendant::NSLink, '.wav')]"/>
+                <xsl:apply-templates select="descendant::Transcription[ends-with(descendant::NSLink, '.xml')]"/>
             </table>            
         </div>
         
@@ -68,5 +85,17 @@
             </td>
         </tr>
     </xsl:template>
+
+    <xsl:template match="Transcription">
+        <tr>
+            <td class="mr-2">
+                <i class="fa-solid fa-file-lines"></i>
+            </td>
+            <td>
+                <xsl:value-of select="NSLink"/>
+            </td>
+        </tr>
+    </xsl:template>
+    
 
 </xsl:stylesheet>

@@ -66,7 +66,9 @@ public class PraatConnection {
         File pitchOut = File.createTempFile("pitch", ".txt");
         
         // 10-02-2025, added flag for #237
-        ProcessBuilder pb = new ProcessBuilder(PRAAT_PATH, "--no-pref-window", tempScript.getAbsolutePath(), audio.getAbsolutePath(), pitchOut.getAbsolutePath());
+        //ProcessBuilder pb = new ProcessBuilder(PRAAT_PATH, "--no-pref-window", tempScript.getAbsolutePath(), audio.getAbsolutePath(), pitchOut.getAbsolutePath());
+        // 23-09-2025, the flag seems to be like totally wrong or deprecated, this one works
+        ProcessBuilder pb = new ProcessBuilder(PRAAT_PATH, "--run", tempScript.getAbsolutePath(), audio.getAbsolutePath(), pitchOut.getAbsolutePath());
         System.out.println(pb.command());
         Process p = pb.start();
         try {
@@ -86,10 +88,12 @@ public class PraatConnection {
             String line = null;
             int count = 0;
             while ((line = TSVReader.readLine()) != null) {
+                // skip the first line
                 if (count==0){
                     count++;
                     continue;
                 }
+                //System.out.println(line);
                 String[] lineItems = line.split(","); //splitting the line and adding its items in String[]
                 Element pitch = document.createElement("pitch");
                 pitch.setAttribute("time", lineItems[0]);
@@ -98,7 +102,10 @@ public class PraatConnection {
                 
                 count++;
             }
-            return IOHelper.DocumentToString(document);
+            String xml = IOHelper.DocumentToString(document);
+            //System.out.println("========= Pitches");
+            //System.out.println(xml);
+            return xml;
         } catch (ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(PraatConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);

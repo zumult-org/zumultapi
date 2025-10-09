@@ -327,7 +327,7 @@ public class DataTableServlet extends HttpServlet {
             
             
             
-            System.out.println("*********** " + String.join(";", metadataKeyNames));
+            //System.out.println("*********** " + String.join(";", metadataKeyNames));
             
             String[][] parameters = {
                 {"METADATA_KEY_NAMES", String.join(";", metadataKeyNames)},
@@ -341,7 +341,7 @@ public class DataTableServlet extends HttpServlet {
             String json = new IOHelper().applyInternalStylesheetToString("/resources/speakers2DataTableJSON.xsl", thisCorpusXML, parameters);
             IDList speakerIDs = backendInterface.getSpeakers4Corpus(corpusID);
             
-            System.out.println(json);
+            //System.out.println(json);
             
             
             /*
@@ -462,7 +462,7 @@ public class DataTableServlet extends HttpServlet {
             
             
             
-            System.out.println("*********** " + String.join(";", metadataKeyNames));
+            //System.out.println("*********** " + String.join(";", metadataKeyNames));
             
             String[][] parameters = {
                 {"METADATA_KEY_NAMES", String.join(";", metadataKeyNames)},

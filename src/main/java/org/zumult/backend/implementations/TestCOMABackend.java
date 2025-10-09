@@ -51,6 +51,11 @@ public class TestCOMABackend {
             );
             BackendInterface bi = new COMAFileSystem(); 
             
+            
+            IDList videos4TranscriptX = bi.getVideos4Transcript("Beckhams");
+            System.out.println(String.join(" / ", videos4TranscriptX));
+            
+            System.exit(0);
             Random random = new Random();
             IDList allCorpusIDs = bi.getCorpora();
             String randomCorpusID = allCorpusIDs.get(random.nextInt(allCorpusIDs.size()));
@@ -59,6 +64,7 @@ public class TestCOMABackend {
             //System.out.println(String.join("  //  ", allTranscriptIDs));
             String randomTranscriptID = allTranscriptIDs.get(random.nextInt(allTranscriptIDs.size()));
             String speechEventID = bi.getSpeechEvent4Transcript(randomTranscriptID);
+            
             
             System.out.println("SpeechEvent : " + speechEventID);
             

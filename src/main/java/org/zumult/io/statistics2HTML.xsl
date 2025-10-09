@@ -6,7 +6,7 @@
     exclude-result-prefixes="xs math"
     version="3.0">
     <xsl:template match="/">
-        <table class="table table-striped">
+        <table class="table table-striped" style="width:auto">
             <tr>
                 <td>Total number of speech events</td>
                 <td><xsl:value-of select="/*/@speech-events"/></td>
@@ -38,7 +38,7 @@
         
         <hr/>
         
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm" style="width: auto;">
             <thead>
                 <th>Speech event</th>
                 <th>#Transcripts</th>
@@ -55,16 +55,16 @@
     
     <xsl:template match="speech-event">
         <tr>
-            <td style="vertical-align:top">
+            <td class="text-right" style="vertical-align:top">
                 <xsl:value-of select="@id"/>
             </td>
             <td>
                 <xsl:value-of select="count(transcript)"/>
             </td>
-            <td style="vertical-align:top">
-                <xsl:value-of select="sum(transcript/@tokens)"/>
+            <td class="text-right" style="vertical-align:top">
+                <xsl:value-of select="format-number(sum(transcript/@tokens), '###,###')"/>
             </td>
-            <td style="vertical-align:top">
+            <td class="text-right" style="vertical-align:top">
                 <xsl:variable name="DUR_IN_SEC" select="sum(transcript/@duration)"/>
                 <xsl:value-of select="linguisticbits:TIME-FORMATTER($DUR_IN_SEC)"/>
             </td>

@@ -236,6 +236,8 @@
                     </xsl:attribute>
                 </xsl:if>
                 <xsl:apply-templates select="tei:u/child::tei:*"/>                
+                
+                <!-- TRANSLATION, IF ANY -->
                 <xsl:if test="string-length($TRANSLATION)&gt;0">                    
                     <xsl:for-each select="tokenize($TRANSLATION, ';')">
                         <xsl:if test="$AB_COPY/descendant::tei:spanGrp[@type=current()]">
@@ -251,7 +253,34 @@
     </xsl:template>
     
     
+    <!-- <u> is skipped -->
     <xsl:template match="tei:u"/>
+    
+    <!-- a nested seg on the lowest level -->
+    <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">
+        <xsl:apply-templates/>
+        <!-- <xsl:choose>
+            <xsl:when test="@type='utterance' and @subtype='interrogative'">
+                <xsl:text>? </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='interrupted'">
+                <xsl:text>... </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='modeless'">
+                <xsl:text>&#x02d9; </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='declarative'">
+                <xsl:text>. </xsl:text>                
+            </xsl:when>
+            <xsl:when test="@type='utterance' and @subtype='exclamative'">
+                <xsl:text>! </xsl:text>                
+            </xsl:when>
+        </xsl:choose> -->
+        <xsl:if test="following-sibling::tei:seg">
+            <br/>
+        </xsl:if>        
+    </xsl:template>
+    
     
     
     <xsl:template match="tei:w">
@@ -267,8 +296,8 @@
         <!-- <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
         <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
         <!-- This may be much faster (?) -->
-        <xsl:variable name="start" select="id(@start)/@interval"/>
-        <xsl:variable name="end" select="id(@end)/@interval"/>
+        <xsl:variable name="start" select="id($startAnchor)/@interval"/>
+        <xsl:variable name="end" select="id($endAnchor)/@interval"/>
         
         
         <span data-start="{$start}" data-end="{$end}" data-norm="{$norm}" data-lemma="{$lemma}" data-pos="{$pos}" data-id="{$ID}">
@@ -350,6 +379,23 @@
         <xsl:apply-templates/>                    
         <xsl:text> </xsl:text>                
     </xsl:template>
+    
+    <xsl:template match="tei:anchor[@rend]">
+        <span class="annotating-anchor">
+            <xsl:if test="@type">
+                <xsl:attribute name="title" select="@type"/>
+            </xsl:if>
+            <xsl:value-of select="@rend"/>
+        </span>
+    </xsl:template>
+    
+    <xsl:template match="tei:anchor[@type and not(@rend)]">
+        <xsl:choose>
+            <xsl:when test="@type='ol-start'"><span class="ol-marker">[</span></xsl:when>
+            <xsl:otherwise><span class="ol-marker">]</span></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     
     <xsl:template match="tei:w/text()">
         <!-- inside overlap? -->
@@ -442,29 +488,6 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">
-        <xsl:apply-templates/>
-        <!-- <xsl:choose>
-            <xsl:when test="@type='utterance' and @subtype='interrogative'">
-                <xsl:text>? </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='interrupted'">
-                <xsl:text>... </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='modeless'">
-                <xsl:text>&#x02d9; </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='declarative'">
-                <xsl:text>. </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='exclamative'">
-                <xsl:text>! </xsl:text>                
-            </xsl:when>
-        </xsl:choose> -->
-        <xsl:if test="following-sibling::tei:seg">
-            <br/>
-        </xsl:if>        
-    </xsl:template>
     
     <!-- to do : highlight -->
     <xsl:template match="tei:seg//tei:pause">
@@ -502,12 +525,6 @@
     
     
     
-    <xsl:template match="tei:anchor[@type]">
-        <xsl:choose>
-            <xsl:when test="@type='ol-start'"><span class="ol-marker">[</span></xsl:when>
-            <xsl:otherwise><span class="ol-marker">]</span></xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
     
     <!-- to do : highlight -->
     <xsl:template match="tei:seg//tei:desc">
