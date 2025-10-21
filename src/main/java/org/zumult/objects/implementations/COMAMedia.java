@@ -5,6 +5,7 @@
  */
 package org.zumult.objects.implementations;
 
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.xpath.XPath;
@@ -136,6 +137,16 @@ public class COMAMedia extends AbstractMedia {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return super.getDuration();
+    }
+
+    @Override
+    public Set<String> getMetadataValues (MetadataKey key, String language) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Set<String> getMetadataValues (MetadataKey key) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

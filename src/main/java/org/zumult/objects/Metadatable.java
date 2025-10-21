@@ -5,6 +5,8 @@
  */
 package org.zumult.objects;
 
+import java.util.Set;
+
 /**
  *
  * @author thomasschmidt
@@ -12,6 +14,8 @@ package org.zumult.objects;
 public interface Metadatable {
     
     public String getMetadataValue(MetadataKey key);
+    public Set<String> getMetadataValues(MetadataKey key, String language);
+    public Set<String> getMetadataValues(MetadataKey key);
     
     
 }

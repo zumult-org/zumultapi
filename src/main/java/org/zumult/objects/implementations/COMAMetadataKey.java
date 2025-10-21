@@ -5,50 +5,23 @@
  */
 package org.zumult.objects.implementations;
 
-import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
 
 /**
  *
  * @author thomas.schmidt
  */
-public class COMAMetadataKey implements MetadataKey {
-
-    String id;
-    String name;
-    ObjectTypesEnum level;
+public class COMAMetadataKey extends AbstractMetadataKey {
     
     public COMAMetadataKey(String id, String name, ObjectTypesEnum level) {
         this.id = id;
-        this.name = name;
+        addName(DEFAULT_LANGUAGE, name);
         this.level = level;
-    }
-
-
-
-    @Override
-    public String getName(String language) {
-        return name;
-    }
-
-    @Override
-    public String getID() {
-        return id;
-    }
-
-    @Override
-    public ObjectTypesEnum getLevel() {
-        return level;
     }
 
     @Override
     public Class getValueClass() {
         return String.class;
-    }
-
-    @Override
-    public boolean isQuantified() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
