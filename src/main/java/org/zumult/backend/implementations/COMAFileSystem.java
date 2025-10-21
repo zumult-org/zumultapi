@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -1004,6 +1003,11 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
     @Override
     public String getCorpus4Speaker(String speakerID) throws IOException {
         return id2Corpus.get(speakerID);        
+    }
+
+    @Override
+    public IDList getAvailableValues (String corpusID, String metadataKeyID, String language) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
   
 }

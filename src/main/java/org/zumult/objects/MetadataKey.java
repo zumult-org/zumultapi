@@ -5,6 +5,9 @@
  */
 package org.zumult.objects;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
  *
  * @author Thomas_Schmidt
@@ -12,6 +15,8 @@ package org.zumult.objects;
 public interface MetadataKey extends Identifiable, Comparable<MetadataKey>  {
     
     String getName(String language);
+    Map<String, String> getNamesByLanguages(); // e.g. { "de":"Nachname", "en": "Surname" }
+    Set<String> getLanguages(); // e.g. ("de", "en", "it")
     
     ObjectTypesEnum getLevel();
     
