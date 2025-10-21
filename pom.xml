@@ -51,7 +51,6 @@
                 <configuration>
                     <!-- changed 2024-11-01 for issue #172 -->
                     <excludes>
-                        <exclude>**/data/quantifications/**</exclude>
                         <exclude>**/data/*.*</exclude>
                     </excludes>
                 </configuration>
