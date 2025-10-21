@@ -104,6 +104,7 @@ public interface BackendInterface {
 
     public IDList getAvailableValues(String corpusID, MetadataKey metadataKey);
     public IDList getAvailableValues(String corpusID, String metadataKeyID);
+    public IDList getAvailableValues(String corpusID, String metadataKeyID, String language);
 
     //public String getMetadataValue(String level, String DGDObjectID, String metadatum);
     //public String getMetadataValue(String level, String DGDObjectID, String metadatum, String speakerID);
