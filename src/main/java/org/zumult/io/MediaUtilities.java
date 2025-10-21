@@ -118,26 +118,21 @@ public class MediaUtilities {
         AudioInputStream audioInputStream;
         System.out.println("Cutting " + pathToInputFile);
         
+        try {
         // 2025-04-08 changed for #246
-        if (!(COMAUtilities.isHttpLink(pathToInputFile))){
-            try {
+            if (!(COMAUtilities.isHttpLink(pathToInputFile))){
                 File soundFile = new File(pathToInputFile);
                 audioInputStream = AudioSystem.getAudioInputStream(soundFile);    
-            } catch (UnsupportedAudioFileException ex){
-                Logger.getLogger(MediaUtilities.class.getName()).log(Level.SEVERE, null, ex);
-                IOException wrappedException = new IOException("Unsupported audio file:" + ex.getLocalizedMessage());
-                throw wrappedException;
-            }
-        } else {
-            try {
+            } else {
                 URL url = new URL(pathToInputFile);
                 audioInputStream = AudioSystem.getAudioInputStream(url);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(MediaUtilities.class.getName()).log(Level.SEVERE, null, ex);
-                IOException wrappedException = new IOException("Unsupported audio file:" + ex.getLocalizedMessage());
-                throw wrappedException;
             }
+        } catch (UnsupportedAudioFileException ex){
+            Logger.getLogger(MediaUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            IOException wrappedException = new IOException("Unsupported audio file:" + ex.getLocalizedMessage());
+            throw wrappedException;
         }
+        
             
         AudioFormat audioFormat = audioInputStream.getFormat();        
 

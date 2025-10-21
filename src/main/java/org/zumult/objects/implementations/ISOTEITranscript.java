@@ -6,7 +6,9 @@
 package org.zumult.objects.implementations;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,11 +29,13 @@ import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
 
 /**
- *
+ * 
  * @author Thomas_Schmidt
  */
 public abstract class ISOTEITranscript extends AbstractXMLObject implements Transcript {
 
+    String teiNamespaceURI = "http://www.tei-c.org/ns/1.0";
+    
     XPath xPath = XPathFactory.newInstance().newXPath();
     
     XMLMetadata metadata;
@@ -756,7 +760,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
 
     private String getAlternativeID(String id) {
         // workaround for issue #58
-        String alternativeID = "";
+        String alternativeID;
         if (id.startsWith("c")){
             String numberPart = id.substring(1);
             try {
@@ -809,6 +813,69 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         }
         
     }
+
+    @Override
+    public List<String> getRecordings() {
+        List<String> result = new ArrayList<>();
+        try {
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:media", getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){                
+                Element node = (Element) nodes.item(i);
+                String url = node.getAttribute("url");
+                result.add(url);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+        
+    }
+
+    
+    
+    @Override
+    public void setRecordings(List<String> recordingURLs) {
+        try {
+            Element recordingStmt = ((Element)xPath.evaluate("//tei:recordingStmt", getDocument().getDocumentElement(), XPathConstants.NODE));
+            while (recordingStmt.hasChildNodes()) {
+               recordingStmt.removeChild(recordingStmt.getFirstChild());
+            }
+            for (String recordingURL : recordingURLs){
+                boolean isAudio = (recordingURL.toLowerCase().endsWith(".wav") || recordingURL.toLowerCase().endsWith(".mp3"));                
+                /* <recording type="audio">
+                        <media mimeType="audio/wav"
+                            url="https://cocoon.huma-num.fr/data/eslo/masters/ESLO1_CONF_502.wav"/>
+                        <media mimeType="audio/mp3"
+                            url="https://cocoon.huma-num.fr/data/eslo/ESLO1_CONF_502.mp3"/>
+                    </recording>
+                */    
+                Element recording = getDocument().createElementNS(teiNamespaceURI, "recording");
+                recordingStmt.appendChild(recording);
+                if (isAudio){
+                    recording.setAttribute("type", "audio");
+                } else {
+                    recording.setAttribute("type", "video");                    
+                }
+                Element media = getDocument().createElementNS(teiNamespaceURI, "media");
+                recording.appendChild(media);
+                media.setAttribute("url", recordingURL);
+                String mimeType = "audio";
+                if (!isAudio) mimeType = "video";
+                String suffix = recordingURL.substring(recordingURL.lastIndexOf(".")+1);
+                mimeType += "/" + suffix;
+                media.setAttribute("mimeType", mimeType);
+                
+                documentChanged();
+            }
+            
+            
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }
+    
+    
     
     
     // what is this???

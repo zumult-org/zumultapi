@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -761,15 +762,12 @@ public class ZumultDataServlet extends HttpServlet {
             
             System.out.println("[Download] Got transcript");
             
-            // 0. ISO TRANSCRIPT
-            if (transcriptISO){
-                File isoFile = File.createTempFile(transcriptID + "_", ".xml");
-                isoFile.deleteOnExit();
-                allFiles.add(isoFile);
-                IOHelper.writeDocument(partTranscript.getDocument(), isoFile);
+            // 21-10-2025: issue #88
+            partTranscript.setTimelineToZero();    
+            
+            IDList audioIDs = backend.getAudios4Transcript(transcriptID);
+            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
 
-                System.out.println("[Download] Written ISO transcript to " + isoFile.getAbsolutePath());
-            }
 
             
             double startTime = 0.0;
@@ -782,33 +780,56 @@ public class ZumultDataServlet extends HttpServlet {
             // security: not longer than 2 minutes!
             endTime = Math.min(endTime, startTime + 120.0);
             
-            IDList audioIDs = backend.getAudios4Transcript(transcriptID);
-            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
             
+            List<String> recordingURLs = new ArrayList<>();
             
             // AUDIO
             if (audioArchive){
                 for (String audioID : audioIDs){
-                    Media partAudio = backend.getMedia(audioID, Media.MEDIA_FORMAT.WAV).getPart(startTime, endTime);
-                    allFiles.add(new File(partAudio.getURL()));
+                    // this is not right
+                    Media fullAudio = backend.getMedia(audioID);
+                    if (!(fullAudio.getURL().toLowerCase().endsWith(".wav"))){
+                        continue;
+                    }
+                    Media partAudio = fullAudio.getPart(startTime, endTime);
+                    String url = partAudio.getURL();
+                    allFiles.add(new File(url));
+                    recordingURLs.add(new File(url).getName());
                     System.out.println("[Download] Added audio " + partAudio.getURL());
                 }
             }
             
+
             // 1st VIDEO
             if (videoArchive && !videoIDs.isEmpty()){
                 Media partVideo = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE).getPart(startTime, endTime);
-                allFiles.add(new File(partVideo.getURL()));
+                String url = partVideo.getURL();
+                allFiles.add(new File(url));
+                    recordingURLs.add(new File(url).getName());
                 System.out.println("[Download] Added video " + partVideo.getURL());                
             }
 
             // 2nd VIDEO
             if (video2Archive && videoIDs.size()>1){
                 Media partVideo = backend.getMedia(videoIDs.get(1), Media.MEDIA_FORMAT.MPEG4_ARCHIVE).getPart(startTime, endTime);
-                allFiles.add(new File(partVideo.getURL()));
+                String url = partVideo.getURL();
+                allFiles.add(new File(url));
+                recordingURLs.add(new File(url).getName());
                 System.out.println("[Download] Added video " + partVideo.getURL());                
             }
             
+            partTranscript.setRecordings(recordingURLs);
+            
+            // 0. ISO TRANSCRIPT
+            if (transcriptISO){
+                File isoFile = File.createTempFile(transcriptID + "_", ".xml");
+                isoFile.deleteOnExit();
+                allFiles.add(isoFile);
+                IOHelper.writeDocument(partTranscript.getDocument(), isoFile); 
+
+                System.out.println("[Download] Written ISO transcript to " + isoFile.getAbsolutePath());
+            }
+
             if (transcriptFLN){
                 String converted = new ISOTEITranscriptConverter((ISOTEITranscript) partTranscript).convert(ISOTEITranscriptConverter.FORMATS.FLN);
                 File outFile = File.createTempFile(transcriptID + "_", ".fln");
@@ -901,6 +922,7 @@ public class ZumultDataServlet extends HttpServlet {
 
             // add all files to the zip file
             for (File f : allFiles){
+                System.out.println("Adding " + f.getAbsolutePath() + " to " + zipFile.getAbsolutePath());
                 FileInputStream inputStream = new FileInputStream(f);
                 BufferedInputStream origin = new BufferedInputStream(inputStream);
                 ZipEntry entry = new ZipEntry(f.getName());

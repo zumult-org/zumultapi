@@ -5,6 +5,7 @@
  */
 package org.zumult.objects;
 
+import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -63,4 +64,7 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     public String getLanguage();
     
     public void setTimelineToZero();
+        
+    public List<String> getRecordings();
+    public void setRecordings(List<String> recordingURLs);
 }

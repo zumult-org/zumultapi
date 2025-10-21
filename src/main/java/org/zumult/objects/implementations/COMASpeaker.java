@@ -7,6 +7,7 @@ package org.zumult.objects.implementations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -59,6 +60,23 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
         }
         return "";
     }
+    
+    @Override
+    public Set<String> getMetadataValues (MetadataKey key, String language) {
+        // this is preliminary until COMA supports multilingual metadata and multiple values per key
+        Set<String> result = new HashSet<>();
+        result.add(getMetadataValue(key));
+        return result;
+    }
+
+    @Override
+    public Set<String> getMetadataValues (MetadataKey key) {
+        // this is preliminary until COMA supports multilingual metadata 
+        Set<String> result = new HashSet<>();
+        result.add(getMetadataValue(key));
+        return result;
+    }
+    
 
     @Override
     public List<Location> getLocations(String locationType) {
@@ -98,14 +116,5 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
         return new IDList("SpeechEvents");
     }
     
-    @Override
-    public Set<String> getMetadataValues (MetadataKey key, String language) {
-        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Set<String> getMetadataValues (MetadataKey key) {
-        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
 }

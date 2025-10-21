@@ -5,6 +5,7 @@
  */
 package org.zumult.objects.implementations;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,6 +107,23 @@ public class COMAMedia extends AbstractMedia {
         } 
         return null;
     }
+    
+    @Override
+    public Set<String> getMetadataValues (MetadataKey key, String language) {
+        // this is preliminary until COMA supports multilingual metadata and multiple values per key
+        Set<String> result = new HashSet<>();
+        result.add(getMetadataValue(key));
+        return result;
+    }
+
+    @Override
+    public Set<String> getMetadataValues (MetadataKey key) {
+        // this is preliminary until COMA supports multilingual metadata 
+        Set<String> result = new HashSet<>();
+        result.add(getMetadataValue(key));
+        return result;
+    }
+    
 
 
     @Override
@@ -139,15 +157,6 @@ public class COMAMedia extends AbstractMedia {
         return super.getDuration();
     }
 
-    @Override
-    public Set<String> getMetadataValues (MetadataKey key, String language) {
-        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Set<String> getMetadataValues (MetadataKey key) {
-        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
     
     
