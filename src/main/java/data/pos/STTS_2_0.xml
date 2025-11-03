@@ -83,23 +83,6 @@
             </category>
             <!-- end verben -->
 
-            <category name="UNSD: Default-Verbformen">
-                <tag name="V" ud-mapping="VERB"/>
-                <description/>
-                <category name="Auxiliarverb (STTS 2.0: VAFIN und VAINF)">
-                    <tag name="VA" ud-mapping="AUX"/>
-                    <description>[du] hat, [er] is</description>
-                </category>
-                <category name="Modalverb (STTS 2.0: VMFIN und VMINF)">
-                    <tag name="VM" ud-mapping="AUX"/>
-                    <description>[du] kann, [wi] muss</description>
-                </category>
-                <category name="Vollverb (STTS 2.0: VVFIN und VVINF)">
-                    <tag name="VV" ud-mapping="VERB"/>
-                    <description>[du] leben, [wi] geht</description>
-                </category>
-            </category>
-
             <category name="Artikel">
                 <tag ud-mapping="DET" name="ART"/>
                 <description/>
@@ -307,21 +290,6 @@
                 </category>
             </category>
 
-
-            <category name="UNSD: Zusätzliche Partikeln">
-                <tag name="PTK" ud-mapping="PART"/>
-                <description/>
-                <category name="Aspektpartikel">
-                    <tag name="PTKAM" ud-mapping="PART"/>
-                    <description>am [arbeiten]</description>
-                </category>
-                <category name="Pluralwort">
-                    <tag name="PL" ud-mapping="PART"/>
-                    <description>alle [Haus] 'Häuser'</description>
-                </category>
-            </category>
-
-
             <category name="nicht-grammatische Elemente (satz-unabhängige Elemente)">
                 <tag name="NG" ud-mapping="PART"/>
                 <description/>
@@ -421,31 +389,6 @@
                     <version version="1.0only"/>
                     <description>- ( ) [ ]</description>
                 </category>
-            </category>
-
-            <category name="UNSD: Zusätzliche Extra-Tags">
-                <description>zusätzliche tags</description>
-                <category name="Fremdsprachliches Material: Englisch">
-                    <tag name="FM-EN" ud-mapping="X"/>
-                    <description>and, parents, you</description>
-                </category>
-                <category name="Fremdsprachliches Material: Tok Pisin">
-                    <tag name="FM-TP" ud-mapping="X"/>
-                    <description>nambis 'Strand', solwara 'Meer'</description>
-                </category>
-                <category name="Fremdsprachliches Material: Kuanua">
-                    <tag name="FM-KU" ud-mapping="X"/>
-                    <description>gunan 'Platz'</description>
-                </category>
-                <category name="Fremdsprachliches Material: Latein">
-                    <tag name="FM-LA" ud-mapping="X"/>
-                    <description>mea culpa</description>
-                </category>
-                <category name="Fremdsprachliches Material: Spanisch">
-                    <tag name="FM-ES" ud-mapping="X"/>
-                    <description>roca, siesta</description>
-                </category>
-
             </category>
         </category>
 
