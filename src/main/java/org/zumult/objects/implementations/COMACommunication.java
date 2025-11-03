@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -208,6 +209,11 @@ public class COMACommunication extends AbstractXMLObject implements Event, Speec
     @Override
     public String getName() {
         return this.getDocument().getDocumentElement().getAttribute("Name");
+    }
+
+    @Override
+    public Map<String, Set<String>> getMetadataValuesByLanguages (MetadataKey key) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

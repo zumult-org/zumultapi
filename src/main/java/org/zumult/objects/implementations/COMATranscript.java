@@ -5,6 +5,7 @@
 package org.zumult.objects.implementations;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -97,6 +98,11 @@ public class COMATranscript extends ISOTEITranscript {
     @Override
     public ISOTEITranscript createNewInstance(Document transcriptDocument){
         return new COMATranscript(transcriptDocument);
+    }
+
+    @Override
+    public Map<String, Set<String>> getMetadataValuesByLanguages (MetadataKey key) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
