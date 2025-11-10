@@ -8,6 +8,7 @@ package org.zumult.objects.implementations;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -293,6 +294,11 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
 
     @Override
     public Set<String> getMetadataValues (MetadataKey key) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Map<String, Set<String>> getMetadataValuesByLanguages (MetadataKey key) {
         throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
