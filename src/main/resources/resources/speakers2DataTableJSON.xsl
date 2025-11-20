@@ -28,19 +28,22 @@
         <speakers>
             <xsl:choose>
                 <xsl:when test="string-length($ORDER_COLUMN_NAME) &gt; 0 and $ORDER_COLUMN_NAME!='ID'">
-                    <xsl:for-each select="//Speaker[descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(text(), $SEARCH_TERM)]]">
+                    <xsl:for-each select="//Speaker[contains(lower-case(@Id),lower-case($SEARCH_TERM)) 
+                        or descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(lower-case(text()), lower-case($SEARCH_TERM))]]">
                         <xsl:sort select="Description/Key[@Name=$ORDER_COLUMN_NAME]" order="{$ORDER_DIRECTION_XSL}"/>
                         <xsl:copy-of select="."/>                       
                     </xsl:for-each>                
                 </xsl:when>
                 <xsl:when test="$ORDER_COLUMN_NAME='ID'">
-                    <xsl:for-each select="//Speaker[descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(text(), $SEARCH_TERM)]]">
+                    <xsl:for-each select="//Speaker[contains(lower-case(@Id),lower-case($SEARCH_TERM))
+                        or descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(lower-case(text()), lower-case($SEARCH_TERM))]]">
                         <xsl:sort select="@Id" order="{$ORDER_DIRECTION_XSL}"/>
                         <xsl:copy-of select="."/>                       
                     </xsl:for-each>                                    
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:for-each select="//Speaker[descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(text(), $SEARCH_TERM)]]">
+                    <xsl:for-each select="//Speaker[contains(lower-case(@Id),lower-case($SEARCH_TERM))
+                        or descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(lower-case(text()), lower-case($SEARCH_TERM))]]">
                         <xsl:copy-of select="."/>                                               
                     </xsl:for-each>                    
                 </xsl:otherwise>

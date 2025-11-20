@@ -51,11 +51,14 @@ public class TestCOMABackend {
             );
             BackendInterface bi = new COMAFileSystem(); 
             
+            IDList audioTrullala = bi.getAudios4Transcript("RC_Interview_002_ISO");
+            System.out.println("---> " + String.join(" * ", audioTrullala));
+            
+            System.exit(0);
             
             IDList videos4TranscriptX = bi.getVideos4Transcript("Beckhams");
             System.out.println(String.join(" / ", videos4TranscriptX));
             
-            System.exit(0);
             Random random = new Random();
             IDList allCorpusIDs = bi.getCorpora();
             String randomCorpusID = allCorpusIDs.get(random.nextInt(allCorpusIDs.size()));

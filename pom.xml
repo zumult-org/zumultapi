@@ -7,7 +7,7 @@
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
     <!-- last change: 16-07-2025 -->
-    <version>0.1.11</version>
+    <version>0.1.14</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>zumultapi</name>
@@ -23,8 +23,16 @@
             <url>https://maven.pkg.github.com/zumult-org/zumultapi</url>
         </repository>                  
     </repositories>    
+    
+    <!-- ***************************** -->   
+    <!-- ***************************** -->   
+    <!-- ***************************** -->   
     <url>https://zumult.org/</url>
-        <build>
+
+    <!-- ***************************** -->   
+    <!-- ***************************** -->   
+    <!-- ***************************** -->   
+    <build>
         <finalName>${project.artifactId}</finalName>       
         <resources>
             <resource>
@@ -36,11 +44,6 @@
             </resource>
             <resource>
                  <directory>src/main/java</directory>
-                 <!-- no longer needed, #221 --> 
-                 <!-- <excludes>
-                        <exclude>/data/corpora/**</exclude>
-                        <exclude>/data/indices/**</exclude>
-                 </excludes> -->
             </resource>   
         </resources>      
         <plugins>
@@ -74,14 +77,21 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- ***************************** -->   
+    <!-- ***************************** -->   
+    <!-- ***************************** -->   
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.packaging>jar</project.packaging>
     </properties>
+
+    <!-- ***************************** -->
+    <!-- ***************************** -->
+    <!-- ***************************** -->
+
     <dependencies>
-        <!-- ***************************** -->
-        <!-- ***************************** -->
-        <!-- ***************************** -->
         
         <!-- MTAS with a lot of transitive dependencies, esp. Lucene -->
         
@@ -113,7 +123,7 @@
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
-            <version>1.0.12</version>
+            <version>1.0.27</version>
             <type>jar</type>
         </dependency>
         
@@ -241,58 +251,31 @@
             <version>1.0.2</version>
         </dependency>
 
-        <!-- I suspect that the following four are not used anywhere -->
-        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-        <!-- <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency> -->
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-        <!-- <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.11.3</version>
-        </dependency> -->        
-        <!-- https://mvnrepository.com/artifact/net.javacrumbs/json-xml -->
-        <!-- <dependency>
-            <groupId>net.javacrumbs</groupId>
-            <artifactId>json-xml</artifactId>
-            <version>2.1</version>
-        </dependency> -->
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <!-- <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20220320</version>
-        </dependency> -->
         
         <!-- ***************************** -->
         <!-- ***************************** -->
         <!-- ***************************** -->
         
         <!-- JERSEY -->
-        
-        
         <!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
-            <version>2.29.1</version>
+            <version>2.35</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
-            <version>2.29.1</version>
+            <version>2.35</version>
+        </dependency>        
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.35</version>
         </dependency>
         
         
-        
-        <!-- <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <version>2.1.2</version>
-        </dependency>         -->
+        <!-- MARIA DB -->
         
         <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
         <dependency>
@@ -322,11 +305,6 @@
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/de.tuebingen.uni.sfs.germanet/germanet-api -->
-        <!-- <dependency>
-            <groupId>de.tuebingen.uni.sfs.germanet</groupId>
-            <artifactId>germanet-api</artifactId>
-            <version>13.3.1</version>
-        </dependency> -->
         
         <!-- These two are new because they were needed after solr exclusion (issue #184) -->
         <dependency>
@@ -335,14 +313,18 @@
             <version>1.13</version>
             <type>jar</type>
         </dependency>
+        
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>3.0-alpha-1</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <type>jar</type>
-        </dependency>   
+        </dependency>
+        
         
     </dependencies>
+    
+    
     <reporting>
         <plugins>
             <plugin>

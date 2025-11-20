@@ -29,7 +29,7 @@
             <xsl:choose>
                 <xsl:when test="string-length($ORDER_COLUMN_NAME) &gt; 0 and $ORDER_COLUMN_NAME!='ID'">
                     <xsl:for-each select="//Communication[contains(lower-case(@Id),lower-case($SEARCH_TERM)) 
-                        or descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(loewr-case(text()), lower-case($SEARCH_TERM))]]">
+                        or descendant::Key[some $t in $METADATA_KEY_NAMES_TOKENIZED satisfies $t = @Name and contains(lower-case(text()), lower-case($SEARCH_TERM))]]">
                         <xsl:sort select="Description/Key[@Name=$ORDER_COLUMN_NAME]" order="{$ORDER_DIRECTION_XSL}"/>
                         <xsl:copy-of select="."/>                       
                     </xsl:for-each>                
@@ -75,7 +75,7 @@
             <xsl:copy-of select="Description"/>
         </xsl:variable>
         <xsl:variable name="AUDIO_ID" select="descendant::Media[ends-with(NSLink, 'mp3')][1]/@Id"/>
-        <xsl:variable name="TRANSCRIPT_ID" select="descendant::Transcription[1]/@Id"/>
+        <xsl:variable name="TRANSCRIPT_ID" select="descendant::Transcription[ends-with(NSLink, 'xml')][1]/@Id"/>
         <xsl:text>{</xsl:text>
         <xsl:text>"ID": "</xsl:text><xsl:value-of select="@Id"/><xsl:text>",</xsl:text>
         <xsl:for-each select="$METADATA_KEY_NAMES_TOKENIZED">

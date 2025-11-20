@@ -328,4 +328,8 @@ public class Constants {
     public static final String CUSTOM_WORDLISTS_TOKEN_DELIMITER = "COMMA";
     public static final String CUSTOM_WORDLISTS_VARIABLE_TOKEN_DELIMITER = "DOPPELPUNKT";
     public static final String CUSTOM_WORDLISTS_VARIABLE_DELIMITER = "STRICHPUNKT";
+    
+    
+    
+    public static final String DEFAULT_HELP_URL = "https://docs.google.com/document/d/1ZMhqHD6YnNRcKvku9ZpOFe2zQ5jF2HEZBE0DTuFU1q8/edit?usp=sharing";
 }

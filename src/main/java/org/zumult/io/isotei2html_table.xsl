@@ -197,7 +197,7 @@
             <td>
                 <xsl:attribute name="class">
                     <xsl:text>speaker</xsl:text>
-                    <xsl:if test="preceding-sibling::tei:annotationBlock[@who][1][@who=$SPEAKER_ID]">
+                    <xsl:if test="preceding-sibling::*[@who][1][@who=$SPEAKER_ID]">
                         <xsl:text> cont</xsl:text>
                     </xsl:if>
                 </xsl:attribute>
@@ -423,6 +423,7 @@
     
     <xsl:template match="tei:body/*[not(self::tei:annotationBlock)]">
         <xsl:variable name="THIS_TYPE" select="@type"/>
+        <xsl:variable name="SPEAKER_ID" select="@who"/>        
         <xsl:if test="not(@type) or not($VIS_INCIDENT_NOT_TYPES_LIST/descendant::id[text()=$THIS_TYPE])">
             <xsl:variable name="ID" select="@xml:id"/>
             <tr class="nonAnnotationBlock">
@@ -444,6 +445,23 @@
                 <xsl:if test="$DROPDOWN='TRUE'">
                     <xsl:call-template name="MAKE_DROPDOWN"/>
                 </xsl:if>
+
+                <!-- table cell for play/pause buttons -->
+                <xsl:if test="$PLAYPAUSEBUTTONS='TRUE'">
+                    <!-- This may be much faster (?) -->
+                    <xsl:variable name="start" select="id(@start)/@interval"/>
+                    <xsl:variable name="end" select="id(@end)/@interval"/>
+                    <td>
+                        <span onclick="playFromButton(this)" style="color:gray; margin-right:3px; cursor: pointer;">
+                            <xsl:attribute name="data-start" select="$start"/>
+                            <i class="fa-solid fa-play"></i>
+                        </span>
+                        <span onclick="pauseFromButton(this)"  style="color:gray; cursor: pointer;">
+                            <i class="fa-solid fa-pause"></i>
+                        </span>
+                    </td>
+                </xsl:if>
+                                
                 <xsl:if test="$NUMBERING='TRUE'">
                     <td class="numbering">
                         <xsl:variable name="NUMBER" select="count(preceding-sibling::*) + 1"/>
@@ -454,7 +472,23 @@
                     </td>
                 </xsl:if>
                 
-                <td> </td>
+                <td> 
+                    <!-- speaker -->
+                    <xsl:attribute name="class">
+                        <xsl:text>speaker</xsl:text>
+                        <xsl:if test="preceding-sibling::*[@who][1][@who=$SPEAKER_ID]">
+                            <xsl:text> cont</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <!-- show speaker metadata on click -->
+                    <!-- <xsl:attribute name="onclick">showSpeaker('<xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/tei:idno[1]"/>')</xsl:attribute> -->
+                    <!-- this is faster (?) -->
+                    <xsl:attribute name="onclick">showSpeaker('<xsl:value-of select="id($SPEAKER_ID)/tei:idno[1]"/>')</xsl:attribute>
+                    <xsl:attribute name="title">Click to show speaker metadata</xsl:attribute>
+                    <xsl:attribute name="style">cursor: pointer;</xsl:attribute>
+                    <!-- <xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/@n"/> -->
+                    <xsl:value-of select="id($SPEAKER_ID)/@n"/>                    
+                </td>
                 <td>
                     <span>
                         <xsl:attribute name="class">

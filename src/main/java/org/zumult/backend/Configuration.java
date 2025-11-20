@@ -68,6 +68,8 @@ public class Configuration {
     
     private static String statisticsStylesheet;
     
+    private static String helpURL;
+    
 
 
     // new 25-11-2020, for issue #22
@@ -194,6 +196,13 @@ public class Configuration {
         
     }
     
+    public static String getHelpURL(){
+        if (helpURL!=null){
+            return helpURL;
+        }
+        return Constants.DEFAULT_HELP_URL;
+    }
+    
 
     // new for #175
     public static String getEvent2HTMLStylesheet(){
@@ -296,6 +305,8 @@ public class Configuration {
             protocolPath = config.getString("backend.protocol-path");
             
             searchIndexPath = config.getString("backend.search-index-path");
+            
+            helpURL = config.getString("backend.help-url");
             
             String[] corpora = config.getString("backend.corpus-ids-for-indexing").split(";");
             Arrays.sort(corpora);
