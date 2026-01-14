@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,6 +115,11 @@ public class COMASpeaker extends AbstractXMLObject implements Speaker {
             Logger.getLogger(COMASpeaker.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new IDList("SpeechEvents");
+    }
+
+    @Override
+    public Map<String, Set<String>> getMetadataValuesByLanguages (MetadataKey key) {
+        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

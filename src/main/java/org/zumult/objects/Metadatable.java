@@ -5,6 +5,7 @@
  */
 package org.zumult.objects;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,6 +17,7 @@ public interface Metadatable {
     public String getMetadataValue(MetadataKey key);
     public Set<String> getMetadataValues(MetadataKey key, String language);
     public Set<String> getMetadataValues(MetadataKey key);
+    public Map<String, Set<String>> getMetadataValuesByLanguages(MetadataKey key);
     
     
 }
