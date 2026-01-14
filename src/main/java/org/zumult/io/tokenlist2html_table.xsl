@@ -40,7 +40,7 @@
         
         <xsl:variable name="TYPE" select="/*/@type"/>
         
-        <table class="wordlist table-striped table-sm">
+        <table class="wordlist table table-striped table-sm">
             <!--  <token form="rechnen" frequency="2"/> -->
             <xsl:variable name="SORTED_TOKENS">
                 <tokenList>

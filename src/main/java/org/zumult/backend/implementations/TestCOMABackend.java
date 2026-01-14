@@ -51,10 +51,14 @@ public class TestCOMABackend {
             );
             BackendInterface bi = new COMAFileSystem(); 
             
+            IDList s27 = bi.getSpeechEvents4Speaker("FU200");
+            System.out.println(String.join(" ", s27));
+            
+            System.exit(0);
+
             IDList audioTrullala = bi.getAudios4Transcript("RC_Interview_002_ISO");
             System.out.println("---> " + String.join(" * ", audioTrullala));
             
-            System.exit(0);
             
             IDList videos4TranscriptX = bi.getVideos4Transcript("Beckhams");
             System.out.println(String.join(" / ", videos4TranscriptX));

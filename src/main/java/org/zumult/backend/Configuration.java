@@ -286,7 +286,7 @@ public class Configuration {
             mediaSnippetsPath = config.getString("backend.media-snippets-path");
             ffmpegPath = config.getString("backend.ffmpeg-path");
             ffprobePath = config.getString("backend.ffprobe-path");
-            if (ffprobePath==null){
+            if (ffprobePath==null && ffmpegPath!=null){
                 // try to guess the path, if it is not provided in the config file
                 File ffmpegFile = new File(ffmpegPath);
                 File ffprobeFile = new File(ffmpegFile.getParentFile(), ffmpegFile.getName().replaceAll("mpeg", "probe"));

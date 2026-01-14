@@ -107,7 +107,7 @@
     <!-- **************************************************************** -->    
     <!-- **************************************************************** -->    
     <xsl:template match="tei:text">
-        <table class="transcript table-striped table-sm" id="transcript-table">
+        <table class="transcript table table-striped table-sm" id="transcript-table">
             <!-- <tr><td><xsl:value-of select="$TOKEN_LIST_URL"/></td></tr> -->
             <xsl:choose>                
                 <!-- We want an excerpt defined by start and end annotation block ID -->
@@ -581,7 +581,7 @@
         <td class="td-dropdown">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" 
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         style="font-size:0.5rem;"
                 >
                     <i class="fa fa-bars fa-xs"></i>                    

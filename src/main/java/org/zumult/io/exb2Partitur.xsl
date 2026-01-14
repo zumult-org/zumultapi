@@ -52,6 +52,10 @@
                             <td class="empty"> </td>
                             <xsl:apply-templates select="//tli"/>
                         </tr>
+                        <tr>
+                            <td class="empty"> </td>
+                            <xsl:apply-templates select="//tli" mode="absolute-times"/>
+                        </tr>
                         <xsl:apply-templates select="//tier">
                             <xsl:sort select="exmaralda:tierSorter(.)" data-type="number" order="ascending"/>
                         </xsl:apply-templates>
@@ -73,6 +77,20 @@
         </td>
     </xsl:template>
     
+    <xsl:template match="tli" mode="absolute-times">
+        <td class="tli absolute">
+            <xsl:attribute name="data-start">
+                <xsl:value-of select="@time"/>
+            </xsl:attribute>
+            <xsl:attribute name="data-end">
+                <xsl:value-of select="following-sibling::tli[1]/@time"/>
+            </xsl:attribute>
+            <xsl:variable name="FORMATTED-TIME" select="exmaralda:formatTime(@time)"/>
+            <xsl:attribute name="title" select="$FORMATTED-TIME"/>
+            [<xsl:value-of select="$FORMATTED-TIME"/>]        
+        </td>
+    </xsl:template>
+
     <xsl:template match="tier">
         <xsl:variable name="TIER_COPY">
             <xsl:copy-of select="."/>
@@ -206,6 +224,31 @@
         <xsl:variable name="CATEGORY_WEIGHT" select="count($TIER_CATEGORIES/descendant::category[text()=$TIER_CATEGORY]/preceding-sibling::category) + 1" as="xs:integer"/>
         <xsl:value-of select="xs:integer(100 * $SPEAKER_WEIGHT + 10 * $TYPE_WEIGHT + $CATEGORY_WEIGHT)"/>           
     </xsl:function>
+    
+    <xsl:function name="exmaralda:formatTime" as="xs:string">
+        <xsl:param name="SECONDS"></xsl:param>
+        <xsl:variable name="total" select="number($SECONDS)"/>
+        <xsl:variable name="hours" select="floor($total div 3600)"/>
+        <xsl:variable name="minutes" select="floor(($total mod 3600) div 60)"/>
+        <xsl:variable name="seconds" select="$total mod 60"/>
+
+        <xsl:choose>
+            <xsl:when test="$hours &gt; 0">
+                <xsl:value-of select="concat(
+                    format-number($hours,'00'), ':',
+                    format-number($minutes,'00'), ':',
+                    format-number($seconds,'00.00')
+                )"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat(
+                    format-number($minutes,'00'), ':',
+                    format-number($seconds,'00.00')
+                )"/>                
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
     
     
     

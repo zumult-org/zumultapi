@@ -12,10 +12,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 import org.exmaralda.folker.utilities.TimeStringFormatter;
+import org.exmaralda.partitureditor.jexmaralda.Timeline;
+import org.exmaralda.partitureditor.jexmaralda.TimelineItem;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
@@ -588,79 +592,126 @@ public class ZumultDataServlet extends HttpServlet {
             String transcriptID = request.getParameter("transcriptID");
             String annotationBlockID = request.getParameter("annotationBlockID");
             String xPerSecond = request.getParameter("xPerSecond");
+            
+            String components = request.getParameter("components");
+            if (components==null){
+                components="MAUS;FFMPEG;PRAAT";
+            }
+            Set<String> componentsSet = new HashSet<>();
+            componentsSet.addAll(Arrays.asList(components.split(";")));
+            
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             
             Transcript transcript = backend.getTranscript(transcriptID);
             AnnotationBlock annotationBlock = backend.getAnnotationBlock(transcriptID, annotationBlockID);
             double startTime = transcript.getTimeForID(annotationBlock.getStart());
             double endTime = transcript.getTimeForID(annotationBlock.getEnd());
-            IDList audioIDs = backend.getAudios4Transcript(transcriptID);
-            if (audioIDs.isEmpty()){
-                throw new IOException("No audio");
+            
+            String audioID = request.getParameter("audioID");
+            if (audioID==null){
+                IDList audioIDs = backend.getAudios4Transcript(transcriptID);
+                if (audioIDs.isEmpty()){
+                    throw new IOException("No audio");
+                }
+                audioID = audioIDs.get(0);
             }
-            Media audio = backend.getMedia(audioIDs.get(0), Media.MEDIA_FORMAT.WAV);
+            Media audio = backend.getMedia(audioID, Media.MEDIA_FORMAT.WAV);
             Media partAudio = audio.getPart(startTime, endTime);
             File audioFile = new File(partAudio.getURL());
             
-            PraatConnection praatConnection = new PraatConnection();
-            String pitchXML = praatConnection.getPitchAsXML(audioFile);
             
+            // PRAAT
+            
+            String pitchXML = null;
+                        
+            if (componentsSet.contains("PRAAT")){
+                PraatConnection praatConnection = new PraatConnection();
+                pitchXML = praatConnection.getPitchAsXML(audioFile);
+            }
+            
+            // MAUS
             String[] xmlArray = new String[1];
+            Thread mausThread = null;
             
-            Thread mausThread = new Thread(){                
-                @Override
-                public void run() {
-                    String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
-                    xmlArray[0] = mausXML;
-                }                
-            };
-            mausThread.start();
+            if (componentsSet.contains("MAUS")){
+                mausThread = new Thread(){                
+                    @Override
+                    public void run() {
+                        String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
+                        xmlArray[0] = mausXML;
+                    }                
+                };
+                mausThread.start();
+            } else {
+                // we will still need a dummy timeline
+                Timeline tl = new Timeline();
+                TimelineItem tliStart = new TimelineItem("TLI_START", startTime);
+                TimelineItem tliEnd = new TimelineItem("TLI_END", endTime);
+                tl.add(tliStart);
+                tl.add(tliEnd);
+                xmlArray[0] = tl.toXML();
+            }
             
-            //String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
             
             List<File> videoStills = new ArrayList();
-            Thread ffmpegThread = new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        IDList videoIDs = backend.getVideos4Transcript(transcriptID);
-                        if (!(videoIDs.isEmpty())){
-                            Media video = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
-                            File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
-                            for (double time = startTime; time<endTime; time+=0.5){
-                                Media videoStill = video.getVideoImage(time);
-                                File videoStillFile = new File(videoStill.getURL());
-                                File targetFile = new File(downloadDirectory, videoStillFile.getName());
-                                Files.move(videoStillFile.toPath(), targetFile.toPath());
-                                videoStills.add(targetFile);
+            Thread ffmpegThread = null;
+            if (componentsSet.contains("FFMPEG")){
+                ffmpegThread = new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+                            if (!(videoIDs.isEmpty())){
+                                Media video = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
+                                File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
+                                for (double time = startTime; time<endTime; time+=0.5){
+                                    Media videoStill = video.getVideoImage(time);
+                                    File videoStillFile = new File(videoStill.getURL());
+                                    File targetFile = new File(downloadDirectory, videoStillFile.getName());
+                                    Files.move(videoStillFile.toPath(), targetFile.toPath());
+                                    videoStills.add(targetFile);
+                                }
                             }
+                        } catch (IOException ex) {
+                            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } catch (IOException ex) {
-                        Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }                                
-            };
-            ffmpegThread.start();
+                    }                                
+                };
+                ffmpegThread.start();
+            }
             
              // Wait for threads to complete
             try {
-                mausThread.join();
-                ffmpegThread.join();
+                if (componentsSet.contains("MAUS")){
+                    mausThread.join();
+                }
+                if (componentsSet.contains("FFMPEG")){
+                    ffmpegThread.join();
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Main thread interrupted");
             }            
             
             String allXML = "<document>";
-            allXML+=pitchXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-            allXML+=xmlArray[0];
-            allXML+="<video-stills>";
-            for (File videoStill : videoStills){
-                allXML+="<video-still>";
-                allXML+=videoStill.getName();
-                allXML+="</video-still>";
+            
+            if (componentsSet.contains("PRAAT")){
+                allXML+=pitchXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
             }
-            allXML+="</video-stills>";
+            
+            //if (componentsSet.contains("MAUS")){
+                allXML+=xmlArray[0];
+            //}
+            
+            if (componentsSet.contains("FFMPEG")){
+                allXML+="<video-stills>";
+                for (File videoStill : videoStills){
+                    allXML+="<video-still>";
+                    allXML+=videoStill.getName();
+                    allXML+="</video-still>";
+                }
+                allXML+="</video-stills>";
+            }
             allXML+="</document>";
             
             //System.out.println(allXML);
@@ -668,7 +719,7 @@ public class ZumultDataServlet extends HttpServlet {
             String[][] parameters ={
                 {"X_PER_SECOND", xPerSecond}
             };
-            String svg = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/pitch2SVG.xsl", allXML);
+            String svg = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/pitch2SVG.xsl", allXML, parameters);
             
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
@@ -1623,8 +1674,8 @@ public class ZumultDataServlet extends HttpServlet {
                 StringBuilder sb = new StringBuilder();
                 sb.append("<result>");
                 sb.append("<video videoID=\"").append(videoID).append("\">");
-                Media audio = backend.getMedia(videoID);
-                sb.append(audio.getURL());
+                Media video = backend.getMedia(videoID);
+                sb.append(video.getURL());
                 sb.append("</video>");
                 sb.append("</result>");
 
