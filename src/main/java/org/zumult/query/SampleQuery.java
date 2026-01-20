@@ -5,11 +5,15 @@
  */
 package org.zumult.query;
 
+import java.util.Map;
+
 /**
  *
  * @author Elena
  */
 public interface SampleQuery extends SearchQuery {
     public String getDescription();
+    public String getDescription(String language);
+    public Map<String, String> getDescriptionsByLanguages();
     public String getCorpus();
 }

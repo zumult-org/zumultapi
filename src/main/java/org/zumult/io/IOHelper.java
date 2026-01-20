@@ -271,7 +271,7 @@ public class IOHelper {
         }
     }*/
     
-    public static ArrayList<SampleQuery> getQueriesFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
+  /*  public static ArrayList<SampleQuery> getQueriesFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
               
         ArrayList <SampleQuery> queries = new ArrayList();
         Document doc = new IOUtilities().documentFromResource(path);
@@ -291,16 +291,16 @@ public class IOHelper {
                 queries.add(query);
             }
         return queries;
-    }
+    }*/
     
-    public static LinkedHashMap<String, String> getQueryStringsFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
+  /*  public static LinkedHashMap<String, String> getQueryStringsFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
         LinkedHashMap<String, String> queryList = new LinkedHashMap<String, String>();
         ArrayList <SampleQuery> queries = getQueriesFromFile(path);
         for (SampleQuery query : queries){
             queryList.put(query.getQueryString(), query.getCorpus());
         }
         return queryList;        
-    }
+    }*/
     
     public static File getProjectFile(String classPath) throws IOException{
         String regex = ".*WEB-INF"; 

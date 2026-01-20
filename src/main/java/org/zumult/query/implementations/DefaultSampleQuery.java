@@ -5,6 +5,8 @@
  */
 package org.zumult.query.implementations;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.zumult.query.SampleQuery;
 
 /**
@@ -12,16 +14,17 @@ import org.zumult.query.SampleQuery;
  * @author Elena
  */
 public class DefaultSampleQuery extends AbstractSearchQuery implements SampleQuery {
+    
+        String DEFAULT_LANGUAGE = "de";
+        
         private String corpus;
         private String description;
+        Map<String, String> descriptions = new HashMap<>(); //e.g. {"en": "...", "de": "..."}
+
 
         @Override
         public String getDescription() {
             return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
         }
 
         @Override
@@ -31,6 +34,24 @@ public class DefaultSampleQuery extends AbstractSearchQuery implements SampleQue
 
         public void setCorpus(String corpus) {
             this.corpus = corpus;
+        }
+        
+        @Override
+        public Map<String, String> getDescriptionsByLanguages () {
+            return descriptions;
+        }
+
+        public void setDescriptions (Map<String, String> descriptions) {
+            this.descriptions = descriptions;
+        }
+
+        @Override
+        public String getDescription (String language) {
+            if (descriptions.get(language)!=null){
+                return descriptions.get(language);
+            }else{
+                return descriptions.get(DEFAULT_LANGUAGE);
+            }
         }
 
     }
