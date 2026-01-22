@@ -71,7 +71,6 @@ import org.zumult.io.IOHelper;
 import org.zumult.io.Constants;
 import org.zumult.query.Hit;
 import org.zumult.query.StatisticEntry;
-import org.zumult.query.searchEngine.util.SearchEngineUtilities;
 
 /**
  * MTAS-based search engine for indexing and querying the contents of the XML-based ISO/TEI transcripts of spoken language. 
@@ -98,9 +97,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
     
     private static final String METADATA_NO_VALUE = "Annotation tag without value";
     private static final String METADATA_VALUE_NOT_AVAILABLE = "not available";
-    
-    private static final String METADATA_KEY_MATCH_TYPE_PHON_HTML ="phon_html";
-    
+        
     /**
      * Additional metadata key ids that can be searched in this search engine.
      */
@@ -548,8 +545,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                 metadata = Arrays.stream(metadataQueryString.split(METADATA_QUERY_DELIMITER))
                         .map(s -> s.split("=")).collect(Collectors.toMap(s -> s[0], s-> s[1]));
             }catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                metadata = Arrays.stream(SearchEngineUtilities.HTML2IPA(metadataQueryString).split(METADATA_QUERY_DELIMITER))
-                        .map(s -> s.split("=")).collect(Collectors.toMap(s -> s[0], s-> s[1]));
+                throw new SearchServiceException("Metadata query is not valid!");
             }
          
 
@@ -560,16 +556,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                 Map.Entry<String,String> entry = metadata.entrySet().iterator().next();
                 String metaDataKey = entry.getKey();
                 String matadataValue = entry.getValue();
-                
-                // TODO: this should be done in the DGD2Searcher class
-                if (metaDataKey.equals(Constants.ATTRIBUTE_NAME_PHON)){
-                    metaDataKey = METADATA_KEY_MATCH_TYPE_PHON_HTML;
-                }
-                
-                if (metaDataKey.equals(METADATA_KEY_MATCH_TYPE_PHON_HTML)){
-                    matadataValue = SearchEngineUtilities.IPA2HTML(entry.getValue());
-                }
-                
+                                
                 if (metaDataKey.equals(METADATA_KEY_HIT_LENGTH) || metaDataKey.equals(METADATA_KEY_HIT_LENGTH_IN_WORD_TOKENS)){
                     Integer size;
                     try {
@@ -808,8 +795,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                             listString =  Constants.EMPTY_TOKEN;                            
                                         } else if (!terms2.isEmpty()){
                                             
-                                            if((metaDataKey.equals(METADATA_KEY_MATCH_TYPE_PHON_HTML)
-                                                || Arrays.asList(Constants.TOKENS).contains(metaDataKey)
+                                            if((Arrays.asList(Constants.TOKENS).contains(metaDataKey)
                                                 || Arrays.asList(BASIC_TOKEN_ANNOTATION_LAYERS).contains(metaDataKey)  
                                                 || Arrays.stream(Constants.PROXI_TOKEN_ANNOTATION_LAYERS) 
                                                     .collect(Collectors.toMap(entity -> entity[0], entity -> entity[1])).keySet().contains(metaDataKey)
@@ -1669,11 +1655,6 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
 
             metadataPrefixList.add(Constants.METADATA_KEY_MATCH_TYPE_PAUSE_DURATION);
             metadataPrefixList.add(Constants.METADATA_KEY_MATCH_TYPE_PAUSE_TYPE);
-        }
-                  
-        if (type.equals(Constants.ATTRIBUTE_NAME_PHON)){
-            metadataPrefixList.clear();
-            metadataPrefixList.add(METADATA_KEY_MATCH_TYPE_PHON_HTML);
         }
         
         //System.out.println("-- method: searchValues without FunktionsWrapper"); 

@@ -44,7 +44,6 @@ import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.util.BytesRef;
-import org.zumult.query.searchEngine.util.SearchEngineUtilities;
 
 /**
  *
@@ -59,7 +58,6 @@ public class ZuMultParser extends MtasTEIParser {
     protected static final String MAPPING_TYPE_ANCHOR = "anchor";
     protected static final String MAPPING_TYPE_PRECEDED_WORD = "precededWord";
     protected static final String MAPPING_FILTER_CEIL = "ceil";
-    protected static final String MAPPING_FILTER_HTML = "html";
     
     public ZuMultParser(MtasConfiguration config) {
         super(config);
@@ -1138,14 +1136,18 @@ public class ZuMultParser extends MtasTEIParser {
     @Override
     protected String computeFilteredPrefixedValue(String type, String value,
       String filter, String prefix) throws MtasConfigException {
-    String localValue = value;
+        
+        if (value != null) {
+            value = value.trim();
+        }
+        
+      String localValue = value;
+
     // do magic with filter
     if (filter != null) {
       String[] filters = filter.split(",");
       for (String item : filters) {
-        if (item.trim().equals(MAPPING_FILTER_HTML)) {
-            localValue = SearchEngineUtilities.IPA2HTML(localValue);
-        } else if (item.trim().equals(MAPPING_FILTER_CEIL)) {
+        if (item.trim().equals(MAPPING_FILTER_CEIL)) {
             if (localValue!=null){
                 Pattern pattern = Pattern.compile("\\d+\\.?\\d*"); // only for doubles
                 if (pattern.matcher(localValue).matches()){         

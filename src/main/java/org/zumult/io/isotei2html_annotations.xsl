@@ -3,6 +3,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     exclude-result-prefixes="xs"
+    xmlns:f="urn:my-functions"
     version="2.0">
 
     <!-- start and end of the transcript ; empty for whole transcript -->
@@ -199,11 +200,12 @@
                         </xsl:if>                        
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:if test="./following::*[not(self::tei:anchor or self::tei:seg)]">
-                            <xsl:apply-templates select="./following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
+                        <xsl:variable name="NEXT" select="f:next-token-in-u(.)"/>
+                        <xsl:if test="$NEXT">
+                            <xsl:apply-templates select="$NEXT" mode="START_FOR_SPAN_GRP">
                                 <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>
                             </xsl:apply-templates>
-                        </xsl:if>                        
+                        </xsl:if>         
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
@@ -223,22 +225,31 @@
                     <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', $THE_SPAN/text())"/>
                     <xsl:value-of select="$THE_SPAN/text()"/>
                 </td>                
-                <xsl:if test="following::*[@synch=$SPAN_TO]/following::*[not(self::tei:anchor or self::tei:seg)]">
-                    <xsl:apply-templates select="following::*[@synch=$SPAN_TO]/following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
-                        <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>                    
+                <xsl:variable name="TARGET" select="following::*[@synch=$SPAN_TO][ancestor::tei:u = current()/ancestor::tei:u][1]"/>
+                <xsl:variable name="NEXT" select="f:next-token-in-u($TARGET)"/>
+                <xsl:if test="$NEXT">
+                    <xsl:apply-templates select="$NEXT" mode="START_FOR_SPAN_GRP">
+                      <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>
                     </xsl:apply-templates>
-                </xsl:if>
+                  </xsl:if>
             </xsl:when>
             
             <xsl:otherwise>
-                <td> </td>
-                <xsl:if test="following::*[not(self::tei:anchor or self::tei:seg)]">
-                    <xsl:apply-templates select="following::*[not(self::tei:anchor or self::tei:seg)][1]" mode="START_FOR_SPAN_GRP">
-                        <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>                    
+                <td> </td> 
+                <xsl:variable name="NEXT" select="f:next-token-in-u(.)"/>
+                <xsl:if test="$NEXT">
+                    <xsl:apply-templates select="$NEXT" mode="START_FOR_SPAN_GRP">
+                        <xsl:with-param name="SPAN_GRP" select="$SPAN_GRP"/>
                     </xsl:apply-templates>
                 </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <xsl:function name="f:next-token-in-u">
+      <xsl:param name="node" as="element()"/>
+      <xsl:variable name="U" select="$node/ancestor::tei:u[1]"/>
+      <xsl:sequence select="$node/following::*[ancestor::tei:u[1] is $U][not(self::tei:anchor or self::tei:seg)][1]"/>
+    </xsl:function>
     
 </xsl:stylesheet>
