@@ -107,13 +107,14 @@ public abstract class AbstractSearcher implements Searcher {
         }
         
         if (queryLanguage.equalsIgnoreCase("cqp")) {
-            if (queryLanguageVersion == null 
-                    || queryLanguageVersion.isEmpty() ) {
-                queryLanguageVersion = 
-                        Constants.DEFAULT_CQP_QUERY_LANGUAGE_VERSION;
+            if (queryLanguageVersion == null || queryLanguageVersion.isEmpty() ) {
+                queryLanguageVersion = Constants.DEFAULT_CQP_QUERY_LANGUAGE_VERSION;
             }
-                 // TODO: check the query language syntax
-
+            // TODO: check the query language syntax
+        } else if (queryLanguage.equalsIgnoreCase("fcsql")){
+            // 2026-01-22, new for #265
+            // but there is nothing to do here?
+            queryLanguageVersion = "1.0";
         }
                 /*  TODO: integrate KoralQuery
                 else if ( queryLanguage.equalsIgnoreCase("poliqarp") || 

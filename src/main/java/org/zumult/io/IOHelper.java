@@ -16,9 +16,11 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -88,6 +90,29 @@ public class IOHelper {
         Document doc = builder.parse(inputStream);
         inputStream.close();
         return doc;
+    }
+    
+    public static InputStream getInputStream(String location) throws IOException {
+        // HTTP
+        if (location.startsWith("http://") || location.startsWith("https://")) {
+            return URI.create(location).toURL().openStream();
+        }
+
+        // Classpath
+        InputStream cp =
+            Thread.currentThread()
+                  .getContextClassLoader()
+                  .getResourceAsStream(location);
+
+        if (cp != null) return cp;
+
+        // File system
+        return Files.newInputStream(Paths.get(location));
+    }    
+    
+    // new 21-01-2026 - this should work for any kind of path
+    public static String readUTF8(String location) throws IOException{
+        return readUTF8(getInputStream(location));
     }
 
     public static String readUTF8(InputStream inputStream) throws FileNotFoundException {

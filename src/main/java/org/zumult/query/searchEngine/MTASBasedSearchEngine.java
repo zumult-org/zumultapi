@@ -490,7 +490,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                  spans.docID(), TOKEN_IDS, spans.startPosition(),
                                                    (spans.endPosition() - 1));
 
-                                            if (terms.size() > 0){ // because of proxy pauses in the speaker-based mode, here term.size can be 0
+                                            if (!terms.isEmpty()){ // because of proxy pauses in the speaker-based mode, here term.size can be 0
                                                     hits_total++; 
                                             }
                                         }
@@ -541,7 +541,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
             // search hits without metadata        
             return searchKWICStandard(indexPaths, q, from, to, cutoff, metadataIDs, end);
             
-        }else { 
+        } else { 
             // parse metadataQuery
             Map<String, String> metadata;
             try{
@@ -573,7 +573,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                 if (metaDataKey.equals(METADATA_KEY_HIT_LENGTH) || metaDataKey.equals(METADATA_KEY_HIT_LENGTH_IN_WORD_TOKENS)){
                     Integer size;
                     try {
-                        size = Integer.parseInt(matadataValue);
+                        size = Integer.valueOf(matadataValue);
                     }catch (NumberFormatException ex){
                         throw new SearchServiceException("Please check the syntax of the metadata query (param: " + metaDataKey + ")");
                     }
@@ -672,7 +672,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                  spans.docID(), TOKEN_IDS, spans.startPosition(),
                                                    (spans.endPosition() - 1));
 
-                                    if (terms.size() > 0){  // because of proxy pauses in the speaker-based mode, here term.size can be 0
+                                    if (!terms.isEmpty()){  // because of proxy pauses in the speaker-based mode, here term.size can be 0
                                         hits++; 
                                         hitNumber++;
                                         
@@ -700,14 +700,14 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                             
                                             /* add metadata for hit */
                                             HashMap<String, String> metadataMap = new HashMap();
-                                            if(metadata!=null && metadata.size()>0){
+                                            if(metadata!=null && !metadata.isEmpty()){
                                                 for (String metadataKeyID: metadata){
                                                     List<CodecSearchTree.MtasTreeHit<String>> terms2 = mtasCodecInfo
                                                      .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                                                                                              spans.docID(), getMetadataPrefixList(metadataKeyID), spans.startPosition(),
                                                                                              (spans.endPosition() - 1));
 
-                                                     if (terms2.size() > 0){
+                                                     if (!terms2.isEmpty()){
                                                          Set<String> values = new HashSet<String>();
                                                          for (CodecSearchTree.MtasTreeHit<String> term : terms2) {                                                   
                                                              String value = CodecUtil.termValue(term.data);
@@ -719,7 +719,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
 
                                                          } 
 
-                                                         List<String> list = new ArrayList<String>(values);
+                                                         List<String> list = new ArrayList<>(values);
                                                          Collections.sort(list); 
                                                          metadataMap.put(metadataKeyID, String.join(", ", list));   
                                                      }
@@ -796,7 +796,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                                                 spans.docID(), TOKEN_IDS, spans.startPosition(),
                                                                                 (spans.endPosition() - 1));
                                     
-                                    if (terms.size() > 0){
+                                    if (!terms.isEmpty()){
                                         List<CodecSearchTree.MtasTreeHit<String>> terms2 = mtasCodecInfo
                                                 .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                                                                                         spans.docID(), getMetadataPrefixList(metaDataKey), spans.startPosition(),
@@ -806,7 +806,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                         String listString = "";
                                         if (terms2.isEmpty() && matadataValue.equals(Constants.EMPTY_TOKEN)) {
                                             listString =  Constants.EMPTY_TOKEN;                            
-                                        }else if (terms2.size()>0){
+                                        } else if (!terms2.isEmpty()){
                                             
                                             if((metaDataKey.equals(METADATA_KEY_MATCH_TYPE_PHON_HTML)
                                                 || Arrays.asList(Constants.TOKENS).contains(metaDataKey)
@@ -1149,7 +1149,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                  spans.docID(), TOKEN_IDS, spans.startPosition(),
                                                    (spans.endPosition() - 1));
 
-                                        if (terms.size() > 0){  // because of proxy pauses in the speaker-based mode, here term.size is 0
+                                        if (!terms.isEmpty()){  // because of proxy pauses in the speaker-based mode, here term.size is 0
                                             hits++;    
                                             
                                             if (sortType.equals(SortTypeEnum.TYPES)){
@@ -1157,7 +1157,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                 .getPositionedTermsByPrefixesAndPositionRange(FIELD_TRANSCRIPT_CONTENT,
                                                                                         spans.docID(), getMetadataPrefixList(Constants.ATTRIBUTE_NAME_LEMMA), spans.startPosition(),
                                                                                         (spans.endPosition() - 1));
-                                                if (terms2.size()>0){
+                                                if (!terms2.isEmpty()){
                                                     for (CodecSearchTree.MtasTreeHit<String> term : terms2) {
                                                         setOfTypes.add(CodecUtil.termValue(term.data));
                                                     }
@@ -1226,7 +1226,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
         }
         
         // delete relative values
-        ArrayList<StatisticEntry>  statistics = new ArrayList<StatisticEntry>();
+        ArrayList<StatisticEntry>  statistics = new ArrayList<>();
         statisticsTmp.forEach((entry) -> {
             statistics.add(entry.getKey());
         });
@@ -1302,7 +1302,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                         @Override
 			public void write(BufferedWriter bw, List<CodecSearchTree.MtasTreeHit<String>> terms) throws IOException {
                             String listString = "";
-                            if (terms.size()>0){
+                            if (!terms.isEmpty()){
                                 
                                 // only distinct values per hit
                                 Set<String> values = new HashSet<String>();
@@ -1315,7 +1315,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                         values.add(value);
                                     }
                                 }
-                                List<String> list = new ArrayList<String>(values); 
+                                List<String> list = new ArrayList<>(values); 
                                     Collections.sort(list); 
                                     listString = String.join(", ", list);
                                     
@@ -1710,7 +1710,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                     spans.docID(), TOKEN_IDS, spans.startPosition(),
                                                         (spans.endPosition() - 1));
                                             
-                                            if (terms.size() > 0){
+                                            if (!terms.isEmpty()){
                                                 hits++;
                                                 ////System.out.println("----------------- START HIT -----------------------");
                                                 StringBuilder hit = new StringBuilder(); 
@@ -1737,7 +1737,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                         /if(!currentType.equals(type)){*/
                                                         if (type.equals(METADATA_KEY_MATCH_TRANSCRIPTION)){
                                                             form=CodecUtil.termPrefix(terms2.get(0).data) +"=>"+ CodecUtil.termValue(terms2.get(0).data);                                                           
-                                                        }else{
+                                                        } else{
                                                             form = CodecUtil.termValue(terms2.get(0).data);
                                                         }
                                                     }

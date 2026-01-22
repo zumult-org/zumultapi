@@ -7,17 +7,17 @@
         <sruResponse:recordData>
             <zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.0/">
                 <zr:serverInfo protocol="SRU" version="2.0" transport="http">
-                    <zr:host>clarin.ids-mannheim.de</zr:host>
-                    <zr:port>80</zr:port>
-                    <zr:database>korapsru</zr:database>
+                    <zr:host>localhost</zr:host>
+                    <zr:port>8080</zr:port>
+                    <zr:database>zumultsru</zr:database>
                 </zr:serverInfo>
                 <zr:databaseInfo>
-                    <zr:title lang="de">KorAP</zr:title>
-                    <zr:title lang="en" primary="true">KorAP</zr:title>
-                    <zr:description lang="de">Suche mit KorAP via SRU.</zr:description>
-                    <zr:description lang="en" primary="true">Search in KorAP via SRU.</zr:description>
-                    <zr:author lang="en">Leibniz institute for the German language</zr:author>
-                    <zr:author lang="de" primary="true">Leibniz Institut für Deutsche Sprache</zr:author>
+                    <zr:title lang="de">ZuMult</zr:title>
+                    <zr:title lang="en" primary="true">ZuMult</zr:title>
+                    <zr:description lang="de">Suche mit ZuMult via SRU.</zr:description>
+                    <zr:description lang="en" primary="true">Search in ZuMult via SRU.</zr:description>
+                    <zr:author lang="en">linguisticbits.de</zr:author>
+                    <zr:author lang="de" primary="true">linguisticbits.de</zr:author>
                 </zr:databaseInfo>
                 <zr:indexInfo>
                     <zr:set identifier="http://clarin.eu/fcs/resource" name="fcs">
@@ -43,9 +43,15 @@
             </zr:explain>
         </sruResponse:recordData>
     </sruResponse:record>
+    
+    <!-- ******************************** -->
+    
     <sruResponse:echoedExplainRequest>
         <sruResponse:version>2.0</sruResponse:version>
     </sruResponse:echoedExplainRequest>
+
+    <!-- ******************************** -->
+
     <sruResponse:extraResponseData>
         <ed:EndpointDescription xmlns:ed="http://clarin.eu/fcs/endpoint-description" version="2">
             <ed:Capabilities>
@@ -57,12 +63,16 @@
                 <ed:SupportedDataView id="adv" delivery-policy="send-by-default">application/x-clarin-fcs-adv+xml</ed:SupportedDataView>
             </ed:SupportedDataViews>
             <ed:SupportedLayers>
-                <ed:SupportedLayer id="l1" result-id="http://clarin.ids-mannheim.de/korapsru/layers/text">text</ed:SupportedLayer>
-                <ed:SupportedLayer id="l2" result-id="http://clarin.ids-mannheim.de/korapsru/layers/pos/corenlp" qualifier="corenlp">pos</ed:SupportedLayer>
+                <ed:SupportedLayer id="l1" result-id="http://zumult.org/zumultsru/layers/text">text</ed:SupportedLayer>
+                <ed:SupportedLayer id="l1" result-id="http://zumult.org/zumultsru/layers/pos/tt" qualifier="tt">pos</ed:SupportedLayer>
+                <ed:SupportedLayer id="l1" result-id="http://zumult.org/zumultsru/layers/pos/ud" qualifier="ud">pos</ed:SupportedLayer>
+                <ed:SupportedLayer id="l6" result-id="http://zumult.org/zumultsru/layers/lemma/tt" qualifier="tt">lemma</ed:SupportedLayer>
+                
+                <!-- <ed:SupportedLayer id="l2" result-id="http://clarin.ids-mannheim.de/korapsru/layers/pos/corenlp" qualifier="corenlp">pos</ed:SupportedLayer>
                 <ed:SupportedLayer id="l3" result-id="http://clarin.ids-mannheim.de/korapsru/layers/pos/marmot" qualifier="marmot">pos</ed:SupportedLayer>
                 <ed:SupportedLayer id="l4" result-id="http://clarin.ids-mannheim.de/korapsru/layers/pos/opennlp" qualifier="opennlp">pos</ed:SupportedLayer>
                 <ed:SupportedLayer id="l5" result-id="http://clarin.ids-mannheim.de/korapsru/layers/pos/tt" qualifier="tt">pos</ed:SupportedLayer>
-                <ed:SupportedLayer id="l6" result-id="http://clarin.ids-mannheim.de/korapsru/layers/lemma/tt" qualifier="tt">lemma</ed:SupportedLayer>
+                <ed:SupportedLayer id="l6" result-id="http://clarin.ids-mannheim.de/korapsru/layers/lemma/tt" qualifier="tt">lemma</ed:SupportedLayer> -->
             </ed:SupportedLayers>
             <ed:Resources>
                 <ed:Resource pid="http://hdl.handle.net/10932/00-03B6-558F-4E10-6201-1">
@@ -81,50 +91,6 @@
                     <ed:Title xml:lang="en">German Wikipedia talk corpus 2017</ed:Title>
                     <ed:Description xml:lang="en">A collection of talk pages of German Wikipedia from July 1st, 2017.</ed:Description>
                     <ed:LandingPageURI>https://korap.ids-mannheim.de?cq=corpusSigle%3DWDD17</ed:LandingPageURI>
-                    <ed:Languages>
-                        <ed:Language>deu</ed:Language>
-                    </ed:Languages>
-                    <ed:AvailableDataViews ref="hits adv"/>
-                    <ed:AvailableLayers ref="l1 l2 l3 l4 l5 l6"/>
-                </ed:Resource>
-                <ed:Resource pid="http://hdl.handle.net/10932/00-03B6-558F-6EF0-6401-F">
-                    <ed:Title xml:lang="de">Deutsche Wikipedia-Benutzerdiskussionskorpus 2017</ed:Title>
-                    <ed:Title xml:lang="en">German Wikipedia user talk corpus 2017</ed:Title>
-                    <ed:Description xml:lang="en">A collection of user talk pages of German Wikipedia from July 1st, 2017.</ed:Description>
-                    <ed:LandingPageURI>https://korap.ids-mannheim.de?cq=corpusSigle%3DWUD17</ed:LandingPageURI>
-                    <ed:Languages>
-                        <ed:Language>deu</ed:Language>
-                    </ed:Languages>
-                    <ed:AvailableDataViews ref="hits adv"/>
-                    <ed:AvailableLayers ref="l1 l2 l3 l4 l5 l6"/>
-                </ed:Resource>
-                <ed:Resource pid="VC-A">
-                    <ed:Title xml:lang="de">St. Galler Tagblatt</ed:Title>
-                    <ed:Title xml:lang="en">St. Galler Tagblatt</ed:Title>
-                    <ed:Description xml:lang="en">The newspaper collection St. Galler Tagblatt from 1997 to 2024</ed:Description>
-                    <ed:LandingPageURI>https://korap.ids-mannheim.de?cq=corpusSigle%3D%2FA%5B0-9%5D%5B0-9%5D%2F</ed:LandingPageURI>
-                    <ed:Languages>
-                        <ed:Language>deu</ed:Language>
-                    </ed:Languages>
-                    <ed:AvailableDataViews ref="hits adv"/>
-                    <ed:AvailableLayers ref="l1 l2 l3 l4 l5 l6"/>
-                </ed:Resource>
-                <ed:Resource pid="VC-AAZ">
-                    <ed:Title xml:lang="de">Aachener Zeitung</ed:Title>
-                    <ed:Title xml:lang="en">Aachener Zeitung</ed:Title>
-                    <ed:Description xml:lang="en">The newspaper collection Aachener Zeitung from 2003 to 2024</ed:Description>
-                    <ed:LandingPageURI>https://korap.ids-mannheim.de?cq=corpusSigle%3D%2FAAZ%5B0-9%5D%5B0-9%5D%2F</ed:LandingPageURI>
-                    <ed:Languages>
-                        <ed:Language>deu</ed:Language>
-                    </ed:Languages>
-                    <ed:AvailableDataViews ref="hits adv"/>
-                    <ed:AvailableLayers ref="l1 l2 l3 l4 l5 l6"/>
-                </ed:Resource>
-                <ed:Resource pid="VC-ROMANE">
-                    <ed:Title xml:lang="de">Romane</ed:Title>
-                    <ed:Title xml:lang="en">Novels</ed:Title>
-                    <ed:Description xml:lang="en">A corpus of novels</ed:Description>
-                    <ed:LandingPageURI>https://korap.ids-mannheim.de?cq=textType+%3D+%2F.*%5BRr%5Doman%2F</ed:LandingPageURI>
                     <ed:Languages>
                         <ed:Language>deu</ed:Language>
                     </ed:Languages>

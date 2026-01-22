@@ -12,13 +12,15 @@ import org.zumult.query.SearchQuery;
  * @author Elena
  */
 public class DefaultSearchQuery extends AbstractSearchQuery implements SearchQuery {
-        private String replacedQueryString;
+        
+    private String replacedQueryString;
 
-        public String getReplacedQueryString() {
-            return replacedQueryString;
-        }
+    public String getReplacedQueryString() {
+        return replacedQueryString;
+    }
 
-        public void setReplacedQueryString(String replacedQueryString) {
-            this.replacedQueryString = replacedQueryString;
-        }
+    public void setReplacedQueryString(String replacedQueryString) {
+        this.replacedQueryString = replacedQueryString;
+    }
+
 }

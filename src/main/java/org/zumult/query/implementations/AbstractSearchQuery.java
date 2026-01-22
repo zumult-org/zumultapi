@@ -11,21 +11,23 @@ package org.zumult.query.implementations;
  */
 public abstract class AbstractSearchQuery extends AbstractQuery{
     private String queryLanguage;
-        private String queryLanguageVersion;
+    
+    private String queryLanguageVersion;
 
-        public String getQueryLanguage() {
-            return queryLanguage;
-        }
+    public String getQueryLanguage() {
+        return queryLanguage;
+    }
 
-        public void setQueryLanguage(String queryLanguage) {
-            this.queryLanguage = queryLanguage;
-        }
+    public void setQueryLanguage(String queryLanguage) {
+        this.queryLanguage = queryLanguage;
+    }
 
-        public String getQueryLanguageVersion() {
-            return queryLanguageVersion;
-        }
+    public String getQueryLanguageVersion() {
+        return queryLanguageVersion;
+    }
 
-        public void setQueryLanguageVersion(String queryLanguageVersion) {
-            this.queryLanguageVersion = queryLanguageVersion;
-        }
+    public void setQueryLanguageVersion(String queryLanguageVersion) {
+        this.queryLanguageVersion = queryLanguageVersion;
+    }
+    
 }
