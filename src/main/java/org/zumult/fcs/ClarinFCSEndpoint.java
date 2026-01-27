@@ -13,10 +13,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.parsers.ParserConfigurationException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.io.IOHelper;
+import org.zumult.objects.IDList;
+import org.zumult.query.KWIC;
+import org.zumult.query.SearchResultPlus;
+import org.zumult.query.SearchServiceException;
+import org.zumult.query.Searcher;
 
 /**
  *
@@ -55,16 +61,7 @@ public class ClarinFCSEndpoint {
     {
         try {
             if (operation==null){
-                Response response = Response
-                        .status(Response.Status.BAD_REQUEST)
-                        .type(MediaType.APPLICATION_XML)
-                        .entity(
-                                "<error>" +
-                                "Parameter 'operation' not provided." +
-                                "</error>"
-                        )
-                        .build();  
-                return response;
+                return generateErrorResponse(Response.Status.BAD_REQUEST, "\"Parameter 'operation' not provided.\"");
             }
             switch (operation) {
                 case "explain" :
@@ -74,31 +71,11 @@ public class ClarinFCSEndpoint {
                     Response searchRetrieveResponse = searchRetrieve(query, version, queryType);
                     return searchRetrieveResponse;
                 default :
-                    Response response = Response
-                            .status(Response.Status.BAD_REQUEST)
-                            .type(MediaType.APPLICATION_XML)
-                            .entity(
-                                    "<error>" +
-                                            "Operation '" + operation + "' unknown." +
-                                                    "</error>"
-                            )
-                            .build();
-                    return response;
-                    
+                    return generateErrorResponse(Response.Status.BAD_REQUEST, "Operation '" + operation + "' unknown.");                    
             }
-        } catch (IOException ex) {
+        } catch (IOException | SearchServiceException | ParserConfigurationException ex) {
             Logger.getLogger(ClarinFCSEndpoint.class.getName()).log(Level.SEVERE, null, ex);
-            Response response = Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .type(MediaType.APPLICATION_XML)
-                    .entity(
-                            "<error>" +
-                            "Internal server error" +
-                            ex.getMessage() +
-                            "</error>"
-                    )
-                    .build();  
-            return response;
+            return generateErrorResponse(Response.Status.INTERNAL_SERVER_ERROR, "Internal server error" + ex.getMessage());
         }
     } 
 
@@ -124,8 +101,41 @@ public class ClarinFCSEndpoint {
         An Endpoint MUST respond in the correct format, i.e. when Endpoint also supports SRU 1.2 and the request is issued in SRU version 1.2, the response must be encoded accordingly. 
         For SRU 2.0 we introduce the queryType parameter to tell which query language to use. For Contextual Query Language the value is cql and for FCS-QL the value is fcs.    
     */
-    private Response searchRetrieve(String query, String version, String queryType) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Response searchRetrieve(String query, String version, String queryType) throws SearchServiceException, IOException, ParserConfigurationException {
+        // version has to be one of 1.1 / 1.2 / 2.0
+        if (!(version.matches("^((1\\.1)|(1\\.2)|(2\\.0))$"))){
+            return generateErrorResponse(Response.Status.BAD_REQUEST, "Version '" + version + "' not permitted.");                            
+        }
+        // Now: 1.1 and 1.2 will always be CQL
+        // and for 2.0, the parameter queryType becomes relevant
+        if (version.equals("2.0") && queryType.equals("fcs")){
+            // translate fcs-ql to cqp
+            // do the query
+            // transform the query result to SRU 2.0
+            String cqpQuery = FCSQL2CQPTranslator.translateFCSQL2CQP(query);
+            IDList corpora = backendInterface.getCorpora();
+            String corpusQuery = String.join("|", corpora);
+            SearchResultPlus searchResultPlus = backendInterface.search(cqpQuery, "cqp", "", corpusQuery, "", 
+                50, 0, null, null, null, null);
+            KWIC result = backendInterface.getKWIC(searchResultPlus, "5-t,5-t");
+            String resultXML = result.toXML();
+            Response response = Response
+                    .status(Response.Status.OK)
+                    .type(MediaType.APPLICATION_XML)
+                    .entity(resultXML)
+                    .build();  
+            return response;            
+        }
+        return null;
+    }
+
+    private Response generateErrorResponse(Response.Status status, String message) {
+        Response response = Response
+                .status(Response.Status.BAD_REQUEST)
+                .type(MediaType.APPLICATION_XML)
+                .entity("<error>" + message  +  "</error>")                      
+                .build();  
+        return response;
     }
     
     

@@ -12,49 +12,10 @@ import java.io.File;
  */
 public class Constants {
     
-    // ###CHANGE_FOR_RELEASE###
-    public static final String DGD_VERSION = "2.14";
-    
-    // ###CHANGE_FOR_RELEASE### (CHECK!!!)
-    //public static final String DGD_URL = "https://pragora-2.ids-mannheim.de";      // release server
-    //public static final String DGD_URL = "https://dgd2.ids-mannheim.de";    // Ausfallserver (35)
-    public static final String DGD_URL =   "https://dgd.ids-mannheim.de"; // public server (37)
-    
-    // the address of the database (for internal http requests!)
-    //public static final String DGD_HOST = DGD_URL + ":8080"; 
-    // ###CHANGE_FOR_RELEASE### (CHECK!!!)
-    //public static final String DGD_HOST = "http://pragora-2.ids-mannheim.de:8080";      // release server
-    //public static final String DGD_HOST = "http://dgd2.ids-mannheim.de:8080";    // Ausfallserver (35)
-    public static final String DGD_HOST =   "http://dgd.ids-mannheim.de:8080"; // public server (37)
-    
-    // ###CHANGE_FOR_RELEASE### (CHECK!!!)
-    //public static final String DGD_HOME = "https://pragora-2.ids-mannheim.de/dgd/pragdb.dgd_extern.welcome";  // release (29)
-    //public static final String DGD_HOME = "https://dgd2.ids-mannheim.de/dgd/pragdb.dgd_extern.welcome";  // ausfall (35) 
-    public static final String DGD_HOME = "https://dgd.ids-mannheim.de/dgd/pragdb.dgd_extern.welcome";    // public (37)
+    // new for #265
+    public static String BASIC_LAYER_NAME = "norm";
 
-    public static final String TOMCAT_HOST = DGD_URL + ":8181"; // all servers
-    
-    // the address for the directory into which Tomcat writes audio snippets
-    //public static final String TOMCAT_AUDIO_PATH = "http://localhost:8084/DGD2Web/audio/";    // local testing
-    public static final String TOMCAT_AUDIO_PATH = DGD_URL + "/DGD2Web/audio/";          // test or release server
-    
     public static final String ZUMULT_PROJECT_ULR = "https://zumult.org";
-    
-    public static final String INVALID_SESSION_URL = DGD_URL + "/dgd/pragdb.dgd_extern.corpora?v_session_id=INVALID_SESSION_ID";
-    
-    // ###CHANGE_FOR_RELEASE###    
-    public static File PERSISTENCE_DIRECTORY = new File("C:\\dgd2_queries");                // test and release
-    //public static File PERSISTENCE_DIRECTORY = new File("/home/oraprag/dgd2_queries");        // ausfall and public
-    
-    // Password for unlocking the POS functionality in query interfaces 
-    public static String ENABLE_POS_PW = "klofsop";
-
-    
-    // ###CHANGE_FOR_RELEASE###    
-    public static File PLAYGROUND_DIRECTORY = new File("C:\\dgd2_playground");          // test and release
-    //public static File PLAYGROUND_DIRECTORY = new File("/home/oraprag/dgd2_playground");     // ausfall and production
-    //public static String FLN2ISO_STYLESHEET = "/org/exmaralda/tei/xml/folker2isotei.xsl";
-    public static String FLN2ISO_STYLESHEET = "/org/zumult/io/folker2isotei.xsl";
     
     public static String ISOTEI2HTML_STYLESHEET = "/org/zumult/io/isotei2html.xsl";
     // now configurable as per #174
@@ -93,8 +54,6 @@ public class Constants {
     public static final String DATA_ZUMAL_PATH = "/data/zumal/";
     public static final String DATA_POS_PATH = "/data/pos/";
 
-    public static final String JAVA_FOLDER_PATH = "/src/main/java";
-            
     public static String[] LEIPZIG_WORDLISTS =
         {
             "GOETHE_A1", "GOETHE_A2", "GOETHE_B1",
@@ -238,29 +197,6 @@ public class Constants {
         
     public static final String TOKEN_INTERVAL = "token.interval"; 
         
-    public static final String[][] FOLK_MEASURES = 
-    {
-        {"intersection", "Measure_1_FOLK"},
-        {"normRate", "Measure_7_FOLK"},
-        {"perMilOverlaps", "Measure_8_FOLK"},
-        {"averageNrOverlappingWords", "Measure_8_FOLK"},
-        {"perCentOverlapsWithMoreThan2Words", "Measure_8_FOLK"},
-        {"perMilTokensOverlapsWithMoreThan2Words", "Measure_8_FOLK"},
-        {"articulationRate","Measure_12_FOLK"},
-        {"pos","Measure_13_FOLK"}
-    };
-    
-    public static final String[][] GWSS_MEASURES = 
-    {
-        {"intersection", "Measure_1_GWSS"},
-        {"normRate", "Measure_7_GWSS"},
-        {"perMilOverlaps", "Measure_8_GWSS"},
-        {"averageNrOverlappingWords", "Measure_8_GWSS"},
-        {"perCentOverlapsWithMoreThan2Words", "Measure_8_GWSS"},
-        {"perMilTokensOverlapsWithMoreThan2Words", "Measure_8_GWSS"},
-        {"articulationRate","Measure_12_GWSS"},
-        {"pos","Measure_13_GWSS"}
-    };
     
        
     // token annotation layers not specified in ZuMultAvailableAnnotationValues.xml
