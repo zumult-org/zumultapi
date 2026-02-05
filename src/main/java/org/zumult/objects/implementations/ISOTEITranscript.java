@@ -642,16 +642,24 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
 
     @Override
     public String getID() {
+        // 2026-02-05, remade for #268
+        // first attempt: see if the root element has an xml:id attribute
+        // this is the preferred solution from now on because it conforms to the generic TEI schema
+        if (getDocument().getDocumentElement().hasAttributeNS("http://www.w3.org/XML/1998/namespace", "id")){
+            String id = getDocument().getDocumentElement().getAttributeNS("http://www.w3.org/XML/1998/namespace", "id");
+            return id;
+        }
         try {
             Element idnoElement = ((Element)xPath.evaluate("//tei:TEI/tei:idno", getDocument().getDocumentElement(), XPathConstants.NODE));
             if (idnoElement!=null){
                 String id = idnoElement.getTextContent();
                 // workaround for issue #60
-                if (id.contains("_DF_")){
+                // we do not want this here any longer
+                /*if (id.contains("_DF_")){
                     int i = id.indexOf("_DF_");
                     id = id.substring(0,i);
                 }
-                return id;
+                return id;*/
             }
             return null;
         } catch (XPathExpressionException ex) {
