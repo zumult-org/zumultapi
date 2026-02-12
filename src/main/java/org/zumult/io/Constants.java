@@ -4,8 +4,6 @@
  */
 package org.zumult.io;
 
-import java.io.File;
-
 /**
  *
  * @author Schmidt
