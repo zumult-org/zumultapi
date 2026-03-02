@@ -11,8 +11,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
+import org.zumult.io.ISOTEITranscriptConverter;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
@@ -21,6 +23,7 @@ import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.KWIC;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.serialization.DefaultQuerySerializer;
@@ -51,6 +54,14 @@ public class TestCOMABackend {
             );
             BackendInterface bi = new COMAFileSystem(); 
             
+            
+            System.out.println(String.join("\n", bi.getCorpora()));
+            
+            
+            
+            
+            System.exit(0);
+            
             Transcript anneWillT = bi.getTranscript("Anne_Will");
             IDList anneWillV = bi.getVideos4Transcript("Anne_Will");
             IDList anneWillA = bi.getAudios4Transcript("Anne_Will");
@@ -62,7 +73,6 @@ public class TestCOMABackend {
             IDList s27 = bi.getSpeechEvents4Speaker("FU200");
             System.out.println(String.join(" ", s27));
             
-            System.exit(0);
 
             IDList audioTrullala = bi.getAudios4Transcript("RC_Interview_002_ISO");
             System.out.println("---> " + String.join(" * ", audioTrullala));
