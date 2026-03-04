@@ -30,6 +30,7 @@ import static org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter.ISOTE
 import static org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter.ISOTEI2EXMARaLDA_2_TOKEN2TIMEREFS_XSL;
 import static org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter.ISOTEI2EXMARaLDA_2b_REMOVE_TIMEPOINTS_XSL;
 import static org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter.ISOTEI2EXMARaLDA_3_DETOKENIZE_XSL;
+import static org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter.ISOTEI2EXMARaLDA_3d_HANDLE_ORPHANED_ANCHORS_XSL;
 import static org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter.ISOTEI2EXMARaLDA_4_TRANSFORM_XSL;
 import org.xml.sax.SAXException;
 import org.zumult.objects.implementations.ISOTEITranscript;
@@ -57,6 +58,7 @@ public class ISOTEITranscriptConverter {
         ISOTEI2EXMARaLDA_2_TOKEN2TIMEREFS_XSL,
         ISOTEI2EXMARaLDA_2b_REMOVE_TIMEPOINTS_XSL,
         ISOTEI2EXMARaLDA_3_DETOKENIZE_XSL,
+        ISOTEI2EXMARaLDA_3d_HANDLE_ORPHANED_ANCHORS_XSL,        
         ISOTEI2EXMARaLDA_4_TRANSFORM_XSL
     };
     
@@ -96,7 +98,7 @@ public class ISOTEITranscriptConverter {
         int count = 1;
         for (String XSL : XSL_EXB_SEQUENCE){
             /*try {
-                IOHelper.writeUTF8(new File(new File("C:\\Users\\thomas.schmidt\\Desktop\\DEBUG\\ZUMULT_EXB"), "Out_" + Integer.toString(count) + ".xml"), currentString);
+                IOHelper.writeUTF8(new File(new File("C:\\Users\\bernd\\Dropbox\\work\\EXMARaLDA_Support\\2026-02-26_ZUMULT_PARTITUR"), "Out_" + Integer.toString(count) + ".xml"), currentString);
             } catch (IOException ex) {
                 Logger.getLogger(ISOTEITranscriptConverter.class.getName()).log(Level.SEVERE, null, ex);
             }*/

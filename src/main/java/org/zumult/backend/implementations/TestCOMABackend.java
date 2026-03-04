@@ -62,7 +62,7 @@ public class TestCOMABackend {
             
             System.exit(0);
             
-            Transcript anneWillT = bi.getTranscript("Anne_Will");
+            Transcript anneWillT = bi.getTranscript("ISO_TIGR_ev17d");
             IDList anneWillV = bi.getVideos4Transcript("Anne_Will");
             IDList anneWillA = bi.getAudios4Transcript("Anne_Will");
             System.out.println(String.join(" ", anneWillV));
