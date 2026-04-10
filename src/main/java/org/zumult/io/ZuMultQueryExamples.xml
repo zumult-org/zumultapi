@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zumult-query-examples>
+    <section name="Generic" language="en" corpus="EXMARaLDA-Demokorpus">
+        <basic-query>
+            <query>
+                <query-expression>in</query-expression>
+                <explanation>will find all tokens whose normalized form is <form>in</form></explanation>
+            </query>
+            <query>
+                <query-expression>in the</query-expression>
+                <explanation>will find <form>in</form> followed by <form>the</form> (normalized form)</explanation>
+            </query>
+        </basic-query>
+        <simple-cqp-query>
+            <query>
+                <query-expression>[word="nice"]</query-expression>
+                <explanation>will find all instances of the transcribed <form>nice</form></explanation>
+            </query>
+            <query>
+                <query-expression>[norm="have"]</query-expression>
+                <explanation>will find all instances whose normalized form is <form>have</form></explanation>
+            </query>
+            <query>
+                <query-expression>[lemma="be"]</query-expression>
+                <explanation>will find all instances whose lemma is <form>be</form></explanation>
+            </query>
+        </simple-cqp-query>
+        <complex-cqp-query>
+            <query>
+                <query-expression>[lemma="klein"][pos="NN"]</query-expression>
+                <explanation>will find forms of the lemma <form>klein</form> followed by a token with POS tag <form>NN</form> (a noun)</explanation>
+            </query>
+            <query>
+                <query-expression>[norm="[Uu]n.+"]</query-expression>
+                <explanation>will find all instances whose normalized form matches the regular expression, i.e. words starting in <form>Un</form> or <form>un</form></explanation>
+            </query>
+        </complex-cqp-query>        
+        <annotation-cqp-query>
+            <query>
+                <query-expression><![CDATA[<en=".*good.*"/>]]></query-expression>
+                <explanation>will find all spans whose English translation (<form>en</form>) contains <form>with</form></explanation>
+            </query>
+            <query>
+                <query-expression><![CDATA[<sup="laut.*"/>]]></query-expression>
+                <explanation>will find all spans annotated with something containing <form>laut</form> on the sup(rasegental) tier</explanation>
+            </query>            
+        </annotation-cqp-query>
+        <metadata-cqp-query>
+            <query>
+                <query-expression><![CDATA[[norm="in"] within <Communication_type="television debate"/>]]></query-expression>
+                <explanation>will restrict the query to speech events whose metadata value for <form>Communication type</form> is <form>television debate</form></explanation>
+            </query>
+            <query>
+                <query-expression><![CDATA[[norm="in"] within <Role="Guest"/>]]></query-expression>
+                <explanation>will restrict the query to speakers whose metadata value for <form>Role</form> is <form>Guest</form></explanation>            
+            </query>
+        </metadata-cqp-query>        
+    </section>
+
+    <!-- ******************************************************************** -->
+    <!-- ******************************************************************** -->
+    <!-- ******************************************************************** -->
+    
+    <section name="TIGR" language="it" corpus="TIGR">
+        <basic-query>
+            <query>
+                <query-expression>in</query-expression>
+                <explanation>will find all tokens whose normalized form is <form>in</form></explanation>
+            </query>
+            <query>
+                <query-expression>in realtà</query-expression>
+                <explanation>will find <form>in</form> followed by <form>realtà</form> (normalized form)</explanation>
+            </query>
+        </basic-query>
+        <simple-cqp-query>
+            <query>
+                <query-expression>[word="ancora"]</query-expression>
+                <explanation>will find all instances of the transcribed <form>ancora</form></explanation>
+            </query>
+            <query>
+                <query-expression>[norm="italiano"]</query-expression>
+                <explanation>will find all instances whose normalized form is <form>italiano</form></explanation>
+            </query>
+            <query>
+                <query-expression>[lemma="parlare"]</query-expression>
+                <explanation>will find all instances whose lemma is <form>parlare</form></explanation>
+            </query>
+        </simple-cqp-query>
+        <complex-cqp-query>
+            <query>
+                <query-expression>[lemma="essere"][pos="ADJ"]</query-expression>
+                <explanation>will find forms of the lemma <form>essere</form> followed by a token with POS tag <form>ADJ</form> (an adjective)</explanation>
+            </query>
+            <query>
+                <query-expression>[norm=".+mente"]</query-expression>
+                <explanation>will find all instances whose normalized form matches the regular expression, i.e. words ending in <form>mente</form></explanation>
+            </query>
+        </complex-cqp-query>
+        <annotation-cqp-query>
+            <query>
+                <query-expression><![CDATA[<comment="laughing"/>]]></query-expression>
+                <explanation>will find all spans annotated with the value <form>laughing</form> on the <form>comment</form> layer</explanation>
+            </query>
+        </annotation-cqp-query>
+        <metadata-cqp-query>
+            <query>
+                <query-expression><![CDATA[[norm="ancora"] within <year="2021.0"/>]]></query-expression>
+                <explanation>will restrict the query to speech events whose metadata value for <form>year</form> is <form>2021.0</form></explanation>
+            </query>
+            <query>
+                <query-expression><![CDATA[[lemma="parlare"] within <regionMainActivity="Ticino"/>]]></query-expression>
+                <explanation>will restrict the query to speakers whose metadata value for <form>regionMainActivity</form> is <form>Ticino</form></explanation>            
+            </query>
+        </metadata-cqp-query>        
+    </section> 
+
+    <section name="ROG" language="sl" corpus="ROG-Art">
+        <basic-query>
+            <query>
+                <query-expression>tudi</query-expression>
+                <explanation>will find all tokens whose normalized form is <form>tudi</form></explanation>
+            </query>
+            <query>
+                <query-expression>in tudi</query-expression>
+                <explanation>will find <form>in</form> followed by <form>tudi</form> (normalized form)</explanation>
+            </query>
+        </basic-query>
+        <simple-cqp-query>
+            <query>
+                <query-expression>[word="tudi"]</query-expression>
+                <explanation>will find all instances of the transcribed <form>nice</form></explanation>
+            </query>
+            <query>
+                <query-expression>[norm="tudi"]</query-expression>
+                <explanation>will find all instances whose normalized form is <form>have</form></explanation>
+            </query>
+            <query>
+                <query-expression>[lemma="imeti"]</query-expression>
+                <explanation>will find all instances whose lemma is <form>imeti</form></explanation>
+            </query>
+        </simple-cqp-query>
+        <complex-cqp-query>
+            <query>
+                <query-expression>[lemma="imeti"][pos="ADJ"]</query-expression>
+                <explanation>will find forms of the lemma <form>imeti</form> followed by a token with POS tag <form>ADJ</form> (an adjective)</explanation>
+            </query>
+            <query>
+                <query-expression>[norm="obve.+"]</query-expression>
+                <explanation>will find all instances whose normalized form matches the regular expression, i.e. words starting in <form>obve</form></explanation>
+            </query>
+        </complex-cqp-query>        
+        <annotation-cqp-query>
+            <query>
+                <query-expression><![CDATA[<disfluencyStructure="reparandum"/>]]></query-expression>
+                <explanation>will find all spans with annotation (<form>reparandum</form>) on the <form>disfluencyStructure</form> annotation layer</explanation>
+            </query>
+            <query>
+                <query-expression><![CDATA[<dialogActsPrimary="informationSeeking"/>]]></query-expression>
+                <explanation>will find all spans with annotation (<form>informationSeeking</form>) on the <form>dialogActsPrimary</form> annotation layer</explanation>
+            </query>            
+            <query>
+                <query-expression><![CDATA[<feats-Gender="Fem"/>]]></query-expression>
+                <explanation>will find all spans with annotation (<form>Fem</form>) on the <form>feats-Gender</form> annotation layer</explanation>
+            </query>            
+        </annotation-cqp-query>
+        <metadata-cqp-query>
+            <query>
+                <query-expression><![CDATA[[norm="tudi"] within <TEXT-REGION="Ljubiljana"/>]]></query-expression>
+                <explanation>will restrict the query to speech events whose metadata value for <form>TEXT-REGION</form> is <form>Ljubiljana</form></explanation>
+            </query>
+            <query>
+                <query-expression><![CDATA[[norm="tudi"] within <DIALECT="pogovorni jezik"/>]]></query-expression>
+                <explanation>will restrict the query to speakers whose metadata value for <form>DIALECT</form> is <form>pogovorni jezik</form></explanation>            
+            </query>
+        </metadata-cqp-query>        
+    </section>
+    
+</zumult-query-examples>

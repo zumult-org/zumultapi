@@ -90,6 +90,9 @@ public class ZumultDataServlet extends HttpServlet {
             case "getSpeakerMetadata" : 
                 getSpeakerMetadata(request, response);
                 break;
+            case "getCorpusMetadata" : 
+                getCorpusMetadata(request, response);
+                break;
             case "getEventMetadataTitle" : 
                 getEventMetadataTitle(request, response);
                 break;
@@ -192,6 +195,56 @@ public class ZumultDataServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void getCorpusMetadata(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String corpusID = request.getParameter("corpusID");
+            String format = request.getParameter("format");
+            if (format==null || format.length()==0){
+                format = "html";
+            }
+            
+            Corpus corpus = backend.getCorpus(corpusID);
+            
+            if (corpus!=null){
+                Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.CORPUS);
+                StringBuilder result = new StringBuilder();
+                if (format.equals("html")){
+                    result.append("<table class=\"table table-striped table-sm\"><tbody>");
+                    for (MetadataKey metadataKey : metadataKeys){
+                        String key = metadataKey.getName("en");
+                        String value = corpus.getMetadataValue(metadataKey);
+                        /*
+                            <tr>
+                                <td class="metadatakey">Family:Marital status</td>
+                                <td class="metadatavalue">Verheiratet</td>
+                            </tr>
+                        */
+                        result.append("<tr><td class=\"metadatakey\">");
+                        result.append(key);
+                        result.append("</td><td class=\"metadatavalue\">");
+                        result.append(value);
+                        result.append("</td></tr>");
+                    }
+                    result.append("</tbody></table>");
+                }
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(result.toString());             
+                response.getWriter().close();            
+            } else {
+                String errorHTML = "<div>Corpus " + corpusID + " not found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } 
+    }
 
     // new for issue #175
     private void getSpeakerMetadata(HttpServletRequest request, HttpServletResponse response) throws IOException {

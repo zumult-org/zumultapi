@@ -5,7 +5,10 @@
  */
 package org.zumult.backend.implementations;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
@@ -14,8 +17,10 @@ import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
+import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEITranscriptConverter;
 import org.zumult.objects.Corpus;
+import org.zumult.objects.Episode;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
@@ -23,6 +28,7 @@ import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.implementations.COMATranscript;
 import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.KWIC;
 import org.zumult.query.SearchResultPlus;
@@ -43,6 +49,21 @@ public class TestCOMABackend {
 
     private void doit() {
         try {
+            
+            String readUTF8 = IOHelper.readUTF8(new File("Y:\\manv\\manv_corpus\\manv_2017_e\\autotranscript\\manv_2017_e_triage.xml"));
+            COMATranscript epiTanscript = new COMATranscript(readUTF8);
+            IDList epiNames = epiTanscript.getEpisodeNames();
+            System.out.println(String.join(" ", epiNames));
+            for (String epiName : epiNames){
+                List<Episode> episodesByName = epiTanscript.getEpisodesByName(epiName);
+                for (Episode epi : episodesByName){
+                    System.out.println(epi.getFrom() + " " + epi.getTo() + " " + epi.getDescription());
+                    System.out.println(String.join(" // ", epi.getRestrictionSpeakerIDs()));
+                }
+            }
+
+            System.exit(0);
+            
             System.out.println(
                     "--- Configuration path : " +
                     Configuration.getBackendInterfaceClassPath()
@@ -57,6 +78,30 @@ public class TestCOMABackend {
             
             System.out.println(String.join("\n", bi.getCorpora()));
             
+            Set<MetadataKey> metadataKeysY = bi.getCorpus("TIGR").getMetadataKeys(ObjectTypesEnum.CORPUS);
+            for (MetadataKey mkx : metadataKeysY){
+                System.out.println(mkx.getID());
+            }
+            MetadataKey selectionKey = bi.findMetadataKeyByID("Corpus_zumult:speechEventMetadataTableSelection");
+            if (selectionKey!=null){
+                String allMetadataNames = bi.getCorpus("TIGR").getMetadataValue(selectionKey);
+                System.out.println(allMetadataNames);
+                if (allMetadataNames!=null && allMetadataNames.length()>0){
+                    Set<String> configuredSelectionSet = new HashSet<>();
+                    String[] tokenizedMetadataNames = allMetadataNames.split(";");
+                    for (String mn : tokenizedMetadataNames){
+                        MetadataKey mk = bi.findMetadataKeyByID("SpeechEvent_" + mn);
+                        if (mk!=null){
+                            configuredSelectionSet.add(mk.getName("en"));
+                        }
+                    }
+                    if (!(configuredSelectionSet.isEmpty())){
+                        System.out.println("YES!");
+                    }
+                }
+            } else {
+                System.out.println("The key is a nullinger");
+            }
             
             
             

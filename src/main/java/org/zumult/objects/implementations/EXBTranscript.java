@@ -20,6 +20,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.zumult.objects.Episode;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.TokenFilter;
 import org.zumult.objects.TokenList;
@@ -215,9 +217,7 @@ public class EXBTranscript extends AbstractXMLObject implements Transcript {
         BasicTranscription bt = getBasicTranscription();
         bt.getBody().getCommonTimeline().shiftAbsoluteTimes(-getStartTime());
         setXML(bt.toXML());
-        
     }
-
 
     @Override
     public String getID() {
@@ -262,6 +262,21 @@ public class EXBTranscript extends AbstractXMLObject implements Transcript {
     @Override
     public Map<String, Set<String>> getMetadataValuesByLanguages (MetadataKey key) {
         throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Map<String, List<Episode>> getEpisodes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Episode> getEpisodesByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public IDList getEpisodeNames() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

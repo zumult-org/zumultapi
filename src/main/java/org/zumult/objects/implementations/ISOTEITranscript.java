@@ -658,8 +658,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 /*if (id.contains("_DF_")){
                     int i = id.indexOf("_DF_");
                     id = id.substring(0,i);
-                }
-                return id;*/
+                }*/
+                return id;
             }
             return null;
         } catch (XPathExpressionException ex) {

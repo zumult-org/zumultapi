@@ -7,6 +7,7 @@ package org.zumult.objects.implementations;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,8 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.zumult.backend.BackendInterface;
+import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.io.IOHelper;
 import org.zumult.objects.AnnotationLayer;
@@ -26,8 +29,10 @@ import org.zumult.objects.AnnotationTypeEnum;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.CorpusStatistics;
 import org.zumult.objects.CrossQuantification;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.objects.ObjectTypesEnum;
+import static org.zumult.objects.ObjectTypesEnum.CORPUS;
 import static org.zumult.objects.ObjectTypesEnum.EVENT;
 import static org.zumult.objects.ObjectTypesEnum.SPEAKER;
 import static org.zumult.objects.ObjectTypesEnum.SPEAKER_IN_SPEECH_EVENT;
@@ -89,6 +94,7 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     public Set<MetadataKey> getMetadataKeys(ObjectTypesEnum objectType) {
         if (objectType!=null){
             return switch (objectType) {
+                case CORPUS -> getCorpusMetadataKeys();    
                 case EVENT -> getEventMetadataKeys();
                 case SPEECH_EVENT -> getSpeechEventMetadataKeys();
                 case SPEAKER -> getSpeakerMetadataKeys();
@@ -106,6 +112,7 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     @Override
     public Set<MetadataKey> getMetadataKeys() {
         Set<MetadataKey> result = new HashSet<>();
+        result.addAll(getCorpusMetadataKeys());
         result.addAll(getEventMetadataKeys());
         result.addAll(getSpeechEventMetadataKeys());
         result.addAll(getSpeakerInSpeechEventMetadataKeys());
@@ -113,6 +120,26 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         // added for #148
         result.addAll(getTranscriptMetadataKeys());
         return result;
+    }
+
+    private Set<MetadataKey> getCorpusMetadataKeys() {
+        Set<MetadataKey> result = new HashSet<>();
+        try {
+            String xPathString = "//Corpus/Description/Key";
+            NodeList allKeys = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            HashSet<String> keySet = new HashSet<>();
+            for (int i=0; i<allKeys.getLength(); i++){
+                Element keyElement = ((Element)(allKeys.item(i)));
+                keySet.add(keyElement.getAttribute("Name"));
+            }      
+            for (String key: keySet){
+                COMAMetadataKey comaMetadataKey = new COMAMetadataKey("Corpus_" + key, key, ObjectTypesEnum.CORPUS);
+                result.add(comaMetadataKey);
+            }
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;        
     }
 
     private Set<MetadataKey> getEventMetadataKeys() {
@@ -244,7 +271,9 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         // this is not what we do in the backend
         // there, we are using the acronym as the ID
         // so let's return the acronym for now
-        return getAcronym();
+        // this is boiling down to shit
+        // return getAcronym();
+        return getDocument().getDocumentElement().getAttribute("Id");        
     }
 
     
@@ -279,7 +308,14 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
     
     @Override
     public String getMetadataValue(MetadataKey key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String xPathString = "/Corpus/Description/Key[@Name='" + key.getName("en") + "']/text()";
+            String value = xPath.evaluate(xPathString, getDocument().getDocumentElement());
+            return value;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
 
     @Override
@@ -294,7 +330,16 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
 
     @Override
     public Set<String> getMetadataValues (MetadataKey key) {
-        throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            IDList values =  backend.getAvailableValues(getID(), key);
+            Set<String> result = new HashSet<>();
+            result.addAll(values);
+            return result;
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(COMACorpus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override

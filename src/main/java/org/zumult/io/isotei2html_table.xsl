@@ -291,8 +291,8 @@
         <xsl:variable name="trans" select="."/>
         <!-- <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
         <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>      -->   
-        <xsl:variable name="startAnchor" select="preceding::tei:anchor[1]/@synch"/>        
-        <xsl:variable name="endAnchor" select="following::tei:anchor[1]/@synch"/>
+        <xsl:variable name="startAnchor" select="preceding::tei:anchor[@synch and id(@synch)[self::tei:when]][1]/@synch"/>        
+        <xsl:variable name="endAnchor" select="following::tei:anchor[@synch and id(@synch)[self::tei:when]][1]/@synch"/>
         <!-- <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
         <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
         <!-- This may be much faster (?) -->

@@ -1069,11 +1069,15 @@ public class ZuMultParser extends MtasTEIParser {
           }
           if (startPosition != null && endPosition != null
               && startOffset != null && endOffset != null) {
-            MtasToken token = tokenCollection.get(tokenId);
-            token.addPositionRange(startPosition, endPosition);
-            token.addOffset(startOffset, endOffset);
+                if (startOffset<=endOffset){
+                    MtasToken token = tokenCollection.get(tokenId);
+                    token.addPositionRange(startPosition, endPosition);
+                    token.addOffset(startOffset, endOffset);
+                } else {
+                    System.out.println("===== Start/End offset anonmaly for token with ID " + tokenId);
+                }
             
-          }else{
+          } else {
           }
         }
       }
