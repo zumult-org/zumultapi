@@ -15,28 +15,28 @@ import org.zumult.objects.IDList;
  */
 public class ISOTEIEpisode extends AbstractXMLObject implements Episode {
 
-    String name;
+    String type;
     String from;
     String to;
     String description;
     IDList restrictionSpeakerIDs;
 
-    public ISOTEIEpisode(Document xmlDocument, String name) {
+    public ISOTEIEpisode(Document xmlDocument, String type) {
         super(xmlDocument);
         getVariables();
-        this.name = name;
+        this.type = type;
     }
 
-    public ISOTEIEpisode(String xmlString, String name) {
+    public ISOTEIEpisode(String xmlString, String type) {
         super(xmlString);
         getVariables();
-        this.name = name;
+        this.type = type;
     }
     
 
     @Override
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
     @Override
@@ -68,10 +68,10 @@ public class ISOTEIEpisode extends AbstractXMLObject implements Episode {
         */
         
         from = getDocument().getDocumentElement().getAttribute("from");
-        to = getDocument().getDocumentElement().getAttribute("from");
+        to = getDocument().getDocumentElement().getAttribute("to");
         description = getDocument().getDocumentElement().getTextContent();
         String select = getDocument().getDocumentElement().getAttribute("select");
-        restrictionSpeakerIDs = new IDList(name);
+        restrictionSpeakerIDs = new IDList(type);
         if (select!=null){
             String[] selects = select.split(" ");
             restrictionSpeakerIDs.addAll(Arrays.asList(selects));

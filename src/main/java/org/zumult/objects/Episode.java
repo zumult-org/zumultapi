@@ -16,7 +16,7 @@ public interface Episode extends XMLSerializable {
     public String getDescription();
     public IDList getRestrictionSpeakerIDs();
     
-    public String getName();
+    public String getType();
     
     
 }

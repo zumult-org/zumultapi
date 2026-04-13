@@ -124,14 +124,14 @@ public class COMATranscript extends ISOTEITranscript {
         } // cache
         episodes = new HashMap<>();
         try {
-            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/tei:spanGrp[@type='episodes']", getDocument(), XPathConstants.NODESET);
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/tei:spanGrp[@n='episodes']", getDocument(), XPathConstants.NODESET);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             for (int i=0; i<nodes.getLength(); i++){                
                 Element node = (Element) nodes.item(i);
-                String name = ((Element)node).getAttribute("subtype");
-                if (name==null) {
-                    name="default";
+                String type = ((Element)node).getAttribute("type");
+                if (type==null) {
+                    type="default";
                 }
                 NodeList nodes2 = node.getChildNodes();
                 List<Episode> theseEpisodes = new ArrayList<>();
@@ -143,10 +143,10 @@ public class COMATranscript extends ISOTEITranscript {
                     Node importedNode = episodeDoc.importNode(node2, true); // true = deep copy
                     // Append as root element
                     episodeDoc.appendChild(importedNode);
-                    ISOTEIEpisode episode = new ISOTEIEpisode(episodeDoc, name);
+                    ISOTEIEpisode episode = new ISOTEIEpisode(episodeDoc, type);
                     theseEpisodes.add(episode);
                 }
-                episodes.put(name, theseEpisodes);
+                episodes.put(type, theseEpisodes);
             }
         } catch (XPathExpressionException | ParserConfigurationException ex) {
             Logger.getLogger(COMATranscript.class.getName()).log(Level.SEVERE, null, ex);

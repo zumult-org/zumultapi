@@ -129,8 +129,8 @@ public class ZumultDataServlet extends HttpServlet {
             case "getPartitur" :
                 getPartitur(request, response);
                 break;
-            case "getProtocol" :
-                getProtocol(request, response);
+            case "getEpisodes" :
+                getEpisodes(request, response);
                 break;
             case "getCoordinatesForTime" :
                 getCoordinatesForTime(request, response);
@@ -1514,25 +1514,22 @@ public class ZumultDataServlet extends HttpServlet {
     }
 
 
-    private void getProtocol(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void getEpisodes(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String speechEventID = request.getParameter("speechEventID");
             String transcriptID = request.getParameter("transcriptID");
-            if (speechEventID==null){
-                speechEventID = backend.getSpeechEvent4Transcript(transcriptID);
+            if (transcriptID==null){
+                transcriptID = backend.getTranscripts4SpeechEvent(speechEventID).get(0);
             }
-            String protocolXML = backend.getProtocol(backend.getProtocol4SpeechEvent(speechEventID)).toXML();
-            String protocolHTML = new IOHelper().applyInternalStylesheetToString(Constants.PROTOCOL2HTML_STYLESHEET, protocolXML);
+            //String protocolXML = backend.getProtocol(backend.getProtocol4SpeechEvent(speechEventID)).toXML();
+            String transcriptXML = backend.getTranscript(transcriptID).toXML();
+            String episodesHTML = new IOHelper().applyInternalStylesheetToString(Constants.EPISODES2HTML_STYLESHEET, transcriptXML);
 
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(protocolHTML);            
+            response.getWriter().write(episodesHTML);            
             response.getWriter().close();
-            
-            
-            
-            
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
