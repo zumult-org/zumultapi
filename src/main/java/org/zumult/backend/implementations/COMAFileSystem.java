@@ -27,6 +27,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import org.exmaralda.partitureditor.jexmaralda.BasicTranscription;
+import org.exmaralda.partitureditor.jexmaralda.convert.TEIConverter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -337,6 +339,8 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                     }
                     Corpus corpus = getCorpus(corpusID);
                     Document corpusDocument = corpus.getDocument();
+                    
+                    // Attempt 1: Try to find an EXB file in the same folder with the same name
                     String xp = "//Transcription[@Id='" + transcriptID + "']";
                     Element transcriptionElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
                     String nsLink = transcriptionElement.getElementsByTagName("NSLink").item(0).getTextContent();
@@ -345,7 +349,26 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                     File resolvedPath = corpusFolder.toPath().resolve(nsLinkModified).toFile();
                     
                     if (!(resolvedPath.exists())){
-                        throw new IOException("Error: No transcript found for: " + transcriptID);
+                        // Attempt 1 has failed
+                        // Attempt 2: Try to find an EXB file in the same communication
+                        String isoFileName = transcriptionElement.getElementsByTagName("Filename").item(0).getTextContent();
+                        String exbFileName = isoFileName.replaceAll("\\.xml", "\\.exb");
+                        String xp2 = "//Transcription[@Id='" + transcriptID + "']/parent::Communication/descendant::Transcription[Filename='" + exbFileName + "']";
+                        
+                        Element transcriptionElement2 = (Element) (Node) xPath.evaluate(xp2, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+                        if (transcriptionElement2!=null){
+                            String nsLink2 = transcriptionElement2.getElementsByTagName("NSLink").item(0).getTextContent();
+                            File resolvedPath2 = corpusFolder.toPath().resolve(nsLink2).toFile();
+                            String xmlString = IOHelper.readUTF8(resolvedPath2);                    
+                            return new EXBTranscript(xmlString);
+                        }
+                        
+                        // Attempt 2 has failed
+                        // Attempt 3: let's calculate
+                        TEIConverter teiConverter = new TEIConverter();
+                        File resolvedPath3 = corpusFolder.toPath().resolve(nsLink).toFile();
+                        BasicTranscription exb = teiConverter.readISOTEIFromFile(resolvedPath3.getAbsolutePath());
+                        return new EXBTranscript(exb.toXML());
                     }
                     
                     String xmlString = IOHelper.readUTF8(resolvedPath);                    
@@ -830,6 +853,8 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             TokenList seTokenList = new DefaultTokenList("transcription");
             org.jdom.Element seElement = new org.jdom.Element("speech-event");
             seElement.setAttribute("id", speechEventID);
+            seElement.setAttribute("audio-files", Integer.toString(backend.getAudios4SpeechEvent(speechEventID).size()));
+            seElement.setAttribute("video-files", Integer.toString(backend.getVideos4SpeechEvent(speechEventID).size()));
             outDocument.getRootElement().addContent(seElement);
             IDList transcriptIDs = backend.getTranscripts4SpeechEvent(speechEventID);
             for (String transcriptID : transcriptIDs){

@@ -34,6 +34,13 @@
             <xsl:attribute name="class">tab-pane fade<xsl:if test="not(preceding-sibling::tei:spanGrp[@n='episodes'])"> show active</xsl:if></xsl:attribute>
             <xsl:attribute name="id" select="concat('TAB_', replace(@Id, '\.', '_'))"/>
             <table class="table table-striped table-sm episodes-table">
+                <tr>
+                    <th></th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Description</th>
+                    <th>Speakers</th>
+                </tr>
                 <xsl:apply-templates select="tei:span"/>
             </table>
         </div>
@@ -46,9 +53,23 @@
            >2017_09_E_TR-23_NA-01+NA-01-ASS+NFS-01_PAT-22_ErS_R</span>           
         -->
         <xsl:variable name="FROM" select="@from"/>
-        <xsl:variable name="FROM_TIME" select="id($FROM)/@interval"/>
+        <xsl:variable name="FROM_TIME" select="id($FROM)/@interval" as="xs:double"/>
         <xsl:variable name="TO" select="@to"/>
-        <xsl:variable name="TO_TIME" select="id($TO)/@interval"/>
+        <xsl:variable name="TO_TIME" select="id($TO)/@interval" as="xs:double"/>
+        <xsl:if test="preceding-sibling::tei:span">
+            <xsl:variable name="PREVIOUS_TO" select="preceding-sibling::tei:span[1]/@to"/>
+            <xsl:variable name="PREVIOUS_TO_TIME" select="id($PREVIOUS_TO)/@interval" as="xs:double"/>
+            <xsl:if test="$PREVIOUS_TO_TIME &lt; $FROM_TIME">
+                <tr>
+                    <td class="episode-gap" colspan="5">
+                        <xsl:text>[</xsl:text>
+                        <xsl:value-of select="exmaralda:formatTime($FROM_TIME - $PREVIOUS_TO_TIME)"/>
+                        <xsl:text>]</xsl:text>
+                    </td>
+                </tr>
+            </xsl:if>
+            
+        </xsl:if>
         <tr>
             <td class="episode-actions">
                 <xsl:variable name="TRANSCRIPT_ID" select="$ROOT/descendant::tei:idno[1]"/>
@@ -84,21 +105,12 @@
         <xsl:variable name="minutes" select="floor(($total mod 3600) div 60)"/>
         <xsl:variable name="seconds" select="$total mod 60"/>
         
-        <xsl:choose>
-            <xsl:when test="$hours &gt; 0">
-                <xsl:value-of select="concat(
-                    format-number($hours,'00'), ':',
-                    format-number($minutes,'00'), ':',
-                    format-number($seconds,'00.00')
-                    )"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="concat(
-                    format-number($minutes,'00'), ':',
-                    format-number($seconds,'00.00')
-                    )"/>                
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="concat(
+            format-number($hours,'00'), ':',
+            format-number($minutes,'00'), ':',
+            format-number($seconds,'00.00')
+            )"/>
+        
     </xsl:function>
     
     

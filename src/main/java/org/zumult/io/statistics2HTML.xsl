@@ -6,63 +6,87 @@
     exclude-result-prefixes="xs math"
     version="3.0">
     <xsl:template match="/">
-        <table class="table table-striped" style="width:auto">
-            <tr>
-                <td>Total number of speech events</td>
-                <td><xsl:value-of select="/*/@speech-events"/></td>
-            </tr>
-            <tr>
-                <xsl:variable name="DUR_IN_SEC" select="sum(//transcript/@duration)"/>
-                <td>Total duration of recordings</td>
-                <td>
-                    <xsl:value-of select="linguisticbits:TIME-FORMATTER($DUR_IN_SEC)"/>                    
-                </td>
-            </tr>
-            <tr>
-                <td>Total number of transcripts</td>
-                <td><xsl:value-of select="format-number(count(//transcript), '###,###')"/></td>
-            </tr>
-            <tr>
-                <td>Total number of speakers</td>
-                <td><xsl:value-of select="/*/@speakers"/></td>
-            </tr>
-            <tr>
-                <td>Total transcribed tokens</td>
-                <td><xsl:value-of select="format-number(sum(//transcript/@tokens), '###,###')"/></td>
-            </tr>
-            <tr>
-                <td>Total transcribed types</td>
-                <td><xsl:value-of select="format-number(/*/@types, '###,###')"/></td>
-            </tr>            
-        </table>
+        <div class="row">
+            <div class="col-4">
+                <table class="table table-striped" style="width:auto">
+                    <tr>
+                        <td>Total number of speech events</td>
+                        <td class="text-right"><xsl:value-of select="/*/@speech-events"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total number of audio files</td>
+                        <td class="text-right"><xsl:value-of select="sum(//speech-event/@audio-files)"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total number of video files</td>
+                        <td class="text-right"><xsl:value-of select="sum(//speech-event/@video-files)"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total number of transcripts</td>
+                        <td class="text-right"><xsl:value-of select="format-number(count(//transcript), '###,###')"/></td>
+                    </tr>
+                    <tr>
+                        <xsl:variable name="DUR_IN_SEC" select="sum(//transcript/@duration)"/>
+                        <td>Total transcribed time</td>
+                        <td class="text-right">
+                            <xsl:value-of select="linguisticbits:TIME-FORMATTER($DUR_IN_SEC)"/>                    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total transcribed tokens</td>
+                        <td class="text-right"><xsl:value-of select="format-number(sum(//transcript/@tokens), '###,###')"/></td>
+                    </tr>
+                    <tr>
+                        <td>Total transcribed types</td>
+                        <td class="text-right"><xsl:value-of select="format-number(/*/@types, '###,###')"/></td>
+                    </tr>            
+                    <tr>
+                        <td>Total number of speakers</td>
+                        <td class="text-right"><xsl:value-of select="/*/@speakers"/></td>
+                    </tr>
+                </table>
+            </div>
         
-        <hr/>
-        
-        <table class="table table-striped table-sm" style="width: auto;">
-            <thead>
-                <th>Speech event</th>
-                <th>#Transcripts</th>
-                <th>#Tokens</th>
-                <th>Duration</th>
-            </thead>
-            <tbody>
-                <xsl:apply-templates select="//speech-event">
-                    <xsl:sort select="@id"/>
-                </xsl:apply-templates>
-            </tbody>
-        </table>
+            <div class="col-8">
+                <table class="table table-striped table-sm" style="width: auto;">
+                    <thead>
+                        <th>Speech event</th>
+                        <th>#Audios</th>
+                        <th>#Videos</th>
+                        <th>#Transcripts</th>
+                        <th>#Tokens</th>
+                        <th>#Types</th>
+                        <th>Duration</th>
+                    </thead>
+                    <tbody>
+                        <xsl:apply-templates select="//speech-event">
+                            <xsl:sort select="@id"/>
+                        </xsl:apply-templates>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </xsl:template>
     
     <xsl:template match="speech-event">
         <tr>
-            <td class="text-right" style="vertical-align:top">
+            <td class="text-left" style="vertical-align:top">
                 <xsl:value-of select="@id"/>
             </td>
-            <td>
+            <td class="text-right">
+                <xsl:value-of select="@audio-files"/>
+            </td>
+            <td class="text-right">
+                <xsl:value-of select="@video-files"/>
+            </td>
+            <td class="text-right">
                 <xsl:value-of select="count(transcript)"/>
             </td>
             <td class="text-right" style="vertical-align:top">
                 <xsl:value-of select="format-number(sum(transcript/@tokens), '###,###')"/>
+            </td>
+            <td class="text-right" style="vertical-align:top">
+                <xsl:value-of select="format-number(sum(transcript/@types), '###,###')"/>
             </td>
             <td class="text-right" style="vertical-align:top">
                 <xsl:variable name="DUR_IN_SEC" select="sum(transcript/@duration)"/>

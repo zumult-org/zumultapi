@@ -95,8 +95,18 @@
         <xsl:variable name="TIER_COPY">
             <xsl:copy-of select="."/>
         </xsl:variable>
+        <xsl:variable name="SPEAKER_ID" select="@speaker"/>
+        <xsl:variable name="CATEGORY" select="@category"/>
         <tr>
-            <xsl:if test="$CONTROLS='TRUE'">
+            <!--             
+             <ud-tier-information>
+                <ud-information attribute-name="exmaralda:hidden">true</ud-information>
+             </ud-tier-information>
+            -->
+            <xsl:if test="descendant::ud-information[@attribute-name='exmaralda:hidden']='true'">
+                <xsl:attribute name="style">display:none;</xsl:attribute>
+            </xsl:if>
+                <xsl:if test="$CONTROLS='TRUE'">
                 <xsl:call-template name="INSERT_CONTROLS">
                     <xsl:with-param name="TIER" select="."/>
                 </xsl:call-template>
@@ -105,7 +115,11 @@
                 <xsl:attribute name="class">
                     <xsl:value-of select="@type"/><xsl:text> label</xsl:text>
                 </xsl:attribute>
-                <xsl:value-of select="@display-name"/>
+                <!-- <xsl:value-of select="@display-name"/> -->
+                <xsl:if test="@type='t'">
+                    <xsl:value-of select="//speaker[@id=$SPEAKER_ID]/abbreviation"/>
+                </xsl:if>
+                <span style="font-weight:normal;"> [<xsl:value-of select="$CATEGORY"/>]</span>
             </td>
             <xsl:apply-templates select="event"/>
         </tr>
@@ -216,6 +230,7 @@
         <xsl:variable name="TYPE_WEIGHT" as="xs:integer">
             <xsl:choose>
                 <xsl:when test="$TIER/@type='t'">2</xsl:when>
+                <xsl:when test="$TIER/@type='a' and $TIER/@category='akz'">3</xsl:when>
                 <xsl:when test="$TIER/@type='d'">4</xsl:when>
                 <xsl:when test="$TIER/@type='a'">6</xsl:when>
                 <xsl:otherwise>8</xsl:otherwise>

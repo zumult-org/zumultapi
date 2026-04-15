@@ -407,6 +407,10 @@ public class DataTableServlet extends HttpServlet {
             String draw = request.getParameter("draw");
             String start = request.getParameter("start");
             String length = request.getParameter("length");
+            String customActionsID = request.getParameter("customActionsID");
+            if (customActionsID==null){
+                customActionsID = "";
+            }
             
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
@@ -471,6 +475,7 @@ public class DataTableServlet extends HttpServlet {
                 {"START", start},
                 {"LENGTH", length},
                 {"SEARCH_TERM", searchTerm},
+                {"CUSTOM_ACTIONS_ID", customActionsID}
             };
             
             String json = new IOHelper().applyInternalStylesheetToString("/resources/communications2DataTableJSON.xsl", thisCorpusXML, parameters);
