@@ -99,7 +99,7 @@
         <dependency>
             <groupId>org.textexploration.mtas</groupId>
             <artifactId>mtas</artifactId>
-            <version>8.9.0.0</version>
+            <version>9.10.0.0-zumult-fork-SNAPSHOT</version>
             <!-- This is an experiment for #184 -->
             <exclusions>
                 <exclusion>
