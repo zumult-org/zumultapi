@@ -18,10 +18,17 @@
           <id>github-manual</id>
           <url>https://raw.githubusercontent.com/Exmaralda-Org/exmaralda/master/src/build/webjar/</url>
         </repository>  
-      <repository>
+        <repository>
+            <id>github-mtas</id>
+            <url>https://maven.pkg.github.com/EleFri/mtas</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>   
+        <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/zumult-org/zumultapi</url>
-        </repository>                  
+        </repository>         
     </repositories>    
     
     <!-- ***************************** -->   
