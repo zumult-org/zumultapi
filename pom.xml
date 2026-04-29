@@ -101,7 +101,7 @@
             <artifactId>mtas</artifactId>
             <!-- last change: 28-04-2026 A fork is needed 
             until the changes required for handling negative numbers in numPosition 
-            are merged into the original version of the MTA project.-->
+            are merged into the original version of the MTAS project.-->
             <!-- <version>8.9.0.0</version> -->
             <version>9.10.0.0-zumult-fork-SNAPSHOT</version>
            
