@@ -1393,7 +1393,7 @@ public class ZumultDataServlet extends HttpServlet {
             String visIncidentNotTypes = request.getParameter("visIncidentNotTypes");
             if (visIncidentNotTypes==null){
                 // this is MANV specific, should not stay here
-                visIncidentNotTypes="gaz;tri-sit;post;act;tri-kat";
+                visIncidentNotTypes="gaz;tri-sit;post;act;tri-kat;man";                
             }
             
             
@@ -1406,6 +1406,10 @@ public class ZumultDataServlet extends HttpServlet {
                     .toURI().toString();*/
             String pathToWordList = pathToWordList(wordlistID);
             
+            String speakerSelection = request.getParameter("speakerSelection");
+            if (speakerSelection==null){
+                speakerSelection="";
+            }
             
             
             String transcriptXML = transcript.toXML();
@@ -1429,7 +1433,9 @@ public class ZumultDataServlet extends HttpServlet {
 
                 {"DROPDOWN", dropdown},
                 
-                {"VIS_INCIDENT_NOT_TYPES", visIncidentNotTypes}
+                {"VIS_INCIDENT_NOT_TYPES", visIncidentNotTypes},
+                
+                {"SPEAKER_SELECTION", speakerSelection}
             };
             
             

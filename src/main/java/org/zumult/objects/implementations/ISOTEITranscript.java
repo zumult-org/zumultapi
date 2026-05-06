@@ -8,8 +8,10 @@ package org.zumult.objects.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
@@ -24,6 +26,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
+import org.zumult.objects.IDList;
 import org.zumult.objects.TokenFilter;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
@@ -106,99 +109,109 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-        
+    }
+    
+    private Element[] mapToWhenIDs(String id1, String id2) throws XPathExpressionException{
+        // get the element with the first ID
+        Element element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+        if (element1==null){                
+            //System.out.println("Do hammers");
+            id1 = getAlternativeID(id1);
+            element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
+        }
+        Element when1 = null;
+
+        //System.out.println("=============> " + element1.getLocalName());
+        switch (element1.getLocalName()){
+            case "when" :
+                when1 = element1;
+                break;
+            case "annotationBlock" : 
+            case "pause" :
+            case "incident" :
+                String startID = element1.getAttribute("start"); //.substring(1);
+                when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", 
+                        getDocument().getDocumentElement(), XPathConstants.NODE);                    
+                //System.out.println("ID " + id1 + " found in " + element1.getAttribute("xml:id"));                    
+                //System.out.println("The start ID is " + startID);
+                break;
+            case "w" :
+                // try to find the nearest anchor *before* that w
+                // then get its id and return the when element with that id
+                Element tryAnchor = (Element)xPath.evaluate("preceding::tei:anchor[@synch][1]", element1, XPathConstants.NODE);
+                if (tryAnchor!=null) {
+                    String anchorID = tryAnchor.getAttribute("synch");
+                    when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", 
+                            getDocument().getDocumentElement(), XPathConstants.NODE);
+                    break;
+                }
+                // nothing found, so get the start of the annotation block
+                Element annotationBlock = (Element)xPath.evaluate("ancestor::tei:annotationBlock[1]", element1, XPathConstants.NODE);
+                String abStart = annotationBlock.getAttribute("start");
+                when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abStart + "']", 
+                        getDocument().getDocumentElement(), XPathConstants.NODE);
+
+        }
+        //Element element2 = getDocument().getElementById(id2);
+        Element element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+        if (element2==null){                
+            //System.out.println("Do hammers");
+            id2 = getAlternativeID(id2);
+            element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
+        }
+
+        Element when2 = null;
+        switch (element2.getLocalName()){
+            case "when" :
+                when2 = element2;
+                break;
+            case "annotationBlock" : 
+            case "pause" :
+            case "incident" :
+                String endID = element2.getAttribute("end"); //.substring(1);
+                when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + endID + "']", 
+                        getDocument().getDocumentElement(), XPathConstants.NODE);
+                //System.out.println("ID " + id2 + " found in " + element2.getAttribute("xml:id"));                    
+                //System.out.println("The end ID is " + endID);
+                break;
+            case "w" :
+                // try to find the nearest anchor *after* that w
+                // then get its id and return the when element with that id
+                Element tryAnchor = (Element)xPath.evaluate("following::tei:anchor[1]", element2, XPathConstants.NODE);
+                if (tryAnchor!=null) {
+                    String anchorID = tryAnchor.getAttribute("synch");
+                    when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", 
+                            getDocument().getDocumentElement(), XPathConstants.NODE);
+                    break;
+                }
+                // nothing found, so get the start of the annotation block
+                Element annotationBlock = (Element)xPath.evaluate("ancestor::tei:annotationBlock", element1, XPathConstants.NODE);
+                String abEnd = annotationBlock.getAttribute("end");
+                when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abEnd + "']", 
+                        getDocument().getDocumentElement(), XPathConstants.NODE);
+        }
+        Element[] result = {
+            when1, when2
+        };
+        return result;
     }
 
     @Override
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock) {
-        System.out.println("Trying " + id1 + " / " + id2);
         try {
-            Element element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
-            if (element1==null){                
-                System.out.println("Do hammers");
-                id1 = getAlternativeID(id1);
-                element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
-            }
-            Element when1 = null;
-            
-            
-            
-            switch (element1.getLocalName()){
-                case "when" :
-                    when1 = element1;
-                    break;
-                case "annotationBlock" : case "pause" :
-                    String startID = element1.getAttribute("start"); //.substring(1);
-                    when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", 
-                            getDocument().getDocumentElement(), XPathConstants.NODE);                    
-                    //System.out.println("YES, it is clearly the KÄS " + element1.getAttribute("xml:id"));                    
-                    break;
-                case "w" :
-                    // try to find the nearest anchor *before* that w
-                    // then get its id and return the when element with that id
-                    Element tryAnchor = (Element)xPath.evaluate("preceding::tei:anchor[1]", element1, XPathConstants.NODE);
-                    if (tryAnchor!=null) {
-                        String anchorID = tryAnchor.getAttribute("synch");
-                        when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", 
-                                getDocument().getDocumentElement(), XPathConstants.NODE);
-                        break;
-                    }
-                    // nothing found, so get the start of the annotation block
-                    Element annotationBlock = (Element)xPath.evaluate("ancestor::tei:annotationBlock", element1, XPathConstants.NODE);
-                    String abStart = annotationBlock.getAttribute("start");
-                    when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abStart + "']", 
-                            getDocument().getDocumentElement(), XPathConstants.NODE);
-                    
-            }
-            //Element element2 = getDocument().getElementById(id2);
-            Element element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
-            if (element2==null){                
-                System.out.println("Do hammers");
-                id2 = getAlternativeID(id2);
-                element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
-            }
-            
-            Element when2 = null;
-            switch (element2.getLocalName()){
-                case "when" :
-                    when2 = element2;
-                    break;
-                case "annotationBlock" : case "pause" :
-                    String endID = element2.getAttribute("start"); //.substring(1);
-                    when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + endID + "']", 
-                            getDocument().getDocumentElement(), XPathConstants.NODE);
-                    break;
-                case "w" :
-                    // try to find the nearest anchor *after* that w
-                    // then get its id and return the when element with that id
-                    Element tryAnchor = (Element)xPath.evaluate("following::tei:anchor[1]", element2, XPathConstants.NODE);
-                    if (tryAnchor!=null) {
-                        String anchorID = tryAnchor.getAttribute("synch");
-                        when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", 
-                                getDocument().getDocumentElement(), XPathConstants.NODE);
-                        break;
-                    }
-                    // nothing found, so get the start of the annotation block
-                    Element annotationBlock = (Element)xPath.evaluate("ancestor::tei:annotationBlock", element1, XPathConstants.NODE);
-                    String abEnd = annotationBlock.getAttribute("end");
-                    when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abEnd + "']", 
-                            getDocument().getDocumentElement(), XPathConstants.NODE);
-                    
-            }
-            
+            Element[] whens = mapToWhenIDs(id1, id2);
+            Element when1 = whens[0];
+            Element when2 = whens[1];
+
             // now we should be sure that both when1 and when2 really are <when> elements
             Document copyDocument = IOHelper.DocumentFromText(toXML());
             
             // throw out annotationBlocks and other things on the same level
-            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*", copyDocument.getDocumentElement(), XPathConstants.NODESET);
-            /*String minTimeString = when1.getAttribute("interval");
-            if (minTimeString==null || minTimeString.length()==0){
-                minTimeString = "0.0";
-            }
-            double minTime = Double.parseDouble(minTimeString);*/
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*[@start and @end]", copyDocument.getDocumentElement(), XPathConstants.NODESET);
             double minTime = getInterval(when1);
-            //double maxTime = Double.parseDouble(when2.getAttribute("interval"));
             double maxTime = getInterval(when2);
+            System.out.println("We have START=" + when1.getAttribute("xml:id") + " and END=" + when2.getAttribute("xml:id"));
+            System.out.println("Start time " + minTime + " / endTime " + maxTime);
             
             for (int i=0; i<nodes.getLength(); i++){                
                 Element node = (Element) nodes.item(i);
@@ -206,7 +219,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 String endID = node.getAttribute("end"); // .substring(1);                  
                 double startTime = getTime(startID);
                 double endTime = getTime(endID);
-                
+                // ......|------|........./--------/
                 if((startTime<minTime && endTime<minTime) 
                         || (startTime>maxTime && endTime>maxTime)){
                     //System.out.println("Throwing out " + node.getAttribute("xml:id"));
@@ -224,7 +237,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 }
             }
             
-            //System.out.println("We have START=" + when1.getAttribute("xml:id") + " and END=" + when2.getAttribute("xml:id"));
+            System.out.println("Now we have START=" + when1.getAttribute("xml:id") + " and END=" + when2.getAttribute("xml:id"));
+            //System.out.println(IOHelper.ElementToString(copyDocument.getDocumentElement()));
             
             // 06-01-2021, for issue #43
             String adjustedStart = ((Element)xPath.evaluate("//*[@start][1]", copyDocument.getDocumentElement(), XPathConstants.NODE)).getAttribute("start");            
@@ -293,6 +307,95 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         }
         return getPart(idOfFirst, idOfLast, expandToFullAnnotationBlock);
     }
+
+    @Override
+    public Transcript filterSpeakers(IDList speakerIDs) {
+        Set<String> speakerSet = new HashSet<>();
+        // speakerIDs are corpus IDs, but we need @who
+        for (String speakerID : speakerIDs){
+            String n = getSpeakerInitialsBySpeakerID(speakerID);
+            speakerSet.add(n);
+        }
+        try {
+            Document copyDocument = IOHelper.DocumentFromText(toXML());            
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*", copyDocument.getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){                
+                Element node = (Element) nodes.item(i);
+                String who = node.getAttribute("who");
+                if (who!=null && (!speakerSet.contains(who))){
+                    node.getParentNode().removeChild(node);
+                }
+            }
+            if(metadata!=null){
+                return createNewInstance(copyDocument, metadata.getDocument());
+            }else {
+                return createNewInstance(copyDocument);
+            }            
+        } catch (TransformerException | IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public IDList getIncidentTypes() {
+        return getTypes("//tei:incident[@type]", "incident-types");
+    }
+
+    @Override
+    public IDList getSegTypes() {
+        return getTypes("//tei:seg[@type]", "seg-types");
+    }
+
+    @Override
+    public IDList getAnnotationTypes() {
+        return getTypes("//tei:spanGrp[@type]", "annotation-types");
+    }
+    
+    
+    private IDList getTypes(String xpath, String name){
+        try {
+            Set<String> types = new HashSet<>();
+            NodeList nodes = (NodeList)xPath.evaluate(xpath, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){
+                Element node = (Element) nodes.item(i);               
+                types.add(node.getAttribute("type"));
+            }
+            IDList result = new IDList(name);
+            result.addAll(types);
+            return result;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;        
+    }
+
+    @Override
+    public IDList getSpeakers() {
+        try {
+            Set<String> types = new HashSet<>();
+            IDList result = new IDList("speakers");
+            NodeList nodes = (NodeList)xPath.evaluate("//*[@who]", getDocument().getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){
+                Element node = (Element) nodes.item(i);               
+                String who = node.getAttribute("who");
+                if (!types.contains(who)){
+                    types.add(who);
+                    String id = getSpeakerIDBySpeakerInitials(who);
+                    if (id!=null){
+                        result.add(id);
+                    }
+                }
+            }
+            return result;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;        
+    }
+    
+    
+    
 
     @Override
     public double getStartTime() {
@@ -673,7 +776,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         try {
             Element ab = (Element)xPath.evaluate("//*[@xml:id='" + annotationBlockID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
             if (ab==null){                
-                System.out.println("Do hammers");
+                //System.out.println("Do hammers");
                 annotationBlockID = getAlternativeID(annotationBlockID);                
             }
 
@@ -707,7 +810,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     @Override
     public String getFirstAnnotationBlockIDForTime(double time) {
         try {
-            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/tei:annotationBlock", getDocument().getDocumentElement(), XPathConstants.NODESET);
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*[@start]", getDocument().getDocumentElement(), XPathConstants.NODESET);
             if ((nodes.getLength()==0)){
                 return null;
             }
@@ -736,6 +839,41 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             return null;
         }
     }
+
+    @Override
+    public String getLastAnnotationBlockIDForTime(double time) {
+        try {
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*[@end]", getDocument().getDocumentElement(), XPathConstants.NODESET);
+            if ((nodes.getLength()==0)){
+                return null;
+            }
+            // boundary condition : if the last annotation block already ends before the time, return its id
+            Element node = (Element) nodes.item(nodes.getLength()-1);
+            String endID = node.getAttribute("end"); //.substring(1);                
+            double endTime = getTime(endID);
+            if (endTime<time){
+                //System.out.println("The boundary!");
+                return node.getAttribute("xml:id");
+            }
+            for (int i=nodes.getLength()-1; i>=0; i--){                
+                node = (Element) nodes.item(i);
+                endID = node.getAttribute("end"); //.substring(1);                
+                endTime = getTime(endID);
+                String startID = node.getAttribute("start"); //.substring(1);                
+                double startTime = getTime(startID);
+                if ((startTime<=time) && (time<=endTime)){
+                    return node.getAttribute("xml:id");
+                }
+            }
+            // nothing found, return the first node  
+            return node.getAttribute("xml:id");
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    
 
     @Override
     public void removeAnnotations() {
@@ -778,10 +916,10 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 } else {
                     alternativeID = "c" + Integer.toString(number+1);                            
                 }
-                System.out.println("Alternative " + alternativeID + " for " + id);
+                //System.out.println("Alternative " + alternativeID + " for " + id);
                 return alternativeID;
             } catch (NumberFormatException nfe) {
-                System.out.println("Couldn't turn " + numberPart + " into a number");
+                //System.out.println("Couldn't turn " + numberPart + " into a number");
                 return id;
             }
         }
@@ -797,8 +935,27 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
+    }
+    
+    @Override
+    public String getLanguage(String id){
+        try {
+            Element element = ((Element)xPath.evaluate("//*[@xml:id='" + id + "']/ancestor-or-self::*[@xml:lang][1]", getDocument().getDocumentElement(), XPathConstants.NODE));
+            if (element==null){
+                return "XYZ";                
+            }
+            String lang = element.getAttribute("xml:lang");
+            if (lang==null){
+                return getLanguage();
+            }
+            return lang;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+            return "ABC";
+        }
         
     }
+    
     
     @Override
     public void setTimelineToZero() {

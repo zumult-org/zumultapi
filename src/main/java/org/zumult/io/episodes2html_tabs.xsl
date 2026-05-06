@@ -76,9 +76,20 @@
                 <a href="./zuViel.jsp?transcriptID={$TRANSCRIPT_ID}&amp;startTimeID={$FROM}&amp;endTimeID={$TO}&amp;speakerSelection={@select}" 
                     target="_blank"
                     title="Open episode in ZuViel"
+                    class="mx-2"
                 >
                     <i class="fa-sharp fa-regular fa-file-lines"></i>
                 </a>
+                <!-- *************************** -->
+                <!-- *************************** -->
+                <a href="./zuPass.jsp?transcriptID={$TRANSCRIPT_ID}&amp;startTime={$FROM_TIME}&amp;endTime={$TO_TIME}&amp;speakerSelection={@select}" 
+                    target="_blank"
+                    title="Open episode in ZuPass"
+                    class="mx-2"
+                    >
+                    <i class="fa-regular fa-bars-staggered" aria-hidden="true"></i>
+                </a>
+                
             </td>
             <td class="time px-2">
                 <xsl:value-of select="exmaralda:formatTime($FROM_TIME)"/>

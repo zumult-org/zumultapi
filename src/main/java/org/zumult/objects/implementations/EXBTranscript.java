@@ -119,6 +119,7 @@ public class EXBTranscript extends AbstractXMLObject implements Transcript {
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock) {
         BasicTranscription bt = getBasicTranscription();
         BasicTranscription partOfTranscription = bt.getPartOfTranscription(bt.getBody().getAllTierIDs(), id1, id2);
+        partOfTranscription.getBody().removeEmptyTiers();
         return new EXBTranscript(partOfTranscription.toXML());
     }
 
@@ -276,6 +277,41 @@ public class EXBTranscript extends AbstractXMLObject implements Transcript {
 
     @Override
     public IDList getEpisodeNames() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getLanguage(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Transcript filterSpeakers(IDList speakerIDs) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public IDList getIncidentTypes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public IDList getSegTypes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public IDList getAnnotationTypes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public IDList getSpeakers() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getLastAnnotationBlockIDForTime(double time) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

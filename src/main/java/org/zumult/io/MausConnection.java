@@ -50,7 +50,7 @@ public class MausConnection {
             audioProcessor.stereoToMono16kHz(audioFile, audioFile16kHzMono);
             
             HashMap<String, Object> otherParameters = new HashMap<>();
-            otherParameters.put("LANGUAGE", MausConnection.mapLanguageCode2ToMAUS(transcript.getLanguage()));
+            otherParameters.put("LANGUAGE", MausConnection.mapLanguageCode2ToMAUS(transcript.getLanguage(annotationBlockID)));
             
             MAUSConnector mausConnector = new MAUSConnector();
             //String praatTextString = mausConnector.callMAUS(textFile, audioFile, otherParameters);

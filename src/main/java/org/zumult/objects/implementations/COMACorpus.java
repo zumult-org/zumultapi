@@ -119,6 +119,7 @@ public class COMACorpus extends AbstractXMLObject implements Corpus {
         result.addAll(getSpeakerMetadataKeys());
         // added for #148
         result.addAll(getTranscriptMetadataKeys());
+        result.addAll(getMediaMetadataKeys());
         return result;
     }
 

@@ -40,6 +40,8 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     public Transcript getPart(double time1, double time2, boolean expandToFullAnnotationBlock);
     public Transcript getPart(int startIndex, int endIndex);
     
+    // issue #272
+    public Transcript filterSpeakers(IDList speakerIDs);
     
     public TokenList getTokenList(String type);
     public TokenList getTokenList(String type, TokenFilter filter);
@@ -51,18 +53,20 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     public Document getXmlDocument();
     public NodeList getAnchorsByAttribute(String attribute);
     public NodeList getAnnotationBlocksBySpeaker(String speaker);
-    public String getSpeakerInitialsBySpeakerID(String speakerID);
     
     // issue #3
     public String getSpeakerIDBySpeakerInitials(String speakerInitials);   
+    public String getSpeakerInitialsBySpeakerID(String speakerID);
     
     public String getAnnotationBlockID(String annotationBlockID, int distance);
     public String getFirstAnnotationBlockIDForTime(double time);
+    public String getLastAnnotationBlockIDForTime(double time);
 
     public void removeAnnotations();
     
     // issue #69
     public String getLanguage();
+    public String getLanguage(String id);
     
     public void setTimelineToZero();
         
@@ -73,4 +77,9 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     public Map<String, List<Episode>> getEpisodes();
     public List<Episode> getEpisodesByName(String name);
     public IDList getEpisodeNames();
+    
+    public IDList getIncidentTypes();
+    public IDList getSegTypes();
+    public IDList getAnnotationTypes();
+    public IDList getSpeakers();
 }

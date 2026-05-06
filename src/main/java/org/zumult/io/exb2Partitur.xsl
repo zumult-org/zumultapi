@@ -46,16 +46,18 @@
     
     <xsl:template match="/">
             <div>
-                <div style="width:100%; overflow:auto;" >
+                <div style="width:100%;" >
                     <table class="w-100 d-block d-md-table">
-                        <tr>
-                            <td class="empty"> </td>
-                            <xsl:apply-templates select="//tli"/>
-                        </tr>
-                        <tr>
-                            <td class="empty"> </td>
-                            <xsl:apply-templates select="//tli" mode="absolute-times"/>
-                        </tr>
+                        <theader>
+                            <tr>
+                                <th class="empty tli"> </th>
+                                <xsl:apply-templates select="//tli"/>
+                            </tr>
+                            <tr>
+                                <th class="empty tli absolute"> </th>
+                                <xsl:apply-templates select="//tli" mode="absolute-times"/>
+                            </tr>
+                        </theader>
                         <xsl:apply-templates select="//tier">
                             <xsl:sort select="exmaralda:tierSorter(.)" data-type="number" order="ascending"/>
                         </xsl:apply-templates>
@@ -66,7 +68,7 @@
     </xsl:template>
     
     <xsl:template match="tli">
-        <td class="tli">
+        <th class="tli">
             <xsl:attribute name="data-start">
                 <xsl:value-of select="@time"/>
             </xsl:attribute>
@@ -74,11 +76,11 @@
                 <xsl:value-of select="following-sibling::tli[1]/@time"/>
             </xsl:attribute>
             <xsl:value-of select="position()"/>
-        </td>
+        </th>
     </xsl:template>
     
     <xsl:template match="tli" mode="absolute-times">
-        <td class="tli absolute">
+        <th class="tli absolute">
             <xsl:attribute name="data-start">
                 <xsl:value-of select="@time"/>
             </xsl:attribute>
@@ -88,7 +90,7 @@
             <xsl:variable name="FORMATTED-TIME" select="exmaralda:formatTime(@time)"/>
             <xsl:attribute name="title" select="$FORMATTED-TIME"/>
             [<xsl:value-of select="$FORMATTED-TIME"/>]        
-        </td>
+        </th>
     </xsl:template>
 
     <xsl:template match="tier">

@@ -5,7 +5,6 @@
     exclude-result-prefixes="xs"
     version="2.0">
     
-    <xsl:output method="html"/>
     <!-- start and end of the transcript ; empty for whole transcript -->
     <xsl:param name="START_ANNOTATION_BLOCK_ID"/>
     <xsl:param name="END_ANNOTATION_BLOCK_ID"/>
@@ -21,10 +20,10 @@
         <div class="annotations-div" style="overflow:auto;">
             <xsl:choose>                
                 <xsl:when test="$START_ANNOTATION_BLOCK_ID and $END_ANNOTATION_BLOCK_ID">
-                    <xsl:apply-templates select="//tei:annotationBlock[descendant::tei:w and not(following-sibling::tei:*[@xml:id=$START_ANNOTATION_BLOCK_ID]) and not(preceding-sibling::tei:*[@xml:id=$END_ANNOTATION_BLOCK_ID])]"/>    
+                    <xsl:apply-templates select="//tei:annotationBlock[not(following-sibling::tei:*[@xml:id=$START_ANNOTATION_BLOCK_ID]) and not(preceding-sibling::tei:*[@xml:id=$END_ANNOTATION_BLOCK_ID])]"/>    
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:apply-templates select="//tei:annotationBlock[descendant::tei:w]"/>
+                    <xsl:apply-templates select="//tei:annotationBlock"/>
                 </xsl:otherwise>
             </xsl:choose>
         </div>
@@ -32,39 +31,36 @@
     
     
     <xsl:template match="tei:annotationBlock">
-        <xsl:variable name="start" select="id(@start)/@interval"/>
-        <xsl:variable name="end" select="id(@end)/@interval"/>
-        <table class="annotations-outer">
+        <xsl:variable name="WHO" select="@who"/>
+        <xsl:variable name="START_ID" select="@start"/>
+        <xsl:variable name="START_TIME" select="//tei:when[@xml:id=$START_ID]/@interval"/>
+        <xsl:variable name="END_ID" select="@end"/>
+        <xsl:variable name="END_TIME" select="//tei:when[@xml:id=$END_ID]/@interval"/>
+        <table>
             <tr>
-                <td class="numbering">
-                    <xsl:attribute name="data-start" select="$start"/>
-                    <xsl:attribute name="data-end" select="$end"/>
-                    <div>
-                        <xsl:value-of select="count(preceding-sibling::tei:annotationBlock) + 1"/> <br/>
-                    </div>
-                    <div>
-                        <xsl:value-of select="id(@who)/@n"/>
-                    </div>
-                    <div>
-                        <span onclick="playFromButton(this)" style="cursor: pointer;" data-start="{$start}">
-                            <i class="fa-solid fa-play"/>
-                        </span>
-                        <span onclick="pauseFromButton(this)"  style="margin-left: 5px; cursor: pointer;">
-                            <i class="fa-solid fa-pause"/>
-                        </span>
-                    </div>
-                    
-                </td>
+                <td class="numbering" data-start="{$START_TIME}" data-end="{$END_TIME}"><xsl:value-of select="count(preceding-sibling::tei:annotationBlock) + 1"/></td>
+                <!-- <td class="audioplay">
+                    <xsl:variable name="START_ID" select="@start"/>
+                    <xsl:variable name="START_TIME" select="//tei:when[@xml:id=$START_ID]/@interval"/>
+                    <span>
+                        <xsl:attribute name="onclick">playAudioFromAnnotation(<xsl:value-of select="$START_TIME"/>)</xsl:attribute>
+                        <i class="fa-duotone fa-circle-play"></i>            
+                    </span>
+                </td> -->
+                <td class="speaker"><xsl:value-of select="//tei:person[@xml:id=$WHO]/@n"/></td>
                 <td>
-                    <xsl:apply-templates select="descendant::tei:u"/>
+                    <xsl:apply-templates select="descendant::tei:u">
+                        <xsl:with-param name="START_TIME" select="$START_TIME"/>
+                    </xsl:apply-templates>
                 </td>
             </tr>
         </table>
     </xsl:template>
     
     <xsl:template match="tei:u">
+        <xsl:param name="START_TIME"/>
         <table class="annotations">
-            <xsl:if test="ancestor::tei:annotationBlock/descendant::tei:spanGrp[@type='original']">
+            <xsl:if test="descendant::tei:spanGrp[@type='original']">
                 <tr>
                     <th>Original</th>
                     <td class="original">
@@ -73,12 +69,12 @@
                     </td>
                 </tr>
             </xsl:if>
-            <xsl:if test="ancestor::tei:annotationBlock/descendant::tei:spanGrp[@type='en']">
+            <xsl:if test="descendant::tei:spanGrp[@type='translation' or @type='en']">
                 <tr>
                     <th>Translation</th>
                     <td class="translation">
                         <xsl:attribute name="colspan" select="count(descendant::tei:w)"/>
-                        <xsl:value-of select="ancestor::tei:annotationBlock/descendant::tei:spanGrp[@type='en']/tei:span/text()"/>
+                        <xsl:value-of select="ancestor::tei:annotationBlock/descendant::tei:spanGrp[@type='translation' or @type='en']/tei:span/text()"/>
                     </td>
                 </tr>
             </xsl:if>
@@ -88,33 +84,33 @@
             </tr>
             <tr>
                 <th>Token</th>
-                <xsl:apply-templates select="descendant::tei:w" mode="TRANS"/>
+                <xsl:apply-templates select="descendant::tei:w" mode="TRANS">
+                    <xsl:with-param name="START_TIME" select="$START_TIME"/>
+                </xsl:apply-templates>                    
             </tr>
-            <xsl:if test="descendant::tei:w[@xml:lang]">
+            <xsl:if test="descendant::tei:w[@xml_lang]">
                 <tr>
                     <th>Language</th>
                     <xsl:apply-templates select="descendant::tei:w" mode="LANG"/>
                 </tr>
             </xsl:if>
-            <tr>
-                <th>Normalisation</th>
-                <xsl:apply-templates select="descendant::tei:w" mode="NORM"/>
-            </tr>
-            <tr>
-                <th>Lemma</th>
-                <xsl:apply-templates select="descendant::tei:w" mode="LEMMA"/>
-            </tr>
-            <tr>
-                <th>POS</th>
-                <xsl:apply-templates select="descendant::tei:w" mode="POS"/>
-            </tr>
-            <xsl:if test="ancestor::tei:annotationBlock/descendant::tei:spanGrp[@type='udpos']">
+            <xsl:if test="descendant::tei:w[@norm]">
                 <tr>
-                    <th>UD-POS</th>
-                    <xsl:apply-templates select="descendant::tei:w" mode="UDPOS"/>
+                    <th>Normalisation</th>
+                    <xsl:apply-templates select="descendant::tei:w" mode="NORM"/>
                 </tr>
             </xsl:if>
-            <xsl:if test="descendant::tei:w[@xml:phon]">
+            <xsl:if test="descendant::tei:w[@lemma]">
+                <tr>
+                    <th>Lemma</th>
+                    <xsl:apply-templates select="descendant::tei:w" mode="LEMMA"/>
+                </tr>
+                <tr>
+                    <th>POS</th>
+                    <xsl:apply-templates select="descendant::tei:w" mode="POS"/>
+                </tr>
+            </xsl:if>
+            <xsl:if test="descendant::tei:w[@phon]">
                 <tr>
                     <th>Phon</th>
                     <xsl:apply-templates select="descendant::tei:w" mode="PHON"/>
@@ -126,15 +122,24 @@
     <!-- <tei:w norm="okay" xml:id="a19_w1" xml:lang="eng" pos="FM" lemma="okay" phon="@U . k ' eI">OKAY</tei:w>  -->
     
     <xsl:template match="tei:w" mode="ID">
+        <xsl:variable name="START_ID" select="preceding::tei:anchor[1]/@synch"/>
+        <xsl:variable name="START_TIME" select="//tei:when[@xml:id=$START_ID]/@interval"/>
+        <xsl:variable name="END_ID" select="following::tei:anchor[1]/@synch"/>
+        <xsl:variable name="END_TIME" select="//tei:when[@xml:id=$END_ID]/@interval"/>
+        
         <td class="id">
             <xsl:attribute name="class">id <xsl:value-of select="@xml:lang"/></xsl:attribute>
+            <xsl:attribute name="data-start" select="$START_TIME"/>
+            <xsl:attribute name="data-end" select="$END_TIME"/>
             <xsl:value-of select="@xml:id"/>
         </td>
     </xsl:template>
     
     <xsl:template match="tei:w" mode="TRANS">
+        <xsl:param name="START_TIME"/>
         <td class="trans">
             <xsl:attribute name="class">trans <xsl:value-of select="@xml:lang"/></xsl:attribute>
+            <xsl:attribute name="data-start" select="$START_TIME"/>
             <xsl:value-of select="text()"/>
         </td>
     </xsl:template>
@@ -158,13 +163,6 @@
         <td class="pos"><xsl:value-of select="@pos"/></td>
     </xsl:template>
     
-    <xsl:template match="tei:w" mode="UDPOS">
-        <xsl:variable name="W_ID" select="@xml:id"/>
-        <td class="udpos">
-            <xsl:value-of select="ancestor::tei:annotationBlock[1]/descendant::tei:spanGrp[@type='udpos'][1]/tei:span[@from=$W_ID][1]/text()"/>
-        </td>
-    </xsl:template>
-    
     <xsl:template match="tei:w" mode="PHON">
         <td class="phon">
             <xsl:text>[</xsl:text>
@@ -173,5 +171,5 @@
         </td>
     </xsl:template>
     
-    
+
 </xsl:stylesheet>

@@ -7,12 +7,15 @@ package org.zumult.backend.implementations;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.exmaralda.partitureditor.jexmaralda.convert.StylesheetFactory;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
@@ -49,9 +52,101 @@ public class TestCOMABackend {
 
     private void doit() {
         try {
+            BackendInterface backendX = BackendInterfaceFactory.newBackendInterface(); 
+            Set<MetadataKey> metadataKeys4Corpus = backendX.getMetadataKeys4Corpus("manv_corpus", ObjectTypesEnum.MEDIA);
+            /*for (MetadataKey m : metadataKeys4Corpus){
+                System.out.println(m.getID());
+            }*/
+            backendX.findMetadataKeyByID("Media_prio-video");
+            System.exit(0);
+            /*
+            http://localhost:8080/zumult/jsp/zuViel.jsp?
+            transcriptID=EXB_manv_2017_e_triage
+            &startTimeID=ts2559
+            &endTimeID=ts2820
+            &speakerSelection=manv_2017_e.NA-01%20manv_2017_e.NFS-01%20manv_2017_e.PAT-07
+             */
+            
+            String transcriptID_MANV = "EXB_manv_2017_e_triage";
+            Transcript transcript_MANV = backendX.getTranscript(transcriptID_MANV);
+            transcript_MANV.getPart("ts2559", "ts2820", true);
+            // <when xml:id="ts2559" interval="3054.6504999999997" since="T_START"/>
+            // <when xml:id="ts2820" interval="3121.6594999999998" since="T_START"/>
+            double timeX1 = transcript_MANV.getTimeForID("ts2559");
+            double timeX2 = transcript_MANV.getTimeForID("ts2820");
+            System.out.println("POINT1: " +timeX1 + " / " + timeX2);
+            // 3054.6504999999997 / 3121.6594999999998
+            String startAnnotationBlockID = transcript_MANV.getFirstAnnotationBlockIDForTime(timeX1);
+            String endAnnotationBlockID = transcript_MANV.getLastAnnotationBlockIDForTime(timeX2);
+            System.out.println("POINT2: " + startAnnotationBlockID + " / " + endAnnotationBlockID);
+            // ab_d1e20324 / ab_d1e21304
+            transcript_MANV.getPart(startAnnotationBlockID, endAnnotationBlockID, true);
+            //             <annotationBlock xml:id="ab_d1e20324" who="NA-01" start="ts7127" end="ts7136"
+            //             <annotationBlock xml:id="ab_d1e21304" who="PAT-08" start="ts2799" end="ts2824"
+
+            
+            IDList allVideoIDs = backendX.getVideos4Transcript(transcriptID_MANV);
+            Collections.sort(allVideoIDs, new Comparator<String>(){
+                @Override
+                public int compare(String id1, String id2) {
+                    try {
+                        String prio1 = backendX.getMedia(id1).getMetadataValue(backendX.findMetadataKeyByID("Media_prio-video"));
+                        String prio2 = backendX.getMedia(id2).getMetadataValue(backendX.findMetadataKeyByID("Media_prio-video"));
+                        System.out.println("Prios: " + prio1 + " / " + prio2);
+                        int prio1Number = 9999;
+                        if (prio1!=null && prio1.length()>0){
+                            prio1Number = Integer.parseInt(prio1);
+                        }
+                        int prio2Number = 9999;
+                        if (prio2!=null && prio2.length()>0){
+                            prio2Number = Integer.parseInt(prio2);
+                        }
+                        return Integer.compare(prio1Number, prio2Number);
+                    } catch (IOException ex) {
+
+                    }
+                    return 0;
+                }
+            });
+            System.out.println(String.join("\n", allVideoIDs));
+            
+
+            
+            System.exit(0);
+            
+            String transcriptIDX = "TRS_1-94-1-6-a";
+            Transcript transcriptX = backendX.getTranscript(transcriptIDX);
+            String corpusIDX = backendX.getCorpus4Event(backendX.getEvent4SpeechEvent(backendX.getSpeechEvent4Transcript(transcriptIDX)));
+            String transcriptXMLX = transcriptX.toXML();
+
+            String audioIDX = transcriptX.getMetadataValue(backendX.findMetadataKeyByID("Transcript_Recording ID"));
+            
+            StylesheetFactory sf = new StylesheetFactory(true);
+
+            String html = sf.applyExternalStylesheetToString("C:\\zumulttgdp\\src\\main\\java\\de\\linguisticbits\\zumult_tgdp\\Transcript2AnnotationHTML.xsl", transcriptXMLX);
+            
+
+            MetadataKey sectionTitleMetadataKey = backendX.findMetadataKeyByID("Transcript_Section Title");
+            String metadataValue = transcriptX.getMetadataValue(sectionTitleMetadataKey);
+            System.out.println(metadataValue);
+
+            String wavURL = backendX.getMedia(audioIDX).getURL();
+            // this is not right or at least clumsy, but COMA only has WAV files
+
+            String mp3URL = wavURL.replaceAll("\\.wav", ".mp3");
+
+            System.exit(0);
+
+
+            String readUTF9 = IOHelper.readUTF8(new File("C:\\Users\\bernd\\Dropbox\\work\\2021_MARGO_TEXAS_GERMAN\\1-94-1-6-a.xml"));
+            COMATranscript tgdpTanscript = new COMATranscript(readUTF9);
+            System.exit(0);
             
             String readUTF8 = IOHelper.readUTF8(new File("Y:\\manv\\manv_corpus\\manv_2017_e\\autotranscript\\manv_2017_e_triage.xml"));
             COMATranscript epiTanscript = new COMATranscript(readUTF8);
+
+
+
             IDList epiNames = epiTanscript.getEpisodeNames();
             System.out.println(String.join(" ", epiNames));
             for (String epiName : epiNames){

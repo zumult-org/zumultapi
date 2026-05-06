@@ -35,7 +35,7 @@
     <xsl:param name="VIS_PAUSE_INSIDE_U">TRUE</xsl:param>
     <!-- Types of incident on top level to be ignored (new 16-06-2025) -->
     <!-- let's expect a semicolon separated list here -->
-    <xsl:param name="VIS_INCIDENT_NOT_TYPES"></xsl:param>
+    <xsl:param name="VIS_INCIDENT_NOT_TYPES"/>
     
     
     <!-- start and end of the transcript ; empty for whole transcript -->
@@ -49,6 +49,9 @@
     <xsl:param name="HIGHLIGHT_IDS_2"/>
     <xsl:param name="HIGHLIGHT_IDS_3"/>
     <xsl:param name="HIGHLIGHT_ANNOTATION_BLOCK"/>
+    
+    <!-- new for #272 -->
+    <xsl:param name="SPEAKER_SELECTION"/>
     
     <xsl:variable name="HIGHLIGHT">
         <ids>
@@ -86,15 +89,29 @@
         </ids>
     </xsl:variable>
     
+    <xsl:variable name="TOKENIZED_SELECTED_SPEAKERS">
+        <xsl:variable name="INDIVIDUAL_IDS" select="tokenize($SPEAKER_SELECTION, ' ')"/>
+        <selected-speakers>
+            <xsl:for-each select="//tei:person">
+                <xsl:if test="string-length($SPEAKER_SELECTION)=0 or $INDIVIDUAL_IDS=tei:idno">
+                    <speaker>
+                        <xsl:attribute name="n" select="@n"/>
+                    </speaker>
+                </xsl:if>
+            </xsl:for-each>
+        </selected-speakers>
+    </xsl:variable>
+    
     <!-- New 16-06-2025 -->
     <!-- Sort in order of appearance? -->
     <xsl:variable name="SORTED_SPEAKERS">
         <tei:particDesc>
             <xsl:for-each-group select="//tei:annotationBlock" group-by="@who">
-                <xsl:copy-of select="//tei:person[@xml:id=current-grouping-key()]"/>
+                <xsl:copy-of select="//tei:person[@xml:id=current-grouping-key()]"/>                
             </xsl:for-each-group>
         </tei:particDesc>
     </xsl:variable>
+    
     
     <!-- **************************************************************** -->    
     <!-- **************************************************************** -->    
@@ -127,8 +144,7 @@
                 <xsl:otherwise>
                     <xsl:apply-templates select="//tei:body/*"/>
                 </xsl:otherwise>
-            </xsl:choose>
-            
+            </xsl:choose>                                
         </table>
     </xsl:template>
     
@@ -139,18 +155,16 @@
         <xsl:variable name="SPEAKER_ID" select="@who"/>
         <xsl:variable name="AB_COPY" select="."/>
         
-        <tr class="annotationBlock">
-            <!-- <xsl:variable name="startAnchor" select="@start"/>
-            <xsl:variable name="endAnchor" select="@end"/>
-            <xsl:variable name="start" select="/tei:TEI/tei:text/[1]/tei:timeline[1]/tei:when[@xml:id=$startAnchor]/@interval"/>
-            <xsl:variable name="end" select="/tei:TEI/tei:text/[1]/tei:timeline[1]/tei:when[@xml:id=$endAnchor]/@interval"/> -->
-            
+        <tr>
+            <xsl:attribute name="class">annotationBlock<xsl:if test="string-length($SPEAKER_ID)&gt;0 and not($TOKENIZED_SELECTED_SPEAKERS/descendant::*[@n=$SPEAKER_ID])"> hiddenAB</xsl:if></xsl:attribute>
             <!-- This may be much faster (?) -->
             <xsl:variable name="start" select="id(@start)/@interval"/>
             <xsl:variable name="end" select="id(@end)/@interval"/>
             
             <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
             <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>
+            <xsl:attribute name="data-who" select="@who"/>
+            <xsl:attribute name="data-type">trans</xsl:attribute>
             
             <!-- This is for display in ZuMin -->
             <xsl:if test="$HIGHLIGHT_ANNOTATION_BLOCK = @xml:id">
@@ -259,23 +273,6 @@
     <!-- a nested seg on the lowest level -->
     <xsl:template match="tei:seg[parent::tei:seg and not(child::tei:seg)]">
         <xsl:apply-templates/>
-        <!-- <xsl:choose>
-            <xsl:when test="@type='utterance' and @subtype='interrogative'">
-                <xsl:text>? </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='interrupted'">
-                <xsl:text>... </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='modeless'">
-                <xsl:text>&#x02d9; </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='declarative'">
-                <xsl:text>. </xsl:text>                
-            </xsl:when>
-            <xsl:when test="@type='utterance' and @subtype='exclamative'">
-                <xsl:text>! </xsl:text>                
-            </xsl:when>
-        </xsl:choose> -->
         <xsl:if test="following-sibling::tei:seg">
             <br/>
         </xsl:if>        
@@ -289,12 +286,8 @@
         <xsl:variable name="lemma" select="@lemma"/>
         <xsl:variable name="pos" select="@pos"/>
         <xsl:variable name="trans" select="."/>
-        <!-- <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
-        <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>      -->   
         <xsl:variable name="startAnchor" select="preceding::tei:anchor[@synch and id(@synch)[self::tei:when]][1]/@synch"/>        
         <xsl:variable name="endAnchor" select="following::tei:anchor[@synch and id(@synch)[self::tei:when]][1]/@synch"/>
-        <!-- <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-        <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
         <!-- This may be much faster (?) -->
         <xsl:variable name="start" select="id($startAnchor)/@interval"/>
         <xsl:variable name="end" select="id($endAnchor)/@interval"/>
@@ -324,16 +317,6 @@
                 </xsl:if>
             </xsl:attribute>
 
-            <!-- <xsl:if test="contains(@type, 'ol-in')">
-                <xsl:variable name="PRECEDING-TIMEPOINT">
-                    <xsl:value-of select="preceding::tei:anchor[1]/@synch"/>
-                </xsl:variable>
-                <xsl:variable name="OVERLAP-ID">OL-<xsl:value-of select="$PRECEDING-TIMEPOINT"/></xsl:variable>
-                <xsl:attribute name="name" select="$OVERLAP-ID"/>
-                <xsl:attribute name="onmouseover">highlight('<xsl:value-of select="$OVERLAP-ID"/>')</xsl:attribute>
-                <xsl:attribute name="onmouseout">lowlight('<xsl:value-of select="$OVERLAP-ID"/>')</xsl:attribute>
-            </xsl:if> -->
-            
             <xsl:attribute name="title">
                 <xsl:value-of select="@norm"/>
                 <xsl:text> / </xsl:text>
@@ -353,7 +336,6 @@
                         <xsl:when test="@norm='#' or @norm='&amp;' or @norm='%'"><!-- do not display dummies --></xsl:when>
                         <xsl:otherwise><xsl:value-of select="@norm"/></xsl:otherwise>
                     </xsl:choose>
-                                        
                 </xsl:when>
                 <xsl:when test="$FORM='lemma'">
                     <xsl:value-of select="@lemma"/>                    
@@ -424,17 +406,22 @@
     <xsl:template match="tei:body/*[not(self::tei:annotationBlock)]">
         <xsl:variable name="THIS_TYPE" select="@type"/>
         <xsl:variable name="SPEAKER_ID" select="@who"/>        
-        <xsl:if test="not(@type) or not($VIS_INCIDENT_NOT_TYPES_LIST/descendant::id[text()=$THIS_TYPE])">
+        <!-- <xsl:if test="not(@type) or not($VIS_INCIDENT_NOT_TYPES_LIST/descendant::id[text()=$THIS_TYPE])"> -->
             <xsl:variable name="ID" select="@xml:id"/>
-            <tr class="nonAnnotationBlock">
+            <tr>
+                <xsl:attribute name="class">
+                    <xsl:text>nonAnnotationBlock</xsl:text>
+                    <xsl:if test="(string-length($SPEAKER_ID)&gt;0 and not($TOKENIZED_SELECTED_SPEAKERS/descendant::*[@n=$SPEAKER_ID]))
+                        or (@type and $VIS_INCIDENT_NOT_TYPES_LIST/descendant::id[text()=$THIS_TYPE])">
+                        <xsl:text> hiddenAB</xsl:text>
+                    </xsl:if>
+                </xsl:attribute>                
                 <xsl:attribute name="id" select="concat('tr', @xml:id)"/>            
-                <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>            
+                <xsl:attribute name="data-annotation-block-id" select="@xml:id"/>   
+                <xsl:attribute name="data-who" select="@who"/>
+                <xsl:attribute name="data-type" select="@type"/>
+                
                 <td class="tablerow_cursor">
-                    <!-- <xsl:variable name="startAnchor" select="@start"/>
-                    <xsl:variable name="endAnchor" select="@end"/>
-                    <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-                    <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
-                    <!-- This may be much faster (?) -->
                     <xsl:variable name="start" select="id(@start)/@interval"/>
                     <xsl:variable name="end" select="id(@end)/@interval"/>                    
                     <xsl:attribute name="data-start" select="$start"/>
@@ -519,17 +506,13 @@
                     </span>                
                 </td>
             </tr>
-        </xsl:if>
+       <!-- </xsl:if> -->
     </xsl:template>
     
     
     <!-- to do : highlight -->
     <xsl:template match="tei:seg//tei:pause">
         <xsl:if test="$VIS_PAUSE_INSIDE_U='TRUE'">
-            <!-- <xsl:variable name="startAnchor" select="preceding-sibling::tei:anchor[1]/@synch"/>        
-            <xsl:variable name="endAnchor" select="following-sibling::tei:anchor[1]/@synch"/>        
-            <xsl:variable name="start" select="//tei:when[@xml:id=$startAnchor]/@interval"/>
-            <xsl:variable name="end" select="//tei:when[@xml:id=$endAnchor]/@interval"/> -->
             <!-- This may be much faster (?) -->
             <xsl:variable name="start" select="id(@start)/@interval"/>
             <xsl:variable name="end" select="id(@end)/@interval"/>

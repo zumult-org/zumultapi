@@ -680,6 +680,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             for (String corpusID : corpora){
                 Corpus corpus = getCorpus(corpusID);
                 for (MetadataKey key : corpus.getMetadataKeys()){
+                    //System.out.println(key.getID());
                     if (key.getID().equals(id)) {
                         foundMetadataKeys.put(id, key);
                         return key;
