@@ -35,7 +35,8 @@
             <xsl:attribute name="id" select="concat('TAB_', replace(@Id, '\.', '_'))"/>
             <table class="table table-striped table-sm episodes-table">
                 <tr>
-                    <th></th>
+                    <th>#</th>
+                    <th>Actions</th>
                     <th>Start</th>
                     <th>End</th>
                     <th>Description</th>
@@ -61,7 +62,7 @@
             <xsl:variable name="PREVIOUS_TO_TIME" select="id($PREVIOUS_TO)/@interval" as="xs:double"/>
             <xsl:if test="$PREVIOUS_TO_TIME &lt; $FROM_TIME">
                 <tr>
-                    <td class="episode-gap" colspan="5">
+                    <td class="episode-gap" colspan="6">
                         <xsl:text>[</xsl:text>
                         <xsl:value-of select="exmaralda:formatTime($FROM_TIME - $PREVIOUS_TO_TIME)"/>
                         <xsl:text>]</xsl:text>
@@ -71,9 +72,12 @@
             
         </xsl:if>
         <tr>
+            <td class="episode-numbering">
+                <xsl:value-of select="format-number(count(preceding-sibling::tei:span)+1, '00')"/>
+            </td>
             <td class="episode-actions">
                 <xsl:variable name="TRANSCRIPT_ID" select="$ROOT/descendant::tei:idno[1]"/>
-                <a href="./zuViel.jsp?transcriptID={$TRANSCRIPT_ID}&amp;startTimeID={$FROM}&amp;endTimeID={$TO}&amp;speakerSelection={@select}" 
+                <a href="./zuViel.jsp?transcriptID={$TRANSCRIPT_ID}&amp;startTimeID={$FROM}&amp;endTimeID={$TO}&amp;speakerSelection={@select}&amp;pageSubtitle={text()}" 
                     target="_blank"
                     title="Open episode in ZuViel"
                     class="mx-2"

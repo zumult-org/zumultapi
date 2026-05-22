@@ -49,7 +49,7 @@
             </ul>
             
             <p>
-                <b>More complex CQP</b> queries can <b>combine one or several tokens</b> and/or use <b>regular expressions</b>, e.g.:
+                <b>More complex CQP</b> queries can <b>combine one or several tokens</b>, several <b>properties of a single token</b>, and/or use <b>regular expressions</b>, e.g.:
             </p>
             <ul>
                 <xsl:apply-templates select="complex-cqp-query/query"/>

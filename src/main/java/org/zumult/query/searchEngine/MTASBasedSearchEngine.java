@@ -226,7 +226,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                 
             if (inputDirectories==null || inputDirectories.isEmpty()){
                 throw new IllegalArgumentException("You have not specified the input directory for creating the search index.");
-            }else{               
+            } else{               
                 for (Path path : inputDirectories){
 
                     // parse input directories for files to be added to the IndexWriter
@@ -813,7 +813,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                               
                                             }else{
                                                 // for metadata only distinct values per hit
-                                                Set<String> values = new HashSet<String>();
+                                                Set<String> values = new HashSet<>();
                                                 for (CodecSearchTree.MtasTreeHit<String> term : terms2) {                                                   
                                                     String value = CodecUtil.termValue(term.data);
                                                     if (value == null){
@@ -824,7 +824,7 @@ public abstract class MTASBasedSearchEngine extends QueryCreater
                                                     
                                                 } 
 
-                                                List<String> list = new ArrayList<String>(values);
+                                                List<String> list = new ArrayList<>(values);
                                                 Collections.sort(list); 
                                                 listString = String.join(", ", list);
                                             }

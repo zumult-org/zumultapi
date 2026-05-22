@@ -46,14 +46,8 @@
         <xsl:text>: </xsl:text>        
         <xsl:text>&lt;/b&gt;</xsl:text>
 
-        <xsl:choose>
-            <xsl:when test="$TYPE='trans'">
-                <xsl:apply-templates select="descendant::tei:seg"/>                
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates select="descendant::tei:seg[descendant::tei:w]"/>                                
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:apply-templates select="descendant::tei:seg[tei:w]"/>                
+
         <xsl:text>&#xa;</xsl:text>
         <xsl:text>&#xa;</xsl:text>
     </xsl:template>

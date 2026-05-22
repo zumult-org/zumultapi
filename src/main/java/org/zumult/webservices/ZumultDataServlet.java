@@ -19,6 +19,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -31,6 +35,7 @@ import javax.xml.transform.TransformerException;
 import org.exmaralda.folker.utilities.TimeStringFormatter;
 import org.exmaralda.partitureditor.jexmaralda.Timeline;
 import org.exmaralda.partitureditor.jexmaralda.TimelineItem;
+import org.jdom.JDOMException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
@@ -630,18 +635,30 @@ public class ZumultDataServlet extends HttpServlet {
     }
     
     private void getMausAlignment(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String transcriptID = request.getParameter("transcriptID");
-        String annotationBlockID = request.getParameter("annotationBlockID");
-        String format = request.getParameter("format");
-        String xml = new MausConnection().getMausAligment(transcriptID, annotationBlockID, format);
-        response.setContentType("application/xml");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(xml);
-        response.getWriter().close();
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String transcriptID = request.getParameter("transcriptID");
+            String annotationBlockID = request.getParameter("annotationBlockID");
+            String format = request.getParameter("format");
+            String xml;
+            try {
+                xml = new MausConnection(backend).getMausAligment(transcriptID, annotationBlockID, format);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | JDOMException ex) {
+                Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+                throw new IOException(ex);
+            }
+            response.setContentType("application/xml");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(xml);
+            response.getWriter().close();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void getMicroView(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             String transcriptID = request.getParameter("transcriptID");
             String annotationBlockID = request.getParameter("annotationBlockID");
             String xPerSecond = request.getParameter("xPerSecond");
@@ -653,7 +670,6 @@ public class ZumultDataServlet extends HttpServlet {
             Set<String> componentsSet = new HashSet<>();
             componentsSet.addAll(Arrays.asList(components.split(";")));
             
-            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
             
             Transcript transcript = backend.getTranscript(transcriptID);
             AnnotationBlock annotationBlock = backend.getAnnotationBlock(transcriptID, annotationBlockID);
@@ -682,20 +698,85 @@ public class ZumultDataServlet extends HttpServlet {
                 pitchXML = praatConnection.getPitchAsXML(audioFile);
             }
             
+            // ****************** START NEW
+            
+            ExecutorService exec = Executors.newFixedThreadPool(2);
+
+            Future<String> mausFuture = exec.submit(() -> {
+                try {
+                    if (componentsSet.contains("MAUS")) {
+                        synchronized (backend) {
+                            MausConnection mc = new MausConnection(backend);
+                            return mc.getMausAligment(transcriptID, annotationBlockID, "EXB");
+                        }
+                    }
+                } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | JDOMException e) {
+                    System.out.println("MAUS failed: " + e.getMessage());
+                }
+
+                Timeline tl = new Timeline();
+                tl.add(new TimelineItem("TLI_START", startTime));
+                tl.add(new TimelineItem("TLI_END", endTime));
+                return tl.toXML();
+            });
+
+            Future<List<File>> ffmpegFuture = exec.submit(() -> {
+                List<File> videoStills = new ArrayList<>();
+                if (!componentsSet.contains("FFMPEG")) return videoStills;
+
+                synchronized (backend) {
+                    IDList videoIDs = backend.getVideos4Transcript(transcriptID);
+                    if (!(videoIDs.isEmpty())){
+                        Media video = backend.getMedia(videoIDs.get(0), Media.MEDIA_FORMAT.MPEG4_ARCHIVE);
+                        File downloadDirectory = new File(getServletContext().getRealPath("/downloads/"));
+                        for (double time = startTime; time<endTime; time+=0.5){
+                            Media videoStill = video.getVideoImage(time);
+                            File videoStillFile = new File(videoStill.getURL());
+                            File targetFile = new File(downloadDirectory, videoStillFile.getName());
+                            Files.move(videoStillFile.toPath(), targetFile.toPath());
+                            videoStills.add(targetFile);
+                        }
+                    }
+                }
+                return videoStills;
+            });
+
+            String xml = mausFuture.get();
+            List<File> videoStills = ffmpegFuture.get();
+
+            exec.shutdown();            
+            
+            // ****************** END NEW
+
             // MAUS
-            String[] xmlArray = new String[1];
+            /*String[] xmlArray = new String[1];
             Thread mausThread = null;
             
             if (componentsSet.contains("MAUS")){
                 mausThread = new Thread(){                
                     @Override
                     public void run() {
-                        String mausXML = new MausConnection().getMausAligment(transcriptID, annotationBlockID, "EXB");
-                        xmlArray[0] = mausXML;
+                        try {
+                            MausConnection mausConnection = new MausConnection();
+                            String mausXML = mausConnection.getMausAligment(transcriptID, annotationBlockID, "EXB");
+                            xmlArray[0] = mausXML;
+                        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | JDOMException ex){
+                            // there was trouble with the MAUS call
+                            // what do we do?
+                            System.out.println("[ZumultDataServlet: getMicroView] MAUS call failed.\n" + ex.getMessage());
+                            // we will still need a dummy timeline
+                            Timeline tl = new Timeline();
+                            TimelineItem tliStart = new TimelineItem("TLI_START", startTime);
+                            TimelineItem tliEnd = new TimelineItem("TLI_END", endTime);
+                            tl.add(tliStart);
+                            tl.add(tliEnd);
+                            xmlArray[0] = tl.toXML();
+                        }
                     }                
                 };
                 mausThread.start();
             } else {
+                // No MAUS desired
                 // we will still need a dummy timeline
                 Timeline tl = new Timeline();
                 TimelineItem tliStart = new TimelineItem("TLI_START", startTime);
@@ -744,7 +825,7 @@ public class ZumultDataServlet extends HttpServlet {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.out.println("Main thread interrupted");
-            }            
+            }            */
             
             String allXML = "<document>";
             
@@ -753,7 +834,7 @@ public class ZumultDataServlet extends HttpServlet {
             }
             
             //if (componentsSet.contains("MAUS")){
-                allXML+=xmlArray[0];
+                allXML+=xml;
             //}
             
             if (componentsSet.contains("FFMPEG")){
@@ -774,14 +855,20 @@ public class ZumultDataServlet extends HttpServlet {
             };
             String svg = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/pitch2SVG.xsl", allXML, parameters);
             
+            //System.out.println(allXML);
+            //System.out.println(svg);
+            
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(svg);
             response.getWriter().close();
             
-        } catch (TransformerException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+        } catch (TransformerException | ClassNotFoundException | InstantiationException | IllegalAccessException | ExecutionException ex) {
+            ex.getCause().printStackTrace();
             Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);            
+        } catch (InterruptedException ex){
+            Thread.currentThread().interrupt();
         }
         
     }

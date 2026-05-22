@@ -26,60 +26,63 @@ import org.zumult.objects.Transcript;
  */
 public class MausConnection {
     
-    public String getMausAligment(String transcriptID, String annotationBlockID, String format){
-        try {
-            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
-            String audioID = backend.getAudios4Transcript(transcriptID).get(0);
-            
-            Transcript transcript = backend.getTranscript(transcriptID);
-            AnnotationBlock annotationBlock = backend.getAnnotationBlock(transcriptID, annotationBlockID);
-            String annotationBlockStartID = annotationBlock.getStart();
-            String annotationBlockEndID = annotationBlock.getEnd();
-            double startTime = transcript.getTimeForID(annotationBlockStartID);
-            double endTime = transcript.getTimeForID(annotationBlockEndID);
-            String text = annotationBlock.getWordText();
-            
-            File textFile = File.createTempFile("ZuMult_MAUS", ".txt");
-            IOHelper.writeUTF8(textFile, text);
-            
-            Media partAudio = backend.getMedia(audioID, Media.MEDIA_FORMAT.WAV).getPart(startTime, endTime);
-            File audioFile = new File(partAudio.getURL());
-            
-            File audioFile16kHzMono = File.createTempFile("ZuMult_", ".wav");
-            AudioProcessor audioProcessor = new AudioProcessor();
-            audioProcessor.stereoToMono16kHz(audioFile, audioFile16kHzMono);
-            
-            HashMap<String, Object> otherParameters = new HashMap<>();
-            otherParameters.put("LANGUAGE", MausConnection.mapLanguageCode2ToMAUS(transcript.getLanguage(annotationBlockID)));
-            
-            MAUSConnector mausConnector = new MAUSConnector();
-            //String praatTextString = mausConnector.callMAUS(textFile, audioFile, otherParameters);
-            String praatTextString = mausConnector.callMAUS(textFile, audioFile16kHzMono, otherParameters);
-            audioFile.delete();
-            textFile.delete();
-            
-            if (format!=null && format.equals("PraatTextGrid")){
-                String wrappedXML = "<praatTextGrid>\n"
-                        + "<![CDATA["
-                        + praatTextString
-                        + "]]>"
-                        + "\n</praatTextGrid>";
-                return wrappedXML;
-            }
-            
-            File praatFile = File.createTempFile("ZuMult_MAUS", ".textGrid");
-            IOHelper.writeUTF8(praatFile, praatTextString);
-            
-            PraatConverter praatConverter = new PraatConverter();
-            BasicTranscription basicTranscription = praatConverter.readPraatFromFile(praatFile.getAbsolutePath());
-            praatFile.delete();
-            
-            return basicTranscription.toXML();
-            
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | JDOMException | IOException ex) {
-            Logger.getLogger(MausConnection.class.getName()).log(Level.SEVERE, null, ex);
-            return "<error>" + ex.getLocalizedMessage() + "</error>";
-        } 
+    BackendInterface backend;
+
+    public MausConnection(BackendInterface backend) {
+        this.backend = backend;
+    }
+    
+    public String getMausAligment(String transcriptID, String annotationBlockID, String format) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JDOMException{
+        //BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+        String audioID = backend.getAudios4Transcript(transcriptID).get(0);
+
+        Transcript transcript = backend.getTranscript(transcriptID);
+        AnnotationBlock annotationBlock = backend.getAnnotationBlock(transcriptID, annotationBlockID);
+        String annotationBlockStartID = annotationBlock.getStart();
+        String annotationBlockEndID = annotationBlock.getEnd();
+        double startTime = transcript.getTimeForID(annotationBlockStartID);
+        double endTime = transcript.getTimeForID(annotationBlockEndID);
+        String text = annotationBlock.getWordText();
+
+        File textFile = File.createTempFile("ZuMult_MAUS", ".txt");
+        IOHelper.writeUTF8(textFile, text);
+        System.out.println("[MausConnection] " + textFile.getAbsolutePath() + " created");
+
+        Media partAudio = backend.getMedia(audioID, Media.MEDIA_FORMAT.WAV).getPart(startTime, endTime);
+        File audioFile = new File(partAudio.getURL());
+
+        File audioFile16kHzMono = File.createTempFile("ZuMult_", ".wav");
+        AudioProcessor audioProcessor = new AudioProcessor();
+        audioProcessor.stereoToMono16kHz(audioFile, audioFile16kHzMono);
+        System.out.println("[MausConnection] " + audioFile16kHzMono.getAbsolutePath() + " created");
+
+        HashMap<String, Object> otherParameters = new HashMap<>();
+        otherParameters.put("LANGUAGE", MausConnection.mapLanguageCode2ToMAUS(transcript.getLanguage(annotationBlockID)));
+
+        MAUSConnector mausConnector = new MAUSConnector();
+        //String praatTextString = mausConnector.callMAUS(textFile, audioFile, otherParameters);
+        String praatTextString = mausConnector.callMAUS(textFile, audioFile16kHzMono, otherParameters);
+        audioFile.delete();
+        textFile.delete();
+
+        if (format!=null && format.equals("PraatTextGrid")){
+            String wrappedXML = "<praatTextGrid>\n"
+                    + "<![CDATA["
+                    + praatTextString
+                    + "]]>"
+                    + "\n</praatTextGrid>";
+            return wrappedXML;
+        }
+
+        File praatFile = File.createTempFile("ZuMult_MAUS", ".textGrid");
+        IOHelper.writeUTF8(praatFile, praatTextString);
+
+        PraatConverter praatConverter = new PraatConverter();
+        BasicTranscription basicTranscription = praatConverter.readPraatFromFile(praatFile.getAbsolutePath());
+        praatFile.delete();
+
+        return basicTranscription.toXML();
+
     }
     
     public static String mapLanguageCode2ToMAUS(String languageCode) {

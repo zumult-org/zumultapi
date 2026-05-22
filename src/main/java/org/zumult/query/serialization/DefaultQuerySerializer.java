@@ -263,9 +263,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
         Document document = db.newDocument();
         
         Element root = createRoot(document,
-        obj.getSearchQuery().getQueryString(),
-  obj.getMetadataQuery().getAdditionalMetadata(),
-        obj.getMetadataQuery().getCorpusQuery());
+            obj.getSearchQuery().getQueryString(),
+            obj.getMetadataQuery().getAdditionalMetadata(),
+            obj.getMetadataQuery().getCorpusQuery());
                     
         root.setAttribute("type", "statistics");
 

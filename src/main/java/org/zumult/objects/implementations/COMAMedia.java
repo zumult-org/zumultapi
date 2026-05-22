@@ -69,7 +69,9 @@ public class COMAMedia extends AbstractMedia {
     @Override
     public Media getPart(double startInSeconds, double endInSeconds) {
         String[] idAndUrl = cut(startInSeconds, endInSeconds);
-        return new COMAMedia(idAndUrl[0], idAndUrl[1]);
+        COMAMedia partMedia = new COMAMedia(idAndUrl[0], idAndUrl[1]);
+        partMedia.metadata = this.metadata;
+        return partMedia;
     }
     
     @Override

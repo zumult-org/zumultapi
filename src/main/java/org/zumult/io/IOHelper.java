@@ -48,7 +48,10 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.OutputKeys;
+import org.zumult.backend.BackendInterface;
+import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
 import org.zumult.query.SearchServiceException;
 
@@ -414,4 +417,30 @@ public class IOHelper {
         return metadata.stream().sorted((MetadataKey o1, MetadataKey o2) -> o1.getName(lang).compareTo(o2.getName(lang))).collect(Collectors.toList()); 
     }
     
+    public static IDList getVideosFromRequest(HttpServletRequest request, BackendInterface backend, String speechEventID) throws IOException{
+        String videoIDsParameter = request.getParameter("videoIDs");
+        IDList videoIDs = new IDList("videos");
+        if (videoIDsParameter==null || videoIDsParameter.length()==0){
+            videoIDs = backend.getVideos4SpeechEvent(speechEventID);
+        } else {
+            String[] videoIDsSplit = videoIDsParameter.split("\\|");
+            videoIDs.addAll(Arrays.asList(videoIDsSplit));
+        }
+        return videoIDs;
+    }
+    
+
+    public static IDList getAudiosFromRequest(HttpServletRequest request, BackendInterface backend, String speechEventID) throws IOException{
+        String audioIDsParameter = request.getParameter("audioIDs");
+        IDList audioIDs = new IDList("audios");
+        if ((audioIDsParameter==null || audioIDsParameter.length()==0)){
+            audioIDs = backend.getAudios4SpeechEvent(speechEventID);
+        } else {
+            String[] audioIDsSplit = audioIDsParameter.split("\\|");
+            audioIDs.addAll(Arrays.asList(audioIDsSplit));
+        } 
+        return audioIDs;
+    }
+
+
 }

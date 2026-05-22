@@ -185,7 +185,7 @@
 
             <!-- table cell for play/pause buttons -->
             <xsl:if test="$PLAYPAUSEBUTTONS='TRUE'">
-                <td>
+                <td class="play_controls">
                     <span onclick="playFromButton(this)" style="color:gray; margin-right:3px; cursor: pointer;">
                         <xsl:attribute name="data-start" select="$start"/>
                         <i class="fa-solid fa-play"></i>
@@ -427,7 +427,6 @@
                     <xsl:attribute name="data-start" select="$start"/>
                     <xsl:attribute name="data-end" select="$end"/>
                     <xsl:text>&#x2009;</xsl:text>
-                    <xsl:value-of select="@type"/>
                 </td>
                 <xsl:if test="$DROPDOWN='TRUE'">
                     <xsl:call-template name="MAKE_DROPDOWN"/>
@@ -438,9 +437,10 @@
                     <!-- This may be much faster (?) -->
                     <xsl:variable name="start" select="id(@start)/@interval"/>
                     <xsl:variable name="end" select="id(@end)/@interval"/>
-                    <td>
+                    <td class="play_controls">
                         <span onclick="playFromButton(this)" style="color:gray; margin-right:3px; cursor: pointer;">
                             <xsl:attribute name="data-start" select="$start"/>
+                            <xsl:attribute name="title" select="concat('Playback from ', exmaralda:formatTime($start))"/>
                             <i class="fa-solid fa-play"></i>
                         </span>
                         <span onclick="pauseFromButton(this)"  style="color:gray; cursor: pointer;">
@@ -476,7 +476,7 @@
                     <!-- <xsl:value-of select="//tei:person[@xml:id=$SPEAKER_ID]/@n"/> -->
                     <xsl:value-of select="id($SPEAKER_ID)/@n"/>                    
                 </td>
-                <td>
+                <td class="transcript-text">
                     <span>
                         <xsl:attribute name="class">
                             <xsl:text>transcript-text </xsl:text>
@@ -492,6 +492,10 @@
                             </xsl:if>
                         </xsl:attribute>
                         <xsl:attribute name="id" select="@xml:id"/>
+                        <xsl:if test="@type">
+                            <span class="type-label"><xsl:value-of select="@type"/></span>
+                        </xsl:if>
+                        <xsl:text> </xsl:text>
                         <xsl:choose>
                             <xsl:when test="descendant-or-self::*[@rend]">
                                 <xsl:value-of select="descendant-or-self::*[@rend]/@rend"/>                            
@@ -586,5 +590,21 @@
             <xsl:value-of select="."/>
         </xsl:for-each>
     </xsl:function>
+    
+    <xsl:function name="exmaralda:formatTime" as="xs:string">
+        <xsl:param name="SECONDS"></xsl:param>
+        <xsl:variable name="total" select="number($SECONDS)"/>
+        <xsl:variable name="hours" select="floor($total div 3600)"/>
+        <xsl:variable name="minutes" select="floor(($total mod 3600) div 60)"/>
+        <xsl:variable name="seconds" select="$total mod 60"/>
+        
+        <xsl:value-of select="concat(
+            format-number($hours,'00'), ':',
+            format-number($minutes,'00'), ':',
+            format-number($seconds,'00.00')
+            )"/>
+        
+    </xsl:function>
+    
 
 </xsl:stylesheet>

@@ -243,6 +243,9 @@ public class Configuration {
         return config.getString("backend." + variableName);
     } 
     
+    public static String getConfigurationVariable(String variableName, String defaultValue){
+        return config.getString("backend." + variableName, defaultValue);
+    } 
     
 
 

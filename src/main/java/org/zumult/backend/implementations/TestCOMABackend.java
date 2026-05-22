@@ -58,6 +58,12 @@ public class TestCOMABackend {
                 System.out.println(m.getID());
             }*/
             backendX.findMetadataKeyByID("Media_prio-video");
+            
+            Transcript txtxtx = backendX.getTranscript("ISO_manv_2017_e_triage");
+            int tokenCount = txtxtx.getNumberOfTokens();
+            System.out.println(tokenCount);
+            
+            
             System.exit(0);
             /*
             http://localhost:8080/zumult/jsp/zuViel.jsp?

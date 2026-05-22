@@ -13,6 +13,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -73,7 +75,8 @@ import org.zumult.query.implementations.COMASearcher;
  */
 public class COMAFileSystem extends AbstractBackend implements MetadataFinderInterface {
     
-    XPath xPath = XPathFactory.newInstance().newXPath();
+    // Maybe not a good idea to share an xpath object
+    //XPath xPath = XPathFactory.newInstance().newXPath();
     File topFolder = new File(Configuration.getMetadataPath());
     
     static final Map<String, String> id2Corpus = new HashMap<>();
@@ -159,6 +162,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             
             //System.out.println("Looking for speech event " + speechEventID + " in corpus " + corpusID);
             
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xp = "//Communication[@Id='" + speechEventID + "']";
             Element communicationElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
 
@@ -189,6 +193,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
             
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xp = "//Speaker[@Id='" + speakerID + "']";
             Element communicationElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
 
@@ -223,10 +228,16 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             <NSLink>Shirin_Zhi_Zhi/MT_270110_Shirin/MT_270110_Shirin.mp3</NSLink> */
             
             String xp = "//Media[@Id='" + mediaID + "']";
-            Element mediaElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+            XPath xPathLocal = XPathFactory.newInstance().newXPath();
+            Element mediaElement = (Element) (Node) xPathLocal.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+            
             if (mediaElement!=null){
-                Element descriptionElement = (Element) mediaElement.getElementsByTagName("Description").item(0);
-                String descriptionXML = IOHelper.ElementToString(descriptionElement);
+                NodeList descriptionElements = mediaElement.getElementsByTagName("Description");
+                String descriptionXML = "<Description/>";
+                if (descriptionElements.getLength()>0){
+                    Element descriptionElement = (Element) descriptionElements.item(0);                
+                    descriptionXML = IOHelper.ElementToString((Element)descriptionElement.cloneNode(true));
+                }
                 String nsLink = mediaElement.getElementsByTagName("NSLink").item(0).getTextContent();
 
                 // 2025-04-08 change for issue #246
@@ -244,10 +255,14 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                 // this is a fallback in case the ID of the recording, not the ID of the media was provided
                 // not sure if this is a good idea
                 String xp2 = "//Recording[@Id='" + mediaID + "']/Media[1]";
-                Element mediaElement2 = (Element) (Node) xPath.evaluate(xp2, corpusDocument.getDocumentElement(), XPathConstants.NODE);
+                Element mediaElement2 = (Element) (Node) xPathLocal.evaluate(xp2, corpusDocument.getDocumentElement(), XPathConstants.NODE);
                 if (mediaElement2!=null){
-                    Element descriptionElement = (Element) mediaElement2.getElementsByTagName("Description").item(0);
-                    String descriptionXML = IOHelper.ElementToString(descriptionElement);
+                    NodeList descriptionElements = mediaElement2.getElementsByTagName("Description");
+                    String descriptionXML = "<Description/>";
+                    if (descriptionElements.getLength()>0){
+                        Element descriptionElement = (Element) descriptionElements.item(0);
+                        descriptionXML = IOHelper.ElementToString(descriptionElement);
+                    }
                     String nsLink = mediaElement2.getElementsByTagName("NSLink").item(0).getTextContent();
                     //File corpusFolder = new File(topFolder, corpusID);
                     //String urlString = corpusFolder.toPath().resolve(nsLink).toUri().toURL().toString();
@@ -291,6 +306,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             /* <Transcription Id="CIDID93045167-C4FF-8EF6-36B8-F08AC9F9E331">
                <NSLink>Shirin_Zhi_Zhi/MT_270110_Shirin/MT_270110_Shirin.exb</NSLink> */
 
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xp = "//Transcription[@Id='" + transcriptID + "']";
             Element transcriptionElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
             String nsLink = transcriptionElement.getElementsByTagName("NSLink").item(0).getTextContent();
@@ -341,6 +357,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                     Document corpusDocument = corpus.getDocument();
                     
                     // Attempt 1: Try to find an EXB file in the same folder with the same name
+                    XPath xPath = XPathFactory.newInstance().newXPath();
                     String xp = "//Transcription[@Id='" + transcriptID + "']";
                     Element transcriptionElement = (Element) (Node) xPath.evaluate(xp, corpusDocument.getDocumentElement(), XPathConstants.NODE);
                     String nsLink = transcriptionElement.getElementsByTagName("NSLink").item(0).getTextContent();
@@ -408,6 +425,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         IDList result = new IDList("Event");
         try {
             Corpus corpus = getCorpus(corpusID);               
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allCommunications = (NodeList) xPath.evaluate("//Communication", corpus.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allCommunications.getLength(); i++){
                 Element communicationElement = ((Element)(allCommunications.item(i)));
@@ -424,6 +442,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
         IDList result = new IDList("Speaker");
         try {
             Corpus corpus = getCorpus(corpusID);
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allSpeakers = (NodeList) xPath.evaluate("//Speaker", corpus.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allSpeakers.getLength(); i++){
                 Element speakerElement = ((Element)(allSpeakers.item(i)));
@@ -456,6 +475,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             /*NodeList allTranscripts = 
                     (NodeList) xPath.evaluate("//Transcription[substring(Filename, string-length(Filename)-3)='.exb' or substring(Filename, string-length(Filename)-3)='.EXB']", 
                             communication.getDocument().getDocumentElement(), XPathConstants.NODESET);*/
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xpath = "//Transcription[substring(Filename, string-length(Filename)-3)='.xml' or substring(Filename, string-length(Filename)-3)='.XML']";
             NodeList allTranscripts = 
                     (NodeList) xPath.evaluate(xpath, 
@@ -487,6 +507,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             <Filename>MT_270110_Shirin.wav</Filename>
             
             */
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allAudios = (NodeList)
                     xPath.evaluate("//Media[substring(Filename, string-length(Filename)-3)='.wav' "
                             + "or substring(Filename, string-length(Filename)-3)='.WAV' "
@@ -501,6 +522,30 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                 Element mediaElement = ((Element)(allAudios.item(i)));
                 result.add(mediaElement.getAttribute("Id"));
             }
+            
+            // 11-05-2026, issue #274
+            String audioSortKey = Configuration.getConfigurationVariable("audioPrioKey", "prio-audio");            
+            MetadataKey prioMetadataKey = findMetadataKeyByID("Media_" + audioSortKey);
+            if (prioMetadataKey!=null){
+                // this only makes sense if we can find that metadata key to begin with
+                Map<String, Integer> audioPrios = new HashMap<>();
+                for (String mediaID : result){
+                    //System.out.println("MEDIA ID: " + mediaID);
+                    String prio = getMedia(mediaID).getMetadataValue(prioMetadataKey);
+                    if (prio==null || prio.length()==0){
+                        audioPrios.put(mediaID, 9999);
+                    } else {
+                        audioPrios.put(mediaID, Integer.valueOf(prio));                    
+                    }
+                }
+                Collections.sort(result, new Comparator<String>(){
+                    @Override
+                    public int compare(String id1, String id2) {
+                        return Integer.compare(audioPrios.get(id1), audioPrios.get(id2));
+                    }
+                });
+            }
+            
             return result;
         } catch (XPathExpressionException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
@@ -524,12 +569,37 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             <Filename>MT_270110_Shirin.wav</Filename>
             
             */
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allVideos = (NodeList)
                     xPath.evaluate("//Media[substring(NSLink, string-length(NSLink)-3)='.mp4' or substring(NSLink, string-length(NSLink)-3)='.MP4']", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allVideos.getLength(); i++){
                 Element mediaElement = ((Element)(allVideos.item(i)));
                 result.add(mediaElement.getAttribute("Id"));
             }
+            
+            // 11-05-2026, issue #274
+            String videoSortKey = Configuration.getConfigurationVariable("videoPrioKey", "prio-video");
+            MetadataKey prioMetadataKey = findMetadataKeyByID("Media_" + videoSortKey);
+            if (prioMetadataKey!=null){
+                // this only makes sense if we can find that metadata key to begin with
+                Map<String, Integer> videoPrios = new HashMap<>();
+                for (String mediaID : result){
+                    String prio = getMedia(mediaID).getMetadataValue(prioMetadataKey);
+                    if (prio==null || prio.length()==0){
+                        videoPrios.put(mediaID, 9999);
+                    } else {
+                        videoPrios.put(mediaID, Integer.valueOf(prio));                    
+                    }
+                }
+                Collections.sort(result, new Comparator<String>(){
+                    @Override
+                    public int compare(String id1, String id2) {
+                        return Integer.compare(videoPrios.get(id1), videoPrios.get(id2));
+                    }
+                });
+            }
+            
+            
             return result;
         } catch (XPathExpressionException ex) {
             Logger.getLogger(COMAFileSystem.class.getName()).log(Level.SEVERE, null, ex);
@@ -611,6 +681,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             </Setting>*/
             IDList result = new IDList("Speaker");
             SpeechEvent communication = getSpeechEvent(speechEventID);
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allSpeakers = (NodeList) xPath.evaluate("//Person", communication.getDocument().getDocumentElement(), XPathConstants.NODESET);
             for (int i=0; i<allSpeakers.getLength(); i++){
                 Element personElement = ((Element)(allSpeakers.item(i)));
@@ -637,6 +708,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             Document comaDocument = corpus.getDocument();
             Set<String> valueSet = new HashSet<>();
             // this will go wrong, for example if both Transcript and Speaker have a key "name"!
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xp = "//Key[@Name='" + metadataKeyID + "']";
             //System.out.println("Evaluating " + xp);
             NodeList allKeys = (NodeList) xPath.evaluate(xp, comaDocument, XPathConstants.NODESET);
@@ -700,6 +772,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             System.out.println("CorpusID for " + transcriptID + "=" + corpusID);
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xp = "//Transcription[@Id='" + transcriptID + "']/ancestor::Communication";
             Element tryElement = (Element) (Node) xPath.evaluate(xp, corpusDocument, XPathConstants.NODE);
             if (tryElement!=null){
@@ -718,6 +791,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             System.out.println("CorpusID for " + speakerID + "=" + corpusID);
             Corpus corpus = getCorpus(corpusID);
             Document corpusDocument = corpus.getDocument();
+            XPath xPath = XPathFactory.newInstance().newXPath();
             String xp = "//Person[text()='" + speakerID + "']/ancestor::Communication";
             NodeList allComms = (NodeList) xPath.evaluate(xp, corpusDocument, XPathConstants.NODESET);            
             IDList result = new IDList("SpeechEvents");
@@ -991,6 +1065,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             String xp = "//Communication[Description/Key[@Name='" + metadataKey.getName("en") + "']='"
                     + metadataValue + "']";
             //System.out.println("Evaluating " + xp);
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allKeys = (NodeList) xPath.evaluate(xp, comaDocument, XPathConstants.NODESET);
             for (int i=0; i<allKeys.getLength(); i++){
                 Element communicationElement = ((Element)(allKeys.item(i)));
@@ -1018,6 +1093,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
             String xp = "//Speaker[Description/Key[@Name='" + metadataKey.getName("en") + "']='"
                     + metadataValue + "']";
             //System.out.println("Evaluating " + xp);
+            XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList allKeys = (NodeList) xPath.evaluate(xp, comaDocument, XPathConstants.NODESET);
             for (int i=0; i<allKeys.getLength(); i++){
                 Element communicationElement = ((Element)(allKeys.item(i)));

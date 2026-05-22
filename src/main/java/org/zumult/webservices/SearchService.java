@@ -62,10 +62,10 @@ import org.zumult.query.SearchResultPlus;
 /* Sample URL Requests: http://zumult.ids-mannheim.de/ProtoZumult/api/SearchService */
 
 public class SearchService {
+    
     BackendInterface backendInterface;
     Response buildResponse = null;
     final String zumultApiBaseURL = Configuration.getRestAPIBaseURL();
-    //private static final String IP_NOT_VALID_MASSAGE = "IP address is not valid!";
     
     /*@Context
     private HttpServletRequest httpServletRequest;
@@ -729,20 +729,10 @@ public class SearchService {
             String corpusQuery, String metadataQuery, String context, Integer pageLength, 
             Integer pageIndex, Boolean cutoff, String mode, String responseFormat, String wordLists){
 
-        Response response;
-        Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
+            Response response;
+            Map<String, String> additionalSearchConstraints = createAdditionalSearchConstraintsMap(wordLists);
         
-     /*   String client_ip = httpServletRequest.getRemoteAddr();
-        if (!(ClientIPValidator.validateClientIP(client_ip))){
-            response = Response.status(Response.Status.BAD_REQUEST).entity(IP_NOT_VALID_MASSAGE).build();  
-            return response;
-        }
-      */  
         try {
-
-            /*KWIC result = backendInterface.getKWIC(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery,
-                        pageLength, pageIndex, cutoff, mode, context);*/
-            
             SearchResultPlus searchResultPlus = backendInterface.search(queryString, queryLanguage, queryLanguageVersion, corpusQuery, metadataQuery, 
                 pageLength, pageIndex, cutoff, mode, null, additionalSearchConstraints);
             KWIC result = backendInterface.getKWIC(searchResultPlus, context);
@@ -766,7 +756,6 @@ public class SearchService {
         }
         
         return response;
-        
     }
     
     private Response getStatistics(String queryString, String queryLanguage, 

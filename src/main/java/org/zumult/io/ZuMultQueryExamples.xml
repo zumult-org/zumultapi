@@ -14,7 +14,7 @@
         <simple-cqp-query>
             <query>
                 <query-expression>[word="nice"]</query-expression>
-                <explanation>will find all instances of the transcribed <form>nice</form></explanation>
+                <explanation>will find all instances of the transcribed form <form>nice</form></explanation>
             </query>
             <query>
                 <query-expression>[norm="have"]</query-expression>
@@ -29,6 +29,10 @@
             <query>
                 <query-expression>[lemma="klein"][pos="NN"]</query-expression>
                 <explanation>will find forms of the lemma <form>klein</form> followed by a token with POS tag <form>NN</form> (a noun)</explanation>
+            </query>
+            <query>
+                <query-expression>[lemma="klein" &amp; pos="ADJA"]</query-expression>
+                <explanation>will find forms of the lemma <form>klein</form> POS-tagged as <form>ADJA</form> (attributive adjective)</explanation>
             </query>
             <query>
                 <query-expression>[norm="[Uu]n.+"]</query-expression>
