@@ -152,17 +152,23 @@ public interface BackendInterface {
      * @param corpusQuery           the corpus query string that specifies in which corpora to search for {@code queryString}, 
      *                              e.g. corpusSigle="FOLK|GWSS|DH", not null
      * @param metadataQuery         the metadata query string that constraints the search result to specified metadata, e.g. tokenSize=2, may be null
-     * @param searchIndex           the string that can be an ID, name or type of a search index or a group of search indices
-     *                              (that depends on the backend implementation, see e.g. 
-     *                              {@link org.zumult.query.implementations.DGD2SearchIndexTypeEnum DGD2SearchIndexTypeEnum}). 
-     *                              If null, the default search index is used.
+     * @param searchIndexType       The search index type: In combination with the {@code corpusQuery}, it defines which search indices should be used
+     *                              (that depends on the backend implementation).
+     *                              If null, the default search index type is used.
+     * @param additionalSearchConstraints
      * 
      * @return the {@code SearchResult} object
      * @throws SearchServiceException if input parameters can not be parsed 
      * @throws IOException 
      */ 
-    public SearchResult search(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, String searchIndex, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
+    public SearchResult search(String queryString,
+                               String queryLanguage,
+                               String queryLanguageVersion,
+                               String corpusQuery,
+                               String metadataQuery,
+                               String searchIndexType,
+                               Map<String, String> additionalSearchConstraints)
+                            throws SearchServiceException, IOException;
     
     /**
      * Searches in the specified search index according to the specified parameters.
@@ -184,20 +190,29 @@ public interface BackendInterface {
      *                              Use false to retrieve just the number of hits specified by {@code pageLength},
      *                              the total number of hits and the total number of documents are set in this case 
      *                              to 1 in the {@code SearchResultPlus} object.
-     * @param searchIndex           the string that can be an ID, name or type of a search index or a group of search indices
-     *                              (that depends on the backend implementation, see e.g. 
-     *                              {@link org.zumult.query.implementations.DGD2SearchIndexTypeEnum DGD2SearchIndexTypeEnum}). 
-     *                              If null, the default search index is used.
+     * @param searchIndexType       The search index type: In combination with the {@code corpusQuery}, it defines which search indices should be used
+     *                              (that depends on the backend implementation).
+     *                              If null, the default search index type is used.
      * @param metadataIDs           the list of metadata IDs whose values should be retrieved for each hit 
      *                              It can be used when downloading KWIC inclusive metadata
+     * @param additionalSearchConstraints
      * 
      * @return the {@code SearchResultPlus} object
      * @throws SearchServiceException if input parameters can not be parsed 
      * @throws IOException 
      */
-    public SearchResultPlus search(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
+    public SearchResultPlus search(String queryString,
+                                String queryLanguage,
+                                String queryLanguageVersion,
+                                String corpusQuery,
+                                String metadataQuery,
+                                Integer pageLength, 
+                                Integer pageIndex,
+                                Boolean cutoff,
+                                String searchIndexType,
+                                IDList metadataIDs,
+                                Map<String, String> additionalSearchConstraints)
+            throws SearchServiceException, IOException;
     
     /**
      * Searches for repetitions in the specified search index according to the specified parameters.
@@ -219,10 +234,9 @@ public interface BackendInterface {
      *                              Use false to retrieve just the number of hits specified by {@code pageLength},
      *                              the total number of hits and the total number of documents are set in this case 
      *                              to 1 in the {@code SearchResultPlus} object.
-     * @param searchIndex           the string that can be an ID, name or type of a search index or a group of search indices
-     *                              (that depends on the backend implementation, see e.g. 
-     *                              {@link org.zumult.query.implementations.DGD2SearchIndexTypeEnum DGD2SearchIndexTypeEnum}). 
-     *                              If null, the default search index is used.
+     * @param searchIndexType       The search index type: In combination with the {@code corpusQuery}, it defines which search indices should be used
+     *                              (that depends on the backend implementation).
+     *                              If null, the default search index type is used.
      * @param metadataIDs           the list of metadata IDs whose values should be retrieved for each hit 
      *                              It can be used when downloading KWIC inclusive metadata
      * @param repetitions           the specification of desired repetitions. e.g. in the xml-format
@@ -239,22 +253,26 @@ public interface BackendInterface {
      *                              &lt;repetitions&gt;
      * @param synonyms              the specification of synonyms, e.g. in the xml-format 
      *                              &lt;synonyms&gt;Katze,Mieze,Kätzchen;Junge,Kerl,Mann;Fernseher,Glotze;&lt;/synonyms&gt;
+     * @param additionalSearchConstraints
      * 
      * @return the {@code SearchResultPlus} object
      * @throws SearchServiceException if input parameters can not be parsed
      * @throws IOException 
      */
-    public SearchResultPlus searchRepetitions(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, Integer pageLength, 
-            Integer pageIndex, Boolean cutoff, String searchIndex, IDList metadataIDs, String repetitions, String synonyms, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
-    
-    
-    /*public SearchResultBigrams searchBigrams(String queryString, String queryLanguage, String queryLanguageVersion, 
-            String corpusQuery, String metadataQuery, Integer pageLength, 
-            Integer pageIndex, String searchIndex, String sortType,
-            String bigramType, List<String> annotationLayerIDs4BigramGroups,
-            List<String> elementsInBetweenToBeIgnored, String scope,
-            Integer minFreq, Integer maxFreq, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;*/
+    public SearchResultPlus searchRepetitions(String queryString,
+                                              String queryLanguage,
+                                              String queryLanguageVersion, 
+                                              String corpusQuery,
+                                              String metadataQuery,
+                                              Integer pageLength,
+                                              Integer pageIndex,
+                                              Boolean cutoff,
+                                              String searchIndexType,
+                                              IDList metadataIDs,
+                                              String repetitions,
+                                              String synonyms,
+                                Map<String, String> additionalSearchConstraints)
+                                throws SearchServiceException, IOException;
         
     /**
      * Searches in the specified search index according to the specified parameters 
@@ -273,21 +291,30 @@ public interface BackendInterface {
      *                              If null, the default value is used.
      * @param pageIndex             the number of the first {@code StatisticEntry} object that should be returned with {@code SearchStatistics}, 
      *                              Please note, that the numbering starts with '0'. If null, the default value '0' is used.
-     * @param searchIndex           the string that can be an ID, name or type of a search index or a group of search indices
-     *                              (that depends on the backend implementation, see e.g. 
-     *                              {@link org.zumult.query.implementations.DGD2SearchIndexTypeEnum DGD2SearchIndexTypeEnum}). 
-     *                              If null, the default search index is used.
+     * @param searchIndexType       The search index type: In combination with the {@code corpusQuery}, it defines which search indices should be used
+     *                              (that depends on the backend implementation).
+     *                              If null, the default search index type is used.
      * @param sortType              the algorithm name that should be used to sort the hit statistics.
      *                              (depends on the backend implementation, see e.g. 
      *                              {@link org.zumult.query.searchEngine.SortTypeEnum SortTypeEnum})
+     * @param additionalSearchConstraints
      * 
      * @return the {@code SearchStatistics} object
      * @throws SearchServiceException if input parameters can not be parsed
      * @throws IOException 
      */
-    public SearchStatistics getSearchStatistics(String queryString, String queryLanguage, 
-            String queryLanguageVersion, String corpusQuery, String metadataQuery, String metadataKeyID, 
-            Integer pageLength, Integer pageIndex, String searchIndex, String sortType, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
+    public SearchStatistics getSearchStatistics(String queryString,
+                                                String queryLanguage,
+                                                String queryLanguageVersion,
+                                                String corpusQuery,
+                                                String metadataQuery,
+                                                String metadataKeyID,
+                                                Integer pageLength,
+                                                Integer pageIndex,
+                                                String searchIndexType,
+                                                String sortType,
+                               Map<String, String> additionalSearchConstraints)
+                            throws SearchServiceException, IOException;
     
     /**
      * Searches in the specified transcript according to the specified parameters, 
@@ -302,19 +329,27 @@ public interface BackendInterface {
      * @param corpusQuery           the corpus query string that specifies in which corpora to search for {@code queryString}, 
      *                              e.g. corpusSigle="FOLK|GWSS|DH", not null
      * @param metadataQuery         the metadata query string that constraints the search result to specified metadata, e.g. tokenSize=2, may be null
-     * @param searchIndex           the string that can be an ID, name or type of a search index or a group of search indices
-     *                              (that depends on the backend implementation, see e.g. 
-     *                              {@link org.zumult.query.implementations.DGD2SearchIndexTypeEnum DGD2SearchIndexTypeEnum}). 
-     *                              If null, the default search index is used.
+     * @param searchIndexType       The search index type: In combination with the {@code corpusQuery}, it defines which search indices should be used
+     *                              (that depends on the backend implementation).
+     *                              If null, the default search index type is used.
      * @param transcriptID          the transcript ID
      * @param tokenAttribute        word token attribute, whose values should be extracted for the match, e.g. "id", "pos", "lemma" or "norm"
+     * @param additionalSearchConstraints
      * 
      * @return {@code IDList} of distinct values for the specified {@code tokenAttribute}
      * @throws SearchServiceException if input parameters can not be parsed
      * @throws IOException 
      */
-    public IDList searchTokensForTranscript(String queryString, String queryLanguage, String queryLanguageVersion, String corpusQuery, String metadataQuery, 
-            String searchIndex, String transcriptID, String tokenAttribute, Map<String, String> additionalSearchConstraints) throws SearchServiceException, IOException;
+    public IDList searchTokensForTranscript(String queryString,
+                                            String queryLanguage,
+                                            String queryLanguageVersion,
+                                            String corpusQuery,
+                                            String metadataQuery,
+                                            String searchIndexType,
+                                            String transcriptID,
+                                            String tokenAttribute,
+                                Map<String, String> additionalSearchConstraints)
+                                throws SearchServiceException, IOException;
     
     /**********************************************************************************/
     /*                          kwic methods                                          */ 
