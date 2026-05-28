@@ -169,7 +169,7 @@ public class ISOTEITranscriptConverter {
         return it.toHTML(htmlParameters);        
     }
 
-    private String convertPartiturEndlessHTML() throws TransformerException, SAXException, JexmaraldaException {
+    private String convertPartiturEndlessHTML_() throws TransformerException, SAXException, JexmaraldaException {
         InterlinearText it = convertInterlinearText();
 
         HTMLParameters htmlParameters = new HTMLParameters();
@@ -182,6 +182,20 @@ public class ISOTEITranscriptConverter {
         //it.reorder();
         
         return it.toHTML(htmlParameters);        
+    }
+
+    private String convertPartiturEndlessHTML() throws TransformerException, SAXException, JexmaraldaException {
+        String xml1 = transcript.toXML();
+        String[][] parameters = {
+        };
+        String xml1a = new IOHelper().applyInternalStylesheetToString("/org/exmaralda/tei/xml/token2timeSpanReferences.xsl", xml1, parameters); 
+        String xml2 = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/addLowLevelAnchors.xsl", xml1a, parameters); 
+        String xml3 = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/isotei2exmaralda_Keep_Tokens.xsl", xml2, parameters); 
+        String[][] htmlParameters = {
+            //{"HIGHLIGHT_IDS_1", highlightIDs}
+        };
+        String html = new IOHelper().applyInternalStylesheetToString("/org/zumult/io/exb2Partitur_Keep_Tokens.xsl", xml3, htmlParameters); 
+        return html;
     }
 
     

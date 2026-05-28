@@ -1577,7 +1577,7 @@ public class ZumultDataServlet extends HttpServlet {
         }               
     }
 
-    private void getPartitur(HttpServletRequest request, HttpServletResponse response) throws IOException {     
+    private void getPartitur_(HttpServletRequest request, HttpServletResponse response) throws IOException {     
         try {
             String transcriptID = request.getParameter("transcriptID");
             String aroundAnnotationBlockID = request.getParameter("startAnnotationBlockID");
@@ -1606,6 +1606,47 @@ public class ZumultDataServlet extends HttpServlet {
         }               
     }
 
+    private void getPartitur(HttpServletRequest request, HttpServletResponse response) throws IOException {     
+        try {
+            String transcriptID = request.getParameter("transcriptID");
+            String startTokenID = request.getParameter("startTokenID");
+            String hideCategories = request.getParameter("hideCategories");
+            if (hideCategories==null){
+                hideCategories = "";
+            }
+
+            
+            
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            Transcript transcript = backend.getTranscript(transcriptID);
+            String aroundAnnotationBlockID = transcript.getFirstAnnotationBlockIDForTime(transcript.getTimeForID(startTokenID));
+
+            System.out.println("getPartitur called with TRANSCRIPT ID=" + transcriptID + " and START_ANNOTATION_BLOCK_ID=" + aroundAnnotationBlockID);
+            
+            int howMuchAround = 1;
+            String startAnnotationBlockID = transcript.getAnnotationBlockID(aroundAnnotationBlockID, -howMuchAround);
+            String endAnnotationBlockID = transcript.getAnnotationBlockID(aroundAnnotationBlockID, howMuchAround);
+            Transcript partTranscript = transcript.getPart(startAnnotationBlockID, endAnnotationBlockID, true);
+            //partTranscript.removeAnnotations();
+            IDList categories = partTranscript.getAnnotationTypes();
+            for (String cat : hideCategories.split(" ")){
+                categories.remove(cat);
+            }
+            partTranscript = partTranscript.filterAnnotations(categories);
+            
+            
+            String partiturHTML = new ISOTEITranscriptConverter((ISOTEITranscript) partTranscript).convert(ISOTEITranscriptConverter.FORMATS.PARTITUR_ENDLESS_HTML);
+            
+            
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(partiturHTML);            
+            response.getWriter().close();
+        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        }               
+    }
 
     private void getEpisodes(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {

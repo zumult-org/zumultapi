@@ -36,6 +36,7 @@ public class TestSearch {
         BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
         Searcher searcher = backend.getSearcher();
         searcher.setQuery("[word=\"in\"]", null, null);
+        searcher.setPagination(Integer.MAX_VALUE, 0);
         searcher.setCollection("manv_corpus", null);
         //SearchResult searchResult = searcher.search("SB_manv_corpus");
         SearchResultPlus searchResultPlus = searcher.search("SB_manv_corpus", Boolean.TRUE, null);

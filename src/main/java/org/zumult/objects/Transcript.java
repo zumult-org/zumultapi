@@ -42,6 +42,7 @@ public interface Transcript extends XMLSerializable, Identifiable, Metadatable {
     
     // issue #272
     public Transcript filterSpeakers(IDList speakerIDs);
+    public Transcript filterAnnotations(IDList annotationTypes);
     
     public TokenList getTokenList(String type);
     public TokenList getTokenList(String type, TokenFilter filter);

@@ -338,6 +338,36 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     }
 
     @Override
+    public Transcript filterAnnotations(IDList annotationTypes) {
+        Set<String> annotationTypesSet = new HashSet<>();
+        // speakerIDs are corpus IDs, but we need @who
+        for (String annotationType : annotationTypes){
+            annotationTypesSet.add(annotationType);
+        }
+        try {
+            Document copyDocument = IOHelper.DocumentFromText(toXML());            
+            NodeList nodes = (NodeList)xPath.evaluate("//tei:body/descendant::tei:spanGrp[@type]", copyDocument.getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<nodes.getLength(); i++){                
+                Element node = (Element) nodes.item(i);
+                String type = node.getAttribute("type");
+                if ((!annotationTypesSet.contains(type))){
+                    node.getParentNode().removeChild(node);
+                }
+            }
+            if(metadata!=null){
+                return createNewInstance(copyDocument, metadata.getDocument());
+            }else {
+                return createNewInstance(copyDocument);
+            }            
+        } catch (TransformerException | IOException | SAXException | ParserConfigurationException | XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+
+    @Override
     public IDList getIncidentTypes() {
         return getTypes("//tei:incident[@type]", "incident-types");
     }
