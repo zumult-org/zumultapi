@@ -5,6 +5,7 @@
  */
 package org.zumult.query.searchEngine;
 
+import java.util.HashMap;
 import org.zumult.query.Hit.Match;
 
 /**
@@ -21,6 +22,16 @@ import org.zumult.query.Hit.Match;
         Integer endOffset;
         double startInterval;
         double endInterval;
+        private HashMap<String, String> metadata;
+        
+        @Override
+        public HashMap<String, String> getMetadata() {
+            return metadata;
+        }
+
+        public void setMetadata(HashMap<String, String> metadata) {
+            this.metadata = metadata;
+        }
 
         public void setType(String type) {
             this.type = type;

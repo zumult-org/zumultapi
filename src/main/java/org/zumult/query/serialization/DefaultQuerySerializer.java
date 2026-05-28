@@ -134,40 +134,12 @@ public class DefaultQuerySerializer implements QuerySerializer {
            
             cutoffElem.setTextContent(String.valueOf(cutoff));
             meta.appendChild(cutoffElem);
-            
-            Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
-            itemsPerPage.setTextContent(String.valueOf(kwicObj.getPagination().getItemsPerPage()));
-            meta.appendChild(itemsPerPage);
 
-            Element mode = document.createElement(MODE);
-            Element code = document.createElement(CODE);
-            code.setTextContent(kwicObj.getSearchMode());
-            mode.appendChild(code);
-            meta.appendChild(mode);
-                        
-            Element pageStartIndex = document.createElement(PAGE_START_INDEX);
-            pageStartIndex.setTextContent(String.valueOf(kwicObj.getPagination().getPageStartIndex()));
-            meta.appendChild(pageStartIndex);
+            addSearchMode(document, meta, kwicObj);
+            addPageInfo(document, meta, kwicObj);
 
-            Element context = document.createElement(CONTEXT);
-            Element left = document.createElement(CONTEXT_LEFT);
-            Element right = document.createElement(CONTEXT_RIGHT);
-            Element leftItem = document.createElement(CONTEXT_ITEM);
-            Element leftLength = document.createElement(CONTEXT_LENGTH);
-            Element rightItem = document.createElement(CONTEXT_ITEM);
-            Element rightLength = document.createElement(CONTEXT_LENGTH);
-            leftItem.setTextContent(kwicObj.getLeftContext().getType());
-            rightItem.setTextContent(kwicObj.getRightContext().getType());
-            leftLength.setTextContent(String.valueOf(kwicObj.getLeftContext().getLength()));
-            rightLength.setTextContent(String.valueOf(kwicObj.getRightContext().getLength()));
-            left.appendChild(leftItem);
-            left.appendChild(leftLength);
-            right.appendChild(rightItem);
-            right.appendChild(rightLength);
-            context.appendChild(left);
-            context.appendChild(right);
-            meta.appendChild(context);
             
+            addContext(document, meta, kwicObj);
             root.appendChild(meta);
             
             if(kwicObj.getAdditionalSearchConstraints()!=null){
@@ -229,7 +201,6 @@ public class DefaultQuerySerializer implements QuerySerializer {
                 hits.appendChild(hit);
                 
                 index++;
-                //System.out.println("--------");
             }
             
             root.appendChild(hits);
@@ -263,9 +234,9 @@ public class DefaultQuerySerializer implements QuerySerializer {
         Document document = db.newDocument();
         
         Element root = createRoot(document,
-            obj.getSearchQuery().getQueryString(),
-            obj.getMetadataQuery().getAdditionalMetadata(),
-            obj.getMetadataQuery().getCorpusQuery());
+        obj.getSearchQuery().getQueryString(),
+  obj.getMetadataQuery().getAdditionalMetadata(),
+        obj.getMetadataQuery().getCorpusQuery());
                     
         root.setAttribute("type", "statistics");
 
@@ -486,71 +457,6 @@ public class DefaultQuerySerializer implements QuerySerializer {
         }
     }
 
-    /*public String displayBigramsInXML(SearchResultBigrams searchResultBigrams) {
-        Document document = db.newDocument();
-        Element root = createRoot(document,
-        searchResultBigrams.getSearchQuery().getQueryString(),
-        searchResultBigrams.getMetadataQuery().getAdditionalMetadata(),
-        searchResultBigrams.getMetadataQuery().getCorpusQuery());
-        root.setAttribute("type", "bigrams");
-        
-        Element meta = createMetaElement(document,
-                searchResultBigrams.getTotalHits(), 
-                searchResultBigrams.getTotalTranscripts(),
-                searchResultBigrams.getSearchTime());
-
-        Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
-        itemsPerPage.setTextContent(String.valueOf(searchResultBigrams.getPagination().getItemsPerPage()));
-        meta.appendChild(itemsPerPage);
-
-        Element mode = document.createElement(MODE);
-        Element code = document.createElement(CODE);
-        code.setTextContent(searchResultBigrams.getSearchMode());
-        mode.appendChild(code);
-        meta.appendChild(mode);
-   
-        Element pageStartIndex = document.createElement(PAGE_START_INDEX);
-        pageStartIndex.setTextContent(String.valueOf(searchResultBigrams.getPagination().getPageStartIndex()));
-        meta.appendChild(pageStartIndex);
-            
-        root.appendChild(meta);
-            
-        if(searchResultBigrams.getAdditionalSearchConstraints()!=null){
-            Element additionalSearchConstraints = document.createElement(ADDITIONAL_SAERCH_CONSTRAINTS);
-                
-            for (AdditionalSearchConstraint additionalSearchConstraint: searchResultBigrams.getAdditionalSearchConstraints()){
-                NodeList nodes = additionalSearchConstraint.getDocument().getChildNodes();
-                for (int i=0; i<nodes.getLength(); i++){
-                    Node node = document.importNode(nodes.item(i), true);
-                    additionalSearchConstraints.appendChild(node);
-                }
-            }
-                
-            root.appendChild(additionalSearchConstraints);
-        }
-            
-        Element bigrams = document.createElement(BIGRAMS_PART);
-        ArrayList<Bigram> rows = searchResultBigrams.getBigrams();
-
-        for (Bigram row : rows){
-            Element bigram = document.createElement(BIGRAM);
-            bigram.setAttribute(ROW, String.valueOf(row.getPosition()));
-                
-            bigram.setAttribute("norm", 
-                                    formatBigram(row, "norm"));
-            bigram.setAttribute("lemma", 
-                                    formatBigram(row, "lemma"));
-            bigram.setAttribute(TOTAL_RESULTS, String.valueOf(row.getNumberOfHits()));
-
-            bigrams.appendChild(bigram);
-        }
- 
-        root.appendChild(bigrams);
-
-        document.appendChild(root);
-        return IOUtilities.documentToString(document); 
-    }*/
-    
     protected Element createRoot(Document document, String searchQuery,
         String additionalMetadata, String corpusQuery) {
         Element root = document.createElement(XML_ROOT);
@@ -570,36 +476,56 @@ public class DefaultQuerySerializer implements QuerySerializer {
         
         return root;
     }
-    
-    /*protected String formatBigram(Bigram b, String layer){
-        
-        String partner = b.getPartner();
-        Bigram.BigramType type = b.getType();
-        
-        StringBuilder sb = new StringBuilder();
 
-            if(type.equals(Bigram.BigramType.LEFT)){
-               if(partner.equals("{}")){
-                   sb.append(".").append(SPACE);
-               } else {
-                   sb.append(getValueFromMap(partner, layer))
-                     .append(SPACE);
-               }
-            } 
-            
-            sb.append(getValueFromMap(b.getQueryMatch(), layer));
-            
-            if(type.equals(Bigram.BigramType.RIGHT)){
-                if (partner.equals("{}")){
-                    sb.append(SPACE).append(".");
-                } else {
-                    sb.append(SPACE)
-                      .append(getValueFromMap(partner, layer));
-                }
+    protected void addMetadata (Element element, HashMap<String, String> metdata){
+        if(metdata!=null) {
+            for (String key: metdata.keySet ()) {
+                element.setAttribute (key, metdata.get (key));
             }
-                        
-            return sb.toString();
-    }*/
+        }
+    }
+    
+    protected void addSearchMode(Document document, Element meta, KWIC kwicObj) {
+        Element mode = document.createElement(MODE);
+        Element code = document.createElement(CODE);
+        code.setTextContent(kwicObj.getSearchMode());
+        mode.appendChild(code);
+        meta.appendChild(mode);
+    }
+    
+    protected void addContext(Document document, Element meta, KWIC kwicObj) {
+        Element context = document.createElement(CONTEXT);
+        Element left = document.createElement(CONTEXT_LEFT);
+        Element right = document.createElement(CONTEXT_RIGHT);
+        Element leftItem = document.createElement(CONTEXT_ITEM);
+        Element leftLength = document.createElement(CONTEXT_LENGTH);
+        Element rightItem = document.createElement(CONTEXT_ITEM);
+        Element rightLength = document.createElement(CONTEXT_LENGTH);
+        leftItem.setTextContent(kwicObj.getLeftContext().getType());
+        rightItem.setTextContent(kwicObj.getRightContext().getType());
+        leftLength.setTextContent(String.valueOf(kwicObj.getLeftContext().getLength()));
+        rightLength.setTextContent(String.valueOf(kwicObj.getRightContext().getLength()));
+        left.appendChild(leftItem);
+        left.appendChild(leftLength);
+        right.appendChild(rightItem);
+        right.appendChild(rightLength);
+        context.appendChild(left);
+        context.appendChild(right);
+        meta.appendChild(context);
+    }
+    
+    protected void addPageInfo(Document document, Element meta, KWIC kwicObj) {
+        
+        Element itemsPerPage = document.createElement(ITEMS_PER_PAGE);
+        itemsPerPage.setTextContent(
+        String.valueOf(kwicObj.getPagination().getItemsPerPage()));
+        meta.appendChild(itemsPerPage);
+
+        Element pageStartIndex = document.createElement(PAGE_START_INDEX);
+        pageStartIndex.setTextContent(
+        String.valueOf(kwicObj.getPagination().getPageStartIndex()));
+        meta.appendChild(pageStartIndex);
+    }
     
     protected String getValueFromMap (String str, String layer) {
         StringBuilder sb = new StringBuilder();

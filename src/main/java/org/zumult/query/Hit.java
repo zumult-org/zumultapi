@@ -29,5 +29,6 @@ import org.zumult.objects.Identifiable;
         Integer getEndOffset();
         double getStartInterval();
         double getEndInterval();
+        public HashMap<String, String> getMetadata();
     }
  }
