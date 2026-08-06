@@ -34,12 +34,14 @@ public class TestSearch {
 
     private void doit() throws SearchServiceException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+        System.out.println(String.join(" / ", backend.getCorpora()));
+        //System.exit(0);
         Searcher searcher = backend.getSearcher();
         searcher.setQuery("[word=\"in\"]", null, null);
         searcher.setPagination(Integer.MAX_VALUE, 0);
-        searcher.setCollection("manv_corpus", null);
+        searcher.setCollection("2024-06_remote-classroom", null);
         //SearchResult searchResult = searcher.search("SB_manv_corpus");
-        SearchResultPlus searchResultPlus = searcher.search("SB_manv_corpus", Boolean.TRUE, null);
+        SearchResultPlus searchResultPlus = searcher.search("SB_2024-06_remote-classroom", Boolean.TRUE, null);
         ArrayList<Hit> hits = searchResultPlus.getHits();
         System.out.println(searchResultPlus.getTotalHits() + " hits, but " + searchResultPlus.getHits().size() + " hits.");
         for (Hit hit : hits){

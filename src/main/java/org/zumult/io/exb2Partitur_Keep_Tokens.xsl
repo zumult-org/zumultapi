@@ -195,7 +195,16 @@
         <!-- if it is the last event -->
         <xsl:if test="not(following-sibling::event[1])">
             <td class="empty">
-                <xsl:variable name="COLSPAN" select="$TIMELINE_COPY/descendant::tli[last()]/@position - $TIMELINE_COPY/descendant::tli[@id=$END]/@position"/>
+                <xsl:variable name="COLSPAN">
+                    <xsl:choose>
+                        <xsl:when test="$TIMELINE_COPY/descendant::tli[@id=$END]">
+                            <xsl:value-of select="$TIMELINE_COPY/descendant::tli[last()]/@position - $TIMELINE_COPY/descendant::tli[@id=$END]/@position"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$TIMELINE_COPY/descendant::tli[last()]/@position - $TIMELINE_COPY/descendant::tli[@id=$START]/@position - 1"/>                            
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <xsl:attribute name="colspan">
                     <xsl:value-of select="$COLSPAN"/>
                 </xsl:attribute>
