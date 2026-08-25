@@ -199,6 +199,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     @Override
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock) {
         try {
+            // STEP 1: get the when IDs corresponding to the IDs
+            // (if id1 and id2 are timepoints, nothing changes
             Element[] whens = mapToWhenIDs(id1, id2);
             Element when1 = whens[0];
             Element when2 = whens[1];
@@ -206,13 +208,22 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             // now we should be sure that both when1 and when2 really are <when> elements
             Document copyDocument = IOHelper.DocumentFromText(toXML());
             
-            // throw out annotationBlocks and other things on the same level
+            // STEP 2: throw out annotationBlocks and other things on the same level
             NodeList nodes = (NodeList)xPath.evaluate("//tei:body/*[@start and @end]", copyDocument.getDocumentElement(), XPathConstants.NODESET);
             double minTime = getInterval(when1);
             double maxTime = getInterval(when2);
-            System.out.println("We have START=" + when1.getAttribute("xml:id") + " and END=" + when2.getAttribute("xml:id"));
-            System.out.println("Start time " + minTime + " / endTime " + maxTime);
+            //System.out.println("   We have START=" + when1.getAttribute("xml:id") + " and END=" + when2.getAttribute("xml:id"));
+            //System.out.println("   Start time " + minTime + " / endTime " + maxTime);
             
+            // 2026-08-19 switch the two when they are reversed?? But why would that happen?
+            if (minTime > maxTime){
+                double memoTime = minTime;
+                minTime = maxTime;
+                maxTime = memoTime;
+            }
+            
+            // 23-08-2023: this is a safety measure: when must not be thrown out if it used as start or end
+            Set<String> allStartEndIDs = new HashSet<>();
             for (int i=0; i<nodes.getLength(); i++){                
                 Element node = (Element) nodes.item(i);
                 String startID = node.getAttribute("start"); //.substring(1);                
@@ -222,47 +233,90 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 // ......|------|........./--------/
                 if((startTime<minTime && endTime<minTime) 
                         || (startTime>maxTime && endTime>maxTime)){
-                    //System.out.println("Throwing out " + node.getAttribute("xml:id"));
-                    node.getParentNode().removeChild(node);
-                    
+                    // this is the case where the element is fully before or fully after
+                    node.getParentNode().removeChild(node);                    
                 } else {
                     if (startTime<minTime){
-                        when1 = ((Element)xPath.evaluate("//*[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                    }
-                    if (endTime>maxTime){
-                        // this is probably not quite right yet
-                        // need to consider cases of overlap
-                        when2 = ((Element)xPath.evaluate("//*[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        System.out.println("HERE ---" + when2.getAttribute("xml:id"));
+                        // this is the case where the element starts before but ends inside
+                        // consider this: we haven't changed minTime, so the new when1 might actually be later than the one we adjusted before
+                        Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));   
+                        if (getInterval(candidate)<getInterval(when1)){
+                            when1 = candidate;
+                        }
                     }
+                    if (endTime>maxTime){
+                        // this is the case where the element starts inside but ends after
+                        // consider this: we haven't changed maxTime, so the new when2 might actually be earlier than the one we adjusted before
+                        Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        if (getInterval(candidate)>getInterval(when2)){
+                            when2 = candidate;
+                        }
+                    }
+                    allStartEndIDs.add(startID);
+                    allStartEndIDs.add(endID);
                 }
             }
             
-            System.out.println("Now we have START=" + when1.getAttribute("xml:id") + " and END=" + when2.getAttribute("xml:id"));
-            //System.out.println(IOHelper.ElementToString(copyDocument.getDocumentElement()));
+            // New 23-08-2026: throw out spans on the top level
+            NodeList topLevelSpanNodes = (NodeList)xPath.evaluate("//tei:body/tei:spanGrp/tei:span[@from and @to]", copyDocument.getDocumentElement(), XPathConstants.NODESET);
+            for (int i=0; i<topLevelSpanNodes.getLength(); i++){                
+                Element spanElement = (Element) topLevelSpanNodes.item(i);
+                String fromID = spanElement.getAttribute("from");
+                String toID = spanElement.getAttribute("to");                
+                Element[] spanWhens = mapToWhenIDs(fromID, toID);
+                Element spanWhen1 = spanWhens[0];
+                Element spanWhen2 = spanWhens[1];
+                double startTime = getInterval(spanWhen1);
+                double endTime = getInterval(spanWhen2);
+                if((startTime<minTime && endTime<minTime) 
+                        || (startTime>maxTime && endTime>maxTime)){
+                    // this is the case where the element is fully before or fully after
+                    spanElement.getParentNode().removeChild(spanElement);                    
+                } else {
+                    allStartEndIDs.add(fromID);
+                    allStartEndIDs.add(toID);                    
+                }               
+                
+            }
+            
             
             // 06-01-2021, for issue #43
-            String adjustedStart = ((Element)xPath.evaluate("//*[@start][1]", copyDocument.getDocumentElement(), XPathConstants.NODE)).getAttribute("start");            
-            System.out.println("ADJUSTED_START " + adjustedStart);
-            if (!(when1.getAttribute("xml:id").equals(adjustedStart))){
-                when1 = ((Element)xPath.evaluate("//*[@xml:id='" + adjustedStart + "']", getDocument().getDocumentElement(), XPathConstants.NODE)); 
+            Element adjustedStartElement = (Element)xPath.evaluate("//*[@start][1]", copyDocument.getDocumentElement(), XPathConstants.NODE);
+            if (adjustedStartElement==null){
+             // this can happen if the resulting part transcript is empty. Let us do nothing in that case?
+            } else {
+                String adjustedStart = adjustedStartElement.getAttribute("start");            
+                //System.out.println("ADJUSTED_START " + adjustedStart);
+                if (!(when1.getAttribute("xml:id").equals(adjustedStart))){
+                    when1 = ((Element)xPath.evaluate("//*[@xml:id='" + adjustedStart + "']", getDocument().getDocumentElement(), XPathConstants.NODE)); 
+                }
             }
+            
+            
             
             // throw out when elements
             NodeList whenNodes = (NodeList)xPath.evaluate("//tei:timeline/tei:when", copyDocument.getDocumentElement(), XPathConstants.NODESET);
             boolean in = false;
             boolean out = false;
+            String since = ((Element)whenNodes.item(0)).getAttribute("since");
             for (int i=0; i<whenNodes.getLength(); i++){                
                 Element whenNode = (Element) whenNodes.item(i);
-                String id = whenNode.getAttribute("xml:id");                
+                String id = whenNode.getAttribute("xml:id"); 
+                if (id.equals(since)) continue;
                 in = in || id.equals(when1.getAttribute("xml:id"));
-                if((!in || out) && (!(whenNode.getAttributeNode("interval")==null))){
-                    whenNode.getParentNode().removeChild(whenNode);
+                if ((!in || out) && (!(whenNode.getAttributeNode("interval")==null))){
+                    // safety measure, see above
+                    if (!(allStartEndIDs.contains(id))){
+                        whenNode.getParentNode().removeChild(whenNode);
+                    }
                 }
                 out = out || id.equals(when2.getAttribute("xml:id"));
             }
             
             
-            if(metadata!=null){
+            
+            
+            if (metadata!=null){
                 return createNewInstance(copyDocument, metadata.getDocument());
             }else {
                 return createNewInstance(copyDocument);
@@ -1076,5 +1130,45 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     // what is this???
     public abstract ISOTEITranscript createNewInstance(Document transcriptDocument, Document metadataDocument);
     public abstract ISOTEITranscript createNewInstance(Document transcriptDocument);
+
+    @Override
+    public String getFirstStartID() {
+        try {
+            Element firstElement = (Element) xPath.evaluate("//tei:body/*[@start][1]", getDocument().getDocumentElement(), XPathConstants.NODE);
+            if (firstElement==null) return null;
+            return firstElement.getAttribute("xml:id");
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public String getLastEndID() {
+        try {
+            NodeList allElements = (NodeList) xPath.evaluate("//tei:body/*[@end]", getDocument().getDocumentElement(), XPathConstants.NODESET);
+            double maxTimeValue = 0.0;
+            String maxTimeID = null;
+            for (int i=0; i<allElements.getLength(); i++){
+                Element element = (Element) allElements.item(i);
+                String endID = element.getAttribute("end"); //.substring(1);
+                //System.out.println("END-ID: " + endID);
+                Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // this should not happen, but we may have dangling events
+                if (whenElement==null) continue;
+                double timeValue = getInterval(whenElement);
+                if (timeValue > maxTimeValue){
+                    maxTimeValue = timeValue;
+                    maxTimeID = endID;
+                }
+                
+            }
+            return maxTimeID;
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     
 }

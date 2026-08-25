@@ -20,6 +20,7 @@ import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
+import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEITranscriptConverter;
 import org.zumult.objects.Corpus;
@@ -32,7 +33,6 @@ import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.Transcript;
 import org.zumult.objects.implementations.COMATranscript;
-import org.zumult.objects.implementations.ISOTEITranscript;
 import org.zumult.query.KWIC;
 import org.zumult.query.SearchResultPlus;
 import org.zumult.query.serialization.DefaultQuerySerializer;
@@ -58,11 +58,58 @@ public class TestCOMABackend {
                 System.out.println(m.getID());
             }*/
             backendX.findMetadataKeyByID("Media_prio-video");
+            /* http://localhost:8080/zumult/jsp/zuViel.jsp?
+                transcriptID=EXB_manv_2019_h_triage&
+                startTimeID=ts81&   
+                endTimeID=ts371&
+                speakerSelection=manv_2019_h.NA-01%20manv_2019_h.NFS-01%20manv_2019_h.PAT-06&
+                pageSubtitle=2019-04_H_TR-02_NA-01+NFS-01_PAT-06_ErS_R
+            */
             
-            Transcript txtxtx = backendX.getTranscript("ISO_manv_2017_e_triage");
-            int tokenCount = txtxtx.getNumberOfTokens();
-            System.out.println(tokenCount);
+            /*
+                http://localhost:8080/zumult/jsp/zuViel.jsp?
+                    transcriptID=EXB_manv_2018_e_triage&
+                    startTimeID=ts11&
+                    endTimeID=ts336&
+                    speakerSelection=manv_2018_e.NA-01%20manv_2018_e.PAT-05&                
+                    pageSubtitle=2018-09_E_TR-02_NA-01_PAT-05_ErS_Y            
+            */
+            String transcriptIDX = "EXB_manv_2018_e_triage";
+            String speakerSelection = "manv_2018_e.NA-01 manv_2018_e.PAT-05";
+            String startTimeID = "ts11";
+            String endTimeID = "ts336";
+            Transcript txtxtx = backendX.getTranscript(transcriptIDX);
             
+            List<Episode> episodesByNameX = txtxtx.getEpisodesByName("triage-situations");
+            System.out.println(episodesByNameX.size() + " episodes.");
+            
+            double startTime = txtxtx.getTimeForID(startTimeID);
+            double endTime = txtxtx.getTimeForID(endTimeID);
+            String startAnnotationBlockIDX = txtxtx.getFirstAnnotationBlockIDForTime(startTime);
+            String endAnnotationBlockIDX = txtxtx.getLastAnnotationBlockIDForTime(endTime);
+            
+            System.out.println(startTime + " ==> " + startAnnotationBlockIDX);
+            System.out.println(endTime + " ==> " + endAnnotationBlockIDX);
+
+            Transcript partTranscriptX = txtxtx.getPart(startAnnotationBlockIDX, endAnnotationBlockIDX, true);
+            System.out.println(partTranscriptX.toXML());
+            
+            startAnnotationBlockIDX = partTranscriptX.getFirstStartID();
+            endAnnotationBlockIDX = partTranscriptX.getLastEndID();
+
+            System.out.println(startTime + " ==> " + startAnnotationBlockIDX);
+            System.out.println(endTime + " ==> " + endAnnotationBlockIDX);
+            
+            
+            String[][] transcriptParameters = {
+                {"START_ANNOTATION_BLOCK_ID", startAnnotationBlockIDX}, 
+                {"END_ANNOTATION_BLOCK_ID", endAnnotationBlockIDX},
+                {"SPEAKER_SELECTION", speakerSelection} 
+            };
+            
+            String HTML = new IOHelper().applyInternalStylesheetToString(Constants.ISOTEI2HTML_STYLESHEET2, partTranscriptX.toXML(), transcriptParameters); 
+            
+            //System.out.println(HTML);
             
             System.exit(0);
             /*
@@ -120,8 +167,8 @@ public class TestCOMABackend {
             
             System.exit(0);
             
-            String transcriptIDX = "TRS_1-94-1-6-a";
-            Transcript transcriptX = backendX.getTranscript(transcriptIDX);
+            String transcriptIDXY = "TRS_1-94-1-6-a";
+            Transcript transcriptX = backendX.getTranscript(transcriptIDXY);
             String corpusIDX = backendX.getCorpus4Event(backendX.getEvent4SpeechEvent(backendX.getSpeechEvent4Transcript(transcriptIDX)));
             String transcriptXMLX = transcriptX.toXML();
 

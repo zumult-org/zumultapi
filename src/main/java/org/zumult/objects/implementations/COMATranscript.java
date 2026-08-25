@@ -133,9 +133,13 @@ public class COMATranscript extends ISOTEITranscript {
                 if (type==null) {
                     type="default";
                 }
-                NodeList nodes2 = node.getChildNodes();
+                //NodeList nodes2 = node.getChildNodes();
+                NodeList nodes2 = node.getElementsByTagNameNS(
+                        "http://www.tei-c.org/ns/1.0",
+                        "span"
+                );                
                 List<Episode> theseEpisodes = new ArrayList<>();
-                for (int j=0; j<nodes.getLength(); j++){                
+                for (int j=0; j<nodes2.getLength(); j++){                
                     Element node2 = (Element) nodes2.item(j);
                     // Create a new empty document
                     Document episodeDoc = builder.newDocument();

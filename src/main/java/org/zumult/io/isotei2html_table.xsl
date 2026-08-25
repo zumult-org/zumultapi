@@ -402,8 +402,11 @@
         </xsl:choose>
     </xsl:template>
     
+    <!-- New 19-08-2026 : do nothing with top level spanGrp -->
+    <xsl:template match="tei:spanGrp[not(ancestor::tei:annotationBlock)]"/>
     
-    <xsl:template match="tei:body/*[not(self::tei:annotationBlock)]">
+    
+    <xsl:template match="tei:body/*[not(self::tei:annotationBlock or self::tei:spanGrp)]">
         <xsl:variable name="THIS_TYPE" select="@type"/>
         <xsl:variable name="SPEAKER_ID" select="@who"/>        
         <!-- <xsl:if test="not(@type) or not($VIS_INCIDENT_NOT_TYPES_LIST/descendant::id[text()=$THIS_TYPE])"> -->
