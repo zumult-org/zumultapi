@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zumult-query-examples>
-    <section name="Generic" language="en" corpus="EXMARaLDA-Demokorpus">
+    <section name="Generic" language="en" corpus="EXMARaLDA-DemoKorpus">
         <basic-query>
             <query>
                 <query-expression>in</query-expression>

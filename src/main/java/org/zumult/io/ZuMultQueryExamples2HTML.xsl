@@ -4,13 +4,34 @@
     xmlns:math="http://www.w3.org/2005/xpath-functions/math"
     exclude-result-prefixes="xs math"
     version="3.0">
+    <xsl:param name="SELECTION"/>
+    
+    <xsl:variable name="SELECTION_VAR">
+        <xsl:choose>
+            <xsl:when test="string-length($SELECTION)&gt;0">
+                <selection>
+                    <xsl:for-each select="tokenize($SELECTION, ';')">
+                        <name><xsl:value-of select="."/></name>
+                    </xsl:for-each>
+                </selection>
+            </xsl:when>
+            <xsl:otherwise>
+                <selection>
+                    <xsl:for-each select="//section">
+                        <name><xsl:value-of select="@name"/></name>
+                    </xsl:for-each>
+                </selection>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+        
     <xsl:template match="/">
         <div class="container mt-4">
             <ul class="nav nav-tabs" id="zumult_query_help_tabs" role="tablist">
-                <xsl:apply-templates select="//section" mode="tabs"/>
+                <xsl:apply-templates select="//section[@name=$SELECTION_VAR/descendant::name]" mode="tabs"/>
             </ul>
             <div class="tab-content border border-top-0 p-3" id="zumult_query_help_tab_content">                
-                <xsl:apply-templates select="//section" mode="tab_content"/>
+                <xsl:apply-templates select="//section[@name=$SELECTION_VAR/descendant::name]" mode="tab_content"/>
             </div>
         </div>
     </xsl:template>
