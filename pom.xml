@@ -123,7 +123,7 @@
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
-            <version>1.0.34</version>
+            <version>1.0.41</version>
             <type>jar</type>
         </dependency>
         
