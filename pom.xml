@@ -7,7 +7,7 @@
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
     <!-- last change: 16-07-2025 -->
-    <version>0.1.22</version>
+    <version>0.1.23</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>zumultapi</name>
@@ -123,7 +123,7 @@
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
-            <version>1.0.41</version>
+            <version>1.0.42</version>
             <type>jar</type>
         </dependency>
         
