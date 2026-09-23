@@ -113,6 +113,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     
     private Element[] mapToWhenIDs(String id1, String id2) throws XPathExpressionException{
         // get the element with the first ID
+        //System.out.println("When mapping : " + id1 + " / " + id2);
         Element element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
         if (element1==null){                
             //System.out.println("Do hammers");

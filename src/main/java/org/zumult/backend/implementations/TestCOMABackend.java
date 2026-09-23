@@ -22,7 +22,6 @@ import org.zumult.backend.Configuration;
 import org.zumult.backend.MetadataFinderInterface;
 import org.zumult.io.Constants;
 import org.zumult.io.IOHelper;
-import org.zumult.io.ISOTEITranscriptConverter;
 import org.zumult.objects.Corpus;
 import org.zumult.objects.Episode;
 import org.zumult.objects.IDList;
@@ -53,6 +52,13 @@ public class TestCOMABackend {
     private void doit() {
         try {
             BackendInterface backendX = BackendInterfaceFactory.newBackendInterface(); 
+            
+            // https://zumult.geiwi.uni-due.de/zumultapi/jsp/zuViel.jsp?transcriptID=ISO_2025-05-27_amica2_T7
+            Transcript transcriptXYZABC = backendX.getTranscript("ISO_2025-05-27_amica2_T7");
+            transcriptXYZABC = transcriptXYZABC.getPart(1, 12);
+            
+            System.exit(0);
+            
             Set<MetadataKey> metadataKeys4Corpus = backendX.getMetadataKeys4Corpus("manv_corpus", ObjectTypesEnum.MEDIA);
             /*for (MetadataKey m : metadataKeys4Corpus){
                 System.out.println(m.getID());
