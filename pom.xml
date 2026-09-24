@@ -294,10 +294,11 @@
         <!-- MARIA DB -->
         
         <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+        <!-- updated for #281 -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.10</version>
         </dependency>        
         
         
