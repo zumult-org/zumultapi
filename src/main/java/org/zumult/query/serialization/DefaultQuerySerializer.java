@@ -28,7 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.collections4.ListUtils;
+// removed for #281
+//import org.apache.commons.collections4.ListUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zumult.backend.BackendInterface;
@@ -319,7 +320,16 @@ public class DefaultQuerySerializer implements QuerySerializer {
             
             new Thread(new Consumer(linkedQueue, bw)).start();
             
-            List<List<Hit>> largeList = ListUtils.partition(hitArray, targetSize);
+            // removed for #281
+            //List<List<Hit>> largeList = ListUtils.partition(hitArray, targetSize);
+
+            // added for #281, it frees us from the collections4 dependency
+            List<List<Hit>> largeList = new ArrayList<>();
+            for (int i = 0; i < hitArray.size(); i += targetSize) {
+                largeList.add(
+                    hitArray.subList(i, Math.min(i + targetSize, hitArray.size()))
+                );
+            }            
             
             
             largeList.parallelStream().forEach((List<Hit> x) -> {

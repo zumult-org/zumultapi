@@ -7,7 +7,10 @@ package org.zumult.objects.implementations;
 
 import java.util.HashMap;
 import java.util.Set;
-import org.apache.commons.lang.StringEscapeUtils;
+// removed for #281
+// import org.apache.commons.lang.StringEscapeUtils;
+// added for #281
+import org.apache.commons.text.StringEscapeUtils;
 import org.zumult.objects.TokenList;
 
 /**
@@ -96,7 +99,10 @@ public class DefaultTokenList extends HashMap<String, Integer> implements TokenL
         StringBuilder sb = new StringBuilder();
         sb.append("<tokenList type='").append(type).append("'>");        
         for (String token : keySet()){
-            sb.append("<token form='").append(StringEscapeUtils.escapeXml(token)).append("' frequency='").append(get(token).toString()).append("'/>");
+            sb.append("<token form='")
+                    //.append(StringEscapeUtils.escapeXml(token)) // removed for #281
+                    .append(StringEscapeUtils.escapeXml10(token)) // added for #281
+                    .append("' frequency='").append(get(token).toString()).append("'/>");
         }
         sb.append("</tokenList>");
         return sb.toString();
