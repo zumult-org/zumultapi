@@ -120,10 +120,11 @@
         
         <!-- EXMARaLDA is needed for many small tasks, -->
         <!-- It has transitive dependencies for XML processing (e.g. JDOM, SAXON) -->
+        <!-- Since #281, it also has transitive dependencies for HTTP -->
         <dependency>
             <groupId>org.exmaralda</groupId>
             <artifactId>EXMARaLDA_WEB</artifactId>
-            <version>1.0.42</version>
+            <version>1.0.43</version>
             <type>jar</type>
         </dependency>
         
@@ -134,21 +135,21 @@
         <!-- ***************************** -->
 
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-        <!-- updated for #281 -->
-        <dependency>
+        <!-- removed for #281 -->
+        <!-- <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.14</version>
-        </dependency>
+        </dependency> -->
         
         <!-- New 05-11-2024 -->
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
-        <!-- updated for #281 -->
-        <dependency>
+        <!-- removed for #281 -->
+        <!-- <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.5.14</version>
-        </dependency>
+        </dependency> -->
         
         <!-- New 05-11-2024 -->
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
