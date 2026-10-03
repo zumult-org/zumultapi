@@ -18,10 +18,17 @@
           <id>github-manual</id>
           <url>https://raw.githubusercontent.com/Exmaralda-Org/exmaralda/master/src/build/webjar/</url>
         </repository>  
-      <repository>
+        <repository>
+            <id>github-mtas</id>
+            <url>https://maven.pkg.github.com/zumult-org/mtas-fork</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/zumult-org/zumultapi</url>
-        </repository>                  
+        </repository>         
     </repositories>    
     
     <!-- ***************************** -->   
@@ -99,7 +106,11 @@
         <dependency>
             <groupId>org.textexploration.mtas</groupId>
             <artifactId>mtas</artifactId>
-            <version>8.9.0.0</version>
+            <!-- last change: 28-04-2026 A fork is needed 
+            until the changes required for handling negative numbers in numPosition 
+            are merged into the original version of the MTAS project.-->
+            <version>9.10.0.0-zumult-mtas-fork-SNAPSHOT</version>
+           
             <!-- This is an experiment for #184 -->
             <exclusions>
                 <exclusion>
