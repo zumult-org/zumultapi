@@ -7,7 +7,7 @@
     <groupId>org.zumult</groupId>
     <artifactId>zumultapi</artifactId>
     <!-- last change: 16-07-2025 -->
-    <version>0.1.24</version>
+    <version>0.1.25</version>
     <!-- <packaging>war</packaging> -->
     <packaging>jar</packaging>
     <name>zumultapi</name>
@@ -188,6 +188,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
         </dependency> -->
+        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.17.0</version>
+        </dependency>        
         <!-- updated for #281 -->
         <dependency>
             <groupId>commons-io</groupId>
