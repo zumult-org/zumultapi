@@ -688,6 +688,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
 
     // TS, added 19-01-2024: the XML schema still seems to allow first <when> without @interval
     private double getInterval(Element element){
+        if (element==null) return 0.0;
         String interval = element.getAttribute("interval");
         if (interval==null || interval.isEmpty()){
             return 0.0;

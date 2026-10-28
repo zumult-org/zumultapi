@@ -953,7 +953,7 @@ public class COMAFileSystem extends AbstractBackend implements MetadataFinderInt
                 seElement.addContent(transcriptElement);
             }
             seElement.setAttribute("types", Integer.toString(seTokenList.getNumberOfTypes()));
-            if (i%50==0){
+            if (i%5==0){
                 System.out.println("[" + i + "/" + speechEventIDs.size() + "]");
             }
             i++;

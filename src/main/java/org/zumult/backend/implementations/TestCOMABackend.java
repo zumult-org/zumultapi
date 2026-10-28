@@ -51,7 +51,22 @@ public class TestCOMABackend {
 
     private void doit() {
         try {
-            BackendInterface backendX = BackendInterfaceFactory.newBackendInterface(); 
+System.out.println(
+    org.apache.commons.lang3.StringUtils.class
+        .getProtectionDomain()
+        .getCodeSource()
+        .getLocation()
+);
+
+System.out.println(
+    org.apache.commons.lang3.SystemProperties.class
+        .getProtectionDomain()
+        .getCodeSource()
+        .getLocation()
+);            BackendInterface backendX = BackendInterfaceFactory.newBackendInterface(); 
+            
+            System.exit(0);
+            
             
             // https://zumult.geiwi.uni-due.de/zumultapi/jsp/zuViel.jsp?transcriptID=ISO_2025-05-27_amica2_T7
             Transcript transcriptXYZABC = backendX.getTranscript("ISO_2025-05-27_amica2_T7");
