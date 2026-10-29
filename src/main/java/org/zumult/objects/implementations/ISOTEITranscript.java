@@ -23,6 +23,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.zumult.io.IOHelper;
 import org.zumult.io.ISOTEINamespaceContext;
@@ -196,7 +197,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         };
         return result;
     }
-
+ 
     @Override
     public Transcript getPart(String id1, String id2, boolean expandToFullAnnotationBlock) {
         try {
@@ -238,19 +239,27 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                     node.getParentNode().removeChild(node);                    
                 } else {
                     if (startTime<minTime){
-                        // this is the case where the element starts before but ends inside
-                        // consider this: we haven't changed minTime, so the new when1 might actually be later than the one we adjusted before
-                        Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));   
-                        if (getInterval(candidate)<getInterval(when1)){
-                            when1 = candidate;
+                        if(endTime==minTime) {
+                            node.getParentNode().removeChild(node); 
+                        } else{
+                            // this is the case where the element starts before but ends inside
+                            // consider this: we haven't changed minTime, so the new when1 might actually be later than the one we adjusted before
+                            Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));   
+                            if (getInterval(candidate)<getInterval(when1)){
+                                when1 = candidate;
+                            }
                         }
                     }
                     if (endTime>maxTime){
-                        // this is the case where the element starts inside but ends after
-                        // consider this: we haven't changed maxTime, so the new when2 might actually be earlier than the one we adjusted before
-                        Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        if (getInterval(candidate)>getInterval(when2)){
-                            when2 = candidate;
+                        if (startTime==maxTime) {
+                            node.getParentNode().removeChild(node); 
+                        } else {
+                            // this is the case where the element starts inside but ends after
+                            // consider this: we haven't changed maxTime, so the new when2 might actually be earlier than the one we adjusted before
+                            Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                            if (getInterval(candidate)>getInterval(when2)){
+                                when2 = candidate;
+                            }
                         }
                     }
                     allStartEndIDs.add(startID);
@@ -315,7 +324,7 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             }
             
             
-            
+            removeWhitespaceNodes(copyDocument.getDocumentElement());
             
             if (metadata!=null){
                 return createNewInstance(copyDocument, metadata.getDocument());
@@ -327,6 +336,20 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    private void removeWhitespaceNodes(Node node) {
+        NodeList children = node.getChildNodes();
+
+        for (int i = children.getLength() - 1; i >= 0; i--) {
+            Node child = children.item(i);
+            if (child.getNodeType() == Node.TEXT_NODE
+                    && child.getNodeValue().trim().isEmpty()) {
+                node.removeChild(child);
+            } else {
+                removeWhitespaceNodes(child);
+            }
+        }
     }
 
     @Override
