@@ -50,6 +50,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.OutputKeys;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.zumult.backend.BackendInterface;
 import org.zumult.objects.IDList;
 import org.zumult.objects.MetadataKey;
@@ -115,16 +117,18 @@ public class IOHelper {
     }
 
     public static String readUTF8(InputStream inputStream) throws FileNotFoundException {
-        Scanner scanner = new Scanner(inputStream, "UTF-8");
-        String xml = scanner.useDelimiter("\\A").next();
-        scanner.close();
+        String xml;
+        try (Scanner scanner = new Scanner(inputStream, "UTF-8")) {
+            xml = scanner.useDelimiter("\\A").next();
+        }
         return xml;    
     }
     
     public static String readUTF8(File file) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file, StandardCharsets.UTF_8.name());
-        String xml = scanner.useDelimiter("\\A").next();
-        scanner.close();
+        String xml;
+        try (Scanner scanner = new Scanner(file, StandardCharsets.UTF_8.name())) {
+            xml = scanner.useDelimiter("\\A").next();
+        }
         return xml;    
     }
     
@@ -132,17 +136,17 @@ public class IOHelper {
         URL url = new URL(urlString);
         InputStream inputStream = url.openStream();
 
-        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name());        
-        String xml = scanner.useDelimiter("\\A").next();
-        scanner.close();
+        String xml;
+        try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+            xml = scanner.useDelimiter("\\A").next();
+        }
         return xml;    
     }
 
     public static void writeUTF8(File file, String text) throws FileNotFoundException, IOException{
-        OutputStreamWriter writer =
-             new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-        writer.write(text);
-        writer.close();
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
+            writer.write(text);
+        }
     }
     
     public static Document readDocument(File file) throws IOException, SAXException, ParserConfigurationException{
@@ -258,73 +262,6 @@ public class IOHelper {
         return content;
     }
     
-    /*public static String getQueryXML(String queryString, String corpusQuery, Integer pageLength, Integer pageIndex) throws IOException {
-        try {
-            URL url = new URL(Configuration.getRestAPIBaseURL() 
-                    + "/SearchService/kwic?q=" + queryString.replaceAll("\\+", "%2B").replaceAll(" & ", "%26").replaceAll("<", "%3C").replaceAll(">", "%3E").replaceAll(" ","%20").replaceAll("#","%23") 
-                    + "&cq=" + corpusQuery
-                    + "&count=" + pageLength
-                    + "&offset=" + pageIndex); //your url i.e fetch data from .
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/xml");
-            conn.setRequestProperty("Accept-Charset", "UTF-8");             
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP Error code : "
-                        + conn.getResponseCode());
-            }
-            InputStreamReader in = new InputStreamReader(conn.getInputStream(), "UTF-8");
-            BufferedReader br = new BufferedReader(in);
-            String output;
-            String xml = "";
-            while ((output = br.readLine()) != null) {
-                xml+=output;
-            }
-            conn.disconnect();
-            
-            return xml;
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(IOHelper.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        } catch (ProtocolException ex) {
-            Logger.getLogger(IOHelper.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        } catch (IOException ex) {
-            Logger.getLogger(IOHelper.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);
-        }
-    }*/
-    
-  /*  public static ArrayList<SampleQuery> getQueriesFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
-              
-        ArrayList <SampleQuery> queries = new ArrayList();
-        Document doc = new IOUtilities().documentFromResource(path);
-
-        NodeList nList = doc.getElementsByTagName("query");
-        
-            for (int i = 0; i < nList.getLength(); i++) {
-                Node nNode = nList.item(i);
-                Element elem = (Element) nNode;
-                DefaultSampleQuery query = new DefaultSampleQuery();
-                String str = elem.getElementsByTagName("string").item(0).getTextContent();
-                String description = elem.getElementsByTagName("description").item(0).getTextContent();
-                String corpus = elem.getElementsByTagName("corpus").item(0).getTextContent();
-                query.setQueryString(str);
-                query.setDescription(description);
-                query.setCorpus(corpus);
-                queries.add(query);
-            }
-        return queries;
-    }*/
-    
-  /*  public static LinkedHashMap<String, String> getQueryStringsFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
-        LinkedHashMap<String, String> queryList = new LinkedHashMap<String, String>();
-        ArrayList <SampleQuery> queries = getQueriesFromFile(path);
-        for (SampleQuery query : queries){
-            queryList.put(query.getQueryString(), query.getCorpus());
-        }
-        return queryList;        
-    }*/
     
     public static File getProjectFile(String classPath) throws IOException{
         String regex = ".*WEB-INF"; 
@@ -441,6 +378,25 @@ public class IOHelper {
         } 
         return audioIDs;
     }
+    
+    // 30-10-2026, for issue #283
+    public static void removeWhitespaceNodes(Node node) {
+        if (node.getNodeType() == Node.ELEMENT_NODE
+                && "http://www.tei-c.org/ns/1.0".equals(node.getNamespaceURI())
+                && Set.of("w", "pc", "span", "desc").contains(node.getLocalName())) {
+            return;
+        }
 
+        NodeList children = node.getChildNodes();
+        for (int i = children.getLength() - 1; i >= 0; i--) {
+            Node child = children.item(i);
+            if (child.getNodeType() == Node.TEXT_NODE
+                    && child.getNodeValue().trim().isEmpty()) {
+                node.removeChild(child);
+            } else {
+                removeWhitespaceNodes(child);
+            }
+        }
+    }
 
 }

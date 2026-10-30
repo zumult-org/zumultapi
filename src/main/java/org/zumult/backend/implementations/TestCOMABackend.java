@@ -51,26 +51,16 @@ public class TestCOMABackend {
 
     private void doit() {
         try {
-System.out.println(
-    org.apache.commons.lang3.StringUtils.class
-        .getProtectionDomain()
-        .getCodeSource()
-        .getLocation()
-);
-
-System.out.println(
-    org.apache.commons.lang3.SystemProperties.class
-        .getProtectionDomain()
-        .getCodeSource()
-        .getLocation()
-);            BackendInterface backendX = BackendInterfaceFactory.newBackendInterface(); 
-            
-            System.exit(0);
-            
+            BackendInterface backendX = BackendInterfaceFactory.newBackendInterface(); 
+                      
             
             // https://zumult.geiwi.uni-due.de/zumultapi/jsp/zuViel.jsp?transcriptID=ISO_2025-05-27_amica2_T7
-            Transcript transcriptXYZABC = backendX.getTranscript("ISO_2025-05-27_amica2_T7");
-            transcriptXYZABC = transcriptXYZABC.getPart(1, 12);
+            Transcript transcriptXYZABC = backendX.getTranscript("EXB_Beckhams");
+            transcriptXYZABC = transcriptXYZABC.getPart("au1_seg0", "au1_seg0", true);
+            
+            System.out.println(transcriptXYZABC.toXML());
+            
+            IOHelper.writeDocument(transcriptXYZABC.getDocument(), new File("C:\\Users\\bernd\\OneDrive\\Desktop\\test.xml"));
             
             System.exit(0);
             

@@ -314,7 +314,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 out = out || id.equals(when2.getAttribute("xml:id"));
             }
             
-            
+            // new 30-10-2026, issue #283
+            IOHelper.removeWhitespaceNodes(copyDocument.getDocumentElement());
             
             
             if (metadata!=null){
