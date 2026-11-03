@@ -117,6 +117,21 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         // Element element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
         // changed for #285
         Element element1 = getDocument().getElementById(id1);
+        
+        // added for #284: this is the frequent special case that id1=id2 and refers to <annotationBlock>
+        if (id1.equals(id2) && element1.getLocalName().equals("annotationBlock")){
+            String annotationBlockStart = element1.getAttribute("start");
+            String annotationBlockEnd = element1.getAttribute("end");
+            Element when1 = getDocument().getElementById(annotationBlockStart);
+            Element when2 = getDocument().getElementById(annotationBlockEnd);
+            Element[] result = {
+                when1, when2
+            };
+            return result;            
+        }
+        
+        // end special case: now do the whole thing
+        
         if (element1==null){                
             id1 = getAlternativeID(id1);
             //element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
@@ -239,8 +254,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 double startTime = getTime(startID);
                 double endTime = getTime(endID);
                 // ......|------|........./--------/
-                if((startTime<minTime && endTime<minTime) 
-                        || (startTime>maxTime && endTime>maxTime)){
+                // if((startTime<minTime && endTime<minTime) || (startTime>maxTime && endTime>maxTime)){
+                // changed this for issue #284
+                if (endTime <= minTime || startTime >= maxTime) {
                     // this is the case where the element is fully before or fully after
                     node.getParentNode().removeChild(node);                    
                 } else {

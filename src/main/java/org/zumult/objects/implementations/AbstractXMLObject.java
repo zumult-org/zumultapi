@@ -38,6 +38,7 @@ public abstract class AbstractXMLObject implements XMLSerializable {
         // new for #285
         registerXmlIds(xmlDocument);        
     }
+    
 
     public AbstractXMLObject(String xmlString) {
         this.xmlString = xmlString;
