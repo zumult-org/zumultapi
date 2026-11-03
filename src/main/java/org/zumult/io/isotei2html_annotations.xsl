@@ -14,7 +14,17 @@
         <div class="annotations-div" style="overflow:auto;">
             <xsl:choose>                
                 <xsl:when test="$START_ANNOTATION_BLOCK_ID and $END_ANNOTATION_BLOCK_ID">
-                    <xsl:apply-templates select="//tei:annotationBlock[not(following-sibling::tei:*[@xml:id=$START_ANNOTATION_BLOCK_ID]) and not(preceding-sibling::tei:*[@xml:id=$END_ANNOTATION_BLOCK_ID])]"/>    
+                    <!-- <xsl:apply-templates select="//tei:annotationBlock[not(following-sibling::tei:*[@xml:id=$START_ANNOTATION_BLOCK_ID]) and not(preceding-sibling::tei:*[@xml:id=$END_ANNOTATION_BLOCK_ID])]"/> -->
+                    <!-- changed 03-11-2026 for issue #284 -->
+                    <xsl:apply-templates select="
+                        //tei:annotationBlock[
+                        (@xml:id = $START_ANNOTATION_BLOCK_ID
+                        or preceding-sibling::tei:annotationBlock[@xml:id = $START_ANNOTATION_BLOCK_ID])
+                        and
+                        (@xml:id = $END_ANNOTATION_BLOCK_ID
+                        or following-sibling::tei:annotationBlock[@xml:id = $END_ANNOTATION_BLOCK_ID])
+                        ]
+                        "/>                    
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:apply-templates select="//tei:annotationBlock"/>
