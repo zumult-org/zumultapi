@@ -111,18 +111,20 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         return null;
     }
     
+    // gets the ids of the <when> elements most suitable for the elements with id1 and id2
     private Element[] mapToWhenIDs(String id1, String id2) throws XPathExpressionException{
         // get the element with the first ID
-        //System.out.println("When mapping : " + id1 + " / " + id2);
-        Element element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+        // Element element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+        // changed for #285
+        Element element1 = getDocument().getElementById(id1);
         if (element1==null){                
-            //System.out.println("Do hammers");
             id1 = getAlternativeID(id1);
-            element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
+            //element1 = (Element)xPath.evaluate("//*[@xml:id='" + id1 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
+            // changed for #285
+            element1 = getDocument().getElementById(id1);            
         }
         Element when1 = null;
 
-        //System.out.println("=============> " + element1.getLocalName());
         switch (element1.getLocalName()){
             case "when" :
                 when1 = element1;
@@ -131,10 +133,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             case "pause" :
             case "incident" :
                 String startID = element1.getAttribute("start"); //.substring(1);
-                when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", 
-                        getDocument().getDocumentElement(), XPathConstants.NODE);                    
-                //System.out.println("ID " + id1 + " found in " + element1.getAttribute("xml:id"));                    
-                //System.out.println("The start ID is " + startID);
+                //when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']",getDocument().getDocumentElement(), XPathConstants.NODE);                    
+                // changed for #285
+                when1 = getDocument().getElementById(startID);
                 break;
             case "w" :
                 // try to find the nearest anchor *before* that w
@@ -142,23 +143,27 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 Element tryAnchor = (Element)xPath.evaluate("preceding::tei:anchor[@synch][1]", element1, XPathConstants.NODE);
                 if (tryAnchor!=null) {
                     String anchorID = tryAnchor.getAttribute("synch");
-                    when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", 
-                            getDocument().getDocumentElement(), XPathConstants.NODE);
+                    //when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                    // changed for #285
+                    when1 = getDocument().getElementById(anchorID);
                     break;
                 }
                 // nothing found, so get the start of the annotation block
                 Element annotationBlock = (Element)xPath.evaluate("ancestor::tei:annotationBlock[1]", element1, XPathConstants.NODE);
                 String abStart = annotationBlock.getAttribute("start");
-                when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abStart + "']", 
-                        getDocument().getDocumentElement(), XPathConstants.NODE);
+                //when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abStart + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // changed for #285
+                when1 = getDocument().getElementById(abStart);
 
         }
-        //Element element2 = getDocument().getElementById(id2);
-        Element element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+        //Element element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+        // changed for #285
+        Element element2 = getDocument().getElementById(id2);
         if (element2==null){                
-            //System.out.println("Do hammers");
             id2 = getAlternativeID(id2);
-            element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
+            //element2 = (Element)xPath.evaluate("//*[@xml:id='" + id2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE);                        
+            // changed for #285
+            element2 = getDocument().getElementById(id2);
         }
 
         Element when2 = null;
@@ -170,10 +175,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             case "pause" :
             case "incident" :
                 String endID = element2.getAttribute("end"); //.substring(1);
-                when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + endID + "']", 
-                        getDocument().getDocumentElement(), XPathConstants.NODE);
-                //System.out.println("ID " + id2 + " found in " + element2.getAttribute("xml:id"));                    
-                //System.out.println("The end ID is " + endID);
+                //when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // changed for #285
+                when2 = getDocument().getElementById(endID);
                 break;
             case "w" :
                 // try to find the nearest anchor *after* that w
@@ -181,15 +185,18 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                 Element tryAnchor = (Element)xPath.evaluate("following::tei:anchor[1]", element2, XPathConstants.NODE);
                 if (tryAnchor!=null) {
                     String anchorID = tryAnchor.getAttribute("synch");
-                    when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", 
-                            getDocument().getDocumentElement(), XPathConstants.NODE);
+                    //when2 = (Element)xPath.evaluate("//tei:when[@xml:id='" + anchorID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                    // changed for #285
+                    when2 = getDocument().getElementById(anchorID);
                     break;
                 }
-                // nothing found, so get the start of the annotation block
+                // nothing found, so get the end of the annotation block
                 Element annotationBlock = (Element)xPath.evaluate("ancestor::tei:annotationBlock", element1, XPathConstants.NODE);
                 String abEnd = annotationBlock.getAttribute("end");
-                when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abEnd + "']", 
-                        getDocument().getDocumentElement(), XPathConstants.NODE);
+                // that one was wrong all the time??
+                // when1 = (Element)xPath.evaluate("//tei:when[@xml:id='" + abEnd + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // changed for #285
+                when2 = getDocument().getElementById(abEnd);
         }
         Element[] result = {
             when1, when2
@@ -240,7 +247,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                     if (startTime<minTime){
                         // this is the case where the element starts before but ends inside
                         // consider this: we haven't changed minTime, so the new when1 might actually be later than the one we adjusted before
-                        Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));   
+                        // Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));   
+                        // changed for #285
+                        Element candidate = getDocument().getElementById(startID);
                         if (getInterval(candidate)<getInterval(when1)){
                             when1 = candidate;
                         }
@@ -248,7 +257,8 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                     if (endTime>maxTime){
                         // this is the case where the element starts inside but ends after
                         // consider this: we haven't changed maxTime, so the new when2 might actually be earlier than the one we adjusted before
-                        Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // Element candidate = ((Element)xPath.evaluate("//*[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        Element candidate = getDocument().getElementById(endID);
                         if (getInterval(candidate)>getInterval(when2)){
                             when2 = candidate;
                         }
@@ -284,12 +294,14 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             // 06-01-2021, for issue #43
             Element adjustedStartElement = (Element)xPath.evaluate("//*[@start][1]", copyDocument.getDocumentElement(), XPathConstants.NODE);
             if (adjustedStartElement==null){
-             // this can happen if the resulting part transcript is empty. Let us do nothing in that case?
+                // this can happen if the resulting part transcript is empty. Let us do nothing in that case?
             } else {
                 String adjustedStart = adjustedStartElement.getAttribute("start");            
                 //System.out.println("ADJUSTED_START " + adjustedStart);
                 if (!(when1.getAttribute("xml:id").equals(adjustedStart))){
-                    when1 = ((Element)xPath.evaluate("//*[@xml:id='" + adjustedStart + "']", getDocument().getDocumentElement(), XPathConstants.NODE)); 
+                    // when1 = ((Element)xPath.evaluate("//*[@xml:id='" + adjustedStart + "']", getDocument().getDocumentElement(), XPathConstants.NODE)); 
+                    // changed for #285
+                    when1 = getDocument().getElementById(adjustedStart);
                 }
             }
             
@@ -489,17 +501,10 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         try {
             Element firstElement = (Element) xPath.evaluate("//tei:body/*[@start][1]", getDocument().getDocumentElement(), XPathConstants.NODE);
             if (firstElement==null) return -1;
-            String startID = firstElement.getAttribute("start"); //.substring(1);
-            //System.out.println("StartID: " + startID);
-            // no idea why this is not working here. it does work above (or not?)
-            //Element whenElement = xmlDocument.getElementById(startID);
-            Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
-            //System.out.println(whenElement);
-            /*String interval = whenElement.getAttribute("interval");
-            if (interval==null || interval.length()==0){
-                return 0.0;
-            }
-            return Double.parseDouble(interval);*/
+            String startID = firstElement.getAttribute("start"); 
+            // Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            // changed for #285
+            Element whenElement = getDocument().getElementById(startID);
             return getInterval(whenElement);
         } catch (XPathExpressionException ex) {
             Logger.getLogger(ISOTEITranscript.class.getName()).log(Level.SEVERE, null, ex);
@@ -515,13 +520,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             for (int i=0; i<allElements.getLength(); i++){
                 Element element = (Element) allElements.item(i);
                 String endID = element.getAttribute("end"); //.substring(1);
-                Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
-                //System.out.println(endID);
-                /*String interval = whenElement.getAttribute("interval");
-                if (interval!=null || interval.length()>0){
-                    double timeValue = Double.parseDouble(interval);
-                    maxTimeValue = Math.max(timeValue, maxTimeValue);
-                }*/
+                // Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // changed for #285
+                Element whenElement = getDocument().getElementById(endID);
                 double timeValue = getInterval(whenElement);
                 maxTimeValue = Math.max(timeValue, maxTimeValue);
                 
@@ -653,14 +654,6 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     @Override
     public String getSpeakerInitialsBySpeakerID(String speakerID) {
         try {
-            // new 04.08.2021, Elena: this is wrong
-            /* 
-            speakerInitials = "";
-            String xPathString = "//tei:idno[@type='AGD-ID']";
-            NodeList personNodes = (NodeList) xPath.evaluate(xPathString, getDocument().getDocumentElement(), XPathConstants.NODESET);
-            speakerInitials = personNodes.item(0).getParentNode().getAttributes().getNamedItem("xml:id").getNodeValue();
-            */
-
             Element idnoElement = ((Element)xPath.evaluate("//tei:person/tei:idno[text()='"+speakerID+"']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
             if (idnoElement!=null){
                 return idnoElement.getParentNode().getAttributes().getNamedItem("n").getNodeValue();
@@ -718,7 +711,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     public double getNextTimeForID(String id){
         if (id==null || id.length()==0) return -1;
         try {
-            Element element = (Element)xPath.evaluate("//*[@xml:id='" + id + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            //Element element = (Element)xPath.evaluate("//*[@xml:id='" + id + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            // changed for #285
+            Element element = getDocument().getElementById(id);
             String name = element.getLocalName();
             switch (name){
                 case "when" : 
@@ -726,26 +721,34 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
                     return getInterval(nextWhenElement);
                 case "annotationBlock" : 
                     String startID = element.getAttribute("end");
-                    Element whenElement = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                    // Element whenElement = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                    // changed for #285
+                    Element whenElement = getDocument().getElementById(startID);
                     return getInterval(whenElement);
                 default :
                     if (!(element.getAttribute("end").isEmpty())){                        
                         String startID2 = element.getAttribute("end");
-                        Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        //Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // changed for #285
+                        Element whenElement2 = getDocument().getElementById(startID2);
                         return getInterval(whenElement2);
                     }
                     // nearest anchor?
                     Element anchorElement = ((Element)xPath.evaluate("following-sibling::tei:anchor[1]", element, XPathConstants.NODE));                   
                     if (anchorElement!=null){
                         String synch = anchorElement.getAttribute("synch");
-                        Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + synch + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        //Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + synch + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // changed for #285
+                        Element whenElement2 = getDocument().getElementById(synch);
                         return getInterval(whenElement2);
                     } else {
                         //System.out.println("Case 3 : We are trying annotationBlock");
                         // superordinate annotationBlock?
                         Element annotationBlock = ((Element)xPath.evaluate("ancestor::tei:annotationBlock[1]", element, XPathConstants.NODE));                   
                         String startID2 = annotationBlock.getAttribute("end");
-                        Element whenElement3 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        //Element whenElement3 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // changed for #285
+                        Element whenElement3 = getDocument().getElementById(startID2);
                         return getInterval(whenElement3);                            
                     }
             }                        
@@ -761,47 +764,46 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     public double getTimeForID(String id) {
         if (id==null || id.length()==0) return -1;
         try {
-            Element element = (Element)xPath.evaluate("//*[@xml:id='" + id + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            // Element element = (Element)xPath.evaluate("//*[@xml:id='" + id + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            // changed for #285
+            Element element = getDocument().getElementById(id);
             String name = element.getLocalName();
-            //System.out.println("Name of element " + name);
-            //System.out.println("ID of element " + element.getAttribute("xml:id"));
             switch (name){
                 case "when" : 
-                    //return Double.parseDouble(element.getAttribute("interval"));
                     return getInterval(element);
                 case "annotationBlock" : 
                     String startID = element.getAttribute("start");
-                    Element whenElement = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                    //return Double.parseDouble(whenElement.getAttribute("interval"));
+                    // Element whenElement = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                    // changed for #285
+                    Element whenElement = getDocument().getElementById(startID);
                     return getInterval(whenElement);
                 default :
                     // new, issue #71 : this is, among others maybe, for pauses
                     // watch out!!! getAttribute never returns null, but empty string??
                     //if (element.getAttribute("start")!=null){
                     if (!(element.getAttribute("start").isEmpty())){                        
-                        //System.out.println("Case 1 : the element does have a start attribute");
                         String startID2 = element.getAttribute("start");
-                        Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        //return Double.parseDouble(whenElement2.getAttribute("interval"));
+                        // Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // changed for #285
+                        Element whenElement2 = getDocument().getElementById(startID2);
                         return getInterval(whenElement2);
                     }
                     // nearest anchor?
                     Element anchorElement = ((Element)xPath.evaluate("preceding-sibling::tei:anchor[1]", element, XPathConstants.NODE));                   
                     if (anchorElement!=null){
-                        //System.out.println("Case 2 : there is a preceding anchor element");
-                        String synch = anchorElement.getAttribute("synch");
-                        //System.out.println("Anchor synch = " + synch);
-                            
-                        Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + synch + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        //return Double.parseDouble(whenElement2.getAttribute("interval"));
+                        String synch = anchorElement.getAttribute("synch");                           
+                        //Element whenElement2 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + synch + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // changed for #285
+                        Element whenElement2 = getDocument().getElementById(synch);
                         return getInterval(whenElement2);
                     } else {
                         //System.out.println("Case 3 : We are trying annotationBlock");
                         // superordinate annotationBlock?
                         Element annotationBlock = ((Element)xPath.evaluate("ancestor::tei:annotationBlock[1]", element, XPathConstants.NODE));                   
                         String startID2 = annotationBlock.getAttribute("start");
-                        Element whenElement3 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
-                        //return Double.parseDouble(whenElement3.getAttribute("interval"));                        
+                        // Element whenElement3 = ((Element)xPath.evaluate("//tei:when[@xml:id='" + startID2 + "']", getDocument().getDocumentElement(), XPathConstants.NODE));                   
+                        // changed for #285
+                        Element whenElement3 = getDocument().getElementById(startID2);
                         return getInterval(whenElement3);                            
                     }
             }                        
@@ -861,21 +863,21 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     @Override
     public String getAnnotationBlockID(String annotationBlockID, int distance) {
         try {
-            Element ab = (Element)xPath.evaluate("//*[@xml:id='" + annotationBlockID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            // Element ab = (Element)xPath.evaluate("//*[@xml:id='" + annotationBlockID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+            // changed for #285
+            Element ab = getDocument().getElementById(annotationBlockID);
             if (ab==null){                
-                //System.out.println("Do hammers");
                 annotationBlockID = getAlternativeID(annotationBlockID);                
             }
 
             String axis = "following-sibling";
             if (distance<0) axis = "preceding-sibling";
-            String xp = "//tei:annotationBlock[@xml:id='" + annotationBlockID
-                    + "']/" + axis +  "::tei:annotationBlock";
-            //System.out.println(xp);
-            NodeList nodes = (NodeList)xPath.evaluate(xp, getDocument().getDocumentElement(), XPathConstants.NODESET);
-            /*for (int i=0; i<nodes.getLength(); i++){
-                System.out.println(((Element)nodes.item(i)).getAttribute("xml:id"));
-            }*/
+            //String xp = "//tei:annotationBlock[@xml:id='" + annotationBlockID + "']/" + axis +  "::tei:annotationBlock";
+            // changed for #285
+            String xp = axis +  "::tei:annotationBlock";
+            // NodeList nodes = (NodeList)xPath.evaluate(xp, getDocument().getDocumentElement(), XPathConstants.NODESET);
+            // changed for #285
+            NodeList nodes = (NodeList)xPath.evaluate(xp, getDocument().getElementById(annotationBlockID), XPathConstants.NODESET);
             if (nodes.getLength()==0){
                 return annotationBlockID;
             }
@@ -1027,7 +1029,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
     @Override
     public String getLanguage(String id){
         try {
-            Element element = ((Element)xPath.evaluate("//*[@xml:id='" + id + "']/ancestor-or-self::*[@xml:lang][1]", getDocument().getDocumentElement(), XPathConstants.NODE));
+            //Element element = ((Element)xPath.evaluate("//*[@xml:id='" + id + "']/ancestor-or-self::*[@xml:lang][1]", getDocument().getDocumentElement(), XPathConstants.NODE));
+            // changed for #285
+            Element element = ((Element)xPath.evaluate("ancestor-or-self::*[@xml:lang][1]", getDocument().getElementById(id), XPathConstants.NODE));
             if (element==null){
                 return "XYZ";                
             }
@@ -1155,8 +1159,9 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
             for (int i=0; i<allElements.getLength(); i++){
                 Element element = (Element) allElements.item(i);
                 String endID = element.getAttribute("end"); //.substring(1);
-                //System.out.println("END-ID: " + endID);
-                Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // Element whenElement = (Element) xPath.evaluate("//tei:when[@xml:id='" + endID + "']", getDocument().getDocumentElement(), XPathConstants.NODE);
+                // changed for #285
+                Element whenElement = getDocument().getElementById(endID);
                 // this should not happen, but we may have dangling events
                 if (whenElement==null) continue;
                 double timeValue = getInterval(whenElement);

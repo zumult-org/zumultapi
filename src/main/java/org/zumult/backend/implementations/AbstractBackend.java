@@ -57,7 +57,7 @@ public abstract class AbstractBackend implements BackendInterface {
 
 
     @Override
-    public AnnotationBlock getAnnotationBlock(String transcriptID, String annotationBlockId) throws IOException {
+    public AnnotationBlock getAnnotationBlock(String transcriptID, String annotationBlockID) throws IOException {
         try {
             Transcript transcript = getTranscript(transcriptID);
             XPath xPath = XPathFactory.newInstance().newXPath();
@@ -66,17 +66,17 @@ public abstract class AbstractBackend implements BackendInterface {
             // but for highest level elements in general
             // it is inaptly named then... Ignoring this for the time being
             //String xpathString = "//tei:annotationBlock[@xml:id='" + annotationBlockId + "']";
-            String xpathString = "//tei:body/*[@xml:id='" + annotationBlockId + "']";
-            //System.out.println(xpathString);
-            Element annotationBlock = (Element)xPath.evaluate(xpathString,
-                    transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+            // String xpathString = "//tei:body/*[@xml:id='" + annotationBlockId + "']";
+            // Element annotationBlock = (Element)xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+            // changed for #285
+            Element annotationBlock = transcript.getDocument().getElementById(annotationBlockID);
             if (annotationBlock==null){
-                throw new IOException("No element with ID " + annotationBlockId);
+                throw new IOException("No element with ID " + annotationBlockID);
             }
             annotationBlock.getParentNode().removeChild(annotationBlock);
             AnnotationBlock ab = new ISOTEIAnnotationBlock(IOHelper.ElementToString(annotationBlock));
             return ab;
-        } catch (XPathExpressionException | TransformerException ex) {
+        } catch (TransformerException ex) {
             Logger.getLogger(AbstractBackend.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
         }
@@ -129,8 +129,11 @@ public abstract class AbstractBackend implements BackendInterface {
             Transcript transcript = getTranscript(transcriptID);
             XPath xPath = XPathFactory.newInstance().newXPath();
             xPath.setNamespaceContext(new ISOTEINamespaceContext());
-            String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
-            Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+            //String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
+            //Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+            // changed for #285
+            String xpathString = "anscestor::tei:annotationBlock[1]";
+            Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getElementById(tokenID), XPathConstants.NODE);
             if (annotationBlock != null) {
                 return annotationBlock.getAttribute("xml:id");
             }
@@ -146,19 +149,26 @@ public abstract class AbstractBackend implements BackendInterface {
             Transcript transcript = getTranscript(transcriptID);
             XPath xPath = XPathFactory.newInstance().newXPath();
             xPath.setNamespaceContext(new ISOTEINamespaceContext());
-            String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
-            Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
-            if (annotationBlock != null) {
-                return annotationBlock.getAttribute("xml:id");
+            // String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
+            // Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+            String tryABID = getAnnotationBlockID4TokenID(transcriptID, tokenID);
+            if (tryABID != null) {
+                return tryABID;
             } else {
                 // if the element with the id is not part of an ab, return the first preceding or following annotation block
-                xpathString = "//*[@xml:id='" + tokenID + "']/preceding-sibling::tei:annotationBlock[1]";
-                annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+                // String xpathString = "//*[@xml:id='" + tokenID + "']/preceding-sibling::tei:annotationBlock[1]";
+                // annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+                // changed for #285
+                String xpathString = "preceding-sibling::tei:annotationBlock[1]";
+                Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getElementById(tokenID), XPathConstants.NODE);
                 if (annotationBlock != null) {
                     return annotationBlock.getAttribute("xml:id");
                 } else {
-                    xpathString = "//*[@xml:id='" + tokenID + "']/following-sibling::tei:annotationBlock[1]";
-                    annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+                    //xpathString = "//*[@xml:id='" + tokenID + "']/following-sibling::tei:annotationBlock[1]";
+                    //annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
+                    // changed for #285
+                    xpathString = "following-sibling::tei:annotationBlock[1]";
+                    annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getElementById(tokenID), XPathConstants.NODE);
                     if (annotationBlock != null) {
                         return annotationBlock.getAttribute("xml:id");
                     }

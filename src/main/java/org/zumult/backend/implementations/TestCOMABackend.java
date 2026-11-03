@@ -15,7 +15,14 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import org.exmaralda.partitureditor.jexmaralda.convert.StylesheetFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.Configuration;
@@ -56,11 +63,67 @@ public class TestCOMABackend {
             
             // https://zumult.geiwi.uni-due.de/zumultapi/jsp/zuViel.jsp?transcriptID=ISO_2025-05-27_amica2_T7
             Transcript transcriptXYZABC = backendX.getTranscript("EXB_Beckhams");
-            transcriptXYZABC = transcriptXYZABC.getPart("au1_seg0", "au1_seg0", true);
+            //transcriptXYZABC = transcriptXYZABC.getPart("au1_seg0", "au1_seg0", true);
             
-            System.out.println(transcriptXYZABC.toXML());
+            Document doc = transcriptXYZABC.getDocument();
+            NodeList elements = doc.getElementsByTagName("*");
+
+            /*for (int i = 0; i < elements.getLength(); i++) {
+                Element e = (Element) elements.item(i);
+
+                String id = e.getAttributeNS(
+                    "http://www.w3.org/XML/1998/namespace", "id"
+                );
+
+                if (!id.isEmpty()) {
+                    System.out.println(id);
+                }
+            } */
             
-            IOHelper.writeDocument(transcriptXYZABC.getDocument(), new File("C:\\Users\\bernd\\OneDrive\\Desktop\\test.xml"));
+            for (int i = 0; i < elements.getLength(); i++) {
+                Element e = (Element) elements.item(i);
+
+                if ("au1_seg0".equals(e.getAttribute("xml:id"))) {
+                    Attr attr = e.getAttributeNode("xml:id");
+
+                    System.out.println("Element: " + e.getTagName());
+                    System.out.println("Attribute namespace: " + attr.getNamespaceURI());
+                    System.out.println("Attribute local name: " + attr.getLocalName());
+                    System.out.println("Attribute is ID: " + attr.isId());
+                    System.out.println("Namespace-aware lookup: " +
+                        e.getAttributeNS(
+                            "http://www.w3.org/XML/1998/namespace", "id"
+                        ));
+                    break;
+                }
+            }            
+            
+            String id1= "au1_seg0";
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            /*Element element = (Element) xPath.evaluate(
+                "//*[@xml:id='" + id1 + "']",
+                doc,
+                XPathConstants.NODE
+            );*/
+            
+            Element element = (Element) xPath.evaluate(
+                "//*[@*[local-name()='id' and .='au1_seg0']]",
+                doc,
+                XPathConstants.NODE
+            );            
+
+            System.out.println("Found via XPath: " + (element != null));
+            System.out.println("Found via getElementById: " +
+                (doc.getElementById(id1) != null));         
+            System.out.println(doc.getDocumentElement().getAttribute("xmlns"));
+            System.out.println(doc.isDefaultNamespace("http://www.tei-c.org/ns/1.0"));      
+            System.out.println(doc.getDocumentElement().getClass().getName());            
+            
+            //System.out.println(transcriptXYZABC.toXML());
+            
+            //System.out.println(transcriptXYZABC.toXML());
+            
+            //IOHelper.writeDocument(transcriptXYZABC.getDocument(), new File("C:\\Users\\bernd\\OneDrive\\Desktop\\test.xml"));
             
             System.exit(0);
             
