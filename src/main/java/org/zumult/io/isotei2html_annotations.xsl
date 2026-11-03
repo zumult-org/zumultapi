@@ -40,6 +40,7 @@
         <xsl:variable name="ID" select="@xml:id"/>        
         <table class="annotations">
             
+            <!-- IDs in the 1st row -->
             <tr class="ids">
                 <th class="anno-label">id</th>
                 <xsl:apply-templates select="child::*">
@@ -48,6 +49,7 @@
             </tr>
                 
             
+            <!-- transcribed forms in the 2nd row -->
             <tr class="trans">
                 <th class="anno-label">trans</th>
                 <xsl:apply-templates select="child::*">
@@ -57,6 +59,7 @@
             
             <xsl:variable name="CURRENT_SEG" select="." />
             
+            <!-- normalisation, lemma, pos, phon and type in the following rows (if they exist) -->
             <xsl:for-each select="('norm', 'lemma', 'pos', 'phon', 'type')">
                 <xsl:variable name="CURRENT_LEVEL" select="current()"/>
                 <xsl:if test="$CURRENT_SEG/descendant::tei:w[@*/name()=$CURRENT_LEVEL]">
@@ -71,11 +74,13 @@
             </xsl:for-each>       
             
             <!-- N.B.: This is actually wrong or at least risky : it rests on the assumption that there is only one <seg> per <u> -->
+            <!-- further annotations in spanGrps if they exist -->
             <xsl:apply-templates select="ancestor-or-self::tei:annotationBlock/child::tei:spanGrp"/>                
             
         </table>
     </xsl:template>
     
+    <!-- word tokens -->
     <xsl:template match="tei:w">
         <xsl:param name="LEVEL"/>
         <td>
@@ -92,6 +97,7 @@
         </td>
     </xsl:template>
     
+    <!-- punctuation tokens -->
     <xsl:template match="tei:pc">
         <xsl:param name="LEVEL"></xsl:param>
         <td>
@@ -102,10 +108,12 @@
         </td>
     </xsl:template>
     
+    <!-- do nothing with anchors -->
     <xsl:template match="tei:seg/tei:anchor">
-<!--        <td>*</td>-->
+        <!-- <td>*</td> -->
     </xsl:template>
     
+    <!-- pauses -->
     <xsl:template match="tei:seg/tei:pause">
         <xsl:param name="LEVEL"/>
         <td class="nv">
@@ -131,6 +139,7 @@
         </td>            
     </xsl:template>
     
+    <!-- non-verbal tokens -->
     <xsl:template match="tei:seg/tei:incident | tei:seg/tei:vocal">
         <xsl:param name="LEVEL"/>
         <td class="nv">
@@ -152,6 +161,7 @@
         </td>
     </xsl:template>
     
+    <!-- additional rows for spanGrp annotations -->
     <xsl:template match="tei:spanGrp">
         <tr>
             <th class="anno-label">
@@ -171,7 +181,7 @@
         <xsl:param name="SPAN_GRP" as="node()"/>
         <xsl:variable name="ID" select="@xml:id"/>
         <xsl:variable name="SYNCH" select="preceding-sibling::*[1]/@synch"/>
-<!--        <xsl:message select="$SPAN_GRP"/>-->
+            <!-- <xsl:message select="$SPAN_GRP"/>-->
         <xsl:choose>
             <xsl:when test="$SPAN_GRP/descendant::tei:span[@from=$ID]">
                 <!-- we are dealing with a span that refers to token ids -->
@@ -185,8 +195,14 @@
                     <xsl:attribute name="colspan">
                         <xsl:value-of select="$LENGTH"/>
                     </xsl:attribute>
-                    <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', $THE_SPAN/text())"/>
-                    <xsl:value-of select="$THE_SPAN/text()"/>
+                    
+                    <!-- changed for #286 -->
+                    <!-- <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', $THE_SPAN/text())"/>
+                    <xsl:value-of select="$THE_SPAN/text()"/> -->
+                    <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', string-join($THE_SPAN/text(), ' '))"/>                    
+                    <xsl:value-of select="string-join($THE_SPAN/text(), ' ')"/>
+                    
+                    <!-- if the span has a @target attribute -->
                     <xsl:if test="$THE_SPAN/@target">
                         <br/><xsl:value-of select="$THE_SPAN/@target"/>
                     </xsl:if>
@@ -210,6 +226,8 @@
                 </xsl:choose>
             </xsl:when>
             
+            <!-- ************************************** -->
+            
             <xsl:when test="$SPAN_GRP/descendant::tei:span[@from=$SYNCH]">
                 <!-- we are dealing with a span that refers to the synch of anchors -->
                 <xsl:variable name="THE_SPAN" select="$SPAN_GRP/descendant::tei:span[@from=$SYNCH]"/>
@@ -222,8 +240,13 @@
                     <xsl:attribute name="colspan">
                         <xsl:value-of select="$LENGTH"/>
                     </xsl:attribute>
-                    <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', $THE_SPAN/text())"/>
-                    <xsl:value-of select="$THE_SPAN/text()"/>
+
+                    <!-- changed for #286 -->
+                    <!-- <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', $THE_SPAN/text())"/>
+                    <xsl:value-of select="$THE_SPAN/text()"/> -->
+                    <xsl:attribute name="title" select="concat($SPAN_GRP/@type, ' : ', string-join($THE_SPAN/text(), ' '))"/>                    
+                    <xsl:value-of select="string-join($THE_SPAN/text(), ' ')"/>
+                    
                 </td>                
                 <xsl:variable name="TARGET" select="following::*[@synch=$SPAN_TO][ancestor::tei:u = current()/ancestor::tei:u][1]"/>
                 <xsl:variable name="NEXT" select="f:next-token-in-u($TARGET)"/>
