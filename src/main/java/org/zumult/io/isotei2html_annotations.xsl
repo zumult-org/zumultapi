@@ -198,8 +198,20 @@
                 <xsl:variable name="THE_SPAN" select="$SPAN_GRP/descendant::tei:span[@from=$ID]"/>
                 <xsl:variable name="SPAN_FROM" select="$THE_SPAN/@from"/>
                 <xsl:variable name="SPAN_TO" select="$THE_SPAN/@to"/>
-                <xsl:variable name="FROM_POSITION" select="count(preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
-                <xsl:variable name="TO_POSITION" select="count(following::*[@xml:id=$SPAN_TO]/preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
+                <!-- <xsl:variable name="FROM_POSITION" select="count(preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
+                <xsl:variable name="TO_POSITION" select="count(following::*[@xml:id=$SPAN_TO]/preceding::*[not(self::tei:anchor or self::tei:seg)])"/> -->
+
+                <xsl:variable name="FROM_POSITION"
+                    select="count(preceding::*[self::tei:w or self::tei:pc
+                    or self::tei:pause or self::tei:vocal
+                    or self::tei:incident])"/>
+                
+                <xsl:variable name="TO_POSITION"
+                    select="count(following::*[@synch=$SPAN_TO]/preceding::*[
+                    self::tei:w or self::tei:pc or self::tei:pause
+                    or self::tei:vocal or self::tei:incident
+                    ])"/>
+                
                 <xsl:variable name="LENGTH" select="$TO_POSITION - $FROM_POSITION + 1"/>
                 <td class="anno-span">
                     <xsl:attribute name="colspan">
@@ -243,8 +255,20 @@
                 <xsl:variable name="THE_SPAN" select="$SPAN_GRP/descendant::tei:span[@from=$SYNCH]"/>
                 <xsl:variable name="SPAN_FROM" select="$THE_SPAN/@from"/>
                 <xsl:variable name="SPAN_TO" select="$THE_SPAN/@to"/>
-                <xsl:variable name="FROM_POSITION" select="count(preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
-                <xsl:variable name="TO_POSITION" select="count(following::*[@synch=$SPAN_TO]/preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
+
+                <!-- <xsl:variable name="FROM_POSITION" select="count(preceding::*[not(self::tei:anchor or self::tei:seg)])"/>
+                <xsl:variable name="TO_POSITION" select="count(following::*[@synch=$SPAN_TO]/preceding::*[not(self::tei:anchor or self::tei:seg)])"/> -->
+                <xsl:variable name="FROM_POSITION"
+                    select="count(preceding::*[self::tei:w or self::tei:pc
+                    or self::tei:pause or self::tei:vocal
+                    or self::tei:incident])"/>
+                
+                <xsl:variable name="TO_POSITION"
+                    select="count(following::*[@synch=$SPAN_TO]/preceding::*[
+                    self::tei:w or self::tei:pc or self::tei:pause
+                    or self::tei:vocal or self::tei:incident
+                    ])"/>
+                
                 <xsl:variable name="LENGTH" select="$TO_POSITION - $FROM_POSITION"/>
                 <td class="anno-span">
                     <xsl:attribute name="colspan">
