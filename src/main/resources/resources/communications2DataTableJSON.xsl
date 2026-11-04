@@ -90,7 +90,7 @@
         <xsl:text>{</xsl:text>
         <xsl:text>"ID": "</xsl:text><xsl:value-of select="@Id"/><xsl:text>",</xsl:text>
         <xsl:for-each select="$METADATA_KEY_NAMES_TOKENIZED">
-            <xsl:if test="not(current()='ID')">
+            <xsl:if test="not(current() = ('ID', 'Actions'))">
                 <xsl:text>"</xsl:text><xsl:value-of select="replace(current(), '&quot;', '\\&quot;')"/><xsl:text>": "</xsl:text><xsl:value-of select="normalize-space(replace($DESCRIPTION/descendant::Key[@Name=current()]/text(),'&quot;', '\\&quot;'))"/><xsl:text>",</xsl:text>
             </xsl:if>
         </xsl:for-each>

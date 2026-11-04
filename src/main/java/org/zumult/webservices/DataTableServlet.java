@@ -16,12 +16,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
 import org.zumult.backend.BackendInterface;
 import org.zumult.backend.BackendInterfaceFactory;
 import org.zumult.backend.implementations.COMAFileSystem;
@@ -54,27 +56,34 @@ public class DataTableServlet extends HttpServlet {
             BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             
             // delegate depending on the command
-            switch (command){
-                case "speakers" :
-                    if (backendInterface instanceof COMAFileSystem){
-                        speakersCOMABackend(request, response);
-                    } else {
+            if (backendInterface instanceof COMAFileSystem) {
+                dataTableCOMABackend(request, response, backendInterface, command);
+            } else {
+                switch (command) {
+                    case "speakers":
                         speakers(request, response);
-                    }
-                    break;
-                case "communications" :     
-                    if (backendInterface instanceof COMAFileSystem){
-                        communicationsCOMABackend(request, response);
-                    } else {
+                        break;
+                    case "communications":
                         communications(request, response);
-                    }
-                    break;
-            }
+                        break;
+                    case "media":
+                        media(request, response);
+                        break;
+                    case "transcripts":
+                        transcripts(request, response);
+                        break;
+                    default:
+                        response.sendError(400, "Unknown command");
+                }
+            }                    
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(DataTableServlet.class.getName()).log(Level.SEVERE, null, ex);
             throw new IOException(ex);
         }
     }
+    
+    static Map<String, String> cachedCOMAXML = new ConcurrentHashMap<>();
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -187,7 +196,7 @@ public class DataTableServlet extends HttpServlet {
                         try {
                             MetadataKey compareKey = metadataNames2Keys.get(orderColumnName);
                             Speaker speaker1 = backendInterface.getSpeaker(speakerID1);
-                            Speaker speaker2 = backendInterface.getSpeaker(speakerID1);
+                            Speaker speaker2 = backendInterface.getSpeaker(speakerID2);
                             String value1 = speaker1.getMetadataValue(compareKey);
                             String value2 = speaker2.getMetadataValue(compareKey);
                             int comparison = value1.compareTo(value2);
@@ -230,7 +239,7 @@ public class DataTableServlet extends HttpServlet {
 
             
             
-            for (int i=start; i<=Math.min(start+length, speakerIDs.size()-1); i++){
+            for (int i=start; i < Math.min(start+length, speakerIDs.size()); i++){
                 String speakerID = speakerIDs.get(i);
                 Speaker speaker = backendInterface.getSpeaker(speakerID);
                 ObjectNode row = mapper.createObjectNode();
@@ -264,278 +273,130 @@ public class DataTableServlet extends HttpServlet {
         
     }
     
-    static Map<String, String> cachedCOMAXML = new HashMap<>();
-    
-    // this version is faster but relies on transforming the COMA file
-    // so it is specific to the COMA Backend
-    private void speakersCOMABackend(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            String corpusID = request.getParameter("corpusID");
-            String draw = request.getParameter("draw");
-            String start = request.getParameter("start");
-            String length = request.getParameter("length");
-            
-            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
-            Corpus corpus = backendInterface.getCorpus(corpusID);
-            if (!cachedCOMAXML.containsKey(corpusID)){
-                String comaXML = corpus.toXML();
-                cachedCOMAXML.put(corpusID, comaXML);
-            }
-            
-            String thisCorpusXML = cachedCOMAXML.get(corpusID);
-            
-            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);                          
-            List<Map<String, String>> columns = new ArrayList<>();
-
-            // this is a rather complex way of getting the actual data objects from the request
-            // there does not seem to be an easier way...
-            int colIndex = 0;
-            while (true) {
-                String prefix = "columns[" + colIndex + "]";
-                String data = request.getParameter(prefix + "[data]");
-                if (data == null) {
-                    break; // No more columns
-                }
-
-                Map<String, String> column = new HashMap<>();
-                column.put("data", data);
-                column.put("name", request.getParameter(prefix + "[name]"));
-                column.put("searchable", request.getParameter(prefix + "[searchable]"));
-                column.put("orderable", request.getParameter(prefix + "[orderable]"));
-                column.put("searchValue", request.getParameter(prefix + "[search][value]"));
-                column.put("searchRegex", request.getParameter(prefix + "[search][regex]"));
-
-                columns.add(column);
-                colIndex++;
-            }        
-            
-            Set<String> metadataKeyNames = new HashSet<>();
-            for (Map<String,String> column : columns){
-                String metadataKeyName = column.get("data");
-                if (metadataKeyName!=null && metadataKeyName.length()>0){
-                    metadataKeyNames.add(metadataKeyName);
-                }
-            }
-            
-            // and this is to find the name of the column by which to order
-            String orderColumnIndex = request.getParameter("order[0][column]");
-            // Now find the column name using columns[<index>][data]
-            String orderColumnName = request.getParameter("columns[" + orderColumnIndex + "][data]");     
-            String orderDirection = request.getParameter("order[0][dir]"); // "asc" or "desc"
-            
-            String searchTerm = request.getParameter("search[value]");
-            
-            
-            
-            //System.out.println("*********** " + String.join(";", metadataKeyNames));
-            
-            String[][] parameters = {
-                {"METADATA_KEY_NAMES", String.join(";", metadataKeyNames)},
-                {"ORDER_COLUMN_NAME", orderColumnName},
-                {"ORDER_DIRECTION", orderDirection},
-                {"START", start},
-                {"LENGTH", length},
-                {"SEARCH_TERM", searchTerm},
-            };
-            
-            String json = new IOHelper().applyInternalStylesheetToString("/resources/speakers2DataTableJSON.xsl", thisCorpusXML, parameters);
-            IDList speakerIDs = backendInterface.getSpeakers4Corpus(corpusID);
-            
-            //System.out.println(json);
-            
-            
-            /*
-            CREATE AND WRITE THE OUTPUT NOW
-            {
-            "draw": 1,
-            "recordsTotal": 1000,
-            "recordsFiltered": 1000,
-            "data": [
-                {
-                    "name": "John Doe",
-                    "position": "Developer",
-                    "office": "NY",
-                    "age": 30,
-                    "start_date": "2021-01-01",
-                    "salary": "$100,000"
-                },
-                ...
-            ]            
-                    */
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectNode root = mapper.createObjectNode();
-            root.put("draw", draw);
-            root.put("recordsTotal", speakerIDs.size());
-            
-            
-            JsonNode jsonNode = mapper.readTree(json);
-            String recordsFiltered = jsonNode.get("recordsFiltered").asText();
-            root.put("recordsFiltered", recordsFiltered);
-
-            JsonNode dataArray = jsonNode.get("data");
-            root.set("data", dataArray);     
-
-            
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Write JSON
-            mapper.writeValue(response.getWriter(), root);  
-            
-            response.getWriter().close();            
-            
-            
-            
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException ex) {
-            Logger.getLogger(DataTableServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);            
-        } catch (Exception ex) {
-            Logger.getLogger(DataTableServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);            
-        }
-        
-    }
-
     private void communications(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 
-    private void communicationsCOMABackend(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void media(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void transcripts(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void dataTableCOMABackend(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            BackendInterface backendInterface,
+            String command) throws IOException {
+
         try {
             String corpusID = request.getParameter("corpusID");
-            String draw = request.getParameter("draw");
-            String start = request.getParameter("start");
-            String length = request.getParameter("length");
-            String customActionsID = request.getParameter("customActionsID");
-            if (customActionsID==null){
-                customActionsID = "";
-            }
-            
-            BackendInterface backendInterface = BackendInterfaceFactory.newBackendInterface();
             Corpus corpus = backendInterface.getCorpus(corpusID);
 
-            if (!cachedCOMAXML.containsKey(corpusID)){
-                String comaXML = corpus.toXML();
-                cachedCOMAXML.put(corpusID, comaXML);
-            }
-            
-            String thisCorpusXML = cachedCOMAXML.get(corpusID);
-            
-            
-            Set<MetadataKey> metadataKeys = corpus.getMetadataKeys(ObjectTypesEnum.SPEAKER);                          
-            List<Map<String, String>> columns = new ArrayList<>();
+            String thisCorpusXML = cachedCOMAXML.computeIfAbsent(
+                    corpusID, id -> {
+                        try {
+                            return corpus.toXML();
+                        } catch (Exception ex) {
+                            throw new IllegalStateException(ex);
+                        }
+                    });
 
-            // this is a rather complex way of getting the actual data objects from the request
-            // there does not seem to be an easier way...
-            int colIndex = 0;
-            while (true) {
-                String prefix = "columns[" + colIndex + "]";
-                String data = request.getParameter(prefix + "[data]");
-                if (data == null) {
-                    break; // No more columns
-                }
-
-                Map<String, String> column = new HashMap<>();
-                column.put("data", data);
-                column.put("name", request.getParameter(prefix + "[name]"));
-                column.put("searchable", request.getParameter(prefix + "[searchable]"));
-                column.put("orderable", request.getParameter(prefix + "[orderable]"));
-                column.put("searchValue", request.getParameter(prefix + "[search][value]"));
-                column.put("searchRegex", request.getParameter(prefix + "[search][regex]"));
-
-                columns.add(column);
-                colIndex++;
-            }        
-            
             Set<String> metadataKeyNames = new HashSet<>();
-            for (Map<String,String> column : columns){
-                String metadataKeyName = column.get("data");
-                if (metadataKeyName!=null && metadataKeyName.length()>0){
-                    metadataKeyNames.add(metadataKeyName);
-                }
+
+            for (int i = 0; ; i++) {
+                String data = request.getParameter(
+                        "columns[" + i + "][data]");
+
+                if (data == null) break;
+                if (!data.isEmpty()) metadataKeyNames.add(data);
             }
-            
-            // and this is to find the name of the column by which to order
-            String orderColumnIndex = request.getParameter("order[0][column]");
-            // Now find the column name using columns[<index>][data]
-            String orderColumnName = request.getParameter("columns[" + orderColumnIndex + "][data]");     
-            String orderDirection = request.getParameter("order[0][dir]"); // "asc" or "desc"
-            
-            String searchTerm = request.getParameter("search[value]");
-            
-            
-            
-            //System.out.println("*********** " + String.join(";", metadataKeyNames));
-            
+
+            String orderColumnIndex =
+                    request.getParameter("order[0][column]");
+
+            String orderColumnName = orderColumnIndex == null
+                    ? ""
+                    : request.getParameter(
+                        "columns[" + orderColumnIndex + "][data]");
+
+            String customActionsID =
+                    request.getParameter("customActionsID");
+
             String[][] parameters = {
                 {"METADATA_KEY_NAMES", String.join(";", metadataKeyNames)},
-                {"ORDER_COLUMN_NAME", orderColumnName},
-                {"ORDER_DIRECTION", orderDirection},
-                {"START", start},
-                {"LENGTH", length},
-                {"SEARCH_TERM", searchTerm},
-                {"CUSTOM_ACTIONS_ID", customActionsID}
+                {"ORDER_COLUMN_NAME", orderColumnName == null ? "" : orderColumnName},
+                {"ORDER_DIRECTION", valueOrEmpty(request.getParameter("order[0][dir]"))},
+                {"START", valueOrDefault(request.getParameter("start"), "0")},
+                {"LENGTH", valueOrDefault(request.getParameter("length"), "10")},
+                {"SEARCH_TERM", valueOrEmpty(request.getParameter("search[value]"))},
+                {"CUSTOM_ACTIONS_ID", valueOrEmpty(customActionsID)}
             };
-            
-            String json = new IOHelper().applyInternalStylesheetToString("/resources/communications2DataTableJSON.xsl", thisCorpusXML, parameters);
-            IDList communicationIDs = backendInterface.getSpeechEvents4Corpus(corpusID);
-            
-            //System.out.println(json);
-            
-            
-            /*
-            CREATE AND WRITE THE OUTPUT NOW
-            {
-            "draw": 1,
-            "recordsTotal": 1000,
-            "recordsFiltered": 1000,
-            "data": [
-                {
-                    "name": "John Doe",
-                    "position": "Developer",
-                    "office": "NY",
-                    "age": 30,
-                    "start_date": "2021-01-01",
-                    "salary": "$100,000"
-                },
-                ...
-            ]            
-                    */
+
+            String stylesheet = "/resources/"
+                    + command + "2DataTableJSON.xsl";
+
+            String json = new IOHelper()
+                    .applyInternalStylesheetToString(
+                            stylesheet, thisCorpusXML, parameters);
+
             ObjectMapper mapper = new ObjectMapper();
+            JsonNode result = mapper.readTree(json);
+
             ObjectNode root = mapper.createObjectNode();
-            root.put("draw", draw);
-            root.put("recordsTotal", communicationIDs.size());
-            
-            
-            JsonNode jsonNode = mapper.readTree(json);
-            String recordsFiltered = jsonNode.get("recordsFiltered").asText();
-            root.put("recordsFiltered", recordsFiltered);
+            root.put("draw", Integer.parseInt(
+                    valueOrDefault(request.getParameter("draw"), "0")));
 
-            JsonNode dataArray = jsonNode.get("data");
-            root.set("data", dataArray);     
+            int recordsTotal;
 
-            
+            switch (command) {
+                case "speakers":
+                    recordsTotal = backendInterface.getSpeakers4Corpus(corpusID).size();
+                    break;
+                case "communications":
+                    recordsTotal = backendInterface.getSpeechEvents4Corpus(corpusID).size();
+                    break;
+                case "media":
+                    recordsTotal = backendInterface.getMedia4Corpus(corpusID).size();
+                    break;
+                case "transcripts":
+                    recordsTotal = backendInterface.getTranscripts4Corpus(corpusID).size();
+                    break;
+                default:
+                    // Requires a proper media/transcript count.
+                    // Do not substitute communication count.
+                    recordsTotal = -1;
+            }
+
+            if (recordsTotal < 0) {
+                throw new IllegalStateException("Record count not implemented for: " + command);
+            }
+
+            root.put("recordsTotal", recordsTotal);
+            root.put("recordsFiltered",
+                    result.path("recordsFiltered").asInt());
+            root.set("data", result.path("data"));
+
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
-            // Write JSON
-            mapper.writeValue(response.getWriter(), root);  
-            
-            response.getWriter().close();            
-            
-            
-            
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException ex) {
-            Logger.getLogger(DataTableServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);            
-        } catch (Exception ex) {
-            Logger.getLogger(DataTableServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException(ex);            
+            mapper.writeValue(response.getWriter(), root);
+
+        } catch (IOException | IllegalStateException | NumberFormatException | TransformerException ex) {
+            throw new IOException(ex);
         }
-        
     }
-    
-    
+
+    private static String valueOrEmpty(String value) {
+        return value == null ? "" : value;
+    }
+
+    private static String valueOrDefault(String value, String defaultValue) {
+        return value == null ? defaultValue : value;
+    }
+
+
     
 }
