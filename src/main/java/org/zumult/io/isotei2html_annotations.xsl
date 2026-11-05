@@ -206,11 +206,23 @@
                     or self::tei:pause or self::tei:vocal
                     or self::tei:incident])"/>
                 
-                <xsl:variable name="TO_POSITION"
+                <!-- <xsl:variable name="TO_POSITION"
                     select="count(following::*[@synch=$SPAN_TO]/preceding::*[
                     self::tei:w or self::tei:pc or self::tei:pause
                     or self::tei:vocal or self::tei:incident
-                    ])"/>
+                    ])"/> -->
+                
+                <xsl:variable name="TO_POSITION"
+                    select="count(
+                    following::tei:anchor[
+                    @synch = $SPAN_TO
+                    and ancestor::tei:u[1] is current()/ancestor::tei:u[1]
+                    ][1]/preceding::*[
+                    self::tei:w or self::tei:pc or
+                    self::tei:pause or self::tei:vocal or
+                    self::tei:incident
+                    ]
+                    )"/>                
                 
                 <xsl:variable name="LENGTH" select="$TO_POSITION - $FROM_POSITION + 1"/>
                 <td class="anno-span">
@@ -263,11 +275,23 @@
                     or self::tei:pause or self::tei:vocal
                     or self::tei:incident])"/>
                 
-                <xsl:variable name="TO_POSITION"
+                <!-- <xsl:variable name="TO_POSITION"
                     select="count(following::*[@synch=$SPAN_TO]/preceding::*[
                     self::tei:w or self::tei:pc or self::tei:pause
                     or self::tei:vocal or self::tei:incident
-                    ])"/>
+                    ])"/> -->
+                
+                <xsl:variable name="TO_POSITION"
+                    select="count(
+                    following::tei:anchor[
+                    @synch = $SPAN_TO
+                    and ancestor::tei:u[1] is current()/ancestor::tei:u[1]
+                    ][1]/preceding::*[
+                    self::tei:w or self::tei:pc or
+                    self::tei:pause or self::tei:vocal or
+                    self::tei:incident
+                    ]
+                    )"/>                
                 
                 <xsl:variable name="LENGTH" select="$TO_POSITION - $FROM_POSITION"/>
                 <td class="anno-span">
@@ -282,7 +306,12 @@
                     <xsl:value-of select="string-join($THE_SPAN/text(), ' ')"/>
                     
                 </td>                
-                <xsl:variable name="TARGET" select="following::*[@synch=$SPAN_TO][ancestor::tei:u = current()/ancestor::tei:u][1]"/>
+                <!-- <xsl:variable name="TARGET" select="following::*[@synch=$SPAN_TO][ancestor::tei:u = current()/ancestor::tei:u][1]"/> -->
+                <xsl:variable name="TARGET"
+                    select="following::tei:anchor[
+                    @synch = $SPAN_TO
+                    and ancestor::tei:u[1] is current()/ancestor::tei:u[1]
+                    ][1]"/>                
                 <xsl:variable name="NEXT" select="f:next-token-in-u($TARGET)"/>
                 <xsl:if test="$NEXT">
                     <xsl:apply-templates select="$NEXT" mode="START_FOR_SPAN_GRP">
