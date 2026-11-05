@@ -132,7 +132,7 @@ public abstract class AbstractBackend implements BackendInterface {
             //String xpathString = "//tei:annotationBlock[descendant::*[@xml:id='" + tokenID + "']]";
             //Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getDocumentElement(), XPathConstants.NODE);
             // changed for #285
-            String xpathString = "anscestor::tei:annotationBlock[1]";
+            String xpathString = "ancestor::tei:annotationBlock[1]";
             Element annotationBlock = (Element) xPath.evaluate(xpathString, transcript.getDocument().getElementById(tokenID), XPathConstants.NODE);
             if (annotationBlock != null) {
                 return annotationBlock.getAttribute("xml:id");
