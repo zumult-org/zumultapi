@@ -4,6 +4,7 @@
  */
 package org.zumult.objects.implementations;
 
+import org.zumult.objects.XMLMetadata;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -15,12 +16,13 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Element;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.XMLMetadatable;
 
 /**
  *
  * @author bernd
  */
-public class COMAAdditionalMaterial extends AbstractAdditionalMaterial {
+public class COMAAdditionalMaterial extends AbstractAdditionalMaterial implements XMLMetadatable {
     
     String fileString;
     XMLMetadata metadata;
@@ -42,6 +44,11 @@ public class COMAAdditionalMaterial extends AbstractAdditionalMaterial {
         metadata = new XMLMetadata(metadataXML);
     }
 
+    @Override
+    public XMLMetadata getXMLMetadata() {
+        return metadata;
+    }
+    
 
     public String getFileString(){
         return fileString;

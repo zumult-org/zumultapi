@@ -80,8 +80,13 @@
         <xsl:variable name="DESCRIPTION">
             <xsl:copy-of select="Description"/>
         </xsl:variable>
-        <xsl:variable name="AUDIO_ID" select="@Id"/>
-        <xsl:variable name="TRANSCRIPT_ID" select="ancestor::Communication/descendant::Transcription[ends-with(NSLink, 'xml')][1]/@Id"/>
+        <xsl:variable name="MEDIA_ID" select="@Id"/>
+        <xsl:variable name="MEDIA_TYPE">
+            <xsl:choose>
+                <xsl:when test="ends-with(NSLink, 'mp3') or ends-with(NSLink, 'wav')">AUDIO</xsl:when>
+                <xsl:otherwise>VIDEO</xsl:otherwise>
+            </xsl:choose>            
+        </xsl:variable>
         <xsl:text>{</xsl:text>
         <xsl:text>"ID": "</xsl:text><xsl:value-of select="@Id"/><xsl:text>",</xsl:text>
         <xsl:for-each select="$METADATA_KEY_NAMES_TOKENIZED">
@@ -91,8 +96,8 @@
         </xsl:for-each>
         <xsl:call-template name="ACTIONS">
             <xsl:with-param name="SPEECH_EVENT_ID" select="@Id"/>
-            <xsl:with-param name="AUDIO_ID" select="$AUDIO_ID"/>
-            <xsl:with-param name="TRANSCRIPT_ID" select="$TRANSCRIPT_ID"/>
+            <xsl:with-param name="MEDIA_ID" select="$MEDIA_ID"/>
+            <xsl:with-param name="MEDIA_TYPE" select="$MEDIA_TYPE"/>
         </xsl:call-template>        
         <xsl:text>}</xsl:text>
         <xsl:if test="position() != last()">,</xsl:if>        
@@ -100,16 +105,30 @@
     
     <xsl:template name="ACTIONS">
         <xsl:param name="SPEECH_EVENT_ID"/>
-        <xsl:param name="AUDIO_ID"/>
-        <xsl:param name="TRANSCRIPT_ID"/>
+        <xsl:param name="MEDIA_ID"/>
+        <xsl:param name="MEDIA_TYPE"/>
+        <xsl:text>"Actions": "</xsl:text>
+        
+        <!-- Metadata -->
+        <xsl:text><![CDATA[<button onclick=\"openMediaMetadata(']]></xsl:text>
+        <xsl:value-of select="$MEDIA_ID"/>
+        <xsl:text><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fa-solid fa-circle-info\"></i></button>]]></xsl:text>
+        
         <xsl:choose>
-            <xsl:when test="$CUSTOM_ACTIONS_ID='UDE'">
-                "Actions" : "<![CDATA[<button onclick=\"openMetadata(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fas fa-info-circle\"></i></button><button onclick=\"showSpeakers(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show speakers for this speech event\"><i class=\"fa-solid fa-people\"></i></button><button onclick=\"openMedia(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[', this)\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Media overview\"><i class=\"fa-solid fa-video\"></i></button><button onclick=\"openTranscript(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display transcript\"><i class=\"fa-regular fa-file-lines\"></i></button><button onclick=\"openZupass(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display score\"><i class=\"fa-regular fa-bars-staggered\"></i></button>]]>"                   
+            <xsl:when test="upper-case(normalize-space($MEDIA_TYPE)) = 'VIDEO'">
+                <!-- Video -->
+                <xsl:text><![CDATA[<button onclick=\"playVideo(']]></xsl:text>
+                <xsl:value-of select="$MEDIA_ID"/>
+                <xsl:text><![CDATA[', this)\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Play video\"><i class=\"fa-solid fa-video\"></i></button>]]></xsl:text>                        
             </xsl:when>
             <xsl:otherwise>
-                "Actions" : "<![CDATA[<button onclick=\"openMetadata(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fas fa-info-circle\"></i></button><button onclick=\"showSpeakers(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show speakers for this speech event\"><i class=\"fa-solid fa-people\"></i></button><button onclick=\"playAudio(']]><xsl:value-of select="$AUDIO_ID"/><![CDATA[', this)\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Play audio\"><i class=\"fa-solid fa-play\"></i></button><button onclick=\"openTranscript(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display transcript\"><i class=\"fa-regular fa-file-lines\"></i></button><button onclick=\"openZupass(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display score\"><i class=\"fa-regular fa-bars-staggered\"></i></button>]]>"                   
+                <!-- Audio -->
+                <xsl:text><![CDATA[<button onclick=\"playAudio(']]></xsl:text>
+                <xsl:value-of select="$MEDIA_ID"/>
+                <xsl:text><![CDATA[', this)\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Play audio\"><i class=\"fa-solid fa-play\"></i></button>]]></xsl:text>                        
             </xsl:otherwise>
-        </xsl:choose>
+        </xsl:choose>                                
+        <xsl:text>"</xsl:text>                
     </xsl:template>
     
     

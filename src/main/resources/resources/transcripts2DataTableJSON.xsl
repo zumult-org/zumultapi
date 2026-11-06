@@ -90,8 +90,6 @@
             </xsl:if>
         </xsl:for-each>
         <xsl:call-template name="ACTIONS">
-            <xsl:with-param name="SPEECH_EVENT_ID" select="@Id"/>
-            <xsl:with-param name="AUDIO_ID" select="$AUDIO_ID"/>
             <xsl:with-param name="TRANSCRIPT_ID" select="$TRANSCRIPT_ID"/>
         </xsl:call-template>        
         <xsl:text>}</xsl:text>
@@ -99,17 +97,27 @@
     </xsl:template>
     
     <xsl:template name="ACTIONS">
-        <xsl:param name="SPEECH_EVENT_ID"/>
-        <xsl:param name="AUDIO_ID"/>
         <xsl:param name="TRANSCRIPT_ID"/>
-        <xsl:choose>
-            <xsl:when test="$CUSTOM_ACTIONS_ID='UDE'">
-                "Actions" : "<![CDATA[<button onclick=\"openMetadata(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fas fa-info-circle\"></i></button><button onclick=\"showSpeakers(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show speakers for this speech event\"><i class=\"fa-solid fa-people\"></i></button><button onclick=\"openMedia(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[', this)\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Media overview\"><i class=\"fa-solid fa-video\"></i></button><button onclick=\"openTranscript(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display transcript\"><i class=\"fa-regular fa-file-lines\"></i></button><button onclick=\"openZupass(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display score\"><i class=\"fa-regular fa-bars-staggered\"></i></button>]]>"                   
-            </xsl:when>
-            <xsl:otherwise>
-                "Actions" : "<![CDATA[<button onclick=\"openMetadata(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fas fa-info-circle\"></i></button><button onclick=\"showSpeakers(']]><xsl:value-of select="$SPEECH_EVENT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show speakers for this speech event\"><i class=\"fa-solid fa-people\"></i></button><button onclick=\"playAudio(']]><xsl:value-of select="$AUDIO_ID"/><![CDATA[', this)\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Play audio\"><i class=\"fa-solid fa-play\"></i></button><button onclick=\"openTranscript(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display transcript\"><i class=\"fa-regular fa-file-lines\"></i></button><button onclick=\"openZupass(']]><xsl:value-of select="$TRANSCRIPT_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display score\"><i class=\"fa-regular fa-bars-staggered\"></i></button>]]>"                   
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:text>"Actions": "</xsl:text>
+        
+        <!-- Metadata -->
+        <xsl:text><![CDATA[<button onclick=\"openTranscriptMetadata(']]></xsl:text>
+        <xsl:value-of select="$TRANSCRIPT_ID"/>
+        <xsl:text><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fa-solid fa-circle-info\"></i></button>]]></xsl:text>
+        
+        
+        <!-- Line tanscript -->
+        <xsl:text><![CDATA[<button onclick=\"openLineTranscript(']]></xsl:text>
+        <xsl:value-of select="$TRANSCRIPT_ID"/>
+        <xsl:text><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display line transcript\"><i class=\"fa-solid fa-align-left\"></i></button>]]></xsl:text>
+        
+        <!-- Score transcript -->
+        <xsl:text><![CDATA[<button onclick=\"openScoreTranscript(']]></xsl:text>
+        <xsl:value-of select="$TRANSCRIPT_ID"/>
+        <xsl:text><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Display score transcript\"><i class=\"fa-solid fa-bars-staggered\"></i></button>]]></xsl:text>
+        
+        <xsl:text>"</xsl:text>                
+        
     </xsl:template>
     
     

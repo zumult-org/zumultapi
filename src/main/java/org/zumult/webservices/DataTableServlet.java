@@ -375,8 +375,7 @@ public class DataTableServlet extends HttpServlet {
             }
 
             root.put("recordsTotal", recordsTotal);
-            root.put("recordsFiltered",
-                    result.path("recordsFiltered").asInt());
+            root.put("recordsFiltered", result.path("recordsFiltered").asInt());
             root.set("data", result.path("data"));
 
             response.setContentType("application/json");

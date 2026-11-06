@@ -24,7 +24,7 @@ public class Constants {
     // new for #175
     public static String EVENT2HTML_STYLESHEET = "/org/zumult/io/communication2HTML_full.xsl";
     public static String SPEECHEVENT2HTML_STYLESHEET = "/org/zumult/io/communication2HTML.xsl";
-    public static String SPEAKER2HTML_STYLESHEET = "/org/zumult/io/speaker2HTML.xsl";
+    public static String SPEAKER2HTML_STYLESHEET = "/org/zumult/io/speaker2HTML_BS5.xsl";
     public static String EVENT_TITLE_METADATAKEY = "v_e_se_art";
     
     // issue #55

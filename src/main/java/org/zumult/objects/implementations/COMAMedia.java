@@ -5,6 +5,7 @@
  */
 package org.zumult.objects.implementations;
 
+import org.zumult.objects.XMLMetadata;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,12 +20,13 @@ import org.zumult.backend.Configuration;
 import org.zumult.io.MediaUtilities;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.XMLMetadatable;
 
 /**
  *
  * @author thomas.schmidt
  */
-public class COMAMedia extends AbstractMedia {
+public class COMAMedia extends AbstractMedia implements XMLMetadatable {
 
     
     String fileString;
@@ -34,7 +36,6 @@ public class COMAMedia extends AbstractMedia {
     public COMAMedia(String id, String urlString){
         super(id, urlString);
     }
-        
 
     public COMAMedia(String id, String urlString, String fileString){
         super(id, urlString);
@@ -47,6 +48,10 @@ public class COMAMedia extends AbstractMedia {
         metadata = new XMLMetadata(metadataXML);
     }
 
+    @Override
+    public XMLMetadata getXMLMetadata() {
+        return metadata;
+    }
 
     public String getFileString(){
         return fileString;
@@ -164,6 +169,7 @@ public class COMAMedia extends AbstractMedia {
     public Map<String, Set<String>> getMetadataValuesByLanguages (MetadataKey key) {
         throw new UnsupportedOperationException ("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 
     
     

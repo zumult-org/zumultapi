@@ -50,11 +50,14 @@ import org.zumult.objects.Event;
 import org.zumult.objects.IDList;
 import org.zumult.objects.Media;
 import org.zumult.objects.MetadataKey;
+import org.zumult.objects.Metadatable;
 import org.zumult.objects.ObjectTypesEnum;
 import org.zumult.objects.Speaker;
 import org.zumult.objects.SpeechEvent;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.XMLMetadata;
+import org.zumult.objects.XMLMetadatable;
 import org.zumult.objects.implementations.ISOTEITranscript;
 
 /**
@@ -88,6 +91,7 @@ public class ZumultDataServlet extends HttpServlet {
             case "getEventMetadataHTML" : 
                 getEventMetadataHTML(request, response);
                 break;
+            
             case "getSpeechEventMetadata" : 
                 getSpeechEventMetadata(request, response);
                 break;
@@ -98,6 +102,13 @@ public class ZumultDataServlet extends HttpServlet {
             case "getCorpusMetadata" : 
                 getCorpusMetadata(request, response);
                 break;
+            case "getMediaMetadata" : 
+                getMediaMetadata(request, response);
+                break;
+            case "getTranscriptMetadata" : 
+                getTranscriptMetadata(request, response);
+                break;
+                
             case "getEventMetadataTitle" : 
                 getEventMetadataTitle(request, response);
                 break;
@@ -285,11 +296,12 @@ public class ZumultDataServlet extends HttpServlet {
                 }
                 allXML += "</Speakers>";
                 String result = allXML;
+                response.setContentType("application/xml");
                 if (format.equals("html")){
                     String xslPath = Configuration.getSpeaker2HTMLStylesheet();
                     result = new IOHelper().applyInternalStylesheetToString(xslPath, allXML);
+                    response.setContentType("text/html");
                 }
-                response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");                            
                 response.getWriter().write(result);             
                 response.getWriter().close();            
@@ -342,11 +354,12 @@ public class ZumultDataServlet extends HttpServlet {
                 }
                 allXML += "</SpeechEvents>";
                 String result = allXML;
+                response.setContentType("application/xml");
                 if (format.equals("html")){
                     String xslPath = Configuration.getSpeechEvent2HTMLStylesheet();
                     result = new IOHelper().applyInternalStylesheetToString(xslPath, allXML);
+                    response.setContentType("text/html");
                 }
-                response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");                            
                 response.getWriter().write(result);             
                 response.getWriter().close();            
@@ -357,8 +370,6 @@ public class ZumultDataServlet extends HttpServlet {
                 response.getWriter().write(errorHTML);             
                 response.getWriter().close();            
             }
-            
-            
             
             if (speechEventID!=null){
                 // N.B. the idea seems to be to get the corresponding event as input for the XSL transformation
@@ -399,6 +410,75 @@ public class ZumultDataServlet extends HttpServlet {
         } 
     }
     
+    private void getMediaMetadata(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String mediaID = request.getParameter("mediaID");
+            String format = request.getParameter("format");
+            if (format==null || format.length()==0){
+                format = "html";
+            }            
+            Media media = backend.getMedia(mediaID);
+            if (media instanceof XMLMetadatable){
+                XMLMetadata xmlMetadata = ((XMLMetadatable)media).getXMLMetadata();
+                String result = xmlMetadata.toXML();
+                response.setContentType("application/xml");
+                if (format.equals("html")){
+                    String xslPath = "/org/zumult/io/comaDescription2HTML.xsl";
+                    result = new IOHelper().applyInternalStylesheetToString(xslPath, result);
+                    response.setContentType("text/html");
+                }
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(result);             
+                response.getWriter().close();            
+                
+            } else {
+                String errorHTML = "<div>No metadata for " + mediaID + " found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | TransformerException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } 
+    }
+    
+    private void getTranscriptMetadata(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BackendInterface backend = BackendInterfaceFactory.newBackendInterface();
+            String transcriptID = request.getParameter("transcriptID");
+            String format = request.getParameter("format");
+            if (format==null || format.length()==0){
+                format = "html";
+            }            
+            Transcript transcript = backend.getTranscript(transcriptID);
+            if (transcript instanceof XMLMetadatable){
+                XMLMetadata xmlMetadata = ((XMLMetadatable)transcript).getXMLMetadata();
+                String result = xmlMetadata.toXML();
+                response.setContentType("application/xml");
+                if (format.equals("html")){
+                    String xslPath = "/org/zumult/io/comaDescription2HTML.xsl";
+                    result = new IOHelper().applyInternalStylesheetToString(xslPath, result);
+                    response.setContentType("text/html");
+                }
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(result);             
+                response.getWriter().close();            
+                
+            } else {
+                String errorHTML = "<div>No metadata for " + transcript + " found.</div>";
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");                            
+                response.getWriter().write(errorHTML);             
+                response.getWriter().close();            
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | TransformerException ex) {
+            Logger.getLogger(ZumultDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IOException(ex);
+        } 
+    }
     
     
 

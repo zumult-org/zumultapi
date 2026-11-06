@@ -92,7 +92,20 @@
     
     <xsl:template name="ACTIONS">
         <xsl:param name="SPEAKER_ID"/>
-        "Actions" : "<![CDATA[<button onclick=\"openSpeakerMetadata(']]><xsl:value-of select="$SPEAKER_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fas fa-info-circle\"></i></button><button onclick=\"showSpeechEvents(']]><xsl:value-of select="$SPEAKER_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show events for this speaker\"><i class=\"fa-solid fa-comment-dots\"></i></button>]]>"   
+        <!-- "Actions" : "<![CDATA[<button onclick=\"openSpeakerMetadata(']]><xsl:value-of select="$SPEAKER_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fas fa-info-circle\"></i></button><button onclick=\"showSpeechEvents(']]><xsl:value-of select="$SPEAKER_ID"/><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show events for this speaker\"><i class=\"fa-solid fa-comment-dots\"></i></button>]]>" -->   
+        <xsl:text>"Actions": "</xsl:text>
+        
+        <!-- Speaker metadata -->
+        <xsl:text><![CDATA[<button onclick=\"openSpeakerMetadata(']]></xsl:text>
+        <xsl:value-of select="$SPEAKER_ID"/>
+        <xsl:text><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show all metadata\"><i class=\"fa-solid fa-circle-info\"></i></button>]]></xsl:text>
+        
+        <!-- Speech events -->
+        <xsl:text><![CDATA[<button onclick=\"showSpeechEvents(']]></xsl:text>
+        <xsl:value-of select="$SPEAKER_ID"/>
+        <xsl:text><![CDATA[')\" type=\"button\" class=\"btn btn-sm py-0 px-1\" title=\"Show events for this speaker\"><i class=\"fa-solid fa-comments\"></i></button>]]></xsl:text>
+        
+        <xsl:text>"</xsl:text>
     </xsl:template>
     
     

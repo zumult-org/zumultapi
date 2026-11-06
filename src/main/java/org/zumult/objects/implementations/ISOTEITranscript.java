@@ -5,6 +5,7 @@
  */
 package org.zumult.objects.implementations;
 
+import org.zumult.objects.XMLMetadata;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,12 +31,13 @@ import org.zumult.objects.IDList;
 import org.zumult.objects.TokenFilter;
 import org.zumult.objects.TokenList;
 import org.zumult.objects.Transcript;
+import org.zumult.objects.XMLMetadatable;
 
 /**
  * 
  * @author Thomas_Schmidt
  */
-public abstract class ISOTEITranscript extends AbstractXMLObject implements Transcript {
+public abstract class ISOTEITranscript extends AbstractXMLObject implements Transcript, XMLMetadatable {
 
     String teiNamespaceURI = "http://www.tei-c.org/ns/1.0";
     
@@ -68,6 +70,12 @@ public abstract class ISOTEITranscript extends AbstractXMLObject implements Tran
         metadata = new XMLMetadata(metadataDocument);
         xPath.setNamespaceContext(new ISOTEINamespaceContext());            
     }
+    
+    @Override
+    public XMLMetadata getXMLMetadata() {
+        return metadata;
+    }
+    
 
 
     @Override
