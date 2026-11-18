@@ -37,7 +37,7 @@
         <table class="annotations-table">
             <tr>
                 <th class="speaker">
-                    <xsl:value-of select="@who"/>
+                    <xsl:value-of select="id(@who)/@n"/>
                 </th>
                 <td>
                     <xsl:apply-templates select="descendant::tei:seg[not(parent::tei:seg)]"/>
@@ -95,7 +95,14 @@
         <xsl:param name="LEVEL"/>
         <td>
             <xsl:choose>
-                <xsl:when test="$LEVEL='trans'"><xsl:apply-templates/></xsl:when>
+                <xsl:when test="$LEVEL='trans'">
+                    <span>
+                        <xsl:attribute name="data-norm" select="@norm"/>
+                        <xsl:attribute name="data-lemma" select="@lemma"/>
+                        <xsl:attribute name="data-pos" select="@pos"/>                        
+                        <xsl:apply-templates/>
+                    </span>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:choose>
                         <xsl:when test="$LEVEL='norm' and text()!=@norm"><xsl:attribute name="style">font-weight:bold;</xsl:attribute></xsl:when>
@@ -333,7 +340,7 @@
     </xsl:template>
     
     <xsl:function name="f:next-token-in-u">
-      <xsl:param name="node" as="element()"/>
+      <xsl:param name="node" as="element()?"/>
       <xsl:variable name="U" select="$node/ancestor::tei:u[1]"/>
       <xsl:sequence select="$node/following::*[ancestor::tei:u[1] is $U][not(self::tei:anchor or self::tei:seg)][1]"/>
     </xsl:function>

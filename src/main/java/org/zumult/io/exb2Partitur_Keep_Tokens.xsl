@@ -225,11 +225,23 @@
                     <xsl:text> highlight2</xsl:text>
                 </xsl:if>                
             </xsl:attribute>
+            <!-- <span 
+                data-start="10.893325777333851" 
+                data-end="12.526657977729686" 
+                data-norm="nicht" 
+                data-lemma="nicht" 
+                data-pos="PTKNEG" data-id="w19" class="token" title="nicht / nicht / PTKNEG / n ' I C t">nicht </span> -->
             <xsl:attribute name="data-start" select="$START"/>
             <xsl:attribute name="data-end" select="$END"/>
             <xsl:attribute name="data-id" select="$ID"/>
+            <xsl:if test="local-name()='w'">
+                <xsl:attribute name="data-norm" select="@norm"/>
+                <xsl:attribute name="data-lemma" select="@lemma"/>
+                <xsl:attribute name="data-pos" select="@pos"/>
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="@rend"><xsl:value-of select="@rend"/></xsl:when>
+                <xsl:when test="self::tei:pause">*****</xsl:when>
                 <xsl:otherwise><xsl:apply-templates/></xsl:otherwise>
             </xsl:choose>            
         </span>

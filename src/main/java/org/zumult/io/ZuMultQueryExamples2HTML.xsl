@@ -38,7 +38,7 @@
     
     <xsl:template match="section" mode="tabs">
         <li class="nav-item">
-            <a id="home-tab" data-toggle="tab" role="tab">
+            <a id="{@name}-tab" data-toggle="tab" data-bs-toggle="tab" role="tab">
                 <xsl:attribute name="href"><xsl:value-of select="concat('#tab_', @name)"/></xsl:attribute>
                 <xsl:attribute name="class">nav-link<xsl:if test="not(preceding-sibling::section)"> active</xsl:if></xsl:attribute>
                 <xsl:value-of select="@name"/>
@@ -101,7 +101,7 @@
     </xsl:template>
     
     <xsl:template match="query-expression">
-        <span class="text-monospace query-expression" onclick="insertQuery(this)">
+        <span class="font-monospace query-expression" onclick="insertQuery(this)">
             <xsl:attribute name="data-corpus" select="ancestor::section[1]/@corpus"/>
             <xsl:value-of select="text()"/>
         </span>
